@@ -100,6 +100,7 @@ import Grothendieck.Folder89
 import Grothendieck.Folder90
 import Grothendieck.Folder90Comodules
 import Grothendieck.Folder93
+import Grothendieck.Folder93Stacks
 import Grothendieck.Folder94
 import Grothendieck.Folder94Koszul
 import Grothendieck.Folder98
