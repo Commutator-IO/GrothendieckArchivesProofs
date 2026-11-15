@@ -18,6 +18,7 @@ import Grothendieck.Folder128
 import Grothendieck.Folder13
 import Grothendieck.Folder133
 import Grothendieck.Folder136
+import Grothendieck.Folder136Stacks
 import Grothendieck.Folder137
 import Grothendieck.Folder140_1
 import Grothendieck.Folder145
@@ -99,6 +100,7 @@ import Grothendieck.Folder89
 import Grothendieck.Folder90
 import Grothendieck.Folder90Comodules
 import Grothendieck.Folder93
+import Grothendieck.Folder93Stacks
 import Grothendieck.Folder94
 import Grothendieck.Folder94Koszul
 import Grothendieck.Folder98
