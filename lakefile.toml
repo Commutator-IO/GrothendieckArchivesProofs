@@ -1,0 +1,32 @@
+name = "GrothendieckArchivesProofs"
+version = "0.1.0"
+defaultTargets = ["GrothendieckArchivesProofs"]
+
+# A `sorry` is a warning, and a proof with a warning in it proves nothing: the build fails on either.
+[leanOptions]
+warningAsError = true
+
+# Same Mathlib as the Stacks project (and `lean-toolchain`, Lean v4.35.0).
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "56a005855ea17e0b0958f73ec801ae140b0a1679"
+
+# The Stacks Project in Lean (AxiomMath, Apache-2.0); the proofs import from StacksCore and
+# StacksFrontier.
+[[require]]
+name = "Stacks"
+git = "https://github.com/AxiomMath/Stacks"
+rev = "c496df0d9beea9deaeabcea8492605f9a0a2313b"
+
+[[lean_lib]]
+name = "GrothendieckArchivesProofs"
+
+# The working notes kept at the University of Montpellier: one file per folder (cote), and the
+# general lemmas in Grothendieck/Upstream/.
+[[lean_lib]]
+name = "Grothendieck"
+
+# The Buffalo lectures (1973): the entries of the index, one file per part.
+[[lean_lib]]
+name = "Buffalo"
