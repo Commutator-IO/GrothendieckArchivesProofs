@@ -5,7 +5,8 @@ import Mathlib
 
 Declarations a proof of this repository needed and that were proposed to mathlib4 from
 the fork mycaule/mathlib4, branch `mycaule/isAdicComplete-of-isNilpotent`, closed upstream on
-2026-10-22. They keep their mathlib names, against the pinned Mathlib; drop a
+2026-10-22. They keep their mathlib names, against the pinned Mathlib, except
+`IsAdicComplete.of_isNilpotent_module` (the ring case of Stacks has the name); drop a
 declaration once Mathlib has it.
 -/
 
@@ -62,7 +63,10 @@ variable [IsAdicComplete I N]
 variable (I)
 end StrictMono
 variable {I} in
-theorem of_isNilpotent (hI : IsNilpotent I) : IsAdicComplete I M := by
+/-- A module is adically complete along a nilpotent ideal. Renamed from the mathlib4 branch's
+`of_isNilpotent`: AxiomMath's Stacks library has `IsAdicComplete.of_isNilpotent` for the ring
+case, and the two meet in `GrothendieckArchivesProofs.lean`. -/
+theorem of_isNilpotent_module (hI : IsNilpotent I) : IsAdicComplete I M := by
   obtain ⟨k, hk⟩ := hI
   have h {n : ℕ} (hn : k ≤ n) : (I ^ n • ⊤ : Submodule R M) = ⊥ := by
     rw [le_bot_iff.1 ((Ideal.pow_le_pow_right hn).trans_eq hk), Submodule.bot_smul]

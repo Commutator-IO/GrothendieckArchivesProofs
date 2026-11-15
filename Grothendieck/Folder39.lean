@@ -65,7 +65,7 @@ variable {A : Type*} [CommRing A]
 
 /-- A ring is complete and separated for a nilpotent ideal. -/
 theorem isAdicComplete_of_nilpotent {I : Ideal A} (hI : IsNilpotent I) : IsAdicComplete I A :=
-  IsAdicComplete.of_isNilpotent A hI
+  IsAdicComplete.of_isNilpotent_module A hI
 
 /-- **Formal preparation, adic case.** `A` complete and separated for the
 `I`-adic topology, `aᵢ ∈ I` for `i < N`, `a_N` a unit: `F` is regular, and every
