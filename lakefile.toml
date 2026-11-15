@@ -30,3 +30,8 @@ name = "Grothendieck"
 # The Buffalo lectures (1973): the entries of the index, one file per part.
 [[lean_lib]]
 name = "Buffalo"
+
+# The open problems of the Montpellier notes and of the Buffalo lectures, stated as `Prop`s
+# (definitions, not theorems): one file per section of the edition's two notes on open problems.
+[[lean_lib]]
+name = "OpenProblems"

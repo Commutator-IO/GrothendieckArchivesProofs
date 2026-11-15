@@ -13,6 +13,15 @@ Lean 4 proofs of statements from two of Alexandre Grothendieck's archives, built
 `import GrothendieckArchivesProofs` brings in both. Lean's kernel checks every proof; the build
 treats warnings as errors, so a `sorry` fails it.
 
+## Open problems
+
+`OpenProblems/` states the open questions of the Montpellier notes and of the Buffalo lectures,
+one file per section of the edition's two notes on open problems. Each is a `def … : Prop`, not a
+theorem: nothing there is proved, and the build would reject a `sorry`. The docstrings give the
+question in our words, its source (folder and pages, or video and time), its status (open,
+settled, or false with the counterexample) and the choices made in writing it down; questions
+that the libraries cannot yet express are listed in each file's header with what is missing.
+
 ## Versions
 
 Lean v4.35.0 and Mathlib v4.35.0, the versions of the Stacks project, which is required at a
