@@ -56,6 +56,18 @@ theorem partialD_t (j l : Fin n) : partialD b j (t l) = if l = j then 1 else 0 :
   rw [partialD_apply, ← hb, Module.Basis.coord_apply, Module.Basis.repr_self,
     Finsupp.single_apply]
 
+include hb in
+omit hp [CharP B p] in
+/-- `∂tⱼ/∂tⱼ = 1`. -/
+theorem partialD_t_self (j : Fin n) : partialD b j (t j) = 1 := by
+  simp [partialD_t b hb]
+
+include hb in
+omit hp [CharP B p] in
+/-- `∂tₗ/∂tⱼ = 0` for `l ≠ j`. -/
+theorem partialD_t_of_ne {j l : Fin n} (h : l ≠ j) : partialD b j (t l) = 0 := by
+  simp [partialD_t b hb, h]
+
 omit hp in
 /-- `∂/∂tⱼ` kills `p`-th powers. -/
 theorem partialD_pow_p (j : Fin n) (c : B) : partialD b j (c ^ p) = 0 := by
@@ -72,8 +84,7 @@ theorem partialD_prod_eq_zero (j : Fin n) (a : Fin n → ℕ) (s : Finset (Fin n
     have hlj : ¬ l = j := by
       rintro rfl
       exact hs (Finset.mem_insert_self _ _)
-    rw [Finset.prod_insert hl, Derivation.leibniz, Derivation.leibniz_pow, partialD_t b hb,
-      if_neg hlj, ih (fun h => hs (Finset.mem_insert_of_mem h))]
+    rw [Finset.prod_insert hl, Derivation.leibniz, Derivation.leibniz_pow, partialD_t_of_ne b hb hlj, ih (fun h => hs (Finset.mem_insert_of_mem h))]
     simp
 
 include hb in
@@ -81,8 +92,8 @@ omit hp [CharP B p] in
 /-- `∂(Q tⱼ^m) = m Q tⱼ^{m-1}` when `∂Q = 0`. -/
 theorem partialD_mul_pow (j : Fin n) (Q : B) (hQ : partialD b j Q = 0) (m : ℕ) :
     partialD b j (Q * t j ^ m) = Q * (m : B) * t j ^ (m - 1) := by
-  rw [Derivation.leibniz, Derivation.leibniz_pow, partialD_t b hb, if_pos rfl, hQ]
-  simp only [smul_eq_mul, nsmul_eq_mul, mul_one, smul_zero, add_zero]
+  rw [Derivation.leibniz, Derivation.leibniz_pow, partialD_t_self b hb, hQ]
+  simp only [smul_eq_mul, nsmul_eq_mul, mul_one]
   ring
 
 include hb in
@@ -102,6 +113,7 @@ theorem partialD_iterate (j : Fin n) (Q : B) (hQ : partialD b j Q = 0) (a k : �
     ring
 
 include hb in
+omit hp in
 /-- **`(∂/∂tⱼ)ᵖ = 0`** for Frobenius coordinates. -/
 theorem partialD_iterate_p_eq_zero (hF : IsFrobeniusCoordinates p B t) (j : Fin n) (y : B) :
     (⇑(partialD b j))^[p] y = 0 := by
@@ -132,6 +144,6 @@ theorem horizontal_generate_of_frobeniusCoordinates (hF : IsFrobeniusCoordinates
     ∃ y : ℕ → B, ∑ i ∈ range p, t j ^ i * PCurvature.u (A := B) i * y i = 1 ∧
       ∀ i, partialD b j (y i) + a * y i = 0 :=
   PCurvature.horizontal_generate ((partialD b j).restrictScalars ℤ) p
-    (partialD_iterate_p_eq_zero b hb hF j) (t j) ((partialD_t b hb j j).trans (if_pos rfl)) a hψ
+    (partialD_iterate_p_eq_zero b hb hF j) (t j) (partialD_t_self b hb j) a hψ
 
 end Grothendieck.Folder93.Frobenius
