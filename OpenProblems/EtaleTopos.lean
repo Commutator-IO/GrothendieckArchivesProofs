@@ -42,7 +42,7 @@ namespace OpenProblems.EtaleTopos
 whiskering by `q⁻¹`, composed with `(g ≫ q)⁻¹ = p⁻¹`, is the comparison `q⁻¹ ⋙ f⁻¹ ≅ (f ≫ q)⁻¹ = p⁻¹`. -/
 def IsOverBase {S X Y : Scheme.{u}} {p : X ⟶ S} {q : Y ⟶ S} {f g : X ⟶ Y} (hf : f ≫ q = p)
     (hg : g ≫ q = p) (α : smallEtalePullbackSet f ≅ smallEtalePullbackSet g) : Prop :=
-  isoWhiskerLeft (smallEtalePullbackSet q) α ≪≫ smallEtalePullbackSetCompIso g q ≪≫
+  Functor.isoWhiskerLeft (smallEtalePullbackSet q) α ≪≫ smallEtalePullbackSetCompIso g q ≪≫
       eqToIso (congrArg smallEtalePullbackSet hg) =
     smallEtalePullbackSetCompIso f q ≪≫ eqToIso (congrArg smallEtalePullbackSet hf)
 
