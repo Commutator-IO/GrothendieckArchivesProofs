@@ -38,6 +38,7 @@ import Buffalo.AG.Part06dStacks
 import Buffalo.AG.Part07
 import Buffalo.AG.Part07Stacks
 import Buffalo.AG.Part07a
+import Buffalo.AG.Part07aStacks
 import Buffalo.AG.Part07b
 import Buffalo.AG.Part07boards
 import Buffalo.AG.Part07c
