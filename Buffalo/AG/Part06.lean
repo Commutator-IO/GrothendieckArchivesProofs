@@ -27,7 +27,8 @@ regular, `cex_8186`), `16396` (`S` must be coherent, not only quasi-separated, `
 
 Not formalised (no carrier in mathlib): the identity component of a group scheme (`6032`),
 blow-ups (`7216`), Koszul complexes in general (`7990`, length one only; global dimension,
-`8121`, is now in `Part06SerreStacks.lean` on Stacks), regularity of completions and Cohen's structure theorem (`8250`, `8313`), the planes and
+`8121`, is now in `Part06SerreStacks.lean` on Stacks), regularity of completions (`8250`; Cohen's
+structure theorem, `8313`, is now in `Part06CohenStacks.lean` on Stacks), the planes and
 lines with doubled origin as glued schemes (`10987`, `14219`, `14762`), quasi-coherent
 `𝒪_X`-modules and their (higher) direct images (`16474`, `16538`), and the irreducibility of
 `Spec(K ⊗_k L)` over a separably closed field (`18360`).
