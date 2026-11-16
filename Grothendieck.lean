@@ -64,6 +64,7 @@ import Grothendieck.Folder42
 import Grothendieck.Folder43
 import Grothendieck.Folder44
 import Grothendieck.Folder46
+import Grothendieck.Folder49Flatness
 import Grothendieck.Folder5
 import Grothendieck.Folder50
 import Grothendieck.Folder53
