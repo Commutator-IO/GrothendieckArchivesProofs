@@ -18,6 +18,7 @@ import Grothendieck.Folder128
 import Grothendieck.Folder13
 import Grothendieck.Folder133
 import Grothendieck.Folder136
+import Grothendieck.Folder136Prop1
 import Grothendieck.Folder136Stacks
 import Grothendieck.Folder137
 import Grothendieck.Folder140_1

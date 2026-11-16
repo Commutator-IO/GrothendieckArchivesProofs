@@ -28,7 +28,8 @@ divided powers on `IP + P₊` (Stacks tag 07H6).
 
 Not formalised: the same identification in every exterior degree and for products of
 monomials (the full isomorphism of the coordinate complex with
-`Crystalline.dividedPowerDeRhamComplex`), and Proposition 1 (`Φ_* ≃ 0`).
+`Crystalline.dividedPowerDeRhamComplex`). Proposition 1 (`Φ_* ≃ 0`) is in
+`Grothendieck/Folder136Prop1.lean`.
 -/
 
 namespace Grothendieck.Folder136
