@@ -240,9 +240,10 @@ variables `σ` (`σ = Fin m` for the `m`-simplex) and any commutative ring `k`.
 * `pd_row_cohomology` gathers these.
 
 Not formalised: the identification of `Γ^p Φ ⊗ Λ^q Ψ` with the coordinate model (Γ of a free
-module, change of basis `X ↦ (T, Y)`) and its simplicial structure; Proposition 1
-(`Φ_* ≃ 0`) and the acyclicity of `C^{p,q}_*` for `p ≥ 1`; the cohomology of a simplicial set
-with coefficients in a simplicial module, hence the passage from `Δ[m]` to an arbitrary `X`.
+module, change of basis `X ↦ (T, Y)`) and its simplicial structure (Proposition 1, `Φ_* ≃ 0`,
+and the acyclicity of `C^{p,q}_*` for `p ≥ 1` are in `Grothendieck/Folder136Prop1.lean`); the
+cohomology of a simplicial set with coefficients in a simplicial module, hence the passage from
+`Δ[m]` to an arbitrary `X`.
 -/
 
 namespace Grothendieck.Folder136
