@@ -57,6 +57,7 @@ import Grothendieck.Folder21
 import Grothendieck.Folder22
 import Grothendieck.Folder22Adic
 import Grothendieck.Folder29
+import Grothendieck.Folder29TameInertia
 import Grothendieck.Folder37
 import Grothendieck.Folder39
 import Grothendieck.Folder40
