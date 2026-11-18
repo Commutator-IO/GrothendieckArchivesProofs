@@ -2,6 +2,7 @@ import Grothendieck.EffectiveVenken
 import Grothendieck.Folder1
 import Grothendieck.Folder10
 import Grothendieck.Folder100
+import Grothendieck.Folder100Cohen
 import Grothendieck.Folder101
 import Grothendieck.Folder104
 import Grothendieck.Folder106
