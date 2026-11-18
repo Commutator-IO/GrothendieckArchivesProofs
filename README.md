@@ -10,6 +10,10 @@ Lean 4 proofs of statements from two of Alexandre Grothendieck's archives, built
   where each file is linked to its folder, its pages and its findings.
 - `Buffalo/`: the lectures given at Buffalo in 1973, one file per part of their index.
 
+The Montpellier statements and their proofs, written out in French, are in the preprint
+M. Hua, *Grothendieck Montpellier. Énoncés des lectures modernisées démontrés*, Hexagon
+[2611.00125v2](https://hexagonmath.org/2611.00125v2).
+
 `import GrothendieckArchivesProofs` brings in both. Lean's kernel checks every proof; the build
 treats warnings as errors, so a `sorry` fails it.
 

@@ -2,7 +2,9 @@ import Grothendieck.EffectiveVenken
 import Grothendieck.Folder1
 import Grothendieck.Folder10
 import Grothendieck.Folder100
+import Grothendieck.Folder100Cohen
 import Grothendieck.Folder101
+import Grothendieck.Folder101DimTwo
 import Grothendieck.Folder104
 import Grothendieck.Folder106
 import Grothendieck.Folder107
@@ -14,6 +16,7 @@ import Grothendieck.Folder118
 import Grothendieck.Folder120
 import Grothendieck.Folder121
 import Grothendieck.Folder125
+import Grothendieck.Folder126NilpotentQuotient
 import Grothendieck.Folder128
 import Grothendieck.Folder13
 import Grothendieck.Folder133
@@ -50,14 +53,18 @@ import Grothendieck.Folder161_1
 import Grothendieck.Folder161_2
 import Grothendieck.Folder161_3
 import Grothendieck.Folder161_6
+import Grothendieck.Folder16Problem5
 import Grothendieck.Folder18
 import Grothendieck.Folder19
 import Grothendieck.Folder2
+import Grothendieck.Folder2KCoherent
 import Grothendieck.Folder21
 import Grothendieck.Folder22
 import Grothendieck.Folder22Adic
+import Grothendieck.Folder22CohenAlgebras
 import Grothendieck.Folder23Normalisation
 import Grothendieck.Folder29
+import Grothendieck.Folder29TameInertia
 import Grothendieck.Folder37
 import Grothendieck.Folder39
 import Grothendieck.Folder40
