@@ -57,6 +57,7 @@ import Grothendieck.Folder16Problem5
 import Grothendieck.Folder18
 import Grothendieck.Folder19
 import Grothendieck.Folder2
+import Grothendieck.Folder2KCoherent
 import Grothendieck.Folder21
 import Grothendieck.Folder22
 import Grothendieck.Folder22Adic
