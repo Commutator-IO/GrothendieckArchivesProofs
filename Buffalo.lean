@@ -46,6 +46,7 @@ import Buffalo.AG.Part07b
 import Buffalo.AG.Part07boards
 import Buffalo.AG.Part07c
 import Buffalo.AG.Part08
+import Buffalo.AG.Part08FpqcDescentStacks
 import Buffalo.AG.Part08a
 import Buffalo.AG.Part08b
 import Buffalo.AG.Part08boards
