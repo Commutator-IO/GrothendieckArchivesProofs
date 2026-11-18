@@ -3,6 +3,7 @@ import Grothendieck.Folder1
 import Grothendieck.Folder10
 import Grothendieck.Folder100
 import Grothendieck.Folder101
+import Grothendieck.Folder101DimTwo
 import Grothendieck.Folder104
 import Grothendieck.Folder106
 import Grothendieck.Folder107
