@@ -14,6 +14,7 @@ import Grothendieck.Folder118
 import Grothendieck.Folder120
 import Grothendieck.Folder121
 import Grothendieck.Folder125
+import Grothendieck.Folder126NilpotentQuotient
 import Grothendieck.Folder128
 import Grothendieck.Folder13
 import Grothendieck.Folder133
