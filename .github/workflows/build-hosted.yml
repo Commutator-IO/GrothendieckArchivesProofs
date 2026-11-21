@@ -50,6 +50,10 @@ jobs:
           key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.run_id }}-${{ github.run_attempt }}-checkpoint
       - name: Build
         run: lake build --log-level=warning
+      - name: Check axioms
+        run: >-
+          lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs
+          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP
       - name: Save .lake
         if: always()
         uses: actions/cache/save@v4

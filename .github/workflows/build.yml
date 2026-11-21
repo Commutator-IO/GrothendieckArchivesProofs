@@ -59,6 +59,13 @@ jobs:
       - name: Build
         run: lake build --log-level=warning
 
+      # Issue #31: every constant of this repository depends only on propext, Classical.choice and
+      # Quot.sound, through Mathlib, Stacks and the copied files (no sorryAx, no added axiom).
+      - name: Check axioms
+        run: >-
+          lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs
+          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP
+
       # Only main writes the store, after a green build. The new entry is written next to the old
       # one and swapped in under a lock, so a job reading the store never sees a half-written copy.
       - name: Save .lake to the machine
