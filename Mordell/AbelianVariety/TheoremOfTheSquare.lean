@@ -1,3 +1,7 @@
+-- Copied from AxiomMath/Mordell at 82a30cb (Apache-2.0, see NOTICE and Mordell/LICENSE), and
+-- modified in GrothendieckArchivesProofs (2026-11-21): `inv_pullbackObj_left` and
+-- `phiMap_translate_eq_sub` omit the unused section instance `[IsAbelianVariety k A]` (the
+-- linter's warning is an error here); nothing else changes.
 module
 public import Mordell.AbelianVariety.PhiMap
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianVariety.ZPowPullback
@@ -265,6 +269,7 @@ variable {K : Type u} [Field K] [Algebra k K]
 
 local notation "π" => Spec.map (CommRingCat.ofHom (algebraMap k K))
 
+omit [IsAbelianVariety k A] in
 /-- The inversion of the base change `A_K` is, on underlying schemes, the map
 `(x, t) ↦ (x⁻¹, t)` of `A ⊗ Spec K`. -/
 private lemma inv_pullbackObj_left :
@@ -349,6 +354,7 @@ variable {k : Type u} [Field k]
 
 variable (A : Over (Spec (CommRingCat.of k))) [GrpObj A] [IsAbelianVariety k A]
 
+omit [IsAbelianVariety k A] in
 /-- The map `φ` of a translate: `φ_{τ_a^* c}(b) = φ_c(b + a) - φ_c(a)`, with the `k`-point `a`
 read as a `K`-point. Only the associativity of the group law enters. -/
 private lemma phiMap_translate_eq_sub (c : Stacks.Picard.ofScheme A.left)
