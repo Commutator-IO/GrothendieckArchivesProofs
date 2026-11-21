@@ -1,7 +1,7 @@
 module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.CohomologicalDimension.TorsionVanishingBound
-public import Mathlib.Algebra.Order.Ring.IsFormallyReal
+public import Mathlib.Algebra.Ring.IsFormallyReal
 
 @[expose] public section
 
@@ -49,7 +49,7 @@ noncomputable def cdPrime (F : Type u) [CommRing F] (r : ℕ) : WithBot ℕ∞ :
 
 /-- `F(√−1)`: the quotient `F[X] ⧸ (X² + 1)`, a field when `−1` is not a square in `F`. -/
 abbrev adjoinSqrtNegOne (F : Type u) [Field F] : Type u :=
-  AdjoinRoot (X ^ 2 + 1 : F[X])
+  AdjoinRoot (Polynomial.X ^ 2 + 1 : F[X])
 
 /-- The second exception of page 22: some point `x` of `Spec A` has an orderable residue field
 `κ(x)` with `cd₂ κ(x)(√−1)` finite. -/

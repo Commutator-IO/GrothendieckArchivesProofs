@@ -16,6 +16,7 @@ public import OpenProblems.Buffalo
 -- with the reasons in the module docstring where they cannot.
 public import OpenProblems.Findings.Folder16
 public import OpenProblems.Findings.Folder29
+public import OpenProblems.Findings.Folder31
 public import OpenProblems.Findings.Folder32
 public import OpenProblems.Findings.Folder34
 public import OpenProblems.Findings.Folder41
