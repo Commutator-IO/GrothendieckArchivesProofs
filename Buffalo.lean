@@ -54,6 +54,7 @@ import Buffalo.AG.Part08boards
 import Buffalo.AG.Part08c
 import Buffalo.AG.Part09
 import Buffalo.AG.Part09AmpleStacks
+import Buffalo.AG.Part09EffectiveDescentStacks
 import Buffalo.AG.Part09a
 import Buffalo.AG.Part09b
 import Buffalo.AG.Part09boards
