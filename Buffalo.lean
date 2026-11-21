@@ -42,6 +42,7 @@ public import Buffalo.AG.Part06d
 public import Buffalo.AG.Part06dStacks
 public import Buffalo.AG.Part07
 public import Buffalo.AG.Part07AmpleMordell
+public import Buffalo.AG.Part07AmpleStacks
 public import Buffalo.AG.Part07Stacks
 public import Buffalo.AG.Part07a
 public import Buffalo.AG.Part07aStacks
@@ -55,6 +56,7 @@ public import Buffalo.AG.Part08b
 public import Buffalo.AG.Part08boards
 public import Buffalo.AG.Part08c
 public import Buffalo.AG.Part09
+public import Buffalo.AG.Part09AmpleStacks
 public import Buffalo.AG.Part09EffectiveDescentStacks
 public import Buffalo.AG.Part09a
 public import Buffalo.AG.Part09b
@@ -117,5 +119,4 @@ public import Buffalo.Topos.Part07a
 public import Buffalo.Topos.Part07b
 public import Buffalo.Topos.Part07boards
 public import Buffalo.Topos.Part07c
-
 @[expose] public section

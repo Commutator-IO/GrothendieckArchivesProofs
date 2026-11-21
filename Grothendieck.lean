@@ -83,6 +83,7 @@ public import Grothendieck.Folder53
 public import Grothendieck.Folder55
 public import Grothendieck.Folder55LemmaB
 public import Grothendieck.Folder58DepthComparison
+public import Grothendieck.Folder58LefPermanence
 public import Grothendieck.Folder62
 public import Grothendieck.Folder63
 public import Grothendieck.Folder64
