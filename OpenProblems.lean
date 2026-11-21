@@ -23,6 +23,7 @@ public import OpenProblems.Findings.Folder45
 public import OpenProblems.Findings.Folder47
 public import OpenProblems.Findings.Folder57
 public import OpenProblems.Findings.Folder91
+public import OpenProblems.Findings.Folder91Res
 public import OpenProblems.Findings.Folder94
 public import OpenProblems.Findings.Folder100
 public import OpenProblems.Findings.Folder100Formal
