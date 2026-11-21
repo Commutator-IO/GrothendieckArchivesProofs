@@ -2,6 +2,8 @@ module
 
 public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CoherentIffFinitePresentation
 public import StacksFrontier.AlgebraicGeometry.CoherenceCriteria.Basic
+public import StacksFrontier.AlgebraicGeometry.Modules.FiniteTypePullbackScheme
+public import StacksFrontier.AlgebraicGeometry.Modules.QuasicoherentPullbackScheme
 
 @[expose] public section
 
@@ -109,5 +111,26 @@ theorem isCoherent_iff_of_isLocallyNoetherian_22510 [IsLocallyNoetherian X] (F :
     ⟨Stacks.AlgebraicGeometry.CoherenceCriteria.isCoherent_of_isCoherent',
       Stacks.AlgebraicGeometry.CoherenceCriteria.isCoherent'_of_isCoherent⟩
   exact ⟨e.trans (h.out 1 2), e.trans (h.out 1 3)⟩
+
+/-- Oqhr-Gt66es-22510 (6:15:10) (on the open subscheme) Finite type restricts to an open
+subscheme: if `M` is of finite type, so is `M|_U = M.restrict U.ι` on the scheme `U` (Stacks 01B6,
+through `Scheme.Modules.restrictFunctorIsoPullback`). -/
+theorem isFiniteType_restrict_22510 (M : X.Modules) [M.IsFiniteType] (U : X.Opens) :
+    (M.restrict U.ι).IsFiniteType :=
+  Stacks.SheafOfModules.isFiniteType_of_iso
+    ((Scheme.Modules.restrictFunctorIsoPullback U.ι).symm.app M)
+
+/-- Oqhr-Gt66es-22510 (6:15:10) (on the open subscheme) On a locally noetherian scheme, a coherent
+module restricts to a coherent module on every open subscheme `U`, for `M|_U = M.restrict U.ι`
+on the scheme `U`. -/
+theorem isCoherent_restrict_22510 [IsLocallyNoetherian X] (M : X.Modules)
+    (hM : Stacks.SheafOfModules.IsCoherent M) (U : X.Opens) :
+    Stacks.SheafOfModules.IsCoherent (M.restrict U.ι) := by
+  obtain ⟨hq, hf⟩ := (isCoherent_iff_of_isLocallyNoetherian_22510 M).1.1 hM
+  have : (M.restrict U.ι).IsQuasicoherent :=
+    inferInstanceAs ((Scheme.Modules.restrictFunctor U.ι).obj M).IsQuasicoherent
+  have : (M.restrict U.ι).IsFiniteType := isFiniteType_restrict_22510 M U
+  exact (isCoherent_iff_of_isLocallyNoetherian_22510 (X := U) (M.restrict U.ι)).1.2
+    ⟨inferInstance, inferInstance⟩
 
 end Buffalo.AG.Part07
