@@ -1,3 +1,7 @@
+-- Copied from AxiomMath/Mordell at 82a30cb (Apache-2.0, see NOTICE and Mordell/LICENSE), and
+-- modified in GrothendieckArchivesProofs (2026-11-21): the redundant `@[expose]` on the abbrev
+-- `Faltings.P` is removed (abbrevs are exposed by default, and the warning is an error here);
+-- nothing else changes.
 module
 
 public import Mathlib
@@ -35,7 +39,7 @@ variable {k K : Type u} [Field k] [Field K] [Algebra k K]
 local notation "π" => Spec.map (CommRingCat.ofHom (algebraMap k K))
 
 /-- A `T`-point of `A_K` as a `k`-morphism `T ⟶ A`. -/
-@[expose] public noncomputable abbrev P (A : Over (Spec (.of k))) {T : Over (Spec (.of K))}
+public noncomputable abbrev P (A : Over (Spec (.of k))) {T : Over (Spec (.of K))}
     (u : T ⟶ (Over.pullback π).obj A) : (Over.map π).obj T ⟶ A :=
   ((Over.mapPullbackAdj π).homEquiv T A).symm u
 

@@ -10,7 +10,7 @@ licensed under the Apache License, Version 2.0.
    Stacks Project (GFDL) is reproduced here.
 
 2. Mordell, https://github.com/AxiomMath/Mordell
-   The files below are copied unchanged from commit 82a30cb7857f6e3cfdb1be91f5533c0ccb57d493,
+   The files below are copied from commit 82a30cb7857f6e3cfdb1be91f5533c0ccb57d493,
    at the same paths, under Mordell/. They carry no per-file header in the source; their licence
    is Mordell's LICENSE, copied as Mordell/LICENSE. They are built here against Stacks f56a316
    instead of Mordell's pin c496df0.
@@ -24,7 +24,6 @@ licensed under the Apache License, Version 2.0.
    Mordell/AbelianVariety/Rigidity.lean
    Mordell/AbelianVariety/TheoremOfTheSquare.lean
    Mordell/AlgebraicGeometry/Ample.lean
-   Mordell/AlgebraicGeometry/GroupScheme/BaseChangePoints.lean
    Mordell/AlgebraicGeometry/PicardPullback.lean
    Mordell/AlgebraicGeometry/ProjectiveSpace/Embedding.lean
    Mordell/AlgebraicGeometry/ProjectiveSpace/MorphismOfSections.lean
@@ -33,8 +32,13 @@ licensed under the Apache License, Version 2.0.
    Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Product.lean
    Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/ProductEmbedding.lean
    Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/ProductPullback.lean
-   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Pullback.lean
    Mordell/AlgebraicGeometry/VeryAmple/Twist.lean
+
+   Modified (a comment at the top of the file says how):
+   Mordell/AlgebraicGeometry/GroupScheme/BaseChangePoints.lean
+     the redundant @[expose] on the abbrev Faltings.P is removed.
+   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Pullback.lean
+     one haveI of a proposition becomes have.
 
    Mordell.lean (the root importing them) is new to this repository.
 
