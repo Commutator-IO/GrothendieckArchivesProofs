@@ -37,3 +37,28 @@ licensed under the Apache License, Version 2.0.
    Mordell/AlgebraicGeometry/VeryAmple/Twist.lean
 
    Mordell.lean (the root importing them) is new to this repository.
+
+3. MMP, https://github.com/AxiomMath/MMP
+   The files below are copied from commit 1f9ade367087ec711a2ce1382bad279a5a0284c3, at the same
+   paths, under MMP/. They carry no per-file header in the source; their licence is MMP's
+   LICENSE, copied as MMP/LICENSE. They are built here against Stacks f56a316 instead of MMP's
+   pin c496df0.
+
+   Copied unchanged:
+   MMP/Attr.lean
+   MMP/AlgebraicGeometry/Divisor/Basic.lean
+   MMP/AlgebraicGeometry/Divisor/DivisorialSheaf.lean
+   MMP/AlgebraicGeometry/Divisor/Principal.lean
+   MMP/AlgebraicGeometry/Intersection/CurveDegreeAdditive.lean
+   MMP/AlgebraicGeometry/Intersection/InvertibleSheafCurveDegree.lean
+   MMP/AlgebraicGeometry/Intersection/Nef.lean
+   MMP/AlgebraicGeometry/Intersection/QCartierCurveNumber.lean
+   MMP/AlgebraicGeometry/Positivity/RelativelyAmple.lean
+
+   Modified (a comment at the top of the file says how):
+   MMP/AlgebraicGeometry/Divisor/DivisorialSheafTensor.lean
+     ported to Stacks f56a316, where the sheafification behind sheafTensor is sealed: Mathlib's
+     PresheafOfModules.sheafificationAdjunction is replaced by
+     Stacks.SheafOfModules.Tensor.sheafificationAdjunction.
+
+   MMP.lean (the root importing them) is new to this repository.

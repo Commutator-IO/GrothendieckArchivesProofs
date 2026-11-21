@@ -3,5 +3,6 @@
 -- stated as propositions.
 import Grothendieck
 import Mordell
+import MMP
 import Buffalo
 import OpenProblems
