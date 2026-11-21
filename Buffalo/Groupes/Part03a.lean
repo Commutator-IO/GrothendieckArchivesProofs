@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03 (a): étale schemes, `π₀`, pro-étale schemes

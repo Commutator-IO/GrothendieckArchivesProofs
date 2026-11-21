@@ -1,9 +1,13 @@
-import Mathlib.CategoryTheory.Monad.Monadicity
-import Mathlib.CategoryTheory.Monad.Comonadicity
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Mathlib.CategoryTheory.Presentable.StrongGenerator
-import Mathlib.CategoryTheory.Presentable.Dense
-import Mathlib.CategoryTheory.Limits.Indization.Category
+module
+
+public import Mathlib.CategoryTheory.Monad.Monadicity
+public import Mathlib.CategoryTheory.Monad.Comonadicity
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Mathlib.CategoryTheory.Presentable.StrongGenerator
+public import Mathlib.CategoryTheory.Presentable.Dense
+public import Mathlib.CategoryTheory.Limits.Indization.Category
+
+@[expose] public section
 
 /-!
 # Folder 161-2: Lawvere theories, monadicity, and locally presentable categories

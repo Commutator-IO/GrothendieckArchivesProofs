@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part02a
+module
+
+public import Buffalo.Topos.Part02a
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2c: sober spaces and fibre functors (18 and 25 May 1973)

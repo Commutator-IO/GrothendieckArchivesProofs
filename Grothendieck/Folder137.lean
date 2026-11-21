@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 137, pages 74–83: polynomial categories and `⊗`-pd-categories

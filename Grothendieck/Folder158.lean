@@ -1,14 +1,18 @@
-import Mathlib.Algebra.Group.End
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Set.Card
-import Mathlib.Tactic.Group
-import Mathlib.Algebra.Group.ULift
-import Mathlib.Algebra.Group.TypeTags.Basic
-import Mathlib.CategoryTheory.FinCategory.Basic
-import Mathlib.CategoryTheory.Filtered.Basic
-import Mathlib.CategoryTheory.Endomorphism
-import Mathlib.Data.Fintype.Pigeonhole
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Set.Card
+public import Mathlib.Tactic.Group
+public import Mathlib.Algebra.Group.ULift
+public import Mathlib.Algebra.Group.TypeTags.Basic
+public import Mathlib.CategoryTheory.FinCategory.Basic
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Mathlib.CategoryTheory.Endomorphism
+public import Mathlib.Data.Fintype.Pigeonhole
+public import Mathlib.SetTheory.Cardinal.Finite
+
+@[expose] public section
 
 /-!
 # Folder 158, Proposition 1 (§5.1)

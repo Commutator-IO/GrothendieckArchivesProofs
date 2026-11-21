@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part03c
+module
+
+public import Buffalo.Topos.Part03c
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3: the blackboards

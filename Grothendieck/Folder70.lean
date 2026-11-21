@@ -1,19 +1,23 @@
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Fintype.Sum
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.LinearAlgebra.Matrix.Nondegenerate
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.GroupTheory.FreeGroup.Basic
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Algebra.Group.Subgroup.Pointwise
-import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
-import Mathlib.FieldTheory.Relrank
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
+module
+
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Fintype.Sum
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum.Prime
+public import Mathlib.LinearAlgebra.Matrix.Nondegenerate
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.GroupTheory.FreeGroup.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Algebra.Group.Subgroup.Pointwise
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
+public import Mathlib.FieldTheory.Relrank
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
+
+@[expose] public section
 
 /-!
 # Folder 70, pages 74–78 and 89–102: the icosahedron over `ℤ[α]` and modulo 5

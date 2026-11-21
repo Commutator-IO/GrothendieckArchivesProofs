@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 40, pages 26–27: regularity is not stable under the group law of `H¹(A, α_p)`

@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
-import Mathlib.Topology.Sober
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
+public import Mathlib.Topology.Sober
+
+@[expose] public section
 
 /-!
 # Folder 41, Proposition 1 (page 11): continuity of the generic section and openness

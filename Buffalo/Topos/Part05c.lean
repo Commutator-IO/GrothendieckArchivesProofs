@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part05a
+module
+
+public import Buffalo.Topos.Part05a
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5c: exactness properties, envelopes, categories of fractions (2 July 1973)

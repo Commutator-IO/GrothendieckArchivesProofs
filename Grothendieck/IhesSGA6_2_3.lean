@@ -1,9 +1,13 @@
-import Mathlib.CategoryTheory.Triangulated.Functor
-import Mathlib.Algebra.Group.Subgroup.Lattice
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.Tactic.Abel
-import Mathlib.LinearAlgebra.Dimension.RankNullity
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+module
+
+public import Mathlib.CategoryTheory.Triangulated.Functor
+public import Mathlib.Algebra.Group.Subgroup.Lattice
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.Tactic.Abel
+public import Mathlib.LinearAlgebra.Dimension.RankNullity
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+
+@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, views 1–3: the group `K` of a triangulated category, and the Euler identity

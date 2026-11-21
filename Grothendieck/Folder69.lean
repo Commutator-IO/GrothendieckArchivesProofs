@@ -1,9 +1,13 @@
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.GroupTheory.SpecificGroups.Quaternion
+module
+
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.GroupTheory.SpecificGroups.Quaternion
+
+@[expose] public section
 
 /-!
 # Folder 69, pages 25–26: the automorphisms of the 27-line graph fixing a triangle

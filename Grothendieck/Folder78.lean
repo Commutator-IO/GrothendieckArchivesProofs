@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 78, pages 109–113: the closure criterion `u_α^n = id ⇔ F_n(α) = 0`

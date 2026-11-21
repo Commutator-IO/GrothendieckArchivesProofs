@@ -1,12 +1,16 @@
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.GroupTheory.GroupAction.Defs
-import Mathlib.Algebra.Group.End
-import Mathlib.Algebra.GCDMonoid.Finset
-import Mathlib.Algebra.GCDMonoid.Nat
-import Mathlib.Logic.Equiv.Fin.Basic
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Group
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.GroupTheory.GroupAction.Defs
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Algebra.GCDMonoid.Finset
+public import Mathlib.Algebra.GCDMonoid.Nat
+public import Mathlib.Logic.Equiv.Fin.Basic
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.Group
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 /-!
 # Folder 88: the order `2ν` (pages 6–8) and the trichotomy of (6) (page 14)

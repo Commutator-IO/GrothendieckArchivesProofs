@@ -1,9 +1,13 @@
-import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
-import Mathlib.RingTheory.Noetherian.Nilpotent
-import Mathlib.RingTheory.MvPowerSeries.Equiv
-import Mathlib.RingTheory.AdicCompletion.Completeness
-import Mathlib.RingTheory.Henselian
-import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
+module
+
+public import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
+public import Mathlib.RingTheory.Noetherian.Nilpotent
+public import Mathlib.RingTheory.MvPowerSeries.Equiv
+public import Mathlib.RingTheory.AdicCompletion.Completeness
+public import Mathlib.RingTheory.Henselian
+public import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
+
+@[expose] public section
 
 /-!
 # Folder 39, the formal preparation theorem (pages 18–19): the adic and discrete cases

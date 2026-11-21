@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 46, pages 90–92: lifting `H¹(Γ, A*)` through `A → A/𝔪A` when `p ∤ |Γ|`

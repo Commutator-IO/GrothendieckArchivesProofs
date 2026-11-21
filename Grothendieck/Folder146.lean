@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 146, page 70: the trivialising exponents of `L_i` and `L` on `M_{0,n}`, `n = 4, 5, 6`
