@@ -1,6 +1,10 @@
-import Buffalo.AG.Part06d
-import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProduct
-import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedBaseChange
+module
+
+public import Buffalo.AG.Part06d
+public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProduct
+public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedBaseChange
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (d): perfect fields and geometric reducedness, completed

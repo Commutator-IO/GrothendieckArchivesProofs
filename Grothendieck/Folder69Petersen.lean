@@ -1,4 +1,8 @@
-import Grothendieck.Folder69
+module
+
+public import Grothendieck.Folder69
+
+@[expose] public section
 
 /-!
 # Folder 69, pages 77 and 81: the « dodécaèdre gauche » of page 81

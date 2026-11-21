@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 4a: coverings, `f_!` and `f^!`, sites and sheaves on a site

@@ -1,4 +1,8 @@
-import Buffalo.Groupes.Part02b
+module
+
+public import Buffalo.Groupes.Part02b
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (c): diagonalizable groups, constant groups, Cartier duality

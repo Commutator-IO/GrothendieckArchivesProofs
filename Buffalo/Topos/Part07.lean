@@ -1,7 +1,11 @@
-import Buffalo.Topos.Part07a
-import Buffalo.Topos.Part07b
-import Buffalo.Topos.Part07c
-import Buffalo.Topos.Part07boards
+module
+
+public import Buffalo.Topos.Part07a
+public import Buffalo.Topos.Part07b
+public import Buffalo.Topos.Part07c
+public import Buffalo.Topos.Part07boards
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7 (12 July 1973)

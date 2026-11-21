@@ -1,5 +1,9 @@
-import Mathlib.GroupTheory.Perm.Cycle.Basic
-import Mathlib.Logic.Relation
+module
+
+public import Mathlib.GroupTheory.Perm.Cycle.Basic
+public import Mathlib.Logic.Relation
+
+@[expose] public section
 
 /-!
 # Folder 152, the dictionary of pages 7 and 9 (partial)

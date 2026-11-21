@@ -1,14 +1,18 @@
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Tactic.Group
-import Mathlib.Tactic.FinCases
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Tactic.Abel
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Tactic.Group
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Tactic.Abel
+
+@[expose] public section
 
 /-!
 # Folder 74: generalised cubic complexes around a triangle (pages 92–103, 116)

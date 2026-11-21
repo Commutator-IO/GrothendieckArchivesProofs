@@ -1,5 +1,9 @@
-import Mathlib
-import Grothendieck.Upstream.DerivationLeibnizProd
+module
+
+public import Mathlib
+public import Grothendieck.Upstream.DerivationLeibnizProd
+
+@[expose] public section
 
 /-!
 # Folder 2, pages 9 and 13: a nonzero class with trivial total Chern class

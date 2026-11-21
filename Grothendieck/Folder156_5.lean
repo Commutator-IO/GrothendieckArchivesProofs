@@ -1,6 +1,10 @@
-import Mathlib.Data.Set.Lattice.Indexed
-import Mathlib.Logic.Relation
-import Mathlib.Data.Fintype.Powerset
+module
+
+public import Mathlib.Data.Set.Lattice.Indexed
+public import Mathlib.Logic.Relation
+public import Mathlib.Data.Fintype.Powerset
+
+@[expose] public section
 
 /-!
 # Folder 156-5: the set-theoretic model of the axioms, and the gluing of ultra-topologies

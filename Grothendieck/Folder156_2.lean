@@ -1,9 +1,13 @@
-import Mathlib.Order.Filter.Germ.Basic
-import Mathlib.Order.Filter.Ultrafilter.Basic
-import Mathlib.Topology.Sets.Closeds
-import Mathlib.Topology.NhdsSet
-import Mathlib.Data.ZMod.Defs
-import Mathlib.Algebra.Ring.Subring.Basic
+module
+
+public import Mathlib.Order.Filter.Germ.Basic
+public import Mathlib.Order.Filter.Ultrafilter.Basic
+public import Mathlib.Topology.Sets.Closeds
+public import Mathlib.Topology.NhdsSet
+public import Mathlib.Data.ZMod.Defs
+public import Mathlib.Algebra.Ring.Subring.Basic
+
+@[expose] public section
 
 /-!
 # Folder 156-2, pages 14–15: the rives of a closed subset and the map `Riv(A, X) → Comp(Ã)`

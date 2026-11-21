@@ -1,0 +1,62 @@
+# Fallback on a GitHub-hosted runner (4 cores, 16 GB, 6 h limit), started by hand only, for when
+# the self-hosted runner of `build.yml` is down (issue #34).
+name: Build (GitHub-hosted fallback)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+      # A cold build of the Stacks closure (over 11,000 modules) has exhausted the runner's memory,
+      # and the runner then dies without saving anything. Extra swap keeps it alive.
+      - name: Add swap
+        run: |
+          sudo swapoff -a || true
+          sudo fallocate -l 12G /swapfile-build
+          sudo chmod 600 /swapfile-build
+          sudo mkswap /swapfile-build
+          sudo swapon /swapfile-build
+          free -h
+      # The compiled Stacks modules have no public cache: keep `.lake` between runs ourselves, and
+      # save it even when the build fails, so that a failing run does not throw them away.
+      - name: Restore .lake
+        uses: actions/cache/restore@v4
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-
+      # Installs elan and the toolchain of lean-toolchain and fetches Mathlib's cache, without
+      # building.
+      - uses: leanprover/lean-action@v1
+        with:
+          use-github-cache: false
+          build: false
+      # A first, time-boxed build followed by a save of `.lake`: if the runner dies later, the next
+      # run starts from this checkpoint instead of from nothing.
+      - name: Build (checkpoint)
+        run: timeout 80m lake build --log-level=warning || true
+      - name: Save .lake (checkpoint)
+        uses: actions/cache/save@v4
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.run_id }}-${{ github.run_attempt }}-checkpoint
+      - name: Build
+        run: lake build --log-level=warning
+      - name: Check axioms
+        run: >-
+          lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs
+          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP
+      - name: Save .lake
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.run_id }}-${{ github.run_attempt }}

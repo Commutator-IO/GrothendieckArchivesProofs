@@ -1,7 +1,11 @@
-import Mathlib.Topology.Sets.Opens
-import Mathlib.Topology.LocallyClosed
-import Mathlib.Topology.Sober
-import Grothendieck.Upstream.QuasiSoberPiCoreCompact
+module
+
+public import Mathlib.Topology.Sets.Opens
+public import Mathlib.Topology.LocallyClosed
+public import Mathlib.Topology.Sober
+public import Grothendieck.Upstream.QuasiSoberPiCoreCompact
+
+@[expose] public section
 
 /-!
 # Folder 161-3: the topos of a product, the converse on pages 10–11

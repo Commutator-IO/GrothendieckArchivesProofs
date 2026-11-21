@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part03a
+module
+
+public import Buffalo.Topos.Part03a
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3b: morphisms of topoi, presheaf topoi, Giraud (1973)

@@ -1,16 +1,20 @@
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.Algebra.CharP.Lemmas
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.RingTheory.Polynomial.UniqueFactorization
-import Mathlib.RingTheory.Polynomial.RationalRoot
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.Polynomial.UniqueFactorization
+public import Mathlib.RingTheory.Polynomial.RationalRoot
+
+@[expose] public section
 
 /-!
 # Folder 160, pages 7–9 and 13–15: the Moore determinant and the Dickson coefficients

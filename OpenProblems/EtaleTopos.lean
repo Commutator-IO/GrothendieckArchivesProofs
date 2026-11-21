@@ -1,5 +1,9 @@
-import Mathlib
-import StacksFrontier.AlgebraicGeometry.EtaleCohomology.SpecializationStalkSets
+module
+
+public import Mathlib
+public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.SpecializationStalkSets
+
+@[expose] public section
 
 /-!
 # Does the étale topos remember the scheme? (p:etrec), stated as a proposition

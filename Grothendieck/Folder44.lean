@@ -1,5 +1,9 @@
-import Mathlib
-import Grothendieck.Upstream.RatSmulMemIndivisible
+module
+
+public import Mathlib
+public import Grothendieck.Upstream.RatSmulMemIndivisible
+
+@[expose] public section
 
 /-!
 # Folder 44, page 4: integrality of the Cartan numbers from the axioms

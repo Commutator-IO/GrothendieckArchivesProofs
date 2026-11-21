@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part01b
+module
+
+public import Buffalo.Topos.Part01b
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1d: algebraic structures on objects of a category (11 May 1973)

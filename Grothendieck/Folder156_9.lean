@@ -1,6 +1,10 @@
-import Mathlib.Order.Lattice
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Fin.Basic
+module
+
+public import Mathlib.Order.Lattice
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Data.Fin.Basic
+
+@[expose] public section
 
 /-!
 # Folder 156-9, pages 107–110: transposes, the orthomodular law, and two finite spatios

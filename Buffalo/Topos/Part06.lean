@@ -1,7 +1,11 @@
-import Buffalo.Topos.Part06a
-import Buffalo.Topos.Part06b
-import Buffalo.Topos.Part06c
-import Buffalo.Topos.Part06boards
+module
+
+public import Buffalo.Topos.Part06a
+public import Buffalo.Topos.Part06b
+public import Buffalo.Topos.Part06c
+public import Buffalo.Topos.Part06boards
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 6 (10–12 July 1973)

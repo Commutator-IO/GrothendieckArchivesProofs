@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (d): diagonalizable groups, Hopf algebras, comodules

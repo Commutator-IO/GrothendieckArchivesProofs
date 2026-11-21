@@ -1,30 +1,34 @@
-import Mathlib.Algebra.Polynomial.HasseDeriv
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Data.Nat.Choose.Lucas
-import Mathlib.Algebra.CharP.Basic
-import Mathlib.NumberTheory.Wilson
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Data.Nat.Prime.Factorial
-import Mathlib.Algebra.Homology.DerivedCategory.Basic
-import Mathlib.Algebra.Homology.HomotopyCategory.HomComplex
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.Algebra.Torsor.Defs
-import Mathlib.RingTheory.Derivation.Basic
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Polynomial.Degree.Lemmas
-import Mathlib.Algebra.Polynomial.Degree.SmallDegree
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Data.Int.GCD
-import Mathlib.Data.Nat.Choose.Dvd
-import Grothendieck.Upstream.HasseDerivXPowMul
-import Grothendieck.Upstream.PolynomialIsCoprimeX
-import Grothendieck.Upstream.DerivationLieMulLeft
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.RingTheory.Localization.Away.Basic
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.Algebraic.Defs
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+module
+
+public import Mathlib.Algebra.Polynomial.HasseDeriv
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Data.Nat.Choose.Lucas
+public import Mathlib.Algebra.CharP.Basic
+public import Mathlib.NumberTheory.Wilson
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.Data.Nat.Prime.Factorial
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
+public import Mathlib.Algebra.Homology.HomotopyCategory.HomComplex
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.Algebra.Torsor.Defs
+public import Mathlib.RingTheory.Derivation.Basic
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Polynomial.Degree.Lemmas
+public import Mathlib.Algebra.Polynomial.Degree.SmallDegree
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Data.Int.GCD
+public import Mathlib.Data.Nat.Choose.Dvd
+public import Grothendieck.Upstream.HasseDerivXPowMul
+public import Grothendieck.Upstream.PolynomialIsCoprimeX
+public import Grothendieck.Upstream.DerivationLieMulLeft
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+
+@[expose] public section
 
 /-!
 # Folder 93, pages 72, 115–123: the Schwarzian difference with divided derivatives

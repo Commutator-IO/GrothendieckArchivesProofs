@@ -1,4 +1,8 @@
-import Grothendieck.Folder80Maps3
+module
+
+public import Grothendieck.Folder80Maps3
+
+@[expose] public section
 
 /-!
 # Folder 80, pages 39–54: the sign algebra behind the three-pencil case

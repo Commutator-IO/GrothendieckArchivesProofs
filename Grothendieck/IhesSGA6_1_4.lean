@@ -1,6 +1,10 @@
-import Grothendieck.IhesSGA6_1_5
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Grothendieck.IhesSGA6_1_5
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_1_4 (with FG_IL_5_SGA6_1_3): pseudo-coherence relative to a class `C₀`

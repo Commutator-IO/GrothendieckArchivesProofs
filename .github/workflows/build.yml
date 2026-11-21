@@ -1,59 +1,135 @@
 name: Build
 
+# Runs on the self-hosted runner of issue #34 (Azure, 32 cores, 128 GB). The compiled `.lake` is
+# kept on the machine, one copy per version of `lake-manifest.json` + `lean-toolchain`, under
+# $LEAN_CI_STORE (default /var/lib/lean-ci/store, on the same XFS disk as the job workspaces in
+# /var/lib/lean-ci/work, so the copies below are reflinks). Every job works on its own copy, so concurrent jobs
+# never share a `.lake`; only a successful build of `main` writes the store back. Pull requests,
+# including those from forks, only read it. The GitHub-hosted build is kept in
+# `build-hosted.yml`, started by hand.
+#
+# The runner VM is on demand: it is deallocated when idle (it does that itself after 20 minutes
+# without a job) and the `start-runner` job below starts it through OIDC, with an Azure role that
+# can only read and start that one VM. The VM, its disk and both roles are Terraform in
+# Commutator-IO/ai-infra (stacks/lean-ci); the repository variables AZURE_CLIENT_ID,
+# AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID, LEAN_CI_RESOURCE_GROUP and LEAN_CI_VM come from
+# `terraform output github_variables` there. None of them is a secret.
+
 on:
   push:
     branches: [main]
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  build:
+  # Pull requests from forks receive no OIDC token, so they skip this job; a maintainer approves
+  # the run and starts the VM (`az vm start`) if it is down. A `workflow_dispatch` on a branch
+  # other than main cannot start it either: the Azure identity trusts main and pull requests only.
+  start-runner:
+    if: >-
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      # A Spot VM can fail to start when Azure has no spare capacity of that size; the error says
+      # so, and `build-hosted.yml` is the fallback.
+      - name: Start the runner VM
+        env:
+          RG: ${{ vars.LEAN_CI_RESOURCE_GROUP }}
+          VM: ${{ vars.LEAN_CI_VM }}
+        run: |
+          state=$(az vm get-instance-view -g "$RG" -n "$VM" \
+            --query "instanceView.statuses[?starts_with(code,'PowerState')].code | [0]" -o tsv)
+          echo "Power state: $state"
+          if [ "$state" != "PowerState/running" ]; then
+            az vm start -g "$RG" -n "$VM"
+            echo "Started; the runner reconnects to GitHub within a minute or two."
+          fi
+
+  build:
+    needs: start-runner
+    # Also when start-runner was skipped (fork pull request): the job then waits for the runner.
+    if: ${{ !cancelled() && needs.start-runner.result != 'failure' }}
+    runs-on: [self-hosted, linux, x64, lean]
+    timeout-minutes: 240
+    env:
+      LEAN_CI_STORE: ${{ vars.LEAN_CI_STORE || '/var/lib/lean-ci/store' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Free disk space
+
+      - name: Install elan
         run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
-          df -h /
-      # A cold build of the Stacks closure (over 11,000 modules) has exhausted the runner's memory,
-      # and the runner then dies without saving anything. Extra swap keeps it alive.
-      - name: Add swap
+          if [ ! -x "$HOME/.elan/bin/lake" ]; then
+            curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      # The store entry for these pins if there is one, otherwise the most recent entry (after a
+      # Stacks or Mathlib bump, most of the old build is still valid and Lake rebuilds the rest).
+      - name: Restore .lake from the machine
+        env:
+          PINS: ${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}
         run: |
-          sudo swapoff -a || true
-          sudo fallocate -l 12G /swapfile-build
-          sudo chmod 600 /swapfile-build
-          sudo mkswap /swapfile-build
-          sudo swapon /swapfile-build
-          free -h
-      # The compiled Stacks modules have no public cache: keep `.lake` between runs ourselves, and
-      # save it even when the build fails, so that a failing run does not throw them away.
-      - name: Restore .lake
-        uses: actions/cache/restore@v4
-        with:
-          path: .lake
-          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-
-      # Installs elan and the toolchain of lean-toolchain and fetches Mathlib's cache, without
-      # building.
-      - uses: leanprover/lean-action@v1
-        with:
-          use-github-cache: false
-          build: false
-      # A first, time-boxed build followed by a save of `.lake`: if the runner dies later, the next
-      # run starts from this checkpoint instead of from nothing.
-      - name: Build (checkpoint)
-        run: timeout 80m lake build --log-level=warning || true
-      - name: Save .lake (checkpoint)
-        uses: actions/cache/save@v4
-        with:
-          path: .lake
-          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.run_id }}-${{ github.run_attempt }}-checkpoint
+          echo "STORE_ENTRY=$LEAN_CI_STORE/$PINS" >> "$GITHUB_ENV"
+          source_dir="$LEAN_CI_STORE/$PINS"
+          if [ ! -d "$source_dir" ]; then
+            source_dir=$(ls -1td "$LEAN_CI_STORE"/*/ 2>/dev/null | head -n 1 || true)
+          fi
+          rm -rf .lake
+          if [ -n "$source_dir" ] && [ -d "$source_dir" ]; then
+            echo "Restoring .lake from $source_dir"
+            cp -a --reflink=auto "${source_dir%/}" .lake
+          else
+            echo "No stored .lake: cold build"
+          fi
+          df -h . | tail -1
+
+      - name: Fetch the Mathlib cache
+        run: lake exe cache get
+
       - name: Build
         run: lake build --log-level=warning
-      - name: Save .lake
+
+      # Issue #31: every constant of this repository depends only on propext, Classical.choice and
+      # Quot.sound, through Mathlib, Stacks and the copied files (no sorryAx, no added axiom).
+      - name: Check axioms
+        run: >-
+          lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs
+          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP
+
+      # Only main writes the store, after a green build. The new entry is written next to the old
+      # one and swapped in under a lock, so a job reading the store never sees a half-written copy.
+      - name: Save .lake to the machine
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p "$LEAN_CI_STORE"
+          (
+            flock 9
+            tmp="$STORE_ENTRY.tmp.$GITHUB_RUN_ID"
+            rm -rf "$tmp"
+            cp -a --reflink=auto .lake "$tmp"
+            rm -rf "$STORE_ENTRY.old"
+            if [ -d "$STORE_ENTRY" ]; then mv "$STORE_ENTRY" "$STORE_ENTRY.old"; fi
+            mv "$tmp" "$STORE_ENTRY"
+            rm -rf "$STORE_ENTRY.old"
+            # Keep the three most recent entries.
+            ls -1td "$LEAN_CI_STORE"/*/ | grep -v '\.tmp\.' | tail -n +4 | xargs -r rm -rf
+          ) 9>"$LEAN_CI_STORE/.lock"
+          du -sh "$STORE_ENTRY"
+
+      - name: Remove the job's .lake
         if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: .lake
-          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.run_id }}-${{ github.run_attempt }}
+        run: rm -rf .lake

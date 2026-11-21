@@ -1,4 +1,8 @@
-import Buffalo.Groupes.Part03
+module
+
+public import Buffalo.Groupes.Part03
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03: board items not covered by the index

@@ -1,6 +1,10 @@
-import Grothendieck.Folder100
-import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem
-import StacksFrontier.RingTheory.NoetherNormalization.Basic
+module
+
+public import Grothendieck.Folder100
+public import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem
+public import StacksFrontier.RingTheory.NoetherNormalization.Basic
+
+@[expose] public section
 
 /-!
 # Folder 100, page 38: the Corollary through Cohen's structure theorem

@@ -1,4 +1,8 @@
-import Grothendieck.Folder80Maps2
+module
+
+public import Grothendieck.Folder80Maps2
+
+@[expose] public section
 
 /-!
 # Pseudoline arrangements: the numbering lemma, stated as a proposition

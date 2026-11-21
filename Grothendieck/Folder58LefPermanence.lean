@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
-import StacksFrontier.AlgebraicGeometry.FormalGeometry.CompletionFunctor.FullyFaithfulComplete
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
+public import StacksFrontier.AlgebraicGeometry.FormalGeometry.CompletionFunctor.FullyFaithfulComplete
+
+@[expose] public section
 
 /-!
 # Folder 58, pages 33 and 41–42: the conditions `(LG)ₙ` and their permanence

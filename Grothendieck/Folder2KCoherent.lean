@@ -1,5 +1,9 @@
-import Mathlib
-import StacksFrontier.AlgebraicGeometry.Perfect.GrothendieckGroupCoherentNonzero
+module
+
+public import Mathlib
+public import StacksFrontier.AlgebraicGeometry.Perfect.GrothendieckGroupCoherentNonzero
+
+@[expose] public section
 
 /-!
 # Folder 2, page 13: the class of a structure sheaf in the `K`-group of coherent sheaves
