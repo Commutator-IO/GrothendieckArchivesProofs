@@ -6,6 +6,13 @@ name: Build
 # never share a `.lake`; only a successful build of `main` writes the store back. Pull requests,
 # including those from forks, only read it. The GitHub-hosted build is kept in
 # `build-hosted.yml`, started by hand.
+#
+# The runner VM is on demand: it is deallocated when idle (it does that itself after 20 minutes
+# without a job) and the `start-runner` job below starts it through OIDC, with an Azure role that
+# can only read and start that one VM. The VM, its disk and both roles are Terraform in
+# Commutator-IO/ai-infra (stacks/lean-ci); the repository variables AZURE_CLIENT_ID,
+# AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID, LEAN_CI_RESOURCE_GROUP and LEAN_CI_VM come from
+# `terraform output github_variables` there. None of them is a secret.
 
 on:
   push:
@@ -17,7 +24,43 @@ permissions:
   contents: read
 
 jobs:
+  # Pull requests from forks receive no OIDC token, so they skip this job; a maintainer approves
+  # the run and starts the VM (`az vm start`) if it is down. A `workflow_dispatch` on a branch
+  # other than main cannot start it either: the Azure identity trusts main and pull requests only.
+  start-runner:
+    if: >-
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      # A Spot VM can fail to start when Azure has no spare capacity of that size; the error says
+      # so, and `build-hosted.yml` is the fallback.
+      - name: Start the runner VM
+        env:
+          RG: ${{ vars.LEAN_CI_RESOURCE_GROUP }}
+          VM: ${{ vars.LEAN_CI_VM }}
+        run: |
+          state=$(az vm get-instance-view -g "$RG" -n "$VM" \
+            --query "instanceView.statuses[?starts_with(code,'PowerState')].code | [0]" -o tsv)
+          echo "Power state: $state"
+          if [ "$state" != "PowerState/running" ]; then
+            az vm start -g "$RG" -n "$VM"
+            echo "Started; the runner reconnects to GitHub within a minute or two."
+          fi
+
   build:
+    needs: start-runner
+    # Also when start-runner was skipped (fork pull request): the job then waits for the runner.
+    if: ${{ !cancelled() && needs.start-runner.result != 'failure' }}
     runs-on: [self-hosted, linux, x64, lean]
     timeout-minutes: 240
     env:
