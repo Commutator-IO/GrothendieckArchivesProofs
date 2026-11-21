@@ -2,7 +2,8 @@ name: Build
 
 # Runs on the self-hosted runner of issue #34 (Azure, 32 cores, 128 GB). The compiled `.lake` is
 # kept on the machine, one copy per version of `lake-manifest.json` + `lean-toolchain`, under
-# $LEAN_CI_STORE (default /var/lib/lean-ci). Every job works on its own copy, so concurrent jobs
+# $LEAN_CI_STORE (default /var/lib/lean-ci/store, on the same XFS disk as the job workspaces in
+# /var/lib/lean-ci/work, so the copies below are reflinks). Every job works on its own copy, so concurrent jobs
 # never share a `.lake`; only a successful build of `main` writes the store back. Pull requests,
 # including those from forks, only read it. The GitHub-hosted build is kept in
 # `build-hosted.yml`, started by hand.
@@ -64,7 +65,7 @@ jobs:
     runs-on: [self-hosted, linux, x64, lean]
     timeout-minutes: 240
     env:
-      LEAN_CI_STORE: ${{ vars.LEAN_CI_STORE || '/var/lib/lean-ci' }}
+      LEAN_CI_STORE: ${{ vars.LEAN_CI_STORE || '/var/lib/lean-ci/store' }}
     steps:
       - uses: actions/checkout@v4
 
