@@ -1,15 +1,19 @@
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Tactic.Group
-import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FinCases
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Spectrum.Maximal.Defs
-import Mathlib.RingTheory.Ideal.Nonunits
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Grothendieck.Upstream.SemilocalStableRange
+module
+
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.Tactic.Group
+public import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.FinCases
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Spectrum.Maximal.Defs
+public import Mathlib.RingTheory.Ideal.Nonunits
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Grothendieck.Upstream.SemilocalStableRange
+
+@[expose] public section
 
 /-!
 # Folder 79: coset graphs with homotheties, and the polyhedra `P_{M,i}` of `(Z/n)²`

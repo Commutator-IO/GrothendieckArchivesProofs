@@ -1,12 +1,16 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.Immersion
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Mathlib.CategoryTheory.Category.Cat.Colimit
-import Mathlib.CategoryTheory.Presentable.LocallyPresentable
-import Mathlib.CategoryTheory.Sites.Limits
-import Mathlib.CategoryTheory.Sites.Types
-import Mathlib.RingTheory.TensorProduct.Maps
-import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.Immersion
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Mathlib.CategoryTheory.Category.Cat.Colimit
+public import Mathlib.CategoryTheory.Presentable.LocallyPresentable
+public import Mathlib.CategoryTheory.Sites.Limits
+public import Mathlib.CategoryTheory.Sites.Types
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
+
+@[expose] public section
 
 /-!
 # The questions of the Buffalo lectures (1973), stated as propositions

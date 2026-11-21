@@ -1,8 +1,12 @@
-import Grothendieck.IhesSGA6_2_3
-import Mathlib.CategoryTheory.Localization.Triangulated
-import Mathlib.CategoryTheory.Triangulated.Subcategory
-import Mathlib.CategoryTheory.ObjectProperty.Retract
-import Mathlib.Algebra.Exact.Basic
+module
+
+public import Grothendieck.IhesSGA6_2_3
+public import Mathlib.CategoryTheory.Localization.Triangulated
+public import Mathlib.CategoryTheory.Triangulated.Subcategory
+public import Mathlib.CategoryTheory.ObjectProperty.Retract
+public import Mathlib.Algebra.Exact.Basic
+
+@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, view 3: `K(D) → K(T) → K(T/D) → 0` for a Verdier quotient

@@ -1,5 +1,9 @@
-import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
-import Mathlib.Algebra.Category.FGModuleCat.Basic
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
+public import Mathlib.Algebra.Category.FGModuleCat.Basic
+
+@[expose] public section
 
 /-!
 # Grothendieck, plan « Motifs » (IHÉS 2ILL5), pp. 2–3: « serein » means dualizable

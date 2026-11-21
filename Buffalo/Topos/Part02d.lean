@@ -1,5 +1,9 @@
-import Buffalo.Topos.Part02b
-import Buffalo.Topos.Part02c
+module
+
+public import Buffalo.Topos.Part02b
+public import Buffalo.Topos.Part02c
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2d: definitions and first examples of topoi (25 May 1973)

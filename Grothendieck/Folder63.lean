@@ -1,7 +1,11 @@
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FinCases
+module
+
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
 
 /-!
 # Folder 63, pages 97–99: the four components of `j = 0` at `p = 2` have distinct tangents

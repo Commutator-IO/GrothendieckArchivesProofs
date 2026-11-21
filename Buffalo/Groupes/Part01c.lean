@@ -1,4 +1,8 @@
-import Buffalo.Groupes.Part01a
+module
+
+public import Buffalo.Groupes.Part01a
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (c): `μ_n`, `SL_n`, `PGL_n`, `α_{p^i}` and Frobenius

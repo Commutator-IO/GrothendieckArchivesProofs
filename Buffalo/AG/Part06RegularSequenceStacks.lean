@@ -1,6 +1,10 @@
-import Buffalo.AG.Part06b
-import StacksFrontier.RingTheory.RegularLocalRing.Basic
-import StacksFrontier.RingTheory.RegularLocalRing.Criteria
+module
+
+public import Buffalo.AG.Part06b
+public import StacksFrontier.RingTheory.RegularLocalRing.Basic
+public import StacksFrontier.RingTheory.RegularLocalRing.Criteria
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: regular local rings and regular sequences

@@ -1,8 +1,12 @@
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Finset.Image
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Order.Interval.Finset.Nat
+module
+
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Finset.Image
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Order.Interval.Finset.Nat
+
+@[expose] public section
 
 /-!
 # Folder 81, pages 31–39 and 45–47: non-parallel decompositions and their ordered quartets

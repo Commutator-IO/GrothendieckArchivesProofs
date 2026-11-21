@@ -1,5 +1,9 @@
-import Grothendieck.Folder53
-import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GaloisFixedComponentDescent
+module
+
+public import Grothendieck.Folder53
+public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GaloisFixedComponentDescent
+
+@[expose] public section
 
 /-!
 # Folder 53, page 9: the criterion of geometric irreducibility, at scheme level

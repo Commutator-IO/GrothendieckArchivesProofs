@@ -1,8 +1,12 @@
-import Mathlib.Data.Fintype.Card
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Algebra.Group.Action.Defs
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.BigOperators.Ring.Finset
+module
+
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Algebra.Group.Action.Defs
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+
+@[expose] public section
 
 /-!
 # Folder 80, pages 20, 24, 28: the bigon-free dichotomy, in combinatorial maps

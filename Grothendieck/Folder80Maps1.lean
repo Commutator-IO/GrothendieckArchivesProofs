@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 80, page 26: the « cas latticiel » — a counterexample and the correct criterion

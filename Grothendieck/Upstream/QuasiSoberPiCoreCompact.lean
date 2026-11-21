@@ -1,5 +1,9 @@
-import Mathlib.Topology.Sober
-import Mathlib.Topology.Constructions
+module
+
+public import Mathlib.Topology.Sober
+public import Mathlib.Topology.Constructions
+
+@[expose] public section
 
 /-!
 # Way-below opens, core-compactness, scattered spaces, products of quasi-sober spaces

@@ -1,14 +1,18 @@
-import Mathlib.CategoryTheory.Monad.Comonadicity
-import Mathlib.CategoryTheory.Limits.Pi
-import Mathlib.CategoryTheory.Limits.Types.Limits
-import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.ModuleEmbedding.GabrielPopescu
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
-import Mathlib.CategoryTheory.Adjunction.FullyFaithful
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.CategoryTheory.Category.GaloisConnection
-import Mathlib.CategoryTheory.Adjunction.Whiskering
-import Mathlib.CategoryTheory.Adjunction.Opposites
-import Mathlib.Order.Sum.Order
+module
+
+public import Mathlib.CategoryTheory.Monad.Comonadicity
+public import Mathlib.CategoryTheory.Limits.Pi
+public import Mathlib.CategoryTheory.Limits.Types.Limits
+public import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.ModuleEmbedding.GabrielPopescu
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
+public import Mathlib.CategoryTheory.Adjunction.FullyFaithful
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.CategoryTheory.Category.GaloisConnection
+public import Mathlib.CategoryTheory.Adjunction.Whiskering
+public import Mathlib.CategoryTheory.Adjunction.Opposites
+public import Mathlib.Order.Sum.Order
+
+@[expose] public section
 
 /-!
 # Folder 19: the comonadicity theorem (page 4), the comonad over a product base

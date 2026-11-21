@@ -1,4 +1,8 @@
-import Buffalo.AG.Part04b
+module
+
+public import Buffalo.AG.Part04b
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (c): 18 June 1973, schemes as Zariski sheaves

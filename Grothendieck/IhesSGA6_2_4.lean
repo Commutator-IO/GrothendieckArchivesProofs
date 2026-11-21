@@ -1,7 +1,11 @@
-import Mathlib.Algebra.Homology.DerivedCategory.Ext.Map
-import Mathlib.Algebra.Homology.DerivedCategory.Ext.EnoughInjectives
-import Mathlib.Algebra.Homology.DerivedCategory.Ext.EnoughProjectives
-import Mathlib.CategoryTheory.Abelian.Exact
+module
+
+public import Mathlib.Algebra.Homology.DerivedCategory.Ext.Map
+public import Mathlib.Algebra.Homology.DerivedCategory.Ext.EnoughInjectives
+public import Mathlib.Algebra.Homology.DerivedCategory.Ext.EnoughProjectives
+public import Mathlib.CategoryTheory.Abelian.Exact
+
+@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_4, views 1–2: Ext-bijectivity of an exact functor by effaceability

@@ -1,7 +1,11 @@
-import Buffalo.AG.Part01c
-import StacksFrontier.RingTheory.Koszul.Regular
-import StacksFrontier.RingTheory.RegularRing.Defs
-import StacksFrontier.RingTheory.AdicCompletion.NoetherianRing.PowerSeriesSurjection
+module
+
+public import Buffalo.AG.Part01c
+public import StacksFrontier.RingTheory.Koszul.Regular
+public import StacksFrontier.RingTheory.RegularRing.Defs
+public import StacksFrontier.RingTheory.AdicCompletion.NoetherianRing.PowerSeriesSurjection
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, parts 05–06: regular rings, Koszul complexes and completions

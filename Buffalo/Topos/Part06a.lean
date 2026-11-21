@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 6a: accessible categories, `Ind`, cardinal filtrations (10 July 1973)

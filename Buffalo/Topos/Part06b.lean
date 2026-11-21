@@ -1,5 +1,9 @@
-import Buffalo.Topos.Part06a
-import Buffalo.Topos.Part03b
+module
+
+public import Buffalo.Topos.Part06a
+public import Buffalo.Topos.Part03b
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 6b: strict generation, theories, Lawvere, Birkhoff (11 July 1973)

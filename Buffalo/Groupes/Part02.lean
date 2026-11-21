@@ -1,7 +1,11 @@
-import Buffalo.Groupes.Part02a
-import Buffalo.Groupes.Part02b
-import Buffalo.Groupes.Part02c
-import Buffalo.Groupes.Part02d
+module
+
+public import Buffalo.Groupes.Part02a
+public import Buffalo.Groupes.Part02b
+public import Buffalo.Groupes.Part02c
+public import Buffalo.Groupes.Part02d
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02

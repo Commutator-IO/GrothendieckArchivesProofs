@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 37, page 92: the counterexample to EGA I 10.10.5 b) ⇒ a), c)

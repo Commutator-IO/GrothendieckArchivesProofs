@@ -1,6 +1,10 @@
-import Buffalo.AG.Part05b
-import StacksFrontier.AlgebraicGeometry.RelativeSpec.Representability
-import StacksFrontier.AlgebraicGeometry.RelativeSpecEssSurj.Basic
+module
+
+public import Buffalo.AG.Part05b
+public import StacksFrontier.AlgebraicGeometry.RelativeSpec.Representability
+public import StacksFrontier.AlgebraicGeometry.RelativeSpecEssSurj.Basic
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05: the relative spectrum of a quasi-coherent algebra

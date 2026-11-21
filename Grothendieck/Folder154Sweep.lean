@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 154, pages 142, 144, 145: one half-sweep of seven pseudolines, written twice

@@ -1,18 +1,22 @@
-import Mathlib.Algebra.Polynomial.Eval.SMul
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.LinearAlgebra.DirectSum.Finsupp
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Binomial
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.Algebra.Group.ForwardDiff
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Data.Nat.Choose.Vandermonde
-import Mathlib.Algebra.Polynomial.Basis
+module
+
+public import Mathlib.Algebra.Polynomial.Eval.SMul
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.LinearAlgebra.DirectSum.Finsupp
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Binomial
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.Algebra.Group.ForwardDiff
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Data.Nat.Choose.Vandermonde
+public import Mathlib.Algebra.Polynomial.Basis
+
+@[expose] public section
 
 /-!
 # Folder 153: integer-valued polynomials, co-operations, analyseurs

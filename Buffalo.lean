@@ -1,117 +1,121 @@
+module
+
 -- The Buffalo lectures (1973): one module per part of the index.
-import Buffalo.AG.Part01
-import Buffalo.AG.Part01a
-import Buffalo.AG.Part01b
-import Buffalo.AG.Part01boards
-import Buffalo.AG.Part01c
-import Buffalo.AG.Part02
-import Buffalo.AG.Part02a
-import Buffalo.AG.Part02b
-import Buffalo.AG.Part02boards
-import Buffalo.AG.Part02c
-import Buffalo.AG.Part03
-import Buffalo.AG.Part03a
-import Buffalo.AG.Part03b
-import Buffalo.AG.Part03boards
-import Buffalo.AG.Part03c
-import Buffalo.AG.Part04
-import Buffalo.AG.Part04Stacks
-import Buffalo.AG.Part04a
-import Buffalo.AG.Part04b
-import Buffalo.AG.Part04boards
-import Buffalo.AG.Part04c
-import Buffalo.AG.Part04d
-import Buffalo.AG.Part05
-import Buffalo.AG.Part05Stacks
-import Buffalo.AG.Part05a
-import Buffalo.AG.Part05b
-import Buffalo.AG.Part05boards
-import Buffalo.AG.Part05c
-import Buffalo.AG.Part06
-import Buffalo.AG.Part06CohenStacks
-import Buffalo.AG.Part06RegularSequenceStacks
-import Buffalo.AG.Part06SerreStacks
-import Buffalo.AG.Part06Stacks
-import Buffalo.AG.Part06a
-import Buffalo.AG.Part06b
-import Buffalo.AG.Part06boards
-import Buffalo.AG.Part06c
-import Buffalo.AG.Part06d
-import Buffalo.AG.Part06dStacks
-import Buffalo.AG.Part07
-import Buffalo.AG.Part07AmpleMordell
-import Buffalo.AG.Part07Stacks
-import Buffalo.AG.Part07a
-import Buffalo.AG.Part07aStacks
-import Buffalo.AG.Part07b
-import Buffalo.AG.Part07boards
-import Buffalo.AG.Part07c
-import Buffalo.AG.Part08
-import Buffalo.AG.Part08FpqcDescentStacks
-import Buffalo.AG.Part08a
-import Buffalo.AG.Part08b
-import Buffalo.AG.Part08boards
-import Buffalo.AG.Part08c
-import Buffalo.AG.Part09
-import Buffalo.AG.Part09EffectiveDescentStacks
-import Buffalo.AG.Part09a
-import Buffalo.AG.Part09b
-import Buffalo.AG.Part09boards
-import Buffalo.Basic
-import Buffalo.Groupes.Part01
-import Buffalo.Groupes.Part01a
-import Buffalo.Groupes.Part01b
-import Buffalo.Groupes.Part01boards
-import Buffalo.Groupes.Part01c
-import Buffalo.Groupes.Part01d
-import Buffalo.Groupes.Part02
-import Buffalo.Groupes.Part02a
-import Buffalo.Groupes.Part02b
-import Buffalo.Groupes.Part02boards
-import Buffalo.Groupes.Part02c
-import Buffalo.Groupes.Part02d
-import Buffalo.Groupes.Part03
-import Buffalo.Groupes.Part03a
-import Buffalo.Groupes.Part03b
-import Buffalo.Groupes.Part03boards
-import Buffalo.Groupes.Part03c
-import Buffalo.ProblemThree
-import Buffalo.QcohDescent
-import Buffalo.Topos.Part01
-import Buffalo.Topos.Part01a
-import Buffalo.Topos.Part01b
-import Buffalo.Topos.Part01boards
-import Buffalo.Topos.Part01c
-import Buffalo.Topos.Part01d
-import Buffalo.Topos.Part01e
-import Buffalo.Topos.Part02
-import Buffalo.Topos.Part02a
-import Buffalo.Topos.Part02b
-import Buffalo.Topos.Part02boards
-import Buffalo.Topos.Part02c
-import Buffalo.Topos.Part02d
-import Buffalo.Topos.Part03
-import Buffalo.Topos.Part03a
-import Buffalo.Topos.Part03b
-import Buffalo.Topos.Part03boards
-import Buffalo.Topos.Part03c
-import Buffalo.Topos.Part04
-import Buffalo.Topos.Part04a
-import Buffalo.Topos.Part04b
-import Buffalo.Topos.Part04boards
-import Buffalo.Topos.Part05
-import Buffalo.Topos.Part05a
-import Buffalo.Topos.Part05b
-import Buffalo.Topos.Part05boards
-import Buffalo.Topos.Part05c
-import Buffalo.Topos.Part05d
-import Buffalo.Topos.Part06
-import Buffalo.Topos.Part06a
-import Buffalo.Topos.Part06b
-import Buffalo.Topos.Part06boards
-import Buffalo.Topos.Part06c
-import Buffalo.Topos.Part07
-import Buffalo.Topos.Part07a
-import Buffalo.Topos.Part07b
-import Buffalo.Topos.Part07boards
-import Buffalo.Topos.Part07c
+public import Buffalo.AG.Part01
+public import Buffalo.AG.Part01a
+public import Buffalo.AG.Part01b
+public import Buffalo.AG.Part01boards
+public import Buffalo.AG.Part01c
+public import Buffalo.AG.Part02
+public import Buffalo.AG.Part02a
+public import Buffalo.AG.Part02b
+public import Buffalo.AG.Part02boards
+public import Buffalo.AG.Part02c
+public import Buffalo.AG.Part03
+public import Buffalo.AG.Part03a
+public import Buffalo.AG.Part03b
+public import Buffalo.AG.Part03boards
+public import Buffalo.AG.Part03c
+public import Buffalo.AG.Part04
+public import Buffalo.AG.Part04Stacks
+public import Buffalo.AG.Part04a
+public import Buffalo.AG.Part04b
+public import Buffalo.AG.Part04boards
+public import Buffalo.AG.Part04c
+public import Buffalo.AG.Part04d
+public import Buffalo.AG.Part05
+public import Buffalo.AG.Part05Stacks
+public import Buffalo.AG.Part05a
+public import Buffalo.AG.Part05b
+public import Buffalo.AG.Part05boards
+public import Buffalo.AG.Part05c
+public import Buffalo.AG.Part06
+public import Buffalo.AG.Part06CohenStacks
+public import Buffalo.AG.Part06RegularSequenceStacks
+public import Buffalo.AG.Part06SerreStacks
+public import Buffalo.AG.Part06Stacks
+public import Buffalo.AG.Part06a
+public import Buffalo.AG.Part06b
+public import Buffalo.AG.Part06boards
+public import Buffalo.AG.Part06c
+public import Buffalo.AG.Part06d
+public import Buffalo.AG.Part06dStacks
+public import Buffalo.AG.Part07
+public import Buffalo.AG.Part07AmpleMordell
+public import Buffalo.AG.Part07Stacks
+public import Buffalo.AG.Part07a
+public import Buffalo.AG.Part07aStacks
+public import Buffalo.AG.Part07b
+public import Buffalo.AG.Part07boards
+public import Buffalo.AG.Part07c
+public import Buffalo.AG.Part08
+public import Buffalo.AG.Part08FpqcDescentStacks
+public import Buffalo.AG.Part08a
+public import Buffalo.AG.Part08b
+public import Buffalo.AG.Part08boards
+public import Buffalo.AG.Part08c
+public import Buffalo.AG.Part09
+public import Buffalo.AG.Part09EffectiveDescentStacks
+public import Buffalo.AG.Part09a
+public import Buffalo.AG.Part09b
+public import Buffalo.AG.Part09boards
+public import Buffalo.Basic
+public import Buffalo.Groupes.Part01
+public import Buffalo.Groupes.Part01a
+public import Buffalo.Groupes.Part01b
+public import Buffalo.Groupes.Part01boards
+public import Buffalo.Groupes.Part01c
+public import Buffalo.Groupes.Part01d
+public import Buffalo.Groupes.Part02
+public import Buffalo.Groupes.Part02a
+public import Buffalo.Groupes.Part02b
+public import Buffalo.Groupes.Part02boards
+public import Buffalo.Groupes.Part02c
+public import Buffalo.Groupes.Part02d
+public import Buffalo.Groupes.Part03
+public import Buffalo.Groupes.Part03a
+public import Buffalo.Groupes.Part03b
+public import Buffalo.Groupes.Part03boards
+public import Buffalo.Groupes.Part03c
+public import Buffalo.ProblemThree
+public import Buffalo.QcohDescent
+public import Buffalo.Topos.Part01
+public import Buffalo.Topos.Part01a
+public import Buffalo.Topos.Part01b
+public import Buffalo.Topos.Part01boards
+public import Buffalo.Topos.Part01c
+public import Buffalo.Topos.Part01d
+public import Buffalo.Topos.Part01e
+public import Buffalo.Topos.Part02
+public import Buffalo.Topos.Part02a
+public import Buffalo.Topos.Part02b
+public import Buffalo.Topos.Part02boards
+public import Buffalo.Topos.Part02c
+public import Buffalo.Topos.Part02d
+public import Buffalo.Topos.Part03
+public import Buffalo.Topos.Part03a
+public import Buffalo.Topos.Part03b
+public import Buffalo.Topos.Part03boards
+public import Buffalo.Topos.Part03c
+public import Buffalo.Topos.Part04
+public import Buffalo.Topos.Part04a
+public import Buffalo.Topos.Part04b
+public import Buffalo.Topos.Part04boards
+public import Buffalo.Topos.Part05
+public import Buffalo.Topos.Part05a
+public import Buffalo.Topos.Part05b
+public import Buffalo.Topos.Part05boards
+public import Buffalo.Topos.Part05c
+public import Buffalo.Topos.Part05d
+public import Buffalo.Topos.Part06
+public import Buffalo.Topos.Part06a
+public import Buffalo.Topos.Part06b
+public import Buffalo.Topos.Part06boards
+public import Buffalo.Topos.Part06c
+public import Buffalo.Topos.Part07
+public import Buffalo.Topos.Part07a
+public import Buffalo.Topos.Part07b
+public import Buffalo.Topos.Part07boards
+public import Buffalo.Topos.Part07c
+
+@[expose] public section

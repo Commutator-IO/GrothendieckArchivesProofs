@@ -1,4 +1,8 @@
-import Buffalo.AG.Part08a
+module
+
+public import Buffalo.AG.Part08a
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08 (b): 9 July 1973, tape 2

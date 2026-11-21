@@ -1,5 +1,9 @@
-import Mathlib
-import Grothendieck.Upstream.ChoosePrimePowSubOne
+module
+
+public import Mathlib
+public import Grothendieck.Upstream.ChoosePrimePowSubOne
+
+@[expose] public section
 
 /-!
 # Folder 136, pages 19–31: the binomial lemma behind the « ombres »

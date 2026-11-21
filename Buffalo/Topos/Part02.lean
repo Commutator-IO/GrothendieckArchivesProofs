@@ -1,8 +1,12 @@
-import Buffalo.Topos.Part02a
-import Buffalo.Topos.Part02b
-import Buffalo.Topos.Part02c
-import Buffalo.Topos.Part02d
-import Buffalo.Topos.Part02boards
+module
+
+public import Buffalo.Topos.Part02a
+public import Buffalo.Topos.Part02b
+public import Buffalo.Topos.Part02c
+public import Buffalo.Topos.Part02d
+public import Buffalo.Topos.Part02boards
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2 (18 and 25 May 1973)

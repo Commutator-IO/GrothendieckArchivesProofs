@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.LinearAlgebra.Dual.Lemmas
+module
+
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+
+@[expose] public section
 
 /-!
 # Folder 125: the chain of equivalences of feuillet 2, and the lemma of feuillet 3
