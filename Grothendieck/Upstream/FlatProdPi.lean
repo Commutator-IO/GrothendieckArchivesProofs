@@ -29,8 +29,10 @@ theorem pi_iff [Finite ι] : Flat R (Π i, M i) ↔ ∀ i, Flat R (M i) := by
   rw [← directSum_iff]
   exact equiv_iff (linearEquivFunOnFintype R ι M).symm
 
-/-- A finite product of flat `R`-modules is flat. -/
-instance pi [Finite ι] [∀ i, Flat R (M i)] : Flat R (Π i, M i) := pi_iff.mpr ‹_›
+/-- A finite product of flat `R`-modules is flat. Named `pi` on the mathlib branch; renamed here
+because `StacksFrontier.RingTheory.Flat.Pi` has a `Module.Flat.pi` (over rings, not an
+instance). -/
+instance pi_of_semiring [Finite ι] [∀ i, Flat R (M i)] : Flat R (Π i, M i) := pi_iff.mpr ‹_›
 
 end DirectSum
 theorem prod_iff : Flat R (M × N) ↔ Flat R M ∧ Flat R N := by

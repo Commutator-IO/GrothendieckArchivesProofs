@@ -7,10 +7,10 @@
    "type": "git",
    "subDir": null,
    "scope": "",
-   "rev": "c496df0d9beea9deaeabcea8492605f9a0a2313b",
+   "rev": "f56a316ddf7a930906d88b78d6f9a2668cffd0cf",
    "name": "Stacks",
    "manifestFile": "lake-manifest.json",
-   "inputRev": "c496df0d9beea9deaeabcea8492605f9a0a2313b",
+   "inputRev": "f56a316ddf7a930906d88b78d6f9a2668cffd0cf",
    "inherited": false,
    "configFile": "lakefile.toml"
   },
