@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.Folder19
+public import Mathlib.CategoryTheory.Sites.Limits
 public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
 
 @[expose] public section

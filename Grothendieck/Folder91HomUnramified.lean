@@ -1,6 +1,10 @@
-import Mathlib.LinearAlgebra.Isomorphisms
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
 
 /-!
 # Folder 91, pages 15–24: `Hom_S(X, Y; φ) → Hom_S(Z, Y)` is unramified

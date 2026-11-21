@@ -1,6 +1,7 @@
 module
 
 public import Mathlib.RingTheory.PowerSeries.Evaluation
+public import Mathlib.RingTheory.PowerSeries.Inverse
 public import Mathlib.Topology.UniformSpace.DiscreteUniformity
 public import StacksFrontier.RingTheory.FormallySmooth.Topological
 public import StacksFrontier.RingTheory.MvPowerSeries.HomExt
