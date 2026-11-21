@@ -2,6 +2,11 @@ module
 
 public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CoherentIffFinitePresentation
 public import StacksFrontier.AlgebraicGeometry.CoherenceCriteria.Basic
+public import StacksFrontier.AlgebraicGeometry.Modules.FiniteTypePullbackScheme
+public import StacksFrontier.AlgebraicGeometry.Modules.QuasicoherentPullbackScheme
+public import StacksFrontier.AlgebraicGeometry.Cohomology.Coherent.NoetherianCoherent
+public import StacksFrontier.AlgebraicGeometry.Cohomology.LocallyNoetherian.PushforwardSupport
+public import StacksFrontier.AlgebraicGeometry.CoherenceCriteria.Affine
 
 @[expose] public section
 
@@ -36,10 +41,13 @@ Basic.lean` (Apache-2.0, see `lean/Stacks/NOTICE.md`) state coherence
 abelian structure of `X.Modules` is that of `SheafOfModules X.ringCatSheaf`, so kernels,
 cokernels and images below are those of `X.Modules`. The image is the kernel of the cokernel.
 
-**Not formalised.** The restriction `M|_U` is the restriction `M.over U` to the slice site of the
-opens of `X` contained in `U`, not Mathlib's `M.restrict U.ι` on the open subscheme `U`; the two
-are identified by `Scheme.Modules.overFunctorEquiv` and `Scheme.Modules.overEquiv`, but the
-transport of finite type and of free modules along that equivalence is not written here.
+**The two readings of `M|_U`.** `def_22510_scheme` reads `M|_U` as the restriction `M.over U` to
+the slice site of the opens of `X` contained in `U`; `def_22510_restrict` reads it as Mathlib's
+`M.restrict U.ι` on the open subscheme `U`. They are matched by `Scheme.Modules.overEquiv` and
+`Scheme.Modules.overFunctorEquiv`: finite type transports both ways
+(`isFiniteType_over_iff_restrict`), free modules go to free modules, and kernels to kernels
+(`isFiniteType_kernel_iff`). On a locally noetherian scheme coherence restricts to open
+subschemes (`isCoherent_restrict_22510`).
 -/
 
 open AlgebraicGeometry CategoryTheory Limits TopologicalSpace
@@ -109,5 +117,108 @@ theorem isCoherent_iff_of_isLocallyNoetherian_22510 [IsLocallyNoetherian X] (F :
     ⟨Stacks.AlgebraicGeometry.CoherenceCriteria.isCoherent_of_isCoherent',
       Stacks.AlgebraicGeometry.CoherenceCriteria.isCoherent'_of_isCoherent⟩
   exact ⟨e.trans (h.out 1 2), e.trans (h.out 1 3)⟩
+
+/-- Oqhr-Gt66es-22510 (6:15:10) (on the open subscheme) Finite type restricts to an open
+subscheme: if `M` is of finite type, so is `M|_U = M.restrict U.ι` on the scheme `U` (Stacks 01B6,
+through `Scheme.Modules.restrictFunctorIsoPullback`). -/
+theorem isFiniteType_restrict_22510 (M : X.Modules) [M.IsFiniteType] (U : X.Opens) :
+    (M.restrict U.ι).IsFiniteType :=
+  Stacks.SheafOfModules.isFiniteType_of_iso
+    ((Scheme.Modules.restrictFunctorIsoPullback U.ι).symm.app M)
+
+/-- Oqhr-Gt66es-22510 (6:15:10) (on the open subscheme) On a locally noetherian scheme, a coherent
+module restricts to a coherent module on every open subscheme `U`, for `M|_U = M.restrict U.ι`
+on the scheme `U`. -/
+theorem isCoherent_restrict_22510 [IsLocallyNoetherian X] (M : X.Modules)
+    (hM : Stacks.SheafOfModules.IsCoherent M) (U : X.Opens) :
+    Stacks.SheafOfModules.IsCoherent (M.restrict U.ι) := by
+  obtain ⟨hq, hf⟩ := (isCoherent_iff_of_isLocallyNoetherian_22510 M).1.1 hM
+  have : (M.restrict U.ι).IsQuasicoherent :=
+    inferInstanceAs ((Scheme.Modules.restrictFunctor U.ι).obj M).IsQuasicoherent
+  have : (M.restrict U.ι).IsFiniteType := isFiniteType_restrict_22510 M U
+  exact (isCoherent_iff_of_isLocallyNoetherian_22510 (X := U) (M.restrict U.ι)).1.2
+    ⟨inferInstance, inferInstance⟩
+
+/-- `M.over U`, read on the open subscheme through `overEquiv`, is `M|_U = M.restrict U.ι`. -/
+noncomputable def overRestrictIso (M : X.Modules) (U : X.Opens) :
+    (Scheme.Modules.overEquiv U).functor.obj (M.over U) ≅ M.restrict U.ι :=
+  (Scheme.Modules.overFunctorEquiv U).app M
+
+/-- Oqhr-Gt66es-22510 (6:15:10) (on the open subscheme) `M.over U` is of finite type if and only
+if `M|_U = M.restrict U.ι` is: the two readings of the restriction agree (AxiomMath/Stacks'
+transports along `overEquiv`, composed with `Scheme.Modules.overFunctorEquiv`). -/
+theorem isFiniteType_over_iff_restrict (M : X.Modules) (U : X.Opens) :
+    (M.over U).IsFiniteType ↔ (M.restrict U.ι).IsFiniteType := by
+  constructor
+  · intro h
+    have := Stacks.AlgebraicGeometry.CoherentPushforward.isFiniteType_overEquiv_functor U (M.over U) h
+    exact Stacks.SheafOfModules.isFiniteType_of_iso (overRestrictIso M U)
+  · intro h
+    have : ((Scheme.Modules.overEquiv U).functor.obj (M.over U)).IsFiniteType :=
+      Stacks.SheafOfModules.isFiniteType_of_iso (overRestrictIso M U).symm
+    exact Stacks.SheafOfModules.isFiniteType_of_overEquiv_functor U this
+
+/-- `𝒪_U^I` read through `overEquiv`, in the category `U.Modules`. -/
+noncomputable def freeIso (U : X.Opens) (I : Type u) :
+    (SheafOfModules.free I : (U : Scheme.{u}).Modules) ≅
+      (Scheme.Modules.overEquiv U).functor.obj (SheafOfModules.free I) :=
+  Stacks.AlgebraicGeometry.CoherenceCriteria.overEquivFreeIso X U I
+
+/-- The morphism `𝒪_U^I → M|_U` corresponding to `φ : 𝒪^I ⟶ M.over U` on the slice site. -/
+noncomputable def toRestrict (M : X.Modules) (U : X.Opens) (I : Type u)
+    (φ : (SheafOfModules.free I : SheafOfModules.{u} (X.ringCatSheaf.over U)) ⟶ M.over U) :
+    (SheafOfModules.free I : (U : Scheme.{u}).Modules) ⟶ M.restrict U.ι :=
+  (freeIso U I).hom ≫ (Scheme.Modules.overEquiv U).functor.map φ ≫ (overRestrictIso M U).hom
+
+/-- The kernel of `toRestrict M U I φ` is the kernel of `φ`, read on the open subscheme. -/
+theorem kernel_toRestrict_iso (M : X.Modules) (U : X.Opens) (I : Type u)
+    (φ : (SheafOfModules.free I : SheafOfModules.{u} (X.ringCatSheaf.over U)) ⟶ M.over U) :
+    Nonempty (kernel (toRestrict M U I φ) ≅ (Scheme.Modules.overEquiv U).functor.obj (kernel φ)) :=
+  haveI : @IsIso (U : Scheme.{u}).Modules _ _ _ (freeIso U I).hom :=
+    ⟨(freeIso U I).inv, (freeIso U I).hom_inv_id, (freeIso U I).inv_hom_id⟩
+  ⟨(kernelIsIsoComp (C := (U : Scheme.{u}).Modules) _ _) ≪≫
+    (kernelCompMono (C := (U : Scheme.{u}).Modules) _ _) ≪≫
+    (PreservesKernel.iso (Scheme.Modules.overEquiv U).functor φ).symm⟩
+
+/-- Every morphism `𝒪_U^I → M|_U` comes from the slice site. -/
+theorem toRestrict_surjective (M : X.Modules) (U : X.Opens) (I : Type u) :
+    Function.Surjective (toRestrict M U I) := by
+  intro ψ
+  refine ⟨(Scheme.Modules.overEquiv U).functor.preimage
+    ((freeIso U I).inv ≫ ψ ≫ (overRestrictIso M U).inv), ?_⟩
+  have key : ∀ {A B C D : (U : Scheme.{u}).Modules} (a : A ≅ B) (b : D ≅ C) (ψ : A ⟶ C),
+      a.hom ≫ ((a.inv ≫ ψ ≫ b.inv) ≫ b.hom) = ψ := by
+    intros; simp
+  rw [toRestrict, Functor.map_preimage]
+  exact key (freeIso U I) (overRestrictIso M U) ψ
+
+/-- The kernel of `φ` is of finite type if and only if the kernel of `toRestrict M U I φ` is. -/
+theorem isFiniteType_kernel_iff (M : X.Modules) (U : X.Opens) (I : Type u)
+    (φ : (SheafOfModules.free I : SheafOfModules.{u} (X.ringCatSheaf.over U)) ⟶ M.over U) :
+    (kernel φ).IsFiniteType ↔ (kernel (toRestrict M U I φ)).IsFiniteType := by
+  obtain ⟨e⟩ := kernel_toRestrict_iso M U I φ
+  constructor
+  · intro h
+    have := Stacks.AlgebraicGeometry.CoherentPushforward.isFiniteType_overEquiv_functor U _ h
+    exact Stacks.SheafOfModules.isFiniteType_of_iso e.symm
+  · intro h
+    have : ((Scheme.Modules.overEquiv U).functor.obj (kernel φ)).IsFiniteType :=
+      Stacks.SheafOfModules.isFiniteType_of_iso e
+    exact Stacks.SheafOfModules.isFiniteType_of_overEquiv_functor U this
+
+/-- Oqhr-Gt66es-22510 (6:15:10) [def] (on the open subscheme) `def_22510_scheme` with `M|_U` the
+module `M.restrict U.ι` on the scheme `U`: `M` is coherent if and only if it is of finite type and,
+for every open `U` and every finite `I`, the kernel of every morphism `𝒪_U^I → M.restrict U.ι` is
+of finite type. -/
+theorem def_22510_restrict (M : X.Modules) :
+    Stacks.SheafOfModules.IsCoherent M ↔ M.IsFiniteType ∧
+      ∀ (U : X.Opens) (I : Type u) [Finite I]
+        (ψ : (SheafOfModules.free I : (U : Scheme.{u}).Modules) ⟶ M.restrict U.ι),
+        (kernel ψ).IsFiniteType := by
+  rw [def_22510_scheme]
+  refine and_congr Iff.rfl ⟨fun h U I _ ψ => ?_, fun h U I _ φ => ?_⟩
+  · obtain ⟨φ, rfl⟩ := toRestrict_surjective M U I ψ
+    exact (isFiniteType_kernel_iff M U I φ).1 (h U I φ)
+  · exact (isFiniteType_kernel_iff M U I φ).2 (h U I _)
 
 end Buffalo.AG.Part07

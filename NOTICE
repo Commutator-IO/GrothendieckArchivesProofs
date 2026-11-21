@@ -1,0 +1,69 @@
+GrothendieckArchivesProofs
+Copyright 2026 Michel Hua. Licensed under the Apache License, Version 2.0 (LICENSE).
+
+This repository builds on, and includes code from, the following works by AxiomMath, each
+licensed under the Apache License, Version 2.0.
+
+1. The Stacks Project in Lean, https://github.com/AxiomMath/Stacks
+   Required as a Lake dependency at commit f56a316ddf7a930906d88b78d6f9a2668cffd0cf
+   (lakefile.toml); not copied. Its declarations are cited by Stacks tag only; no prose of the
+   Stacks Project (GFDL) is reproduced here.
+
+2. Mordell, https://github.com/AxiomMath/Mordell
+   The files below are copied from commit 82a30cb7857f6e3cfdb1be91f5533c0ccb57d493,
+   at the same paths, under Mordell/. They carry no per-file header in the source; their licence
+   is Mordell's LICENSE, copied as Mordell/LICENSE. They are built here against Stacks f56a316
+   instead of Mordell's pin c496df0.
+
+   Mordell/Attr.lean
+   Mordell/AbelianVariety/AbelianScheme/BaseChange.lean
+   Mordell/AbelianVariety/Ample/Sum.lean
+   Mordell/AbelianVariety/PhiMap.lean
+   Mordell/AbelianVariety/PicZero.lean
+   Mordell/AbelianVariety/PicZeroTranslation.lean
+   Mordell/AbelianVariety/Rigidity.lean
+   Mordell/AlgebraicGeometry/Ample.lean
+   Mordell/AlgebraicGeometry/PicardPullback.lean
+   Mordell/AlgebraicGeometry/ProjectiveSpace/Embedding.lean
+   Mordell/AlgebraicGeometry/ProjectiveSpace/MorphismOfSections.lean
+   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Basic.lean
+   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/ClosedImmersion.lean
+   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Product.lean
+   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/ProductEmbedding.lean
+   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/ProductPullback.lean
+   Mordell/AlgebraicGeometry/VeryAmple/Twist.lean
+
+   Modified (a comment at the top of the file says how):
+   Mordell/AlgebraicGeometry/GroupScheme/BaseChangePoints.lean
+     the redundant @[expose] on the abbrev Faltings.P is removed.
+   Mordell/AbelianVariety/TheoremOfTheSquare.lean
+     two private lemmas omit an unused section instance.
+   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Pullback.lean
+     one haveI of a proposition becomes have.
+
+   Mordell.lean (the root importing them) is new to this repository.
+
+3. MMP, https://github.com/AxiomMath/MMP
+   The files below are copied from commit 1f9ade367087ec711a2ce1382bad279a5a0284c3, at the same
+   paths, under MMP/. They carry no per-file header in the source; their licence is MMP's
+   LICENSE, copied as MMP/LICENSE. They are built here against Stacks f56a316 instead of MMP's
+   pin c496df0.
+
+   Copied unchanged:
+   MMP/Attr.lean
+   MMP/AlgebraicGeometry/Divisor/Basic.lean
+   MMP/AlgebraicGeometry/Divisor/DivisorialSheaf.lean
+   MMP/AlgebraicGeometry/Divisor/Principal.lean
+   MMP/AlgebraicGeometry/Intersection/CurveDegreeAdditive.lean
+   MMP/AlgebraicGeometry/Intersection/InvertibleSheafCurveDegree.lean
+   MMP/AlgebraicGeometry/Intersection/Nef.lean
+   MMP/AlgebraicGeometry/Intersection/QCartierCurveNumber.lean
+   MMP/AlgebraicGeometry/Positivity/RelativelyAmple.lean
+
+   Modified (a comment at the top of the file says how):
+   MMP/AlgebraicGeometry/Divisor/DivisorialSheafTensor.lean
+     ported to Stacks f56a316, where the sheafification behind sheafTensor is sealed: Mathlib's
+     PresheafOfModules.sheafificationAdjunction is replaced by
+     Stacks.SheafOfModules.Tensor.sheafificationAdjunction.
+
+   MMP.lean (the root importing them) is new to this repository.
