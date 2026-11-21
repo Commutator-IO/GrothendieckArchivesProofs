@@ -22,7 +22,6 @@ licensed under the Apache License, Version 2.0.
    Mordell/AbelianVariety/PicZero.lean
    Mordell/AbelianVariety/PicZeroTranslation.lean
    Mordell/AbelianVariety/Rigidity.lean
-   Mordell/AbelianVariety/TheoremOfTheSquare.lean
    Mordell/AlgebraicGeometry/Ample.lean
    Mordell/AlgebraicGeometry/PicardPullback.lean
    Mordell/AlgebraicGeometry/ProjectiveSpace/Embedding.lean
@@ -37,6 +36,8 @@ licensed under the Apache License, Version 2.0.
    Modified (a comment at the top of the file says how):
    Mordell/AlgebraicGeometry/GroupScheme/BaseChangePoints.lean
      the redundant @[expose] on the abbrev Faltings.P is removed.
+   Mordell/AbelianVariety/TheoremOfTheSquare.lean
+     two private lemmas omit an unused section instance.
    Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Pullback.lean
      one haveI of a proposition becomes have.
 
