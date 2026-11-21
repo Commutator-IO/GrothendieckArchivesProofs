@@ -68,11 +68,11 @@ theorem lgN_of_isProper_of_isAdicComplete (A : Type u) [CommRing A] [IsNoetheria
     (n : ℕ) :
     letI : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian f
     LGn (baseIdealSheaf A J f) n := by
-  letI : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian f
+  let _ : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian f
   intro F _
   refine ⟨fun i _ => isIso_cohomologyToLimit_of_isProper_of_isAdicComplete A J f F i, ?_⟩
   have := isIso_cohomologyToLimit_of_isProper_of_isAdicComplete A J f F (n + 1)
-  infer_instance
+  exact IsIso.mono_of_iso _
 
 /-- **Corollaire 1 of page 42 for `(LG)ₙ`, over a complete base.** Let `A` be noetherian and
 `J`-adically complete, `f : X ⟶ Spec A` proper and `Y = V(J 𝒪_X)`. For every proper
@@ -81,9 +81,9 @@ cut out by `J 𝒪_W`, satisfies `(LG)ₙ`, as `(X, Y)` does. -/
 theorem lgN_permanence_of_isProper_of_isAdicComplete (A : Type u) [CommRing A]
     [IsNoetherianRing A] (J : Ideal A) [IsAdicComplete J A] {X W : Scheme.{u}}
     (f : X ⟶ Spec (.of A)) [IsProper f] (g : W ⟶ X) [IsProper g] (n : ℕ) :
-    (letI : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian f
+    (letI : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian f;
       LGn (baseIdealSheaf A J f) n) ∧
-    (letI : IsLocallyNoetherian W := LocallyOfFiniteType.isLocallyNoetherian (g ≫ f)
+    (letI : IsLocallyNoetherian W := LocallyOfFiniteType.isLocallyNoetherian (g ≫ f);
       LGn (baseIdealSheaf A J (g ≫ f)) n) :=
   ⟨lgN_of_isProper_of_isAdicComplete A J f n, lgN_of_isProper_of_isAdicComplete A J (g ≫ f) n⟩
 
