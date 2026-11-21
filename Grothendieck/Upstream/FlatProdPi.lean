@@ -39,7 +39,9 @@ instance). -/
 instance pi_of_semiring [Finite ι] [∀ i, Flat R (M i)] : Flat R (Π i, M i) := pi_iff.mpr ‹_›
 
 end DirectSum
-theorem prod_iff : Flat R (M × N) ↔ Flat R M ∧ Flat R N := by
+/-- Named `prod_iff` on the mathlib branch; renamed here because
+`StacksFrontier.RingTheory.Flat.Prod` has a `Module.Flat.prod_iff` (over rings). -/
+theorem prod_iff_of_semiring : Flat R (M × N) ↔ Flat R M ∧ Flat R N := by
   have key {P : Type u} [AddCommMonoid P] [Module R P] (Q : Submodule R P) :
       Function.Injective (Q.subtype.rTensor (M × N)) ↔
         Function.Injective (Q.subtype.rTensor M) ∧ Function.Injective (Q.subtype.rTensor N) := by
@@ -50,8 +52,11 @@ theorem prod_iff : Flat R (M × N) ↔ Flat R M ∧ Flat R N := by
     simpa [coe_prodMap, Prod.map_injective] using congr(Function.Injective ⇑$this)
   simp_rw [iff_rTensor_injectiveₛ, key, forall_and]
 
-/-- The product of two flat `R`-modules is flat. -/
-instance prod [Flat R M] [Flat R N] : Flat R (M × N) := prod_iff.mpr ⟨‹_›, ‹_›⟩
+/-- The product of two flat `R`-modules is flat. Named `prod` on the mathlib branch; renamed here
+because `StacksFrontier.RingTheory.Flat.Prod` has a `Module.Flat.prod` (over rings, not an
+instance). -/
+instance prod_of_semiring [Flat R M] [Flat R N] : Flat R (M × N) :=
+  prod_iff_of_semiring.mpr ⟨‹_›, ‹_›⟩
 
 section Algebra
 variable {S : Type*} [Semiring S] [Algebra R S]

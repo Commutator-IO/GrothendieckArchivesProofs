@@ -1,6 +1,7 @@
 module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.HenselianRings.StrictlyHenselianFiniteAlgebras
+public import StacksFrontier.RingTheory.Henselian.Unramified
 
 @[expose] public section
 
@@ -38,7 +39,9 @@ module-finite `R`-algebras `Bᵢ` with `A ≃ₐ[R] ∏ᵢ Bᵢ`, such that
   (it is surjective and universally injective, i.e. radicial — the first arrow `f₁`);
 * `etalePartMap e : R^ι → A` (the trivial finite étale cover `∐_ι Spec R`, the second arrow `f₂`)
   has the universal property: every `R`-algebra map `R^J → A` from a split finite étale algebra
-  factors uniquely through it (`existsUnique_comp_etalePartMap_eq`).
+  factors uniquely through it (`existsUnique_comp_etalePartMap_eq`), and so does every `R`-algebra
+  map `T → A` from any finite étale `R`-algebra `T` (`existsUnique_comp_etalePartMap_eq_of_etale`),
+  since such a `T` is split (`exists_algEquiv_pi_of_etale`, Stacks 04GL).
 
 The general pieces: a ring map from a finite product into a local ring factors through exactly
 one factor (`exists_map_single_eq_one`, `geomPointsPiEquiv`); a prime of an integral extension
@@ -53,9 +56,9 @@ fibre is its `finiteAlgHomCharsEquiv`.
   henselisations, and the construction of `X^ét` by descent of étale covers (SGA 1 IX §4, the
   draft's Stacks 02L5), are not done; Mathlib has no finite étale part `π₀(X/Y)` of a finite
   morphism.
-* The universal property is proved only against split finite étale algebras `R^J`; that every
-  finite étale algebra over a strictly henselian ring is split (Stacks 04GL), and the topological
-  invariance of the étale site used on page 23, are not formalised here.
+* The topological invariance of the étale site used on page 23 is in AxiomMath/Stacks
+  (`Stacks.Etale.etalePullback_isEquivalence`, 04DZ) but is not applied here: it serves the global
+  statement, which is not formalised.
 * Universal openness enters only through the openness of `Spec A → Spec R` after base change;
   the page's remark that « `d` constant » may be dropped for connected `Y` is false (the
   reading's counterexample `y² = t` over `k[t]`) and is not stated.
@@ -63,7 +66,7 @@ fibre is its `finiteAlgHomCharsEquiv`.
 
 open IsLocalRing
 
-universe u
+universe u v
 
 namespace Grothendieck.Folder126RadicialEtale
 
@@ -432,5 +435,86 @@ theorem radicial_etale_factorisation_of_strictlyHenselian
     exact ((Finset.sum_eq_sum_iff_of_le hle).mp hsum.symm i (Finset.mem_univ i)).symm
   exact ⟨ι, inferInstance, B, hBc, hBa, hBs, e, hcard, hBf, hpts,
     fun J _ f => existsUnique_comp_etalePartMap_eq e f⟩
+
+/-- A free module over a nonzero quotient `R ⧸ I` forces `I = ⊥`. -/
+theorem eq_bot_of_free_quotient {R : Type*} [CommRing R] (I : Ideal R) (hI : I ≠ ⊤)
+    [Module.Free R (R ⧸ I)] : I = ⊥ := by
+  classical
+  have : Nontrivial (R ⧸ I) := Ideal.Quotient.nontrivial_iff.mpr hI
+  let b := Module.Free.chooseBasis R (R ⧸ I)
+  obtain ⟨j⟩ : Nonempty (Module.Free.ChooseBasisIndex R (R ⧸ I)) := b.index_nonempty
+  refine (Submodule.eq_bot_iff _).2 fun r hr => ?_
+  have h0 : r • b j = 0 := by
+    obtain ⟨x, hx⟩ := Ideal.Quotient.mk_surjective (b j)
+    rw [← hx, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, ← map_mul,
+      Ideal.Quotient.eq_zero_iff_mem]
+    exact I.mul_mem_right x hr
+  have := congrArg (fun y => b.repr y j) h0
+  simpa [b.repr_self] using this
+
+/-- **Stacks 04GL, finite étale case.** Over a strictly henselian local ring, every finite étale
+algebra is split: `S ≃ₐ[R] R^n`. -/
+theorem exists_algEquiv_pi_of_etale (R : Type u) [CommRing R] [StrictlyHenselianLocalRing R]
+    (S : Type v) [CommRing S] [Algebra R S] [Algebra.Etale R S] [Module.Finite R S] :
+    ∃ n : ℕ, Nonempty (S ≃ₐ[R] (Fin n → R)) := by
+  classical
+  obtain ⟨n, I, B, _, _, ⟨e⟩, hI, hB⟩ :=
+    Algebra.IsUnramifiedIn.exists_algEquiv_prod_quotient R S
+      (fun P hP _ => (Algebra.unramified_iff_forall.mp inferInstance) ⟨P, hP⟩)
+  -- `B` is a quotient of `S`, hence finite over `R`; a maximal ideal of `B` would lie over `𝔪`.
+  have hB0 : Subsingleton B := by
+    by_contra h
+    rw [not_subsingleton_iff_nontrivial] at h
+    have hsurj : Function.Surjective ((AlgHom.snd R _ B).comp e.toAlgHom) := fun b =>
+      ⟨e.symm (0, b), by simp⟩
+    have : Module.Finite R B :=
+      Module.Finite.of_surjective ((AlgHom.snd R _ B).comp e.toAlgHom).toLinearMap hsurj
+    obtain ⟨m, hm⟩ := Ideal.exists_maximal B
+    have hc : (m.under R).IsMaximal := Ideal.isMaximal_under_of_isIntegral_of_isMaximal m
+    exact hB m hm.isPrime ⟨(IsLocalRing.eq_maximalIdeal hc).symm⟩
+  -- each `R ⧸ Iᵢ` is a retract of the flat module `S`, hence free, hence `Iᵢ = ⊥`.
+  have hI0 : ∀ i, I i = ⊥ := by
+    intro i
+    let p : S →ₗ[R] R ⧸ I i :=
+      (LinearMap.proj (R := R) (φ := fun j => R ⧸ I j) i).comp
+        ((LinearMap.fst R _ B).comp e.toLinearEquiv.toLinearMap)
+    let s : (R ⧸ I i) →ₗ[R] S :=
+      e.symm.toLinearEquiv.toLinearMap.comp
+        ((LinearMap.inl R _ B).comp (LinearMap.single R (fun j => R ⧸ I j) i))
+    have hps : p.comp s = LinearMap.id := by
+      ext
+      simp [p, s]
+    have : Module.Flat R (R ⧸ I i) := Module.Flat.of_retract s p hps
+    have : Module.Finite R (R ⧸ I i) := Module.Finite.of_surjective p
+      (fun x => ⟨s x, LinearMap.congr_fun hps x⟩)
+    have : Module.Free R (R ⧸ I i) := Module.free_of_flat_of_isLocalRing
+    exact eq_bot_of_free_quotient (I i) (hI i)
+  have : Unique B := uniqueOfSubsingleton 0
+  refine ⟨n, ⟨e.trans ((AlgEquiv.prodUnique).trans (AlgEquiv.piCongrRight fun i => ?_))⟩⟩
+  rw [hI0 i]
+  exact AlgEquiv.quotientBot R R
+
+/-- **Folder 126, page 23, over a strictly henselian base, for every finite étale algebra.**
+When `A ≃ ∏ᵢ Bᵢ` with `Bᵢ` local over a strictly henselian `R`, every `R`-algebra map `T → A`
+from a finite étale `R`-algebra `T` factors uniquely through `etalePartMap e : R^ι → A`. -/
+theorem existsUnique_comp_etalePartMap_eq_of_etale {R : Type u} [CommRing R]
+    [StrictlyHenselianLocalRing R] {A : Type*} [CommRing A] [Algebra R A] {ι : Type*}
+    {B : ι → Type*} [∀ i, CommRing (B i)] [∀ i, Algebra R (B i)] [∀ i, IsLocalRing (B i)]
+    (e : A ≃ₐ[R] ∀ i, B i) (T : Type v) [CommRing T] [Algebra R T] [Algebra.Etale R T]
+    [Module.Finite R T] (f : T →ₐ[R] A) :
+    ∃! g : T →ₐ[R] (ι → R), (etalePartMap e).comp g = f := by
+  obtain ⟨n, ⟨eT⟩⟩ := exists_algEquiv_pi_of_etale R T
+  obtain ⟨g, hg, huniq⟩ := existsUnique_comp_etalePartMap_eq e (f.comp eT.symm.toAlgHom)
+  refine ⟨g.comp eT.toAlgHom, ?_, fun g' hg' => ?_⟩
+  · show (etalePartMap e).comp (g.comp eT.toAlgHom) = f
+    rw [← AlgHom.comp_assoc, hg]
+    ext x
+    simp
+  · have := huniq (g'.comp eT.symm.toAlgHom) (by
+      show (etalePartMap e).comp (g'.comp eT.symm.toAlgHom) = f.comp eT.symm.toAlgHom
+      rw [← AlgHom.comp_assoc, hg'])
+    rw [← this]
+    ext x
+    simp
 
 end Grothendieck.Folder126RadicialEtale
