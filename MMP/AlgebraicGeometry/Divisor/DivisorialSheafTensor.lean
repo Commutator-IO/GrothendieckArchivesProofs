@@ -114,7 +114,10 @@ theorem divisorialSheafTensorMul_unit (W : X.Opensᵒᵖ) (φ : D.divisorialShea
           D'.divisorialSheaf.val)) W (φ ⊗ₜ ψ)) = divisorialMul W.unop φ ψ :=
   PresheafOfModules.hom_congr_apply'
     (Stacks.SheafOfModules.Tensor.sheafificationAdjunction_unit_comp_homEquiv_symm
-      (divisorialTensorMul D D')) W (φ ⊗ₜ ψ)
+      (R := ⟨X.toRingedSpace.presheaf, X.toRingedSpace.IsSheaf⟩)
+      (M := PresheafOfModules.tensorObj (O := X.presheaf) D.divisorialSheaf.val
+        D'.divisorialSheaf.val)
+      (N := (D + D').divisorialSheaf) (divisorialTensorMul D D')) W (φ ⊗ₜ ψ)
 
 /-- If `D` has a local equation on a neighbourhood of every point, the multiplication map
 `𝒪_X(D) ⊗ 𝒪_X(D') ⟶ 𝒪_X(D + D')` is an epimorphism: near a point where `ψ` is a local equation
