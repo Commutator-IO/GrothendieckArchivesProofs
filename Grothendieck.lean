@@ -17,6 +17,7 @@ import Grothendieck.Folder120
 import Grothendieck.Folder121
 import Grothendieck.Folder125
 import Grothendieck.Folder126NilpotentQuotient
+import Grothendieck.Folder126RadicialEtale
 import Grothendieck.Folder128
 import Grothendieck.Folder13
 import Grothendieck.Folder133
@@ -79,6 +80,7 @@ import Grothendieck.Folder50
 import Grothendieck.Folder53
 import Grothendieck.Folder55
 import Grothendieck.Folder55LemmaB
+import Grothendieck.Folder58DepthComparison
 import Grothendieck.Folder58LefPermanence
 import Grothendieck.Folder62
 import Grothendieck.Folder63
