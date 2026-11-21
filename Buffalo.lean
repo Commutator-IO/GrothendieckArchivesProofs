@@ -39,6 +39,7 @@ import Buffalo.AG.Part06c
 import Buffalo.AG.Part06d
 import Buffalo.AG.Part06dStacks
 import Buffalo.AG.Part07
+import Buffalo.AG.Part07AmpleMordell
 import Buffalo.AG.Part07Stacks
 import Buffalo.AG.Part07a
 import Buffalo.AG.Part07aStacks
