@@ -1,6 +1,10 @@
-import Mathlib.LinearAlgebra.TensorProduct.Quotient
-import Mathlib.RingTheory.Flat.Equalizer
-import StacksFrontier.RingTheory.Flat.SquareZeroConormal
+module
+
+public import Mathlib.LinearAlgebra.TensorProduct.Quotient
+public import Mathlib.RingTheory.Flat.Equalizer
+public import StacksFrontier.RingTheory.Flat.SquareZeroConormal
+
+@[expose] public section
 
 /-!
 # Folder 126, pages 4 to 7: deforming a flat equivalence relation across a nilpotent thickening

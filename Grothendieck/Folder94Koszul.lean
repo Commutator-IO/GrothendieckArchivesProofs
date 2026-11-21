@@ -1,5 +1,9 @@
-import Grothendieck.Folder94
-import StacksFrontier.RingTheory.Koszul.Regular
+module
+
+public import Grothendieck.Folder94
+public import StacksFrontier.RingTheory.Koszul.Regular
+
+@[expose] public section
 
 /-!
 # Folder 94, pages 8–9: the Koszul step of Lemme 6

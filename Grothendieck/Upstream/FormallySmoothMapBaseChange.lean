@@ -1,5 +1,9 @@
-import Mathlib
-import StacksFrontier.RingTheory.Kaehler.JacobiZariski
+module
+
+public import Mathlib
+public import StacksFrontier.RingTheory.Kaehler.JacobiZariski
+
+@[expose] public section
 
 /-!
 # Backport of the mathlib4 branch `mycaule/formallySmooth-mapBaseChange`

@@ -1,6 +1,10 @@
-import Mathlib
-import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianSchemeFirstCohomologyGenericPoint
-import StacksFrontier.AlgebraicGeometry.GroupScheme.Torsion
+module
+
+public import Mathlib
+public import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianSchemeFirstCohomologyGenericPoint
+public import StacksFrontier.AlgebraicGeometry.GroupScheme.Torsion
+
+@[expose] public section
 
 /-!
 # Folder 100: homomorphisms of abelian schemes, stated as propositions

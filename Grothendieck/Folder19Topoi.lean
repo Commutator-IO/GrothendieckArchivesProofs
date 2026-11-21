@@ -1,5 +1,9 @@
-import Grothendieck.Folder19
-import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
+module
+
+public import Grothendieck.Folder19
+public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
+
+@[expose] public section
 
 /-!
 # Folder 19, after théorème 1.12: descent along a surjective morphism of topoi
