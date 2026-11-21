@@ -15,10 +15,15 @@ name: Build
 # AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID, LEAN_CI_RESOURCE_GROUP and LEAN_CI_VM come from
 # `terraform output github_variables` there. None of them is a secret.
 
+# Only main builds on its own: with a single runner, a pull request never queues ahead of main. A
+# pull request builds when the `ci` label is added to it (remove and add it again to rebuild); a
+# `pull_request` event keeps the OIDC identity that may start the VM, which a `workflow_dispatch`
+# on a branch other than main does not have.
 on:
   push:
     branches: [main]
   pull_request:
+    types: [labeled]
   workflow_dispatch:
 
 permissions:
@@ -31,7 +36,8 @@ jobs:
   start-runner:
     if: >-
       github.event_name != 'pull_request' ||
-      github.event.pull_request.head.repo.full_name == github.repository
+      (github.event.label.name == 'ci' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -61,7 +67,15 @@ jobs:
   build:
     needs: start-runner
     # Also when start-runner was skipped (fork pull request): the job then waits for the runner.
-    if: ${{ !cancelled() && needs.start-runner.result != 'failure' }}
+    if: >-
+      ${{ !cancelled() && needs.start-runner.result != 'failure' &&
+      (github.event_name != 'pull_request' || github.event.label.name == 'ci') }}
+    # One run per branch: a new run of a pull request cancels its previous one; runs of main are
+    # never cancelled, so that the store is always written. At job level, so that adding another
+    # label (a skipped job) cancels nothing.
+    concurrency:
+      group: build-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
     runs-on: [self-hosted, linux, x64, lean]
     timeout-minutes: 240
     env:
