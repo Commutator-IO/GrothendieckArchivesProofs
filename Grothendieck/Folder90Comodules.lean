@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 90, pages 7–9 and 13–15: the smallest subcomodule, over `X = S = Spec A`

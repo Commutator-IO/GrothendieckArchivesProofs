@@ -1,5 +1,9 @@
-import Mathlib
-import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.Torsor
+module
+
+public import Mathlib
+public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.Torsor
+
+@[expose] public section
 
 /-!
 # Folder 45: surjectivity of `H¹` over a field of dimension `≤ 1`, stated as a proposition

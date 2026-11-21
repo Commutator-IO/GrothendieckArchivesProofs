@@ -1,13 +1,17 @@
-import StacksFrontier.AlgebraicGeometry.AffineNonvanishing.Basis
-import StacksFrontier.AlgebraicGeometry.AmplePositivePower.Basic
-import StacksFrontier.AlgebraicGeometry.AmplePullbackDatum.Basic
-import StacksFrontier.AlgebraicGeometry.AmpleWire.Basic
-import StacksFrontier.AlgebraicGeometry.QuasiProjective.BaseChange
-import StacksFrontier.AlgebraicGeometry.RelativeAmple.LocalOnBase
-import StacksFrontier.AlgebraicGeometry.RelativeAmple.VeryAmple
-import StacksFrontier.AlgebraicGeometry.RelativeAmpleAffineBase.Basic
-import StacksFrontier.AlgebraicGeometry.RelativeProjSeparated.Basic
-import StacksFrontier.AlgebraicGeometry.RelativelyAmple.Separated
+module
+
+public import StacksFrontier.AlgebraicGeometry.AffineNonvanishing.Basis
+public import StacksFrontier.AlgebraicGeometry.AmplePositivePower.Basic
+public import StacksFrontier.AlgebraicGeometry.AmplePullbackDatum.Basic
+public import StacksFrontier.AlgebraicGeometry.AmpleWire.Basic
+public import StacksFrontier.AlgebraicGeometry.QuasiProjective.BaseChange
+public import StacksFrontier.AlgebraicGeometry.RelativeAmple.LocalOnBase
+public import StacksFrontier.AlgebraicGeometry.RelativeAmple.VeryAmple
+public import StacksFrontier.AlgebraicGeometry.RelativeAmpleAffineBase.Basic
+public import StacksFrontier.AlgebraicGeometry.RelativeProjSeparated.Basic
+public import StacksFrontier.AlgebraicGeometry.RelativelyAmple.Separated
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07: ℙ(E), ample and very ample invertible sheaves

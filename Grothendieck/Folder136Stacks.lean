@@ -1,4 +1,8 @@
-import StacksFrontier.AlgebraicGeometry.Crystalline.Differentials.DividedPowerPolynomialAlgebra
+module
+
+public import StacksFrontier.AlgebraicGeometry.Crystalline.Differentials.DividedPowerPolynomialAlgebra
+
+@[expose] public section
 
 /-!
 # Folder 136, pages 5 to 7: the differential of a divided power, in Stacks' divided power de Rham complex

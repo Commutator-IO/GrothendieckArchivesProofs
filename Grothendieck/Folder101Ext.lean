@@ -1,4 +1,8 @@
-import Grothendieck.Folder101
+module
+
+public import Grothendieck.Folder101
+
+@[expose] public section
 
 /-!
 # Folder 101, page 11: `Ext¹_A(K, A)` as a cokernel, and completeness

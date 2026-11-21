@@ -1,4 +1,8 @@
-import StacksFrontier.AlgebraicGeometry.SectionRatioNoAmple.Pullback
+module
+
+public import StacksFrontier.AlgebraicGeometry.SectionRatioNoAmple.Pullback
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09: inverse image of ample sheaves

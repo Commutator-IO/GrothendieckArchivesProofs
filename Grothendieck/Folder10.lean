@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 10, pages 191–197: the indecomposables of `𝔾_a ⋊ 𝔾_m`

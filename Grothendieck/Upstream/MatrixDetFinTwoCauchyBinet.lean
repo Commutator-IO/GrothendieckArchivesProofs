@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Backport of the mathlib4 branch `mycaule/matrix-det-fin-two-cauchy-binet`

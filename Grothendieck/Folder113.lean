@@ -1,8 +1,12 @@
-import Mathlib.CategoryTheory.Idempotents.FunctorExtension
-import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
-import Mathlib.CategoryTheory.Preadditive.Opposite
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Grothendieck.Upstream.KaroubiAdditiveFunctors
+module
+
+public import Mathlib.CategoryTheory.Idempotents.FunctorExtension
+public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
+public import Mathlib.CategoryTheory.Preadditive.Opposite
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Grothendieck.Upstream.KaroubiAdditiveFunctors
+
+@[expose] public section
 
 /-!
 # Folder 113, page 3: the Karoubi envelope and Morita invariance (partial)

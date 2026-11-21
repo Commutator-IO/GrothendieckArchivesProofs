@@ -1,5 +1,9 @@
-import StacksFrontier.AlgebraicGeometry.Algebraization.StrictDepthFullyFaithful
-import StacksFrontier.AlgebraicGeometry.FormalGeometry.PrincipalFormalLocusDimensionCriterion
+module
+
+public import StacksFrontier.AlgebraicGeometry.Algebraization.StrictDepthFullyFaithful
+public import StacksFrontier.AlgebraicGeometry.FormalGeometry.PrincipalFormalLocusDimensionCriterion
+
+@[expose] public section
 
 /-!
 # Folder 58, pages 45 to 51: comparison of Hom along `Y′ = V(t)`, depth asked only off `Y′`

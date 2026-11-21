@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part07a
+module
+
+public import Buffalo.Topos.Part07a
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7: blackboard items not covered by an index entry

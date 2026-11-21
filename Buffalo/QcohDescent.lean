@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.LinearAlgebra.Quotient.Basic
+module
+
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.Quotient.Basic
+
+@[expose] public section
 
 /-!
 # Descent of morphisms of modules along a pure ring map (Buffalo 1973, Theorem A, affine core)

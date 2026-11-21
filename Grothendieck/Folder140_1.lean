@@ -1,5 +1,9 @@
-import Mathlib
-import Grothendieck.Folder146
+module
+
+public import Mathlib
+public import Grothendieck.Folder146
+
+@[expose] public section
 
 /-!
 # Folder 140-1, pages 22 and 24: `H¹(U_{0,3}, 𝔖₃; 𝔾_m) ≃ ℤ/6`

@@ -1,7 +1,11 @@
-import StacksFrontier.AlgebraicGeometry.Descent.AffineFpqcEffectivity
-import StacksFrontier.AlgebraicGeometry.Descent.Scheme.CanonicalInvariantOpen
-import StacksFrontier.AlgebraicGeometry.Descent.Scheme.DescendedScheme
-import StacksFrontier.AlgebraicGeometry.Descent.Scheme.OpenSubDatum
+module
+
+public import StacksFrontier.AlgebraicGeometry.Descent.AffineFpqcEffectivity
+public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.CanonicalInvariantOpen
+public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.DescendedScheme
+public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.OpenSubDatum
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09: effective descent of schemes along fpqc morphisms

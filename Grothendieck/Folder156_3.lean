@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 156-3, betweenness read on the cuts of a tronçon (pages 11–15)

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 62, pages 35–47: the invariant `j` of a conic with an étale trisection

@@ -1,4 +1,8 @@
-import StacksFrontier.AlgebraicGeometry.Descent.Modules.FpqcFinitePresentation
+module
+
+public import StacksFrontier.AlgebraicGeometry.Descent.Modules.FpqcFinitePresentation
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08: fpqc descent of finite type and finite presentation

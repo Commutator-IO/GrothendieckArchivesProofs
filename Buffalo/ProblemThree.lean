@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part05d
+module
+
+public import Buffalo.Topos.Part05d
+
+@[expose] public section
 
 /-!
 # Problem three for all small limits: the counterexample `{2} → Set`

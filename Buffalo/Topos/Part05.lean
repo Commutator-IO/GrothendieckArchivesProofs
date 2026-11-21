@@ -1,8 +1,12 @@
-import Buffalo.Topos.Part05a
-import Buffalo.Topos.Part05b
-import Buffalo.Topos.Part05c
-import Buffalo.Topos.Part05d
-import Buffalo.Topos.Part05boards
+module
+
+public import Buffalo.Topos.Part05a
+public import Buffalo.Topos.Part05b
+public import Buffalo.Topos.Part05c
+public import Buffalo.Topos.Part05d
+public import Buffalo.Topos.Part05boards
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5 (late June, 2 July and 10 July 1973)

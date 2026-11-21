@@ -1,9 +1,13 @@
-import Mathlib.Algebra.Group.Units.Basic
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FinCases
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Fintype.Fin
+module
+
+public import Mathlib.Algebra.Group.Units.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.Data.Fintype.Fin
+
+@[expose] public section
 
 /-!
 # Folder 89: the « fundamental relation » of the 3-3 sets, pages 15–18

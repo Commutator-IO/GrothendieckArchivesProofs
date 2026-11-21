@@ -1,4 +1,8 @@
-import StacksFrontier.RingTheory.RegularRing.GlobalDimension
+module
+
+public import StacksFrontier.RingTheory.RegularRing.GlobalDimension
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: Serre's characterisation of regular local rings

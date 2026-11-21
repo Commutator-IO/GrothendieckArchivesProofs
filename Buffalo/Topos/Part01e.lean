@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part01a
+module
+
+public import Buffalo.Topos.Part01a
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1e: colimits of sheaves and representability (4 April 1973)

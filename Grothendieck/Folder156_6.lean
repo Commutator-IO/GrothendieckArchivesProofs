@@ -1,7 +1,11 @@
-import Mathlib.Order.UpperLower.CompleteLattice
-import Mathlib.Order.UpperLower.Principal
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.Set.Finite.Lattice
+module
+
+public import Mathlib.Order.UpperLower.CompleteLattice
+public import Mathlib.Order.UpperLower.Principal
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Set.Finite.Lattice
+
+@[expose] public section
 
 /-!
 # Folder 156-6, pages 40, 44 and 49–50: closed parts, the lemma on `φ ↦ φ⁻¹`, trivial ateliers

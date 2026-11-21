@@ -1,4 +1,8 @@
-import Buffalo.AG.Part04a
+module
+
+public import Buffalo.AG.Part04a
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (b): 13 June 1973, locally ringed spaces and schemes

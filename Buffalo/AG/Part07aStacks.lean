@@ -1,5 +1,9 @@
-import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CoherentIffFinitePresentation
-import StacksFrontier.AlgebraicGeometry.CoherenceCriteria.Basic
+module
+
+public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CoherentIffFinitePresentation
+public import StacksFrontier.AlgebraicGeometry.CoherenceCriteria.Basic
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (a): coherent `𝒪_X`-modules on a scheme

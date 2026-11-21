@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 90, page 9: a flat irreducible group whose components have non-empty fibres, and a

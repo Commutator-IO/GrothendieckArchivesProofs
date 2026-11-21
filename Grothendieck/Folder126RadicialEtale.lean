@@ -1,4 +1,8 @@
-import StacksFrontier.AlgebraicGeometry.EtaleCohomology.HenselianRings.StrictlyHenselianFiniteAlgebras
+module
+
+public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.HenselianRings.StrictlyHenselianFiniteAlgebras
+
+@[expose] public section
 
 /-!
 # Folder 126, pages 17–23: the radicial–étale factorisation, local core

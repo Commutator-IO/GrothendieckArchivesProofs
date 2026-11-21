@@ -1,6 +1,10 @@
-import StacksFrontier.RingTheory.Flat.LocalCriteria.FibreCriteria
-import StacksFrontier.RingTheory.Flat.ShortExact
-import StacksFrontier.RingTheory.Coherent.Flat
+module
+
+public import StacksFrontier.RingTheory.Flat.LocalCriteria.FibreCriteria
+public import StacksFrontier.RingTheory.Flat.ShortExact
+public import StacksFrontier.RingTheory.Coherent.Flat
+
+@[expose] public section
 
 /-!
 # Folder 49, page 3: a coherent sheaf that embeds fibrewise into flat stalks is flat

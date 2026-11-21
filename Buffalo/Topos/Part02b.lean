@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part02a
+module
+
+public import Buffalo.Topos.Part02a
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2b: infinite products, connectedness, torsors, stacks (18 May 1973)
