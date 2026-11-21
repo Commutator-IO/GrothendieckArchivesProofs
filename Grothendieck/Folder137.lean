@@ -1094,7 +1094,7 @@ lemma lex_mono (F : Lex k B) (L : Perf k) : Mono (F.obj.map (ιP L)) := by
 
 /-- The kernel property of `F(L) → F(I(L)) → F(L[1])`. -/
 def lexLimit (F : Lex k B) (L : Perf k) :
-    IsLimit (KernelFork.ofι (F.obj.map (ιP L)) (by
+    IsLimit (KernelFork.ofι (f := F.obj.map (πP L)) (F.obj.map (ιP L)) (by
       rw [← F.obj.map_comp, ιP_comp_πP, F.obj.map_zero])) :=
   (F.property.2.2 _ _ (isSigma_cone L)).choose_spec.some
 
