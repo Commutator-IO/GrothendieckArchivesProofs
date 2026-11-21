@@ -79,6 +79,7 @@ import Grothendieck.Folder50
 import Grothendieck.Folder53
 import Grothendieck.Folder55
 import Grothendieck.Folder55LemmaB
+import Grothendieck.Folder58DepthComparison
 import Grothendieck.Folder62
 import Grothendieck.Folder63
 import Grothendieck.Folder64
