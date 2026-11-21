@@ -1,6 +1,10 @@
-import Buffalo.Topos.Part04a
-import Buffalo.Topos.Part04b
-import Buffalo.Topos.Part04boards
+module
+
+public import Buffalo.Topos.Part04a
+public import Buffalo.Topos.Part04b
+public import Buffalo.Topos.Part04boards
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 4 (6, 20 and 27 June 1973)

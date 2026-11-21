@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part03b
+module
+
+public import Buffalo.Topos.Part03b
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3c: sober spaces, ordered categories, very dense subsets (4 June 1973)

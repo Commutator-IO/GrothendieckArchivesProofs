@@ -1,5 +1,9 @@
-import Grothendieck.Folder136
-import StacksFrontier.AlgebraicTopology.SimplicialObject.ChainHomotopy
+module
+
+public import Grothendieck.Folder136
+public import StacksFrontier.AlgebraicTopology.SimplicialObject.ChainHomotopy
+
+@[expose] public section
 
 /-!
 # Folder 136, page 226, Proposition 1: `Φ_* ≃ 0`, and `C^{p,q}_*` is contractible for `p ≥ 1`

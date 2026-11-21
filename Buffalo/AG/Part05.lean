@@ -1,6 +1,10 @@
-import Buffalo.AG.Part05a
-import Buffalo.AG.Part05b
-import Buffalo.AG.Part05c
+module
+
+public import Buffalo.AG.Part05a
+public import Buffalo.AG.Part05b
+public import Buffalo.AG.Part05c
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05: (undated session, from 7:04:25) – 25 June 1973 (to 0:57:01)

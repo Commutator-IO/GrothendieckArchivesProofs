@@ -1,4 +1,8 @@
-import Buffalo.AG.Part02
+module
+
+public import Buffalo.AG.Part02
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (a): 12–13 June 1973, stalks, localization, local rings

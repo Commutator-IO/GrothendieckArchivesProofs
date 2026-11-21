@@ -1,10 +1,14 @@
-import Mathlib.CategoryTheory.ConnectedComponents
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
-import Mathlib.CategoryTheory.Limits.IsConnected
-import Mathlib.CategoryTheory.PUnit
-import Mathlib.CategoryTheory.Yoneda
-import Mathlib.CategoryTheory.SingleObj
-import Mathlib.Data.ZMod.Defs
+module
+
+public import Mathlib.CategoryTheory.ConnectedComponents
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+public import Mathlib.CategoryTheory.Limits.IsConnected
+public import Mathlib.CategoryTheory.PUnit
+public import Mathlib.CategoryTheory.Yoneda
+public import Mathlib.CategoryTheory.SingleObj
+public import Mathlib.Data.ZMod.Defs
+
+@[expose] public section
 
 /-!
 # Folder 114: fundamental localisers, `W₀`, and the minimal one

@@ -1,5 +1,9 @@
-import Mathlib
-import Grothendieck.Upstream.NoetherianIsOpenOfStableUnderGeneralization
+module
+
+public import Mathlib
+public import Grothendieck.Upstream.NoetherianIsOpenOfStableUnderGeneralization
+
+@[expose] public section
 
 /-!
 # Folder 42: Lemme 1, the proposition of page 3, Lemme 2, Corollaire 1

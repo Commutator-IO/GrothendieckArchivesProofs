@@ -1,16 +1,22 @@
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.RingTheory.Flat.Tensor
-import Mathlib.LinearAlgebra.TensorProduct.Prod
-import Mathlib.RingTheory.PowerSeries.Trunc
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.RingTheory.Kaehler.JacobiZariski
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.RingTheory.Smooth.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Basis
-import Mathlib.Algebra.MvPolynomial.Expand
-import Mathlib.Algebra.CharP.Frobenius
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.RingTheory.PowerSeries.Substitution
+module
+
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.RingTheory.Flat.Tensor
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Mathlib.RingTheory.PowerSeries.Trunc
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.RingTheory.Kaehler.JacobiZariski
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.RingTheory.Smooth.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
+public import Mathlib.Algebra.MvPolynomial.Expand
+public import Mathlib.Algebra.CharP.Frobenius
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+public import Mathlib.Algebra.FiveLemma
+
+@[expose] public section
 
 /-!
 # Folder 22, Lemme 3.3, Corollaires 3.4, 3.5, and the obstruction of pp. 22, 24

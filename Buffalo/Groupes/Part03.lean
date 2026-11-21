@@ -1,6 +1,10 @@
-import Buffalo.Groupes.Part03a
-import Buffalo.Groupes.Part03b
-import Buffalo.Groupes.Part03c
+module
+
+public import Buffalo.Groupes.Part03a
+public import Buffalo.Groupes.Part03b
+public import Buffalo.Groupes.Part03c
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03

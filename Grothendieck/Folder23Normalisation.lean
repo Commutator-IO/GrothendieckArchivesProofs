@@ -1,9 +1,13 @@
-import StacksFrontier.RingTheory.Excellent.Basic
-import StacksFrontier.RingTheory.Nagata.Basic
-import StacksFrontier.RingTheory.Nagata.CompleteLocalRing
-import StacksFrontier.RingTheory.Nagata.Examples
-import StacksFrontier.RingTheory.Nagata.MonogenicN1
-import StacksFrontier.RingTheory.Nagata.Universes
+module
+
+public import StacksFrontier.RingTheory.Excellent.Basic
+public import StacksFrontier.RingTheory.Nagata.Basic
+public import StacksFrontier.RingTheory.Nagata.CompleteLocalRing
+public import StacksFrontier.RingTheory.Nagata.Examples
+public import StacksFrontier.RingTheory.Nagata.MonogenicN1
+public import StacksFrontier.RingTheory.Nagata.Universes
+
+@[expose] public section
 
 /-!
 # Folder 23, pages 86 to 88: finiteness of the normalisation of a quotient of a regular ring

@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
+module
+
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+
+@[expose] public section
 
 /-!
 # Folder 13, page 47: the « double niveau » question, and its Tate case

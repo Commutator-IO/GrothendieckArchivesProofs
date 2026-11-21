@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 5: the coefficients `qᵢ` of the universal divided-power algebra (page 4)

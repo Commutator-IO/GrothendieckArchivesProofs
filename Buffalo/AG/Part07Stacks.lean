@@ -1,5 +1,9 @@
-import Buffalo.AG.Part07a
-import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProduct
+module
+
+public import Buffalo.AG.Part07a
+public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProduct
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (a): products of separable and of connected `k`-schemes

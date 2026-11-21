@@ -1,8 +1,12 @@
-import Mathlib.Order.Hom.Basic
-import Mathlib.Order.Basic
-import Mathlib.Data.Set.Lattice.Indexed
-import Mathlib.Tactic.Order
-import Mathlib.Data.Fintype.Powerset
+module
+
+public import Mathlib.Order.Hom.Basic
+public import Mathlib.Order.Basic
+public import Mathlib.Data.Set.Lattice.Indexed
+public import Mathlib.Tactic.Order
+public import Mathlib.Data.Fintype.Powerset
+
+@[expose] public section
 
 /-!
 # Folder 156-7, pages 61–98: supports by points, the two-strand string, and the orthomodular law

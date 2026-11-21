@@ -1,5 +1,9 @@
-import StacksFrontier.RingTheory.DeRham.Cartier.Coordinates
-import Grothendieck.Folder93
+module
+
+public import StacksFrontier.RingTheory.DeRham.Cartier.Coordinates
+public import Grothendieck.Folder93
+
+@[expose] public section
 
 /-!
 # Folder 93: Cartier descent in rank one on an algebra with Frobenius coordinates

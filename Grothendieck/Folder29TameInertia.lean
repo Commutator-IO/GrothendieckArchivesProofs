@@ -1,5 +1,9 @@
-import Grothendieck.Folder29
-import StacksFrontier.RingTheory.DiscreteValuationRing.Abhyankar.AbhyankarLemma
+module
+
+public import Grothendieck.Folder29
+public import StacksFrontier.RingTheory.DiscreteValuationRing.Abhyankar.AbhyankarLemma
+
+@[expose] public section
 
 /-!
 # Folder 29, page 120: tame inertia through Abhyankar's lemma

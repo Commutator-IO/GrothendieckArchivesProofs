@@ -1,5 +1,9 @@
-import Grothendieck.Folder11
-import StacksFrontier.AlgebraicGeometry.WeilCohomology.Concrete.DiagonalExpansion
+module
+
+public import Grothendieck.Folder11
+public import StacksFrontier.AlgebraicGeometry.WeilCohomology.Concrete.DiagonalExpansion
+
+@[expose] public section
 
 /-!
 # Folder 11 (pages 33, 37, 41): push-forwards into a graded algebra with a diagonal class

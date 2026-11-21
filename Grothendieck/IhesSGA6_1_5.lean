@@ -1,8 +1,12 @@
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.Algebra.Exact.Basic
-import Mathlib.LinearAlgebra.Basis.Prod
-import Mathlib.RingTheory.Finiteness.Prod
-import Mathlib.RingTheory.Finiteness.Projective
+module
+
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.Algebra.Exact.Basic
+public import Mathlib.LinearAlgebra.Basis.Prod
+public import Mathlib.RingTheory.Finiteness.Prod
+public import Mathlib.RingTheory.Finiteness.Projective
+
+@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_1_5, views 1–5: modules with an `n`-presentation

@@ -1,5 +1,9 @@
-import Grothendieck.Folder101Ext
-import StacksFrontier.RingTheory.LocalCohomology.CechModel
+module
+
+public import Grothendieck.Folder101Ext
+public import StacksFrontier.RingTheory.LocalCohomology.CechModel
+
+@[expose] public section
 
 /-!
 # Folder 101, page 10: local cohomology on `Spec A` lives in degrees `0` and `1`

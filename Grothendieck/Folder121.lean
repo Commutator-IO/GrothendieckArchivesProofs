@@ -1,8 +1,12 @@
-import Mathlib.Topology.Closure
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Order.WellFounded
-import Mathlib.Order.CompleteLattice.Finset
-import Mathlib.Topology.Connected.Basic
+module
+
+public import Mathlib.Topology.Closure
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Order.WellFounded
+public import Mathlib.Order.CompleteLattice.Finset
+public import Mathlib.Topology.Connected.Basic
+
+@[expose] public section
 
 /-!
 # Folder 121, pages 3–16: the coarsest admissible cellular decomposition

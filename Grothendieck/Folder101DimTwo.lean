@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 101, pages 14–15: local duality with algebraic Matlis duals fails in dimension 2

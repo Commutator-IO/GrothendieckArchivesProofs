@@ -1,5 +1,9 @@
-import Buffalo.Topos.Part02
-import Buffalo.Topos.Part03
+module
+
+public import Buffalo.Topos.Part02
+public import Buffalo.Topos.Part03
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7b: classifying topoi, examples and special cases (12 July 1973)

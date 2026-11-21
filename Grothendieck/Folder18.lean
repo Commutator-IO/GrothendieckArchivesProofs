@@ -1,6 +1,10 @@
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Mathlib.RingTheory.AlgebraicIndependent.Defs
-import Mathlib.RingTheory.Algebraic.Defs
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Mathlib.RingTheory.AlgebraicIndependent.Defs
+public import Mathlib.RingTheory.Algebraic.Defs
+
+@[expose] public section
 
 /-!
 # Folder 18, page 12: the elliptic case of the period conjecture (statement only)

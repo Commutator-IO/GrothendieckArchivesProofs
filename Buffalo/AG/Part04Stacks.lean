@@ -1,5 +1,9 @@
-import Buffalo.AG.Part04d
-import StacksFrontier.Algebra.Module.Projective.Invertible
+module
+
+public import Buffalo.AG.Part04d
+public import StacksFrontier.Algebra.Module.Projective.Invertible
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04: invertible modules are the locally free modules of rank one

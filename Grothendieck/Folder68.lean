@@ -1,9 +1,13 @@
-import Mathlib.LinearAlgebra.Matrix.Transvection
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Algebra.GroupWithZero.Units.Fintype
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Transvection
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Algebra.GroupWithZero.Units.Fintype
+
+@[expose] public section
 
 
 /-!

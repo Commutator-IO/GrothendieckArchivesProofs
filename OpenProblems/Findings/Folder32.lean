@@ -1,5 +1,9 @@
-import Mathlib
-import StacksFrontier.AlgebraicGeometry.EtaleCohomology.Colimits.CohomologyPullbackMap
+module
+
+public import Mathlib
+public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.Colimits.CohomologyPullbackMap
+
+@[expose] public section
 
 /-!
 # Folder 32: the kernel of a pullback is killed by the index, stated as propositions

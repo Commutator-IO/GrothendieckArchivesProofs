@@ -1,5 +1,9 @@
-import Mathlib.Data.List.Basic
-import Mathlib.Logic.Function.Iterate
+module
+
+public import Mathlib.Data.List.Basic
+public import Mathlib.Logic.Function.Iterate
+
+@[expose] public section
 
 /-!
 # Folder 80, page 9: the regions of the arrangement of nine curves

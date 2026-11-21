@@ -1,6 +1,10 @@
-import Grothendieck.Folder113
-import Mathlib.CategoryTheory.Linear.LinearFunctor
-import StacksFrontier.AlgebraicGeometry.WeilCohomology.Motives.Category
+module
+
+public import Grothendieck.Folder113
+public import Mathlib.CategoryTheory.Linear.LinearFunctor
+public import StacksFrontier.AlgebraicGeometry.WeilCohomology.Motives.Category
+
+@[expose] public section
 
 /-!
 # Folder 113, page 3: Morita invariance in its `k`-linear form

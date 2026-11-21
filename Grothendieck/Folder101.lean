@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 101, pages 10–11: local duality in dimension one for every `O_X`-module

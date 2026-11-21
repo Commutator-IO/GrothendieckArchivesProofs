@@ -1,5 +1,9 @@
-import Grothendieck.Folder128
-import StacksFrontier.AlgebraicGeometry.Descent.Modules.EffectiveDescent
+module
+
+public import Grothendieck.Folder128
+public import StacksFrontier.AlgebraicGeometry.Descent.Modules.EffectiveDescent
+
+@[expose] public section
 
 /-!
 # Folder 128, pages 7–9: Cor. 2 and 3 in the affine case, and why « flat » cannot be dropped

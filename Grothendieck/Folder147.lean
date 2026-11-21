@@ -1,5 +1,9 @@
-import Mathlib.Tactic.Ring
-import Mathlib.Data.Rat.Init
+module
+
+public import Mathlib.Tactic.Ring
+public import Mathlib.Data.Rat.Init
+
+@[expose] public section
 
 /-!
 # Folder 147, pages 62–64: the stratified class of `M₁,₁` over `ℤ`

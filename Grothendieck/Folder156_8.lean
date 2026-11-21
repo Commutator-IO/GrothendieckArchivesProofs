@@ -1,8 +1,12 @@
-import Mathlib.Order.Basic
-import Mathlib.Data.Fintype.Sum
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Finset.Card
+module
+
+public import Mathlib.Order.Basic
+public import Mathlib.Data.Fintype.Sum
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Finset.Card
+
+@[expose] public section
 
 /-!
 # Folder 156-8: the axioms of a magasin, and the interior supports of the magasin of an ordered set

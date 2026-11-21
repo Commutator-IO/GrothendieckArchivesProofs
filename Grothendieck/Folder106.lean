@@ -1,6 +1,10 @@
-import Mathlib.CategoryTheory.Localization.Construction
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
-import Mathlib.CategoryTheory.Limits.Shapes.IsTerminal
+module
+
+public import Mathlib.CategoryTheory.Localization.Construction
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
+public import Mathlib.CategoryTheory.Limits.Shapes.IsTerminal
+
+@[expose] public section
 
 /-!
 # Folder 106: cofibration categories and Brown's factorisation lemma

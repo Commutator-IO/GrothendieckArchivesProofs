@@ -1,4 +1,8 @@
-import Grothendieck.Folder55
+module
+
+public import Grothendieck.Folder55
+
+@[expose] public section
 
 /-!
 # Folder 55, page 13: Lemme B does not hold as stated
