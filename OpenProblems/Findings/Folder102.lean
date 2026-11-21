@@ -1,5 +1,9 @@
-import Mathlib
-import StacksFrontier.AlgebraicGeometry.Limits.LimitPreservingFunctorOfPoints
+module
+
+public import Mathlib
+public import StacksFrontier.AlgebraicGeometry.Limits.LimitPreservingFunctorOfPoints
+
+@[expose] public section
 
 /-!
 # Folder 102: an open-immersion criterion for functors, stated as a proposition

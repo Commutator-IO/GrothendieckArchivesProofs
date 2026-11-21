@@ -1,12 +1,16 @@
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
-import Mathlib.NumberTheory.Real.GoldenRatio
-import Mathlib.NumberTheory.Zsqrtd.Basic
-import Mathlib.Data.Rat.Lemmas
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.IntervalCases
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+public import Mathlib.NumberTheory.Real.GoldenRatio
+public import Mathlib.NumberTheory.Zsqrtd.Basic
+public import Mathlib.Data.Rat.Lemmas
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+
+@[expose] public section
 
 /-!
 # Folder 161-6, pages 3–6, 12, 14 and 21: the golden number and the six axes of the icosahedron

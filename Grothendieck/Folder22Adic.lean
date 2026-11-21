@@ -1,8 +1,13 @@
-import Mathlib.RingTheory.PowerSeries.Evaluation
-import Mathlib.Topology.UniformSpace.DiscreteUniformity
-import StacksFrontier.RingTheory.FormallySmooth.Topological
-import StacksFrontier.RingTheory.MvPowerSeries.HomExt
-import Grothendieck.Folder22
+module
+
+public import Mathlib.RingTheory.PowerSeries.Evaluation
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.Topology.UniformSpace.DiscreteUniformity
+public import StacksFrontier.RingTheory.FormallySmooth.Topological
+public import StacksFrontier.RingTheory.MvPowerSeries.HomExt
+public import Grothendieck.Folder22
+
+@[expose] public section
 
 /-!
 # Folder 22, pages 22 and 24: the `t`-adic half of the obstruction

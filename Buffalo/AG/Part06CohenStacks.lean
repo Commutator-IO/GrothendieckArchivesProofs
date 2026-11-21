@@ -1,5 +1,9 @@
-import StacksFrontier.RingTheory.CompleteLocalRing.Regular
-import StacksFrontier.RingTheory.RegularLocalRing.Criteria
+module
+
+public import StacksFrontier.RingTheory.CompleteLocalRing.Regular
+public import StacksFrontier.RingTheory.RegularLocalRing.Criteria
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: complete regular local rings are power series rings

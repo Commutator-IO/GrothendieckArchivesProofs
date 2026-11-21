@@ -1,4 +1,8 @@
-import Buffalo.Groupes.Part02a
+module
+
+public import Buffalo.Groupes.Part02a
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (b): distributions, hyperalgebra, diagonalizable groups

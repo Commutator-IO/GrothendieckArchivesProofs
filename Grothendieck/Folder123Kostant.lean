@@ -1,6 +1,10 @@
-import Mathlib.Data.Nat.Totient
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Tactic.NormNum
+
+@[expose] public section
 
 /-!
 # Folder 123: the number of Kostant rigidifications, `card(W)² / (h z φ(h))`, in small rank

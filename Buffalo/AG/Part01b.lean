@@ -1,4 +1,8 @@
-import Buffalo.AG.Part01a
+module
+
+public import Buffalo.AG.Part01a
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 01 (b): 30 May 1973

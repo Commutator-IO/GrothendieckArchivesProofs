@@ -1,4 +1,8 @@
-import Buffalo.Groupes.Part01
+module
+
+public import Buffalo.Groupes.Part01
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03 (c): group schemes over a field, height one, tori

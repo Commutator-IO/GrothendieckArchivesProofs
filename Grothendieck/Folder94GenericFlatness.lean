@@ -1,5 +1,9 @@
-import Grothendieck.Folder94
-import StacksFrontier.RingTheory.Flat.GenericFlatness
+module
+
+public import Grothendieck.Folder94
+public import StacksFrontier.RingTheory.Flat.GenericFlatness
+
+@[expose] public section
 
 /-!
 # Folder 94, page 19 (Lemme 16): the dense open for `X` of finite type over `S`

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 77, pages 65–71 and 87: the universal discriminant mod 2 and mod 4

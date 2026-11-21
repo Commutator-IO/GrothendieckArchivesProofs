@@ -1,6 +1,10 @@
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Fin.VecNotation
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Data.Fin.VecNotation
+
+@[expose] public section
 
 /-!
 # Folder 80, page 24: the « crucial » arrangements and a counterexample to the Théorème

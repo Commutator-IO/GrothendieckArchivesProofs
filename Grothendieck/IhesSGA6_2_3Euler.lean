@@ -1,9 +1,13 @@
-import StacksFrontier.CategoryTheory.Abelian.GrothendieckGroup
-import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
-import Mathlib.Algebra.Order.Interval.Finset.SuccPred
-import Mathlib.Algebra.Ring.NegOnePow
-import Mathlib.Data.Int.Interval
-import Mathlib.Data.Int.SuccPred
+module
+
+public import StacksFrontier.CategoryTheory.Abelian.GrothendieckGroup
+public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Algebra.Order.Interval.Finset.SuccPred
+public import Mathlib.Algebra.Ring.NegOnePow
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Data.Int.SuccPred
+
+@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, view 3, item 5: the Euler formula for any additive function

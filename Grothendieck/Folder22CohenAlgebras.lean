@@ -1,4 +1,8 @@
-import StacksFrontier.RingTheory.GeometricallyRegular.FormalSmoothness
+module
+
+public import StacksFrontier.RingTheory.GeometricallyRegular.FormalSmoothness
+
+@[expose] public section
 
 /-!
 # Folder 22, pages 12 to 18: formal smoothness and geometric regularity (3.9, 3.10, 3.12, 3.13)

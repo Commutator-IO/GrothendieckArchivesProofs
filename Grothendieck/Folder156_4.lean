@@ -1,8 +1,12 @@
-import Mathlib.Order.Basic
-import Mathlib.Data.Set.Lattice.Indexed
-import Mathlib.Data.List.Chain
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Fin.VecNotation
+module
+
+public import Mathlib.Order.Basic
+public import Mathlib.Data.Set.Lattice.Indexed
+public import Mathlib.Data.List.Chain
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Data.Fin.VecNotation
+
+@[expose] public section
 
 /-!
 # Folder 156-4, pages 65–68: supports, cosupports, and the presumed Boolean algebra

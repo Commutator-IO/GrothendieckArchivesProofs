@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 11 (pages 50–56): the tautological subalgebra of `H*(Xᵏ)`, an algebraic model

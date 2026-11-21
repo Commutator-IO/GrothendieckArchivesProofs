@@ -1,4 +1,8 @@
-import Buffalo.AG.Part04
+module
+
+public import Buffalo.AG.Part04
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04: board items not covered by the index

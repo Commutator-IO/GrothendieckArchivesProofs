@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part01a
+module
+
+public import Buffalo.Topos.Part01a
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1c: direct and inverse images, stalks (11 May 1973)

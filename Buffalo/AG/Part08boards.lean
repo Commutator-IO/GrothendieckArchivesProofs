@@ -1,4 +1,8 @@
-import Buffalo.AG.Part08
+module
+
+public import Buffalo.AG.Part08
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08: blackboards

@@ -1,25 +1,29 @@
-import Mathlib.CategoryTheory.Subobject.Basic
-import Mathlib.AlgebraicTopology.Reedy.Basic
-import Mathlib.SetTheory.Ordinal.Rank
-import Mathlib.Data.Fin.SuccPred
-import Mathlib.Data.Finset.Sort
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Option
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.LinearAlgebra.Finsupp.Defs
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.CategoryTheory.Subfunctor.Image
-import Mathlib.CategoryTheory.Adhesive.Basic
-import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
-import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
-import Mathlib.CategoryTheory.Limits.Types.Pushouts
-import Mathlib.CategoryTheory.Limits.Types.Coproducts
-import Mathlib.CategoryTheory.Limits.MonoCoprod
-import Mathlib.CategoryTheory.Extensive
-import Mathlib.CategoryTheory.Adjunction.Limits
-import Grothendieck.Upstream.SemiSimplexCategoryReedy
+module
+
+public import Mathlib.CategoryTheory.Subobject.Basic
+public import Mathlib.AlgebraicTopology.Reedy.Basic
+public import Mathlib.SetTheory.Ordinal.Rank
+public import Mathlib.Data.Fin.SuccPred
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.Option
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.LinearAlgebra.Finsupp.Defs
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.CategoryTheory.Subfunctor.Image
+public import Mathlib.CategoryTheory.Adhesive.Basic
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
+public import Mathlib.CategoryTheory.Limits.Types.Pushouts
+public import Mathlib.CategoryTheory.Limits.Types.Coproducts
+public import Mathlib.CategoryTheory.Limits.MonoCoprod
+public import Mathlib.CategoryTheory.Extensive
+public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Grothendieck.Upstream.SemiSimplexCategoryReedy
+
+@[expose] public section
 
 /-!
 # Folder 104: categories of models, their three examples, and the globular complex

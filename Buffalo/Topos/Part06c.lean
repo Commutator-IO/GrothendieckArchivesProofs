@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part06b
+module
+
+public import Buffalo.Topos.Part06b
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 6c: morphisms of sites, classifying topoi, subtopoi (1973)

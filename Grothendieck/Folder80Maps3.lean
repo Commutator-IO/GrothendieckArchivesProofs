@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 80, pages 39–54: the skeleton of a bigon-free arrangement, in combinatorial maps

@@ -1,6 +1,10 @@
-import Mathlib
-import StacksFrontier.RingTheory.GeometricallyNormal.Defs
-import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.Normal
+module
+
+public import Mathlib
+public import StacksFrontier.RingTheory.GeometricallyNormal.Defs
+public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.Normal
+
+@[expose] public section
 
 /-!
 # Folder 127: flatness of a schematic closure, stated as propositions
