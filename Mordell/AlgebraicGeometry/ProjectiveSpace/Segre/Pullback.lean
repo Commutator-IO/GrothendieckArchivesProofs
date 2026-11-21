@@ -1,3 +1,7 @@
+-- Copied from AxiomMath/Mordell at 82a30cb (Apache-2.0, see NOTICE and Mordell/LICENSE), and
+-- modified in GrothendieckArchivesProofs (2026-11-21): one `haveI` of a proposition in
+-- `nonempty_pullback_segreMorphism_iso` becomes `have` (the style linter's warning is an error
+-- here); nothing else changes.
 module
 public import Mordell.AlgebraicGeometry.ProjectiveSpace.Segre.Basic
 public import StacksFrontier.AlgebraicGeometry.Morphisms.Differentials.ExternalTensorProduct
@@ -120,7 +124,7 @@ private theorem nonempty_pullback_morphismAtUniverse_iso {X : Scheme.{u}} (L : X
 private theorem nonempty_pullback_segreMorphism_iso (n m : ℕ) :
     Nonempty ((Scheme.Modules.pullback (Segre.segreMorphism.{u} n m)).obj
         (twistingSheafAtUniverse.{u} (n * m + n + m)) ≅ Segre.segreModule.{u} n m) := by
-  haveI : Stacks.Ample.IsInvertibleModule _ (Segre.segreModule.{u} n m) :=
+  have : Stacks.Ample.IsInvertibleModule _ (Segre.segreModule.{u} n m) :=
     Segre.isInvertible_segreModule.{u} n m
   exact nonempty_pullback_morphismAtUniverse_iso _ _ _
 
