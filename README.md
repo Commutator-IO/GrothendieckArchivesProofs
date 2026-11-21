@@ -61,4 +61,6 @@ held by his heirs.
 
 `Mordell/` holds files copied unchanged from [AxiomMath/Mordell](https://github.com/AxiomMath/Mordell)
 (Apache-2.0): abelian varieties (Pic⁰, φ_L, the theorem of the square) and ample sheaves over a
-field. They are listed in [`NOTICE`](NOTICE), with the commit they come from.
+field. `MMP/` holds files copied from [AxiomMath/MMP](https://github.com/AxiomMath/MMP)
+(Apache-2.0): nef divisors and numerical equivalence; one of them is ported to the pinned Stacks.
+They are listed in [`NOTICE`](NOTICE), with the commit they come from.

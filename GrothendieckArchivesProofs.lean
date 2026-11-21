@@ -5,6 +5,7 @@ module
 -- stated as propositions.
 public import Grothendieck
 public import Mordell
+public import MMP
 public import Buffalo
 public import OpenProblems
 

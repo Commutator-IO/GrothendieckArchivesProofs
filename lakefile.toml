@@ -37,6 +37,12 @@ name = "Buffalo"
 name = "Mordell"
 leanOptions = { autoImplicit = false, relaxedAutoImplicit = false, maxSynthPendingDepth = 3 }
 
+# Files copied from AxiomMath/MMP at 1f9ade3 (Apache-2.0, listed in NOTICE; one is ported), with
+# the options of MMP's own lakefile that affect elaboration. Warnings stay errors, as above.
+[[lean_lib]]
+name = "MMP"
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false, maxSynthPendingDepth = 3 }
+
 # The open problems of the Montpellier notes and of the Buffalo lectures, stated as `Prop`s
 # (definitions, not theorems): one file per section of the edition's two notes on open problems.
 [[lean_lib]]
