@@ -82,6 +82,10 @@ public import Grothendieck.Folder50
 public import Grothendieck.Folder53
 public import Grothendieck.Folder55
 public import Grothendieck.Folder55LemmaB
+public import Grothendieck.Folder55Sheaf
+public import Grothendieck.Folder55Generation
+public import Grothendieck.Folder55Coherent
+public import Grothendieck.Folder55Ideals
 public import Grothendieck.Folder58DepthComparison
 public import Grothendieck.Folder58LefPermanence
 public import Grothendieck.Folder62

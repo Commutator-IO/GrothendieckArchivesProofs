@@ -265,4 +265,53 @@ theorem exists_sum_eq_of_localization
     ← Units.val_pow_eq_pow_val, ← Units.val_pow_eq_pow_val, inv_pow, Units.inv_mul, one_mul]
 end Relations
 
+
+/-! ### The same on the site of opens itself -/
+
+section Base
+
+variable {R' : (Opens X)ᵒᵖ ⥤ RingCat.{0}}
+
+/-- **Local generation on `Opens X`, point by point.** -/
+theorem generatesLocally_of_forall_mem' (M : PresheafOfModules.{0} R') {U' : Opens X}
+    {ι : Type} [Fintype ι] (s : ι → M.obj (op U'))
+    (h : ∀ (V : Opens X) (f : V ⟶ U') (t : M.obj (op V)) (x : X), x ∈ V →
+      ∃ (W : Opens X) (g : W ⟶ V), x ∈ W ∧ ∃ a : ι → R'.obj (op W),
+        ∑ i, a i • M.restrictₛₗ (g ≫ f).op (s i) = M.restrictₛₗ g.op t) :
+    GeneratesLocally (Opens.grothendieckTopology X) M s := by
+  intro V f t
+  let S : Sieve V :=
+    { arrows := fun W g => ∃ a : ι → R'.obj (op W),
+        ∑ i, a i • M.restrictₛₗ (g ≫ f).op (s i) = M.restrictₛₗ g.op t
+      downward_closed := by
+        rintro W W' g ⟨a, ha⟩ e
+        refine ⟨fun i => R'.map e.op (a i), ?_⟩
+        have key : ∀ {A B : Opens X} (e : W' ⟶ A) (g : A ⟶ B) (m : M.obj (op B)),
+            M.restrictₛₗ e.op (M.restrictₛₗ g.op m) = M.restrictₛₗ (e ≫ g).op m :=
+          fun e g m => (M.map_comp_apply g.op e.op m).symm
+        have := congrArg (M.restrictₛₗ e.op) ha
+        rw [map_sum] at this
+        simp only [map_smulₛₗ, key] at this
+        rw [Category.assoc]
+        exact this }
+  refine ⟨S, ?_, fun W g hg => hg⟩
+  rw [Opens.mem_grothendieckTopology]
+  intro x hx
+  obtain ⟨W, g, hxW, a, ha⟩ := h V f t x hx
+  exact ⟨W, g, ⟨a, ha⟩, hxW⟩
+
+/-- **Finite type on `Opens X`, point by point.** -/
+theorem isFiniteTypeSections_of_forall_mem' (M : PresheafOfModules.{0} R')
+    (h : ∀ x : X, ∃ (U' : Opens X), x ∈ U' ∧ ∃ (n : ℕ) (s : Fin n → M.obj (op U')),
+        GeneratesLocally (Opens.grothendieckTopology X) M s) :
+    IsFiniteTypeSections (Opens.grothendieckTopology X) M := by
+  choose U' hx n s hs using h
+  refine ⟨X, U', ?_, fun x => ⟨n x, s x, hs x⟩⟩
+  intro V
+  rw [Opens.mem_grothendieckTopology]
+  intro x hxV
+  exact ⟨V ⊓ U' x, homOfLE inf_le_left, ⟨x, ⟨homOfLE inf_le_right⟩⟩, ⟨hxV, hx x⟩⟩
+
+end Base
+
 end Grothendieck.Folder55Generation
