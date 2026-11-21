@@ -1,11 +1,15 @@
-import Mathlib.Algebra.Module.Injective
-import Mathlib.RingTheory.Filtration
-import Mathlib.LinearAlgebra.Isomorphisms
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.Topology.Sober
-import Mathlib.Topology.Category.TopCat.Opens
-import Mathlib.CategoryTheory.Category.Cat
-import Grothendieck.Upstream.PrimaryComponentInjective
+module
+
+public import Mathlib.Algebra.Module.Injective
+public import Mathlib.RingTheory.Filtration
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.Topology.Sober
+public import Mathlib.Topology.Category.TopCat.Opens
+public import Mathlib.CategoryTheory.Category.Cat
+public import Grothendieck.Upstream.PrimaryComponentInjective
+
+@[expose] public section
 
 /-!
 # Folder 21, Proposition 2.15 and Corollaire 2.16: `I`-torsion and injectivity

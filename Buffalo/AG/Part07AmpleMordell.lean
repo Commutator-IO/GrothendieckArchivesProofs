@@ -1,6 +1,10 @@
-import Mordell.AbelianVariety.Ample.Sum
-import Mordell.AlgebraicGeometry.VeryAmple.Twist
-import StacksFrontier.AlgebraicGeometry.AmpleBridge.Basic
+module
+
+public import Mordell.AbelianVariety.Ample.Sum
+public import Mordell.AlgebraicGeometry.VeryAmple.Twist
+public import StacksFrontier.AlgebraicGeometry.AmpleBridge.Basic
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07: tensor products and twists of ample sheaves

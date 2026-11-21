@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 94, pages 8, 9 and 19: regular sequences over a non-reduced base

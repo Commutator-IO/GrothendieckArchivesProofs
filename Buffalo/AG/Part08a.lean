@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08 (a): 6 July 1973 (from 10:19:03) and 9 July 1973, tape 1

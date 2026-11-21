@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 76, pages 26–28: flags of type `H` in a set with operators

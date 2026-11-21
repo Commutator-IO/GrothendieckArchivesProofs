@@ -1,7 +1,11 @@
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.List.FinRange
-import Mathlib.Algebra.Order.Group.End
-import Mathlib.GroupTheory.SpecificGroups.Alternating
+module
+
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Algebra.Order.Group.End
+public import Mathlib.GroupTheory.SpecificGroups.Alternating
+
+@[expose] public section
 
 /-!
 # Folder 86, pages 18–32: the five trièdres of the icosahedron and the hemi-icosahedron

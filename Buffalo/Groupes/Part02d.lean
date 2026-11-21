@@ -1,4 +1,8 @@
-import Buffalo.Groupes.Part02c
+module
+
+public import Buffalo.Groupes.Part02c
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (d): connected components, étale schemes, irreducibility

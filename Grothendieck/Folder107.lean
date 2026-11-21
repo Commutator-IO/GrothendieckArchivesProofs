@@ -1,7 +1,11 @@
-import Mathlib.AlgebraicTopology.ModelCategory.Basic
-import Mathlib.AlgebraicTopology.ModelCategory.Cylinder
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
-import Mathlib.CategoryTheory.Limits.Shapes.IsTerminal
+module
+
+public import Mathlib.AlgebraicTopology.ModelCategory.Basic
+public import Mathlib.AlgebraicTopology.ModelCategory.Cylinder
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
+public import Mathlib.CategoryTheory.Limits.Shapes.IsTerminal
+
+@[expose] public section
 
 /-!
 # Folder 107: rectification of a relative square (pages 20 and 22)

@@ -1,5 +1,9 @@
-import Grothendieck.IhesSGA6_2_3
-import StacksFrontier.Algebra.Homology.DerivedCategory.KGroup
+module
+
+public import Grothendieck.IhesSGA6_2_3
+public import StacksFrontier.Algebra.Homology.DerivedCategory.KGroup
+
+@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, n° 2: `K(A) ≅ K(D^b(A))` for an abelian category `A`

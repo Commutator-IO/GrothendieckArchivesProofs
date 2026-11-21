@@ -1,14 +1,18 @@
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.RingTheory.Ideal.Span
-import Mathlib.RingTheory.Ideal.Maximal
-import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.RingTheory.Ideal.Span
+public import Mathlib.RingTheory.Ideal.Maximal
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Module
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 /-!
 # Folder 85: the invariant of a rotation of order 5 (pages 10, 27, 30, 40)

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 82, pages 77–78: the conic in characteristic 2 and Frobenius, split case

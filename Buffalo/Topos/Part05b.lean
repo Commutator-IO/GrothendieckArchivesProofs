@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5b: strict cogeneration, accessibility, representability (2 July 1973)

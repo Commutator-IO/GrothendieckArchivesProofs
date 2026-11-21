@@ -1,4 +1,8 @@
-import StacksFrontier.AlgebraicGeometry.WeilCohomology.ClassicalTheory
+module
+
+public import StacksFrontier.AlgebraicGeometry.WeilCohomology.ClassicalTheory
+
+@[expose] public section
 
 /-!
 # Folder 16, page 49: `A⁰(X)`, `A′⁰(X)`, `A″⁰(X)` in a classical Weil cohomology theory

@@ -1,6 +1,10 @@
-import Grothendieck.EffectiveVenken
-import StacksFrontier.AlgebraicGeometry.GroupScheme.Relations.PreRelations
-import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GroupoidOfEquivalenceRelation
+module
+
+public import Grothendieck.EffectiveVenken
+public import StacksFrontier.AlgebraicGeometry.GroupScheme.Relations.PreRelations
+public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GroupoidOfEquivalenceRelation
+
+@[expose] public section
 
 /-!
 # Venken's relation as an equivalence relation of schemes

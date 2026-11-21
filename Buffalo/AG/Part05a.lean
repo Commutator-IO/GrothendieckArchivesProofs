@@ -1,4 +1,8 @@
-import Buffalo.AG.Part02a
+module
+
+public import Buffalo.AG.Part02a
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05 (a): (undated session, from 7:04:25) – 19 June 1973

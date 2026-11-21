@@ -1,5 +1,9 @@
-import Mathlib.Tactic.NormNum
-import Mathlib.Data.List.Basic
+module
+
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Data.List.Basic
+
+@[expose] public section
 
 /-!
 # Folder 148, pages 30–32: the counts of the chart of special structures on five points

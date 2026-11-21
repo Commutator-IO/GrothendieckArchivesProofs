@@ -1,7 +1,11 @@
-import Mathlib
-import StacksFrontier.AlgebraicGeometry.EtaleCohomology.Colimits.CohomologyPullbackMap
-import StacksFrontier.RingTheory.Catenary.Defs
-import StacksFrontier.RingTheory.Nagata.Defs
+module
+
+public import Mathlib
+public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.Colimits.CohomologyPullbackMap
+public import StacksFrontier.RingTheory.Catenary.Defs
+public import StacksFrontier.RingTheory.Nagata.Defs
+
+@[expose] public section
 
 /-!
 # Étale cohomology and Hodge theory: the open problems, stated as propositions

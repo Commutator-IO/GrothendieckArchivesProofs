@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 151, page 68: the gluing of tubes over covering pairs fails in depth 2

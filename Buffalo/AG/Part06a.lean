@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (a): 25 June 1973, open and closed immersions

@@ -1,13 +1,17 @@
-import Mathlib.Data.Set.Card
-import Mathlib.Data.Multiset.Bind
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Algebra.Group.Subgroup.Defs
-import Mathlib.SetTheory.Cardinal.NatCard
-import Mathlib.Algebra.Group.Action.Defs
-import Mathlib.CategoryTheory.Iso
-import Mathlib.Topology.Covering.Basic
-import Mathlib.Topology.Algebra.ConstMulAction
-import Mathlib.Algebra.Group.Action.Sum
+module
+
+public import Mathlib.Data.Set.Card
+public import Mathlib.Data.Multiset.Bind
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.Algebra.Group.Subgroup.Defs
+public import Mathlib.SetTheory.Cardinal.NatCard
+public import Mathlib.Algebra.Group.Action.Defs
+public import Mathlib.CategoryTheory.Iso
+public import Mathlib.Topology.Covering.Basic
+public import Mathlib.Topology.Algebra.ConstMulAction
+public import Mathlib.Algebra.Group.Action.Sum
+
+@[expose] public section
 
 /-!
 # Folder 98: the axioms of a theory of norms in the model of G-sets (pages 10–12), and the

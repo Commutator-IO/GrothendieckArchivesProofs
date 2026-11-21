@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 154, page 153: the shadow of the `ν`-cube is a `2ν`-gon

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 84: the product of quadratic algebras, in split coordinates
@@ -2139,7 +2143,7 @@ open Polynomial
 variable {R : Type*} [CommRing R] (b c : R)
 
 /-- The basis `(1, U)` of `R[U]/(U² + bU + c)`. -/
-noncomputable def qbasis : Module.Basis (Fin 2) R (QAlg b c) :=
+@[no_expose] noncomputable def qbasis : Module.Basis (Fin 2) R (QAlg b c) :=
   .mk (v := ![1, AdjoinRoot.root (qpoly b c)])
     (LinearIndependent.pair_iff.2 fun s t h => coords_zero (by
       simpa [Algebra.smul_def] using h))

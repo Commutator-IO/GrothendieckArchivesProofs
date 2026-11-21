@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5d: corrections, `Setᵒᵖ` and Boolean algebras (10 July 1973)

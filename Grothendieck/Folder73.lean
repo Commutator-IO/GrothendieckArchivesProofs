@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 73 (« Polygones », [from 1976]): ear areas of plane polygons

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 128, pages 12–13: the equivalence ideals of a rank-2 algebra over a field

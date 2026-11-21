@@ -1,8 +1,12 @@
-import Mathlib.FieldTheory.PerfectClosure
-import Mathlib.Algebra.CharP.Frobenius
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.LinearAlgebra.Finsupp.Defs
+module
+
+public import Mathlib.FieldTheory.PerfectClosure
+public import Mathlib.Algebra.CharP.Frobenius
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.LinearAlgebra.Finsupp.Defs
+
+@[expose] public section
 
 /-!
 # Folder 43, pages 165–169: additive polynomials modulo `F − 1` and the perfection

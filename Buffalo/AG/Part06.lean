@@ -1,6 +1,10 @@
-import Buffalo.AG.Part06a
-import Buffalo.AG.Part06c
-import Buffalo.AG.Part06d
+module
+
+public import Buffalo.AG.Part06a
+public import Buffalo.AG.Part06c
+public import Buffalo.AG.Part06d
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: 25 June 1973 (from 0:58:06) – 26 June 1973 (to 5:23:27)

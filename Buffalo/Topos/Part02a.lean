@@ -1,5 +1,9 @@
-import Buffalo.Topos.Part01d
-import Buffalo.Topos.Part01c
+module
+
+public import Buffalo.Topos.Part01d
+public import Buffalo.Topos.Part01c
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2a: étale morphisms, ring objects, internal Hom (18 May 1973)

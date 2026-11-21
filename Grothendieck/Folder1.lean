@@ -1,5 +1,9 @@
-import Mathlib
-import Grothendieck.Upstream.SingularValuesSigmaTwo
+module
+
+public import Mathlib
+public import Grothendieck.Upstream.SingularValuesSigmaTwo
+
+@[expose] public section
 
 /-!
 # Folder 1: the system (16) of page 71 for `m ≤ 2`, and (16) ⟹ (15)

@@ -1,4 +1,8 @@
-import Buffalo.Topos.Part01
+module
+
+public import Buffalo.Topos.Part01
+
+@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3a: points, fibre functors, classifying topoi (11 May and 30 May 1973)

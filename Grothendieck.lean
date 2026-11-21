@@ -1,166 +1,170 @@
-import Grothendieck.EffectiveVenken
-import Grothendieck.Folder1
-import Grothendieck.Folder10
-import Grothendieck.Folder100
-import Grothendieck.Folder100Cohen
-import Grothendieck.Folder101
-import Grothendieck.Folder101DimTwo
-import Grothendieck.Folder104
-import Grothendieck.Folder106
-import Grothendieck.Folder107
-import Grothendieck.Folder11
-import Grothendieck.Folder113
-import Grothendieck.Folder114
-import Grothendieck.Folder115
-import Grothendieck.Folder118
-import Grothendieck.Folder120
-import Grothendieck.Folder121
-import Grothendieck.Folder125
-import Grothendieck.Folder126NilpotentQuotient
-import Grothendieck.Folder126RadicialEtale
-import Grothendieck.Folder128
-import Grothendieck.Folder13
-import Grothendieck.Folder133
-import Grothendieck.Folder136
-import Grothendieck.Folder136Prop1
-import Grothendieck.Folder136Stacks
-import Grothendieck.Folder137
-import Grothendieck.Folder140_1
-import Grothendieck.Folder145
-import Grothendieck.Folder146
-import Grothendieck.Folder148
-import Grothendieck.Folder148Chart
-import Grothendieck.Folder150
-import Grothendieck.Folder151
-import Grothendieck.Folder152
-import Grothendieck.Folder153
-import Grothendieck.Folder154
-import Grothendieck.Folder154Sweep
-import Grothendieck.Folder154Zonogon
-import Grothendieck.Folder155
-import Grothendieck.Folder156_1
-import Grothendieck.Folder156_2
-import Grothendieck.Folder156_3
-import Grothendieck.Folder156_4
-import Grothendieck.Folder156_5
-import Grothendieck.Folder156_6
-import Grothendieck.Folder156_7
-import Grothendieck.Folder156_8
-import Grothendieck.Folder156_9
-import Grothendieck.Folder158
-import Grothendieck.Folder16
-import Grothendieck.Folder160
-import Grothendieck.Folder161_1
-import Grothendieck.Folder161_2
-import Grothendieck.Folder161_3
-import Grothendieck.Folder161_6
-import Grothendieck.Folder16Problem5
-import Grothendieck.Folder18
-import Grothendieck.Folder19
-import Grothendieck.Folder2
-import Grothendieck.Folder2KCoherent
-import Grothendieck.Folder21
-import Grothendieck.Folder22
-import Grothendieck.Folder22Adic
-import Grothendieck.Folder22CohenAlgebras
-import Grothendieck.Folder23Normalisation
-import Grothendieck.Folder29
-import Grothendieck.Folder29TameInertia
-import Grothendieck.Folder37
-import Grothendieck.Folder39
-import Grothendieck.Folder40
-import Grothendieck.Folder41
-import Grothendieck.Folder42
-import Grothendieck.Folder43
-import Grothendieck.Folder44
-import Grothendieck.Folder46
-import Grothendieck.Folder49Flatness
-import Grothendieck.Folder5
-import Grothendieck.Folder50
-import Grothendieck.Folder53
-import Grothendieck.Folder55
-import Grothendieck.Folder55LemmaB
-import Grothendieck.Folder58DepthComparison
-import Grothendieck.Folder62
-import Grothendieck.Folder63
-import Grothendieck.Folder64
-import Grothendieck.Folder67
-import Grothendieck.Folder68
-import Grothendieck.Folder69
-import Grothendieck.Folder69Petersen
-import Grothendieck.Folder70
-import Grothendieck.Folder72
-import Grothendieck.Folder73
-import Grothendieck.Folder74
-import Grothendieck.Folder76
-import Grothendieck.Folder77
-import Grothendieck.Folder78
-import Grothendieck.Folder79
-import Grothendieck.Folder80
-import Grothendieck.Folder80Count
-import Grothendieck.Folder80Maps1
-import Grothendieck.Folder80Maps2
-import Grothendieck.Folder80Maps3
-import Grothendieck.Folder80Signs
-import Grothendieck.Folder81
-import Grothendieck.Folder82
-import Grothendieck.Folder83
-import Grothendieck.Folder84
-import Grothendieck.Folder85
-import Grothendieck.Folder86
-import Grothendieck.Folder88
-import Grothendieck.Folder89
-import Grothendieck.Folder90
-import Grothendieck.Folder90Comodules
-import Grothendieck.Folder91HomUnramified
-import Grothendieck.Folder93
-import Grothendieck.Folder93Stacks
-import Grothendieck.Folder94
-import Grothendieck.Folder94Koszul
-import Grothendieck.Folder98
-import Grothendieck.Folder123Kostant
-import Grothendieck.Folder147
-import Grothendieck.IhesSGA6_1_4
-import Grothendieck.IhesSGA6_1_5
-import Grothendieck.IhesSGA6_2_3
-import Grothendieck.IhesSGA6_2_3Db
-import Grothendieck.IhesSGA6_2_3Verdier
-import Grothendieck.IhesSGA6_2_4
-import Grothendieck.Ihes2ILL5
-import Grothendieck.Upstream.AdjunctionIdempotent
-import Grothendieck.Upstream.ChoosePrimePowSubOne
-import Grothendieck.Upstream.CurryR1Space
-import Grothendieck.Upstream.DerivationLeibnizProd
-import Grothendieck.Upstream.DerivationLieMulLeft
-import Grothendieck.Upstream.DetPascalMatrix
-import Grothendieck.Upstream.FinitePresentationPiRightHomBijective
-import Grothendieck.Upstream.FlatProdPi
-import Grothendieck.Upstream.FormallySmoothMapBaseChange
-import Grothendieck.Upstream.HasseDerivXPowMul
-import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
-import Grothendieck.Upstream.IsNoetherianRingIffFinitePresentation
-import Grothendieck.Upstream.KaroubiAdditiveFunctors
-import Grothendieck.Upstream.MatrixDetFinTwoCauchyBinet
-import Grothendieck.Upstream.MonadicityIff
-import Grothendieck.Upstream.MonoidRightZero
-import Grothendieck.Upstream.NoetherianIsOpenOfStableUnderGeneralization
-import Grothendieck.Upstream.PolynomialIntegerValued
-import Grothendieck.Upstream.PolynomialIsCoprimeX
-import Grothendieck.Upstream.PrimaryComponentInjective
-import Grothendieck.Upstream.QuasiSoberPiCoreCompact
-import Grothendieck.Upstream.RatSmulMemIndivisible
-import Grothendieck.Upstream.SemiSimplexCategoryReedy
-import Grothendieck.Upstream.SemilocalStableRange
-import Grothendieck.Upstream.SingularValuesSigmaTwo
-import Grothendieck.Upstream.SubalgebraIsUnitOfIsIntegral
-import Grothendieck.Upstream.TensorProductMemRangeRTensorBasis
-import Grothendieck.IhesSGA6_2_3Euler
-import Grothendieck.Folder94GenericFlatness
-import Grothendieck.Folder128FlatBaseChange
-import Grothendieck.Folder101Ext
-import Grothendieck.Folder101LocalCohomology
-import Grothendieck.Folder53GeometricIrreducibility
-import Grothendieck.Folder19Topoi
-import Grothendieck.Folder113Linear
-import Grothendieck.Folder11GradedPoincare
-import Grothendieck.EffectiveVenkenRelation
+module
+
+public import Grothendieck.EffectiveVenken
+public import Grothendieck.Folder1
+public import Grothendieck.Folder10
+public import Grothendieck.Folder100
+public import Grothendieck.Folder100Cohen
+public import Grothendieck.Folder101
+public import Grothendieck.Folder101DimTwo
+public import Grothendieck.Folder104
+public import Grothendieck.Folder106
+public import Grothendieck.Folder107
+public import Grothendieck.Folder11
+public import Grothendieck.Folder113
+public import Grothendieck.Folder114
+public import Grothendieck.Folder115
+public import Grothendieck.Folder118
+public import Grothendieck.Folder120
+public import Grothendieck.Folder121
+public import Grothendieck.Folder125
+public import Grothendieck.Folder126NilpotentQuotient
+public import Grothendieck.Folder126RadicialEtale
+public import Grothendieck.Folder128
+public import Grothendieck.Folder13
+public import Grothendieck.Folder133
+public import Grothendieck.Folder136
+public import Grothendieck.Folder136Prop1
+public import Grothendieck.Folder136Stacks
+public import Grothendieck.Folder137
+public import Grothendieck.Folder140_1
+public import Grothendieck.Folder145
+public import Grothendieck.Folder146
+public import Grothendieck.Folder148
+public import Grothendieck.Folder148Chart
+public import Grothendieck.Folder150
+public import Grothendieck.Folder151
+public import Grothendieck.Folder152
+public import Grothendieck.Folder153
+public import Grothendieck.Folder154
+public import Grothendieck.Folder154Sweep
+public import Grothendieck.Folder154Zonogon
+public import Grothendieck.Folder155
+public import Grothendieck.Folder156_1
+public import Grothendieck.Folder156_2
+public import Grothendieck.Folder156_3
+public import Grothendieck.Folder156_4
+public import Grothendieck.Folder156_5
+public import Grothendieck.Folder156_6
+public import Grothendieck.Folder156_7
+public import Grothendieck.Folder156_8
+public import Grothendieck.Folder156_9
+public import Grothendieck.Folder158
+public import Grothendieck.Folder16
+public import Grothendieck.Folder160
+public import Grothendieck.Folder161_1
+public import Grothendieck.Folder161_2
+public import Grothendieck.Folder161_3
+public import Grothendieck.Folder161_6
+public import Grothendieck.Folder16Problem5
+public import Grothendieck.Folder18
+public import Grothendieck.Folder19
+public import Grothendieck.Folder2
+public import Grothendieck.Folder2KCoherent
+public import Grothendieck.Folder21
+public import Grothendieck.Folder22
+public import Grothendieck.Folder22Adic
+public import Grothendieck.Folder22CohenAlgebras
+public import Grothendieck.Folder23Normalisation
+public import Grothendieck.Folder29
+public import Grothendieck.Folder29TameInertia
+public import Grothendieck.Folder37
+public import Grothendieck.Folder39
+public import Grothendieck.Folder40
+public import Grothendieck.Folder41
+public import Grothendieck.Folder42
+public import Grothendieck.Folder43
+public import Grothendieck.Folder44
+public import Grothendieck.Folder46
+public import Grothendieck.Folder49Flatness
+public import Grothendieck.Folder5
+public import Grothendieck.Folder50
+public import Grothendieck.Folder53
+public import Grothendieck.Folder55
+public import Grothendieck.Folder55LemmaB
+public import Grothendieck.Folder58DepthComparison
+public import Grothendieck.Folder62
+public import Grothendieck.Folder63
+public import Grothendieck.Folder64
+public import Grothendieck.Folder67
+public import Grothendieck.Folder68
+public import Grothendieck.Folder69
+public import Grothendieck.Folder69Petersen
+public import Grothendieck.Folder70
+public import Grothendieck.Folder72
+public import Grothendieck.Folder73
+public import Grothendieck.Folder74
+public import Grothendieck.Folder76
+public import Grothendieck.Folder77
+public import Grothendieck.Folder78
+public import Grothendieck.Folder79
+public import Grothendieck.Folder80
+public import Grothendieck.Folder80Count
+public import Grothendieck.Folder80Maps1
+public import Grothendieck.Folder80Maps2
+public import Grothendieck.Folder80Maps3
+public import Grothendieck.Folder80Signs
+public import Grothendieck.Folder81
+public import Grothendieck.Folder82
+public import Grothendieck.Folder83
+public import Grothendieck.Folder84
+public import Grothendieck.Folder85
+public import Grothendieck.Folder86
+public import Grothendieck.Folder88
+public import Grothendieck.Folder89
+public import Grothendieck.Folder90
+public import Grothendieck.Folder90Comodules
+public import Grothendieck.Folder91HomUnramified
+public import Grothendieck.Folder93
+public import Grothendieck.Folder93Stacks
+public import Grothendieck.Folder94
+public import Grothendieck.Folder94Koszul
+public import Grothendieck.Folder98
+public import Grothendieck.Folder123Kostant
+public import Grothendieck.Folder147
+public import Grothendieck.IhesSGA6_1_4
+public import Grothendieck.IhesSGA6_1_5
+public import Grothendieck.IhesSGA6_2_3
+public import Grothendieck.IhesSGA6_2_3Db
+public import Grothendieck.IhesSGA6_2_3Verdier
+public import Grothendieck.IhesSGA6_2_4
+public import Grothendieck.Ihes2ILL5
+public import Grothendieck.Upstream.AdjunctionIdempotent
+public import Grothendieck.Upstream.ChoosePrimePowSubOne
+public import Grothendieck.Upstream.CurryR1Space
+public import Grothendieck.Upstream.DerivationLeibnizProd
+public import Grothendieck.Upstream.DerivationLieMulLeft
+public import Grothendieck.Upstream.DetPascalMatrix
+public import Grothendieck.Upstream.FinitePresentationPiRightHomBijective
+public import Grothendieck.Upstream.FlatProdPi
+public import Grothendieck.Upstream.FormallySmoothMapBaseChange
+public import Grothendieck.Upstream.HasseDerivXPowMul
+public import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
+public import Grothendieck.Upstream.IsNoetherianRingIffFinitePresentation
+public import Grothendieck.Upstream.KaroubiAdditiveFunctors
+public import Grothendieck.Upstream.MatrixDetFinTwoCauchyBinet
+public import Grothendieck.Upstream.MonadicityIff
+public import Grothendieck.Upstream.MonoidRightZero
+public import Grothendieck.Upstream.NoetherianIsOpenOfStableUnderGeneralization
+public import Grothendieck.Upstream.PolynomialIntegerValued
+public import Grothendieck.Upstream.PolynomialIsCoprimeX
+public import Grothendieck.Upstream.PrimaryComponentInjective
+public import Grothendieck.Upstream.QuasiSoberPiCoreCompact
+public import Grothendieck.Upstream.RatSmulMemIndivisible
+public import Grothendieck.Upstream.SemiSimplexCategoryReedy
+public import Grothendieck.Upstream.SemilocalStableRange
+public import Grothendieck.Upstream.SingularValuesSigmaTwo
+public import Grothendieck.Upstream.SubalgebraIsUnitOfIsIntegral
+public import Grothendieck.Upstream.TensorProductMemRangeRTensorBasis
+public import Grothendieck.IhesSGA6_2_3Euler
+public import Grothendieck.Folder94GenericFlatness
+public import Grothendieck.Folder128FlatBaseChange
+public import Grothendieck.Folder101Ext
+public import Grothendieck.Folder101LocalCohomology
+public import Grothendieck.Folder53GeometricIrreducibility
+public import Grothendieck.Folder19Topoi
+public import Grothendieck.Folder113Linear
+public import Grothendieck.Folder11GradedPoincare
+public import Grothendieck.EffectiveVenkenRelation
+
+@[expose] public section

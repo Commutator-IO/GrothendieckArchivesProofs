@@ -1,12 +1,16 @@
-import Mathlib.CategoryTheory.Localization.Bousfield
-import Mathlib.CategoryTheory.Types.Basic
-import Mathlib.CategoryTheory.Discrete.Basic
-import Mathlib.Tactic.TFAE
-import Mathlib.CategoryTheory.Monad.Limits
-import Mathlib.CategoryTheory.Adjunction.PartialAdjoint
-import Grothendieck.Upstream.AdjunctionIdempotent
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
-import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
+module
+
+public import Mathlib.CategoryTheory.Localization.Bousfield
+public import Mathlib.CategoryTheory.Types.Basic
+public import Mathlib.CategoryTheory.Discrete.Basic
+public import Mathlib.Tactic.TFAE
+public import Mathlib.CategoryTheory.Monad.Limits
+public import Mathlib.CategoryTheory.Adjunction.PartialAdjoint
+public import Grothendieck.Upstream.AdjunctionIdempotent
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
+
+@[expose] public section
 
 /-!
 # Folder 161-1: the fixed part of an adjunction, idempotent adjunctions, local objects

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Folder 150, page 19: without `Xᵢ ∩ Y = f(Ẋᵢ)`, the reconstruction is not faithful

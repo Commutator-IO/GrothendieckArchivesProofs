@@ -1,4 +1,8 @@
-import Buffalo.AG.Part04c
+module
+
+public import Buffalo.AG.Part04c
+
+@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (d): 18 June 1973, gluing, projective space
