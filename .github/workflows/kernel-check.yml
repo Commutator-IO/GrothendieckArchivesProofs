@@ -9,20 +9,24 @@ name: Kernel check
 # Quot.sound is used. A soundness bug would have to be shared by all six kernels to go unnoticed.
 #
 # The export and the six replays of the whole closure take hours, so this runs weekly and by
-# hand, not on every push. `runs_on` lets it run on the self-hosted runner of issue #34.
+# hand, not on every push. It runs on the self-hosted runner of issue #34 and starts from the
+# `.lake` that main's builds keep there, as `build.yml` does. That runner takes one job at a
+# time, so a pull request that changes this file runs it only when the `kernel-check` label is
+# added (remove and add it again to rerun), never on every push. By hand, `runs_on` can still send
+# it to a GitHub-hosted runner, which starts from a cold build and is unlikely to fit in 6 h.
 
 on:
   workflow_dispatch:
     inputs:
       runs_on:
-        description: 'Runner labels, as JSON (e.g. ["self-hosted","linux","x64","lean"])'
+        description: 'Runner labels, as JSON (e.g. "ubuntu-latest")'
         required: false
-        default: '"ubuntu-latest"'
+        default: '["self-hosted","linux","x64","lean"]'
   schedule:
     # Sundays, 02:41 UTC.
     - cron: '41 2 * * 0'
-  # A change to this workflow is tested on its pull request.
   pull_request:
+    types: [labeled]
     paths:
       - .github/workflows/kernel-check.yml
 
@@ -30,9 +34,51 @@ permissions:
   contents: read
 
 jobs:
+  # As in build.yml: the runner VM is deallocated when idle, and only main and pull_request events
+  # may start it through OIDC. Skipped when the job is sent to a GitHub-hosted runner.
+  start-runner:
+    if: >-
+      !contains(inputs.runs_on || '', 'ubuntu') &&
+      (github.event_name != 'pull_request' ||
+       (github.event.label.name == 'kernel-check' &&
+        github.event.pull_request.head.repo.full_name == github.repository))
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - name: Start the runner VM
+        env:
+          RG: ${{ vars.LEAN_CI_RESOURCE_GROUP }}
+          VM: ${{ vars.LEAN_CI_VM }}
+        run: |
+          state=$(az vm get-instance-view -g "$RG" -n "$VM" \
+            --query "instanceView.statuses[?starts_with(code,'PowerState')].code | [0]" -o tsv)
+          echo "Power state: $state"
+          if [ "$state" != "PowerState/running" ]; then
+            az vm start -g "$RG" -n "$VM"
+            echo "Started; the runner reconnects to GitHub within a minute or two."
+          fi
+
   kernel-check:
-    runs-on: ${{ fromJSON(inputs.runs_on || '"ubuntu-latest"') }}
+    needs: start-runner
+    if: >-
+      ${{ !cancelled() && needs.start-runner.result != 'failure' &&
+      (github.event_name != 'pull_request' || github.event.label.name == 'kernel-check') }}
+    # One run per branch; at job level, so that adding another label cancels nothing.
+    concurrency:
+      group: kernel-check-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    runs-on: ${{ fromJSON(inputs.runs_on || '["self-hosted","linux","x64","lean"]') }}
     timeout-minutes: 360
+    env:
+      LEAN_CI_STORE: ${{ vars.LEAN_CI_STORE || '/var/lib/lean-ci/store' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -52,30 +98,48 @@ jobs:
           sudo swapon /swapfile-build
 
       # The sandbox of `lake check`. Ubuntu 24.04 restricts unprivileged user namespaces through
-      # AppArmor, which bwrap needs; lift that restriction on the (throwaway) hosted runner.
-      - name: Install bubblewrap
+      # AppArmor, which bwrap needs; lift that restriction on the (throwaway) hosted runner. On the
+      # self-hosted runner, bubblewrap and that setting belong to its image (Commutator-IO/ai-infra,
+      # stacks/lean-ci); the last line fails early, with bwrap's own message, if either is missing.
+      - name: Check bubblewrap
         run: |
-          if ! command -v bwrap >/dev/null; then
-            sudo apt-get update -q && sudo apt-get install -y -q bubblewrap
-          fi
           if [ "${{ runner.environment }}" = "github-hosted" ]; then
+            if ! command -v bwrap >/dev/null; then
+              sudo apt-get update -q && sudo apt-get install -y -q bubblewrap
+            fi
             sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
           fi
           bwrap --ro-bind / / --dev /dev --proc /proc --unshare-user --unshare-net true
 
-      # Start from main's build, so that the sandboxed build only replays it.
-      - name: Restore .lake
-        if: runner.environment == 'github-hosted'
-        uses: actions/cache/restore@v4
-        with:
-          path: .lake
-          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-kernel-check
-          restore-keys: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-
+      - name: Install elan
+        run: |
+          if [ ! -x "$HOME/.elan/bin/lake" ]; then
+            curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
-      - uses: leanprover/lean-action@v1
-        with:
-          use-github-cache: false
-          build: false
+      # Start from main's build, so that the sandboxed build only replays it: the store entry for
+      # these pins, else the most recent one. Only on the self-hosted runner.
+      - name: Restore .lake from the machine
+        if: runner.environment == 'self-hosted'
+        env:
+          PINS: ${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}
+        run: |
+          source_dir="$LEAN_CI_STORE/$PINS"
+          if [ ! -d "$source_dir" ]; then
+            source_dir=$(ls -1td "$LEAN_CI_STORE"/*/ 2>/dev/null | head -n 1 || true)
+          fi
+          rm -rf .lake
+          if [ -n "$source_dir" ] && [ -d "$source_dir" ]; then
+            echo "Restoring .lake from $source_dir"
+            cp -a --reflink=auto "${source_dir%/}" .lake
+          else
+            echo "No stored .lake: cold build"
+          fi
+
+      - name: Fetch the Mathlib cache
+        run: lake exe cache get
 
       - name: Check with every kernel
         run: |
@@ -89,3 +153,8 @@ jobs:
           name: kernel-check-log
           path: kernel-check.log
           if-no-files-found: ignore
+
+      # Each job works on its own copy of the store entry; drop it.
+      - name: Remove the working .lake
+        if: always() && runner.environment == 'self-hosted'
+        run: rm -rf .lake
