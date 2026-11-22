@@ -57,16 +57,14 @@ topoi; the affine statement used here is the module-level 063Y.
 * The scheme-level statement: effectivity of `R`, the construction of `Y` as the ringed space
   `(Y₀, Ker(𝒪_X ⇉ 𝒪_R))` and the gluing of its affine pieces into a scheme, the reduction from a
   nilpotent `𝒥_X` to `𝒥_X² = 0`, and the identification `R₀ = R ×_X X₀`.
-* The descent of `𝒥_X` to `𝒥_Y` along `X₀ → Y₀` (faithfully flat descent, Stacks 023N in the
-  vendored files, not connected here), which this file takes as the hypothesis that
-  `I ⊗_{A'} B → J` is bijective for a given `A'`.
-* The heart of pages 5 to 7: exactness of `0 → 𝒥_Y → 𝒪_Y → 𝒪_{Y₀} → 0`, in particular the
-  surjectivity of `𝒪_Y → 𝒪_{Y₀}` by lifting an invariant function and correcting the lift with
-  `Ȟ¹(X₀/Y₀, 𝒥_Y) = 0`, and the vanishing `Ȟ⁰(X₀/Y₀, ℋ¹(𝒥_Y)) = 0` of Remark 2 (page 3) for
-  fpqc quasi-separated covers of an affine. The vendored files have the Amitsur complex exact
-  (Stacks 023M) only in the abstract form of a Čech conerve; its degree-one exactness on the
-  concrete tensor products `B ⊗ B ⊗ M` is not available, and nothing here constructs `A'` from
-  `B'` and `C'`. Here `A'` and `φ` are given.
+* Here `A'` and `φ` are given and the descent of `𝒥_X` is the hypothesis that `I ⊗_{A'} B → J`
+  is bijective. `Folder126NilpotentDescent` removes that hypothesis in the affine case: it
+  constructs `A' = Ker(B' ⇉ C')`, proves `0 → 𝒥_Y → 𝒪_Y → 𝒪_{Y₀} → 0` exact (lifting an
+  invariant function and correcting the lift with the degree-one exactness of the concrete
+  Amitsur complex, Stacks 023M, available in the vendored files as
+  `Module.Descent.exact_amitsur_degree_one`), and derives the bijectivity by descent
+  (Stacks 023N). The vanishing `Ȟ⁰(X₀/Y₀, ℋ¹(𝒥_Y)) = 0` of Remark 2 (page 3) for fpqc
+  quasi-separated covers of a non-affine `Y₀` remains open, with the other points listed there.
 -/
 
 namespace Grothendieck.Folder126NilpotentQuotient

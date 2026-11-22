@@ -1,4 +1,34 @@
 module
 
+public import Challenge.BuffaloProblemThree
+public import Challenge.Folder1
+public import Challenge.Folder100
+public import Challenge.Folder101
+public import Challenge.Folder104
+public import Challenge.Folder113
+public import Challenge.Folder125
 public import Challenge.Folder126
+public import Challenge.Folder128
+public import Challenge.Folder13
+public import Challenge.Folder136
+public import Challenge.Folder145
+public import Challenge.Folder153
+public import Challenge.Folder16
+public import Challenge.Folder161_2
+public import Challenge.Folder161_6
 public import Challenge.Folder19
+public import Challenge.Folder22
+public import Challenge.Folder39
+public import Challenge.Folder42
+public import Challenge.Folder5
+public import Challenge.Folder53
+public import Challenge.Folder55
+public import Challenge.Folder74
+public import Challenge.Folder77
+public import Challenge.Folder84
+public import Challenge.Folder85
+public import Challenge.Folder88
+public import Challenge.Folder90
+public import Challenge.Folder91
+public import Challenge.Folder93
+public import Challenge.Folder94
