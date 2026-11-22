@@ -1,6 +1,13 @@
 {
   "challenge_module": "Challenge",
   "solution_module": "Solution",
-  "theorem_names": ["Challenge.Folder19.proposition_page80"],
-  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
+  "theorem_names": [
+    "Challenge.Folder19.proposition_page80",
+    "Challenge.Folder126.radicial_etale_factorisation"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
 }
