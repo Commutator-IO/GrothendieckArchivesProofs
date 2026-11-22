@@ -54,10 +54,10 @@ fibre is its `finiteAlgHomCharsEquiv`.
 **Not formalised.**
 * The global statement is proved elsewhere, not from this local core: the universal property
   of page 23 and the uniqueness of the factorisation over any `Y` in
-  `Grothendieck.Folder126RadicialEtaleGlobal` (Stacks 0BTY), and the existence of `X^ét` over an
-  affine `Y` in `Grothendieck.Folder126Existence`, by étale descent from étale neighbourhoods
-  (Stacks 02LO, 02W8) instead of strict henselisations. The Zariski gluing to a non-affine `Y`
-  is not done.
+  `Grothendieck.Folder126RadicialEtaleGlobal` (Stacks 0BTY), and the existence of `X^ét` over a
+  quasi-compact quasi-separated `Y` in `Grothendieck.Folder126Existence`, by étale descent from
+  étale neighbourhoods (Stacks 02LO, 02W8) instead of strict henselisations, then over any `Y`
+  in `Grothendieck.Folder126Glue` by relative gluing over the affine opens (Stacks 01LH).
 * Universal openness enters only through the openness of `Spec A → Spec R` after base change;
   the page's remark that « `d` constant » may be dropped for connected `Y` is false (the
   reading's counterexample `y² = t` over `k[t]`) and is not stated.

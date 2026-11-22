@@ -22,6 +22,7 @@ public import Grothendieck.Folder126Descent
 public import Grothendieck.Folder126EtaleSplitting
 public import Grothendieck.Folder126Existence
 public import Grothendieck.Folder126GeometricPoints
+public import Grothendieck.Folder126Glue
 public import Grothendieck.Folder126NilpotentQuotient
 public import Grothendieck.Folder126RadicialEtale
 public import Grothendieck.Folder126RadicialEtaleGlobal

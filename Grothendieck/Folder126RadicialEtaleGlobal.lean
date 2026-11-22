@@ -34,11 +34,12 @@ surjective map are equal, because the diagonal of an étale morphism is an open 
 Integral, universally injective and surjective is the same as universal homeomorphism (Stacks
 04DF, `universalHomeomorphism_iff_integral_universallyInjective_surjective`).
 
-**Existence.** The factorisation itself exists over an affine `Y`
-(`Grothendieck.Folder126Existence.exists_radicial_etale_factorisation`), by étale descent from
-the splitting over étale neighbourhoods rather than from strict henselisations; the noetherian
-hypothesis is not needed. Over a general `Y` it would follow by Zariski gluing, using the
-uniqueness proved here; that gluing is not formalised. The full equivalence of étale sites
+**Existence.** The factorisation itself exists over any `Y`
+(`Grothendieck.Folder126Glue.exists_radicial_etale_factorisation_of_hasGeomDegree`): by étale
+descent from the splitting over étale neighbourhoods over a quasi-compact quasi-separated base
+(`Grothendieck.Folder126Existence`), then by relative gluing over the affine opens, the
+transitions coming from the uniqueness proved here; the noetherian hypothesis is not needed.
+The full equivalence of étale sites
 (Stacks 04DZ, `Stacks.Etale.etalePullback_isEquivalence`) is not needed here: full faithfulness,
 which is what the universal property uses, suffices.
 -/
