@@ -4,6 +4,7 @@ public import Grothendieck.EffectiveVenken
 public import Grothendieck.Folder1
 public import Grothendieck.Folder10
 public import Grothendieck.Folder100
+public import Grothendieck.Folder100Baire
 public import Grothendieck.Folder100Cohen
 public import Grothendieck.Folder101
 public import Grothendieck.Folder101DimTwo
