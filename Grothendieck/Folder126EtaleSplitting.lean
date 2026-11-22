@@ -70,12 +70,12 @@ theorem isPurelyInseparable_of_residueFieldCongr {E V : Scheme.{u}} (g : E ⟶ V
 
 /-- **Folder 126, the factorisation exists étale-locally.** Let `f : X ⟶ Y` be finite and
 universally open, with exactly `n` geometric points in every geometric fibre. Every point `y` of
-`Y` has an étale neighbourhood `u : U ⟶ Y` such that the base change `T = X ×_Y U ⟶ U` (any
+`Y` has an affine étale neighbourhood `u : U ⟶ Y` such that the base change `T = X ×_Y U ⟶ U` (any
 pullback square) factors as a universal homeomorphism `T ⟶ Z` followed by a finite étale
 `Z ⟶ U`. -/
 theorem exists_etale_local_factorisation (f : X ⟶ Y) [IsFinite f] [UniversallyOpen f] {n : ℕ}
     (hn : HasGeomDegree f n) (y : Y) :
-    ∃ (U : Scheme.{u}) (u : U ⟶ Y), Etale u ∧ y ∈ Set.range u ∧
+    ∃ (U : Scheme.{u}) (u : U ⟶ Y), Etale u ∧ IsAffine U ∧ y ∈ Set.range u ∧
       ∃ (T : Scheme.{u}) (a : T ⟶ X) (b : T ⟶ U), IsPullback a b f u ∧
         ∃ (Z : Scheme.{u}) (g : T ⟶ Z) (h : Z ⟶ U),
           UniversalHomeomorphism g ∧ IsFinite h ∧ Etale h ∧ g ≫ h = b := by
@@ -120,8 +120,12 @@ theorem exists_etale_local_factorisation (f : X ⟶ Y) [IsFinite f] [Universally
   have hpI : ∀ k, E.point ∈ I k := fun k =>
     ⟨(D (some k)).ι (v k.1 k.2), ι_apply_mem _ _,
       (Scheme.Hom.comp_apply _ _ _).symm.trans (hpieces k.1 k.2).2.2.2.choose⟩
-  let O : E.scheme.Opens := ⟨Cᶜ ∩ ⋂ k, I k, hC.isOpen_compl.inter (isOpen_iInter_of_finite hI)⟩
-  have hO : E.point ∈ O := ⟨hpC, Set.mem_iInter.2 hpI⟩
+  let O₀ : E.scheme.Opens := ⟨Cᶜ ∩ ⋂ k, I k, hC.isOpen_compl.inter (isOpen_iInter_of_finite hI)⟩
+  have hO₀ : E.point ∈ O₀ := ⟨hpC, Set.mem_iInter.2 hpI⟩
+  -- An affine open neighbourhood inside it.
+  obtain ⟨O, hOaff, hO, hOle⟩ : ∃ O : E.scheme.Opens, O ∈ E.scheme.affineOpens ∧ E.point ∈ O ∧
+      O ≤ O₀ := TopologicalSpace.Opens.isBasis_iff_nbhd.mp E.scheme.isBasis_affineOpens hO₀
+  have : IsAffine (O : Scheme.{u}) := hOaff
   -- The new base, its base change and the pullback square.
   let u : (O : Scheme.{u}) ⟶ Y := O.ι ≫ E.toBase
   let b : (p ⁻¹ᵁ O : Scheme.{u}) ⟶ O := p ∣_ O
@@ -146,7 +150,7 @@ theorem exists_etale_local_factorisation (f : X ⟶ Y) [IsFinite f] [Universally
     obtain ⟨k', hk'⟩ := Set.mem_iUnion.1 hmem
     cases k' with
     | none =>
-      exact (((ι_apply_mem (p ⁻¹ᵁ O) t) : p ((p ⁻¹ᵁ O).ι t) ∈ O).1 ⟨_, hk', rfl⟩).elim
+      exact ((hOle ((ι_apply_mem (p ⁻¹ᵁ O) t) : p ((p ⁻¹ᵁ O).ι t) ∈ O)).1 ⟨_, hk', rfl⟩).elim
     | some k => exact ⟨k, hk'⟩
   have hWclosed : ∀ k, IsClosed (W k : Set (p ⁻¹ᵁ O : Scheme.{u})) := fun k =>
     (hclopen (some k)).isClosed.preimage (p ⁻¹ᵁ O).ι.continuous
@@ -156,7 +160,7 @@ theorem exists_etale_local_factorisation (f : X ⟶ Y) [IsFinite f] [Universally
   have hsurj : ∀ k, Surjective ((W k).ι ≫ b) := by
     intro k
     refine ⟨fun o => ?_⟩
-    obtain ⟨w, hw, hwo⟩ := Set.mem_iInter.1 o.2.2 k
+    obtain ⟨w, hw, hwo⟩ := Set.mem_iInter.1 (hOle o.2).2 k
     have hwO : w ∈ p ⁻¹ᵁ O := by
       change p w ∈ O
       rw [hwo]; exact o.2
@@ -206,7 +210,7 @@ theorem exists_etale_local_factorisation (f : X ⟶ Y) [IsFinite f] [Universally
     exact (cancel_mono _).1 ((cancel_mono _).1 h12)
   -- The counting lemma.
   obtain ⟨g, hg, hgh⟩ := exists_factorisation_of_sheets b hWdisj hWcov hbn p₀ hp₀
-  exact ⟨O, u, inferInstance, ⟨o₀, E.map_point⟩, _, _, b, H, _, g, fold O κ, hg,
+  exact ⟨O, u, inferInstance, inferInstance, ⟨o₀, E.map_point⟩, _, _, b, H, _, g, fold O κ, hg,
     inferInstance, etale_sigmaDesc _ fun _ => inferInstance, hgh⟩
 
 end Grothendieck.Folder126EtaleSplitting
