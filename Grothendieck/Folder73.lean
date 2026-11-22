@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 73 (« Polygones », [from 1976]): ear areas of plane polygons
@@ -155,6 +156,7 @@ theorem not_wedge13_eq :
   norm_num [mu_zero, mu_two, wedge] at this
 
 /-- Page 5: `μ₀ + μ₂ = μ₁ + μ₃`. -/
+@[montpellier "73, 5"]
 theorem mu_relation (u : Fin 4 → Fin 2 → k) (h : Closed u) :
     mu u 0 + mu u 2 = mu u 1 + mu u 3 := by
   obtain ⟨h1, h2, -⟩ := wedge_diag u h
@@ -174,6 +176,7 @@ theorem wedge_eq_zero_of_mu (u : Fin 4 → Fin 2 → k) (h : Closed u)
     simp [wedge_self, e0, e1, e2, e3, h02, h13, s 0 1, s 0 2, s 1 2, s 1 3, s 2 3, s 3 0]
 
 /-- Affine invariance: a linear map multiplies every ear area by its determinant. -/
+@[montpellier "73, 5–6"]
 theorem mu_mulVec (M : Matrix (Fin 2) (Fin 2) k) (u : Fin 4 → Fin 2 → k) (i : Fin 4) :
     mu (fun j => M *ᵥ u j) i = M.det * mu u i :=
   wedge_mulVec M _ _
@@ -258,6 +261,7 @@ theorem exists_matrix_of_mu (u u' : Fin 4 → Fin 2 → k) (hu : Closed u) (hu' 
 /-- Pages 5–6, the bijection on affine classes: two closed quadrilaterals not contained in
 a line have proportional ear areas exactly when one is the image of the other by an
 invertible linear map. -/
+@[montpellier "73, 5–6"]
 theorem quad_moduli (u u' : Fin 4 → Fin 2 → k) (hu : Closed u) (hu' : Closed u')
     (hne : ∃ i, mu u i ≠ 0) :
     (∃ M : Matrix (Fin 2) (Fin 2) k, M.det ≠ 0 ∧ ∀ i, u' i = M *ᵥ u i) ↔
@@ -295,6 +299,7 @@ theorem exists_quad_of_mu_one (m : Fin 4 → k) (hrel : m 0 + m 2 = m 1 + m 3) (
 
 /-- Page 5, « épi ? »: every nonzero point of the plane `μ₀ + μ₂ = μ₁ + μ₃` is the
 ear-area vector of a closed quadrilateral. -/
+@[montpellier "73, 5"]
 theorem exists_quad_of_mu (m : Fin 4 → k) (hrel : m 0 + m 2 = m 1 + m 3) (hm : m ≠ 0) :
     ∃ u : Fin 4 → Fin 2 → k, Closed u ∧ mu u = m := by
   obtain ⟨i, hi⟩ : ∃ i, m i ≠ 0 := Function.ne_iff.mp hm
@@ -310,6 +315,7 @@ theorem exists_quad_of_mu (m : Fin 4 → k) (hrel : m 0 + m 2 = m 1 + m 3) (hm :
 
 /-- A side is zero exactly when the two ears containing it are flat (page 5, boxed for
 `u₂`), for a closed quadrilateral not contained in a line. -/
+@[montpellier "73, 5"]
 theorem side_eq_zero_iff (u : Fin 4 → Fin 2 → k) (hu : Closed u) (hne : ∃ j, mu u j ≠ 0)
     (i : Fin 4) : u i = 0 ↔ mu u i = 0 ∧ mu u (i + 1) = 0 := by
   constructor
@@ -360,6 +366,7 @@ theorem framePt_mem (i : Fin 4) :
 
 /-- A closed quadrilateral with `u_i = 0` has ear areas `μ = μ_{i+2} • p_i`, and
 `μ_{i+2} ≠ 0` when it is not contained in a line. -/
+@[montpellier "73, 5–6"]
 theorem mu_eq_smul_framePt (u : Fin 4 → Fin 2 → k) (hu : Closed u) (i : Fin 4)
     (h : u i = 0) : mu u = mu u (i + 2) • framePt i := by
   have hrel := mu_relation u hu
@@ -377,6 +384,7 @@ theorem mu_degenerate_ne_zero (u : Fin 4 → Fin 2 → k) (hu : Closed u) (i : F
   exact hj (by rw [mu_eq_smul_framePt u hu i h, h0, zero_smul, Pi.zero_apply])
 
 /-- The only linear relation among the four degenerate points is the alternating one. -/
+@[montpellier "73, 5–6"]
 theorem sum_smul_framePt_eq_zero_iff (c : Fin 4 → k) :
     ∑ i, c i • framePt i = (0 : Fin 4 → k) ↔
       ∃ t : k, c = t • (![1, -1, 1, -1] : Fin 4 → k) := by
@@ -395,6 +403,7 @@ theorem sum_smul_framePt_eq_zero_iff (c : Fin 4 → k) :
 
 /-- Any three of the degenerate points are linearly independent: with the alternating
 relation, the four points form a projective frame of the plane. -/
+@[montpellier "73, 5–6"]
 theorem framePt_three_indep (c : Fin 4 → k) (h : ∑ i, c i • framePt i = (0 : Fin 4 → k))
     (i : Fin 4)
     (hi : c i = 0) : c = 0 := by
@@ -457,6 +466,7 @@ theorem frameMap_range : LinearMap.range (frameMap (k := k)) = plane := by
 /-- Page 6, the plane is canonically `P(k^A / k·(1,1,1,1))`: a linear isomorphism
 `k⁴ / k·(1,1,1,1) ≃ plane` sending the class of the edge `i` to `(-1)ⁱ p_i`, whose line
 is the point of the degenerate quadrilateral `u_i = 0`. -/
+@[montpellier "73, 6"]
 theorem frame_canonical :
     ∃ e : ((Fin 4 → k) ⧸ (k ∙ (fun _ => (1 : k)))) ≃ₗ[k] plane,
       ∀ i : Fin 4, (e (Submodule.Quotient.mk (Pi.single i 1))).1 =
@@ -568,6 +578,7 @@ theorem exists_smul_of_wedge {a c : Fin 2 → k} (ha : a ≠ 0) (h : wedge a c =
 
 /-- Page 28, the « pair of directions »: for nonzero vectors of a plane, `c·d` is a
 multiple of `a·b` in `Sym² k²` if and only if `{[a], [b]} = {[c], [d]}` as pairs of lines. -/
+@[montpellier "73, 28"]
 theorem symProd_proportional_iff {a b c d : Fin 2 → k} (ha : a ≠ 0) (hb : b ≠ 0)
     (hc : c ≠ 0) (hd : d ≠ 0) :
     (∃ t : k, symProd c d = t • symProd a b) ↔
@@ -625,6 +636,7 @@ variable [Field k] {n : ℕ} [NeZero n]
 
 /-- The multipliers of an `n`-gon given by its sides (page 25, the relation `(∗)`):
 `λ_i u_{i-1} - λ_{i+1}(u_i + u_{i+1}) + λ_{i+2} u_{i+2} = 0` for all `i`. -/
+@[montpellier "73, 25"]
 def IsMult (u : ZMod n → Fin 2 → k) (l : ZMod n → k) : Prop :=
   ∀ i, l i • u (i - 1) - l (i + 1) • (u i + u (i + 1)) + l (i + 2) • u (i + 2) = 0
 
@@ -760,6 +772,7 @@ theorem symId_n_add (u : ZMod n → Fin 2 → k) (l : ZMod n → k) (hcl : parti
 multiplier with `λ₀ = 0` and `λ₁ = 1` if and only if it is closed and, for
 `2 ≤ i ≤ n - 1`, either `s_i = s_0` or the pair of directions of `{u_{i-1}, u_i}` is that
 of `{u_1, u_{0i}}`. -/
+@[montpellier "73, 28"]
 theorem zero_multiplier_criterion (hn : 3 ≤ n) (u : ZMod n → Fin 2 → k)
     (hu : ∀ i, u i ≠ 0) :
     (∃ l : ZMod n → k, l 0 = 0 ∧ l 1 = 1 ∧ IsMult u l) ↔
@@ -828,6 +841,7 @@ theorem zero_multiplier_criterion (hn : 3 ≤ n) (u : ZMod n → Fin 2 → k)
 
 /-- The multiplier is given by `λ_i u_{i-1}·u_i = u_1·u_{0i}` in `Sym² V`, for every
 `i ≥ 1` (the page's « on aura λ_i défini par u_1 u_{0i} = λ_i u_i u_{i-1} »). -/
+@[montpellier "73, 15, 18, 28"]
 theorem symProd_formula (u : ZMod n → Fin 2 → k) (l : ZMod n → k) (h0 : l 0 = 0)
     (h1 : l 1 = 1) (h : IsMult u l) (i : ℕ) (hi : 1 ≤ i) :
     l i • symProd (u (i - 1 : ℕ)) (u i) = symProd (u 1) (partialSum u i) := by
@@ -835,6 +849,7 @@ theorem symProd_formula (u : ZMod n → Fin 2 → k) (l : ZMod n → k) (h0 : l 
   rwa [SymId, show i - 1 + 1 = i by omega] at this
 
 /-- Page 28: `λ_i = 0` exactly at the vertices `s_i = s_0` (`u_{0i} = 0`). -/
+@[montpellier "73, 28"]
 theorem mult_eq_zero_iff (u : ZMod n → Fin 2 → k) (hu : ∀ i, u i ≠ 0) (l : ZMod n → k)
     (h0 : l 0 = 0) (h1 : l 1 = 1) (h : IsMult u l) (i : ℕ) (hi : 1 ≤ i) :
     l i = 0 ↔ partialSum u i = 0 := by
@@ -848,6 +863,7 @@ theorem mult_eq_zero_iff (u : ZMod n → Fin 2 → k) (hu : ∀ i, u i ≠ 0) (l
     exact hf.resolve_right (not_or.2 ⟨hu _, hu _⟩)
 
 /-- The multiplier with `λ₀ = 0`, `λ₁ = 1` is unique. -/
+@[montpellier "73, 15, 18, 28"]
 theorem mult_unique (u : ZMod n → Fin 2 → k) (hu : ∀ i, u i ≠ 0) (l l' : ZMod n → k)
     (h0 : l 0 = 0) (h1 : l 1 = 1) (h : IsMult u l) (h0' : l' 0 = 0) (h1' : l' 1 = 1)
     (h' : IsMult u l') : l = l' := by
@@ -865,6 +881,7 @@ theorem mult_unique (u : ZMod n → Fin 2 → k) (hu : ∀ i, u i ≠ 0) (l l' :
 
 /-- Two consecutive zero components force a multiplier to vanish: hence the normalisation
 `λ₁ = 1` once `λ₀ = 0`. -/
+@[montpellier "73, 15, 18, 28"]
 theorem eq_zero_of_consecutive (u : ZMod n → Fin 2 → k) (hu : ∀ i, u i ≠ 0)
     (l : ZMod n → k) (h : IsMult u l) (i : ZMod n) (h0 : l i = 0) (h1 : l (i + 1) = 0) :
     l = 0 := by
@@ -911,6 +928,7 @@ section EarArea
 variable [Field k] {n : ℕ} [NeZero n]
 
 /-- The space `N(u_*)` of multipliers. -/
+@[montpellier "73, 23–28"]
 def multSpace (u : ZMod n → Fin 2 → k) : Submodule k (ZMod n → k) where
   carrier := {l | IsMult u l}
   add_mem' {a b} ha hb i := by
@@ -950,6 +968,7 @@ theorem evPair_injective (i : ZMod n) : Function.Injective (evPair u i) := by
   exact Subtype.ext (eq_zero_of_consecutive u hu l.1 l.2 i h0 h1)
 
 /-- **Page 23.** `dim N(u_*) ≤ 2`. -/
+@[montpellier "73, 23"]
 theorem finrank_multSpace_le_two : Module.finrank k (multSpace u) ≤ 2 := by
   simpa using LinearMap.finrank_le_finrank_of_injective (evPair_injective u hu 0)
 
@@ -959,6 +978,7 @@ theorem evPair_surjective (h2 : Module.finrank k (multSpace u) = 2) (i : ZMod n)
     (evPair_injective u hu i)
 
 /-- **Pages 23 and 26, (a) ⇒ (b).** -/
+@[montpellier "73, 23, 26"]
 theorem collinear_of_finrank_two (h2 : Module.finrank k (multSpace u) = 2) (i : ZMod n) :
     wedge (u i) (u (i + 3)) = 0 ∧ wedge (u i) (u (i + 1) + u (i + 2)) = 0 := by
   obtain ⟨l, hl⟩ := evPair_surjective u hu h2 (i + 1) ![1, 0]
@@ -1074,6 +1094,7 @@ theorem exists_consecutive (hl : ∃ i j, wedge (u i) (u j) ≠ 0) :
   exact hij (wedge_eq_zero_of_common (hu 0) (hall i) (hall j))
 
 /-- **Pages 24, 26 and 27, (b) ⇒ (c) ⇒ (d).** -/
+@[montpellier "73, 24, 26–27"]
 theorem triangle_of_collinear (hl : ∃ i j, wedge (u i) (u j) ≠ 0)
     (hb : ∀ i, wedge (u i) (u (i + 3)) = 0 ∧ wedge (u i) (u (i + 1) + u (i + 2)) = 0) :
     (∀ i, u (i + 3) = u i ∧ u (i + 1) + u (i + 2) = -u i) ∧ 3 ∣ n := by
@@ -1160,6 +1181,7 @@ theorem isMult_periodic (h3 : 3 ∣ n) (hper : ∀ i, u (i + 3) = u i) (hs : u 0
 
 /-- **Page 25, the Proposition, (a) ⇔ (d).** For nonzero sides not all on one line,
 `dim N(u_*) = 2` if and only if the polygon is a triangle traversed `n/3` times. -/
+@[montpellier "73, 25"]
 theorem finrank_multSpace_eq_two_iff (hl : ∃ i j, wedge (u i) (u j) ≠ 0) :
     Module.finrank k (multSpace u) = 2 ↔
       3 ∣ n ∧ (∀ i, u (i + 3) = u i) ∧ u 0 + u 1 + u 2 = 0 := by
@@ -1209,6 +1231,7 @@ theorem not_le_hyperplane_of_finrank_two (h2 : Module.finrank k (multSpace u) = 
   simp
 
 /-- **Page 28, case II.** If `N(u_*)` lies in a coordinate hyperplane, `dim N(u_*) ≤ 1`. -/
+@[montpellier "73, 28"]
 theorem finrank_le_one_of_le_hyperplane (i : ZMod n) (h : ∀ l ∈ multSpace u, l i = 0) :
     Module.finrank k (multSpace u) ≤ 1 := by
   let e : multSpace u →ₗ[k] k := (LinearMap.proj (i + 1)).comp (multSpace u).subtype
@@ -1221,6 +1244,7 @@ theorem finrank_le_one_of_le_hyperplane (i : ZMod n) (h : ∀ l ∈ multSpace u,
 omit hu in
 /-- **Page 28, the dichotomy**, for `|k| > n`: either some multiplier has no zero
 component, or `N(u_*)` lies in a coordinate hyperplane. -/
+@[montpellier "73, 28"]
 theorem dichotomy (hk : (n : ℕ∞) < ENat.card k) :
     (∃ l ∈ multSpace u, ∀ i, l i ≠ 0) ∨ ∃ i, ∀ l ∈ multSpace u, l i = 0 := by
   by_contra hcon
@@ -1309,6 +1333,7 @@ theorem sum_wedge_single (L : ZMod n → Fin 2 → k) (i : ZMod n) (e : Fin 2 �
   rw [Finset.sum_eq_single i (fun j _ hj => by simp [hj, wedge]) (by simp)]; simp
 
 /-- **Page 14.** `λ ∈ N(u_*)` iff `Σ λ_i dφ_i` vanishes on the closed deformations. -/
+@[montpellier "73, 14"]
 theorem isMult_iff_closed (u : ZMod n → Fin 2 → k) (l : ZMod n → k) :
     IsMult u l ↔ ∀ v, ∑ i, v i = 0 → ∑ i, l i * dEar u v i = 0 := by
   refine ⟨fun h v hv => ?_, fun hw => ?_⟩
@@ -1328,6 +1353,7 @@ theorem isMult_iff_closed (u : ZMod n → Fin 2 → k) (l : ZMod n → k) :
 
 /-- **Page 14, the Lagrange form.** `λ ∈ N(u_*)` iff `Σ λ_i dφ_i = w ∧ Σ dv_i` for a
 constant vector `w`: the page's `Σ λ_i df_i = μ Σ dx_i + ν Σ dy_i`. -/
+@[montpellier "73, 14"]
 theorem isMult_iff_lagrange (u : ZMod n → Fin 2 → k) (l : ZMod n → k) :
     IsMult u l ↔ ∃ w : Fin 2 → k, ∀ v, ∑ i, l i * dEar u v i = wedge w (∑ i, v i) :=
   ⟨fun h => ⟨lagr u l 0, fun v => by rw [sum_mul_dEar, wedge_sum]; simp only [lagr_const u l h]⟩,
@@ -1342,6 +1368,7 @@ def closedDef : Submodule k (ZMod n → Fin 2 → k) where
 
 /-- **Pages 14 and 28, case (a).** `N(u_*) = 0` iff `dφ_u` maps the closed deformations
 onto `k^{ℤ/n}`: `φ`, on the polygons with `Σ u_i` fixed, is a submersion at `u_*`. -/
+@[montpellier "73, 14, 28"]
 theorem multSpace_eq_bot_iff (u : ZMod n → Fin 2 → k) :
     multSpace u = ⊥ ↔ closedDef.map (dEar u) = ⊤ := by
   have hf : ∀ (f : Module.Dual k (ZMod n → k)) x, f x = ∑ j, f (Pi.single j 1) * x j :=
@@ -1404,6 +1431,7 @@ theorem finrank_ne_zero_of_mem {l : ZMod n → k} (hl : l ∈ multSpace u) (hl0 
   hl0 (by simpa using (Submodule.finrank_eq_zero.1 h ▸ hl : l ∈ (⊥ : Submodule k _)))
 
 /-- **Page 28, the Théorème: the four cases** (`|k| > n`). -/
+@[montpellier "73, 28"]
 theorem four_cases (hk : (n : ℕ∞) < ENat.card k) :
     multSpace u = ⊥ ∨
       ((∃ l ∈ multSpace u, ∀ i, l i ≠ 0) ∧ Module.finrank k (multSpace u) = 1) ∨
@@ -1429,6 +1457,7 @@ theorem four_cases (hk : (n : ℕ∞) < ENat.card k) :
 omit hu [NeZero n] in
 /-- The four cases exclude one another: (a) excludes a nowhere-zero multiplier and is
 `N(u_*) ≠ 0` negated, (b₁) and (b₂) differ by the dimension, and (b) excludes (c). -/
+@[montpellier "73, 28"]
 theorem four_cases_exclusive :
     (multSpace u = ⊥ → ¬ ∃ l ∈ multSpace u, ∀ i, l i ≠ 0) ∧
       ((∃ l ∈ multSpace u, ∀ i, l i ≠ 0) → ¬ ∃ i, ∀ l ∈ multSpace u, l i = 0) :=
@@ -1437,6 +1466,7 @@ theorem four_cases_exclusive :
 
 /-- **Page 28, case (c).** If `N(u_*) ≠ 0` lies in `H_i`, it is the line spanned by a
 multiplier with `λ_i = 0` and `λ_{i+1} = 1`. -/
+@[montpellier "73, 28"]
 theorem special_two_span (hb : multSpace u ≠ ⊥) (i : ZMod n)
     (hi : ∀ l ∈ multSpace u, l i = 0) :
     ∃ l ∈ multSpace u, l i = 0 ∧ l (i + 1) = 1 ∧ ∀ l' ∈ multSpace u, ∃ c : k, l' = c • l := by
@@ -1470,6 +1500,7 @@ def nonagon (b₁ b₂ b₃ y₄ y₆ y₈ : k) : ZMod 9 → Fin 2 → k :=
 
 /-- **Page 18.** For `βⱼ ≠ 0, 1`, `y₄ ≠ β₁`, `y₆ ≠ β₂y₄`, `y₈ ≠ β₃y₆`, the nine-gon's
 `N(u_*)` is a line, spanned by a multiplier zero at `0` and nowhere else. -/
+@[montpellier "73, 18"]
 theorem nonagon_multSpace {b₁ b₂ b₃ y₄ y₆ y₈ : k} (h₁ : b₁ ≠ 0) (h₁' : b₁ ≠ 1) (h₂ : b₂ ≠ 0)
     (h₂' : b₂ ≠ 1) (h₃ : b₃ ≠ 0) (h₃' : b₃ ≠ 1) (h₄ : y₄ ≠ b₁) (h₆ : y₆ ≠ b₂ * y₄)
     (h₈ : y₈ ≠ b₃ * y₆) :

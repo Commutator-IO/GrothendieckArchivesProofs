@@ -8,6 +8,7 @@ module
 public import Mathlib.RingTheory.Algebraic.Integral
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+import Grothendieck.Attr
 
 /-!
 # Folder 13, page 47: the « double niveau » question, and its Tate case
@@ -68,12 +69,14 @@ open scoped Pointwise
 namespace Grothendieck.Folder13
 
 /-- Page 33: `x ∈ B ∩ g • Λ` iff `x ∈ B` and `g⁻¹ • x ∈ Λ` (« `V ∩ T'(V)` »). -/
+@[montpellier "13, 33"]
 theorem mem_inter_smul_iff {Γ M : Type*} [Group Γ] [MulAction Γ M] (B Λ : Set M) (g : Γ)
     (x : M) : x ∈ B ∩ g • Λ ↔ x ∈ B ∧ g⁻¹ • x ∈ Λ := by
   rw [Set.mem_inter_iff, Set.mem_smul_set_iff_inv_smul_mem]
 
 /-- **Grothendieck, page 47** (the inclusion `V^G ⊂ V ∩ g(V̄)`): an element of `B ⊆ Λ` fixed
 by every element of the group lies in `B ∩ g • Λ`, for every `g`. -/
+@[montpellier "13, 47"]
 theorem invariants_subset_inter_smul {Γ M : Type*} [Group Γ] [MulAction Γ M] {B Λ : Set M}
     (hB : B ⊆ Λ) (g : Γ) : {x | x ∈ B ∧ ∀ h : Γ, h • x = x} ⊆ B ∩ g • Λ := by
   rintro x ⟨hx, hfix⟩
@@ -99,6 +102,7 @@ forme reconstituée par l'édition). For the Tate motive `ℚ(n)`, the rational 
 the de Rham line `(2πi)ⁿ ℚ̄` are all of `ℚ` when `n = 0` and only `0` otherwise, which is
 `V^G` for the weight-`n` character of `𝔾_m`. Assumes the transcendence of `π` (Lindemann),
 not in Mathlib. -/
+@[montpellier "13, 47"]
 theorem tate (hπ : Transcendental ℚ (Real.pi : ℂ)) (n : ℤ) :
     {q : ℚ | ∃ α : ℂ, IsAlgebraic ℚ α ∧ (q : ℂ) = (2 * Real.pi * I) ^ n * α} =
       if n = 0 then Set.univ else {0} := by

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 09 (a): 10 July 1973, from 4:22:15
@@ -67,6 +68,7 @@ lemma GluingDatum.Cocycle.self {φ : GluingDatum π X'} (hφ : φ.Cocycle) (s : 
 
 /-- vuys5SNs2eQ-15735 (4:22:15) [prop] A gluing datum on `X'` is a descent datum (satisfies the
 cocycle condition) if and only if `X'' ⇉ X'` is an equivalence relation (on points). -/
+@[buffalo "vuys5SNs2eQ-15735"]
 theorem prop_15735 (φ : GluingDatum π X') : Equivalence φ.rel ↔ φ.Cocycle := by
   constructor
   · intro hE s t u h₁ h₂ x
@@ -94,6 +96,7 @@ def GluingDatum.quotToBase {φ : GluingDatum π X'} (hφ : φ.Cocycle) :
 /-- vuys5SNs2eQ-16055 (4:27:35) [prop] (on points, where every equivalence relation is
 universally effective) A descent datum is effective: the quotient `X = X'/X''` exists, `X'' =
 X' ×_X X'`, and `X'` is recovered as `X ×_S S'` (fibre by fibre: `X'_s ≃ X_{π s}`). -/
+@[buffalo "vuys5SNs2eQ-16055"]
 theorem prop_16055 {φ : GluingDatum π X'} (hφ : φ.Cocycle) :
     (∀ a b, (Quotient.mk (GluingDatum.setoid hφ) a = Quotient.mk _ b ↔ φ.rel a b)) ∧
       ∀ s : S', Function.Bijective (fun x : X' s =>
@@ -112,6 +115,7 @@ theorem prop_16055 {φ : GluingDatum π X'} (hφ : φ.Cocycle) :
 
 /-- vuys5SNs2eQ-16510 (4:35:10) [prop] A subset `U` of `X'` is stable under the descent datum
 (saturated for `X''`) if and only if it has the same inverse image under `q₁` and `q₂`. -/
+@[buffalo "vuys5SNs2eQ-16510"]
 theorem prop_16510 (φ : GluingDatum π X') (U : Set (Σ s, X' s)) :
     ((fun r : {p : (Σ s, X' s) × (Σ s, X' s) // φ.rel p.1 p.2} => r.1.1) ⁻¹' U =
         (fun r : {p : (Σ s, X' s) × (Σ s, X' s) // φ.rel p.1 p.2} => r.1.2) ⁻¹' U) ↔
@@ -132,6 +136,7 @@ section Radicial
 /-- vuys5SNs2eQ-17754 (4:55:54) [prop] A faithfully flat, quasi-compact and radicial (universally
 injective) morphism is a homeomorphism; these hypotheses being stable under base change, it is a
 universal homeomorphism (`prop_17754_universal`). -/
+@[buffalo "vuys5SNs2eQ-17754"]
 theorem prop_17754 {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] [QuasiCompact f] [Surjective f]
     [UniversallyInjective f] : IsHomeomorph f.base := by
   have hq : IsQuotientMap f := Flat.isQuotientMap_of_surjective f
@@ -141,6 +146,7 @@ theorem prop_17754 {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] [QuasiCompact f] [S
 
 /-- vuys5SNs2eQ-17754 (4:55:54) [prop] (universality) every base change of a faithfully flat
 quasi-compact radicial morphism is a homeomorphism. -/
+@[buffalo "vuys5SNs2eQ-17754"]
 theorem prop_17754_universal {X Y Y' : Scheme.{u}} (f : X ⟶ Y) [Flat f] [QuasiCompact f]
     [Surjective f] [UniversallyInjective f] (g : Y' ⟶ Y) :
     IsHomeomorph (pullback.snd f g).base := by
@@ -151,6 +157,7 @@ theorem prop_17754_universal {X Y Y' : Scheme.{u}} (f : X ⟶ Y) [Flat f] [Quasi
 
 /-- vuys5SNs2eQ-18155 (5:02:35) [prop] (the case `X' = S'`) If `g : S' → S` is radicial, the two
 projections `S'' = S' ×_S S' ⇉ S'` agree on underlying points, so every subset is stable. -/
+@[buffalo "vuys5SNs2eQ-18155"]
 theorem prop_18155 {S S' : Scheme.{u}} (g : S' ⟶ S) [UniversallyInjective g]
     (z : ↥(pullback g g)) : pullback.fst g g z = pullback.snd g g z := by
   obtain ⟨t, rfl⟩ := ((UniversallyInjective.iff_diagonal g).1 inferInstance).surj z
@@ -164,6 +171,7 @@ section VeryAmple
 /-- vuys5SNs2eQ-18554 (5:09:14) [prop] (affine case) Direct image commutes with base change: for
 `A → B`, a `B`-module `N` and `A → A'`, the base change `N ⊗_B (B ⊗_A A')` of `N` to
 `X' = Spec (B ⊗_A A')`, viewed over `A`, is `N ⊗_A A'`, the base change of `f_* N`. -/
+@[buffalo "vuys5SNs2eQ-18554"]
 def prop_18554 (A B A' N : Type*) [CommRing A] [CommRing B] [CommRing A'] [Algebra A B]
     [Algebra A A'] [AddCommGroup N] [Module A N] [Module B N] [IsScalarTower A B N] :
     N ⊗[B] (B ⊗[A] A') ≃ₗ[B] N ⊗[A] A' :=
@@ -172,6 +180,7 @@ def prop_18554 (A B A' N : Type*) [CommRing A] [CommRing B] [CommRing A'] [Algeb
 /-- vuys5SNs2eQ-19389 (5:23:09) [prop] For `B` free of finite rank over `A`, the norm
 `N(x) = det(x ·)` is multiplicative, `N(1) = 1`, and sends units to units (whence the norm of
 an invertible sheaf, a torsor under `B^*`, to a torsor under `A^*`). -/
+@[buffalo "vuys5SNs2eQ-19389"]
 theorem prop_19389 (A B : Type*) [CommRing A] [CommRing B] [Algebra A B] (x y : B) :
     Algebra.norm A x = LinearMap.det (Algebra.lmul A B x) ∧
       Algebra.norm A (x * y) = Algebra.norm A x * Algebra.norm A y ∧ Algebra.norm A (1 : B) = 1 ∧
@@ -196,6 +205,7 @@ def IsGluing (R : X' → X' → Prop) : Prop :=
 `(s, g) ↦ (s, g s)` (a pseudo-torsor). A gluing datum `R` on `X'` is a descent datum (an
 equivalence relation) if and only if it is the orbit relation of an action of `G` on `X'`
 compatible with the projection to `S'`. -/
+@[buffalo "vuys5SNs2eQ-20176"]
 theorem prop_20176 [Group G] [MulAction G S']
     (htors : ∀ s t, π s = π t ↔ ∃ g : G, g • s = t)
     (R : X' → X' → Prop) (hR : IsGluing π f R) :
@@ -233,6 +243,7 @@ section Galois
 /-- vuys5SNs2eQ-20367 (5:39:27) [prop] (the case `X = Spec k`, `Y = 𝔸¹`, for `S' → S` the
 spectrum of a Galois extension, of descent of rank 1) Full faithfulness on points: the
 `k`-points of the affine line are its `Γ`-invariant `k'`-points, `k = k'^Γ`. -/
+@[buffalo "vuys5SNs2eQ-20367"]
 theorem prop_20367 (k k' : Type*) [Field k] [Field k'] [Algebra k k'] [IsGalois k k'] (x : k') :
     x ∈ Set.range (algebraMap k k') ↔ ∀ σ : k' ≃ₐ[k] k', σ x = x :=
   InfiniteGalois.mem_range_algebraMap_iff_fixed x

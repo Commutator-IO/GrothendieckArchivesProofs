@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 07 (c): 3 July 1973
@@ -47,6 +48,7 @@ variable {X Y Z : Scheme.{u}}
 
 /-- Oqhr-Gt66es-30706 (8:31:46) [prop] Finite = integral and of finite type; integral = affine
 and universally closed. -/
+@[buffalo "Oqhr-Gt66es-30706"]
 theorem prop_30706 (f : X ⟶ Y) :
     (IsFinite f ↔ IsIntegralHom f ∧ LocallyOfFiniteType f) ∧
     (IsIntegralHom f ↔ UniversallyClosed f ∧ IsAffineHom f) :=
@@ -54,16 +56,19 @@ theorem prop_30706 (f : X ⟶ Y) :
     IsIntegralHom.iff_universallyClosed_and_isAffineHom⟩
 
 /-- Oqhr-Gt66es-31028 (8:37:08) [prop] A morphism is finite iff it is proper with finite fibres. -/
+@[buffalo "Oqhr-Gt66es-31028"]
 theorem prop_31028 (f : X ⟶ Y) : IsFinite f ↔ IsProper f ∧ ∀ y, (f ⁻¹' {y}).Finite := by
   rw [IsFinite.iff_isProper_and_locallyQuasiFinite]
   refine and_congr_right fun _ => locallyQuasiFinite_iff_finite_preimage_singleton
 
 /-- Oqhr-Gt66es-33740 (9:22:20) [def] `f : X → Y` is quasi-affine if the preimage of every affine
 open set of `Y` is a quasi-affine scheme. -/
+@[buffalo "Oqhr-Gt66es-33740"]
 def IsQuasiAffineHom (f : X ⟶ Y) : Prop :=
   ∀ U : Y.affineOpens, (f ⁻¹ᵁ U.1).toScheme.IsQuasiAffine
 
 /-- Oqhr-Gt66es-33935 (9:25:35) [prop] (one direction) A quasi-compact immersion is quasi-affine. -/
+@[buffalo "Oqhr-Gt66es-33935"]
 theorem prop_33935 (f : X ⟶ Y) [IsImmersion f] [QuasiCompact f] : IsQuasiAffineHom f := by
   intro U
   have : IsAffine U.1.toScheme := U.2
@@ -75,6 +80,7 @@ theorem prop_33935 (f : X ⟶ Y) [IsImmersion f] [QuasiCompact f] : IsQuasiAffin
 /-- Oqhr-Gt66es-34060 (9:27:40) [prop] A separated morphism of finite type with finite fibres is
 quasi-affine (by Zariski's Main Theorem: over an affine open, `X` is an open subscheme of the affine
 scheme of its normalization). -/
+@[buffalo "Oqhr-Gt66es-34060"]
 theorem prop_34060 (f : X ⟶ Y) [LocallyOfFiniteType f] [IsSeparated f] [QuasiCompact f]
     (hf : ∀ y, (f ⁻¹' {y}).Finite) : IsQuasiAffineHom f := by
   have : LocallyQuasiFinite f := (locallyQuasiFinite_iff_finite_preimage_singleton).2 hf
@@ -90,6 +96,7 @@ theorem prop_34060 (f : X ⟶ Y) [LocallyOfFiniteType f] [IsSeparated f] [QuasiC
 /-- Oqhr-Gt66es-34132 (9:28:52) [prop] (integral form) Zariski's Main Theorem: a separated
 quasi-finite morphism of finite type factors as a quasi-compact open immersion `X → X'` followed by
 an integral morphism `X' → Y` (its relative normalization). -/
+@[buffalo "Oqhr-Gt66es-34132"]
 theorem prop_34132 (f : X ⟶ Y) [LocallyOfFiniteType f] [IsSeparated f] [QuasiCompact f]
     (hf : ∀ y, (f ⁻¹' {y}).Finite) :
     IsOpenImmersion f.toNormalization ∧ QuasiCompact f.toNormalization ∧
@@ -99,27 +106,32 @@ theorem prop_34132 (f : X ⟶ Y) [LocallyOfFiniteType f] [IsSeparated f] [QuasiC
 
 /-- Oqhr-Gt66es-30771 (8:32:51) [prop] (second half) A proper morphism is separated and
 universally closed. -/
+@[buffalo "Oqhr-Gt66es-30771"]
 theorem prop_30771 (f : X ⟶ Y) [IsProper f] : IsSeparated f ∧ UniversallyClosed f :=
   ⟨inferInstance, inferInstance⟩
 
 /-- Oqhr-Gt66es-30898 (8:34:58) [prop] (first half, schemes) A scheme affine over a quasi-affine
 scheme is quasi-affine. -/
+@[buffalo "Oqhr-Gt66es-30898"]
 theorem prop_30898 (f : X ⟶ Y) [IsAffineHom f] [Y.IsQuasiAffine] : X.IsQuasiAffine :=
   Scheme.IsQuasiAffine.of_isAffineHom f
 
 /-- Oqhr-Gt66es-33252 (9:14:12) [def] A quasi-affine scheme (mathlib: `IsQuasiAffine`, a
 quasi-compact open subscheme of `Spec Γ(X, 𝒪_X)`) is separated and coherent. -/
+@[buffalo "Oqhr-Gt66es-33252"]
 theorem def_33252 [X.IsQuasiAffine] :
     CompactSpace X ∧ IsOpenImmersion X.toSpecΓ ∧ X.IsSeparated ∧ QuasiSeparatedSpace X :=
   ⟨inferInstance, inferInstance, inferInstance, inferInstance⟩
 
 /-- Oqhr-Gt66es-33316 (9:15:16) [prop] Morphisms `X → Spec B` are ring homomorphisms
 `B → Γ(X, 𝒪_X)` (the `Γ ⊣ Spec` adjunction). -/
+@[buffalo "Oqhr-Gt66es-33316"]
 def prop_33316 (R : CommRingCat.{u}) : (X ⟶ Spec R) ≃ (R ⟶ Γ(X, ⊤)) :=
   ((ΓSpec.adjunction.homEquiv X (Opposite.op R)).symm.trans (opEquiv _ _))
 
 /-- Oqhr-Gt66es-33316 (9:15:16) [prop] Every morphism `X → Spec B` factors through
 `X → Spec Γ(X, 𝒪_X)`. -/
+@[buffalo "Oqhr-Gt66es-33316"]
 theorem prop_33316_factor (R : CommRingCat.{u}) (g : X ⟶ Spec R) :
     g = X.toSpecΓ ≫ Spec.map g.appTop ≫ inv (Spec R).toSpecΓ := by
   rw [← Category.assoc, ← Scheme.toSpecΓ_naturality, Category.assoc, IsIso.hom_inv_id,
@@ -129,6 +141,7 @@ theorem prop_33316_factor (R : CommRingCat.{u}) (g : X ⟶ Spec R) :
 `X → Spec Γ(X, 𝒪_X)` is an open immersion iff the affine `X_f`, `f ∈ Γ(X, 𝒪_X)`, cover `X`;
 they then
 form a base of the topology. -/
+@[buffalo "Oqhr-Gt66es-33470"]
 theorem prop_33470 [CompactSpace X] :
     (X.IsQuasiAffine ↔ IsOpenImmersion X.toSpecΓ) ∧
     (X.IsQuasiAffine →
@@ -141,6 +154,7 @@ theorem prop_33470 [CompactSpace X] :
 
 /-- Oqhr-Gt66es-34487 (9:34:47) [prop] `f` is universally injective iff it is injective with
 purely inseparable residue field extensions (radicial). -/
+@[buffalo "Oqhr-Gt66es-34487"]
 theorem prop_34487 (f : X ⟶ Y) :
     UniversallyInjective f ↔ Function.Injective f ∧
       ∀ x, (f.residueFieldMap x).hom.IsPurelyInseparable :=
@@ -148,6 +162,7 @@ theorem prop_34487 (f : X ⟶ Y) :
 
 /-- Oqhr-Gt66es-34689 (9:38:09) [prop] `f` is radicial iff `X(K) → Y(K)` is injective for every
 field `K`, iff the diagonal is surjective. -/
+@[buffalo "Oqhr-Gt66es-34689"]
 theorem prop_34689 (f : X ⟶ Y) :
     (UniversallyInjective f ↔ ∀ (K : Type u) [Field K],
       Function.Injective (fun g : Spec (.of K) ⟶ X ↦ g ≫ f)) ∧
@@ -156,6 +171,7 @@ theorem prop_34689 (f : X ⟶ Y) :
 
 /-- Oqhr-Gt66es-34883 (9:41:23) [prop] Radicial morphisms are stable under base change and
 composition; monomorphisms are radicial. -/
+@[buffalo "Oqhr-Gt66es-34883"]
 theorem prop_34883 (f : X ⟶ Y) :
     MorphismProperty.IsStableUnderBaseChange @UniversallyInjective ∧
     MorphismProperty.IsStableUnderComposition @UniversallyInjective ∧
@@ -164,6 +180,7 @@ theorem prop_34883 (f : X ⟶ Y) :
 
 /-- Oqhr-Gt66es-35012 (9:43:32) [prop] (first half) An integral, radicial and surjective
 morphism is a universal homeomorphism. -/
+@[buffalo "Oqhr-Gt66es-35012"]
 theorem prop_35012 (f : X ⟶ Y) [IsIntegralHom f] [UniversallyInjective f] [Surjective f]
     (g : Z ⟶ Y) : IsHomeomorph (pullback.snd f g) := by
   have key : ∀ {X' Y' : Scheme.{u}} (f' : X' ⟶ Y') [IsIntegralHom f'] [UniversallyInjective f']
@@ -176,12 +193,14 @@ theorem prop_35012 (f : X ⟶ Y) [IsIntegralHom f] [UniversallyInjective f] [Sur
   exact key _
 
 /-- Oqhr-Gt66es-35659 (9:54:19) [def] Universally open morphisms (mathlib: `UniversallyOpen`). -/
+@[buffalo "Oqhr-Gt66es-35659"]
 theorem def_35659 (f : X ⟶ Y) :
     UniversallyOpen f ↔ (topologically @IsOpenMap).universally f := by
   rw [UniversallyOpen.eq]
 
 /-- Oqhr-Gt66es-35806 (9:56:46) [prop] (positive half) Open morphisms are stable under
 composition; universally open ones under composition and base change. -/
+@[buffalo "Oqhr-Gt66es-35806"]
 theorem prop_35806 :
     MorphismProperty.IsStableUnderComposition (topologically @IsOpenMap) ∧
     MorphismProperty.IsStableUnderBaseChange @UniversallyOpen ∧
@@ -190,17 +209,20 @@ theorem prop_35806 :
 
 /-- Oqhr-Gt66es-35869 (9:57:49) [prop] (special cases) Open immersions and flat morphisms are
 generalizing. -/
+@[buffalo "Oqhr-Gt66es-35869"]
 theorem prop_35869 (f : X ⟶ Y) :
     (IsOpenImmersion f → GeneralizingMap f) ∧ (Flat f → GeneralizingMap f) :=
   ⟨fun _ => f.isOpenEmbedding.generalizingMap, fun _ => Flat.generalizingMap f⟩
 
 /-- Oqhr-Gt66es-36565 (10:09:25) [prop] (one direction) If `f` is locally of finite presentation
 and generalizing, it is open; if moreover flat, it is universally open. -/
+@[buffalo "Oqhr-Gt66es-36565"]
 theorem prop_36565 (f : X ⟶ Y) [LocallyOfFinitePresentation f] :
     (GeneralizingMap f → IsOpenMap f) ∧ (Flat f → UniversallyOpen f) :=
   ⟨isOpenMap_of_generalizingMap f, fun _ => UniversallyOpen.of_flat f⟩
 
 /-- Oqhr-Gt66es-36440 (10:07:20) [prop] (part) Generalizing maps are stable under composition. -/
+@[buffalo "Oqhr-Gt66es-36440"]
 theorem prop_36440 {α β γ : Type*} [TopologicalSpace α] [TopologicalSpace β] [TopologicalSpace γ]
     {f : α → β} {g : β → γ} (hf : GeneralizingMap f) (hg : GeneralizingMap g) :
     GeneralizingMap (g ∘ f) :=
@@ -208,12 +230,14 @@ theorem prop_36440 {α β γ : Type*} [TopologicalSpace α] [TopologicalSpace β
 
 /-- Oqhr-Gt66es-36696 (10:11:36) [prop] Chevalley: the image of a constructible set by a morphism
 of finite presentation to a quasi-compact quasi-separated scheme is constructible. -/
+@[buffalo "Oqhr-Gt66es-36696"]
 theorem prop_36696 (f : X ⟶ Y) [LocallyOfFinitePresentation f] [QuasiCompact f] [CompactSpace Y]
     [QuasiSeparatedSpace Y] {s : Set X} (hs : IsConstructible s) : IsConstructible (f '' s) :=
   f.isConstructible_image hs
 
 /-- Oqhr-Gt66es-36760 (10:12:40) [prop] (affine form) A constructible subset of `Spec A` is open
 iff it is stable under generization. -/
+@[buffalo "Oqhr-Gt66es-36760"]
 theorem prop_36760 {A : Type*} [CommRing A] (s : Set (PrimeSpectrum A)) (hs : IsConstructible s) :
     IsOpen s ↔ StableUnderGeneralization s :=
   ⟨IsOpen.stableUnderGeneralization, fun h =>
@@ -221,6 +245,7 @@ theorem prop_36760 {A : Type*} [CommRing A] (s : Set (PrimeSpectrum A)) (hs : Is
 
 /-- Oqhr-Gt66es-37016 (10:16:56) [prop] (finite presentation case) A scheme locally of finite
 presentation over a field is universally open over it (it is flat). -/
+@[buffalo "Oqhr-Gt66es-37016"]
 theorem prop_37016 {k : Type u} [Field k] (f : X ⟶ Spec (.of k)) [LocallyOfFinitePresentation f] :
     UniversallyOpen f :=
   UniversallyOpen.of_flat f
@@ -233,6 +258,7 @@ def genericPt (A : Type*) [CommRing A] [IsDomain A] : PrimeSpectrum A := ⟨⊥,
 /-- Oqhr-Gt66es-36503 (10:08:23) [cex] The inclusion of the generic point of an integral scheme
 (here `Spec A`, `A` a domain) is generalizing; it is not open for the affine line: `{η}` is not open
 in `Spec k[X]`. -/
+@[buffalo "Oqhr-Gt66es-36503"]
 theorem cex_36503 (A : Type*) [CommRing A] [IsDomain A] (k : Type*) [Field k] :
     GeneralizingMap (fun _ : Unit => genericPt A) ∧ ¬ IsOpen ({genericPt k[X]} : Set _) := by
   refine ⟨fun _ q hq => ⟨(), specializes_rfl, ?_⟩, fun h => ?_⟩
@@ -283,6 +309,7 @@ theorem cusp_isIntegral (k : Type*) [Field k] : Algebra.IsIntegral (cuspRing k) 
 
 /-- Oqhr-Gt66es-35209 (9:46:49) [ex] (integral and surjective half) The normalization
 `Spec k[t] → Spec k[t², t³]` of the cusp is integral and surjective. -/
+@[buffalo "Oqhr-Gt66es-35209"]
 theorem ex_35209 (k : Type*) [Field k] :
     Algebra.IsIntegral (cuspRing k) k[X] ∧
       Function.Surjective (comap (algebraMap (cuspRing k) k[X])) := by

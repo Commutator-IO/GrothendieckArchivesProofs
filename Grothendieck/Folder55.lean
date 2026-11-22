@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 55, page 13: Lemme B, the identity principle and noetherianity
@@ -111,6 +112,7 @@ open Subsheaf
 /-- **Quasi-compactness step of Lemme B.** On a quasi-compact space, an increasing sequence of
 subsheaves which, near every point, is eventually constant on some open neighbourhood, is
 eventually constant. -/
+@[montpellier "55, 13"]
 theorem stationary_of_locally_stationary [CompactSpace X] (S : ℕ → Subsheaf F)
     (hS : Monotone S)
     (hloc : ∀ x : X, ∃ W : Opens X, x ∈ W ∧ ∃ k₀, ∀ k ≥ k₀, AgreeOn (S k) (S k₀) W) :
@@ -132,6 +134,7 @@ On a quasi-compact space, let `S` be an increasing sequence of subsheaves. Suppo
 * (uniformity) for every point `x` and every index `k`, there is an open neighbourhood `W` of
   `x` such that every later `S l` with the same germs at `x` as `S k` agrees with `S k` on `W`.
 Then the sequence is stationary. -/
+@[montpellier "55, 13"]
 theorem stationary_of_germs [CompactSpace X] (S : ℕ → Subsheaf F) (hS : Monotone S)
     (hgerm : ∀ x : X, ∃ k₀, ∀ k ≥ k₀, (S k).germs x = (S k₀).germs x)
     (huniform : ∀ (x : X) (k : ℕ), ∃ W : Opens X, x ∈ W ∧
@@ -156,6 +159,7 @@ theorem germs_stabilize_of_noetherian {R M : Type*} [Ring R] [AddCommGroup M] [M
 a partially ordered type (the coherent subsheaves of `𝒪_X`) in which every increasing sequence
 is stationary (Lemme B). If every finitely generated ideal `I` of `A` gives a member `Ĩ` of `C`,
 monotonically, with `Γ(Ĩ) = I` (Lemme A and its Corollaire 1), then `A` is noetherian. -/
+@[montpellier "55, 13"]
 theorem isNoetherianRing_of_tilde {A P : Type*} [CommRing A] [PartialOrder P] (C : P → Prop)
     (hB : ∀ s : ℕ → P, Monotone s → (∀ k, C (s k)) → ∃ k₀, ∀ k ≥ k₀, s k = s k₀)
     (tilde : Ideal A → P) (Γ : P → Ideal A)
@@ -242,6 +246,7 @@ theorem accumulating_not_stationary : ¬ ∃ k₀, ∀ k ≥ k₀, accumulating 
 
 /-- **The identity principle cannot be dropped**: on a quasi-compact space, an increasing
 sequence of subsheaves whose germs stabilise at every point need not be stationary. -/
+@[montpellier "55, 13"]
 theorem not_stationary_without_uniformity :
     ∃ (X : TopCat) (_ : CompactSpace X) (F : TopCat.Presheaf Type X) (S : ℕ → Subsheaf F),
       Monotone S ∧ (∀ x : X, ∃ k₀, ∀ k ≥ k₀, (S k).germs x = (S k₀).germs x) ∧

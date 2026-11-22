@@ -11,6 +11,7 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Flat
 public import Mathlib.AlgebraicGeometry.Morphisms.Finite
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import StacksFrontier.AlgebraicGeometry.Morphisms.UniversalHomeomorphism.Defs.Integral
+import Grothendieck.Attr
 
 /-!
 # Folder 126, page 17: geometric points of the fibres
@@ -62,16 +63,19 @@ namespace Grothendieck.Folder126GeometricPoints
 variable {X Y : Scheme.{u}}
 
 /-- The geometric points of `X` over the geometric point `p : Spec K ⟶ Y` of `Y`. -/
+@[montpellier "126, 17"]
 abbrev GeomFibre (f : X ⟶ Y) {K : Type u} [Field K] (p : Spec (.of K) ⟶ Y) : Type u :=
   {q : Spec (.of K) ⟶ X // q ≫ f = p}
 
 /-- **The hypothesis of page 17.** Every geometric fibre of `f` has exactly `n` points. -/
+@[montpellier "126, 17"]
 def HasGeomDegree (f : X ⟶ Y) (n : ℕ) : Prop :=
   ∀ (K : Type u) [Field K] [IsAlgClosed K] (p : Spec (.of K) ⟶ Y),
     Nonempty (GeomFibre f p ≃ Fin n)
 
 /-- The geometric fibre of a base change `X ×_Y U ⟶ U` over `p` is the geometric fibre of
 `X ⟶ Y` over the image of `p`. -/
+@[montpellier "126, 17"]
 def geomFibrePullbackEquiv (f : X ⟶ Y) {U : Scheme.{u}} (u : U ⟶ Y) {K : Type u} [Field K]
     (p : Spec (.of K) ⟶ U) : GeomFibre (pullback.snd f u) p ≃ GeomFibre f (p ≫ u) where
   toFun q := ⟨q.1 ≫ pullback.fst f u, by
@@ -82,11 +86,13 @@ def geomFibrePullbackEquiv (f : X ⟶ Y) {U : Scheme.{u}} (u : U ⟶ Y) {K : Typ
   right_inv q := Subtype.ext (pullback.lift_fst _ _ _)
 
 /-- The degree of the geometric fibres is stable under base change. -/
+@[montpellier "126, 17"]
 theorem HasGeomDegree.pullback_snd {f : X ⟶ Y} {n : ℕ} (hf : HasGeomDegree f n)
     {U : Scheme.{u}} (u : U ⟶ Y) : HasGeomDegree (pullback.snd f u) n := fun K _ _ p =>
   (hf K _).map fun e => (geomFibrePullbackEquiv f u p).trans e
 
 /-- At most one geometric point over every geometric point: `f` is universally injective. -/
+@[montpellier "126, 17"]
 theorem universallyInjective_of_forall_subsingleton (f : X ⟶ Y)
     (h : ∀ (K : Type u) [Field K] [IsAlgClosed K] (p : Spec (.of K) ⟶ Y),
       Subsingleton (GeomFibre f p)) :
@@ -103,6 +109,7 @@ theorem universallyInjective_of_forall_subsingleton (f : X ⟶ Y)
   exact (cancel_epi ι).1 (congrArg Subtype.val heq)
 
 /-- At least one geometric point over every geometric point: `f` is surjective. -/
+@[montpellier "126, 17"]
 theorem surjective_of_forall_nonempty (f : X ⟶ Y)
     (h : ∀ (K : Type u) [Field K] [IsAlgClosed K] (p : Spec (.of K) ⟶ Y),
       Nonempty (GeomFibre f p)) :
@@ -117,6 +124,7 @@ theorem surjective_of_forall_nonempty (f : X ⟶ Y)
 
 /-- A finite surjective morphism has a geometric point over every geometric point: a closed point
 of the geometric fibre, which is finite over an algebraically closed field, is rational. -/
+@[montpellier "126, 17"]
 theorem nonempty_geomFibre_of_surjective (f : X ⟶ Y) [IsFinite f] [Surjective f]
     {K : Type u} [Field K] [IsAlgClosed K] (p : Spec (.of K) ⟶ Y) :
     Nonempty (GeomFibre f p) := by
@@ -130,6 +138,7 @@ theorem nonempty_geomFibre_of_surjective (f : X ⟶ Y) [IsFinite f] [Surjective 
 
 /-- **The criterion.** An integral morphism with exactly one geometric point over every
 geometric point is a universal homeomorphism. -/
+@[montpellier "126, 17"]
 theorem universalHomeomorphism_of_hasGeomDegree_one (f : X ⟶ Y) [IsIntegralHom f]
     (h : HasGeomDegree f 1) : UniversalHomeomorphism f :=
   (universalHomeomorphism_iff_integral_universallyInjective_surjective f).2
@@ -140,6 +149,7 @@ theorem universalHomeomorphism_of_hasGeomDegree_one (f : X ⟶ Y) [IsIntegralHom
 
 /-- Conversely, a finite universal homeomorphism has exactly one geometric point over every
 geometric point. -/
+@[montpellier "126, 17"]
 theorem hasGeomDegree_one_of_universalHomeomorphism (f : X ⟶ Y) [IsFinite f]
     [UniversalHomeomorphism f] : HasGeomDegree f 1 := by
   obtain ⟨-, hinj, hsurj⟩ :=

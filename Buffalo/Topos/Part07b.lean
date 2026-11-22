@@ -7,6 +7,7 @@ module
 
 public import Buffalo.Topos.Part02
 public import Buffalo.Topos.Part03
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 7b: classifying topoi, examples and special cases (12 July 1973)
@@ -40,12 +41,14 @@ noncomputable section
 
 /-- ORG14LNb5gE-8883 (2:28:03) [prop] `u : X → Y` is an epimorphism iff `Y ⊔_X Y → Y` is an
 isomorphism (`Part02.epi_iff_isIso_codiagonal`). -/
+@[buffalo "ORG14LNb5gE-8883"]
 theorem epi_iff_codiagonal {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y) [HasPushout f f] :
     Epi f ↔ IsIso (pushout.desc (f := f) (g := f) (𝟙 Y) (𝟙 Y) rfl) :=
   Part02.epi_iff_isIso_codiagonal f
 
 /-- ORG14LNb5gE-15238 (4:13:58) [prop], for a presheaf target `Ĉ'`: `φ : C → C'` (with `C` finitely
 complete) is left exact iff its colimit-preserving extension `φ_! : Ĉ → Ĉ'` is. -/
+@[buffalo "ORG14LNb5gE-15238"]
 theorem lex_iff_extension_lex {C C' : Type u} [SmallCategory C] [SmallCategory C']
     [HasFiniteLimits C] (φ : C ⥤ C') :
     PreservesFiniteLimits φ ↔
@@ -55,6 +58,7 @@ theorem lex_iff_extension_lex {C C' : Type u} [SmallCategory C] [SmallCategory C
 /-- ORG14LNb5gE-12268 (3:24:28) [prop] A group morphism `G → G'` induces by restriction a functor
 `B_{G'} → B_G` (presheaves on the one-object categories) with both adjoints: an essential morphism
 `B_G → B_{G'}`. -/
+@[buffalo "ORG14LNb5gE-12268"]
 theorem res_essential {G G' : Type} [Group G] [Group G'] (f : G →* G') :
     (Part03.restr (SingleObj.mapHom G G' f)).IsRightAdjoint ∧
       (Part03.restr (SingleObj.mapHom G G' f)).IsLeftAdjoint :=
@@ -62,12 +66,14 @@ theorem res_essential {G G' : Type} [Group G] [Group G'] (f : G →* G') :
 
 /-- ORG14LNb5gE-9433 (2:37:13) [prop], the case of points: in `Set`, filtered colimits commute with
 finite limits, so a filtered colimit of left exact functors to `Set` is left exact. -/
+@[buffalo "ORG14LNb5gE-9433"]
 theorem filtered_colim_lex {K : Type u} [SmallCategory K] [IsFiltered K] :
     PreservesFiniteLimits (colim : (K ⥤ Type u) ⥤ Type u) := inferInstance
 
 /-- ORG14LNb5gE-9758 (2:42:38) [ex] The subobjects of the terminal object of `B = [FinSet, Set]` are
 the upward-closed classes of finite sets (`P A → (A → B) → P B`); there are exactly three: `∅`, the
 nonempty sets (the image of `X → e`) and all sets. -/
+@[buffalo "ORG14LNb5gE-9758"]
 theorem subterminal_classifying (P : FintypeCat.{u} → Prop)
     (hP : ∀ (A B : FintypeCat.{u}) (_ : A ⟶ B), P A → P B) :
     P = (fun _ => False) ∨ P = (fun A : FintypeCat.{u} => Nonempty (A : Type u)) ∨
@@ -96,12 +102,14 @@ theorem subterminal_classifying (P : FintypeCat.{u} → Prop)
 
 /-- ORG14LNb5gE-10017 (2:46:57) [ex], points of `B*`: `x → e` is an epimorphism of sets iff `x` is
 nonempty. -/
+@[buffalo "ORG14LNb5gE-10017"]
 theorem epi_toUnit_iff (X : Type u) : Epi (↾(fun _ : X => PUnit.unit.{u+1})) ↔ Nonempty X := by
   rw [epi_iff_surjective]
   exact ⟨fun h => ⟨(h PUnit.unit).choose⟩, fun ⟨x⟩ _ => ⟨x, rfl⟩⟩
 
 /-- ORG14LNb5gE-10210 (2:50:10) [ex], points of `Φ₀₁`: `x → e` is a monomorphism iff `x` has at most
 one element. -/
+@[buffalo "ORG14LNb5gE-10210"]
 theorem mono_toUnit_iff (X : Type u) :
     Mono (↾(fun _ : X => PUnit.unit.{u+1})) ↔ Subsingleton X := by
   rw [mono_iff_injective]
@@ -109,6 +117,7 @@ theorem mono_toUnit_iff (X : Type u) :
 
 /-- ORG14LNb5gE-10342 (2:52:22) [ex], points of `Φ₁ = Φ₀₁ ∩ B*`: `x → e` is mono and epi, i.e. an
 isomorphism, iff `x` has exactly one element. -/
+@[buffalo "ORG14LNb5gE-10342"]
 theorem isIso_toUnit_iff (X : Type u) :
     IsIso (↾(fun _ : X => PUnit.unit.{u+1})) ↔ Nonempty X ∧ Subsingleton X := by
   rw [isIso_iff_bijective]
@@ -116,6 +125,7 @@ theorem isIso_toUnit_iff (X : Type u) :
     fun ⟨⟨x⟩, hs⟩ => ⟨fun a b _ => Subsingleton.elim a b, fun _ => ⟨x, rfl⟩⟩⟩
 
 /-- ORG14LNb5gE-9888 (2:44:48) [ex], the point of `Φ₀`: a set is initial iff it is empty. -/
+@[buffalo "ORG14LNb5gE-9888"]
 theorem isInitial_iff_isEmpty (X : Type u) : Nonempty (IsInitial X) ↔ IsEmpty X := by
   constructor
   · rintro ⟨h⟩
@@ -129,11 +139,13 @@ theorem isInitial_iff_isEmpty (X : Type u) : Nonempty (IsInitial X) ↔ IsEmpty 
 
 /-- ORG14LNb5gE-10727 (2:58:47) [prop] Every `T₀` space embeds in a product of copies of the
 Sierpiński space `Prop` (Mathlib `productOfMemOpens_isEmbedding`). -/
+@[buffalo "ORG14LNb5gE-10727"]
 theorem t0_embeds (X : Type u) [TopologicalSpace X] [T0Space X] :
     Topology.IsEmbedding (productOfMemOpens X) := productOfMemOpens_isEmbedding X
 
 /-- ORG14LNb5gE-10665 (2:57:45) [ex], for spaces: a continuous map to the Sierpiński space is the
 same as an open subset. -/
+@[buffalo "ORG14LNb5gE-10665"]
 def sierpinski_classifies_opens (X : Type u) [TopologicalSpace X] :
     {p : X → Prop // Continuous p} ≃ Opens X where
   toFun q := ⟨{x | q.1 x}, continuous_Prop.1 q.2⟩
@@ -143,14 +155,17 @@ def sierpinski_classifies_opens (X : Type u) [TopologicalSpace X] :
 
 /-- ORG14LNb5gE-10793 (2:59:53) [prop], for `Ĉ`: the topologies on `C` (the subtopoi of `Ĉ`) form a
 complete lattice. -/
+@[buffalo "ORG14LNb5gE-10793"]
 theorem topologies_completeLattice (C : Type u) [Category.{v} C] :
     Nonempty (CompleteLattice (GrothendieckTopology C)) := ⟨inferInstance⟩
 
 /-- ORG14LNb5gE-11198 (3:06:38) [ex] `ℤ` is the universal group: `Hom(ℤ, G) ≃ G`. -/
+@[buffalo "ORG14LNb5gE-11198"]
 def intHomEquiv (G : Type u) [Group G] : (Multiplicative ℤ →* G) ≃ G := (zpowersHom G).symm
 
 /-- ORG14LNb5gE-11403 (3:10:03) [prop], for a presheaf target: `φ` is flat iff its extension `φ_!`
 is left exact; if `C` has finite limits, flat means left exact. -/
+@[buffalo "ORG14LNb5gE-11403"]
 theorem flat_iff {C D : Type u} [SmallCategory C] [SmallCategory D] [HasFiniteLimits C]
     (φ : C ⥤ D) :
     (RepresentablyFlat φ ↔ PreservesFiniteLimits (φ.op.lan : (Cᵒᵖ ⥤ Type u) ⥤ (Dᵒᵖ ⥤ Type u))) ∧
@@ -160,6 +175,7 @@ theorem flat_iff {C D : Type u} [SmallCategory C] [SmallCategory D] [HasFiniteLi
 
 /-- ORG14LNb5gE-12140 (3:22:20) [prop], for `S = Set`: the forgetful functor `B_G → Set` is faithful
 and commutes with all limits (and colimits). -/
+@[buffalo "ORG14LNb5gE-12140"]
 theorem action_forget (G : Type u) [Group G] :
     (Action.forget (Type u) G).Faithful ∧ PreservesLimits (Action.forget (Type u) G) ∧
       PreservesColimits (Action.forget (Type u) G) :=
@@ -167,6 +183,7 @@ theorem action_forget (G : Type u) [Group G] :
 
 /-- ORG14LNb5gE-12397 (3:26:37) [def] The universal torsor: `G` acting on itself by left
 translations. -/
+@[buffalo "ORG14LNb5gE-12397"]
 def universalTorsor (G : Type u) [Group G] : Action (Type u) G := Action.ofMulAction G G
 
 /-- ... the right translations commute with the left action (the right action of `p^*G`). -/
@@ -175,6 +192,7 @@ theorem right_translation_equivariant (G : Type u) [Group G] (g h x : G) :
 
 /-- ORG14LNb5gE-15494 (4:18:14) [prop], connectedness: for `C` with finite limits (a terminal object
 suffices), the constant functor `Set → Ĉ` is fully faithful. -/
+@[buffalo "ORG14LNb5gE-15494"]
 theorem const_fullyFaithful (C : Type u) [SmallCategory C] [HasTerminal C] :
     (Functor.const Cᵒᵖ : Type u ⥤ (Cᵒᵖ ⥤ Type u)).Full ∧
       (Functor.const Cᵒᵖ : Type u ⥤ (Cᵒᵖ ⥤ Type u)).Faithful := by
@@ -187,6 +205,7 @@ theorem eval_terminal_colimits (C : Type u) [SmallCategory C] [HasTerminal C] :
 
 /-- ORG14LNb5gE-15751 (4:22:31) [def] An elementary topos: finite limits, cartesian closed, a
 subobject classifier. -/
+@[buffalo "ORG14LNb5gE-15751"]
 structure IsElementaryTopos (E : Type u) [Category.{v} E] [MonoidalCategory E] : Prop where
   cartesian : Nonempty (CartesianMonoidalCategory E)
   finiteLimits : HasFiniteLimits E
@@ -201,6 +220,7 @@ theorem sheaf_isElementaryTopos {C : Type u} [SmallCategory C] (J : Grothendieck
 
 /-- ORG14LNb5gE-18019 (5:00:19) [prop] In `Set`, an arbitrary product of surjections is surjective
 (the failure in other topoi: `Part02.product_of_epis_not_epi`). -/
+@[buffalo "ORG14LNb5gE-18019"]
 theorem pi_surjective {ι : Type u} {X Y : ι → Type v} (f : ∀ i, X i → Y i)
     (hf : ∀ i, Function.Surjective (f i)) :
     Function.Surjective (fun (x : ∀ i, X i) i => f i (x i)) :=
@@ -208,6 +228,7 @@ theorem pi_surjective {ι : Type u} {X Y : ι → Type v} (f : ∀ i, X i → Y 
 
 /-- ORG14LNb5gE-18084 (5:01:24) [prop], for `Ĉ`: the constant functor has a left adjoint
 (`colim`, i.e. `π₀`), so `Ĉ → pt` is essential... -/
+@[buffalo "ORG14LNb5gE-18084"]
 def const_leftAdjoint (C : Type u) [SmallCategory C] :
     (colim : (Cᵒᵖ ⥤ Type u) ⥤ Type u) ⊣ Functor.const Cᵒᵖ := colimConstAdj
 
@@ -223,33 +244,39 @@ instance types_isIdempotentComplete : IsIdempotentComplete (Type u) :=
 
 /-- ORG14LNb5gE-18411 (5:06:51) [prop], why the Karoubian hypothesis: `Ĉ` only determines `C` up to
 its Karoubi envelope, `Ĉ ≃ (Kar C)^`. -/
+@[buffalo "ORG14LNb5gE-18411"]
 def presheaf_karoubi (C : Type u) [SmallCategory C] :
     (Cᵒᵖ ⥤ Type u) ≌ (Idempotents.Karoubi Cᵒᵖ ⥤ Type u) :=
   Idempotents.karoubiUniversal Cᵒᵖ (Type u)
 
 /-- ORG14LNb5gE-18604 (5:10:04) [prop] For `D` with finite limits, a functor `D → Set` (a point of
 `D̂`) is left exact iff it is an ind-object of `Dᵒᵖ`: `Hom_lex(D, Set) = Ind(Dᵒᵖ)`. -/
+@[buffalo "ORG14LNb5gE-18604"]
 theorem points_indObjects (D : Type u) [SmallCategory D] [HasFiniteLimits D]
     (A : Dᵒᵖᵒᵖ ⥤ Type u) : IsIndObject A ↔ PreservesFiniteLimits A :=
   isIndObject_iff_preservesFiniteLimits A
 
 /-- ORG14LNb5gE-18997 (5:16:37) [prop], in the type theory of Lean: the cardinal of the universe
 `Type u` is strongly inaccessible in `Type (u+1)`. -/
+@[buffalo "ORG14LNb5gE-18997"]
 theorem universe_inaccessible : Cardinal.IsInaccessible Cardinal.univ.{u, u + 1} :=
   Cardinal.IsInaccessible.univ
 
 /-- ORG14LNb5gE-9568 (2:39:28) [prop] `FinSet` is Karoubian, so the essential points of `B`
 (objects of the Karoubi envelope of `FinSetᵒᵖ`) are the finite sets. -/
+@[buffalo "ORG14LNb5gE-9568"]
 instance fintypeCat_isIdempotentComplete : IsIdempotentComplete FintypeCat.{u} :=
   (Idempotents.isIdempotentComplete_iff_hasEqualizer_of_id_and_idempotent _).2
     fun _ _ _ => inferInstance
 
 /-- ORG14LNb5gE-5906 (1:38:26) [prop], `I` a point: `FinSetᵒᵖ` has finite limits (the free
 finite-product category on one object is also finitely complete). -/
+@[buffalo "ORG14LNb5gE-5906"]
 theorem finSetOp_finiteLimits : HasFiniteLimits FintypeCat.{u}ᵒᵖ := inferInstance
 
 /-- ORG14LNb5gE-10145 (2:49:05) [ex] For the topology `⊤` (all sieves cover: the empty subtopos)
 every sheaf is terminal at every object: only the trivial model. -/
+@[buffalo "ORG14LNb5gE-10145"]
 theorem top_sheaf_terminal {C : Type u} [Category.{v} C]
     (F : Sheaf (⊤ : GrothendieckTopology C) (Type w)) (U : C) :
     Nonempty (IsTerminal (F.1.obj (op U))) := by
@@ -261,10 +288,12 @@ theorem top_sheaf_terminal {C : Type u} [Category.{v} C]
 
 /-- ORG14LNb5gE-16919 (4:41:59) [prop], for affine `X`: the constructible topology on `Spec R` is
 quasi-compact (same points). -/
+@[buffalo "ORG14LNb5gE-16919"]
 theorem constructible_compact (R : Type u) [CommRing R] :
     CompactSpace (WithConstructibleTopology (PrimeSpectrum R)) := inferInstance
 
 /-- ORG14LNb5gE-17111 (4:45:11) [def] Absolutely flat rings: all modules are flat. -/
+@[buffalo "ORG14LNb5gE-17111"]
 def IsAbsolutelyFlat (R : Type u) [CommRing R] : Prop :=
   ∀ (M : Type u) [AddCommGroup M] [Module R M], Module.Flat R M
 
@@ -274,12 +303,14 @@ theorem field_absolutelyFlat (K : Type u) [Field K] : IsAbsolutelyFlat K :=
 
 /-- ORG14LNb5gE-17307 (4:48:27) [prop], punctual topos: `M` is flat iff `J ⊗ M → M` is injective
 for every finitely generated ideal `J`. -/
+@[buffalo "ORG14LNb5gE-17307"]
 theorem flat_criterion (R : Type u) [CommRing R] (M : Type u) [AddCommGroup M] [Module R M] :
     Module.Flat R M ↔ ∀ ⦃I : Ideal R⦄, I.FG → Function.Injective (I.subtype.rTensor M) :=
   Module.Flat.iff_rTensor_injective
 
 /-- ORG14LNb5gE-13957 (3:52:37) [prop] Clopens of `Spec R` ↔ complementary idempotents: `Spec R` is
 connected iff the only idempotents are `0` and `1` (and `0 ≠ 1`). -/
+@[buffalo "ORG14LNb5gE-13957"]
 def clopens_idempotents (R : Type u) [CommRing R] :
     {e : R × R // e.1 * e.2 = 0 ∧ e.1 + e.2 = 1} ≃o Clopens (PrimeSpectrum R) :=
   PrimeSpectrum.mulZeroAddOneEquivClopens
@@ -287,6 +318,7 @@ def clopens_idempotents (R : Type u) [CommRing R] :
 /-- ORG14LNb5gE-13187 (3:39:47) [prop], trivial topology: for `t ≅ s`, `Isom(s, t)` is a torsor
 under
 `Aut(s)` acting by `g • f = g⁻¹ ≫ f`. -/
+@[buffalo "ORG14LNb5gE-13187"]
 theorem iso_torsor {C : Type u} [Category.{v} C] {s t : C} (f f' : s ≅ t) :
     ∃! g : s ≅ s, g.symm ≪≫ f = f' := by
   refine ⟨(f ≪≫ f'.symm), by ext; simp, fun g hg => ?_⟩
@@ -314,6 +346,7 @@ def contractedSetoid (P X : Type u) [MulAction Gᵐᵒᵖ P] [MulAction G X] : S
 
 /-- ORG14LNb5gE-11601 (3:13:21) [def] The contracted product `P ∧^G X`: the quotient of `P × X` by
 `(pg, x) ∼ (p, gx)` (`P` a right, `X` a left `G`-set). -/
+@[buffalo "ORG14LNb5gE-11601"]
 def ContractedProduct (P X : Type u) [MulAction Gᵐᵒᵖ P] [MulAction G X] : Type u :=
   Quotient (contractedSetoid G P X)
 
@@ -325,6 +358,7 @@ theorem contracted_rel (P X : Type u) [MulAction Gᵐᵒᵖ P] [MulAction G X] (
 
 /-- ORG14LNb5gE-11533 (3:12:13) [prop] The extension `P ↦ P ∧^G X` sends the representable `G` to
 `X`. -/
+@[buffalo "ORG14LNb5gE-11533"]
 def contractedRegular (X : Type u) [MulAction G X] : ContractedProduct G G X ≃ X where
   toFun := Quotient.lift (fun a : G × X => a.1 • a.2) (fun a b ⟨g, h⟩ => by
     subst h; simp [smul_smul, MulOpposite.smul_eq_mul_unop])
@@ -338,6 +372,7 @@ def contractedRegular (X : Type u) [MulAction G X] : ContractedProduct G G X ≃
 
 /-- ORG14LNb5gE-11667 (3:14:27) [prop], terminal object: `pt ∧^G X ≃ X/G`, so the extension
 preserves the terminal object iff `X` is nonempty and transitive. -/
+@[buffalo "ORG14LNb5gE-11667"]
 def contractedPoint (X : Type u) [MulAction G X] :
     ContractedProduct G PUnit X ≃ MulAction.orbitRel.Quotient G X where
   toFun := Quotient.lift

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import StacksFrontier.AlgebraicGeometry.Descent.Modules.FpqcFinitePresentation
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 08: fpqc descent of finite type and finite presentation
@@ -66,6 +67,7 @@ namespace Buffalo.AG.Part08
 /-- vuys5SNs2eQ-3491 (0:58:11) [prop], affine form. If `A → A'` is faithfully flat, an `A`-module
 `M` is finite (resp. finitely presented) if and only if `A' ⊗_A M` is so over `A'`. Mathlib's
 `Module.Finite.of_finite_tensorProduct_of_faithfullyFlat` and Stacks 03C4. -/
+@[buffalo "vuys5SNs2eQ-3491"]
 theorem prop_3491_module {A A' : Type u} [CommRing A] [CommRing A'] [Algebra A A']
     [Module.FaithfullyFlat A A'] (M : Type u) [AddCommGroup M] [Module A M] :
     (Module.Finite A' (A' ⊗[A] M) ↔ Module.Finite A M) ∧
@@ -78,6 +80,7 @@ theorem prop_3491_module {A A' : Type u} [CommRing A] [CommRing A'] [Algebra A A
 /-- vuys5SNs2eQ-3491 (0:58:11) [prop] Let `g : X' ⟶ X` be faithfully flat (flat and surjective)
 and quasi-compact. A quasi-coherent `𝒪_X`-module `F` is of finite type (resp. of finite
 presentation) if and only if `g^* F` is. Stacks 05AZ and 05B0, for the fpqc covering `{g}`. -/
+@[buffalo "vuys5SNs2eQ-3491"]
 theorem prop_3491_fpqc {X X' : Scheme.{u}} (g : X' ⟶ X) [Flat g] [Surjective g] [QuasiCompact g]
     (F : X.Modules) [F.IsQuasicoherent] :
     (((Scheme.Modules.pullback g).obj F).IsFiniteType ↔ F.IsFiniteType) ∧

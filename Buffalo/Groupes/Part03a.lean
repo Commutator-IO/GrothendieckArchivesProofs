@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic groups, Part 03 (a): étale schemes, `π₀`, pro-étale schemes
@@ -58,6 +59,7 @@ theorem etale_isReduced [Algebra.Etale K A] : IsReduced A :=
 /-- 3ULFIl_2Wis-6157 (1:42:37) [prop] An étale `k`-scheme is connected and non-empty if and only
 if it is `Spec K` with `K` a field: for an étale `k`-algebra `A`, `A ≠ 0` without non-trivial
 idempotents iff `A` is a field. -/
+@[buffalo "3ULFIl_2Wis-6157"]
 theorem etale_connected_iff_isField [Algebra.Etale K A] :
     (Nontrivial A ∧ ∀ e : A, IsIdempotentElem e → e = 0 ∨ e = 1) ↔ IsField A := by
   constructor
@@ -95,6 +97,7 @@ theorem etale_connected_iff_isField [Algebra.Etale K A] :
 
 /-- 3ULFIl_2Wis-6157 (1:42:37) [prop] ... and the fields étale over `k` are exactly the finite
 separable extensions of `k`. -/
+@[buffalo "3ULFIl_2Wis-6157"]
 theorem field_etale_iff (L : Type u) [Field L] [Algebra K L] :
     Algebra.Etale K L ↔ Module.Finite K L ∧ Algebra.IsSeparable K L := by
   constructor
@@ -106,6 +109,7 @@ theorem field_etale_iff (L : Type u) [Field L] [Algebra K L] :
 
 /-- 3ULFIl_2Wis-6289 (1:44:49) [prop] An affine (= quasi-compact connected-component-wise finite)
 étale `k`-scheme has a finite set `E = X(Ω)` of geometric points, for every field `Ω`. -/
+@[buffalo "3ULFIl_2Wis-6289"]
 theorem etale_finite_points [Algebra.Etale K A] (Ω : Type u) [Field Ω] [Algebra K Ω] :
     Finite (A →ₐ[K] Ω) :=
   have := etale_finite K A
@@ -113,11 +117,13 @@ theorem etale_finite_points [Algebra.Etale K A] (Ω : Type u) [Field Ω] [Algebr
 
 /-- 3ULFIl_2Wis-6358 (1:45:58) [prop] Finite projective limits of étale schemes are étale: the
 product `Spec A ×_k Spec B = Spec (A ⊗_k B)` of two étale `k`-schemes is étale. -/
+@[buffalo "3ULFIl_2Wis-6358"]
 theorem etale_tensor [Algebra.Etale K A] [Algebra.Etale K B] : Algebra.Etale K (A ⊗[K] B) :=
   Algebra.Etale.comp K A (A ⊗[K] B)
 
 /-- 3ULFIl_2Wis-6489 (1:48:09) [prop] A morphism `Spec B → Spec A` of affine étale `k`-schemes is
 surjective (an epimorphism) iff `A → B` is injective. -/
+@[buffalo "3ULFIl_2Wis-6489"]
 theorem etale_injective_iff_comap_surjective [Algebra.Etale K A] [Algebra.Etale K B]
     (f : A →ₐ[K] B) :
     Function.Injective f ↔ Function.Surjective (PrimeSpectrum.comap f.toRingHom) := by
@@ -147,6 +153,7 @@ end Etale
 
 /-- 3ULFIl_2Wis-6815 (1:53:35) [prop] A finite Galois extension `L` of `k` inside a separable
 closure `k_s` gives the surjective homomorphism `π = Gal(k_s/k) → Gal(L/k)` (restriction). -/
+@[buffalo "3ULFIl_2Wis-6815"]
 theorem galois_restrict_surjective (K Ks : Type u) [Field K] [Field Ks] [Algebra K Ks]
     [Normal K Ks] (L : IntermediateField K Ks) [Normal K L] :
     Function.Surjective (AlgEquiv.restrictNormalHom (F := K) (K₁ := Ks) L) :=
@@ -157,11 +164,13 @@ theorem galois_restrict_surjective (K Ks : Type u) [Field K] [Field Ks] [Algebra
 /-- 3ULFIl_2Wis-8163 (2:16:03) [def] An affine pro-étale `k`-scheme is `Spec A` with `A` the
 (filtered) union of its finite étale subalgebras: every element lies in an étale subalgebra
 (an étale algebra over a field is finite, `etale_finite`). -/
+@[buffalo "3ULFIl_2Wis-8163"]
 def IsIndEtale (K A : Type u) [Field K] [CommRing A] [Algebra K A] : Prop :=
   ∀ a : A, ∃ B : Subalgebra K A, Algebra.Etale K B ∧ a ∈ B
 
 /-- 3ULFIl_2Wis-8298 (2:18:18) [prop] A `k`-algebra is ind-étale iff it is integral and separable:
 the case of a field extension `L/k`. -/
+@[buffalo "3ULFIl_2Wis-8298"]
 theorem isIndEtale_iff_isSeparable (K L : Type u) [Field K] [Field L] [Algebra K L] :
     IsIndEtale K L ↔ Algebra.IsSeparable K L := by
   constructor
@@ -189,6 +198,7 @@ theorem isIndEtale_iff_isSeparable (K L : Type u) [Field K] [Field L] [Algebra K
 
 /-- 3ULFIl_2Wis-8360 (2:19:20) [prop] Étaleness, hence (affine) pro-étaleness of the finite
 pieces, is preserved by extension of scalars `k → k'`. -/
+@[buffalo "3ULFIl_2Wis-8360"]
 theorem etale_baseChange (K A K' : Type u) [Field K] [CommRing A] [Algebra K A] [CommRing K']
     [Algebra K K'] [Algebra.Etale K A] : Algebra.Etale K' (K' ⊗[K] A) :=
   inferInstance
@@ -196,12 +206,14 @@ theorem etale_baseChange (K A K' : Type u) [Field K] [CommRing A] [Algebra K A] 
 /-- 3ULFIl_2Wis-8425 (2:20:25) [thm] Over a separably closed field `k`, an affine étale scheme is
 determined by its finite set of points: `A ≃ (Spec A → k)`; the finite case of the equivalence
 with compact totally disconnected spaces. -/
+@[buffalo "3ULFIl_2Wis-8425"]
 theorem etale_sepClosed_functions (K A : Type u) [Field K] [IsSepClosed K] [CommRing A]
     [Algebra K A] [Algebra.Etale K A] : Nonempty (A ≃ₐ[K] (PrimeSpectrum A → K)) :=
   ⟨Algebra.FormallyEtale.equivPiOfIsSepClosed K A⟩
 
 /-- 3ULFIl_2Wis-8622 (2:23:42) [def] A `k`-scheme `X` is locally profinite if every point has an
 affine open neighbourhood `U` with `Γ(U, 𝒪_X)` ind-étale over `k`. -/
+@[buffalo "3ULFIl_2Wis-8622"]
 def IsLocallyProfinite {K : Type u} [Field K] {X : AlgebraicGeometry.Scheme.{u}}
     (f : X ⟶ AlgebraicGeometry.Spec (.of K)) : Prop :=
   ∀ x : X, ∃ U : X.Opens, AlgebraicGeometry.IsAffineOpen U ∧ x ∈ U ∧
@@ -212,6 +224,7 @@ def IsLocallyProfinite {K : Type u} [Field K] {X : AlgebraicGeometry.Scheme.{u}}
 /-- 3ULFIl_2Wis-8688 (2:24:48) [def] `p : X → P` over `k` is a `π₀(X/k)` if `P` is locally
 profinite and every `k`-morphism from `X` to a locally profinite `k`-scheme factors uniquely
 through `p`. -/
+@[buffalo "3ULFIl_2Wis-8688"]
 def IsPiZero {K : Type u} [Field K] {X P : AlgebraicGeometry.Scheme.{u}}
     (f : X ⟶ AlgebraicGeometry.Spec (.of K)) (g : P ⟶ AlgebraicGeometry.Spec (.of K))
     (p : X ⟶ P) : Prop :=
@@ -222,6 +235,7 @@ def IsPiZero {K : Type u} [Field K] {X P : AlgebraicGeometry.Scheme.{u}}
 /-- 3ULFIl_2Wis-8898 (2:28:18) [prop] The connected component of a point is the intersection of
 the open and closed sets containing it: proved for noetherian spaces (e.g. quasi-compact schemes
 locally of finite type over a field). -/
+@[buffalo "3ULFIl_2Wis-8898"]
 theorem connectedComponent_eq_iInter_isClopen_of_noetherian {X : Type*} [TopologicalSpace X]
     [TopologicalSpace.NoetherianSpace X] (x : X) :
     connectedComponent x = ⋂ Z : { Z : Set X // IsClopen Z ∧ x ∈ Z }, Z := by

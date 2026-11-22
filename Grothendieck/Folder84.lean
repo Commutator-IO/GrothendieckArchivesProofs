@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 84: the product of quadratic algebras, in split coordinates
@@ -101,6 +102,7 @@ variable {A : Type*} [CommRing A]
 /-- The identity of page 64: with `Qᵢ = uᵢ² + bᵢuᵢ + cᵢ` and
 `u = u₁b₂ + u₂b₁ + 2u₁u₂`, `u² + bu + c = b₂²Q₁ + b₁²Q₂ + 4(Q₁Q₂ − c₁Q₂ − c₂Q₁)`
 for `b = b₁b₂`, `c = c₁b₂² + c₂b₁² − 4c₁c₂`. -/
+@[montpellier "84, 64"]
 theorem identity_page64 (b₁ c₁ b₂ c₂ u₁ u₂ : A) :
     (2 * u₁ * u₂ + b₁ * u₂ + b₂ * u₁) ^ 2 + b₁ * b₂ * (2 * u₁ * u₂ + b₁ * u₂ + b₂ * u₁)
         + (c₁ * b₂ ^ 2 + c₂ * b₁ ^ 2 - 4 * c₁ * c₂)
@@ -112,6 +114,7 @@ theorem identity_page64 (b₁ c₁ b₂ c₂ u₁ u₂ : A) :
 /-- Pages 64 and 102: if `U₁² + b₁U₁ + c₁ = 0` and `U₂² + b₂U₂ + c₂ = 0` in a
 commutative ring, then `𝒰 = 2U₁U₂ + b₁U₂ + b₂U₁` satisfies `𝒰² + b𝒰 + c = 0`
 with `b = b₁b₂` and `c = c₁b₂² + c₂b₁² − 4c₁c₂`. -/
+@[montpellier "84, 64, 102"]
 theorem root_of_roots {b₁ c₁ b₂ c₂ U₁ U₂ : A}
     (h₁ : U₁ ^ 2 + b₁ * U₁ + c₁ = 0) (h₂ : U₂ ^ 2 + b₂ * U₂ + c₂ = 0) :
     (2 * U₁ * U₂ + b₁ * U₂ + b₂ * U₁) ^ 2 + b₁ * b₂ * (2 * U₁ * U₂ + b₁ * U₂ + b₂ * U₁)
@@ -119,6 +122,7 @@ theorem root_of_roots {b₁ c₁ b₂ c₂ U₁ U₂ : A}
   rw [identity_page64, h₁, h₂]; ring
 
 /-- Corollary of page 89: `δ = δ₁δ₂`, where `δ = b² − 4c`. -/
+@[montpellier "84, 89"]
 theorem disc_mul (b₁ c₁ b₂ c₂ : A) :
     (b₁ * b₂) ^ 2 - 4 * (c₁ * b₂ ^ 2 + c₂ * b₁ ^ 2 - 4 * c₁ * c₂)
       = (b₁ ^ 2 - 4 * c₁) * (b₂ ^ 2 - 4 * c₂) := by
@@ -141,6 +145,7 @@ noncomputable def iU (b₁ b₂ : R) (u₁ : A₁) (u₂ : A₂) : A₁ ⊗[R] A
 
 /-- Page 102, in `A₁ ⊗[R] A₂`: the element `i(𝒰)` satisfies
 `𝒰² + b₁b₂𝒰 + (c₁b₂² + c₂b₁² − 4c₁c₂) = 0`. -/
+@[montpellier "84, 102"]
 theorem tensor_root {b₁ c₁ b₂ c₂ : R} {u₁ : A₁} {u₂ : A₂}
     (h₁ : u₁ ^ 2 + algebraMap R A₁ b₁ * u₁ + algebraMap R A₁ c₁ = 0)
     (h₂ : u₂ ^ 2 + algebraMap R A₂ b₂ * u₂ + algebraMap R A₂ c₂ = 0) :
@@ -159,6 +164,7 @@ noncomputable def prodPoly (b₁ c₁ b₂ c₂ : R) : R[X] :=
 
 /-- Pages 98 to 102: the algebra map `i : R[𝒰]/(𝒰² + b𝒰 + c) → A₁ ⊗[R] A₂`,
 `𝒰 ↦ 2U₁U₂ + b₁U₂ + b₂U₁`. -/
+@[montpellier "84, 98–102"]
 noncomputable def productToTensor {b₁ c₁ b₂ c₂ : R} {u₁ : A₁} {u₂ : A₂}
     (h₁ : u₁ ^ 2 + algebraMap R A₁ b₁ * u₁ + algebraMap R A₁ c₁ = 0)
     (h₂ : u₂ ^ 2 + algebraMap R A₂ b₂ * u₂ + algebraMap R A₂ c₂ = 0) :
@@ -283,6 +289,7 @@ theorem ker_le_range {b₁ b₂ : R} (h : Ideal.span {2, b₁, b₂} = ⊤) :
 /-- **Proposition (page 85), in coordinates.** The map
 `E₁ ⊗ E₂ / Im(σ₁ ⊗ σ₂ − id) → E₁ * E₂` is bijective if and only if
 `2R + b₁R + b₂R = R`. -/
+@[montpellier "84, 85"]
 theorem coinvariants_bijective_iff (b₁ b₂ : R) :
     Function.Bijective (coinvMap b₁ b₂) ↔ Ideal.span {2, b₁, b₂} = ⊤ := by
   constructor
@@ -376,6 +383,7 @@ lemma iMap_apply (b₁ b₂ : R) (v : Fin 2 → R) :
 
 /-- **Corollaire (page 86), in coordinates.** If `2R + b₁R + b₂R = R`, then
 `A → A₁ ⊗ A₂` is injective with image `(A₁ ⊗ A₂)^{σ₁⊗σ₂}`. -/
+@[montpellier "84, 86"]
 theorem invariants_of_span_eq_top {b₁ b₂ : R} (h : Ideal.span {2, b₁, b₂} = ⊤) :
     InvariantsIso b₁ b₂ := by
   obtain ⟨g₀, g₁, g₂, hg⟩ := (span_eq_top_iff b₁ b₂).1 h
@@ -413,6 +421,7 @@ theorem invariants_of_span_eq_top {b₁ b₂ : R} (h : Ideal.span {2, b₁, b₂
 /-- **Corollaire (page 86), the converse « après tout changement de base ».**
 `A → (A₁ ⊗ A₂)^{σ₁⊗σ₂}` is an isomorphism after every base change `R → S` if
 and only if `2R + b₁R + b₂R = R`. Base change to `R/(2, b₁, b₂)` is enough. -/
+@[montpellier "84, 86"]
 theorem invariants_universally_iff {R : Type u} [CommRing R] (b₁ b₂ : R) :
     (∀ (S : Type u) [CommRing S] (f : R →+* S), InvariantsIso (f b₁) (f b₂)) ↔
       Ideal.span {2, b₁, b₂} = ⊤ := by
@@ -451,6 +460,7 @@ and `b₂ = 0`, `A → (A₁ ⊗ A₂)^{σ₁⊗σ₂}` is an isomorphism, while
 generate the proper ideal `(2, X)`. -/
 lemma two_eq_C : (2 : ℤ[X]) = C 2 := by simp
 
+@[montpellier "84, 86"]
 theorem invariants_not_iff :
     InvariantsIso (X : ℤ[X]) 0 ∧ Ideal.span {(2 : ℤ[X]), X, 0} ≠ ⊤ := by
   refine ⟨⟨?_, ?_⟩, ?_⟩
@@ -598,6 +608,7 @@ lemma moves_symm {b c b' c' : R} (ε : Rˣ) (t : R)
 `R[V]/(V² + b'V + c')` are isomorphic `R`-algebras if and only if
 `(b', c')` comes from `(b, c)` by a change of variables `V = εU + t`,
 `ε` a unit. -/
+@[montpellier "84, 48"]
 theorem qalg_iso_iff_moves (b c b' c' : R) :
     Nonempty (QAlg b c ≃ₐ[R] QAlg b' c') ↔ Moves b c b' c' := by
   constructor
@@ -655,6 +666,7 @@ theorem disc_congr (b c : R) : b ^ 2 - disc b c = 4 * c := by unfold disc; ring
 
 /-- Page 47: the congruence `T₀² ≡ δ (mod 4)` does not depend on the lift `τ` of
 `T₀ ∈ R/2R`, since `(τ + 2a)² ≡ τ² (mod 4)`. -/
+@[montpellier "84, 47"]
 theorem lift_indep (τ a δ : R) (h : ∃ k, τ ^ 2 - δ = 4 * k) :
     ∃ k, (τ + 2 * a) ^ 2 - δ = 4 * k := by
   obtain ⟨k, hk⟩ := h
@@ -686,6 +698,7 @@ theorem moves_iff_disc (h2 : ∀ x : R, 2 * x = 0 → x = 0) (b c b' c' : R) :
 
 /-- The isomorphism classes of free quadratic algebras over `R`, `2` regular, are
 classified by `(δ, b mod 2)` up to `(ε²δ, εb)`. -/
+@[montpellier "84, 48"]
 theorem qalg_iso_iff_disc (h2 : ∀ x : R, 2 * x = 0 → x = 0) (b c b' c' : R) :
     Nonempty (QAlg b c ≃ₐ[R] QAlg b' c') ↔
       ∃ ε : Rˣ, disc b' c' = (ε : R) ^ 2 * disc b c ∧ ∃ s, b' = ε * b + 2 * s := by
@@ -698,6 +711,7 @@ def Translates (b c b' c' : R) (t : R) : Prop := b' = b - 2 * t ∧ c' = c - b *
 translation from `(b, c)` to `(b', c')` exists iff `δ' = δ` and
 `b' ≡ b (mod 2)`, and it is unique: the groupoid of free quadratic algebras with
 `L = R` is equivalent to the discrete set of pairs `(δ, T₀)`. -/
+@[montpellier "84, 48"]
 theorem translates_iff (h2 : ∀ x : R, 2 * x = 0 → x = 0) (b c b' c' : R) :
     (∃ t, Translates b c b' c' t) ↔ disc b' c' = disc b c ∧ ∃ s, b' = b + 2 * s := by
   constructor
@@ -708,6 +722,7 @@ theorem translates_iff (h2 : ∀ x : R, 2 * x = 0 → x = 0) (b c b' c' : R) :
     unfold disc at hd; rw [hs] at hd
     linear_combination -hd
 
+@[montpellier "84, 48"]
 theorem translates_unique (h2 : ∀ x : R, 2 * x = 0 → x = 0) {b c b' c' t t' : R}
     (h : Translates b c b' c' t) (h' : Translates b c b' c' t') : t = t' := by
   rw [← sub_eq_zero]; apply h2; linear_combination h.1 - h'.1
@@ -715,12 +730,14 @@ theorem translates_unique (h2 : ∀ x : R, 2 * x = 0 → x = 0) {b c b' c' t t' 
 /-- **Théorème (page 48), essential surjectivity.** Over any base, every `δ` with
 a `τ` such that `τ² ≡ δ (mod 4)` is the discriminant of `(τ, c)` for some `c`;
 conversely `b² ≡ δ (mod 4)` for every `(b, c)`. -/
+@[montpellier "84, 48"]
 theorem exists_of_congr (δ τ : R) (h : ∃ k, τ ^ 2 - δ = 4 * k) :
     ∃ c, disc τ c = δ := by
   obtain ⟨k, hk⟩ := h
   exact ⟨k, by unfold disc; linear_combination hk⟩
 
 /-- Page 53, over `ℤ`: the discriminants are the integers `≡ 0, 1 (mod 4)`. -/
+@[montpellier "84, 53"]
 theorem int_disc_iff (δ : ℤ) : (∃ b c : ℤ, disc b c = δ) ↔ δ % 4 = 0 ∨ δ % 4 = 1 := by
   constructor
   · rintro ⟨b, c, rfl⟩
@@ -735,6 +752,7 @@ theorem int_disc_iff (δ : ℤ) : (∃ b c : ℤ, disc b c = δ) ↔ δ % 4 = 0 
 
 /-- Page 53, over `ℤ`: `T₀` is determined by `δ`, and two quadratic rings
 `ℤ[U]/(U² + bU + c)` are isomorphic iff they have the same discriminant. -/
+@[montpellier "84, 53"]
 theorem int_qalg_iso_iff (b c b' c' : ℤ) :
     Nonempty (QAlg b c ≃ₐ[ℤ] QAlg b' c') ↔ disc b c = disc b' c' := by
   have h2 : ∀ x : ℤ, 2 * x = 0 → x = 0 := fun x hx => by omega
@@ -755,6 +773,7 @@ theorem int_qalg_iso_iff (b c b' c' : ℤ) :
 /-- The hypothesis « 2 regular » is needed: over `𝔽₂`, `(b, c) = (1, 0)` and
 `(1, 1)` have the same `δ = 1` and the same `b mod 2`, but `𝔽₂[U]/(U² + U)` and
 `𝔽₂[U]/(U² + U + 1)` (that is `𝔽₂ × 𝔽₂` and `𝔽₄`) are not isomorphic. -/
+@[montpellier "84, 48"]
 theorem two_regular_needed :
     disc (1 : ZMod 2) 0 = disc (1 : ZMod 2) 1 ∧
       ¬ Nonempty (QAlg (1 : ZMod 2) 0 ≃ₐ[ZMod 2] QAlg (1 : ZMod 2) 1) := by
@@ -802,6 +821,7 @@ theorem isChiSplitting_of (b : M →ₗ[R] L) : IsChiSplitting χ (piOf χ b) (v
 
 /-- Page 129: on a split extension, a `χ`-scindage is determined by
 `b = π|_M : M → L`, and it is `(piOf b, varpiOf b)`. -/
+@[montpellier "84, 129"]
 theorem chiSplitting_eq {π : M × L →ₗ[R] L} {ϖ : M →ₗ[R] M × L}
     (h : IsChiSplitting χ π ϖ) :
     π = piOf χ (π ∘ₗ LinearMap.inl R M L) ∧ ϖ = varpiOf χ (π ∘ₗ LinearMap.inl R M L) := by
@@ -847,6 +867,7 @@ theorem transv_comp_varpiOf (b' w : M →ₗ[R] L) :
 `M ⊕ L` inducing the identity on `L` and on `M` carries the scindage of `b` to
 that of `b'` if and only if it is a transvection `T_w` with `b = b' + χw`; there
 is such an `f` iff `b ≡ b' (mod χ)`. Every such `f` is invertible, `T_w⁻¹ = T_{−w}`. -/
+@[montpellier "84, 77, 129"]
 theorem iso_iff (b b' : M →ₗ[R] L) :
     (∃ f : M × L →ₗ[R] M × L, LinearMap.fst R M L ∘ₗ f = LinearMap.fst R M L ∧
         f ∘ₗ LinearMap.inr R M L = LinearMap.inr R M L ∧ piOf χ b' ∘ₗ f = piOf χ b) ↔
@@ -890,6 +911,7 @@ noncomputable def uProd (b₁ u₁ : M₁ →ₗ[R] L₁) (b₂ u₂ : M₂ →�
 
 /-- **Page 129.** Changing the scindages, `bᵢ ↦ bᵢ + χuᵢ`, changes the product
 datum `b = b₁ ⊗ b₂` by `χu`: `b′₁ ⊗ b′₂ = b₁ ⊗ b₂ + χu`. -/
+@[montpellier "84, 129"]
 theorem prod_change (b₁ u₁ : M₁ →ₗ[R] L₁) (b₂ u₂ : M₂ →ₗ[R] L₂) :
     TensorProduct.map (b₁ + χ • u₁) (b₂ + χ • u₂)
       = TensorProduct.map b₁ b₂ + χ • uProd χ b₁ u₁ b₂ u₂ := by
@@ -900,6 +922,7 @@ theorem prod_change (b₁ u₁ : M₁ →ₗ[R] L₁) (b₂ u₂ : M₂ →ₗ[R
 /-- **Page 131, the cocycle relation `u″ = u + u′`.** Two successive changes,
 `uᵢ` then `u′ᵢ` (the second computed with `b′ᵢ = bᵢ + χuᵢ`), compose to the
 change `uᵢ + u′ᵢ`. -/
+@[montpellier "84, 131"]
 theorem uProd_cocycle (b₁ u₁ u₁' : M₁ →ₗ[R] L₁) (b₂ u₂ u₂' : M₂ →ₗ[R] L₂) :
     uProd χ b₁ u₁ b₂ u₂ + uProd χ (b₁ + χ • u₁) u₁' (b₂ + χ • u₂) u₂'
       = uProd χ b₁ (u₁ + u₁') b₂ (u₂ + u₂') := by
@@ -909,12 +932,14 @@ theorem uProd_cocycle (b₁ u₁ u₁' : M₁ →ₗ[R] L₁) (b₂ u₂ u₂' :
 
 /-- **Page 78, commutativity.** Under `M₁ ⊗ M₂ ≅ M₂ ⊗ M₁` and
 `L₁ ⊗ L₂ ≅ L₂ ⊗ L₁`, `b₁ ⊗ b₂` is `b₂ ⊗ b₁`. -/
+@[montpellier "84, 78"]
 theorem prod_comm (b₁ : M₁ →ₗ[R] L₁) (b₂ : M₂ →ₗ[R] L₂) :
     (TensorProduct.comm R L₁ L₂).toLinearMap ∘ₗ TensorProduct.map b₁ b₂
       = TensorProduct.map b₂ b₁ ∘ₗ (TensorProduct.comm R M₁ M₂).toLinearMap :=
   (TensorProduct.map_comp_comm_eq b₂ b₁).symm
 
 /-- **Page 78, associativity.** -/
+@[montpellier "84, 78"]
 theorem prod_assoc (b₁ : M₁ →ₗ[R] L₁) (b₂ : M₂ →ₗ[R] L₂) (b₃ : M₃ →ₗ[R] L₃) :
     (TensorProduct.assoc R L₁ L₂ L₃).toLinearMap ∘ₗ TensorProduct.map (TensorProduct.map b₁ b₂) b₃
       = TensorProduct.map b₁ (TensorProduct.map b₂ b₃) ∘ₗ
@@ -923,6 +948,7 @@ theorem prod_assoc (b₁ : M₁ →ₗ[R] L₁) (b₂ : M₂ →ₗ[R] L₂) (b�
 
 /-- **Page 78, unit.** The unit object is `M = L = R` with `b = id`
 (`π(u, λ) = λ + χu`); under `R ⊗ M ≅ M`, `R ⊗ L ≅ L`, `id ⊗ b` is `b`. -/
+@[montpellier "84, 78"]
 theorem prod_unit (b : M →ₗ[R] L) :
     (TensorProduct.lid R L).toLinearMap ∘ₗ TensorProduct.map LinearMap.id b
       = b ∘ₗ (TensorProduct.lid R M).toLinearMap := by
@@ -947,6 +973,7 @@ theorem chiRel_mul {b₁ b₁' b₂ b₂' : R} (h₁ : ChiRel χ b₁ b₁') (h�
 `b` is invertible for the product (`bb' ≡ ε (mod χ)` for some `b'`) iff
 `T₀ = −b₀` generates `L₀ = R/χR` on `V(χ)`, that is iff `b` and `χ` generate the
 unit ideal. -/
+@[montpellier "84, 79"]
 theorem invertible_iff (b : R) :
     (∃ b', ChiRel χ (b * b') 1) ↔ Ideal.span {b, χ} = ⊤ := by
   rw [Ideal.eq_top_iff_one, Ideal.mem_span_pair]
@@ -957,6 +984,7 @@ theorem invertible_iff (b : R) :
     exact ⟨g, 1, -h, by simp; linear_combination e⟩
 
 /-- The same criterion, as the page states it: `b` is a unit in `R/χR`. -/
+@[montpellier "84, 79"]
 theorem span_eq_top_iff_isUnit (b : R) :
     Ideal.span {b, χ} = ⊤ ↔ IsUnit (Ideal.Quotient.mk (Ideal.span {χ}) b) := by
   rw [Ideal.eq_top_iff_one, Ideal.mem_span_pair, isUnit_iff_exists_inv]
@@ -978,6 +1006,7 @@ theorem span_eq_top_iff_isUnit (b : R) :
 /-- **Pages 125 and 127.** In coordinates the pullback product carries the
 scindage `−b`, `b = b₁ ⊗ b₂`. If `γχ = 2`, the transvection `T_{γb}` carries the
 pushout scindage `b` to the pullback scindage `−b`. -/
+@[montpellier "84, 125, 127"]
 theorem push_pull {γ : R} (hγ : γ * χ = 2) (b : M →ₗ[R] L) :
     piOf χ (-b) ∘ₗ transv (γ • b) = piOf χ b := by
   rw [piOf_comp_transv, smul_smul, mul_comm, hγ, two_smul]
@@ -986,6 +1015,7 @@ theorem push_pull {γ : R} (hγ : γ * χ = 2) (b : M →ₗ[R] L) :
 /-- **Page 125, « commute ! ».** The comparison `T_{γb}` is compatible with the
 changes of scindage: for `b ↦ b + χu` on the pushout side and `−b ↦ −b − χu` on
 the pullback side, `T_{γb} ∘ T_u = T_{−u} ∘ T_{γ(b + χu)}`. -/
+@[montpellier "84, 125"]
 theorem push_pull_square {γ : R} (hγ : γ * χ = 2) (b u : M →ₗ[R] L) :
     transv (γ • b) ∘ₗ transv u = transv (-u) ∘ₗ transv (γ • (b + χ • u)) := by
   rw [transv_comp, transv_comp, smul_add, smul_smul, hγ, two_smul]
@@ -994,6 +1024,7 @@ theorem push_pull_square {γ : R} (hγ : γ * χ = 2) (b u : M →ₗ[R] L) :
 /-- The hypothesis `γχ = 2` is necessary: for the unit objects (`M = L = R`,
 `b₁ = b₂ = id`, so `b = id`), an isomorphism from the pushout to the pullback
 inducing the identity on `L` and `M` exists iff `2 ∈ χR`. -/
+@[montpellier "84, 125, 127, 167, 169"]
 theorem push_pull_unit_iff :
     (∃ f : R × R →ₗ[R] R × R, LinearMap.fst R R R ∘ₗ f = LinearMap.fst R R R ∧
         f ∘ₗ LinearMap.inr R R R = LinearMap.inr R R R ∧
@@ -1118,6 +1149,7 @@ lemma map_tmul' (φ : L ≃ₗ[R] L') (x y : L) :
 
 /-- **Morphisms in coordinates.** For `L'` invertible, `(φ, t)` is a morphism iff
 `φ(b) = b' + 2t` and `φ(c) = c' + b't + t²`, over any base. -/
+@[montpellier "84, 48"]
 theorem isCoverHom_iff [Module.Invertible R L'] (b : L) (c : L ⊗[R] L) (b' : L')
     (c' : L' ⊗[R] L') (φ : L ≃ₗ[R] L') (t : L') :
     IsCoverHom b c b' c' φ t ↔
@@ -1179,6 +1211,7 @@ def TripletCond (δ : L ⊗[R] L) (T₀ : L ⧸ twoL R L) : Prop :=
 
 /-- Page 47: for `L` invertible the condition does not depend on the lift,
 `(τ + 2a)² ≡ τ² (mod 4)`. -/
+@[montpellier "84, 47"]
 theorem tripletCond_iff_forall [Module.Invertible R L] (δ : L ⊗[R] L) (T₀ : L ⧸ twoL R L) :
     TripletCond δ T₀ ↔
       (∃ τ : L, Submodule.Quotient.mk τ = T₀) ∧
@@ -1200,12 +1233,14 @@ theorem tripletCond_iff_forall [Module.Invertible R L] (δ : L ⊗[R] L) (T₀ :
 
 /-- **The functor on objects** (page 47): `(L, b, c) ↦ (L, δ, T₀)` with `T₀ = b mod 2`
 satisfies `T₀² ≡ δ (mod 4)`, over any base. -/
+@[montpellier "84, 47"]
 theorem tripletCond_discL (b : L) (c : L ⊗[R] L) :
     TripletCond (discL b c) (Submodule.Quotient.mk b) :=
   ⟨b, rfl, c, by simp [discL]⟩
 
 /-- **The functor on morphisms**, over any base: a morphism `(φ, t)` of quadratic
 covers carries `δ` to `δ'` and `T₀` to `T'₀`. -/
+@[montpellier "84, 48"]
 theorem isCoverHom_triplet [Module.Invertible R L'] {b : L} {c : L ⊗[R] L} {b' : L'}
     {c' : L' ⊗[R] L'} {φ : L ≃ₗ[R] L'} {t : L'} (h : IsCoverHom b c b' c' φ t) :
     TensorProduct.map (φ : L →ₗ[R] L') (φ : L →ₗ[R] L') (discL b c) = discL b' c' ∧
@@ -1222,6 +1257,7 @@ theorem isCoverHom_triplet [Module.Invertible R L'] {b : L} {c : L ⊗[R] L} {b'
 /-- **Full faithfulness** (page 48). If `2` is a non-zero-divisor in `R` and `L`, `L'`
 are invertible, every isomorphism `φ : L ≅ L'` of triplets (`φ(δ) = δ'`,
 `φ₀(T₀) = T'₀`) lifts to exactly one morphism `(φ, t)` of quadratic covers. -/
+@[montpellier "84, 48"]
 theorem triplet_full_faithful (h2 : ∀ x : R, 2 * x = 0 → x = 0)
     [Module.Invertible R L'] (b : L) (c : L ⊗[R] L) (b' : L') (c' : L' ⊗[R] L')
     (φ : L ≃ₗ[R] L')
@@ -1250,6 +1286,7 @@ theorem triplet_full_faithful (h2 : ∀ x : R, 2 * x = 0 → x = 0)
 /-- **Essential surjectivity** (page 48), over any base: every triplet `(L, δ, T₀)`
 with `T₀² ≡ δ (mod 4)` comes from a quadratic cover on the same `L`, namely
 `b = τ`, `c = (τ² − δ)/4` for a lift `τ` of `T₀`. -/
+@[montpellier "84, 48"]
 theorem triplet_ess_surj (δ : L ⊗[R] L) (T₀ : L ⧸ twoL R L) (h : TripletCond δ T₀) :
     ∃ (b : L) (c : L ⊗[R] L), discL b c = δ ∧ Submodule.Quotient.mk b = T₀ := by
   obtain ⟨τ, hτ, k, hk⟩ := h
@@ -1261,6 +1298,7 @@ non-zero-divisor in `R`, then for invertible `L`, `L'` and an isomorphism
 exist iff `φ` is an isomorphism of triplets, and are then unique; every triplet
 occurs. Together: the groupoid of quadratic covers is equivalent, by
 `(L, b, c) ↦ (L, δ, T₀)`, to the groupoid of triplets. -/
+@[montpellier "84, 48"]
 theorem triplet_classification (h2 : ∀ x : R, 2 * x = 0 → x = 0)
     [Module.Invertible R L'] (b : L) (c : L ⊗[R] L) (b' : L') (c' : L' ⊗[R] L')
     (φ : L ≃ₗ[R] L') :
@@ -1272,6 +1310,7 @@ theorem triplet_classification (h2 : ∀ x : R, 2 * x = 0 → x = 0)
 
 /-- On isomorphism classes: two quadratic covers with `L`, `L'` invertible are
 isomorphic iff their triplets are. -/
+@[montpellier "84, 48"]
 theorem cover_iso_iff_triplet_iso (h2 : ∀ x : R, 2 * x = 0 → x = 0)
     [Module.Invertible R L'] (b : L) (c : L ⊗[R] L) (b' : L') (c' : L' ⊗[R] L') :
     (∃ (φ : L ≃ₗ[R] L') (t : L'), IsCoverHom b c b' c' φ t) ↔
@@ -1593,6 +1632,7 @@ instance : SymmetricCategory (ChiExt χ) where
   symmetry X Y := by refine hom_ext ?_ ?_ ?_ <;> simp
 
 /-- A morphism whose components on `M` and on `L` are isomorphisms is an isomorphism. -/
+@[montpellier "84, 65–79"]
 theorem isIso_of {X Y : ChiExt χ} (p : X ⟶ Y) [IsIso p.f] [IsIso p.φ] : IsIso p := by
   refine ⟨⟨⟨inv p.f, inv p.φ, -(inv p.f ≫ p.w ≫ inv p.φ), ?_⟩, ?_, ?_⟩⟩
   · have h := congrArg (fun g => inv p.f ≫ g ≫ inv p.φ) p.comm
@@ -1623,6 +1663,7 @@ def ofSection (L : ModuleCat.{u} R) (b : L) : ChiExt χ :=
 /-- **Page 79, the invertibility criterion, for any `L`.** The object `(𝒪, L, b)` is
 invertible for the product iff `L` is an invertible module and `b` generates `L` modulo
 `χ`, i.e. `T₀ = −b₀` generates `L₀ = L/χL` on `V(χ)`. -/
+@[montpellier "84, 79"]
 theorem invertible_iff_generates (L : ModuleCat.{u} R) (b : L) :
     (∃ Y : ChiExt χ, Nonempty (ofSection χ L b ⊗ Y ≅ 𝟙_ _)) ↔
       Module.Invertible R L ∧ ∀ x : L, ∃ (r : R) (y : L), x = r • b + χ • y := by
@@ -1698,6 +1739,7 @@ theorem invertible_iff_generates (L : ModuleCat.{u} R) (b : L) :
 open scoped Pointwise in
 /-- The criterion in the page's words: `(𝒪, L, b)` is invertible iff `L` is invertible and
 the class of `b` generates `L₀ = L/χL`. -/
+@[montpellier "84, 79"]
 theorem invertible_iff_span (L : ModuleCat.{u} R) (b : L) :
     (∃ Y : ChiExt χ, Nonempty (ofSection χ L b ⊗ Y ≅ 𝟙_ _)) ↔ Module.Invertible R L ∧
       Submodule.span R {Submodule.Quotient.mk (p := χ • (⊤ : Submodule R L)) b} = ⊤ := by
@@ -1783,6 +1825,7 @@ lemma Splitting.π_eq (s : X.Splitting) (e : E) : X.π e = χ • s.p e + X.ψ e
 
 /-- **Every extension of `𝒪` splits** on an affine base: if `0 → L → E → R → 0` is exact,
 it has a splitting. -/
+@[montpellier "84, 65–76"]
 noncomputable def splittingOf (hι : Function.Injective X.ι) (hex : ∀ e, X.ψ e = 0 → ∃ u, X.ι u = e)
     (hψ : Function.Surjective X.ψ) : X.Splitting := by
   let x₀ := (hψ 1).choose
@@ -1856,6 +1899,7 @@ theorem amal_hom_ext {F G : Amal X₁ X₂ →ₗ[R] N} (h₁ : F ∘ₗ starA X
   Submodule.linearMap_qext _ (LinearMap.prod_ext h₁ h₂)
 
 /-- **The amalgamated sum is a pushout** (in `ModuleCat`, Mathlib's `IsPushout`). -/
+@[montpellier "84, 65–76"]
 theorem isPushout {R : Type u} [CommRing R] {χ : R} {L₁ E₁ L₂ E₂ : Type u} [AddCommGroup L₁]
     [Module R L₁] [AddCommGroup E₁] [Module R E₁] [AddCommGroup L₂] [Module R L₂]
     [AddCommGroup E₂] [Module R E₂] (X₁ : ChiTriv χ L₁ E₁) (X₂ : ChiTriv χ L₂ E₂) :
@@ -1890,6 +1934,7 @@ noncomputable def piA : Amal X₁ X₂ →ₗ[R] L₁ ⊗[R] L₂ :=
 
 /-- **The product is a `χ`-trivialised extension**, constructed without any division and
 without choosing a splitting. -/
+@[montpellier "84, 70"]
 noncomputable def prodA : ChiTriv χ (L₁ ⊗[R] L₂) (Amal X₁ X₂) where
   ι := incl X₁ X₂
   ψ := psiA X₁ X₂
@@ -1914,6 +1959,7 @@ lemma star_ι_right (x₁ : E₁) (u₂ : L₂) :
   simpa [jK, μK] using LinearMap.congr_fun (star_comp_jK X₁ X₂) (0, x₁ ⊗ₜ u₂)
 
 /-- `(x₁ + u₁) * (x₂ + u₂) = x₁ * x₂ + u₁ ⊗ π₂(x₂) + π₁(x₁) ⊗ u₂ + χ u₁ ⊗ u₂`. -/
+@[montpellier "84, 72–74"]
 theorem star_add (x₁ : E₁) (u₁ : L₁) (x₂ : E₂) (u₂ : L₂) :
     starA X₁ X₂ ((x₁ + X₁.ι u₁) ⊗ₜ (x₂ + X₂.ι u₂)) = starA X₁ X₂ (x₁ ⊗ₜ x₂) +
       incl X₁ X₂ (u₁ ⊗ₜ X₂.π x₂ + X₁.π x₁ ⊗ₜ u₂ + χ • u₁ ⊗ₜ u₂) := by
@@ -1956,6 +2002,7 @@ lemma star_eq_split (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) (e₁ : E₁
 
 /-- **The split case (pages 77 and 78).** A splitting of each factor identifies the
 amalgamated sum with `𝒪 × (L₁ ⊗ L₂)`. -/
+@[montpellier "84, 77, 78"]
 noncomputable def splitEquiv (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) :
     Amal X₁ X₂ ≃ₗ[R] R × (L₁ ⊗[R] L₂) :=
   LinearEquiv.ofLinearMap (coord s₁ s₂) (uncoord s₁ s₂)
@@ -2009,6 +2056,7 @@ noncomputable def prodSplitting (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) 
     obtain ⟨⟨r, u⟩, rfl⟩ := (splitEquiv s₁ s₂).symm.surjective z
     simp [prodA, uncoord, psiA, coordT, add_comm]
 
+@[montpellier "84, 78"]
 theorem prodSplitting_b (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) :
     (prodA X₁ X₂).π (prodSplitting s₁ s₂).x₀ = X₁.π s₁.x₀ ⊗ₜ X₂.π s₂.x₀ := piA_star ..
 
@@ -2017,6 +2065,7 @@ theorem prodSplitting_b (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) :
 `f(x₁ + u₁, x₂) = f(x₁, x₂) + α(u₁ ⊗ π₂(x₂))` and `f(x₁, x₂ + u₂) = f(x₁, x₂) + α(π₁(x₁) ⊗ u₂)`,
 factors uniquely through `(x₁, x₂) ↦ x₁ * x₂`: there is exactly one linear
 `g : E₁ * E₂ → N` with `g(x₁ * x₂) = f(x₁, x₂)` and `g|_{L₁ ⊗ L₂} = α`. -/
+@[montpellier "84, 75, 76"]
 theorem biaffine_universal (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) (f : E₁ → E₂ → N)
     (α : L₁ ⊗[R] L₂ →ₗ[R] N)
     (h₁ : ∀ x₁ x₂ u₁, X₁.ψ x₁ = 1 → X₂.ψ x₂ = 1 →
@@ -2041,6 +2090,7 @@ theorem biaffine_universal (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) (f : 
 
 /-- Conversely every linear map out of `E₁ * E₂` restricts to a bi-affine pair, with no
 condition on `ψ`. -/
+@[montpellier "84, 75, 76"]
 theorem biaffine_of_linear (g : Amal X₁ X₂ →ₗ[R] N) (x₁ : E₁) (x₂ : E₂) (u₁ : L₁) (u₂ : L₂) :
     g (starA X₁ X₂ ((x₁ + X₁.ι u₁) ⊗ₜ x₂)) =
         g (starA X₁ X₂ (x₁ ⊗ₜ x₂)) + g (incl X₁ X₂ (u₁ ⊗ₜ X₂.π x₂)) ∧
@@ -2114,11 +2164,13 @@ lemma bc2_map (φ : L →ₗ[R] L') (z : L ⊗[R] L) :
   | add z z' hz hz' => simp [hz, hz']
 
 /-- **Base change of the discriminant**: `δ(b_S, c_S) = δ(b, c)_S`. -/
+@[montpellier "84, 49–52"]
 theorem discL_baseChange (b : L) (c : L ⊗[R] L) :
     discL ((1 : S) ⊗ₜ[R] b) (bc2 S L c) = bc2 S L (discL b c) := by
   simp only [discL, map_sub, bc2_tmul, bc2_smul, map_ofNat]
 
 /-- **Base change of the triplet condition**: `T₀² ≡ δ mod 4` passes to every `S`. -/
+@[montpellier "84, 49–52"]
 theorem tripletCond_baseChange {δ : L ⊗[R] L} {τ : L}
     (h : TripletCond δ (Submodule.Quotient.mk τ)) :
     TripletCond (bc2 S L δ) (Submodule.Quotient.mk ((1 : S) ⊗ₜ[R] τ)) := by
@@ -2133,6 +2185,7 @@ theorem tripletCond_baseChange {δ : L ⊗[R] L} {τ : L}
 
 /-- **Base change of morphisms of covers.** If `(φ, t)` is a morphism
 `(L, b, c) → (L', b', c')`, then `(φ_S, 1 ⊗ t)` is a morphism of the base-changed covers. -/
+@[montpellier "84, 49–52"]
 theorem isCoverHom_baseChange [Module.Invertible R L'] {b : L} {c : L ⊗[R] L} {b' : L'}
     {c' : L' ⊗[R] L'} {φ : L ≃ₗ[R] L'} {t : L'} (h : IsCoverHom b c b' c' φ t) :
     IsCoverHom ((1 : S) ⊗ₜ[R] b) (bc2 S L c) ((1 : S) ⊗ₜ[R] b') (bc2 S L' c')
@@ -2146,6 +2199,7 @@ theorem isCoverHom_baseChange [Module.Invertible R L'] {b : L} {c : L ⊗[R] L} 
     exact e.symm
 
 /-- **Base change of morphisms of triplets**: `φ_S` is again an isomorphism of triplets. -/
+@[montpellier "84, 49–52"]
 theorem tripletHom_baseChange {δ : L ⊗[R] L} {δ' : L' ⊗[R] L'} {τ : L} {τ' : L'}
     (φ : L ≃ₗ[R] L') (hδ : TensorProduct.map (φ : L →ₗ[R] L') (φ : L →ₗ[R] L') δ = δ')
     (hT : mod2 (φ : L →ₗ[R] L') (Submodule.Quotient.mk τ) = Submodule.Quotient.mk τ') :
@@ -2244,6 +2298,7 @@ lemma recon_one : recon (1 : QAlg b c) = (2, 0) := by
 
 /-- **The product of page 51**, without division:
 `2 β(yy') = ββ' + γγ'δ` and `2 γ(yy') = βγ' + γβ'`. -/
+@[montpellier "84, 51"]
 theorem recon_mul (y y' : QAlg b c) :
     2 * (recon (y * y')).1 = (recon y).1 * (recon y').1 + (recon y).2 * (recon y').2 * disc b c ∧
       2 * (recon (y * y')).2 = (recon y).1 * (recon y').2 + (recon y).2 * (recon y').1 := by
@@ -2253,6 +2308,7 @@ theorem recon_mul (y y' : QAlg b c) :
   constructor <;> ring
 
 /-- **The norm of page 51**: `4N(β, γ) = β² − γ²δ`, Mathlib's `Algebra.norm`. -/
+@[montpellier "84, 51"]
 theorem recon_norm (y : QAlg b c) :
     4 * Algebra.norm R y = (recon y).1 ^ 2 - (recon y).2 ^ 2 * disc b c := by
   obtain ⟨a, e, rfl⟩ := coords_exist y
@@ -2260,6 +2316,7 @@ theorem recon_norm (y : QAlg b c) :
   ring
 
 /-- **The image (page 50)**: `Γ A = {(β, γ) | β ≡ γ T₀ mod 2}`, `T₀ = b mod 2`, any `R`. -/
+@[montpellier "84, 50"]
 theorem recon_range (β γ : R) :
     (∃ y : QAlg b c, recon y = (β, γ)) ↔ ∃ s, β = γ * b + 2 * s := by
   constructor
@@ -2273,6 +2330,7 @@ theorem recon_range (β γ : R) :
 
 /-- **The reconstruction is faithful** when `2` is a non-zero-divisor: `y` is known by its
 trace and `γ`. -/
+@[montpellier "84, 49–52"]
 theorem recon_injective (h2 : ∀ x : R, 2 * x = 0 → x = 0) :
     Function.Injective (recon (b := b) (c := c)) := by
   rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
@@ -2301,6 +2359,7 @@ lemma eCoord_eq (x : Module.Dual R (QAlg b c)) :
   simp [eCoord, this]
 
 /-- **`Γ E = {(λ, ζ) | ζ ≡ λ T₀ mod 2}` (page 49)**, any `R`. -/
+@[montpellier "84, 49"]
 theorem eCoord_range (l ζ : R) :
     (∃ x : Module.Dual R (QAlg b c), eCoord x = (l, ζ)) ↔ ∃ s, ζ = l * b + 2 * s := by
   constructor
@@ -2326,6 +2385,7 @@ theorem eCoord_injective (h2 : ∀ x : R, 2 * x = 0 → x = 0) {x x' : Module.Du
   fin_cases i <;> simp [h1, hU]
 
 /-- **The coupling (page 50)**: `2⟨y, x⟩ = λβ + γζ`. -/
+@[montpellier "84, 50"]
 theorem coupling (x : Module.Dual R (QAlg b c)) (y : QAlg b c) :
     2 * x y = (eCoord x).1 * (recon y).1 + (recon y).2 * (eCoord x).2 := by
   obtain ⟨a, e, rfl⟩ := coords_exist y
@@ -2338,6 +2398,7 @@ noncomputable def qE (x : Module.Dual R (QAlg b c)) : R :=
   x (AdjoinRoot.root _) ^ 2 + b * x 1 * x (AdjoinRoot.root _) + c * x 1 ^ 2
 
 /-- **The form of page 52**: `Q(λ, ζ) = (ζ² − λ²δ)/4`, without division. -/
+@[montpellier "84, 52"]
 theorem four_qE (x : Module.Dual R (QAlg b c)) :
     4 * qE x = (eCoord x).2 ^ 2 - (eCoord x).1 ^ 2 * disc b c := by
   rw [eCoord_eq, qE, disc]; ring
@@ -2347,6 +2408,7 @@ noncomputable def phiN (y : QAlg b c) : Module.Dual R (QAlg b c) :=
   Algebra.trace R _ y • Algebra.trace R _ - Algebra.trace R _ ∘ₗ LinearMap.mulLeft R y
 
 /-- **Page 50**: `φ_N(β, γ) = (β, −γδ)`, and **the box of page 46**: `Q(φ_N(y)) = −N(y)δ`. -/
+@[montpellier "84, 46, 50"]
 theorem phiN_coords (y : QAlg b c) :
     eCoord (phiN y) = ((recon y).1, -((recon y).2 * disc b c)) ∧
       qE (phiN y) = -(Algebra.norm R y * disc b c) := by
@@ -2387,6 +2449,7 @@ variable {δ : L ⊗[R] L} {τ : L} {β β' : R} {γ γ' : Module.Dual R L}
 
 /-- **The norm `(β² − γ²δ)/4` of page 51 is defined**: if `β ≡ γ(τ)` mod `2` and
 `τ² ≡ δ` mod `4`, then `β² − γ²δ ∈ 4𝒪`. -/
+@[montpellier "84, 51"]
 theorem div_norm (hδ : ∃ k, τ ⊗ₜ τ - δ = (4 : R) • k) (hβ : ∃ s, β = γ τ + 2 * s) :
     ∃ n, β ^ 2 - pairL γ γ δ = 4 * n := by
   obtain ⟨k, hk⟩ := hδ
@@ -2397,6 +2460,7 @@ theorem div_norm (hδ : ∃ k, τ ⊗ₜ τ - δ = (4 : R) • k) (hβ : ∃ s, 
   ring
 
 /-- **The first coordinate `(ββ' + γγ'δ)/2` of the product (page 51) is defined.** -/
+@[montpellier "84, 51"]
 theorem div_prod_fst (hδ : ∃ k, τ ⊗ₜ τ - δ = (4 : R) • k) (hβ : ∃ s, β = γ τ + 2 * s)
     (hβ' : ∃ s, β' = γ' τ + 2 * s) : ∃ m, β * β' + pairL γ γ' δ = 2 * m := by
   obtain ⟨k, hk⟩ := hδ
@@ -2416,6 +2480,7 @@ lemma dual_symm [Module.Invertible R L] (γ γ' : Module.Dual R L) (τ : L) :
 
 /-- **The second coordinate `(βγ' + γβ')/2` of the product (page 51) is defined**, for `L`
 invertible. -/
+@[montpellier "84, 51"]
 theorem div_prod_snd [Module.Invertible R L] (hβ : ∃ s, β = γ τ + 2 * s)
     (hβ' : ∃ s, β' = γ' τ + 2 * s) : ∃ g : Module.Dual R L, β • γ' + β' • γ = (2 : R) • g := by
   obtain ⟨s, rfl⟩ := hβ
@@ -2426,6 +2491,7 @@ theorem div_prod_snd [Module.Invertible R L] (hβ : ∃ s, β = γ τ + 2 * s)
 
 /-- **The product stays in `Γ A`**: if `2` is regular, the halves `β''`, `γ''` satisfy
 `β'' ≡ γ''(τ)` mod `2` again (page 51, « il le vérifie à chaque étape »). -/
+@[montpellier "84, 51"]
 theorem div_prod_mem (h2 : ∀ x : R, 2 * x = 0 → x = 0) (hδ : ∃ k, τ ⊗ₜ τ - δ = (4 : R) • k)
     (hβ : ∃ s, β = γ τ + 2 * s) (hβ' : ∃ s, β' = γ' τ + 2 * s) {β'' : R}
     {γ'' : Module.Dual R L} (h₁ : 2 * β'' = β * β' + pairL γ γ' δ)
@@ -2444,6 +2510,7 @@ theorem div_prod_mem (h2 : ∀ x : R, 2 * x = 0 → x = 0) (hδ : ∃ k, τ ⊗�
 
 /-- **The form `(ζ² − λ²δ)/4` of page 52 is defined**, for `L` invertible: if `ζ ≡ λτ`
 mod `2L`, then `ζ² − λ²δ ∈ 4L^{⊗2}`. -/
+@[montpellier "84, 52"]
 theorem div_qform [Module.Invertible R L] (hδ : ∃ k, τ ⊗ₜ τ - δ = (4 : R) • k) {l : R} {ζ : L}
     (hζ : ∃ a, ζ = l • τ + (2 : R) • a) : ∃ q, ζ ⊗ₜ ζ - l ^ 2 • δ = (4 : R) • q := by
   obtain ⟨k, hk⟩ := hδ

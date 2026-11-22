@@ -8,6 +8,7 @@ module
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Fin.VecNotation
+import Grothendieck.Attr
 
 /-!
 # Folder 80, page 24: the « crucial » arrangements and a counterexample to the Théorème
@@ -93,6 +94,7 @@ def six : Fin 6 → Fin 3 → ℤ :=
   ![![0, 1, 0], ![1, 1, -1], ![1, 0, 0], ![2, -1, 0], ![3, -1, -3], ![5, -1, 1]]
 
 /-- The concurrent triples (`i < j < k`) are `{AB, CA, a}`, `{AB, BC, b}`, `{BC, CA, c}`. -/
+@[montpellier "80, 24"]
 theorem six_concurrent :
     (Finset.univ.filter fun t : Fin 6 × Fin 6 × Fin 6 =>
         t.1 < t.2.1 ∧ t.2.1 < t.2.2 ∧ Concurrent six t.1 t.2.1 t.2.2) =
@@ -105,17 +107,20 @@ theorem six_distinct (i j : Fin 6) (h : i ≠ j) :
   revert i j; decide
 
 /-- **Not covered by two pencils**: no two vertices have every line through one of them. -/
+@[montpellier "80, 24"]
 theorem six_not_two_pencils :
     ¬ ∃ i j k l : Fin 6, i ≠ j ∧ k ≠ l ∧ ∀ m, Through six m i j ∨ Through six m k l := by
   decide
 
 /-- **No `II_5`**: any five of the lines contain a concurrent triple. -/
+@[montpellier "80, 24"]
 theorem six_no_II5 :
     ∀ S : Finset (Fin 6), S.card = 5 →
       ∃ i ∈ S, ∃ j ∈ S, ∃ k ∈ S, i < j ∧ j < k ∧ Concurrent six i j k := by
   decide
 
 /-- **Not `III_6`**: three concurrent triples, where the complete quadrangle has four. -/
+@[montpellier "80, 24"]
 theorem six_not_III6 :
     (Finset.univ.filter fun t : Fin 6 × Fin 6 × Fin 6 =>
         t.1 < t.2.1 ∧ t.2.1 < t.2.2 ∧ Concurrent six t.1 t.2.1 t.2.2).card = 3 := by
@@ -123,6 +128,7 @@ theorem six_not_III6 :
 
 /-- The five lines `AB, CA, a, b, c` form a `II′_{3,2}`: their only concurrent triple is
 `{AB, CA, a}`. -/
+@[montpellier "80, 24"]
 theorem six_has_II32 :
     (Finset.univ.filter fun t : Fin 6 × Fin 6 × Fin 6 =>
         t.1 ∈ ({0, 2, 3, 4, 5} : Finset (Fin 6)) ∧ t.2.1 ∈ ({0, 2, 3, 4, 5} : Finset (Fin 6)) ∧
@@ -143,6 +149,7 @@ theorem seven_concurrent :
 
 /-- **The reading's correction**: `IV_7` contains a `II′_{3,2}`, the lines `AB, DA, AC, BD, EF`,
 whose only concurrent triple is `{AB, DA, AC}`. -/
+@[montpellier "80, 24"]
 theorem seven_has_II32 :
     (Finset.univ.filter fun t : Fin 7 × Fin 7 × Fin 7 =>
         t.1 ∈ ({0, 3, 4, 5, 6} : Finset (Fin 7)) ∧ t.2.1 ∈ ({0, 3, 4, 5, 6} : Finset (Fin 7)) ∧

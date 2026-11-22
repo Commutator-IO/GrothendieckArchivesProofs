@@ -11,6 +11,7 @@ public import Mathlib.CategoryTheory.Limits.Preserves.Finite
 public import Mathlib.CategoryTheory.Presentable.StrongGenerator
 public import Mathlib.CategoryTheory.Presentable.Dense
 public import Mathlib.CategoryTheory.Limits.Indization.Category
+import Grothendieck.Attr
 
 /-!
 # Folder 161-2: Lawvere theories, monadicity, and locally presentable categories
@@ -99,6 +100,7 @@ variable {A : Type u₁} {B : Type u₂} [Category.{v} A] [Category.{v} B]
 adjoint à gauche `F` est monadique (`A ≃ Alg(T)`, `T = UF`) si `U` est
 conservatif et si `A` a et `U` préserve les coégalisateurs des paires
 réflexives. » -/
+@[montpellier "161-2, 33"]
 theorem monadicite {F : B ⥤ A} {U : A ⥤ B} (adj : F ⊣ U) [HasReflexiveCoequalizers A]
     [U.ReflectsIsomorphisms]
     (hU : ∀ ⦃X Y : A⦄ (f g : X ⟶ Y), IsReflexivePair f g → PreservesColimit (parallelPair f g) U) :
@@ -110,6 +112,7 @@ theorem monadicite {F : B ⥤ A} {U : A ⥤ B} (adj : F ⊣ U) [HasReflexiveCoeq
 conservative, the comparison functor `B' → B_π`, `π = f^* f_*`, into the
 coalgebras of the comonad `π` is an equivalence. The page states it for a
 morphism of topoi; only finite limits in `B'` are used. -/
+@[montpellier "161-2, 34"]
 theorem descente {fStar : B ⥤ A} {fLower : A ⥤ B} (adj : fStar ⊣ fLower) [HasFiniteLimits B]
     [PreservesFiniteLimits fStar] [fStar.ReflectsIsomorphisms] :
     (Comonad.comparison adj).IsEquivalence := by
@@ -134,6 +137,7 @@ every object is the canonical colimit over `𝒞/X`) and made of presentable
 (« accessibles ») objects. mathlib's `IsLocallyPresentable` stands for the left
 side: cocomplete, with a small family of `κ`-presentable objects of which every
 object is a `κ`-filtered colimit — i.e. `E ≃ Ind_κ(𝒞)`. -/
+@[montpellier "161-2, 61"]
 theorem caracterisation_gabriel_ulmer :
     IsLocallyPresentable.{w} C ↔
       ∃ P : ObjectProperty C, ObjectProperty.Small.{w} P ∧ P.ι.IsDense ∧
@@ -185,6 +189,7 @@ itself (a small category with finite colimits, `R = Σ°`), so that `S` is the
 category of left-exact presheaves on `Σ`: the ind-objects of `Σ` are exactly the
 left-exact presheaves (mathlib's `isIndObject_iff_preservesFiniteLimits`), whence
 `Ind(Σ) ≃ S` as full subcategories of `Σ̂`. -/
+@[montpellier "161-2, 77"]
 theorem lemme_ind (Sig : Type u) [SmallCategory Sig] [HasFiniteColimits Sig] :
     (IsIndObject (C := Sig)) = (fun A : Sigᵒᵖ ⥤ Type u => PreservesFiniteLimits A) ∧
       Nonempty (Ind Sig ≌

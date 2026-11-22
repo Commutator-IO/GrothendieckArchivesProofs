@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import OpenProblems.AbelianVarieties
 public import Grothendieck.Folder123KostantOpposite
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -396,6 +397,7 @@ theorem oppositeB (hn : 1 ≤ n) (ha : ∀ i, a i ≠ 0) (W : Submodule ℂ (Fin
 
 /-- **p:kostant in type `B_n`** (folder 123, pp. 21–22): for `G = SO_{2n+1}(ℂ)`, every
 `E'`-stable complete flag of `ℂ^{2n+1}`, self-orthogonal or not, is opposite to the standard one. -/
+@[montpellier "123, 21–22"]
 theorem kostantOppositeTypeB (n : ℕ) : KostantOppositeTypeB n := by
   intro hn a ha V _ hdim hstab _ k v hv h0
   exact oppositeB hn ha (V k) k (hdim k) (hstab k) v hv h0
@@ -418,6 +420,7 @@ theorem coeffC_ne_zero (n : ℕ) (a : Fin (n + 1) → ℂ) (ha : ∀ i, a i ≠ 
 
 /-- **p:kostant in type `C_n`** (folder 123, pp. 21–22): for `G = Sp_{2n}(ℂ)`, every Borel
 through the centraliser of Kostant's cyclic element is opposite to the upper triangular one. -/
+@[montpellier "123, 21–22"]
 theorem kostantOppositeTypeC (n : ℕ) : KostantOppositeTypeC n := by
   intro a ha V hV hdim hstab _
   exact Folder123KostantOpposite.kostantOppositeTypeA (2 * n) (coeffC n a)
@@ -825,6 +828,7 @@ theorem oppositeD (hn : 3 ≤ n) (ha : ∀ i, a i ≠ 0) (W : Submodule ℂ (Fin
 /-- **p:kostant in type `D_n`** (folder 123, pp. 21–22), the steps `k < n`: for
 `G = SO_{2n}(ℂ)`, `n ≥ 3`, an `E'`-stable isotropic flag is transverse to the standard flag
 below the middle. -/
+@[montpellier "123, 21–22"]
 theorem kostantOppositeTypeD (n : ℕ) : KostantOppositeTypeD n := by
   intro hn a ha V _ hdim hstab hiso k v hv h0
   exact oppositeD hn ha (V k) k k.2 (hdim k) (hstab k) (hiso k) v hv h0

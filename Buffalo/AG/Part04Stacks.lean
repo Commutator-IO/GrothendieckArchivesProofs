@@ -7,6 +7,7 @@ module
 
 public import Buffalo.AG.Part04d
 public import StacksFrontier.Algebra.Module.Projective.Invertible
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 04: invertible modules are the locally free modules of rank one
@@ -42,6 +43,7 @@ namespace Buffalo.AG.Part04
 /-- thSz9ZHDK9o-23907 (6:38:27) [prop] An `A`-module `L` is invertible if and only if it is
 finitely generated projective and `L_𝔭` is free of rank `1` over `A_𝔭` for every prime `𝔭`.
 Stacks tag 0B8I for the converse. -/
+@[buffalo "thSz9ZHDK9o-23907"]
 theorem prop_23907_iff (A L : Type u) [CommRing A] [AddCommGroup L] [Module A L] :
     Module.Invertible A L ↔
       Module.Finite A L ∧ Projective A L ∧ ∀ (p : Ideal A) [p.IsPrime],

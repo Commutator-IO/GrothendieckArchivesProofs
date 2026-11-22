@@ -8,6 +8,7 @@ module
 public import Grothendieck.Folder113
 public import Mathlib.CategoryTheory.Linear.LinearFunctor
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.Motives.Category
+import Grothendieck.Attr
 
 /-!
 # Folder 113, page 3: Morita invariance in its `k`-linear form
@@ -101,6 +102,7 @@ def restrictionLinear :
 /-- **Morita invariance, `k`-linear form.** For `D` a `k`-linear idempotent-complete category,
 restriction along `P° → (Kar P)°` is an equivalence from additive `k`-linear functors
 `(Kar P)° → D` to additive `k`-linear functors `P° → D`. -/
+@[montpellier "113, 3"]
 instance morita_linear [IsIdempotentComplete D] : (restrictionLinear k P D).IsEquivalence := by
   let W := (Functor.whiskeringLeft Pᵒᵖ (Karoubi P)ᵒᵖ D).obj (toKaroubi P).op
   have hW : W.FullyFaithful := Functor.FullyFaithful.ofFullyFaithful W
@@ -121,6 +123,7 @@ instance morita_linear [IsIdempotentComplete D] : (restrictionLinear k P D).IsEq
   exact { }
 
 /-- The case of modules: `(Kar P)^k ≃ P^k` for `k`-linear presheaves of `k`-modules. -/
+@[montpellier "113, 3"]
 theorem morita_linear_module :
     (restrictionLinear k P (ModuleCat.{w} k)).IsEquivalence :=
   inferInstance

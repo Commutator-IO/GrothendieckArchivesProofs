@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.Groupes.Part01
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic groups, Part 03 (c): group schemes over a field, height one, tori
@@ -44,10 +45,12 @@ section Abstract
 variable {C : Type*} [Category C] [CartesianMonoidalCategory C] (G : C) [GrpObj G]
 
 /-- 3ULFIl_2Wis-14186 (3:56:26) [prop] The map `(g, h) ↦ g h⁻¹`. -/
+@[buffalo "3ULFIl_2Wis-14186"]
 noncomputable def divMap : G ⊗ G ⟶ G := fst G G * (snd G G)⁻¹
 
 /-- 3ULFIl_2Wis-14186 (3:56:26) [prop] The diagonal of a group object is the inverse image of the
 unit section under `(g, h) ↦ g h⁻¹`. -/
+@[buffalo "3ULFIl_2Wis-14186"]
 theorem diag_isPullback :
     IsPullback (lift (𝟙 G) (𝟙 G)) (toUnit G) (divMap G) η := by
   refine IsPullback.of_isLimit' ⟨by
@@ -65,6 +68,7 @@ theorem diag_isPullback :
   · simp [← h₁]
 
 /-- 3ULFIl_2Wis-14253 (3:57:33) [prop] The shear `(g, x) ↦ (g x, x)` is an isomorphism. -/
+@[buffalo "3ULFIl_2Wis-14253"]
 noncomputable def shear : G ⊗ G ≅ G ⊗ G where
   hom := lift (fst G G * snd G G) (snd G G)
   inv := lift (fst G G * (snd G G)⁻¹) (snd G G)
@@ -73,6 +77,7 @@ noncomputable def shear : G ⊗ G ≅ G ⊗ G where
 
 /-- 3ULFIl_2Wis-14253 (3:57:33) [prop] The multiplication is the shear followed by the first
 projection. -/
+@[buffalo "3ULFIl_2Wis-14253"]
 theorem mul_eq_shear_fst : μ[G] = (shear G).hom ≫ fst G G := by
   simp [shear, Hom.mul_def]
 
@@ -80,6 +85,7 @@ end Abstract
 
 /-- 3ULFIl_2Wis-14186 (3:56:26) [prop] A group scheme over `S` whose unit section is a closed
 immersion is separated. -/
+@[buffalo "3ULFIl_2Wis-14186"]
 theorem isSeparated_of_unit {S : Scheme} (G : Over S) [GrpObj G] [IsClosedImmersion η[G].left] :
     IsSeparated G.hom := by
   have hpb := (diag_isPullback G).map (Over.forget S)
@@ -92,6 +98,7 @@ theorem isSeparated_of_unit {S : Scheme} (G : Over S) [GrpObj G] [IsClosedImmers
 
 /-- 3ULFIl_2Wis-14186 (3:56:26) [prop] Conversely the unit section of a separated group scheme is a
 closed immersion. -/
+@[buffalo "3ULFIl_2Wis-14186"]
 theorem unit_of_isSeparated {S : Scheme} (G : Over S) [GrpObj G] [IsSeparated G.hom] :
     IsClosedImmersion η[G].left := by
   have : IsClosedImmersion (η[G].left ≫ G.hom) := by
@@ -99,12 +106,14 @@ theorem unit_of_isSeparated {S : Scheme} (G : Over S) [GrpObj G] [IsSeparated G.
   exact IsClosedImmersion.of_comp _ G.hom
 
 /-- 3ULFIl_2Wis-14121 (3:55:21) [prop] Every group scheme over a field is separated. -/
+@[buffalo "3ULFIl_2Wis-14121"]
 theorem isSeparated_over_field {K : Type u} [Field K] (G : Over (Spec (.of K))) [GrpObj G] :
     IsSeparated G.hom :=
   isSeparated_of_unit G
 
 /-- 3ULFIl_2Wis-14253 (3:57:33) [prop] For a group scheme locally of finite type over a field, the
 composition law `G × G → G` is open. -/
+@[buffalo "3ULFIl_2Wis-14253"]
 theorem mul_isOpenMap {K : Type u} [Field K] (G : Over (Spec (.of K))) [GrpObj G]
     [LocallyOfFiniteType G.hom] : IsOpenMap μ[G].left := by
   have : UniversallyOpen G.hom := UniversallyOpen.of_flat G.hom
@@ -114,6 +123,7 @@ theorem mul_isOpenMap {K : Type u} [Field K] (G : Over (Spec (.of K))) [GrpObj G
 
 /-- 3ULFIl_2Wis-14392 (3:59:52) [prop] If `(g, x) ↦ (g x, x)` is an isomorphism `G × X ≅ X × X`
 (with `X` locally of finite type over the field), the action `G × X → X` is open and flat. -/
+@[buffalo "3ULFIl_2Wis-14392"]
 theorem action_open_flat {K : Type u} [Field K] (G X : Over (Spec (.of K)))
     (a : G ⊗ X ⟶ X) [IsIso (lift a (snd G X))] [LocallyOfFiniteType X.hom] :
     IsOpenMap a.left ∧ Flat a.left := by
@@ -128,11 +138,13 @@ theorem action_open_flat {K : Type u} [Field K] (G X : Over (Spec (.of K)))
   infer_instance
 
 /-- 3ULFIl_2Wis-14457 (4:00:57) [def] `U V ⊂ X` is the image of `U × V` under the action. -/
+@[buffalo "3ULFIl_2Wis-14457"]
 def actImage {S : Scheme} {G X : Over S} (a : G ⊗ X ⟶ X) (U : Set G.left) (V : Set X.left) :
     Set X.left :=
   a.left '' ((fst G X).left ⁻¹' U ∩ (snd G X).left ⁻¹' V)
 
 /-- 3ULFIl_2Wis-14457 (4:00:57) [def] If the action is open, `U V` is open. -/
+@[buffalo "3ULFIl_2Wis-14457"]
 theorem isOpen_actImage {S : Scheme} {G X : Over S} (a : G ⊗ X ⟶ X) (ha : IsOpenMap a.left)
     {U : Set G.left} {V : Set X.left} (hU : IsOpen U) (hV : IsOpen V) :
     IsOpen (actImage a U V) :=
@@ -140,6 +152,7 @@ theorem isOpen_actImage {S : Scheme} {G X : Over S} (a : G ⊗ X ⟶ X) (ha : Is
 
 /-- 3ULFIl_2Wis-17756 (4:55:56) [def] A group scheme is totally disconnected if the connected
 component of its neutral element is reduced to a point. -/
+@[buffalo "3ULFIl_2Wis-17756"]
 def IsTotallyDisconnectedGrp {K : Type u} [Field K] (G : Over (Spec (.of K))) [GrpObj G] : Prop :=
   ∀ s : (𝟙_ (Over (Spec (.of K)))).left, connectedComponent (η[G].left s) = {η[G].left s}
 
@@ -152,12 +165,14 @@ variable (k : Type u) [Field k] (p : ℕ) [Fact p.Prime] [CharP k p]
 /-- 3ULFIl_2Wis-19065 (5:17:45) [def] An affine group scheme `Spec A` has height one if its
 Frobenius is trivial: `a ^ p = ε(a) ^ p` for all `a` (the comorphism of `F_G` is `a ↦ a ^ p`, that
 of the trivial map is `a ↦ ε(a) ^ p`). -/
+@[buffalo "3ULFIl_2Wis-19065"]
 def IsHeightOne (A : Type u) [CommRing A] [Bialgebra k A] : Prop :=
   ∀ a : A, a ^ p = algebraMap k A (Coalgebra.counit a ^ p)
 
 omit [CharP k p] in
 /-- 3ULFIl_2Wis-19065 (5:17:45) [def] A group of height one is radicial: its augmentation ideal is
 nil and `Spec A` is a single point. -/
+@[buffalo "3ULFIl_2Wis-19065"]
 theorem heightOne_radicial (A : Type u) [CommRing A] [Bialgebra k A] (h : IsHeightOne k p A) :
     (∀ a : A, Coalgebra.counit (R := k) a = 0 → a ^ p = 0) ∧ Subsingleton (PrimeSpectrum A) := by
   have hnil : ∀ a : A, Coalgebra.counit (R := k) a = 0 → a ^ p = 0 := fun a ha ↦ by
@@ -176,6 +191,7 @@ attribute [local instance 100] LieRing.ofAssociativeRing in
 `x ↦ x^[p]`, here defined through a faithful representation in an associative `k`-algebra
 carrying `x^[p]` to `x ^ p` (equivalent, by the restricted Poincaré–Birkhoff–Witt theorem, to the
 definition with Jacobson's formula). -/
+@[buffalo "3ULFIl_2Wis-19319"]
 structure RestrictedLie (L : Type u) [LieRing L] [LieAlgebra k L] where
   /-- The `p`-map. -/
   pmap : L → L
@@ -189,6 +205,7 @@ attribute [local instance 100] LieRing.ofAssociativeRing in
 algebra `k`, the identity `x ↦ x` satisfies Jacobson's formula (all brackets vanish, so it reduces
 to additivity), but it is not a restricted structure as soon as some `c` has `c ^ p ≠ c`: the
 axiom `(c x)^[p] = c ^ p x^[p]` fails. -/
+@[buffalo "3ULFIl_2Wis-19319"]
 theorem id_not_restricted (hc : ∃ c : k, c ^ p ≠ c) :
     (∀ x y : k, id (x + y) = id x + id y) ∧ ¬ ∃ R : RestrictedLie k p k, R.pmap = id := by
   refine ⟨fun _ _ ↦ rfl, ?_⟩
@@ -210,6 +227,7 @@ section Derivations
 variable {k A : Type*} [CommRing k] [CommRing A] [Algebra k A]
 
 /-- 3ULFIl_2Wis-19382 (5:23:02) [prop] Leibniz's formula for the iterates of a derivation. -/
+@[buffalo "3ULFIl_2Wis-19382"]
 theorem derivation_iterate_leibniz (D : Derivation k A A) (n : ℕ) (a b : A) :
     D^[n] (a * b) =
       ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal n, n.choose ij.1 • (D^[ij.1] a * D^[ij.2] b) := by
@@ -225,6 +243,7 @@ theorem derivation_iterate_leibniz (D : Derivation k A A) (n : ℕ) (a b : A) :
 
 /-- 3ULFIl_2Wis-19382 (5:23:02) [prop] In characteristic `p`, the `p`-th power of a derivation is
 a derivation (which makes `Lie(G)` a restricted Lie algebra). -/
+@[buffalo "3ULFIl_2Wis-19382"]
 theorem derivation_pow_char (p : ℕ) [hp : Fact p.Prime] [CharP k p] (D : Derivation k A A) :
     ∃ Dp : Derivation k A A, ∀ a, Dp a = D^[p] a := by
   have hpA : ∀ x : A, p • x = 0 := fun x ↦ by
@@ -251,6 +270,7 @@ end Derivations
 /-- 3ULFIl_2Wis-19444 (5:24:04) [prop] `Lie(G) = Lie(G₁)`: the ideal of `G₁ = ker F` in `A`,
 generated by the `a ^ p` with `a` in the augmentation ideal `m`, lies in `m²`, so the cotangent
 space `m/m²` at the origin is unchanged. -/
+@[buffalo "3ULFIl_2Wis-19444"]
 theorem frobenius_ideal_le_sq {A : Type*} [CommRing A] (m : Ideal A) (p : ℕ) (hp : 2 ≤ p) :
     Ideal.span {x | ∃ a ∈ m, a ^ p = x} ≤ m ^ 2 := by
   rw [Ideal.span_le]
@@ -262,6 +282,7 @@ theorem frobenius_ideal_le_sq {A : Type*} [CommRing A] (m : Ideal A) (p : ℕ) (
 /-- 3ULFIl_2Wis-19511 (5:25:11) [prop] Over an algebraically closed field the one-dimensional
 restricted Lie algebras `k x`, `x^[p] = c x`, are, up to rescaling `x`, those with `c = 0`
 (`Lie α_p`) and `c = 1` (`Lie μ_p`): for `c ≠ 0` some `l ≠ 0` has `(l x)^[p] = l x`. -/
+@[buffalo "3ULFIl_2Wis-19511"]
 theorem rank_one_restricted_normalize {k : Type*} [Field k] [IsAlgClosed k] (p : ℕ) (hp : 2 ≤ p)
     {c : k} (hc : c ≠ 0) : ∃ l : k, l ≠ 0 ∧ l ^ p * c = l := by
   obtain ⟨l, hl⟩ := IsAlgClosed.exists_pow_nat_eq c⁻¹ (n := p - 1) (by omega)
@@ -274,6 +295,7 @@ theorem rank_one_restricted_normalize {k : Type*} [Field k] [IsAlgClosed k] (p :
 
 /-- 3ULFIl_2Wis-25487 (7:04:47) [prop] A split torus is determined by its character lattice: the
 diagonalizable group `D(M)` of Part 01, with `D(ℤ) = 𝔾_m` and `D(M ⊕ N) = D(M) × D(N)`. -/
+@[buffalo "3ULFIl_2Wis-25487"]
 noncomputable def splitTorus_rankOne (A : Type*) [CommRing A] : Part01.D ℤ A ≃ Aˣ :=
   Part01.D_int A
 
@@ -316,7 +338,8 @@ noncomputable def dnCounit : Dk →ₗ[k] k := (fstHom k k k).toLinearMap + sndH
 lemma dn_inl (r : k) : (inl r : Dk) = r • 1 := by ext <;> simp
 
 /-- _lTf_L0yvrU-10811 (3:00:11) [def] (Part 01 question) `π`, `ε` make `k[ε]` a coalgebra. -/
-@[instance_reducible] noncomputable def dnCoalgebra : Coalgebra k Dk where
+@[buffalo "_lTf_L0yvrU-10811", instance_reducible]
+noncomputable def dnCoalgebra : Coalgebra k Dk where
   comul := dnComul k
   counit := dnCounit k
   coassoc := by
@@ -333,6 +356,7 @@ lemma dn_inl (r : k) : (inl r : Dk) = r • 1 := by ext <;> simp
     · simp [dnEps]
 
 /-- _lTf_L0yvrU-10811 (3:00:11) [def] (Part 01 question) `π` is multiplicative ... -/
+@[buffalo "_lTf_L0yvrU-10811"]
 theorem dn_comul_mul (x y : Dk) : dnComul k (x * y) = dnComul k x * dnComul k y := by
   simp only [dnComul_apply, fst_mul, snd_mul, add_mul, mul_add,
     Algebra.TensorProduct.tmul_mul_tmul, dnEps, inl_mul_inl, inl_mul_inr, inr_mul_inl, inr_mul_inr,
@@ -341,11 +365,13 @@ theorem dn_comul_mul (x y : Dk) : dnComul k (x * y) = dnComul k x * dnComul k y 
   abel
 
 /-- _lTf_L0yvrU-10811 (3:00:11) [def] (Part 01 question) ... and unital ... -/
+@[buffalo "_lTf_L0yvrU-10811"]
 theorem dn_comul_one : dnComul k 1 = 1 := by
   simp [Algebra.TensorProduct.one_def]
 
 /-- _lTf_L0yvrU-10811 (3:00:11) [def] (Part 01 question) ... but the counit is not an algebra
 homomorphism. -/
+@[buffalo "_lTf_L0yvrU-10811"]
 theorem dn_counit_not_mul :
     dnCounit k (dnEps k * dnEps k) ≠ dnCounit k (dnEps k) * dnCounit k (dnEps k) := by
   simp [dnEps]

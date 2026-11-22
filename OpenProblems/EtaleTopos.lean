@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.SpecializationStalkSets
+import Grothendieck.Attr
 
 /-!
 # Does the étale topos remember the scheme? (p:etrec), stated as a proposition
@@ -80,6 +81,7 @@ looks false over `S = Spec 𝔽_p`, since the absolute Frobenius of a reduced `�
 type is an `𝔽_p`-morphism acting on the small étale topos as the identity (compatibly with the
 base, whose Frobenius is the identity); this may be why the margin asks « `S` de car. 0 ? ». See
 `EtaleToposFaithfulCharZero`. -/
+@[montpellier "149, 50–51"]
 def EtaleToposFaithful : Prop :=
   ∀ (S X Y : Scheme.{u}) [IsLocallyNoetherian S] (p : X ⟶ S) (q : Y ⟶ S) [IsReduced X]
     [IsReduced Y] [LocallyOfFinitePresentation p] [LocallyOfFinitePresentation q] (f g : X ⟶ Y)
@@ -92,6 +94,7 @@ def EtaleToposFaithful : Prop :=
 Status: as for `EtaleToposFaithful`; open for a general locally noetherian base of characteristic
 `0` (for instance a scheme of finite type over `ℚ` that is not a field), as far as the note
 found. -/
+@[montpellier "149, 51"]
 def EtaleToposFaithfulCharZero : Prop :=
   ∀ (S X Y : Scheme.{u}) [IsLocallyNoetherian S], Nonempty (S ⟶ Spec (CommRingCat.of (ULift ℚ))) →
     ∀ (p : X ⟶ S) (q : Y ⟶ S) [IsReduced X] [IsReduced Y] [LocallyOfFinitePresentation p]

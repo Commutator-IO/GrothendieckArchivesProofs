@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part04c
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 04 (d): 18 June 1973, gluing, projective space
@@ -36,6 +37,7 @@ noncomputable section
 /-- thSz9ZHDK9o-21714 (6:01:54) [prop] Schemes `X_i`, opens `X_{ij} ⊂ X_i` and isomorphisms
 `X_{ij} ≅ X_{ji}` satisfying the cocycle condition (mathlib's `Scheme.GlueData`) glue to a
 scheme `X` covered by the `X_i`, through open immersions. -/
+@[buffalo "thSz9ZHDK9o-21714"]
 theorem prop_21714 (D : Scheme.GlueData.{u}) :
     (∀ i, IsOpenImmersion (D.ι i)) ∧ ∀ x : D.glued, ∃ i y, (D.ι i).base y = x :=
   ⟨fun _ => inferInstance, fun x => D.ι_jointly_surjective x⟩
@@ -46,6 +48,7 @@ example (D : Scheme.GlueData.{u}) : D.glued.OpenCover := D.openCover
 
 /-- thSz9ZHDK9o-22643 (6:17:23) [rem] Two nonzero vectors span the same line iff they differ by
 a scalar in `k^×`: the set of lines is `(V ∖ {0}) / k^×`. -/
+@[buffalo "thSz9ZHDK9o-22643"]
 theorem rem_22643 {k V : Type*} [Field k] [AddCommGroup V] [Module k V] (v w : V) :
     (k ∙ v) = (k ∙ w) ↔ ∃ c : kˣ, c • v = w :=
   Submodule.span_singleton_eq_span_singleton
@@ -53,6 +56,7 @@ theorem rem_22643 {k V : Type*} [Field k] [AddCommGroup V] [Module k V] (v w : V
 /-- thSz9ZHDK9o-22770 (6:19:30) [prop] In a basis, every line `k v` has some coordinate
 `x_i ≠ 0`, and if `x_i(v) ≠ 0` it has a unique point with `x_i = 1`: the line is determined by
 the other `n - 1` coordinates of that point. -/
+@[buffalo "thSz9ZHDK9o-22770"]
 theorem prop_22770 {k : Type*} [Field k] {n : Type*} (v : n → k) (hv : v ≠ 0) :
     (∃ i, v i ≠ 0) ∧ ∀ i, v i ≠ 0 → ∃! w : n → k, w ∈ (k ∙ v) ∧ w i = 1 := by
   refine ⟨by by_contra h; push Not at h; exact hv (funext h), fun i hi => ?_⟩
@@ -67,6 +71,7 @@ theorem prop_22770 {k : Type*} [Field k] {n : Type*} (v : n → k) (hv : v ≠ 0
 /-- thSz9ZHDK9o-22963 (6:22:43) [ex] For `n = 2`, a line `[x : y]` with `x, y ≠ 0` has the two
 coordinates `y/x` and `x/y`, independent of the representative and inverse to each other: the
 projective line is two copies of `k` glued along `k^×` by `λ ↦ λ⁻¹`. -/
+@[buffalo "thSz9ZHDK9o-22963"]
 theorem ex_22963 {k : Type*} [Field k] (x y : k) (c : k) (hc : c ≠ 0) :
     y / x = (x / y)⁻¹ ∧ (c * y) / (c * x) = y / x ∧ (c * x) / (c * y) = x / y := by
   refine ⟨(inv_div x y).symm, ?_, ?_⟩ <;> rw [mul_div_mul_left _ _ hc]
@@ -75,6 +80,7 @@ theorem ex_22963 {k : Type*} [Field k] (x y : k) (c : k) (hc : c ≠ 0) :
 order-reversing bijection between subspaces of `V` and of `V^∨` with
 `dim W + dim W^⊥ = dim V` (so lines of `V` ↔ hyperplanes of `V^∨`); and the hyperplanes `H` of
 `V` are the kernels of the `1`-dimensional quotients, `dim V/H = 1 ↔ dim H + 1 = dim V`. -/
+@[buffalo "thSz9ZHDK9o-23316"]
 theorem prop_23316 {k V : Type*} [Field k] [AddCommGroup V] [Module k V] [FiniteDimensional k V] :
     Function.Bijective (fun W : Subspace k V => W.dualAnnihilator) ∧
       (∀ W : Subspace k V, finrank k W + finrank k W.dualAnnihilator = finrank k V) ∧
@@ -86,6 +92,7 @@ theorem prop_23316 {k V : Type*} [Field k] [AddCommGroup V] [Module k V] [Finite
 
 /-- thSz9ZHDK9o-23380 (6:29:40) [def] `𝐏(V)` denotes the set of hyperplanes of `V`, i.e. of
 `1`-dimensional quotients of `V` (not the set of lines, mathlib's `Projectivization`). -/
+@[buffalo "thSz9ZHDK9o-23380"]
 def PHyp (k V : Type*) [Field k] [AddCommGroup V] [Module k V] : Type _ :=
   {H : Subspace k V // finrank k (V ⧸ H) = 1}
 
@@ -101,6 +108,7 @@ theorem chi5_apply (x : ℤ√(-5)) : chi5 x = (x.re : ZMod 2) + (x.im : ZMod 2)
 `L = (2, 1 + √-5)` of `ℤ[√-5]` is not principal, i.e. not free of rank `1`. Partial: that `L` is
 nevertheless locally free of rank `1` (it is invertible, `L² = (2)`, hence Zariski-locally free by
 `def_23770`) is not formalised. -/
+@[buffalo "thSz9ZHDK9o-23642"]
 theorem cex_23642 :
     ¬ (Ideal.span {(2 : ℤ√(-5)), 1 + Zsqrtd.sqrtd} : Ideal (ℤ√(-5))).IsPrincipal := by
   rintro ⟨α, hα⟩
@@ -148,6 +156,7 @@ theorem cex_23642 :
 /-- thSz9ZHDK9o-23770 (6:36:10) [def] An `A`-module `L` is invertible (mathlib's
 `Module.Invertible`, `L^∨ ⊗ L ≅ A`); it is then Zariski-locally free of rank `1`: there are
 `f_α` generating the unit ideal with `L_{f_α}` free over `A_{f_α}`. -/
+@[buffalo "thSz9ZHDK9o-23770"]
 theorem def_23770 (A L : Type u) [CommRing A] [AddCommGroup L] [Module A L]
     [Module.Invertible A L] :
     ∃ s : Finset A, Ideal.span (s : Set A) = ⊤ ∧
@@ -156,6 +165,7 @@ theorem def_23770 (A L : Type u) [CommRing A] [AddCommGroup L] [Module A L]
 
 /-- thSz9ZHDK9o-23835 (6:37:15) [prop] `L` is invertible iff there is `M` with `M ⊗ L ≅ A`;
 `L^{-1} = Hom_A(L, A)` is such an `M` and is invertible too. -/
+@[buffalo "thSz9ZHDK9o-23835"]
 theorem prop_23835 (A L : Type u) [CommRing A] [AddCommGroup L] [Module A L] :
     (Module.Invertible A L ↔ ∃ (M : Type u) (_ : AddCommGroup M) (_ : Module A M),
       Nonempty (M ⊗[A] L ≃ₗ[A] A)) ∧
@@ -192,6 +202,7 @@ theorem prop_23835_not_unique :
 /-- thSz9ZHDK9o-23907 (6:38:27) [prop] An invertible module is finitely generated projective and
 `L_𝔭` is free of rank `1` for every prime `𝔭`. Partial: this direction; the converse is a TODO
 of mathlib. -/
+@[buffalo "thSz9ZHDK9o-23907"]
 theorem prop_23907 (A L : Type u) [CommRing A] [AddCommGroup L] [Module A L]
     [Module.Invertible A L] (p : Ideal A) [p.IsPrime] :
     Module.Finite A L ∧ Projective A L ∧
@@ -204,6 +215,7 @@ theorem prop_23907 (A L : Type u) [CommRing A] [AddCommGroup L] [Module A L]
 /-- thSz9ZHDK9o-24039 (6:40:39) [prop] The kernel of an invertible (indeed of any projective)
 quotient `V → L` is a direct summand. Partial: the rank count `n - 1` at every prime is not
 formalised. -/
+@[buffalo "thSz9ZHDK9o-24039"]
 theorem prop_24039 {A V L : Type u} [CommRing A] [AddCommGroup V] [Module A V] [AddCommGroup L]
     [Module A L] [Module.Invertible A L] (q : V →ₗ[A] L) (hq : Function.Surjective q) :
     ∃ K : Submodule A V, IsCompl (LinearMap.ker q) K := by
@@ -220,6 +232,7 @@ theorem prop_24039 {A V L : Type u} [CommRing A] [AddCommGroup V] [Module A V] [
 
 /-- thSz9ZHDK9o-24104 (6:41:44) [prop] If `L` is an invertible quotient of `V_{k'}` and
 `k' → k''`, then `L ⊗_{k'} k''` is an invertible quotient of `V_{k''} = V_{k'} ⊗_{k'} k''`. -/
+@[buffalo "thSz9ZHDK9o-24104"]
 theorem prop_24104 {k' k'' W L : Type u} [CommRing k'] [CommRing k''] [Algebra k' k'']
     [AddCommGroup W] [Module k' W] [AddCommGroup L] [Module k' L] [Module.Invertible k' L]
     (q : W →ₗ[k'] L) (hq : Function.Surjective q) :
@@ -229,12 +242,14 @@ theorem prop_24104 {k' k'' W L : Type u} [CommRing k'] [CommRing k''] [Algebra k
 /-- thSz9ZHDK9o-24168 (6:42:48) [def] For a `k`-module `V`, `𝐏(V)(k')` is the set of invertible
 quotients of `V ⊗_k k'`, i.e. of submodules `K` of `k' ⊗_k V` with invertible quotient
 (functoriality: `prop_24104`). -/
+@[buffalo "thSz9ZHDK9o-24168"]
 def PV (k V k' : Type u) [CommRing k] [AddCommGroup V] [Module k V] [CommRing k']
     [Algebra k k'] : Set (Submodule k' (k' ⊗[k] V)) :=
   {K | Module.Invertible k' ((k' ⊗[k] V) ⧸ K)}
 
 /-- thSz9ZHDK9o-24619 (6:50:19) [prop] `𝐏_e(k')`: the quotients `L` of `V_{k'}` in which the image
 of `e` is a basis; this is stable under base change, so `𝐏_e` is a subfunctor of `𝐏(V)`. -/
+@[buffalo "thSz9ZHDK9o-24619"]
 theorem prop_24619 {k' k'' L : Type u} [CommRing k'] [CommRing k''] [Algebra k' k'']
     [AddCommGroup L] [Module k' L] (b : Basis (Fin 1) k' L) :
     ∃ b' : Basis (Fin 1) k'' (k'' ⊗[k'] L), ∀ i, b' i = 1 ⊗ₜ b i :=
@@ -244,6 +259,7 @@ theorem prop_24619 {k' k'' L : Type u} [CommRing k'] [CommRing k''] [Algebra k' 
 module `L` generates it, `{𝔭 | (L / A s)_𝔭 = 0}`, is open (the complement of the support of
 `L / A s`). Partial: that, `L` being invertible, generating at `𝔭` means being a basis of `L_𝔭`,
 and the resulting open immersion `𝐏_e → 𝐏(V)` of sheaves, are not formalised. -/
+@[buffalo "thSz9ZHDK9o-24821"]
 theorem prop_24821 {A L : Type u} [CommRing A] [AddCommGroup L] [Module A L] [Module.Finite A L]
     (s : L) :
     IsOpen {p : PrimeSpectrum A |
@@ -259,6 +275,7 @@ theorem prop_24821 {A L : Type u} [CommRing A] [AddCommGroup L] [Module A L] [Mo
 /-- thSz9ZHDK9o-25011 (6:56:51) [prop] If the `e_i` generate `V`, the `𝐏_{e_i}` cover `𝐏(V)`:
 at a point, `L` is free of rank `1` over a local ring and one of the images of the `e_i` is a
 basis. Partial: the local statement (one of the generators is a unit of `L ≅ A`). -/
+@[buffalo "thSz9ZHDK9o-25011"]
 theorem prop_25011 {A L ι : Type u} [CommRing A] [IsLocalRing A] [AddCommGroup L] [Module A L]
     (e : L ≃ₗ[A] A) (x : ι → L) (hx : Submodule.span A (Set.range x) = ⊤) :
     ∃ i, IsUnit (e (x i)) := by
@@ -275,6 +292,7 @@ theorem prop_25011 {A L ι : Type u} [CommRing A] [IsLocalRing A] [AddCommGroup 
 
 /-- thSz9ZHDK9o-25080 (6:58:00) [prop] `𝐏_e` is represented by `Sym(V)/(e - 1)`: a point with
 values in `k'` is a linear map `V → k'` (equivalently `V_{k'} → k'`) sending `e` to `1`. -/
+@[buffalo "thSz9ZHDK9o-25080"]
 def prop_25080 (k V k' : Type u) [CommRing k] [AddCommGroup V] [Module k V] [CommRing k']
     [Algebra k k'] (e : V) :
     (SymmetricAlgebra k V ⧸ Ideal.span {SymmetricAlgebra.ι k V e - 1} →ₐ[k] k') ≃
@@ -349,6 +367,7 @@ def quotXsubOne (k I : Type u) [CommRing k] [DecidableEq I] (i : I) :
 
 /-- thSz9ZHDK9o-25145 (6:59:05) [ex] If `(e_i)` is a basis of `V`, `Sym(V)/(e_i - 1)` is the
 polynomial ring in the `T_j`, `j ≠ i`: `𝐏_{e_i}` is the affine space of dimension `|I| - 1`. -/
+@[buffalo "thSz9ZHDK9o-25145"]
 def ex_25145 (k V I : Type u) [CommRing k] [AddCommGroup V] [Module k V] [DecidableEq I]
     (b : Basis I k V) (i : I) :
     (SymmetricAlgebra k V ⧸ Ideal.span {SymmetricAlgebra.ι k V (b i) - 1}) ≃ₐ[k]

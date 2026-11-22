@@ -8,6 +8,7 @@ module
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianSchemeFirstCohomologyGenericPoint
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.Torsion
+import Grothendieck.Attr
 
 /-!
 # Folder 100: homomorphisms of abelian schemes, stated as propositions
@@ -56,6 +57,7 @@ universe u
 namespace OpenProblems.Findings.Folder100
 
 /-- `O_S → f_*O_{S'}` is injective: the folder's « épimorphisme » (p. 22). -/
+@[montpellier "100, 22"]
 def IsSchematicEpi {S S' : Scheme.{u}} (f : S' ⟶ S) : Prop :=
   ∀ U : S.Opens, Function.Injective (f.app U)
 
@@ -73,6 +75,7 @@ Rydh, « Submersions and effective descent of étale morphisms » (2010).
 
 Choices: « propre » is an interlinear addition read with doubt; `Hom_S(S, X)` is the set of
 sections of `X → S`. -/
+@[montpellier "100, 22"]
 def ProperEpimorphismHomDescent : Prop :=
   ∀ (S S' : Scheme.{u}) (f : S' ⟶ S) [IsLocallyNoetherian S] [IsLocallyNoetherian S']
     [IsProper f], IsSchematicEpi f →
@@ -103,6 +106,7 @@ Choices: `A[p^∞]` is the system of the `A[p^n]`, a morphism `A[p^∞] → B[p^
 homomorphisms `v_n` compatible with the inclusions `A[p^n] ⊆ A[p^{n+1}]` (stated through any
 `j` over `A`, which is the inclusion); the third component `id` of the triple is the
 identification of `(A_U)[p^n]` with `(A[p^n])_U`, used in the compatibility of `v_n` with `w`. -/
+@[montpellier "100, 2–3"]
 def FullFaithfulnessConnectedComponents : Prop :=
   ∀ (S : Scheme.{u}) [IsLocallyNoetherian S] (U : S.Opens) (p : ℕ), p.Prime →
     (∀ s : S, s ∉ U → ringChar (S.residueField s) = p) →

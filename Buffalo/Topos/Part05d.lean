@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 5d: corrections, `Setᵒᵖ` and Boolean algebras (10 July 1973)
@@ -47,6 +48,7 @@ def kleinMap (x : ZMod 2 × ZMod 2) : ZMod 2 × ZMod 2 := if x = 0 then 0 else (
 
 /-- 4gynb9uTEE4-13056 (3:37:36) [cex, partial] « A group structure is not determined by the maps
 `x ↦ xⁿ` »: `kleinMap` commutes with all the power maps `x ↦ n • x`... -/
+@[buffalo "4gynb9uTEE4-13056"]
 theorem kleinMap_zsmul (n : ℤ) (x : ZMod 2 × ZMod 2) : kleinMap (n • x) = n • kleinMap x := by
   rw [← Int.cast_smul_eq_zsmul (ZMod 2), ← Int.cast_smul_eq_zsmul (ZMod 2)]
   generalize (n : ZMod 2) = a
@@ -85,6 +87,7 @@ def sectionXor3 {K : Type} [SmallCategory K] (F : K ⥤ Type) (e : ∀ k, F.obj 
 /-- 4gynb9uTEE4-13448 (3:44:08) [ex, imprecise] No limit of a diagram of copies of the two-element
 set has exactly three elements: so `3` is not a limit of copies of `2`, and `{2}` is not strictly
 cogenerating in `Set` in the sense of 0:06:26 (nor is it codense). -/
+@[buffalo "4gynb9uTEE4-13448"]
 theorem no_limit_of_bools {K : Type} [SmallCategory K] (F : K ⥤ Type) (e : ∀ k, F.obj k ≃ Bool)
     {c : Cone F} (hc : IsLimit c) : IsEmpty (c.pt ≃ Fin 3) := by
   refine ⟨fun E => ?_⟩
@@ -106,6 +109,7 @@ theorem no_limit_of_bools {K : Type} [SmallCategory K] (F : K ⥤ Type) (e : ∀
 /-- 4gynb9uTEE4-13577 (3:46:17) [prop, partial] `X ↦ 𝒫(X)` is fully faithful from `Setᵒᵖ` to
 complete Boolean algebras: the complete lattice homomorphisms `𝒫(Y) → 𝒫(X)` are exactly the
 inverse images of the maps `X → Y`. -/
+@[buffalo "4gynb9uTEE4-13577"]
 theorem setPreimage_bijective (X Y : Type u) :
     Function.Bijective (fun f : X → Y => CompleteLatticeHom.setPreimage f) := by
   constructor
@@ -140,6 +144,7 @@ theorem setPreimage_bijective (X Y : Type u) :
 /-- 4gynb9uTEE4-14825 (4:07:05) [prop] Every complete Boolean algebra `B` falls under the theory of
 `π`-complete Boolean algebras for `π = #B`: every supremum is one over a family of at most `#B`
 elements. -/
+@[buffalo "4gynb9uTEE4-14825"]
 theorem iSup_eq_sSup_small {B : Type u} [CompleteBooleanAlgebra B] {ι : Type*} (f : ι → B) :
     ∃ S : Set B, Cardinal.mk S ≤ Cardinal.mk B ∧ iSup f = sSup S :=
   ⟨Set.range f, Cardinal.mk_set_le _, sSup_range.symm⟩

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 4a: coverings, `f_!` and `f^!`, sites and sheaves on a site
@@ -36,6 +37,7 @@ noncomputable section
 /-- PqCQM3Pcl6Q-12618 (3:30:18) [prop] A subgroup `H ⊆ G` is recovered from the pointed transitive
 `G`-set `G/H` as the stabilizer of its base point, and every pointed transitive `G`-set `(X, x)` is
 `G/Stab(x)`. (The covering side, `G/H ↔ Z' → Z`, is not formalised.) -/
+@[buffalo "PqCQM3Pcl6Q-12618"]
 theorem subgroup_pointed_transitive {G : Type*} [Group G] (H : Subgroup G) :
     MulAction.stabilizer G ((1 : G) : G ⧸ H) = H ∧
       ∀ (X : Type*) [MulAction G X] [MulAction.IsPretransitive G X] (x : X),
@@ -50,6 +52,7 @@ theorem subgroup_pointed_transitive {G : Type*} [Group G] (H : Subgroup G) :
 `G/H`, the fibre `F` over the base point is stable under `H`, and `E = G ×^H F`: every element of
 `E` is some `g • x` with `x ∈ F`, and `g • x = g' • x'` iff `g' = g h⁻¹`, `x' = h • x` for some
 `h ∈ H`. -/
+@[buffalo "PqCQM3Pcl6Q-13017"]
 theorem fibre_over_quotient {G E : Type*} [Group G] [MulAction G E] (H : Subgroup G)
     (p : E → G ⧸ H) (hp : ∀ (g : G) (e : E), p (g • e) = g • p e) :
     (∀ h ∈ H, ∀ x, p x = ((1 : G) : G ⧸ H) → p (h • x) = ((1 : G) : G ⧸ H)) ∧
@@ -76,6 +79,7 @@ theorem fibre_over_quotient {G E : Type*} [Group G] [MulAction G E] (H : Subgrou
 
 /-- PqCQM3Pcl6Q-13743 (3:49:03) [prop], the limit half: the direct image of sheaves of abelian
 groups `i_*` is a right adjoint, hence commutes with all limits (for every continuous map). -/
+@[buffalo "PqCQM3Pcl6Q-13743"]
 theorem pushforward_preservesLimits {X Y : TopCat.{u}} (i : Y ⟶ X) :
     PreservesLimits (TopCat.Sheaf.pushforward (Type u) i) :=
   (TopCat.Sheaf.pullbackPushforwardAdjunction (Type u) i).rightAdjoint_preservesLimits
@@ -83,6 +87,7 @@ theorem pushforward_preservesLimits {X Y : TopCat.{u}} (i : Y ⟶ X) :
 /-- PqCQM3Pcl6Q-14059 (3:54:19) [prop], presheaf form: for an open embedding `j : Y → X`, `j^*`
 (restriction along `V ↦ j(V)`) commutes with all limits and has a left adjoint `j_!` (the left
 Kan extension) on presheaves of sets. -/
+@[buffalo "PqCQM3Pcl6Q-14059"]
 theorem openEmbedding_restrict_isRightAdjoint {X Y : TopCat.{u}} (j : Y ⟶ X)
     (hj : IsOpenEmbedding j) :
     ((Functor.whiskeringLeft (Opens Y)ᵒᵖ (Opens X)ᵒᵖ (Type u)).obj
@@ -95,6 +100,7 @@ theorem openEmbedding_restrict_isRightAdjoint {X Y : TopCat.{u}} (j : Y ⟶ X)
 /-- PqCQM3Pcl6Q-14625 (4:03:45) [prop], the space case. The initial sheaf `∅_X` has `∅_X(U) = pt`
 if `U = ∅` and `∅_X(U) = ∅` otherwise, so `f_*∅_X(V) = ∅_X(f⁻¹V)`; hence `f_*∅_X = ∅_Y` iff
 `f⁻¹V = ∅` forces `V = ∅` for open `V`, iff the image of `f` is dense. -/
+@[buffalo "PqCQM3Pcl6Q-14625"]
 theorem pushforward_empty_iff_denseRange {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     (f : X → Y) :
     (∀ V : Set Y, IsOpen V → (f ⁻¹' V = ∅ ↔ V = ∅)) ↔ DenseRange f := by
@@ -127,6 +133,7 @@ def IsTrivialMap (p : E → X) : Prop :=
 
 /-- PqCQM3Pcl6Q-15006 (4:10:06) [def] `p : E → X` is locally trivial if every point has an open
 neighbourhood `U` with `E|_U ≅ U × F_U` over `U`. -/
+@[buffalo "PqCQM3Pcl6Q-15006"]
 def IsLocallyTrivialMap (p : E → X) : Prop :=
   ∀ x : X, ∃ U : Set X, IsOpen U ∧ x ∈ U ∧ ∃ (F : Type u) (_ : TopologicalSpace F)
     (e : (p ⁻¹' U) ≃ₜ U × F), ∀ y, (e y).1 = ⟨p y, y.2⟩
@@ -149,6 +156,7 @@ private lemma ptToBool_false (y : ptToBool.{u} ⁻¹' {⟨false⟩}) : False := 
 /-- PqCQM3Pcl6Q-15006 (4:10:06) [def], the claim « being locally trivial is local, being trivial is
 not »: the inclusion of a point into the discrete two-point space is locally trivial (fibres a point
 over `true`, empty over `false`) but not trivial. -/
+@[buffalo "PqCQM3Pcl6Q-15006"]
 theorem ptToBool_locallyTrivial_not_trivial :
     IsLocallyTrivialMap ptToBool.{u} ∧ ¬ IsTrivialMap ptToBool.{u} := by
   refine ⟨fun ⟨x⟩ => ⟨{⟨x⟩}, isOpen_discrete _, rfl, ?_⟩, ?_⟩
@@ -169,6 +177,7 @@ theorem ptToBool_locallyTrivial_not_trivial :
 
 /-- PqCQM3Pcl6Q-15261 (4:14:21) [def] A torsor in the functorial sense: for every `K'` (an index
 `i`), `X(K')` is empty or a principal homogeneous space under `G(K')`. -/
+@[buffalo "PqCQM3Pcl6Q-15261"]
 def IsFunctorialTorsor {ι : Type*} (G X : ι → Type*) [∀ i, Group (G i)]
     [∀ i, MulAction (G i) (X i)] : Prop :=
   ∀ i, IsEmpty (X i) ∨
@@ -176,6 +185,7 @@ def IsFunctorialTorsor {ι : Type*} (G X : ι → Type*) [∀ i, Group (G i)]
 
 /-- PqCQM3Pcl6Q-15387 (4:16:27) [rem] A principal homogeneous space with a point (a section) is
 trivial: `g ↦ g • x` is a `G`-equivariant bijection `G ≃ X`. -/
+@[buffalo "PqCQM3Pcl6Q-15387"]
 theorem torsor_trivial_of_point {G X : Type*} [Group G] [MulAction G X]
     [MulAction.IsPretransitive G X] (hfree : ∀ (g : G) (x : X), g • x = x → g = 1) (x : X) :
     Function.Bijective (fun g : G => g • x) := by
@@ -202,6 +212,7 @@ example (K : Precoverage C) (X : C) : Set (Presieve X) := K.coverings X
 (quasi-compact, jointly surjective families of flat morphisms) contains the isomorphisms and is
 stable under base change and composition; and faithful flatness is stable under base change
 and composition. -/
+@[buffalo "PqCQM3Pcl6Q-15774"]
 theorem fpqc_pretopology_axioms :
     Precoverage.HasIsos AlgebraicGeometry.Scheme.fpqcPrecoverage.{u} ∧
       Precoverage.IsStableUnderBaseChange AlgebraicGeometry.Scheme.fpqcPrecoverage.{u} ∧
@@ -233,17 +244,20 @@ example (J : GrothendieckTopology C) {X : C} {S R : Sieve X} (h : S ≤ R) (hS :
 
 /-- PqCQM3Pcl6Q-16285 (4:31:25) [def] Saturating a pretopology gives a topology: a sieve covers
 for `K.toGrothendieck` iff it contains a covering family of `K`. -/
+@[buffalo "PqCQM3Pcl6Q-16285"]
 theorem mem_toGrothendieck_iff (K : Pretopology C) {X : C} (S : Sieve X) :
     S ∈ K.toGrothendieck X ↔ ∃ R ∈ K X, R ≤ (S : Presieve X) :=
   Iff.rfl
 
 /-- PqCQM3Pcl6Q-16476 (4:34:36) [def] A property `P` of the arrows `Y → X` (the property of the
 pulled-back situation over `Y`) holds locally on `X` if it holds on the members of a covering. -/
+@[buffalo "PqCQM3Pcl6Q-16476"]
 def HoldsLocally (J : GrothendieckTopology C) {X : C} (P : ∀ ⦃Y : C⦄, (Y ⟶ X) → Prop) : Prop :=
   ∃ S ∈ J X, ∀ ⦃Y : C⦄ (f : Y ⟶ X), S f → P f
 
 /-- PqCQM3Pcl6Q-16608 (4:36:48) [prop] For the topology generated by a pretopology `K`, a property
 stable under further pullback holds locally iff it holds on a covering family of `K`. -/
+@[buffalo "PqCQM3Pcl6Q-16608"]
 theorem holdsLocally_toGrothendieck_iff (K : Pretopology C) {X : C}
     (P : ∀ ⦃Y : C⦄, (Y ⟶ X) → Prop)
     (hP : ∀ ⦃Y Z : C⦄ (g : Z ⟶ Y) (f : Y ⟶ X), P f → P (g ≫ f)) :
@@ -273,6 +287,7 @@ example [HasPullbacks C] (P : Cᵒᵖ ⥤ Type u) {X : C} (R : Presieve X) [R.Ha
 
 /-- PqCQM3Pcl6Q-16924 (4:42:04) [thm], in the elementary form Mathlib can state: the category of
 sheaves of sets on a small site has all limits and colimits and a subobject classifier. -/
+@[buffalo "PqCQM3Pcl6Q-16924"]
 theorem sheaf_topos_axioms :
     HasLimitsOfSize.{u, u} (Sheaf J (Type u)) ∧
       (∀ (K : Type u) [SmallCategory K], HasColimitsOfShape K (Sheaf J (Type u))) ∧
@@ -281,6 +296,7 @@ theorem sheaf_topos_axioms :
 
 /-- PqCQM3Pcl6Q-17114 (4:45:14) [prop], the half « covering families become epimorphic »: the
 inclusion of a covering sieve `R ↪ X` in `Ĉ` becomes an isomorphism after sheafification. -/
+@[buffalo "PqCQM3Pcl6Q-17114"]
 theorem coveringSieve_inverted {X : C} (S : Sieve X) (hS : S ∈ J X) :
     IsIso ((presheafToSheaf J (Type u)).map (Sieve.shrinkFunctor.{u} S).ι) :=
   (J.W_iff _).1 (Sieve.W_shrinkFunctor_ι_of_mem J S hS)
@@ -289,6 +305,7 @@ theorem coveringSieve_inverted {X : C} (S : Sieve X) (hS : S ∈ J X) :
 
 /-- PqCQM3Pcl6Q-17743 (4:55:43) [thm] The inclusion `Sh(C) → Ĉ` has a left adjoint `a`, which is
 left exact. -/
+@[buffalo "PqCQM3Pcl6Q-17743"]
 theorem sheafification_leftExact :
     Nonempty (presheafToSheaf J (Type u) ⊣ sheafToPresheaf J (Type u)) ∧
       Nonempty (PreservesFiniteLimits (presheafToSheaf J (Type u))) :=
@@ -307,6 +324,7 @@ def CoverSeparated (P : Cᵒᵖ ⥤ Type u) : Prop :=
 
 /-- PqCQM3Pcl6Q-18127 (5:02:07) [prop] `L` is left exact, `LF` is separated, and
 `Hom(F, G) ≃ Hom(LF, G)` for every sheaf `G`. -/
+@[buffalo "PqCQM3Pcl6Q-18127"]
 theorem plus_properties :
     Nonempty (PreservesFiniteLimits (J.plusFunctor (Type u))) ∧
       (∀ P : Cᵒᵖ ⥤ Type u, CoverSeparated J (J.plusObj P)) ∧
@@ -319,6 +337,7 @@ theorem plus_properties :
 
 /-- PqCQM3Pcl6Q-18258 (5:04:18) [prop] `F → LF` is injective iff `F` is separated, an isomorphism
 iff `F` is a sheaf; if `F` is separated, `LF` is a sheaf; and `a = L ∘ L`. -/
+@[buffalo "PqCQM3Pcl6Q-18258"]
 theorem toPlus_properties (P : Cᵒᵖ ⥤ Type u) :
     (CoverSeparated J P ↔ ∀ X, Function.Injective ((J.toPlus P).app (op X))) ∧
       (Presheaf.IsSheaf J P ↔ IsIso (J.toPlus P)) ∧
@@ -343,6 +362,7 @@ theorem toPlus_properties (P : Cᵒᵖ ⥤ Type u) :
 
 /-- PqCQM3Pcl6Q-18454 (5:07:34) [prop] Sheaves are closed under limits in `Ĉ` (the inclusion
 creates limits), and a colimit of sheaves is the associated sheaf of the colimit in `Ĉ`. -/
+@[buffalo "PqCQM3Pcl6Q-18454"]
 theorem sheaf_limits_colimits {K : Type u} [SmallCategory K] (F : K ⥤ Sheaf J (Type u)) :
     Nonempty (CreatesLimitsOfShape K (sheafToPresheaf J (Type u))) ∧
       Nonempty (colimit F ≅ (presheafToSheaf J (Type u)).obj

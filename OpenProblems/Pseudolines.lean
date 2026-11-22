@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Grothendieck.Folder80Maps2
+import Grothendieck.Attr
 
 /-!
 # Pseudoline arrangements: the numbering lemma, stated as a proposition (proved)
@@ -60,6 +61,7 @@ Status: proved, as `Grothendieck.Folder80Numbering.numberingLemma`
 `PseudolineMap` of `Grothendieck/Folder80Maps2.lean` with finitely many flags and lines; the
 partial arrangements are read on the incidence (`PartialOn`), a vertex of the partial arrangement
 being a vertex of the map met by two of its lines. -/
+@[montpellier "80, 28"]
 def NumberingLemma : Prop :=
   ∀ {D L : Type} [Fintype D] [Finite L] (X : PseudolineMap D L), BigonFree X.On →
     ∃ (n : ℕ) (e : Fin n ≃ L) (k₀ : ℕ),

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 05 (c): 25 June 1973, to 0:57:01
@@ -43,6 +44,7 @@ section Localization
 /-- Oqhr-Gt66es-1 (0:00:01) [prop] `Spec 𝒪_{X,x} → X` is a monomorphism (it is a preimmersion,
 injective on points), with image the generizations of `x`, the intersection of the open
 neighbourhoods of `x`. -/
+@[buffalo "Oqhr-Gt66es-1"]
 theorem prop_1 (X : Scheme.{u}) (x : X) :
     Function.Injective (X.fromSpecStalk x) ∧ Set.range (X.fromSpecStalk x) = {y | y ⤳ x} ∧
       {y | y ⤳ x} = ⋂₀ {U : Set X | IsOpen U ∧ x ∈ U} := by
@@ -53,12 +55,14 @@ theorem prop_1 (X : Scheme.{u}) (x : X) :
 
 /-- Oqhr-Gt66es-65 (0:01:05) [prop] The prime ideals of `A_𝔭` correspond bijectively (and
 monotonically) to the primes `𝔮 ⊆ 𝔭` of `A`. -/
+@[buffalo "Oqhr-Gt66es-65"]
 def prop_65 {A : Type*} [CommRing A] (p : Ideal A) [p.IsPrime] :
     {q : Ideal (Localization.AtPrime p) // q.IsPrime} ≃o {q : Ideal A // q.IsPrime ∧ q ≤ p} :=
   IsLocalization.AtPrime.orderIsoOfPrime _ p
 
 /-- Oqhr-Gt66es-128 (0:02:08) [prop] The local rings of the localization are those of `X`: for
 every prime `𝔔` of `A_𝔭` (that is, `𝔔 = 𝔮A_𝔭` with `𝔮 ⊆ 𝔭`), `(A_𝔭)_𝔔 = A_𝔮`, `𝔮 = 𝔔 ∩ A`. -/
+@[buffalo "Oqhr-Gt66es-128"]
 def prop_128 {A : Type*} [CommRing A] (p : Ideal A) [p.IsPrime]
     (P : Ideal (Localization.AtPrime p)) [P.IsPrime] :
     Localization.AtPrime (P.comap (algebraMap A (Localization.AtPrime p))) ≃ₐ[A]
@@ -72,11 +76,13 @@ end Localization
 section LocalSchemes
 
 /-- Oqhr-Gt66es-325 (0:05:25) [def] A local scheme is the spectrum of a local ring. -/
+@[buffalo "Oqhr-Gt66es-325"]
 def IsLocalScheme (X : Scheme.{u}) : Prop :=
   ∃ (R : CommRingCat.{u}), IsLocalRing R ∧ Nonempty (X ≅ Spec R)
 
 /-- Oqhr-Gt66es-388 (0:06:28) [prop] (affine case) A ring `A ≠ 0` is local if and only if
 `Spec A` has a unique closed point. -/
+@[buffalo "Oqhr-Gt66es-388"]
 theorem prop_388 (A : Type u) [CommRing A] [Nontrivial A] :
     IsLocalRing A ↔ ∃! x : PrimeSpectrum A, IsClosed ({x} : Set (PrimeSpectrum A)) := by
   simp only [isClosed_singleton_iff_isMaximal]
@@ -91,6 +97,7 @@ theorem prop_388 (A : Type u) [CommRing A] [Nontrivial A] :
 /-- Oqhr-Gt66es-388 (0:06:28) [prop] (the reduction to the affine case) In a quasi-compact
 scheme with a unique closed point `x`, every point specializes to `x`, so every open set containing
 `x` (for instance an affine one) is the whole scheme. -/
+@[buffalo "Oqhr-Gt66es-388"]
 theorem prop_388_reduction (X : Scheme.{u}) [CompactSpace X] (x : X)
     (hx : ∀ y : X, IsClosed ({y} : Set X) ↔ y = x) (U : X.Opens) (hU : x ∈ U) : U = ⊤ := by
   refine eq_top_iff.2 fun y _ => ?_
@@ -101,12 +108,14 @@ theorem prop_388_reduction (X : Scheme.{u}) [CompactSpace X] (x : X)
 
 /-- Oqhr-Gt66es-784 (0:13:04) [prop] Morphisms `Spec 𝒪 → X`, `𝒪` local, are pairs of a point
 `x` and a local homomorphism `𝒪_{X,x} → 𝒪` (mathlib: `SpecToEquivOfLocalRing`). -/
+@[buffalo "Oqhr-Gt66es-784"]
 def prop_784 (X : Scheme.{u}) (R : CommRingCat.{u}) [IsLocalRing R] :
     (Spec R ⟶ X) ≃ Σ x, {f : X.presheaf.stalk x ⟶ R // IsLocalHom f.hom} :=
   SpecToEquivOfLocalRing X R
 
 /-- Oqhr-Gt66es-909 (0:15:09) [prop] A homomorphism `f : A → 𝒪` to a local ring factors uniquely
 through `A_𝔭`, `𝔭 = f⁻¹(𝔪)`, by a local homomorphism. -/
+@[buffalo "Oqhr-Gt66es-909"]
 theorem prop_909 {A O : Type*} [CommRing A] [CommRing O] [IsLocalRing O] (f : A →+* O) :
     ∃! g : Localization.AtPrime ((IsLocalRing.maximalIdeal O).comap f) →+* O,
       g.comp (algebraMap A _) = f ∧ IsLocalHom g := by
@@ -131,18 +140,21 @@ theorem prop_909 {A O : Type*} [CommRing A] [CommRing O] [IsLocalRing O] (f : A 
 /-- Oqhr-Gt66es-974 (0:16:14) [prop] Localization is functorial in (scheme, point): a morphism
 `f` with `f(y) = x` gives `Spec 𝒪_{Y,y} → Spec 𝒪_{X,x}` over `f` (mathlib:
 `SpecMap_stalkMap_fromSpecStalk`). -/
+@[buffalo "Oqhr-Gt66es-974"]
 theorem prop_974 {X Y : Scheme.{u}} (f : Y ⟶ X) (y : Y) :
     Spec.map (f.stalkMap y) ≫ X.fromSpecStalk (f y) = Y.fromSpecStalk y ≫ f :=
   Scheme.SpecMap_stalkMap_fromSpecStalk f
 
 /-- Oqhr-Gt66es-1102 (0:18:22) [prop] Morphisms `Spec k → X`, `k` a field, are pairs of a point
 `x` and a homomorphism `κ(x) → k` (mathlib: `SpecToEquivOfField`). -/
+@[buffalo "Oqhr-Gt66es-1102"]
 def prop_1102 (K : Type u) [Field K] (X : Scheme.{u}) :
     (Spec (CommRingCat.of K) ⟶ X) ≃ Σ x, X.residueField x ⟶ CommRingCat.of K :=
   Scheme.SpecToEquivOfField K X
 
 /-- Oqhr-Gt66es-1232 (0:20:32) [prop] `Spec κ(x)` is a closed subscheme of `Spec 𝒪_{X,x}`, and a
 morphism `Spec k → X` with image `x` factors through `Spec κ(x) → X`. -/
+@[buffalo "Oqhr-Gt66es-1232"]
 theorem prop_1232 (X : Scheme.{u}) (x : X) (K : Type u) [Field K]
     (g : Spec (CommRingCat.of K) ⟶ X) :
     IsClosedImmersion (Spec.map (X.residue x)) ∧
@@ -163,6 +175,7 @@ theorem subsingleton_primeSpectrum_of {R : Type*} [CommRing R]
 /-- Oqhr-Gt66es-1295 (0:21:35) [cex] A one-point affine scheme need not be the spectrum of a
 field: `Spec ℤ/4` is a point but `ℤ/4` is not a field. Conversely, if `Spec A` is a point, `A` is
 local with nil maximal ideal. -/
+@[buffalo "Oqhr-Gt66es-1295"]
 theorem cex_1295 : Subsingleton (PrimeSpectrum (ZMod 4)) ∧ ¬ IsField (ZMod 4) ∧
     ∀ (A : Type u) [CommRing A] [Nontrivial A], Subsingleton (PrimeSpectrum A) →
       IsLocalRing A ∧ ∀ a : A, ¬ IsUnit a → IsNilpotent a := by
@@ -194,6 +207,7 @@ theorem cex_1295 : Subsingleton (PrimeSpectrum (ZMod 4)) ∧ ¬ IsField (ZMod 4)
 dimension is `0` (for a local ring: its spectrum is a point); an artinian local ring has a
 nilpotent maximal ideal (mathlib: `isArtinianRing_iff_isNoetherianRing_krullDimLE_zero`,
 `IsArtinianRing.isNilpotent_jacobson_bot`). -/
+@[buffalo "Oqhr-Gt66es-1429"]
 theorem prop_1429 (A : Type*) [CommRing A] :
     (IsArtinianRing A ↔ IsNoetherianRing A ∧ Ring.KrullDimLE 0 A) ∧
       (IsArtinianRing A → IsNilpotent (Ideal.jacobson (⊥ : Ideal A))) :=
@@ -203,6 +217,7 @@ theorem prop_1429 (A : Type*) [CommRing A] :
 /-- Oqhr-Gt66es-1556 (0:25:56) [ex] (the `ℤ/p^n` half, corrected) For `p` prime and `n ≥ 2`,
 `ℤ/p^n` is
 artinian, every element is nilpotent or a unit (so `Spec` is a point), and it is not a field. -/
+@[buffalo "Oqhr-Gt66es-1556"]
 theorem ex_1556 (p n : ℕ) [hp : Fact p.Prime] (hn : 2 ≤ n) :
     IsArtinianRing (ZMod (p ^ n)) ∧ (∀ x : ZMod (p ^ n), IsNilpotent x ∨ IsUnit x) ∧
       Subsingleton (PrimeSpectrum (ZMod (p ^ n))) ∧ ¬ IsField (ZMod (p ^ n)) := by
@@ -240,15 +255,18 @@ theorem ex_1556 (p n : ℕ) [hp : Fact p.Prime] (hn : 2 ≤ n) :
 
 /-- Oqhr-Gt66es-1556 (0:25:56) [ex] (the hypothesis `n ≥ 2` is needed) For `n = 1`, `ℤ/p` is a
 field (and so is `k[t]/(t)`), so its spectrum is the spectrum of a field. -/
+@[buffalo "Oqhr-Gt66es-1556"]
 theorem ex_1556_one (p : ℕ) [Fact p.Prime] : IsField (ZMod (p ^ 1)) := by
   rw [pow_one]
   exact Field.toIsField _
 
 /-- Oqhr-Gt66es-1948 (0:32:28) [prop] An irreducible space is connected. -/
+@[buffalo "Oqhr-Gt66es-1948"]
 theorem prop_1948 (X : Scheme.{u}) [IrreducibleSpace X] : ConnectedSpace X := inferInstance
 
 /-- Oqhr-Gt66es-2011 (0:33:31) [ex] An infinite disjoint union of nonempty spaces (the underlying
 space of the constant scheme `G_k = ∐_G Spec k`) is not quasi-compact. -/
+@[buffalo "Oqhr-Gt66es-2011"]
 theorem ex_2011 (G : Type*) [Infinite G] (Y : G → Type*) [∀ g, TopologicalSpace (Y g)]
     [∀ g, Nonempty (Y g)] : ¬ CompactSpace (Σ g, Y g) := by
   intro hc
@@ -264,12 +282,14 @@ theorem ex_2011 (G : Type*) [Infinite G] (Y : G → Type*) [∀ g, TopologicalSp
 
 /-- Oqhr-Gt66es-2202 (0:36:42) [def] A noetherian scheme is a quasi-compact locally noetherian
 one (mathlib: `IsNoetherian`); then `Γ(U, 𝒪_X)` is noetherian for every affine open set `U`. -/
+@[buffalo "Oqhr-Gt66es-2202"]
 theorem def_2202 (X : Scheme.{u}) [IsNoetherian X] (U : X.affineOpens) :
     CompactSpace X ∧ IsNoetherianRing Γ(X, U) :=
   ⟨inferInstance, IsLocallyNoetherian.component_noetherian U⟩
 
 /-- Oqhr-Gt66es-2270 (0:37:50) [def] A locally noetherian scheme (mathlib: `IsLocallyNoetherian`):
 `Γ(U, 𝒪_X)` noetherian for every affine open set; every quasi-compact open set is noetherian. -/
+@[buffalo "Oqhr-Gt66es-2270"]
 theorem def_2270 (X : Scheme.{u}) [IsLocallyNoetherian X] (U : X.Opens)
     (hU : IsCompact (U : Set X)) :
     IsNoetherian U :=
@@ -277,22 +297,26 @@ theorem def_2270 (X : Scheme.{u}) [IsLocallyNoetherian X] (U : X.Opens)
 
 /-- Oqhr-Gt66es-2525 (0:42:05) [prop] (localization half) A localization of a noetherian ring is
 noetherian. -/
+@[buffalo "Oqhr-Gt66es-2525"]
 theorem prop_2525 (A : Type*) [CommRing A] [IsNoetherianRing A] (S : Submonoid A) :
     IsNoetherianRing (Localization S) :=
   IsLocalization.isNoetherianRing S _ ‹_›
 
 /-- Oqhr-Gt66es-2589 (0:43:09) [def] An artinian scheme (mathlib: `IsArtinianScheme`, locally
 artinian and quasi-compact); `Spec A` is artinian if and only if `A` is an artinian ring. -/
+@[buffalo "Oqhr-Gt66es-2589"]
 theorem def_2589 (R : CommRingCat.{u}) : IsArtinianScheme (Spec R) ↔ IsArtinianRing R :=
   Scheme.isArtinianScheme_Spec
 
 /-- Oqhr-Gt66es-2728 (0:45:28) [prop] An artinian scheme is noetherian, discrete and finite; an
 artinian ring is the product of its localizations at its (finitely many) maximal ideals. -/
+@[buffalo "Oqhr-Gt66es-2728"]
 theorem prop_2728 (X : Scheme.{u}) [IsArtinianScheme X] :
     IsNoetherian X ∧ DiscreteTopology X ∧ Finite X :=
   ⟨inferInstance, inferInstance, inferInstance⟩
 
 /-- Oqhr-Gt66es-2728 (0:45:28) [prop] (the ring) An artinian ring is the product of the
+@[buffalo "Oqhr-Gt66es-2728"]
 localizations at its maximal ideals (mathlib: `MaximalSpectrum.toPiLocalizationEquiv`, `Spec`
 being discrete). -/
 def prop_2728_ring (R : Type*) [CommRing R] [IsArtinianRing R] :
@@ -301,6 +325,7 @@ def prop_2728_ring (R : Type*) [CommRing R] [IsArtinianRing R] :
 
 /-- Oqhr-Gt66es-2791 (0:46:31) [prop] A scheme is artinian if and only if it is noetherian with
 discrete underlying space. -/
+@[buffalo "Oqhr-Gt66es-2791"]
 theorem prop_2791 (X : Scheme.{u}) : IsArtinianScheme X ↔ IsNoetherian X ∧ DiscreteTopology X :=
   IsArtinianScheme.iff_isNoetherian_and_discreteTopology
 
@@ -311,16 +336,19 @@ end LocalSchemes
 section Finiteness
 
 /-- Oqhr-Gt66es-2904 (0:48:24) [prop] Quasi-compact morphisms are stable under base change. -/
+@[buffalo "Oqhr-Gt66es-2904"]
 theorem prop_2904 :
     MorphismProperty.IsStableUnderBaseChange (@QuasiCompact : MorphismProperty Scheme.{u}) :=
   inferInstance
 
 /-- Oqhr-Gt66es-2968 (0:49:28) [prop] Quasi-compact morphisms are stable under composition. -/
+@[buffalo "Oqhr-Gt66es-2968"]
 theorem prop_2968 {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) [QuasiCompact f] [QuasiCompact g] :
     QuasiCompact (f ≫ g) := inferInstance
 
 /-- Oqhr-Gt66es-3033 (0:50:33) [prop] If `g ∘ f` is quasi-compact and `g` quasi-separated, `f` is
 quasi-compact. -/
+@[buffalo "Oqhr-Gt66es-3033"]
 theorem prop_3033 {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) [QuasiCompact (f ≫ g)]
     [QuasiSeparated g] : QuasiCompact f :=
   QuasiCompact.of_comp f g
@@ -328,6 +356,7 @@ theorem prop_3033 {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) [QuasiCompact
 /-- Oqhr-Gt66es-3158 (0:52:38) [def] Morphisms locally of finite type (mathlib:
 `LocallyOfFiniteType`, defined by affine open sets `V ⊆ f⁻¹U` exactly as in the entry); of finite
 type: moreover quasi-compact. -/
+@[buffalo "Oqhr-Gt66es-3158"]
 theorem def_3158 {X Y : Scheme.{u}} (f : X ⟶ Y) :
     LocallyOfFiniteType f ↔ ∀ {U : Y.Opens} (_ : IsAffineOpen U) {V : X.Opens}
       (_ : IsAffineOpen V) (e : V ≤ f ⁻¹ᵁ U), (f.appLE U V e).hom.FiniteType :=
@@ -335,6 +364,7 @@ theorem def_3158 {X Y : Scheme.{u}} (f : X ⟶ Y) :
 
 /-- Oqhr-Gt66es-3227 (0:53:47) [def] Morphisms locally of finite presentation (mathlib:
 `LocallyOfFinitePresentation`, a `HasRingHomProperty`, hence local on the source). -/
+@[buffalo "Oqhr-Gt66es-3227"]
 theorem def_3227 {X Y : Scheme.{u}} (f : X ⟶ Y) :
     LocallyOfFinitePresentation f ↔ ∀ {U : Y.Opens} (_ : IsAffineOpen U) {V : X.Opens}
       (_ : IsAffineOpen V) (e : V ≤ f ⁻¹ᵁ U), (f.appLE U V e).hom.FinitePresentation :=
@@ -342,6 +372,7 @@ theorem def_3227 {X Y : Scheme.{u}} (f : X ⟶ Y) :
 
 /-- Oqhr-Gt66es-3292 (0:54:52) [prop] `Spec B → Spec A` is locally of finite type (resp. finite
 presentation) if and only if `B` is finitely generated (resp. finitely presented) over `A`. -/
+@[buffalo "Oqhr-Gt66es-3292"]
 theorem prop_3292 {A B : CommRingCat.{u}} (φ : A ⟶ B) :
     (LocallyOfFiniteType (Spec.map φ) ↔ φ.hom.FiniteType) ∧
       (LocallyOfFinitePresentation (Spec.map φ) ↔ φ.hom.FinitePresentation) :=
@@ -349,6 +380,7 @@ theorem prop_3292 {A B : CommRingCat.{u}} (φ : A ⟶ B) :
 
 /-- Oqhr-Gt66es-3359 (0:55:59) [prop] Over a locally noetherian base, locally of finite type and
 locally of finite presentation coincide. -/
+@[buffalo "Oqhr-Gt66es-3359"]
 theorem prop_3359 {X Y : Scheme.{u}} (f : X ⟶ Y) [IsLocallyNoetherian Y] :
     LocallyOfFinitePresentation f ↔ LocallyOfFiniteType f :=
   LocallyOfFinitePresentation.iff_locallyOfFiniteType
@@ -356,6 +388,7 @@ theorem prop_3359 {X Y : Scheme.{u}} (f : X ⟶ Y) [IsLocallyNoetherian Y] :
 /-- Oqhr-Gt66es-3421 (0:57:01) [prop] Quasi-compact, locally of finite type and locally of finite
 presentation morphisms (hence also of finite type) are stable under base change and
 composition. -/
+@[buffalo "Oqhr-Gt66es-3421"]
 theorem prop_3421 :
     MorphismProperty.IsStableUnderBaseChange (@QuasiCompact : MorphismProperty Scheme.{u}) ∧
       MorphismProperty.IsStableUnderBaseChange

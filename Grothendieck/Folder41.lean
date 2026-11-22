@@ -7,6 +7,7 @@ module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
 public import Mathlib.Topology.Sober
+import Grothendieck.Attr
 
 /-!
 # Folder 41, Proposition 1 (page 11): continuity of the generic section and openness
@@ -94,6 +95,7 @@ variable {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
 
 /-- `φ(y)` is the generic point of the (irreducible, non-empty) fibre `f⁻¹(y)`:
 it lies over `y` and specialises to every point over `y`. -/
+@[montpellier "41, 11"]
 def SectionGenerique (f : X → Y) (φ : Y → X) : Prop :=
   ∀ y, f (φ y) = y ∧ ∀ x, f x = y → φ y ⤳ x
 
@@ -112,12 +114,14 @@ include hφ
 
 omit [TopologicalSpace Y] in
 /-- **The page's formula** `φ⁻¹(U) = f(U)`, for `U` open. -/
+@[montpellier "41, 11"]
 theorem preimage_eq_image {U : Set X} (hU : IsOpen U) : φ ⁻¹' U = f '' U := by
   refine Set.ext fun y => ⟨fun hy => ⟨φ y, hy, (hφ y).1⟩, ?_⟩
   rintro ⟨x, hx, rfl⟩
   exact ((hφ (f x)).2 x rfl).mem_open hU hx
 
 /-- **(i) ⟺ (ii).** `φ` is continuous if and only if `f` is open. -/
+@[montpellier "41, 11"]
 theorem i_iff_ii : Continuous φ ↔ IsOpenMap f := by
   rw [continuous_def]
   exact ⟨fun h U hU => preimage_eq_image hφ hU ▸ h U hU,
@@ -125,11 +129,13 @@ theorem i_iff_ii : Continuous φ ↔ IsOpenMap f := by
 
 omit hφ in
 /-- **(i) ⟹ (iii).** A continuous map preserves specialisation. -/
+@[montpellier "41, 11"]
 theorem i_imp_iii (h : Continuous φ) : ∀ y y', y' ⤳ y → φ y' ⤳ φ y :=
   fun _ _ hy => hy.map h
 
 /-- **(iii) ⟺ (iii bis).** `φ` preserves specialisation if and only if `f`
 lifts generizations. -/
+@[montpellier "41, 11"]
 theorem iii_iff_iiibis : (∀ y y', y' ⤳ y → φ y' ⤳ φ y) ↔ GeneralizingMap f := by
   refine ⟨fun h x y' hy' => ⟨φ y', (h _ _ hy').trans ((hφ (f x)).2 x rfl), (hφ y').1⟩,
     fun h y y' hy' => ?_⟩
@@ -145,6 +151,7 @@ open AlgebraicGeometry
 /-- **Proposition 1.** For a morphism of schemes locally of finite presentation
 whose fibres are irreducible and non-empty with generic points `φ(y)`, the four
 conditions (i), (ii), (iii), (iii bis) are equivalent. -/
+@[montpellier "41, 11"]
 theorem proposition1 {X Y : Scheme} (f : X ⟶ Y) [LocallyOfFinitePresentation f] (φ : Y → X)
     (hφ : SectionGenerique f φ) :
     List.TFAE [Continuous φ, IsOpenMap f, ∀ y y', y' ⤳ y → φ y' ⤳ φ y, GeneralizingMap f] := by
@@ -161,6 +168,7 @@ section Contreexemple
 /-- **The finiteness hypothesis is needed.** For topological spaces, (iii bis)
 does not imply (ii): the identity from `ℕ` (discrete) to `ℕ` with the cofinite
 topology has singleton fibres, lifts generizations, and is not open. -/
+@[montpellier "41, 11"]
 theorem iiibis_not_imp_ii :
     SectionGenerique (CofiniteTopology.of : ℕ → CofiniteTopology ℕ) CofiniteTopology.of.symm ∧
       GeneralizingMap (CofiniteTopology.of : ℕ → CofiniteTopology ℕ) ∧

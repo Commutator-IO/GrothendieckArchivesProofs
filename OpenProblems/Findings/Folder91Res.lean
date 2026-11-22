@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import OpenProblems.Findings.Folder91
+import Grothendieck.Attr
 
 /-!
 # Folder 91, pages 24–28 and 31: representability of `Res_{X/S}(P)` by a scheme, stated
@@ -77,6 +78,7 @@ presentation and `P → X` separated and locally of finite presentation. Let `Z�
 finite) be closed immersions such that (a) each `Res_{Zᵢ/S}(P ×_X Zᵢ)` is representable,
 (b) `X` is normally flat along each `Zᵢ`, and (c) every associated point of every geometric fibre
 `X ×_S Spec κ(s)‾` lies over a point of some `Zᵢ`. Then `Res_{X/S}(P)` is representable. -/
+@[montpellier "91, 25"]
 def ResRepresentableByScheme : Prop :=
   ∀ (S X : Scheme.{u}) (f : X ⟶ S) [IsProper f] [Flat f] [LocallyOfFinitePresentation f]
     (P : Over X) [IsSeparated P.hom] [LocallyOfFinitePresentation P.hom]

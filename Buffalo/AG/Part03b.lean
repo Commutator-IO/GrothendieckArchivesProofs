@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part03a
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 03 (b): 11 June 1973, recorded on `_lTf_L0yvrU`
@@ -43,10 +44,12 @@ section Sheaves
 
 /-- _lTf_L0yvrU-13553 (3:45:53) [prop] `Spec A` with its structure sheaf is a locally ringed space
 (mathlib: `AlgebraicGeometry.Spec.locallyRingedSpaceObj`). -/
+@[buffalo "_lTf_L0yvrU-13553"]
 def prop_13553 (R : CommRingCat.{u}) : AlgebraicGeometry.LocallyRingedSpace.{u} :=
   AlgebraicGeometry.Spec.locallyRingedSpaceObj R
 
 /-- _lTf_L0yvrU-13617 (3:46:57) [prop] `Spec` turns tensor products into fibre products:
+@[buffalo "_lTf_L0yvrU-13617"]
 `Spec(A ⊗_k B) = Spec A ×_{Spec k} Spec B` (mathlib, in schemes:
 `AlgebraicGeometry.pullbackSpecIso`; the fibre product of schemes is also the one of
 locally ringed spaces). -/
@@ -60,6 +63,7 @@ def prop_13617 (R S T : Type u) [CommRing R] [CommRing S] [CommRing T] [Algebra 
 /-- _lTf_L0yvrU-13646 (3:47:26) [prop] A sheaf on `Spec A` is determined by its restriction to the
 basic open sets: morphisms to a sheaf are the morphisms of the restrictions to the `X_f` (mathlib:
 `TopCat.Sheaf.restrictHomEquivHom`, for any basis). -/
+@[buffalo "_lTf_L0yvrU-13646"]
 def prop_13646 {C : Type*} [Category C] (A : CommRingCat.{u})
     (F : (AlgebraicGeometry.Spec.topObj A).Presheaf C)
     (G : (AlgebraicGeometry.Spec.topObj A).Sheaf C) :
@@ -74,6 +78,7 @@ variable {A : Type*} [CommRing A]
 
 /-- _lTf_L0yvrU-13976 (3:52:56) [prop] `X_f ⊂ X_g` iff `f^n = gh` for some `n ≥ 0` and `h ∈ A`;
 the relation is transitive. -/
+@[buffalo "_lTf_L0yvrU-13976"]
 theorem prop_13976 (f g : A) :
     (basicOpen f ≤ basicOpen g ↔ ∃ (n : ℕ) (h : A), f ^ n = g * h) ∧
       ∀ h : A, basicOpen f ≤ basicOpen g → basicOpen g ≤ basicOpen h →
@@ -86,6 +91,7 @@ theorem prop_13976 (f g : A) :
 
 /-- _lTf_L0yvrU-14363 (3:59:23) [prop] `X_f = ⋃ X_{f_i}` iff `f_i^{n_i} ∈ fA` for all `i` and
 `f^n = ∑ g_i f_i` for some `n` and `g_i` almost all zero. -/
+@[buffalo "_lTf_L0yvrU-14363"]
 theorem prop_14363 {ι : Type*} (f : A) (fi : ι → A) :
     basicOpen f = ⨆ i, basicOpen (fi i) ↔
       (∀ i, ∃ n : ℕ, fi i ^ n ∈ Ideal.span {f}) ∧
@@ -124,6 +130,7 @@ theorem pw_add (f : A) (n m : ℕ) : pw f (n + m) = pw f n * pw f m :=
 /-- _lTf_L0yvrU-14427 (4:00:27) [def] To an `A`-module `M` one associates a sheaf `M~` on
 `Spec A`; for `M = A` it is the structure sheaf (mathlib: `AlgebraicGeometry.tilde`,
 `AlgebraicGeometry.tildeSelf`). -/
+@[buffalo "_lTf_L0yvrU-14427"]
 def def_14427 {R : CommRingCat.{u}} (N : ModuleCat.{u} R) : (AlgebraicGeometry.Spec R).Modules :=
   AlgebraicGeometry.tilde N
 
@@ -139,6 +146,7 @@ example {R : CommRingCat.{u}} (N : ModuleCat.{u} R) (f : R) :
 
 /-- _lTf_L0yvrU-14557 (4:02:37) [prop] In `M_f`, multiplication by `f` is bijective, and
 `M → M_f` is the canonical map. -/
+@[buffalo "_lTf_L0yvrU-14557"]
 theorem prop_14557 (f : A) :
     Function.Bijective (fun x : LocalizedModule (Submonoid.powers f) M => f • x) ∧
       ∀ m : M, LocalizedModule.mkLinearMap (Submonoid.powers f) M m = LocalizedModule.mk m 1 := by
@@ -153,6 +161,7 @@ theorem prop_14557 (f : A) :
 /-- _lTf_L0yvrU-14682 (4:04:42) [prop] Universal property: every `M → N`, `f` bijective on `N`,
 factors uniquely through `M_f` (mathlib: `IsLocalizedModule.lift`, `IsLocalizedModule.lift_comp`,
 `IsLocalizedModule.lift_unique`); hence `M ↦ M_f` is a functor (`LocalizedModule.map`). -/
+@[buffalo "_lTf_L0yvrU-14682"]
 theorem prop_14682 (f : A) {N : Type*} [AddCommGroup N] [Module A N] (g : M →ₗ[A] N)
     (hg : ∀ x : Submonoid.powers f, IsUnit (algebraMap A (Module.End A N) x)) :
     ∃! l : LocalizedModule (Submonoid.powers f) M →ₗ[A] N,
@@ -162,6 +171,7 @@ theorem prop_14682 (f : A) {N : Type*} [AddCommGroup N] [Module A N] (g : M →�
 
 /-- _lTf_L0yvrU-14941 (4:09:01) [prop] `M_f` is the set of `x/f^n`, with `x/f^n = x'/f^{n'}` iff
 `f^m (f^{n'} x - f^n x') = 0` for some `m`. -/
+@[buffalo "_lTf_L0yvrU-14941"]
 theorem prop_14941 (f : A) (x x' : M) (n n' : ℕ) :
     LocalizedModule.mk x (pw f n) =
         LocalizedModule.mk x' (pw f n') ↔
@@ -176,6 +186,7 @@ theorem prop_14941 (f : A) (x x' : M) (n n' : ℕ) :
 
 /-- _lTf_L0yvrU-15076 (4:11:16) [prop] `A_f` is a ring, `A → A_f` a ring homomorphism, and
 `x/f^n · y/f^{n'} = xy/f^{n+n'}` (mathlib: `Localization.mk_mul`). -/
+@[buffalo "_lTf_L0yvrU-15076"]
 theorem prop_15076 (f x y : A) (n n' : ℕ) :
     Localization.mk x (pw f n) * Localization.mk y (pw f n') =
       Localization.mk (x * y) (pw f (n + n')) := by
@@ -183,6 +194,7 @@ theorem prop_15076 (f x y : A) (n n' : ℕ) :
 
 /-- _lTf_L0yvrU-15142 (4:12:22) [prop] `M_f` is an `A_f`-module via
 `λ/f^n · x/f^m = λx/f^{n+m}` (mathlib: `LocalizedModule.mk_smul_mk`). -/
+@[buffalo "_lTf_L0yvrU-15142"]
 theorem prop_15142 (f c : A) (x : M) (n m : ℕ) :
     Localization.mk c (pw f n) •
         LocalizedModule.mk x (pw f m) =
@@ -192,6 +204,7 @@ theorem prop_15142 (f c : A) (x : M) (n m : ℕ) :
 /-- _lTf_L0yvrU-15206 (4:13:26) [prop] Every homomorphism from `A` to a ring `R` (even
 noncommutative) sending `f` to a unit factors uniquely through `A_f` (existence: mathlib's
 `OreLocalization.universalHom`, `A_f` being an Ore localization). -/
+@[buffalo "_lTf_L0yvrU-15206"]
 theorem prop_15206 (f : A) {R : Type*} [Ring R] (g : A →+* R) (hg : IsUnit (g f)) :
     ∃! h : Localization.Away f →+* R, h.comp (algebraMap A _) = g := by
   have hS : ∀ s : Submonoid.powers f, IsUnit (((g : A →* R).comp (Submonoid.powers f).subtype) s) :=
@@ -211,6 +224,7 @@ theorem prop_15206 (f : A) {R : Type*} [Ring R] (g : A →+* R) (hg : IsUnit (g 
 bijectively, and conversely an `A`-module on which `f` acts bijectively is its own localization at
 `f`, hence an `A_f`-module (mathlib: `isLocalizedModule_id`). The equivalence of categories itself
 is not stated. -/
+@[buffalo "_lTf_L0yvrU-15270"]
 theorem prop_15270 (f : A) (N : Type*) [AddCommGroup N] [Module A N]
     [Module (Localization.Away f) N] [IsScalarTower A (Localization.Away f) N] :
     Function.Bijective (fun x : N => f • x) ∧
@@ -226,6 +240,7 @@ theorem prop_15270 (f : A) (N : Type*) [AddCommGroup N] [Module A N]
 /-- _lTf_L0yvrU-15575 (4:19:35) [prop] If `X_f ⊂ X_g`, say `f^n = gh`, then `g` is invertible on
 `M_f`, whence a unique restriction `M_g → M_f` compatible with `M → M_g`, `M → M_f`; uniqueness
 gives the compatibility with composition (the presheaf is mathlib's `tilde`). -/
+@[buffalo "_lTf_L0yvrU-15575"]
 theorem prop_15575 (f g h : A) (n : ℕ) (hfg : f ^ n = g * h) :
     Function.Bijective (fun x : LocalizedModule (Submonoid.powers f) M => g • x) ∧
       ∃! r : LocalizedModule (Submonoid.powers g) M →ₗ[A] LocalizedModule (Submonoid.powers f) M,
@@ -244,6 +259,7 @@ theorem prop_15575 (f g h : A) (n : ℕ) (hfg : f ^ n = g * h) :
 /-- _lTf_L0yvrU-15707 (4:21:47) [thm] `f ↦ M_f` is a sheaf on the base of the `X_f`. Proved: the
 separation half (`prop_36939`: an element of `M` vanishing in every `M_{f_i}` is zero); the gluing
 half is the sheaf property of mathlib's `tilde`. -/
+@[buffalo "_lTf_L0yvrU-15707"]
 theorem thm_15707 (s : Set A) (hs : Ideal.span s = ⊤) (x y : M)
     (h : ∀ r : s, LocalizedModule.mkLinearMap (Submonoid.powers r.1) M x =
       LocalizedModule.mkLinearMap (Submonoid.powers r.1) M y) : x = y :=
@@ -256,11 +272,13 @@ example {R : CommRingCat.{u}} (N : ModuleCat.{u} R) : (AlgebraicGeometry.Spec R)
 
 /-- _lTf_L0yvrU-16542 (4:35:42) [prop] The `X_f` are quasi-compact (mathlib:
 `PrimeSpectrum.isCompact_basicOpen`). -/
+@[buffalo "_lTf_L0yvrU-16542"]
 theorem prop_16542 (f : A) : IsCompact (basicOpen f : Set (PrimeSpectrum A)) :=
   isCompact_basicOpen f
 
 /-- _lTf_L0yvrU-16989 (4:43:09) [prop] `M~(X) = M` and `M~(X_f) = M_f` (mathlib:
 `AlgebraicGeometry.tilde.isoTop`). -/
+@[buffalo "_lTf_L0yvrU-16989"]
 def prop_16989 {R : CommRingCat.{u}} (N : ModuleCat.{u} R) :
     N ≅ (AlgebraicGeometry.modulesSpecToSheaf.obj (AlgebraicGeometry.tilde N)).presheaf.obj
       (Opposite.op ⊤) :=
@@ -268,6 +286,7 @@ def prop_16989 {R : CommRingCat.{u}} (N : ModuleCat.{u} R) :
 
 /-- _lTf_L0yvrU-17115 (4:45:15) [prop] `M ⊗_A A_f → M_f` is an isomorphism: `M_f` is the base
 change of `M` (mathlib: `IsLocalizedModule.isBaseChange`). -/
+@[buffalo "_lTf_L0yvrU-17115"]
 theorem prop_17115 (f : A) :
     IsBaseChange (Localization.Away f) (LocalizedModule.mkLinearMap (Submonoid.powers f) M) :=
   IsLocalizedModule.isBaseChange (Submonoid.powers f) (Localization.Away f) _
@@ -276,6 +295,7 @@ theorem prop_17115 (f : A) :
 each factor `A_f ⊗_A A_g ≃ (A_f)_g`, the localization of `A` at `fg` (mathlib:
 `IsLocalization.Away.tensorEquiv`); the identification of the sheaf condition with the descent
 sequence is not stated separately. -/
+@[buffalo "_lTf_L0yvrU-17311"]
 def prop_17311 (f g : A) :
     Localization.Away f ⊗[A] Localization.Away g ≃ₐ[Localization.Away f]
       Localization.Away (algebraMap A (Localization.Away f) g) :=
@@ -291,6 +311,7 @@ variable {A : Type*} [CommRing A]
 
 /-- _lTf_L0yvrU-17443 (4:50:43) [thm] If `A'` is faithfully flat, `0 → M → M ⊗ A' ⇉ M ⊗ A' ⊗ A'`
 is exact (`thm_35250`); without the hypothesis it can fail, e.g. for `A' = 0`. -/
+@[buffalo "_lTf_L0yvrU-17443"]
 theorem thm_17443 :
     (∀ (A B M : Type) [CommRing A] [CommRing B] [Algebra A B] [Module.FaithfullyFlat A B]
       [AddCommGroup M] [Module A M], Function.Injective (fun m : M => m ⊗ₜ[A] (1 : B))) ∧
@@ -317,6 +338,7 @@ example (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M] :
 /-- _lTf_L0yvrU-17830 (4:57:10) [prop] If `M` is faithfully flat, `N → N'` is injective (resp.
 surjective, bijective) iff `M ⊗ N → M ⊗ N'` is (mathlib:
 `Module.FaithfullyFlat.lTensor_injective_iff_injective` and its variants). -/
+@[buffalo "_lTf_L0yvrU-17830"]
 theorem prop_17830 (M : Type*) [AddCommGroup M] [Module A M] [Module.FaithfullyFlat A M]
     {N N' : Type*} [AddCommGroup N] [Module A N] [AddCommGroup N'] [Module A N']
     (g : N →ₗ[A] N') :
@@ -339,6 +361,7 @@ example {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S) (hf : f.Faithfu
 
 /-- _lTf_L0yvrU-17958 (4:59:18) [prop] For `A'` faithfully flat, `0 → M → M ⊗ A' → M ⊗ A' ⊗ A' → ⋯`
 is exact. Proved in degrees 0 and 1 (`thm_36802`). -/
+@[buffalo "_lTf_L0yvrU-17958"]
 theorem prop_17958 (B : Type*) [CommRing B] [Algebra A B] [Module.FaithfullyFlat A B]
     (M : Type*) [AddCommGroup M] [Module A M] :
     Function.Injective ((d0 A B).lTensor M) ∧

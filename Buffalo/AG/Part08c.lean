@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part08b
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 08 (c): 9 July 1973 (tape 3) and 10 July 1973 (to 4:14:24)
@@ -53,6 +54,7 @@ variable {A : Type u} {B : Type v} [CommRing A] [CommRing B]
 /-- vuys5SNs2eQ-12865 (3:34:25) [prop] If `f : Z → S` is quasi-compact, `s ∈ closure f(Z)` iff `s`
 has a generization in `f(Z)`. Proved for `Spec B → Spec A` (mathlib:
 `PrimeSpectrum.closure_range_comap`, `Ideal.exists_ideal_comap_le_prime`). -/
+@[buffalo "vuys5SNs2eQ-12865"]
 theorem prop_12865 (φ : A →+* B) : SpecClosure (comap φ) := by
   intro s
   rw [closure_range_comap]
@@ -68,6 +70,7 @@ theorem prop_12865 (φ : A →+* B) : SpecClosure (comap φ) := by
 
 /-- vuys5SNs2eQ-12993 (3:36:33) [prop] `s` is interior to the complement of `f(Z)` iff all
 generizations of `s` lie outside `f(Z)` (from `prop_12865`, for `Spec B → Spec A`). -/
+@[buffalo "vuys5SNs2eQ-12993"]
 theorem prop_12993 (φ : A →+* B) (s : PrimeSpectrum A) :
     s ∈ interior (Set.range (comap φ))ᶜ ↔ ∀ t, t ⤳ s → t ∉ Set.range (comap φ) := by
   rw [interior_compl, Set.mem_compl_iff, prop_12865 φ s]
@@ -81,6 +84,7 @@ variable {X Y S S' : Type*} [TopologicalSpace X] [TopologicalSpace S] [Topologic
 
 /-- vuys5SNs2eQ-4013 (1:06:53) [prop] If `g` is generalizing and `f` quasi-compact,
 `g⁻¹(closure f(Z)) = closure (g⁻¹ f(Z))` (here for any `f` with `SpecClosure f`). -/
+@[buffalo "vuys5SNs2eQ-4013"]
 theorem prop_4013 {f : X → S} (hf : SpecClosure f) {g : S' → S} (hgc : Continuous g)
     (hg : GeneralizingMap g) :
     g ⁻¹' closure (Set.range f) = closure (g ⁻¹' Set.range f) := by
@@ -93,6 +97,7 @@ theorem prop_4013 {f : X → S} (hf : SpecClosure f) {g : S' → S} (hgc : Conti
 /-- vuys5SNs2eQ-4142 (1:09:02) [prop] If `g` is generalizing and `f` quasi-compact dominant, the
 base change is dominant (its image is `g⁻¹ f(Z)`, mathlib `Scheme.Pullback.range_snd`); the
 converse holds if `g` is surjective. -/
+@[buffalo "vuys5SNs2eQ-4142"]
 theorem prop_4142 {f : X → S} (hf : SpecClosure f) {g : S' → S} (hgc : Continuous g)
     (hg : GeneralizingMap g) :
     (Dense (Set.range f) → Dense (g ⁻¹' Set.range f)) ∧
@@ -105,6 +110,7 @@ theorem prop_4142 {f : X → S} (hf : SpecClosure f) {g : S' → S} (hgc : Conti
 
 /-- vuys5SNs2eQ-4464 (1:14:24) [prop] A quasi-compact `f` is dominant iff its fibre at each
 maximal point of `S` is nonempty (for `S` sober and any `f` with `SpecClosure f`). -/
+@[buffalo "vuys5SNs2eQ-4464"]
 theorem prop_4464 [QuasiSober S] [T0Space S] {f : X → S} (hf : SpecClosure f) :
     Dense (Set.range f) ↔ ∀ η, IsMaximalPoint η → η ∈ Set.range f := by
   constructor
@@ -136,6 +142,7 @@ variable {S S' : Scheme.{u}} (g : S' ⟶ S)
 /-- vuys5SNs2eQ-10517 (2:55:17) [prop] A subset `T'` of `S'` comes from a subset of `S` iff its two
 inverse images in `S'' = S' ×_S S'` coincide (surjectivity of `g` makes the subset unique), and then
 it comes from `g(T')`. -/
+@[buffalo "vuys5SNs2eQ-10517"]
 theorem prop_10517 (T' : Set S') :
     (∃ T : Set S, T' = g ⁻¹' T) ↔
       pullback.fst g g ⁻¹' T' = pullback.snd g g ⁻¹' T' := by
@@ -156,6 +163,7 @@ theorem prop_10517 (T' : Set S') :
 /-- vuys5SNs2eQ-10644 (2:57:24) [prop] If `g` is faithfully flat and quasi-compact, the open (resp.
 closed) sets of `S` are identified with the open (resp. closed) sets of `S'` having the same two
 inverse images in `S''` (`prop_10517` and `g` submersive, `prop_4795`). -/
+@[buffalo "vuys5SNs2eQ-10644"]
 theorem prop_10644 [Surjective g] [Flat g] [QuasiCompact g] (T' : Set S') :
     ((∃ T : Set S, IsOpen T ∧ T' = g ⁻¹' T) ↔
       IsOpen T' ∧ pullback.fst g g ⁻¹' T' = pullback.snd g g ⁻¹' T') ∧
@@ -201,6 +209,7 @@ theorem eq_bot_of_isOpen_singleton {R : Type u} [CommRing R] [IsDomain R] (x : P
 /-- vuys5SNs2eQ-10967 (3:02:47) [cex] `(𝔸¹ ∖ {0}) ⊔ {0} → 𝔸¹` is a monomorphism that is not an
 immersion. Proved: on the underlying spaces (`𝔸¹ = Spec k[X]`, `0 = (X)`) the map is a continuous
 bijection that is not an embedding, since `{0}` is open in the source but not in `𝔸¹`. -/
+@[buffalo "vuys5SNs2eQ-10967"]
 theorem cex_10967 (k : Type u) [Field k] :
     let m : PrimeSpectrum (Polynomial k) :=
       ⟨Ideal.span {Polynomial.X},
@@ -249,6 +258,7 @@ theorem cex_10967 (k : Type u) [Field k] :
 /-- vuys5SNs2eQ-12606 (3:30:06) [cex] A filtered union of pieces mapped onto locally closed subsets
 need not map onto a locally closed subset: the closed points of a line (here `Spec ℤ`), each finite
 set of which is closed, form a dense subset that is not locally closed. -/
+@[buffalo "vuys5SNs2eQ-12606"]
 theorem cex_12606 :
     let P := {x : PrimeSpectrum ℤ | x.asIdeal.IsMaximal}
     (∀ s : Finset (PrimeSpectrum ℤ), (↑s : Set _) ⊆ P → IsClosed (↑s : Set (PrimeSpectrum ℤ))) ∧
@@ -290,12 +300,14 @@ variable {A B : Type u} [CommRing A] [CommRing B]
 
 /-- vuys5SNs2eQ-13186 (3:39:46) [thm] Chevalley: if `f` is of finite presentation, `f(Z)` is
 (locally) constructible. Affine case (mathlib: `PrimeSpectrum.isConstructible_comap_image`). -/
+@[buffalo "vuys5SNs2eQ-13186"]
 theorem thm_13186 (φ : A →+* B) (hφ : φ.FinitePresentation) {s : Set (PrimeSpectrum B)}
     (hs : IsConstructible s) : IsConstructible (comap φ '' s) :=
   isConstructible_comap_image hφ hs
 
 /-- vuys5SNs2eQ-13380 (3:43:00) [prop] A generalizing morphism locally of finite presentation is
 open (mathlib: `isOpenMap_of_generalizingMap`). -/
+@[buffalo "vuys5SNs2eQ-13380"]
 theorem prop_13380 {X Y : Scheme.{u}} (f : X ⟶ Y) [LocallyOfFinitePresentation f]
     (hf : GeneralizingMap f) : IsOpenMap f :=
   isOpenMap_of_generalizingMap f hf
@@ -304,6 +316,7 @@ variable [Algebra A B]
 
 /-- vuys5SNs2eQ-15009 (4:10:09) [prop] `B` is integral over `A` iff its finitely generated
 `A`-subalgebras are finite over `A`. -/
+@[buffalo "vuys5SNs2eQ-15009"]
 theorem prop_15009 :
     Algebra.IsIntegral A B ↔ ∀ C : Subalgebra A B, C.FG → Module.Finite A C := by
   constructor
@@ -321,6 +334,7 @@ theorem prop_15009 :
 /-- vuys5SNs2eQ-14946 (4:09:06) [prop] If `A → A'` is faithfully flat, `B` is finite over `A` iff
 `A' ⊗_A B` is over `A'` (mathlib: `Module.Finite.of_finite_tensorProduct_of_faithfullyFlat`);
 the integral case is not proved here. -/
+@[buffalo "vuys5SNs2eQ-14946"]
 theorem prop_14946 (A' : Type u) [CommRing A'] [Algebra A A'] [Module.FaithfullyFlat A A'] :
     Module.Finite A' (A' ⊗[A] B) ↔ Module.Finite A B :=
   prop_3491 B
@@ -335,6 +349,7 @@ variable {S S' X : Scheme.{u}} (g : S' ⟶ S) (f : X ⟶ S)
 immersion iff `f'` is (mathlib:
 `descendsAlong_isOpenImmersion_surjective_inf_flat_inf_quasicompact'`); closed and quasi-compact
 immersions are not covered. -/
+@[buffalo "vuys5SNs2eQ-12211"]
 theorem prop_12211 [Surjective g] [Flat g] [QuasiCompact g] :
     IsOpenImmersion (pullback.snd f g) ↔ IsOpenImmersion f :=
   MorphismProperty.pullback_snd_iff (P := @IsOpenImmersion) (fpqc_hyp g)
@@ -342,6 +357,7 @@ theorem prop_12211 [Surjective g] [Flat g] [QuasiCompact g] :
 /-- vuys5SNs2eQ-14816 (4:06:56) [prop] `f` is quasi-affine if `X → Spec f_*𝒪_X` is an open
 immersion. Absolute case (`Y = Spec ℤ`, mathlib `Scheme.IsQuasiAffine`): a quasi-compact `X` is
 quasi-affine as soon as `X → Spec Γ(X, 𝒪_X)` is an open immersion. -/
+@[buffalo "vuys5SNs2eQ-14816"]
 theorem prop_14816 (Z : Scheme.{u}) [CompactSpace Z] [IsOpenImmersion Z.toSpecΓ] :
     Z.IsQuasiAffine :=
   { }

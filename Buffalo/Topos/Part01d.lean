@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.Topos.Part01b
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 1d: algebraic structures on objects of a category (11 May 1973)
@@ -37,21 +38,25 @@ variable {C : Type*} [Category C] [HasBinaryProducts C]
 
 /-- URU5jgTvjhU-17970 (4:59:30) [def] A composition law `m : E × E → E` is commutative if it is
 unchanged by the symmetry of `E × E` ... -/
+@[buffalo "URU5jgTvjhU-17970"]
 def IsCommLaw {E : C} (m : E ⨯ E ⟶ E) : Prop :=
   (prod.braiding E E).hom ≫ m = m
 
 /-- URU5jgTvjhU-17970 (4:59:30) [def] ... and associative if `(ab)c = a(bc)` as arrows
 `(E × E) × E → E`. -/
+@[buffalo "URU5jgTvjhU-17970"]
 def IsAssocLaw {E : C} (m : E ⨯ E ⟶ E) : Prop :=
   (prod.associator E E E).hom ≫ prod.map (𝟙 E) m ≫ m = prod.map m (𝟙 E) ≫ m
 
 /-- URU5jgTvjhU-18102 (5:01:42) [def] A left unit is `e : 1 → E` such that
 `E ≃ 1 × E → E × E → E` is the identity. -/
+@[buffalo "URU5jgTvjhU-18102"]
 def IsLeftUnit [HasTerminal C] {E : C} (m : E ⨯ E ⟶ E) (e : ⊤_ C ⟶ E) : Prop :=
   prod.lift (terminal.from E) (𝟙 E) ≫ prod.map e (𝟙 E) ≫ m = 𝟙 E
 
 /-- URU5jgTvjhU-18295 (5:04:55) [prop] Via Yoneda, a law `E × E → E` is equivalent to laws on the
 sets `Hom(Z, E)`, functorial in `Z`. -/
+@[buffalo "URU5jgTvjhU-18295"]
 def lawEquiv (E : C) :
     (E ⨯ E ⟶ E) ≃ { μ : ∀ Z : C, (Z ⟶ E) → (Z ⟶ E) → (Z ⟶ E) //
       ∀ (Z Z' : C) (h : Z' ⟶ Z) (a b : Z ⟶ E), μ Z' (h ≫ a) (h ≫ b) = h ≫ μ Z a b } where
@@ -71,6 +76,7 @@ end Laws
 /-- URU5jgTvjhU-18427 (5:07:07) [def] and URU5jgTvjhU-19406 (5:23:26) [prop] An algebraic structure
 (here a group) on an object is Mathlib's `Grp C`; a functor commuting with finite products sends
 group objects to group objects. -/
+@[buffalo "URU5jgTvjhU-18427"]
 def mapGrpOfPreserves {C D : Type*} [Category C] [Category D] [CartesianMonoidalCategory C]
     [CartesianMonoidalCategory D] (F : C ⥤ D) [PreservesFiniteProducts F] : Grp C ⥤ Grp D :=
   letI := Functor.Monoidal.ofChosenFiniteProducts F
@@ -84,6 +90,7 @@ variable {C : Type*} [Category C] [HasPullbacks C]
 to `C`: objects `D₀`, arrows `D₁`, source and target `D₁ ⇉ D₀`, units `D₀ → D₁`, and composition
 `D₁ ×_{D₀} D₁ → D₁` (pairs `(f, g)` with `t f = s g`), the axioms being equalities of arrows out of
 fibre products. -/
+@[buffalo "URU5jgTvjhU-18687"]
 structure InternalCategory where
   /-- Objects. -/
   D₀ : C
@@ -119,6 +126,7 @@ end Internal
 /-- URU5jgTvjhU-18881 (5:14:41) [prop] The Yoneda embedding `C → Ĉ` commutes with limits but not
 with colimits: for `C = Set`, the image of the initial set `∅` is not initial in `Ĉ`
 (`Hom(∅, ∅)` is not empty). -/
+@[buffalo "URU5jgTvjhU-18881"]
 theorem yoneda_limits_not_colimits :
     Nonempty (PreservesLimits (yoneda : Type u ⥤ _)) ∧
       ¬ Nonempty (IsInitial (yoneda.obj PEmpty.{u + 1})) := by
@@ -129,12 +137,14 @@ variable {X : TopCat.{u}}
 
 /-- URU5jgTvjhU-19073 (5:17:53) [def] A sheaf of groups is a presheaf of groups whose composite with
 the forgetful functor is a sheaf. -/
+@[buffalo "URU5jgTvjhU-19073"]
 theorem grp_isSheaf_iff (F : X.Presheaf GrpCat.{u}) :
     F.IsSheaf ↔ TopCat.Presheaf.IsSheaf (F ⋙ forget GrpCat.{u}) :=
   TopCat.Presheaf.isSheaf_iff_isSheaf_comp (forget GrpCat.{u}) F
 
 /-- URU5jgTvjhU-19532 (5:25:32) [prop] The stalks of a presheaf of rings are rings, and the
 underlying set of the stalk is the stalk of the underlying presheaf of sets (the forgetful functor
+@[buffalo "URU5jgTvjhU-19532"]
 commutes with filtered colimits). (For groups Mathlib has no colimits in `GrpCat` at this
 revision.) -/
 def ring_stalk (F : X.Presheaf CommRingCat.{u}) (x : X) :
@@ -144,6 +154,7 @@ def ring_stalk (F : X.Presheaf CommRingCat.{u}) (x : X) :
 
 /-- URU5jgTvjhU-19665 (5:27:45) [def] For a `k`-coalgebra `A`, an `A`-comodule is a `k`-module `M`
 with `M → M ⊗ A` coassociative and counital. -/
+@[buffalo "URU5jgTvjhU-19665"]
 structure Comodule (k A M : Type*) [CommRing k] [AddCommGroup A] [Module k A] [Coalgebra k A]
     [AddCommGroup M] [Module k M] where
   /-- The coaction. -/
@@ -155,6 +166,7 @@ structure Comodule (k A M : Type*) [CommRing k] [AddCommGroup A] [Module k A] [C
 
 /-- URU5jgTvjhU-20064 (5:34:24) [def] `E` is a torsor under `G` if `E ≠ ∅` and `G` acts simply
 transitively on `E` (the definition of 9213). -/
+@[buffalo "URU5jgTvjhU-20064"]
 theorem isTorsor_iff (G E : Type*) [Group G] [MulAction G E] :
     IsTorsor G E ↔ Nonempty E ∧ ∀ x y : E, ∃! g : G, g • x = y := by
   rw [IsTorsor, isSimplyTransitive_iff, and_comm]

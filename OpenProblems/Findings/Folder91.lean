@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 91: Weil restriction and centralisers, stated as propositions
@@ -112,6 +113,7 @@ Choices: finite locally free is finite, flat and locally of finite presentation;
 étale cover `X → Y` of `T`-schemes is a finite étale morphism, and its image is the morphism of
 functors `Res(X) → Res(Y)`, asked to be represented by finite étale morphisms, since `Res(Y)`
 need not be representable; `T ⊔ T` is the coproduct of `T` with itself over `T`. -/
+@[montpellier "91, 53"]
 def WeilRestrictionFiniteEtaleTFAE : Prop :=
   ∀ (S T : Scheme.{u}) (t : T ⟶ S) [IsFinite t] [Flat t] [LocallyOfFinitePresentation t],
     List.TFAE [IsLocallyConstant (geometricPointCount t),
@@ -135,6 +137,7 @@ and this is the open part.
 Choices: the reading's form, through the universal property among finite étale `S`-schemes
 rather than through the functor `I ↦ Res_{T/S}(T × I)` on finite sets; geometrically connected
 fibres are fibres over the geometric points `Spec \bar{κ(p)}` that are connected. -/
+@[montpellier "91, 55–58"]
 def RelativeConnectedComponents : Prop :=
   ∀ (S T : Scheme.{u}) (t : T ⟶ S) [IsFinite t] [Flat t] [LocallyOfFinitePresentation t],
     IsLocallyConstant (geometricPointCount t) →
@@ -146,6 +149,7 @@ def RelativeConnectedComponents : Prop :=
 over `S`, every open subgroup of `H_T` containing the special fibre (the fibre over the closed
 point) is all of `H_T`. An open subgroup is an open `V` of `H_T` containing the unit section and
 stable under `(a, b) ↦ a b⁻¹` on the points of `H_T` with values in `V`. -/
+@[montpellier "91, 8"]
 def SatisfiesConditionR {S : Scheme.{u}} (H : Grp (Over S)) : Prop :=
   ∀ (A : CommRingCat.{u}) [IsLocalRing A] (t : Spec A ⟶ S)
     (V : ((Over.pullback t).mapGrp.obj H).X.left.Opens),
@@ -177,6 +181,7 @@ open question.
 Choices: a subscheme is an immersion `Z → G`, and representability says that the points of
 `Cent_G(u)` are the points of `G` factoring through it; « plat » for `H` is in the page's own
 interline on p. 9; « `T` local » is read as `T = Spec A` for a local ring `A`. -/
+@[montpellier "91, 4–9"]
 def CentraliserRepresentable : Prop :=
   ∀ (S : Scheme.{u}) [IsLocallyNoetherian S] (H G : Grp (Over S)) (u : H ⟶ G),
     Flat H.X.hom → LocallyOfFiniteType H.X.hom → QuasiCompact H.X.hom → SatisfiesConditionR H →

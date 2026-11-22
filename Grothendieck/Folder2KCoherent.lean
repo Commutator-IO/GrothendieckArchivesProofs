@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.Perfect.GrothendieckGroupCoherentNonzero
+import Grothendieck.Attr
 
 /-!
 # Folder 2, page 13: the class of a structure sheaf in the `K`-group of coherent sheaves
@@ -86,6 +87,7 @@ noncomputable def lengthAtPrime (p : Ideal A) [p.IsPrime] (M : FinModule A) : �
   ((Module.length (Localization.AtPrime p) (Localization.AtPrime p ⊗[A] M.carrier)).toNat : ℤ)
 
 /-- **Length at a minimal prime is additive**: it descends to a homomorphism `K'₀(A) →+ ℤ`. -/
+@[montpellier "2, 13"]
 theorem exists_lengthAtPrimeHom (p : Ideal A) [p.IsPrime] (hp : p ∈ minimalPrimes A) :
     ∃ φ : KPrime0 A →+ ℤ, ∀ M : FinModule A, φ M.cls = lengthAtPrime p M := by
   refine KPrime0.universalProperty_existence (lengthAtPrime p) ?_ ?_
@@ -132,6 +134,7 @@ theorem lengthAtPrime_quotient_pos (p : Ideal A) [p.IsPrime] (hp : p ∈ minimal
   exact_mod_cast ENat.toNat_pos Module.length_pos.ne' (length_localization_ne_top p hp _)
 
 /-- **`[A/I] ≠ 0` in `K'₀(A)`** when `I` lies in a minimal prime of the noetherian ring `A`. -/
+@[montpellier "2, 13"]
 theorem quotient_cls_ne_zero (p : Ideal A) [p.IsPrime] (hp : p ∈ minimalPrimes A)
     (I : Ideal A) (hI : I ≤ p) : (quotientFinModule I).cls ≠ 0 := by
   obtain ⟨φ, hφ⟩ := exists_lengthAtPrimeHom p hp
@@ -143,6 +146,7 @@ theorem quotient_cls_ne_zero (p : Ideal A) [p.IsPrime] (hp : p ∈ minimalPrimes
 /-- **The class of `𝒪_{V(I)}` in `K'₀(Spec A)` is nonzero** when `I` lies in a minimal prime of
 the noetherian ring `A`; it is the class sent to `[A/I]` by Stacks' identification
 `K'₀(Spec A) ≃+ K'₀(A)` (tag 0FDH). -/
+@[montpellier "2, 13"]
 theorem coherentKZero_quotient_ne_zero (p : Ideal A) [p.IsPrime] (hp : p ∈ minimalPrimes A)
     (I : Ideal A) (hI : I ≤ p) :
     (affineCoherentKZeroEquiv A).symm (quotientFinModule I).cls ≠ 0 := by

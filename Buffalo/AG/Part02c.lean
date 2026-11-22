@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part02b
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 02 (c): 11 June 1973 (beginning)
@@ -53,6 +54,7 @@ variable (k : Type u) [CommRing k]
 /-- 51wmmpHand0-29480 (8:11:20) [def] A group in a category `C` embedded in functors: an object
 `G` with a group structure on each `G(Z) = Hom(Z, G)`, functorial in `Z` (a lift of `yoneda G` to
 groups); no products and no final object are required. -/
+@[buffalo "51wmmpHand0-29480"]
 structure GroupOnPoints {C : Type*} [Category C] (G : C) where
   /-- The groups `Hom(Z, G)`, functorially in `Z`. -/
   F : Cᵒᵖ ⥤ GrpCat
@@ -61,6 +63,7 @@ structure GroupOnPoints {C : Type*} [Category C] (G : C) where
 
 /-- 51wmmpHand0-29867 (8:17:47) [ex] `A = K[T_ij][Δ⁻¹]` represents `GL_n`: its points with values
 in `K'` are the matrices with invertible determinant (`Buffalo.AG.Part01.prop_17469`). -/
+@[buffalo "51wmmpHand0-29867"]
 theorem ex_29867 (n : Type u) [Fintype n] [DecidableEq n] (k' : Type u) [CommRing k']
     [Algebra k k'] :
     Function.Injective (fun u : OGL k n →ₐ[k] k' =>
@@ -74,11 +77,13 @@ theorem ex_29867 (n : Type u) [Fintype n] [DecidableEq n] (k' : Type u) [CommRin
 /-- 51wmmpHand0-29996 (8:19:56) [prop] A monoid structure on the affine space of `A` is a
 comultiplication `A → A ⊗_K A` with counit satisfying the axioms: monoid objects of `𝒞` are the
 commutative bialgebras (mathlib: `commBialgCatEquivComonCommAlgCat`). -/
+@[buffalo "51wmmpHand0-29996"]
 def prop_29996 : CommBialgCat k ≌ (Mon (CommAlgCat k)ᵒᵖ)ᵒᵖ :=
   commBialgCatEquivComonCommAlgCat k
 
 /-- 51wmmpHand0-29996 (8:19:56) [prop] Group objects of `𝒞` are the commutative Hopf algebras
 (mathlib: `commHopfAlgCatEquivCogrpCommAlgCat`). -/
+@[buffalo "51wmmpHand0-29996"]
 def prop_29996_hopf : CommHopfAlgCat k ≌ (CategoryTheory.Grp (CommAlgCat k)ᵒᵖ)ᵒᵖ :=
   commHopfAlgCatEquivCogrpCommAlgCat k
 
@@ -86,6 +91,7 @@ def prop_29996_hopf : CommHopfAlgCat k ≌ (CategoryTheory.Grp (CommAlgCat k)ᵒ
 the `K`-algebra `A` (the antipode; mathlib: `CommAlgCat.inv_op_of_unop_hom`,
 `HopfAlgebra.antipodeAlgHom`): if `V_A` carries a functorial group structure, then
 `g⁻¹ = g ∘ σ` for every point `g`, and `σ ∘ σ = id`. -/
+@[buffalo "51wmmpHand0-30063"]
 theorem prop_30063 (A : Type u) [CommRing A] [Algebra k A] (G : CommAlgCat.{u} k ⥤ GrpCat.{u})
     (e : G ⋙ forget GrpCat ≅ V k A) :
     ∃ σ : A ≃ₐ[k] A, ∀ (k' : CommAlgCat.{u} k) (x : G.obj k'),
@@ -126,6 +132,7 @@ theorem prop_30063 (A : Type u) [CommRing A] [Algebra k A] (G : CommAlgCat.{u} k
 
 /-- 51wmmpHand0-30192 (8:23:12) [prop] The `V(J)` are the closed sets of `Spec A`, which is
 quasi-compact; the closed sets correspond to the radical ideals (`prop_23031`). -/
+@[buffalo "51wmmpHand0-30192"]
 theorem prop_30192 (A : Type*) [CommRing A] :
     (∀ Z : Set (PrimeSpectrum A), IsClosed Z ↔ ∃ J : Ideal A, Z = zeroLocus J) ∧
       CompactSpace (PrimeSpectrum A) ∧
@@ -135,6 +142,7 @@ theorem prop_30192 (A : Type*) [CommRing A] :
 
 /-- 51wmmpHand0-30258 (8:24:18) [prop] Primes correspond to irreducible closed sets and to points;
 `Spec A` is sober, and empty iff `A = 0` (`prop_25035`, `prop_25167`, `prop_23676`). -/
+@[buffalo "51wmmpHand0-30258"]
 theorem prop_30258 (A : Type*) [CommRing A] :
     (∀ J : Ideal A, J.IsPrime → IsIrreducible (zeroLocus (J : Set A))) ∧
       (∀ Z : Set (PrimeSpectrum A), IsIrreducible Z → IsClosed Z → ∃! x, closure {x} = Z) ∧
@@ -144,6 +152,7 @@ theorem prop_30258 (A : Type*) [CommRing A] :
 
 /-- 51wmmpHand0-30323 (8:25:23) [prop] `Spec A` is irreducible iff its radical (the nilradical
 `rad A = nil A`) is prime, i.e. `A / rad A` is an integral domain (`prop_23801`). -/
+@[buffalo "51wmmpHand0-30323"]
 theorem prop_30323 (A : Type*) [CommRing A] :
     (IrreducibleSpace (PrimeSpectrum A) ↔ (nilradical A).IsPrime) ∧
       (IrreducibleSpace (PrimeSpectrum A) ↔ IsDomain (A ⧸ nilradical A)) :=
@@ -190,6 +199,7 @@ theorem acc_finsetSup {X : Type*} [TopologicalSpace X] (s : Finset (Closeds X))
 /-- 51wmmpHand0-30451 (8:27:31) [prop] A space is noetherian iff (a) every closed set has finitely
 many irreducible components and (b) every decreasing sequence of irreducible closed sets is
 stationary (well-foundedness of `⊂` on irreducible closed sets). -/
+@[buffalo "51wmmpHand0-30451"]
 theorem prop_30451 (X : Type*) [TopologicalSpace X] :
     NoetherianSpace X ↔ (∀ Z : Set X, IsClosed Z → (irreducibleComponents Z).Finite) ∧
       WellFounded (fun s t : {s : Set X // IsIrreducible s ∧ IsClosed s} => s.1 ⊂ t.1) := by
@@ -239,6 +249,7 @@ theorem prop_30451 (X : Type*) [TopologicalSpace X] :
 /-- 51wmmpHand0-30645 (8:30:45) [prop] For `A` finitely generated over a field `K`, the set `X₀`
 of closed points is very dense in `Spec A` (`prop_28733`: the inclusion is a
 quasi-homeomorphism); if `K` is algebraically closed, `X₀ = X(K)` (`prop_29114`). -/
+@[buffalo "51wmmpHand0-30645"]
 theorem prop_30645 (K A : Type u) [Field K] [CommRing A] [Algebra K A] [Algebra.FiniteType K A] :
     VeryDense (closedPoints (PrimeSpectrum A)) ∧
       ([IsAlgClosed K] → ∀ x : PrimeSpectrum A, x ∈ closedPoints (PrimeSpectrum A) ↔
@@ -247,6 +258,7 @@ theorem prop_30645 (K A : Type u) [Field K] [CommRing A] [Algebra K A] [Algebra.
 
 /-- 51wmmpHand0-30897 (8:34:57) [prop] The irreducible components of an open set `U` are the
 traces on `U` of the components of the space that meet `U`. -/
+@[buffalo "51wmmpHand0-30897"]
 theorem prop_30897 {X : Type*} [TopologicalSpace X] (U : Set X) (hU : IsOpen U) :
     irreducibleComponents U =
       {T | ∃ Z ∈ irreducibleComponents X, (Z ∩ U).Nonempty ∧ T = Subtype.val ⁻¹' Z} := by
@@ -278,6 +290,7 @@ theorem preirreducible_inter_isOpen {X : Type*} [TopologicalSpace X] {Z W : Set 
 /-- 51wmmpHand0-30897 (8:34:57) [prop] If `X` has finitely many irreducible components, `X` is
 locally connected, and `x`, `y` lie in the same connected component iff a chain of irreducible
 components joins them, two consecutive ones meeting. -/
+@[buffalo "51wmmpHand0-30897"]
 theorem prop_30897_conn {X : Type*} [TopologicalSpace X] (hfin : (irreducibleComponents X).Finite) :
     LocallyConnectedSpace X ∧ ∀ x y : X, y ∈ connectedComponent x ↔
       Relation.ReflTransGen (fun a b => ∃ Z ∈ irreducibleComponents X, a ∈ Z ∧ b ∈ Z) x y := by

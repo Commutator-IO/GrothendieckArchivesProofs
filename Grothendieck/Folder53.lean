@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 53, page 21: a cancellative algebraic monoid is a group
@@ -89,6 +90,7 @@ variable [IsAlgClosed K] [Finite ι]
 /-- A monoid of `K`-points of an affine variety with a polynomial law, whose left translations
 are injective, is a group (the reading of folder 53, page 21, over an algebraically closed
 field). -/
+@[montpellier "53, 21"]
 theorem isUnit_of_isLeftCancelMul {M : Type*} [Monoid M] [IsLeftCancelMul M]
     (φ : M → ι → K) (hφ : Function.Injective φ) (I : Ideal (MvPolynomial ι K))
     (hI : Set.range φ = zeroLocus K I) (m : ι → MvPolynomial (ι ⊕ ι) K)
@@ -131,6 +133,7 @@ noncomputable def glLaw (n : ℕ) :
 /-- A submonoid of `GL_n(K)`, `K` algebraically closed, which is Zariski-closed in `GL_n`
 (cut out by polynomials in the entries and `det⁻¹`) is a subgroup: the special case of
 page 21 of folder 53 behind the rectification `GL_n ↦ M_n`. -/
+@[montpellier "53, 21"]
 theorem inv_mem_of_isClosed {n : ℕ} (S : Submonoid (GL (Fin n) K))
     (J : Ideal (MvPolynomial (Option (Fin n × Fin n)) K))
     (hS : ∀ g, g ∈ S ↔ glCoords g ∈ zeroLocus K J) {g : GL (Fin n) K} (hg : g ∈ S) :
@@ -231,6 +234,7 @@ generalizing (as `X_{k'} → X` is, finite and flat, for `k'/k` finite), with `X
 fibres of `p` (as `Gal(k'/k)` does). If an irreducible `G`-stable set `S` (the image of `Z_{k'}`)
 contains a point `s` through which only one irreducible component of `X'` passes, then `X'` is
 irreducible. -/
+@[montpellier "53, 9"]
 theorem irreducibleSpace_of_stable [QuasiSober X'] [QuasiSober X] [IrreducibleSpace X]
     (p : X' → X) (hpc : IsClosedMap p) (hpg : GeneralizingMap p)
     (horb : ∀ x y, p x = p y → ∃ g : G, g • x = y)
@@ -272,6 +276,7 @@ theorem irreducibleSpace_of_stable [QuasiSober X'] [QuasiSober X] [IrreducibleSp
 /-- The same, with `S` the image of an irreducible space `Z'` (the base change `Z_{k'}` of a
 geometrically irreducible `Z`), stable under `G`, and one point `f' z` of the image lying on a
 single irreducible component: the form of hypotheses a) and b) of page 9. -/
+@[montpellier "53, 9"]
 theorem irreducibleSpace_of_map [QuasiSober X'] [QuasiSober X] [IrreducibleSpace X]
     {Z' : Type*} [TopologicalSpace Z'] [IrreducibleSpace Z'] (p : X' → X) (hpc : IsClosedMap p)
     (hpg : GeneralizingMap p) (horb : ∀ x y, p x = p y → ∃ g : G, g • x = y)
@@ -358,6 +363,7 @@ theorem ker_toLines : RingHom.ker toLines = Ideal.span {sumSq ℝ} := by
     exact toLines_sumSq
 
 /-- `ℝ[x, y] / (x² + y²)` is a domain: `X = Spec ℝ[x,y]/(x² + y²)` is irreducible. -/
+@[montpellier "53, 9"]
 theorem isPrime_span_sumSq_real : (Ideal.span {sumSq ℝ}).IsPrime :=
   ker_toLines ▸ RingHom.ker_isPrime toLines
 
@@ -373,6 +379,7 @@ theorem evalAt_sumSq {a b : ℂ} (h : b ^ 2 + a ^ 2 = 0) : evalAt a b (sumSq ℂ
 
 /-- Over `ℂ`, `x² + y² = (x + iy)(x - iy)` and neither factor is nilpotent modulo `x² + y²`:
 `Spec ℂ[x,y]/(x² + y²)`, the base change of `X` to `ℂ`, is not irreducible. -/
+@[montpellier "53, 9"]
 theorem not_irreducibleSpace_complex :
     ¬ IrreducibleSpace (PrimeSpectrum (ℂ[X][X] ⧸ Ideal.span {sumSq ℂ})) := by
   rw [PrimeSpectrum.irreducibleSpace_iff_isPrime_nilradical]
@@ -491,10 +498,12 @@ noncomputable def tensorQuotSumSqEquiv :
       simp [baseChangeEquiv_tmul_sumSq])
 
 /-- `X = Spec ℝ[x,y]/(x² + y²)` is integral. -/
+@[montpellier "53, 9"]
 theorem isIntegral_spec_sumSq : IsIntegral (Spec (CommRingCat.of SumSqRing)) := inferInstance
 
 /-- `X = Spec ℝ[x,y]/(x² + y²)` is not geometrically irreducible over `ℝ`: its base change to
 `ℂ` is `Spec ℂ[x,y]/(x² + y²)`, which is not irreducible. -/
+@[montpellier "53, 9"]
 theorem not_geometricallyIrreducible_sumSq :
     ¬ GeometricallyIrreducible (Spec.map (CommRingCat.ofHom (algebraMap ℝ SumSqRing))) := by
   intro h
@@ -508,6 +517,7 @@ theorem not_geometricallyIrreducible_sumSq :
 
 /-- The counterexample of page 9 with Mathlib's schemes: `Spec ℝ[x,y]/(x² + y²)` is integral
 but not geometrically irreducible over `ℝ`. -/
+@[montpellier "53, 9"]
 theorem isIntegral_and_not_geometricallyIrreducible_sumSq :
     IsIntegral (Spec (CommRingCat.of SumSqRing)) ∧
       ¬ GeometricallyIrreducible (Spec.map (CommRingCat.ofHom (algebraMap ℝ SumSqRing))) :=

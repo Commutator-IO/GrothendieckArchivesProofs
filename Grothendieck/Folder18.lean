@@ -8,6 +8,7 @@ module
 public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
 public import Mathlib.RingTheory.AlgebraicIndependent.Defs
 public import Mathlib.RingTheory.Algebraic.Defs
+import Grothendieck.Attr
 
 /-!
 # Folder 18, page 12: the elliptic case of the period conjecture (statement only)
@@ -72,6 +73,7 @@ noncomputable def eta₁ (L : PeriodPair) : ℂ := 2 * weierstrassZeta L (L.ω�
 noncomputable def eta₂ (L : PeriodPair) : ℂ := 2 * weierstrassZeta L (L.ω₂ / 2)
 
 /-- The lattice has complex multiplication: some non-integer `α` maps it into itself. -/
+@[montpellier "18, 12"]
 def HasCM (L : PeriodPair) : Prop :=
   ∃ α : ℂ, α ∉ Set.range ((↑) : ℤ → ℂ) ∧ ∀ l ∈ L.lattice, α * l ∈ L.lattice
 
@@ -79,6 +81,7 @@ def HasCM (L : PeriodPair) : Prop :=
 page 12, « 4 ou 2 » ; Bost–Charles 2016, Conjecture 2.12). For a lattice with algebraic
 invariants and no complex multiplication, `ω₁, ω₂, η₁, η₂` are algebraically independent
 over `ℚ`, that is, the period field has transcendence degree `4`. -/
+@[montpellier "18, 12"]
 def EllipticPeriodConjecture : Prop :=
   ∀ L : PeriodPair, IsAlgebraic ℚ L.g₂ → IsAlgebraic ℚ L.g₃ → ¬ HasCM L →
     AlgebraicIndependent ℚ ![L.ω₁, L.ω₂, eta₁ L, eta₂ L]

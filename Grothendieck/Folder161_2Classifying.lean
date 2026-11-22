@@ -11,6 +11,7 @@ public import Mathlib.Tactic.Ring
 public import Mathlib.Algebra.Group.Idempotent
 public import Mathlib.Algebra.Field.IsField
 public import Mathlib.Algebra.GroupWithZero.Units.Basic
+import Grothendieck.Attr
 
 /-!
 # Folder 161-2, pages 42 and 94: the classifiers of von Neumann regular rings and of fields
@@ -153,6 +154,7 @@ def ax : Ax → Sequent.{w} lang
   | .quasi₂ => eqn 1 (tMul (tMul (tQ (x 0)) (tQ (x 0))) (x 0)) (tQ (x 0))
 
 /-- **The theory of commutative von Neumann regular rings**, with their quasi-inverse. -/
+@[montpellier "161-2, 42"]
 def vnrTheory : GeometricTheory.{w} lang := Set.range ax
 
 /-- The theory is Horn: every axiom is an equation. -/
@@ -162,6 +164,7 @@ theorem vnrTheory_isHorn : (vnrTheory.{w}).IsHorn := by
 
 /-- **Page 42: the classifying topos of commutative von Neumann regular rings is a presheaf
 topos.** Their theory, a Horn theory, is classified by the presheaf topos on a small category. -/
+@[montpellier "161-2, 42"]
 theorem vnrTheory_isOfPresheafType : IsOfPresheafType.{u} (vnrTheory.{u}) :=
   isOfPresheafType_of_isHorn _ vnrTheory_isHorn
 
@@ -185,6 +188,7 @@ def ofCommRing (q : A → A) : lang.Structure A where
 
 /-- **Models of the theory among rings.** A commutative ring with an operation `q` is a model of
 `vnrTheory` iff `q` is a quasi-inverse: `a² q(a) = a` and `q(a)² a = q(a)` for every `a`. -/
+@[montpellier "161-2, 42"]
 theorem isSetModel_ofCommRing_iff (q : A → A) :
     letI := ofCommRing A q
     (vnrTheory.{w}).IsSetModel A ↔ ∀ a : A, a * a * q a = a ∧ q a * q a * a = q a := by
@@ -232,6 +236,7 @@ theorem isQuasiInverse_of_mul {a b : A} (h : a * a * b = a) :
 variable (A) in
 /-- **The quasi-inverse.** A commutative ring has a quasi-inverse operation, and then exactly one,
 iff it is von Neumann regular: every `a` has some `b` with `a² b = a`. -/
+@[montpellier "161-2, 42"]
 theorem existsUnique_quasiInverse_iff :
     (∀ a : A, ∃ b, a * a * b = a) ↔
       ∃! q : A → A, ∀ a, a * a * q a = a ∧ q a * q a * a = q a := by
@@ -246,6 +251,7 @@ theorem existsUnique_quasiInverse_iff :
     exact ⟨q a, (hq a).1⟩
 
 /-- **The idempotent of page 42.** With `y = q(a)` (only `a² y = a` is needed), `e = a y` is
+@[montpellier "161-2, 42"]
 idempotent and `e a = a`: `A ≅ eA × (1 − e)A`, with `a` invertible in the first factor and zero
 in the second, which is `A ≅ A_a × A/aA`. -/
 theorem mul_quasiInverse_idempotent {a y : A} (h₁ : a * a * y = a) :
@@ -273,6 +279,7 @@ def nontrivAx : Sequent.{w} lang := ⟨0, .equal tZero tOne, .bot⟩
 
 /-- **The theory of fields**, with the inverse (and `q 0 = 0`) as the quasi-inverse: the theory of
 von Neumann regular rings and the two covering conditions. -/
+@[montpellier "161-2, 94"]
 def fieldTheory : GeometricTheory.{w} lang := vnrTheory ∪ {splitAx, nontrivAx}
 
 /-- **The field classifier is a subtopos of the presheaf classifier of von Neumann regular
@@ -282,6 +289,7 @@ category `C` and a structure `U` on its presheaf topos classifying `vnrTheory`, 
 theory of fields: the classifying topos of fields is obtained from that of von Neumann regular
 rings by imposing covering conditions, those of the axioms `splitAx` and `nontrivAx`
 (`IsClassifyingSite.quotientTopology`). -/
+@[montpellier "161-2, 94"]
 theorem fieldTheory_classifyingSite :
     ∃ (C : Type u) (_ : SmallCategory C)
       (U : CatStructure lang (Sheaf (⊥ : GrothendieckTopology C) (Type u)))
@@ -297,6 +305,7 @@ variable (A : Type*) [CommRing A]
 /-- **Models of the theory of fields among rings.** A commutative ring with an operation `q` is a
 model of `fieldTheory` iff `q` is a quasi-inverse, every element is `0` or has `q` as an inverse,
 and `0 ≠ 1`. -/
+@[montpellier "161-2, 94"]
 theorem isSetModel_fieldTheory_iff (q : A → A) :
     letI := ofCommRing A q
     (fieldTheory.{w}).IsSetModel A ↔ (∀ a : A, a * a * q a = a ∧ q a * q a * a = q a) ∧
@@ -327,6 +336,7 @@ theorem isSetModel_fieldTheory_iff (q : A → A) :
 /-- **Fields are the models.** A commutative ring is a field iff it carries an operation making it
 a model of `fieldTheory`; the operation is then unique (`existsUnique_quasiInverse_iff`): it is
 the inverse, extended by `q 0 = 0`. -/
+@[montpellier "161-2, 94"]
 theorem isField_iff_exists_isSetModel :
     IsField A ↔ ∃ q : A → A, letI := ofCommRing A q; (fieldTheory.{w}).IsSetModel A := by
   classical

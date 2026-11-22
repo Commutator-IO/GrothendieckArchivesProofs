@@ -11,6 +11,7 @@ public import Mathlib.RingTheory.MvPowerSeries.Equiv
 public import Mathlib.RingTheory.AdicCompletion.Completeness
 public import Mathlib.RingTheory.Henselian
 public import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
+import Grothendieck.Attr
 
 /-!
 # Folder 39, the formal preparation theorem (pages 18–19): the adic and discrete cases
@@ -94,6 +95,7 @@ theorem isAdicComplete_of_nilpotent {I : Ideal A} (hI : IsNilpotent I) : IsAdicC
 /-- **Formal preparation, adic case.** `A` complete and separated for the
 `I`-adic topology, `aᵢ ∈ I` for `i < N`, `a_N` a unit: `F` is regular, and every
 `G` is uniquely `QF + r` with `deg r < N`. -/
+@[montpellier "39, 18–19"]
 theorem preparation_adique (I : Ideal A) [IsAdicComplete I A] (F : A⟦X⟧) (N : ℕ)
     (h1 : ∀ i < N, coeff i F ∈ I) (h2 : IsUnit (coeff N F)) :
     (∀ H : A⟦X⟧, F * H = 0 → H = 0) ∧
@@ -143,6 +145,7 @@ theorem ideal_nilpotent (F : A⟦X⟧) (N : ℕ) (h1 : ∀ i < N, IsNilpotent (c
 /-- **Formal preparation, discrete case.** Over any commutative ring, if
 `a₀, …, a_{N-1}` are nilpotent and `a_N` is a unit, `F` is regular and every `G`
 is uniquely `QF + r` with `deg r < N`. -/
+@[montpellier "39, 18–19"]
 theorem preparation_discrete (F : A⟦X⟧) (N : ℕ) (h1 : ∀ i < N, IsNilpotent (coeff i F))
     (h2 : IsUnit (coeff N F)) :
     (∀ H : A⟦X⟧, F * H = 0 → H = 0) ∧
@@ -329,6 +332,7 @@ theorem subst_cons_finSuccEquiv_symm {m : ℕ} {F : MvPowerSeries (Fin m) k}
   rfl
 
 /-- The formal implicit function theorem in one unknown, over any commutative ring. -/
+@[montpellier "39, 12"]
 theorem implicit_function {m : ℕ} (Q : MvPowerSeries (Fin (m + 1)) k)
     (h0 : constantCoeff Q = 0) (h1 : IsUnit (coeff (Finsupp.single 0 1) Q)) :
     ∃! F : MvPowerSeries (Fin m) k, constantCoeff F = 0 ∧
@@ -365,6 +369,7 @@ theorem implicit_function {m : ℕ} (Q : MvPowerSeries (Fin (m + 1)) k)
 built in, each `A n` being a unital subring. (S) is taken in its strong form (constants
 allowed in `φ`), (H) with « isomorphisme formel » read as « has a two-sided inverse for
 substitution ». -/
+@[montpellier "39, 9–11"]
 structure IsFormalClass (A : ∀ n : ℕ, Subring (MvPowerSeries (Fin n) k)) : Prop where
   /-- (I) -/
   X_mem : ∀ n (i : Fin n), X i ∈ A n
@@ -408,6 +413,7 @@ variable {A : ∀ n : ℕ, Subring (MvPowerSeries (Fin n) k)}
 /-- Corollary 3 of page 12 (the implicit function theorem in the class), under (I), (S), (R),
 (H) alone: if `P ∈ A_{n+1}` (variables `Z, t₁, …, tₙ`) has `P(0) = 0` and `∂P/∂Z (0)` a unit
 of `k`, the unique `F` with `F(0) = 0` and `P(F(t), t) = 0` lies in `A_n`. -/
+@[montpellier "39, 12"]
 theorem implicit_mem (hA : IsFormalClass A) {n : ℕ} {P : MvPowerSeries (Fin (n + 1)) k}
     (hP : P ∈ A (n + 1)) (h0 : constantCoeff P = 0)
     (h1 : IsUnit (coeff (Finsupp.single 0 1) P)) {F : MvPowerSeries (Fin n) k}
@@ -551,6 +557,7 @@ theorem polyToSeries_mem (hA : IsFormalClass A) {n : ℕ} {P : Polynomial (MvPow
 /-- Corollary 2 of page 12, under (I), (S), (R), (H) alone: a simple root of the reduced
 polynomial lifts, uniquely, to a root in `A_n`. Here the approximate root `a₀` may be any element
 of `A_n` (the page takes a constant `ζ ∈ k₀`). -/
+@[montpellier "39, 12"]
 theorem hensel_mem (hA : IsFormalClass A) {n : ℕ} {P : Polynomial (MvPowerSeries (Fin n) k)}
     (hP : ∀ i, P.coeff i ∈ A n) {a₀ : MvPowerSeries (Fin n) k} (ha₀ : a₀ ∈ A n)
     (h0 : constantCoeff (P.eval a₀) = 0)
@@ -590,6 +597,7 @@ noncomputable def idealM (A : ∀ n : ℕ, Subring (MvPowerSeries (Fin n) k)) (n
 
 /-- Corollaries 1–2 of pages 11–12 as the pair statement, under (I), (S), (R), (H) alone: the pair
 `(A_n, A_n ∩ 𝔪_n)` is henselian, in particular zariskian (`A_n ∩ 𝔪_n ⊆ rad A_n`). -/
+@[montpellier "39, 11–12"]
 theorem henselianRing (hA : IsFormalClass A) (n : ℕ) : HenselianRing (A n) (idealM A n) := by
   have hev : ∀ (g : Polynomial (A n)) (a : A n),
       (g.map (A n).subtype).eval (a : MvPowerSeries (Fin n) k) = ((g.eval a : A n) : _) :=
@@ -633,6 +641,7 @@ theorem henselianRing (hA : IsFormalClass A) (n : ℕ) : HenselianRing (A n) (id
 
 /-- Condition (D) of page 14, in one variable at a time: the coefficients of `f ∈ A_{n+1}` as a
 series in its first variable lie in `A_n`. -/
+@[montpellier "39, 14"]
 def CoeffClosed (A : ∀ n : ℕ, Subring (MvPowerSeries (Fin n) k)) : Prop :=
   ∀ {n : ℕ} {f : MvPowerSeries (Fin (n + 1)) k}, f ∈ A (n + 1) →
     ∀ j, PowerSeries.coeff j (finSuccEquiv k n f) ∈ A n
@@ -645,6 +654,7 @@ theorem C_mem (hA : IsFormalClass A) {n : ℕ} {c : k} (hc : (C c : MvPowerSerie
 /-- Corollary 1 of page 11 under (I), (S), (R), (H) and (D): if `f ∈ A_n` and `f(0)` is a unit of
 `k`, then `f⁻¹ ∈ A_n`. (D) is used once, for `n = 0`, as in the page's argument: the inverse of
 `s ↦ f(0) s` is in `A_1` by (H), and its coefficient `f(0)⁻¹` is in `A_0` by (D). -/
+@[montpellier "39, 11"]
 theorem inv_mem (hA : IsFormalClass A) (hD : CoeffClosed A) {n : ℕ}
     {f : MvPowerSeries (Fin n) k} (hf : f ∈ A n) (hu : IsUnit (constantCoeff f)) :
     ∃ g ∈ A n, f * g = 1 := by
@@ -679,6 +689,7 @@ theorem inv_mem (hA : IsFormalClass A) (hD : CoeffClosed A) {n : ℕ}
   simpa [sub_eq_zero] using hg
 
 /-- The corollary of page 14, under (D) alone: `A_n ⊆ k₀[[t₁, …, tₙ]]`, `k₀ = A_0`. -/
+@[montpellier "39, 14"]
 theorem coeff_mem (hD : CoeffClosed A) {n : ℕ} {f : MvPowerSeries (Fin n) k} (hf : f ∈ A n)
     (e : Fin n →₀ ℕ) : (C (coeff e f) : MvPowerSeries (Fin 0) k) ∈ A 0 := by
   induction n with
@@ -705,6 +716,7 @@ theorem constantCoeff_subst_of_zero {m n : ℕ} {a : Fin m → MvPowerSeries (Fi
   rw [this, subst_add h, subst_C, map_add, constantCoeff_subst_eq_zero h ha (by simp)]
   simp
 
+@[montpellier "39, 11"]
 theorem intConst_isFormalClass : IsFormalClass intConst where
   X_mem n i := Subring.mem_comap.mpr ⟨0, by simp⟩
   subst_mem {n m φ f} hφ _ hf := by
@@ -713,6 +725,7 @@ theorem intConst_isFormalClass : IsFormalClass intConst where
     exact Subring.mem_comap.mp hφ
   inv_mem {n f g} _ _ hg _ _ i := Subring.mem_comap.mpr ⟨0, by simp [(hg i).eq_zero]⟩
 
+@[montpellier "39, 11"]
 theorem intConst_not_inv_mem :
     (C 2 : MvPowerSeries (Fin 0) ℚ) ∈ intConst 0 ∧
       IsUnit (constantCoeff (C 2 : MvPowerSeries (Fin 0) ℚ)) ∧

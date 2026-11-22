@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 151, page 68: the gluing of tubes over covering pairs fails in depth 2
@@ -238,6 +239,7 @@ theorem eq_strat {Z : Type*} (f : ∀ i, T.piece i → Z)
 /-- `(ℝ², colimTop)`, with the seven inclusions, is the colimit of `Ĩ` in `Top`: a family of
 continuous maps out of the vertices, compatible with the six arrows, factors uniquely through a
 map out of the plane continuous for `colimTop`. -/
+@[montpellier "151, 68"]
 theorem exists_unique_desc {Z : Type*} [TopologicalSpace Z] (f : ∀ i, T.piece i → Z)
     (hc : ∀ i, Continuous (f i))
     (hf : ∀ a b, (a, b) ∈ arrows → ∀ p (ha : p ∈ T.piece a) (hb : p ∈ T.piece b),
@@ -290,11 +292,13 @@ theorem isOpen_preimage_U {S : Set P} (hS : S ⊆ axis ∨ (0 : P) ∉ S) :
     exact (isOpen_ne_fun continuous_fst continuous_const).preimage continuous_subtype_val
 
 /-- `U` is open in the colimit of the covering-pair diagram. -/
+@[montpellier "151, 68"]
 theorem isOpen_colimTop_U : IsOpen[T.colimTop] U := by
   simp only [isOpen_iSup_iff, isOpen_coinduced]
   exact fun i => isOpen_preimage_U (T.piece_dichotomy i)
 
 /-- `U` is not open in `ℝ²`: it is not a neighbourhood of `0`. -/
+@[montpellier "151, 68"]
 theorem not_isOpen_U : ¬ IsOpen U := by
   intro h
   have : IsOpen ((fun t : ℝ => ((0 : ℝ), t)) ⁻¹' U) :=
@@ -306,6 +310,7 @@ theorem not_isOpen_U : ¬ IsOpen U := by
 
 /-- The colimit topology of `Ĩ` is not the topology of `ℝ²`: the gluing theorem of page 68,
 read as a colimit in `Top`, fails for `ℝ² ⊃ ℝ × {0} ⊃ {0}`, whatever the tubes. -/
+@[montpellier "151, 68"]
 theorem colimTop_ne : T.colimTop ≠ (inferInstance : TopologicalSpace P) := by
   intro h
   have := T.isOpen_colimTop_U
@@ -357,6 +362,7 @@ open Classical in
 /-- Depth one: if `X₀` is closed and the tube `𝒱̄` is a neighbourhood of `X₀`, then `X` with the
 four inclusions is the colimit of `Ĩ` in `Top`: a compatible family of continuous maps out of the
 vertices factors uniquely through a continuous map out of `X`. -/
+@[montpellier "151, 68"]
 theorem exists_unique_desc (hX₀ : IsClosed X₀) (hV : X₀ ⊆ interior V)
     {Z : Type*} [TopologicalSpace Z] (f : ∀ i, piece X₀ V i → Z)
     (hc : ∀ i, Continuous (f i))
@@ -385,6 +391,7 @@ theorem exists_unique_desc (hX₀ : IsClosed X₀) (hV : X₀ ⊆ interior V)
     exacts [(hg' 0 ⟨p, h⟩).trans (hg 0 ⟨p, h⟩).symm, (hg' 3 ⟨p, h⟩).trans (hg 3 ⟨p, h⟩).symm]
 
 /-- Depth one: the colimit topology of the four vertices is the topology of `X`. -/
+@[montpellier "151, 68"]
 theorem colimTop_eq (hX₀ : IsClosed X₀) (hV : X₀ ⊆ interior V) :
     colimTop X₀ V = ‹TopologicalSpace X› := by
   refine le_antisymm (iSup_le fun i => continuous_subtype_val.coinduced_le) fun U hU => ?_

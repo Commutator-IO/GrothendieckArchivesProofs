@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 145, pages 34–35: the unit-exponent exercise
@@ -70,6 +71,7 @@ def hatPow {G : Type*} [Group G] [Fintype G] (p : ∀ n : ℕ, ZMod n) (x : G) :
 
 /-- Relation (14) of page 35, `l_∞^p l₁^p l₀^p = 1` under `l_∞ l₁ l₀ = 1`, read in every
 finite quotient of the free profinite group on `l₀, l₁`. -/
+@[montpellier "145, 35"]
 def Rel14 (p : ∀ n : ℕ, ZMod n) : Prop :=
   ∀ (G : Type) [Group G] [Fintype G] (x y z : G),
     z * y * x = 1 → hatPow p z * hatPow p y * hatPow p x = 1
@@ -81,6 +83,7 @@ lemma pow_odd_of_mul_self {G : Type*} [Group G] {x : G} (hx : x * x = 1) {m : �
 
 /-- The dihedral witness: for `m` odd, `(sr 0 · sr 1)⁻¹ ^ m · sr 0 ^ m · sr 1 ^ m = 1`
 in `DihedralGroup N` iff `m ≡ 1 (mod N)`. -/
+@[montpellier "145, 34–35"]
 theorem dihedral_witness (N : ℕ) {m : ℕ} (hm : Odd m) :
     ((sr 0 * sr 1 : DihedralGroup N)⁻¹) ^ m * (sr 0) ^ m * (sr 1) ^ m = 1 ↔
       (m : ZMod N) = 1 := by
@@ -98,6 +101,7 @@ lemma val_odd_of_two (p : ∀ n : ℕ, ZMod n) (hp : Compatible p) (h2 : p 2 = 1
 
 /-- **The exercise of page 35**, more generally: for a compatible family `p` with `p` odd
 (`p 2 = 1`), relation (14) holds in every finite group iff `p = 1`. -/
+@[montpellier "145, 35"]
 theorem rel14_iff (p : ∀ n : ℕ, ZMod n) (hp : Compatible p) (h2 : p 2 = 1) :
     Rel14 p ↔ ∀ n : ℕ, n ≠ 0 → p n = 1 := by
   constructor
@@ -115,6 +119,7 @@ theorem rel14_iff (p : ∀ n : ℕ, ZMod n) (hp : Compatible p) (h2 : p 2 = 1) :
       pow_one] using hxyz
 
 /-- The page's form: `p` a unit of `ℤ̂` (each residue a unit). -/
+@[montpellier "145, 34–35"]
 theorem rel14_unit_iff (p : ∀ n : ℕ, ZMod n) (hp : Compatible p)
     (hu : ∀ n : ℕ, n ≠ 0 → IsUnit (p n)) :
     Rel14 p ↔ ∀ n : ℕ, n ≠ 0 → p n = 1 := by
@@ -124,6 +129,7 @@ theorem rel14_unit_iff (p : ∀ n : ℕ, ZMod n) (hp : Compatible p)
   revert a; decide
 
 /-- The oddness cannot be dropped: `p = 0` satisfies (14). -/
+@[montpellier "145, 34–35"]
 theorem rel14_zero : Rel14 (fun _ => 0) := by
   intro G _ _ x y z _
   simp [hatPow]

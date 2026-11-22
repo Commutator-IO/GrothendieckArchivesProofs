@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 40, pages 26–27: regularity is not stable under the group law of `H¹(A, α_p)`
@@ -104,6 +105,7 @@ theorem isDomain_radical {n : ℕ} (hn : n ≠ 0) {ϖ u : A} (hϖ : Irreducible 
 
 /-- **The regular torsors.** Over a discrete valuation ring `A` with uniformiser `ϖ`,
 `A[T]/(T^n - ϖu)` is a discrete valuation ring for every `n ≥ 1` and every unit `u`. -/
+@[montpellier "40, 26–27"]
 theorem isDVR_adjoinRoot {n : ℕ} (hn : n ≠ 0) {ϖ u : A} (hϖ : Irreducible ϖ)
     (hu : IsUnit u) :
     have := isDomain_radical hn hϖ hu
@@ -173,6 +175,7 @@ section PowerSeries
 variable {k : Type*} [Field k]
 
 /-- `k[[X]][T]/(T^n - X)` is a discrete valuation ring. -/
+@[montpellier "40, 26–27"]
 theorem isDVR_root_X {n : ℕ} (hn : n ≠ 0) :
     have := isDomain_radical hn PowerSeries.X_irreducible (isUnit_one (M := (PowerSeries k)))
     IsDiscreteValuationRing (AdjoinRoot (X ^ n - C (PowerSeries.X * 1 : (PowerSeries k)))) :=
@@ -182,6 +185,7 @@ theorem isUnit_X_sub_one : IsUnit (PowerSeries.X - 1 : (PowerSeries k)) := by
   rw [PowerSeries.isUnit_iff_constantCoeff]; simp
 
 /-- `k[[X]][T]/(T^n + X - X²)` is a discrete valuation ring: `-X + X² = X (X - 1)`. -/
+@[montpellier "40, 26–27"]
 theorem isDVR_root_neg_X_add_X_sq {n : ℕ} (hn : n ≠ 0) :
     have := isDomain_radical hn PowerSeries.X_irreducible (isUnit_X_sub_one (k := k))
     IsDiscreteValuationRing
@@ -250,6 +254,7 @@ theorem cuspMap_mem (n : ℕ) (hn : n ≠ 0) (r : Cusp k n) : cuspMap n hn r ∈
 
 /-- **The sum is not regular.** For `n ≥ 3` odd, in `k[[X]][T]/(T^n - X²)` neither of `X`,
 `T` divides the other. -/
+@[montpellier "40, 26–27"]
 theorem cusp_not_valuation {n : ℕ} (hn : 3 ≤ n) (hodd : Odd n) (c : Cusp k n) :
     AdjoinRoot.of _ PowerSeries.X * c ≠ AdjoinRoot.root _ ∧
       AdjoinRoot.root _ * c ≠ AdjoinRoot.of _ PowerSeries.X := by
@@ -281,6 +286,7 @@ theorem cusp_not_valuation {n : ℕ} (hn : 3 ≤ n) (hodd : Odd n) (c : Cusp k n
     rw [h2, PowerSeries.coeff_X_pow_self] at h3
     exact one_ne_zero h3
 
+@[montpellier "40, 26–27"]
 theorem not_isDVR_cusp_odd {n : ℕ} (hn : 3 ≤ n) (hodd : Odd n) :
     ¬ ∃ _ : IsDomain (Cusp k n), IsDiscreteValuationRing (Cusp k n) := by
   rintro ⟨_, _⟩
@@ -296,6 +302,7 @@ theorem cusp_factor_ne_zero {m : ℕ} (hm : m ≠ 0) (ε : (PowerSeries k)) :
   rw [natDegree_X_pow_sub_C, natDegree_X_pow_add_C]; omega
 
 /-- For `n = 2m` even, `k[[X]][T]/(T^n - X²)` is not a domain. -/
+@[montpellier "40, 26–27"]
 theorem not_isDomain_cusp_even {m : ℕ} (hm : m ≠ 0) : ¬ IsDomain (Cusp k (2 * m)) := by
   intro hd
   have h0 : AdjoinRoot.mk (X ^ (2 * m) - C (PowerSeries.X ^ 2 : (PowerSeries k)))
@@ -306,6 +313,7 @@ theorem not_isDomain_cusp_even {m : ℕ} (hm : m ≠ 0) : ¬ IsDomain (Cusp k (2
   exact mul_ne_zero (cusp_factor_ne_zero hm _) (cusp_factor_ne_zero hm _) h0
 
 /-- For `n = 2` in characteristic `2`: `(T - X)² = 0` and `T - X ≠ 0`. -/
+@[montpellier "40, 26–27"]
 theorem cusp_two_nilpotent [CharP k 2] :
     (AdjoinRoot.root _ - AdjoinRoot.of _ PowerSeries.X : Cusp k 2) ^ 2 = 0 ∧
       (AdjoinRoot.root _ - AdjoinRoot.of _ PowerSeries.X : Cusp k 2) ≠ 0 := by
@@ -354,6 +362,7 @@ theorem charP_of_algebra {R : Type*} [CommRing R] [Algebra (PowerSeries k) R] [N
   (CharP.charP_iff_prime_eq_zero hp.out).mpr (natCast_p_eq_zero (k := k) p)
 
 /-- In `C₁`: `-X + X² = (-s + s²)^p`. -/
+@[montpellier "40, 26–27"]
 theorem neg_X_add_X_sq_eq_pow :
     AdjoinRoot.of _ (-PowerSeries.X + PowerSeries.X ^ 2) =
       (-AdjoinRoot.root _ + AdjoinRoot.root _ ^ 2 : C₁ (k := k) p) ^ p := by
@@ -416,12 +425,14 @@ theorem toD_z : toD p (z (k := k) p) =
 
 omit [CharP k p] in
 /-- **The fibre product is not reduced.** `z ≠ 0`. -/
+@[montpellier "40, 26–27"]
 theorem fibre_ne_zero : z (k := k) p ≠ 0 := fun h => by
   refine AdjoinRoot.mk_ne_zero_of_natDegree_lt (monic_X_pow_sub_C _ hp.out.ne_zero)
     (X_sub_C_ne_zero _) ?_ ((toD_z (k := k) p).symm.trans (by rw [h, map_zero]))
   rw [natDegree_X_pow_sub_C, natDegree_X_sub_C]; exact hp.out.one_lt
 
 /-- **The fibre product is not reduced.** `z^p = 0`. -/
+@[montpellier "40, 26–27"]
 theorem fibre_nilpotent : z (k := k) p ^ p = 0 := by
   have : Nontrivial (C₁ (k := k) p ⊗[PowerSeries k] C₂ (k := k) p) :=
     (toD (k := k) p).toRingHom.domain_nontrivial
@@ -498,6 +509,7 @@ theorem EtoFibre_root : EtoFibre p (AdjoinRoot.root _) = z (k := k) p :=
 
 /-- **Page 27: the fibre product is `C₁[T]/(T^p)`.** `C₁ ⊗_A C₂ ≃ C₁[T]/(T^p)` as
 `C₁`-algebras, `z = 1 ⊗ t - (-s + s²) ⊗ 1 ↦ T`. -/
+@[montpellier "40, 27"]
 noncomputable def fibreEquiv :
     C₁ (k := k) p ⊗[PowerSeries k] C₂ (k := k) p ≃ₐ[C₁ (k := k) p] E (k := k) p :=
   AlgEquiv.ofAlgHom (fibreToE p) (EtoFibre p)

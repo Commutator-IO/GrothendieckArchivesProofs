@@ -11,6 +11,7 @@ public import Mathlib.Tactic.Ring
 public import Mathlib.Tactic.FinCases
 public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.Data.Fintype.Fin
+import Grothendieck.Attr
 
 /-!
 # Folder 89: the « fundamental relation » of the 3-3 sets, pages 15–18
@@ -51,6 +52,7 @@ theorem cramer (u v w : Fin 2 → R) (i : Fin 2) :
 
 /-- Folder 89, pages 15–18: for `u ∧ v` a unit, `u ∧ v = v ∧ w = w ∧ u` exactly when
 `u + v + w = 0`, over any commutative ring. -/
+@[montpellier "89, 15–18"]
 theorem fundamental_relation (u v w : Fin 2 → R) (hd : IsUnit (wedge u v)) :
     (wedge u v = wedge v w ∧ wedge v w = wedge w u) ↔ u + v + w = 0 := by
   constructor

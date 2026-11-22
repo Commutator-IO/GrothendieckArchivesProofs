@@ -7,6 +7,7 @@ module
 
 public import Mathlib.Data.List.Basic
 public import Mathlib.Logic.Function.Iterate
+import Grothendieck.Attr
 
 /-!
 # Folder 80, page 9: the regions of the arrangement of nine curves
@@ -220,6 +221,7 @@ theorem rimFace_spec : ∀ k < 18, rimFace k ∈ faces ∧ 162 + k ∈ rimFace k
 
 /-- **The projective count**: 37 faces, 10 triangles, 21 quadrilaterals, 6 pentagons, and the
 side-sum is `144 = 2 · 72`, twice the number of edges. -/
+@[montpellier "80, 9"]
 theorem proj_count : projSizes.length = 37 ∧ projSizes.count 3 = 10 ∧ projSizes.count 4 = 21 ∧
     projSizes.count 5 = 6 ∧ projSizes.sum = 144 := by
   decide +kernel
@@ -232,6 +234,7 @@ theorem numCross_eq : numCross = 36 := by decide +kernel
 /-- Euler's relation `V − E + F = 1` in the projective plane, written `V + F = E + 1`: 36 vertices,
 `9 · 9 − 9 = 72` edges (the two end
 segments of each curve are one edge), 37 faces. -/
+@[montpellier "80, 9"]
 theorem euler_proj : numCross + projSizes.length = (9 * 9 - 9) + 1 := by
   rw [numCross_eq, proj_count.1]
 
@@ -242,16 +245,19 @@ theorem euler_disc : (numCross + rim.length) + faces.length = (9 * 9 + rim.lengt
   rw [numCross_eq, rim_antipodal.1, faces_length]
 
 /-- The regions away from the rim: 7 triangles, 18 quadrilaterals, 3 pentagons. -/
+@[montpellier "80, 9"]
 theorem inner_count : inner.length = 28 ∧ (inner.map List.length).count 3 = 7 ∧
     (inner.map List.length).count 4 = 18 ∧ (inner.map List.length).count 5 = 3 := by
   decide +kernel
 
 /-- The nine faces across the rim: 3 triangles (arcs 0, 3, 6), 3 quadrilaterals (1, 4, 7), 3
 pentagons (2, 5, 8). -/
+@[montpellier "80, 9"]
 theorem rim_count : (List.range 9).map projSides = [3, 4, 5, 3, 4, 5, 3, 4, 5] := by
   decide +kernel
 
 /-- The central triangle is bounded by `D_A`, `D_B`, `D_C`. -/
+@[montpellier "80, 9"]
 theorem central_triangle : [117, 153, 134] ∈ inner ∧
     [117, 153, 134].map (· / 18) = [6, 8, 7] := by
   decide +kernel
@@ -261,6 +267,7 @@ def curves (f : List ℕ) : List ℕ := (f.filter fun d => decide (d < 162)).map
 
 /-- Each rim triangle is a piece `Δ_X Δ_X′ D` with three curve sides (four with its rim arc),
 glued to a piece with two: `3 + 2 − 2 = 3`. -/
+@[montpellier "80, 9"]
 theorem rim_triangle_pieces :
     curves (rimFace 0) = [0, 1, 8] ∧ curves (rimFace 9) = [0, 8] ∧
     curves (rimFace 6) = [2, 3, 7] ∧ curves (rimFace 15) = [2, 7] ∧
@@ -277,6 +284,7 @@ def pageRim : List (ℕ × Bool) :=
 
 /-- The page's labels at infinity are the projective numbers of sides: both pieces of a face
 carry its number, one of them primed. -/
+@[montpellier "80, 9"]
 theorem labels_rim : ∀ k < 9, (pageRim.getD k (0, false)).1 = projSides k ∧
     (pageRim.getD (k + 9) (0, false)).1 = projSides k ∧
     (pageRim.getD k (0, false)).2 ≠ (pageRim.getD (k + 9) (0, false)).2 := by
@@ -286,6 +294,7 @@ theorem labels_rim : ∀ k < 9, (pageRim.getD k (0, false)).1 = projSides k ∧
 two orbits of three); 24 = the 18 inner quadrilaterals, the 3 rim quadrilaterals and the 3 rim
 triangles; 6 = the 3 inner and 3 rim pentagons. So 7, 24, 6 is the projective count with the
 three rim triangles among the quadrilaterals, and `147 = 144 + 3`. -/
+@[montpellier "80, 9"]
 theorem page_count :
     (inner.map List.length).count 3 = 1 + 3 + 3 ∧
     (inner.map List.length).count 4 + ((List.range 9).map projSides).count 4 +
@@ -296,6 +305,7 @@ theorem page_count :
 
 /-- Counting the rim arc as a side of every face across the rim gives 7 triangles, 21
 quadrilaterals, 6 pentagons and 3 hexagons: not the page's count. -/
+@[montpellier "80, 9"]
 theorem rim_arc_side :
     (inner.map List.length ++ (List.range 9).map fun k => projSides k + 1).count 3 = 7 ∧
     (inner.map List.length ++ (List.range 9).map fun k => projSides k + 1).count 4 = 21 ∧
@@ -305,6 +315,7 @@ theorem rim_arc_side :
 
 /-- The 46 regions of the disc, each rim arc counted as a side: 13 triangles, 24
 quadrilaterals, 9 pentagons, side-sum `180` (the darts). -/
+@[montpellier "80, 9"]
 theorem disc_count : (faces.map List.length).count 3 = 13 ∧
     (faces.map List.length).count 4 = 24 ∧ (faces.map List.length).count 5 = 9 ∧
     (faces.map List.length).sum = 180 := by

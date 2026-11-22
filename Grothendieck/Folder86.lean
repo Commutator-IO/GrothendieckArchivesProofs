@@ -9,6 +9,7 @@ public import Mathlib.Data.Fintype.Basic
 public import Mathlib.Data.List.FinRange
 public import Mathlib.Algebra.Order.Group.End
 public import Mathlib.GroupTheory.SpecificGroups.Alternating
+import Grothendieck.Attr
 
 /-!
 # Folder 86, pages 18–32: the five trièdres of the icosahedron and the hemi-icosahedron
@@ -236,6 +237,7 @@ def antiAut : Aut where
 
 /-- `ρ₀(s, t)`: with `u, v` the third vertices of the two faces on `{s, t}`, the side
 `{Π_{s,u}, Π_{s,v}}` of the link pentagon of `s` opposite `t`. -/
+@[montpellier "86, 18–19"]
 def rho0 (p : Fin 12 × Fin 12) : Fin 12 × Fin 12 :=
   let u := (common p.1 p.2).headD 0
   let v := (common p.1 p.2).getD 1 0
@@ -273,10 +275,12 @@ theorem rho0_sameDir : ∀ p q, IsEdge p → SameDir p q → SameDir (rho0 p) (r
   decide +kernel
 
 /-- `ρ³ = id`, without fixed point (pages 18–19). -/
+@[montpellier "86, 18–19"]
 theorem rho_cube : ∀ p, IsEdge p → SameDir (rho0 (rho0 (rho0 p))) p ∧ ¬ SameDir (rho0 p) p := by
   decide +kernel
 
 /-- `ρ²(\bar a) = \overline{\{u, ι v\}}` (page 19), for either labelling of `u, v`. -/
+@[montpellier "86, 19"]
 theorem rho_sq : ∀ s t u, Tri s t u →
     SameDir (rho0 (rho0 (s, t))) (u, anti (other s t u)) := by decide +kernel
 
@@ -308,10 +312,12 @@ def SameTri (p q : Fin 12 × Fin 12) : Prop :=
 instance (p q : Fin 12 × Fin 12) : Decidable (SameTri p q) := by unfold SameTri; infer_instance
 
 /-- The labels are the `ρ`-orbits of directions: five orbits of three directions. -/
+@[montpellier "86, 18–20"]
 theorem col_eq_iff : ∀ p q, IsEdge p → IsEdge q → (col p = col q ↔ SameTri p q) := by
   decide +kernel
 
 /-- Each trièdre meets the five edges at a vertex once (page 20, corollary `P(s) ≃ T`). -/
+@[montpellier "86, 20"]
 theorem col_inj_at : ∀ s t t', Adj s t → Adj s t' → colTab s t = colTab s t' → t = t' := by
   decide +kernel
 
@@ -319,6 +325,7 @@ theorem col_surj_at : ∀ s c, ∃ t, Adj s t ∧ colTab s t = c := by decide +k
 
 /-- Two orthogonal edges (same trièdre, different directions) have no common vertex
 (page 20). With `col_inj_at`, each trièdre is a perfect matching of six edges. -/
+@[montpellier "86, 20"]
 theorem orthogonal_disjoint : ∀ p q, IsEdge p → IsEdge q → col p = col q → ¬ SameDir p q →
     p.1 ≠ q.1 ∧ p.1 ≠ q.2 ∧ p.2 ≠ q.1 ∧ p.2 ≠ q.2 := by decide +kernel
 
@@ -326,6 +333,7 @@ theorem orthogonal_disjoint : ∀ p q, IsEdge p → IsEdge q → col p = col q �
 `{v, w}, {w, u}, {u, v}`, the directions `{u, v₁}, {v, w₁}, {w, u₁}` form a trièdre and
 `{u, w₁}, {v, u₁}, {w, v₁}` another; b) these two and the trièdres of the three sides are
 five distinct trièdres. -/
+@[montpellier "86, 23"]
 theorem face_triedres : ∀ u v w, Tri u v w →
     let u₁ := other v w u; let v₁ := other w u v; let w₁ := other u v w
     (colTab u v₁ = colTab v w₁ ∧ colTab v w₁ = colTab w u₁) ∧
@@ -335,6 +343,7 @@ theorem face_triedres : ∀ u v w, Tri u v w →
 
 /-- The first triple as the page reads it, with `{u, v}` for `{u, v₁}`, is not a trièdre:
 `{u, v}` and `{v, w₁}` never have the same trièdre. -/
+@[montpellier "86, 23"]
 theorem face_triedre_page_reading : ∀ u v w, Tri u v w →
     colTab u v ≠ colTab v (other u v w) := by decide +kernel
 
@@ -424,6 +433,7 @@ theorem actT_mul (g h : Aut) (c : Fin 5) : actT (g * h) c = actT g (actT h c) :=
 theorem actT_one (c : Fin 5) : actT 1 c = c := (nb0_spec c).2
 
 /-- The homomorphism `G → 𝔖_T` (page 22). -/
+@[montpellier "86, 22"]
 def permT : Aut →* Equiv.Perm (Fin 5) where
   toFun g :=
     { toFun := actT g
@@ -448,6 +458,7 @@ theorem kernel_aux : ∀ x y z, Tri x y z → (∀ c, colTab x (ext x y z (nb0 c
     (x = 0 ∧ y = 1 ∧ z = 2) ∨ (x = anti 0 ∧ y = anti 1 ∧ z = anti 2) := by decide +kernel
 
 /-- Page 25: the kernel of `G → 𝔖_T` is `{1, ι}`. -/
+@[montpellier "86, 25"]
 theorem permT_eq_one_iff (g : Aut) : permT g = 1 ↔ g = 1 ∨ g = antiAut := by
   constructor
   · intro h
@@ -468,6 +479,7 @@ theorem sign_aux : ∀ x y z (h : Tri x y z), Equiv.Perm.sign (permT (mkAut x y 
   decide +kernel
 
 /-- Pages 20–22: `G` acts on `T` by even permutations. -/
+@[montpellier "86, 20–22"]
 theorem permT_mem_alternating (g : Aut) : permT g ∈ alternatingGroup (Fin 5) := by
   rw [Equiv.Perm.mem_alternatingGroup, eq_mkAut g]
   exact sign_aux _ _ _ _
@@ -488,6 +500,7 @@ def permF (p : Fin 12 × Fin 12 × Fin 12) : Equiv.Perm (Fin 5) :=
 theorem card_image_permF : (triList.map permF).toFinset.card = 60 := by decide +kernel
 
 /-- Page 25: `G → Alt_T` is onto. -/
+@[montpellier "86, 25"]
 theorem permT_surjective (σ : Equiv.Perm (Fin 5)) (hσ : σ ∈ alternatingGroup (Fin 5)) :
     ∃ g, permT g = σ := by
   classical
@@ -520,6 +533,7 @@ theorem card_flags :
     Fintype.card {p : Fin 12 × Fin 12 × Fin 12 // Tri p.1 p.2.1 p.2.2} = 120 := by
   decide +kernel
 
+@[montpellier "86, 18–32"]
 theorem card_aut : Nat.card Aut = 120 := by
   rw [Nat.card_congr autEquivFlag, Nat.card_eq_fintype_card, card_flags]
 
@@ -528,6 +542,7 @@ theorem card_aut : Nat.card Aut = 120 := by
 /-- The numbering of `T` attached to a flag `(s, t, u)` (page 30): the trièdres of the five
 edges at `s`, read around `s` from `t`, in the direction away from `u`. With `v` the other
 face on `{s, t}`, these edges go to `t, v, Π_{s,v}, Π_{s,u}, u`. -/
+@[montpellier "86, 30"]
 def numb (p : Fin 12 × Fin 12 × Fin 12) : Fin 5 → Fin 5 :=
   ![colTab p.1 p.2.1, colTab p.1 (other p.1 p.2.1 p.2.2),
     colTab p.1 (other p.1 (other p.1 p.2.1 p.2.2) p.2.1),
@@ -589,6 +604,7 @@ theorem flagOf_mul_anti (g : Aut) : flagOf (g * antiAut) = flι (flagOf g) := by
 
 /-- Every numbering of a flag is even: compatible with the canonical orientation, which is
 the class of the even numberings for this labelling of `T`. -/
+@[montpellier "86, 26–32"]
 theorem numb_even (p : Fin 12 × Fin 12 × Fin 12) (hp : p ∈ triList) :
     ∃ σ ∈ alternatingGroup (Fin 5), ⇑σ = numb p := by
   obtain ⟨g, rfl⟩ := exists_flagOf p hp
@@ -598,6 +614,7 @@ theorem numb_even (p : Fin 12 × Fin 12 × Fin 12) (hp : p ∈ triList) :
     (numb_flagOf g).symm⟩
 
 /-- Every even numbering is the numbering of a flag. -/
+@[montpellier "86, 26–32"]
 theorem numb_surjective (σ : Equiv.Perm (Fin 5)) (hσ : σ ∈ alternatingGroup (Fin 5)) :
     ∃ p ∈ triList, numb p = ⇑σ := by
   have hw : w0 ∈ alternatingGroup (Fin 5) := by
@@ -608,6 +625,7 @@ theorem numb_surjective (σ : Equiv.Perm (Fin 5)) (hσ : σ ∈ alternatingGroup
 
 /-- Two flags have the same numbering if and only if they are equal or antipodal: the `60`
 flags of `Π/ι` are the `60` even numberings of `T` (page 30). -/
+@[montpellier "86, 30"]
 theorem numb_eq_iff (p q : Fin 12 × Fin 12 × Fin 12) (hp : p ∈ triList) (hq : q ∈ triList) :
     numb p = numb q ↔ q = p ∨ q = flι p := by
   obtain ⟨g, rfl⟩ := exists_flagOf p hp
@@ -656,6 +674,7 @@ theorem other_zero : other 0 1 2 = 5 := by decide
 
 /-- Pages 31–32: the three flag involutions act on numberings by the double transpositions of
 places `τ0`, `τ1`, `τ2`, that is `σᵢ(a) = a ∘ τᵢ`. -/
+@[montpellier "86, 31–32"]
 theorem numb_sigma (p : Fin 12 × Fin 12 × Fin 12) (hp : p ∈ triList) :
     numb (fl0 p) = numb p ∘ ⇑τ0 ∧ numb (fl1 p) = numb p ∘ ⇑τ1 ∧
       numb (fl2 p) = numb p ∘ ⇑τ2 := by
@@ -684,6 +703,7 @@ theorem tau1'_eq : τ1' = τ2 * τ1 * τ2 ∧ τ0 * τ2 = τ2 * τ0 ∧ τ2 * τ
 
 /-- The page's triple `(τ0, τ1', τ2)` is the action of the involutions of `Π` on the
 numbering `p ↦ numb (fl2 p)`: the two triples give isomorphic `Γ̂`-sets. -/
+@[montpellier "86, 31–32"]
 theorem numb_sigma_page (p : Fin 12 × Fin 12 × Fin 12) (hp : p ∈ triList) :
     numb (fl2 (fl0 p)) = numb (fl2 p) ∘ ⇑τ0 ∧ numb (fl2 (fl1 p)) = numb (fl2 p) ∘ ⇑τ1' ∧
       numb (fl2 (fl2 p)) = numb (fl2 p) ∘ ⇑τ2 := by
@@ -701,6 +721,7 @@ theorem numb_sigma_page (p : Fin 12 × Fin 12 × Fin 12) (hp : p ∈ triList) :
 /-- Page 32, composing right to left on numberings: with the page's `σ₁`, `ρ_f = σ₁σ₀`,
 `ρ_s = σ₂σ₁` and `σ₀σ₂` have the values written there and orders `3`, `5`, `2`; the page's
 label « `σ₀σ₁` » for the third has the value of `σ₀σ₂`, and `σ₀σ₁` is of order `3`. -/
+@[montpellier "86, 32"]
 theorem page32 :
     (⇑(τ0 * τ1') = ![3, 0, 2, 1, 4]) ∧ (⇑(τ1' * τ2) = ![1, 2, 3, 4, 0]) ∧
     (⇑(τ2 * τ0) = ![0, 2, 1, 4, 3]) ∧
@@ -784,6 +805,7 @@ theorem numb_mul (g k : Aut) : numb (flagOf (g * k)) = ⇑(permT g) ∘ numb (fl
 numberings trace the same pentagon on `T`; the same edge if and only if they give the same
 partition of type `(2, 2, 1)`; the same face if and only if they give the same three-element
 set. -/
+@[montpellier "86, 26–29, 31"]
 theorem incidence_dictionary (p q : Fin 12 × Fin 12 × Fin 12) (hp : p ∈ triList)
     (hq : q ∈ triList) :
     ((q.1 = p.1 ∨ q.1 = anti p.1) ↔ SamePent (numb p) (numb q)) ∧
@@ -824,6 +846,7 @@ theorem samePent_id : ∀ a0 a1 a2 a3 a4 : Fin 5, SamePent id ![a0, a1, a2, a3, 
     ∃ d ∈ dihedral, ⇑d = ![a0, a1, a2, a3, a4] := by decide +kernel
 
 /-- Page 21, « type `n ≡ 1 (4)` »: the symmetries of a pentagon are even permutations. -/
+@[montpellier "86, 21"]
 theorem dihedral_even : ∀ d ∈ dihedral, Equiv.Perm.sign d = 1 := by decide +kernel
 
 theorem samePent_sign (σ τ : Equiv.Perm (Fin 5)) (h : SamePent ⇑σ ⇑τ) :
@@ -846,6 +869,7 @@ theorem samePent_sign (σ τ : Equiv.Perm (Fin 5)) (h : SamePent ⇑σ ⇑τ) :
 /-- Pages 26–27: a numbering traces the pentagon of a vertex of `Π/ι` if and only if it is
 even. With the twelve pentagon structures on `T` and ten numberings for each, the vertices are
 the six pentagons compatible with the orientation. -/
+@[montpellier "86, 26–27"]
 theorem vertex_pentagons (σ : Equiv.Perm (Fin 5)) :
     (∃ p ∈ triList, SamePent (numb p) ⇑σ) ↔ σ ∈ alternatingGroup (Fin 5) := by
   constructor
@@ -867,6 +891,7 @@ def partSet (a : Fin 5 → Fin 5) : Finset (Finset (Fin 5)) := {{a 0}, {a 1, a 2
 
 /-- The counts of pages 26–27 and 31: `6` pentagons, `15` partitions of type `(2, 2, 1)`
 (all of them: there are `5 · 3`), and all `10` three-element subsets. -/
+@[montpellier "86, 26–27, 31"]
 theorem counts :
     (triList.map (pentSet ∘ numb)).toFinset.card = 6 ∧
     (triList.map (partSet ∘ numb)).toFinset.card = 15 ∧

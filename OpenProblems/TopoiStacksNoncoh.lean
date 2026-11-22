@@ -12,6 +12,7 @@ public import Mathlib.ModelTheory.Ultraproducts
 public import Mathlib.RingTheory.Jacobson.Ideal
 public import Mathlib.RingTheory.KrullDimension.Zero
 public import Mathlib.RingTheory.Nilpotent.Lemmas
+import Grothendieck.Attr
 
 /-!
 # p:noncoh: the first-order part, proved by Łoś's theorem
@@ -321,6 +322,7 @@ end Counterexample
 
 /-- **p:noncoh, rings with irreducible spectrum.** No first-order theory in the language of rings
 has, as its models among the commutative rings, exactly the rings whose nilradical is prime. -/
+@[montpellier "161-2, 39, 41–42"]
 theorem not_isAxiomatizable_nilradical_isPrime :
     ¬ IsAxiomatizable.{u} fun R _ => (nilradical R).IsPrime :=
   not_isAxiomatizable_of_ultraproduct (A := D) (𝒰 := hyperfilter ℕ)
@@ -329,12 +331,14 @@ theorem not_isAxiomatizable_nilradical_isPrime :
 /-- **p:noncoh, rings with zero-dimensional spectrum.** No first-order theory in the language of
 rings has, as its models among the commutative rings, exactly the rings of Krull dimension `≤ 0`
 (the zero ring included). -/
+@[montpellier "161-2, 39, 41–42"]
 theorem not_isAxiomatizable_krullDimLE_zero :
     ¬ IsAxiomatizable.{u} fun R _ => Ring.KrullDimLE 0 R :=
   not_isAxiomatizable_of_ultraproduct (A := D) (𝒰 := hyperfilter ℕ)
     (fun _ => inferInstance) not_krullDimLE_zero
 
 /-- The same with Krull dimension exactly `0` (the zero ring, of dimension `⊥`, excluded). -/
+@[montpellier "161-2, 39, 41–42"]
 theorem not_isAxiomatizable_ringKrullDim_eq_zero :
     ¬ IsAxiomatizable.{u} fun R _ => ringKrullDim R = 0 :=
   not_isAxiomatizable_of_ultraproduct (A := D) (𝒰 := hyperfilter ℕ)

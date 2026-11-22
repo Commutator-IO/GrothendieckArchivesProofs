@@ -7,6 +7,7 @@ module
 
 public import Mathlib.Tactic.NormNum
 public import Mathlib.Data.List.Basic
+import Grothendieck.Attr
 
 /-!
 # Folder 148, pages 30–32: the counts of the chart of special structures on five points
@@ -34,6 +35,7 @@ namespace Grothendieck.Folder148Chart
 
 /-- The nine types of page 30, by level: the order of `G` for each. `I₁₀` has `G = 𝔻₅` (order 10),
 `I₆` has `𝔖₃`, `I₄` has `ℤ/4`; the others have `ℤ/2` or `1`. -/
+@[montpellier "148, 30"]
 def orders : List ℕ := [10, 6, 4, 2, 2, 1, 2, 1, 2]
 
 /-- The number of structures of each type, `120 / |G|`. -/
@@ -42,15 +44,18 @@ def counts : List ℕ := orders.map (120 / ·)
 theorem counts_eq : counts = [12, 20, 30, 60, 60, 120, 60, 120, 60] := by decide
 
 /-- Level by level, 62, 240 and 240 structures; 542 vertices in all. -/
+@[montpellier "148, 30–32"]
 theorem vertices :
     (counts.take 3).sum = 62 ∧ ((counts.drop 3).take 3).sum = 240 ∧ (counts.drop 6).sum = 240 ∧
       counts.sum = 542 := by decide
 
+@[montpellier "148, 32"]
 /-- The arrows of page 32, in the reading's three groups (each type counted once, by its
 sources). -/
 def arrows : List (List ℕ) :=
   [[60, 120], [60, 120, 60, 60, 120], [120, 120, 120, 120, 360, 120, 60]]
 
+@[montpellier "148, 32"]
 theorem arrows_eq : arrows.map List.sum = [180, 420, 1020] ∧ (arrows.map List.sum).sum = 1620 ∧
     (arrows.map List.length).sum = 14 := by decide
 

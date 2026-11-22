@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 public import Grothendieck.Upstream.SingularValuesSigmaTwo
+import Grothendieck.Attr
 
 /-!
 # Folder 1: the system (16) of page 71 for `m ≤ 2`, and (16) ⟹ (15)
@@ -341,6 +342,7 @@ theorem sum_range_singularValues_eq (T : E →ₗ[𝕜] F) (n : ℕ) :
 
 /-- **Ky Fan's inequality** (the case `m = 1` of the system of page 71):
 `s_0(u+v) + ⋯ + s_{n-1}(u+v) ≤ (s_0(u) + ⋯ + s_{n-1}(u)) + (s_0(v) + ⋯ + s_{n-1}(v))`. -/
+@[montpellier "1, 71"]
 theorem sum_singularValues_add_le (u v : E →ₗ[𝕜] F) (n : ℕ) :
     ∑ j ∈ range n, (u + v).singularValues j ≤
       ∑ j ∈ range n, u.singularValues j + ∑ j ∈ range n, v.singularValues j :=
@@ -363,6 +365,7 @@ theorem sigma_one (n : ℕ) (T : E →ₗ[𝕜] F) :
 /-- **The system (16) of page 71 for `m ≤ 1`**:
 `σ_n^m(u+v) ≤ ∑_{p=0}^{m} σ_n^p(u) σ_n^{m-p}(v)`. For `m = 0` both sides are `1`; for `m = 1`
 this is Ky Fan's inequality. -/
+@[montpellier "1, 71"]
 theorem sigma_system_of_le_one (u v : E →ₗ[𝕜] F) (n m : ℕ) (hm : m ≤ 1) :
     sigma n m (u + v) ≤ ∑ p ∈ range (m + 1), sigma n p u * sigma n (m - p) v := by
   interval_cases m
@@ -426,6 +429,7 @@ variable [FiniteDimensional 𝕜 E]
 /-- **The system (16) implies the product form (15)** (page 71): if
 `σ_n^m(u+v) ≤ ∑_{p ≤ m} σ_n^p(u) σ_n^{m-p}(v)` for all `m ≤ n`, then for `r ≥ 0`,
 `∏_{i<n} (1 + r s_i(u+v)) ≤ ∏_{i<n} (1 + r s_i(u)) ∏_{i<n} (1 + r s_i(v))`. -/
+@[montpellier "1, 71"]
 theorem prod_le_of_sigma_system (u v : E →ₗ[𝕜] F) (n : ℕ)
     (h : ∀ m ≤ n, sigma n m (u + v) ≤ ∑ p ∈ range (m + 1), sigma n p u * sigma n (m - p) v)
     {r : ℝ} (hr : 0 ≤ r) :
@@ -437,6 +441,7 @@ theorem prod_le_of_sigma_system (u v : E →ₗ[𝕜] F) (n : ℕ)
     (fun m => sigma n m (u + v)) (fun m => sigma_nonneg n m u) (fun m => sigma_nonneg n m v) h
 
 /-- The product form (15) for `n = 1`: `1 + r s_0(u+v) ≤ (1 + r s_0(u)) (1 + r s_0(v))`. -/
+@[montpellier "1, 71"]
 theorem one_add_singularValues_zero_le (u v : E →ₗ[𝕜] F) {r : ℝ} (hr : 0 ≤ r) :
     1 + r * (u + v).singularValues 0 ≤
       (1 + r * u.singularValues 0) * (1 + r * v.singularValues 0) := by
@@ -1029,12 +1034,14 @@ theorem bform_ebasis_fvec (w : E →ₗ[𝕜] F) (n : ℕ) :
 
 /-- **The system (16) of page 71 for `m = 2`**:
 `σ_n^2(u+v) ≤ σ_n^2(u) + σ_n^1(u) σ_n^1(v) + σ_n^2(v)`, for every `n`. -/
+@[montpellier "1, 71"]
 theorem sigma_two_add_le (u v : E →ₗ[𝕜] F) (n : ℕ) :
     sigma n 2 (u + v) ≤ sigma n 2 u + sigma n 1 u * sigma n 1 v + sigma n 2 v :=
   by rw [sigma_one, sigma_one]
      exact LinearMap.sum_powersetCard_two_prod_singularValues_add_le u v n
 
 /-- **The system (16) of page 71 for `m ≤ 2`** and every `n`. -/
+@[montpellier "1, 71"]
 theorem sigma_system_of_le_two (u v : E →ₗ[𝕜] F) (n m : ℕ) (hm : m ≤ 2) :
     sigma n m (u + v) ≤ ∑ p ∈ range (m + 1), sigma n p u * sigma n (m - p) v := by
   rcases Nat.lt_or_ge m 2 with h | h
@@ -1046,6 +1053,7 @@ theorem sigma_system_of_le_two (u v : E →ₗ[𝕜] F) (n m : ℕ) (hm : m ≤ 
 
 /-- The product form (15) for `n ≤ 2`:
 `∏_{i<n} (1 + r s_i(u+v)) ≤ ∏_{i<n} (1 + r s_i(u)) ∏_{i<n} (1 + r s_i(v))`, `r ≥ 0`. -/
+@[montpellier "1, 71"]
 theorem prod_le_of_le_two (u v : E →ₗ[𝕜] F) {n : ℕ} (hn : n ≤ 2) {r : ℝ} (hr : 0 ≤ r) :
     ∏ i ∈ range n, (1 + r * (u + v).singularValues i) ≤
       (∏ i ∈ range n, (1 + r * u.singularValues i)) *
@@ -1197,6 +1205,7 @@ theorem block_posSemidef (A : Matrix n n ℂ) :
 
 /-- **Page 123, Corollaire 2, in finite dimension.** For complex square matrices `A`, `B`,
 `|α_k(A + B)|² ≤ α_k(|A| + |B|) · α_k(|A*| + |B*|)` for every `k`. -/
+@[montpellier "1, 123"]
 theorem corollaire2 (A B : Matrix n n ℂ) (k : ℕ) :
     ‖alpha k (A + B)‖ ^ 2 ≤
       (alpha k (CFC.abs A + CFC.abs B)).re * (alpha k (CFC.abs Aᴴ + CFC.abs Bᴴ)).re := by
@@ -1254,6 +1263,7 @@ theorem norm_alpha_le (A B : Matrix n n ℂ) (k : ℕ) :
 /-- **Page 124, Corollaire 3, in finite dimension**, and the geometric-mean form:
 `|det(1 + A + B)| ≤ ½ [det(1 + |A| + |B|) + det(1 + |A*| + |B*|)]` and
 `|det(1 + A + B)|² ≤ det(1 + |A| + |B|) · det(1 + |A*| + |B*|)`. -/
+@[montpellier "1, 124"]
 theorem corollaire3 (A B : Matrix n n ℂ) :
     ‖det (1 + (A + B))‖ ≤
         ((det (1 + (CFC.abs A + CFC.abs B))).re + (det (1 + (CFC.abs Aᴴ + CFC.abs Bᴴ))).re) / 2 ∧
@@ -1361,6 +1371,7 @@ theorem K_pos {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) : 0 < K p := by
 
 /-- **The representation of page 128**: `s^p · K_p = ∫₀^∞ log(1 + v s) v^{−1−p} dv`
 for `s ≥ 0`, `0 < p < 1`. -/
+@[montpellier "1, 128"]
 theorem integral_kernel {p s : ℝ} (hp0 : 0 < p) (hs : 0 ≤ s) :
     ∫ v in Set.Ioi 0, kernel p s v = s ^ p * K p := by
   rcases hs.eq_or_lt with rfl | hs
@@ -1399,6 +1410,7 @@ theorem sum_rpow_mul_K {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (a : ℕ → ℝ) (
 /-- **Subadditivity from the determinant inequality** (page 129): for `0 < p < 1`,
 if `∏ (1 + r aᵢ) ≤ ∏ (1 + r bᵢ) ∏ (1 + r cᵢ)` for every `r ≥ 0`, then
 `Σ aᵢ^p ≤ Σ bᵢ^p + Σ cᵢ^p`. -/
+@[montpellier "1, 129"]
 theorem sum_rpow_le_of_prod_le {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (a b c : ℕ → ℝ)
     (ha : ∀ i, 0 ≤ a i) (hb : ∀ i, 0 ≤ b i) (hc : ∀ i, 0 ≤ c i) (n : ℕ)
     (h : ∀ r : ℝ, 0 ≤ r → ∏ i ∈ range n, (1 + r * a i) ≤
@@ -1429,6 +1441,7 @@ variable [FiniteDimensional 𝕜 E]
 
 /-- Page 129 for operators: (15) for every `r ≥ 0` gives
 `Σ_{i<n} sᵢ(u + v)^p ≤ Σ_{i<n} sᵢ(u)^p + Σ_{i<n} sᵢ(v)^p`, `0 < p < 1`. -/
+@[montpellier "1, 129"]
 theorem sum_singularValues_rpow_add_le_of_prod (u v : E →ₗ[𝕜] F) (n : ℕ) {p : ℝ}
     (hp0 : 0 < p) (hp1 : p < 1)
     (h15 : ∀ r : ℝ, 0 ≤ r → ∏ i ∈ range n, (1 + r * (u + v).singularValues i) ≤
@@ -1440,6 +1453,7 @@ theorem sum_singularValues_rpow_add_le_of_prod (u v : E →ₗ[𝕜] F) (n : ℕ
     (fun i => u.singularValues_nonneg i) (fun i => v.singularValues_nonneg i) n h15
 
 /-- Unconditionally for the first two singular values, by (15) for `n ≤ 2`. -/
+@[montpellier "1, 129"]
 theorem sum_singularValues_rpow_add_le_of_le_two (u v : E →ₗ[𝕜] F) {n : ℕ} (hn : n ≤ 2)
     {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) :
     ∑ i ∈ range n, (u + v).singularValues i ^ p ≤
@@ -1989,6 +2003,7 @@ theorem re_alpha_sqrtDiag_gramMat_le {H : Type*} [NormedAddCommGroup H] [InnerPr
 /-- **The system (16) of page 71**, for every `m` and `n`, for linear maps between
 finite-dimensional complex inner product spaces:
 `σ_n^m(u+v) ≤ ∑_{p=0}^{m} σ_n^p(u) σ_n^{m-p}(v)`. -/
+@[montpellier "1, 71"]
 theorem sigma_system (u v : E →ₗ[ℂ] F) (n m : ℕ) :
     sigma n m (u + v) ≤ ∑ p ∈ range (m + 1), sigma n p u * sigma n (m - p) v := by
   set T := u + v
@@ -2027,6 +2042,7 @@ theorem sigma_system (u v : E →ₗ[ℂ] F) (n m : ℕ) :
 
 /-- **The product form (15) of page 71, for every `n`**: for `r ≥ 0`,
 `∏_{i<n} (1 + r s_i(u+v)) ≤ ∏_{i<n} (1 + r s_i(u)) · ∏_{i<n} (1 + r s_i(v))`. -/
+@[montpellier "1, 71"]
 theorem prod_one_add_singularValues_add_le (u v : E →ₗ[ℂ] F) (n : ℕ) {r : ℝ} (hr : 0 ≤ r) :
     ∏ i ∈ range n, (1 + r * (u + v).singularValues i) ≤
       (∏ i ∈ range n, (1 + r * u.singularValues i)) *
@@ -2035,6 +2051,7 @@ theorem prod_one_add_singularValues_add_le (u v : E →ₗ[ℂ] F) (n : ℕ) {r 
 
 /-- **Page 129, unconditionally in finite dimension**: for `0 < p < 1`,
 `∑_{i<n} s_i(u+v)^p ≤ ∑_{i<n} s_i(u)^p + ∑_{i<n} s_i(v)^p`. -/
+@[montpellier "1, 129"]
 theorem sum_singularValues_rpow_add_le (u v : E →ₗ[ℂ] F) (n : ℕ) {p : ℝ} (hp0 : 0 < p)
     (hp1 : p < 1) :
     ∑ i ∈ range n, (u + v).singularValues i ^ p ≤
@@ -2127,11 +2144,13 @@ theorem sigma_cplx (n m : ℕ) (u : E →ₗ[ℝ] F) : sigma n m (cplx u) = sigm
   simp only [sigma, singularValues_cplx]
 
 /-- **The system (16) of page 71 over `ℝ`**, for every `m` and `n`. -/
+@[montpellier "1, 71"]
 theorem sigma_system_real (u v : E →ₗ[ℝ] F) (n m : ℕ) :
     sigma n m (u + v) ≤ ∑ p ∈ range (m + 1), sigma n p u * sigma n (m - p) v := by
   simpa only [← cplx_add, sigma_cplx] using sigma_system (cplx u) (cplx v) n m
 
 /-- The product form (15) over `ℝ`, for every `n`. -/
+@[montpellier "1, 71"]
 theorem prod_one_add_singularValues_add_le_real (u v : E →ₗ[ℝ] F) (n : ℕ) {r : ℝ}
     (hr : 0 ≤ r) :
     ∏ i ∈ range n, (1 + r * (u + v).singularValues i) ≤
@@ -2140,6 +2159,7 @@ theorem prod_one_add_singularValues_add_le_real (u v : E →ₗ[ℝ] F) (n : ℕ
   prod_le_of_sigma_system u v n (fun m _ => sigma_system_real u v n m) hr
 
 /-- Page 129 over `ℝ`: `∑_{i<n} s_i(u+v)^p ≤ ∑_{i<n} s_i(u)^p + ∑_{i<n} s_i(v)^p`, `0 < p < 1`. -/
+@[montpellier "1, 129"]
 theorem sum_singularValues_rpow_add_le_real (u v : E →ₗ[ℝ] F) (n : ℕ) {p : ℝ} (hp0 : 0 < p)
     (hp1 : p < 1) :
     ∑ i ∈ range n, (u + v).singularValues i ^ p ≤
@@ -2317,6 +2337,7 @@ theorem toMatrix_wmax_comp (u : E →ₗ[ℂ] F) (n : ℕ) :
 
 /-- **Prop. 3 of page 72**, in finite dimension: `σ_n^m(u)` is the largest value of
 `|α_m(w u)|` over the contractions `w : F → E` of rank `≤ n` (in any basis of `E`). -/
+@[montpellier "1, 72"]
 theorem isGreatest_norm_alpha_comp (u : E →ₗ[ℂ] F) (n m : ℕ) {ι : Type*} [Fintype ι]
     [DecidableEq ι] (b : Basis ι ℂ E) :
     IsGreatest {r | ∃ w : F →ₗ[ℂ] E, (∀ z, ‖w z‖ ≤ ‖z‖) ∧

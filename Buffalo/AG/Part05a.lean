@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part02a
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 05 (a): (undated session, from 7:04:25) – 19 June 1973
@@ -52,6 +53,7 @@ section ZariskiSheaves
 /-- thSz9ZHDK9o-25465 (7:04:25) [prop] A presheaf `F` on schemes is a Zariski sheaf if and only
 if, for every scheme `S'` and every open covering `(S'_i)`, `F(S') → ∏ F(S'_i) ⇉ ∏ F(S'_i ×_{S'}
 S'_j)` is an equalizer (case `S = Spec ℤ`). -/
+@[buffalo "thSz9ZHDK9o-25465"]
 theorem prop_25465 (F : Scheme.{u}ᵒᵖ ⥤ Type u) :
     Presieve.IsSheaf Scheme.zariskiTopology F ↔
       ∀ (X : Scheme.{u}) (𝒰 : Scheme.OpenCover.{u} X),
@@ -63,6 +65,7 @@ theorem prop_25465 (F : Scheme.{u}ᵒᵖ ⥤ Type u) :
 /-- thSz9ZHDK9o-25594 (7:06:34) [prop] (the direct half) The restriction of a Zariski sheaf on
 `Sch/S` to the small Zariski site of `S` (the `S`-schemes `U → S` that are open immersions, i.e.
 the open sets of `S`) is a sheaf: `F_S` is an ordinary sheaf. -/
+@[buffalo "thSz9ZHDK9o-25594"]
 theorem prop_25594 (S : Scheme.{u}) (F : (Over S)ᵒᵖ ⥤ Type u)
     (hF : Presieve.IsSheaf (S.overGrothendieckTopology @IsOpenImmersion) F) :
     Presieve.IsSheaf (S.smallGrothendieckTopology (P := @IsOpenImmersion) (Q := @IsOpenImmersion))
@@ -86,6 +89,7 @@ def restr (F : Scheme.{u}ᵒᵖ ⥤ Type u) (X : Scheme.{u}) : X.Opensᵒᵖ ⥤
 
 /-- thSz9ZHDK9o-25794 (7:09:54) [prop] A morphism `f : S'' → S'` induces a morphism of presheaves
 `F_{S'} → f_* F_{S''}`, given on `U'` by `F(U') → F(f⁻¹U')` (the restriction `f⁻¹U' → U'`). -/
+@[buffalo "thSz9ZHDK9o-25794"]
 def prop_25794 (F : Scheme.{u}ᵒᵖ ⥤ Type u) {X Y : Scheme.{u}} (f : X ⟶ Y) :
     restr F Y ⟶ (TopologicalSpace.Opens.map f.base).op ⋙ restr F X where
   app U := F.map (f.resLE U.unop (f ⁻¹ᵁ U.unop) le_rfl).op
@@ -98,6 +102,7 @@ def prop_25794 (F : Scheme.{u}ᵒᵖ ⥤ Type u) {X Y : Scheme.{u}} (f : X ⟶ Y
 
 /-- thSz9ZHDK9o-26123 (7:15:23) [prop] (the value on the whole space) `F(S') = F_{S'}(S')`: the
 open set `S'` of `S'` is isomorphic to `S'`. -/
+@[buffalo "thSz9ZHDK9o-26123"]
 def prop_26123 (F : Scheme.{u}ᵒᵖ ⥤ Type u) (X : Scheme.{u}) :
     (restr F X).obj (op ⊤) ≅ F.obj (op X) :=
   F.mapIso (Scheme.topIso X).op.symm
@@ -110,6 +115,7 @@ section LimitsEpis
 
 /-- thSz9ZHDK9o-26334 (7:18:54) [prop] Projective limits of Zariski sheaves are computed argument
 by argument: the forgetful functor to presheaves, then evaluation at `S'`, preserve them. -/
+@[buffalo "thSz9ZHDK9o-26334"]
 theorem prop_26334 (J : Type u) [SmallCategory J] (X : Scheme.{u}) :
     PreservesLimitsOfShape J (sheafToPresheaf Scheme.zariskiTopology.{u} (Type u) ⋙
       (evaluation _ _).obj (op X)) :=
@@ -118,12 +124,14 @@ theorem prop_26334 (J : Type u) [SmallCategory J] (X : Scheme.{u}) :
 /-- thSz9ZHDK9o-26529 (7:22:09) [prop] A locally surjective morphism of Zariski sheaves (every
 section of `G` is locally the image of a section of `F`) is an epimorphism; on a small site the
 converse holds. -/
+@[buffalo "thSz9ZHDK9o-26529"]
 theorem prop_26529 {F G : Sheaf Scheme.zariskiTopology.{u} (Type u)} (φ : F ⟶ G)
     [Sheaf.IsLocallySurjective φ] : Epi φ :=
   inferInstance
 
 /-- thSz9ZHDK9o-26529 (7:22:09) [prop] (the converse, on a small site) A morphism of sheaves of
 sets is an epimorphism if and only if it is locally surjective. -/
+@[buffalo "thSz9ZHDK9o-26529"]
 theorem prop_26529_small {C : Type u} [SmallCategory C] (J : GrothendieckTopology C)
     {F G : Sheaf J (Type u)} (φ : F ⟶ G) : Sheaf.IsLocallySurjective φ ↔ Epi φ :=
   Sheaf.isLocallySurjective_iff_epi φ
@@ -131,6 +139,7 @@ theorem prop_26529_small {C : Type u} [SmallCategory C] (J : GrothendieckTopolog
 /-- thSz9ZHDK9o-26850 (7:27:30) [prop] A morphism of schemes `f : X → Y` is locally surjective as a
 morphism of Zariski sheaves `h_X → h_Y` if and only if it has local sections: every point of `Y`
 has an open neighbourhood `V` and a section `V → X`. -/
+@[buffalo "thSz9ZHDK9o-26850"]
 theorem prop_26850 {X Y : Scheme.{u}} (f : X ⟶ Y) :
     Presheaf.IsLocallySurjective Scheme.zariskiTopology (yoneda.map f) ↔
       ∀ y : Y, ∃ (V : Scheme.{u}) (j : V ⟶ Y), IsOpenImmersion j ∧ y ∈ Set.range j ∧
@@ -159,6 +168,7 @@ theorem prop_26850 {X Y : Scheme.{u}} (f : X ⟶ Y) :
 
 /-- thSz9ZHDK9o-27459 (7:37:39) [prop] An open immersion is a monomorphism, also as a morphism of
 the represented sheaves. -/
+@[buffalo "thSz9ZHDK9o-27459"]
 theorem prop_27459 {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] :
     Mono f ∧ Mono (yoneda.map f) :=
   ⟨inferInstance, inferInstance⟩
@@ -172,6 +182,7 @@ section Representability
 /-- thSz9ZHDK9o-27917 (7:45:17) [prop] (case `S = Spec ℤ`) A Zariski sheaf `F` covered by open
 subfunctors `F_i` that are representable (`h_{X_i} → F` relatively representable open immersions,
 jointly locally surjective) is representable (mathlib: `LocalRepresentability.isRepresentable`). -/
+@[buffalo "thSz9ZHDK9o-27917"]
 theorem prop_27917 (F : Sheaf Scheme.zariskiTopology.{u} (Type u)) {ι : Type u}
     {X : ι → Scheme.{u}} (f : (i : ι) → yoneda.obj (X i) ⟶ F.1)
     (hf : ∀ i, IsOpenImmersion.presheaf (f i))
@@ -194,6 +205,7 @@ variable {A : Type u} [CommRing A]
 /-- thSz9ZHDK9o-28630 (7:57:10) [prop] The set of points where a section `s` of a finitely
 generated module `L` (e.g. an invertible one) generates the stalk is open: it is the complement of
 the support of `L/As`. -/
+@[buffalo "thSz9ZHDK9o-28630"]
 theorem prop_28630 (L : Type u) [AddCommGroup L] [Module A L] [Module.Finite A L] (s : L) :
     IsOpen {p : PrimeSpectrum A | Subsingleton
       (LocalizedModule p.asIdeal.primeCompl (L ⧸ Submodule.span A {s}))} := by
@@ -204,6 +216,7 @@ theorem prop_28630 (L : Type u) [AddCommGroup L] [Module A L] [Module.Finite A L
 
 /-- thSz9ZHDK9o-28693 (7:58:13) [prop] Over a local ring, if `e_i` generate a module `L ≃ k'`
 free of rank `1` (an invertible quotient), one of the `e_i` is a basis of it. -/
+@[buffalo "thSz9ZHDK9o-28693"]
 theorem prop_28693 [IsLocalRing A] {L : Type*} [AddCommGroup L] [Module A L] (e : L ≃ₗ[A] A)
     {ι : Type*} (x : ι → L) (hx : Submodule.span A (Set.range x) = ⊤) :
     ∃ i, Submodule.span A {x i} = ⊤ := by
@@ -226,6 +239,7 @@ theorem prop_28693 [IsLocalRing A] {L : Type*} [AddCommGroup L] [Module A L] (e 
 
 /-- thSz9ZHDK9o-29021 (8:03:41) [prop] `k' ↦ Hom_{k'}(V_{k'}, k') = Hom_k(V, k')` is represented
 by `Sym_k(V)`. -/
+@[buffalo "thSz9ZHDK9o-29021"]
 def prop_29021 (k : Type u) [CommRing k] (V : Type u) [AddCommGroup V] [Module k V]
     (k' : Type u) [CommRing k'] [Algebra k k'] :
     (k' ⊗[k] V →ₗ[k'] k') ≃ (SymmetricAlgebra k V →ₐ[k] k') :=
@@ -233,6 +247,7 @@ def prop_29021 (k : Type u) [CommRing k] (V : Type u) [AddCommGroup V] [Module k
 
 /-- thSz9ZHDK9o-29157 (8:05:57) [prop] `P_i(k')`, the homomorphisms `V → k'` sending `e_i` to `1`,
 is represented by `Sym(V)/(e_i - 1)`. -/
+@[buffalo "thSz9ZHDK9o-29157"]
 def prop_29157 (k : Type u) [CommRing k] (V : Type u) [AddCommGroup V] [Module k V] (e : V)
     (k' : Type u) [CommRing k'] [Algebra k k'] :
     {φ : V →ₗ[k] k' // φ e = 1} ≃
@@ -259,6 +274,7 @@ def prop_29157 (k : Type u) [CommRing k] (V : Type u) [AddCommGroup V] [Module k
 
 /-- thSz9ZHDK9o-29348 (8:09:08) [def] `𝒪(n) = 𝒪(1)^{⊗n}`, `n ∈ ℤ`: in the Picard group,
 `L^{⊗(-m)} = (L^{⊗m})^{-1} = (L^{-1})^{⊗m}`. -/
+@[buffalo "thSz9ZHDK9o-29348"]
 theorem def_29348 (L : CommRing.Pic A) (m : ℕ) :
     L ^ (-(m : ℤ)) = (L ^ m)⁻¹ ∧ (L ^ m)⁻¹ = L⁻¹ ^ m :=
   ⟨by rw [zpow_neg, zpow_natCast], (inv_pow L m).symm⟩
@@ -266,6 +282,7 @@ theorem def_29348 (L : CommRing.Pic A) (m : ℕ) :
 /-- thSz9ZHDK9o-29606 (8:13:26) [def] The vector bundle `𝐕(M)`: `k' ↦ Hom_{k'}(M_{k'}, k')`,
 which is `Hom_k(M, k')` (mathlib: `LinearMap.liftBaseChangeEquiv`) and is represented by
 `Sym(M)` (`prop_29021`). -/
+@[buffalo "thSz9ZHDK9o-29606"]
 def def_29606 (k : Type u) [CommRing k] (M : Type u) [AddCommGroup M] [Module k M]
     (k' : Type u) [CommRing k'] [Algebra k k'] :
     (M →ₗ[k] k') ≃ₗ[k'] (k' ⊗[k] M →ₗ[k'] k') :=
@@ -274,6 +291,7 @@ def def_29606 (k : Type u) [CommRing k] (M : Type u) [AddCommGroup M] [Module k 
 /-- thSz9ZHDK9o-29932 (8:18:52) [prop] A point `u : M → k'` of `𝐕(M)` is an epimorphism
 (`u(M)` generates `k'`) if and only if it is nonzero on each fibre, if and only if it lies off the
 zero section: `Spec k' → Spec Sym(M)` avoids `V(M · Sym M)`. -/
+@[buffalo "thSz9ZHDK9o-29932"]
 theorem prop_29932 (k : Type u) [CommRing k] (M : Type u) [AddCommGroup M] [Module k M]
     (k' : Type u) [CommRing k'] [Algebra k k'] (u : M →ₗ[k] k') :
     (Ideal.span (Set.range u) = ⊤ ↔ ∀ p : Ideal k', p.IsPrime → ∃ m, u m ∉ p) ∧
@@ -297,6 +315,7 @@ theorem prop_29932 (k : Type u) [CommRing k] (M : Type u) [AddCommGroup M] [Modu
 
 /-- thSz9ZHDK9o-30064 (8:21:04) [prop] An epimorphism `u : M → R` defines the quotient
 `M/ker u`, which is free of rank `1`. -/
+@[buffalo "thSz9ZHDK9o-30064"]
 def prop_30064 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A)
     (hu : Function.Surjective u) : (M ⧸ LinearMap.ker u) ≃ₗ[A] A :=
   u.quotKerEquivOfSurjective hu
@@ -304,6 +323,7 @@ def prop_30064 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A)
 /-- thSz9ZHDK9o-30256 (8:24:16) [prop] `𝐕* → 𝐏(M)` is an epimorphism: over a local ring an
 invertible module `L` is free of rank `1`, so an invertible quotient `q : M → L` is of the form
 `M/ker u` with `u : M → R` an epimorphism. -/
+@[buffalo "thSz9ZHDK9o-30256"]
 theorem prop_30256 [IsLocalRing A] {M L : Type u} [AddCommGroup M] [Module A M] [AddCommGroup L]
     [Module A L] [Module.Invertible A L] (q : M →ₗ[A] L) (hq : Function.Surjective q) :
     ∃ v : M →ₗ[A] A, Function.Surjective v ∧ LinearMap.ker v = LinearMap.ker q := by
@@ -314,6 +334,7 @@ theorem prop_30256 [IsLocalRing A] {M L : Type u} [AddCommGroup M] [Module A M] 
 
 /-- thSz9ZHDK9o-30385 (8:26:25) [prop] `𝔾_m` is represented by `k[t, t⁻¹]`: a homomorphism
 `k[t, t⁻¹] → k'` is determined by the image of `t`, which can be any unit (`Part02.prop_17855`). -/
+@[buffalo "thSz9ZHDK9o-30385"]
 theorem prop_30385 (k : Type u) [CommRing k] (k' : Type*) [CommRing k'] [Algebra k k'] :
     Function.Injective (fun φ : Localization.Away (Polynomial.X : Polynomial k) →ₐ[k] k' =>
         φ (algebraMap (Polynomial k) (Localization.Away (Polynomial.X : Polynomial k))
@@ -325,6 +346,7 @@ theorem prop_30385 (k : Type u) [CommRing k] (k' : Type*) [CommRing k'] [Algebra
 
 /-- thSz9ZHDK9o-30521 (8:28:41) [prop] `𝔾_m` acts freely on `𝐕*`: `λu = u` with `u` an
 epimorphism forces `λ = 1`; on `𝐕` the origin is fixed by every `λ`. -/
+@[buffalo "thSz9ZHDK9o-30521"]
 theorem prop_30521 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A)
     (hu : Function.Surjective u) (c : Aˣ) (h : c • u = u) :
     c = 1 ∧ ∀ d : Aˣ, d • (0 : M →ₗ[A] A) = 0 := by
@@ -335,6 +357,7 @@ theorem prop_30521 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A)
   exact Units.ext this
 
 /-- thSz9ZHDK9o-30648 (8:30:48) [prop] `u` and `λu`, `λ` invertible, have the same kernel. -/
+@[buffalo "thSz9ZHDK9o-30648"]
 theorem prop_30648 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A) (c : Aˣ) :
     LinearMap.ker (c • u) = LinearMap.ker u := by
   ext m
@@ -343,6 +366,7 @@ theorem prop_30648 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A)
 
 /-- thSz9ZHDK9o-30775 (8:32:55) [prop] Two epimorphisms `u, v : M → R` define the same quotient
 (have the same kernel) if and only if `v = λu` with `λ` a unit. -/
+@[buffalo "thSz9ZHDK9o-30775"]
 theorem prop_30775 {M : Type*} [AddCommGroup M] [Module A M] (u v : M →ₗ[A] A)
     (hu : Function.Surjective u) (hv : Function.Surjective v) :
     LinearMap.ker u = LinearMap.ker v ↔ ∃ c : Aˣ, v = c • u := by
@@ -366,6 +390,7 @@ theorem prop_30775 {M : Type*} [AddCommGroup M] [Module A M] (u v : M →ₗ[A] 
 
 /-- thSz9ZHDK9o-30838 (8:33:58) [prop] (pointwise) `𝐕* → 𝐏(M)` is a `𝔾_m`-torsor: the fibre of
 `u ↦ ker u` through an epimorphism `u` is the orbit `𝔾_m · u`, on which `𝔾_m` acts freely. -/
+@[buffalo "thSz9ZHDK9o-30838"]
 theorem prop_30838 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A)
     (hu : Function.Surjective u) :
     {v : M →ₗ[A] A | Function.Surjective v ∧ LinearMap.ker v = LinearMap.ker u} =
@@ -385,6 +410,7 @@ theorem prop_30838 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A)
 
 /-- thSz9ZHDK9o-30903 (8:35:03) [prop] `𝔾_m = GL_1`: the automorphisms of the module `R` are the
 multiplications by units. -/
+@[buffalo "thSz9ZHDK9o-30903"]
 def prop_30903 : (A ≃ₗ[A] A) ≃* Aˣ :=
   (LinearMap.GeneralLinearGroup.generalLinearEquiv A A).symm.trans
     (Units.mapEquiv ((RingEquiv.moduleEndSelf A).symm.trans
@@ -392,6 +418,7 @@ def prop_30903 : (A ≃ₗ[A] A) ≃* Aˣ :=
 
 /-- thSz9ZHDK9o-30966 (8:36:06) [prop] (pointwise) `Isom(R, L)` is a principal homogeneous set
 under `Rˣ` when nonempty: two trivializations of `L` differ by a unique unit. -/
+@[buffalo "thSz9ZHDK9o-30966"]
 theorem prop_30966 {L : Type*} [AddCommGroup L] [Module A L] (e e' : A ≃ₗ[A] L) :
     ∃! c : Aˣ, ∀ a, e' a = e (c * a) := by
   refine ⟨Units.mk (e.symm (e' 1)) (e'.symm (e 1)) ?_ ?_, fun a => ?_, fun c hc => ?_⟩
@@ -412,6 +439,7 @@ theorem prop_30966 {L : Type*} [AddCommGroup L] [Module A L] (e e' : A ≃ₗ[A]
 
 /-- thSz9ZHDK9o-31032 (8:37:12) [def] (pointwise) A torsor: a nonempty set with a free and
 transitive action; it is then isomorphic to the group (`g ↦ g • x`). -/
+@[buffalo "thSz9ZHDK9o-31032"]
 theorem def_31032 {G X : Type*} [Group G] [MulAction G X] [MulAction.IsPretransitive G X]
     (hfree : ∀ (g : G) (x : X), g • x = x → g = 1) (x : X) :
     Function.Bijective (fun g : G => g • x) := by
@@ -423,6 +451,7 @@ theorem def_31032 {G X : Type*} [Group G] [MulAction G X] [MulAction.IsPretransi
 
 /-- thSz9ZHDK9o-31099 (8:38:19) [prop] (pointwise) If `G` acts freely on `F`, `G` acts simply
 transitively on each fibre of `F → F/G` (each orbit). -/
+@[buffalo "thSz9ZHDK9o-31099"]
 theorem prop_31099 {G X : Type*} [Group G] [MulAction G X]
     (hfree : ∀ (g : G) (x : X), g • x = x → g = 1) {x y : X}
     (h : (Quotient.mk (MulAction.orbitRel G X) x) = Quotient.mk _ y) :
@@ -438,6 +467,7 @@ theorem prop_31099 {G X : Type*} [Group G] [MulAction G X]
 /-- thSz9ZHDK9o-31232 (8:40:32) [prop] (pointwise) The points of `𝐕*` above an invertible
 quotient `q : M → L` are the trivializations of `L`: an isomorphism `e : L ≃ R` gives the
 epimorphism `e ∘ q`, with kernel `ker q`. -/
+@[buffalo "thSz9ZHDK9o-31232"]
 theorem prop_31232 {M L : Type*} [AddCommGroup M] [Module A M] [AddCommGroup L] [Module A L]
     (q : M →ₗ[A] L) (hq : Function.Surjective q) (e : L ≃ₗ[A] A) :
     Function.Surjective (e.toLinearMap ∘ₗ q) ∧
@@ -452,6 +482,7 @@ example (k : Type*) [Field k] (n : ℕ) : Type _ := Projectivization k (Fin (n +
 
 /-- thSz9ZHDK9o-31747 (8:49:07) [prop] (affine pointwise case) A linear map `u : R^{n+1} → R`
 (the `n+1` sections `u(e_i)`) is an epimorphism if and only if the `u(e_i)` generate `R`. -/
+@[buffalo "thSz9ZHDK9o-31747"]
 theorem prop_31747 (n : ℕ) (u : (Fin (n + 1) → A) →ₗ[A] A) :
     Function.Surjective u ↔ Ideal.span (Set.range fun i => u (Pi.single i 1)) = ⊤ := by
   constructor
@@ -479,6 +510,7 @@ theorem prop_31747 (n : ℕ) (u : (Fin (n + 1) → A) →ₗ[A] A) :
 /-- thSz9ZHDK9o-32079 (8:54:39) [prop] Invertible quotients up to isomorphism are kernels: two
 quotients `q : M → L`, `q' : M → L'` are isomorphic under `M` if and only if they have the same
 kernel. -/
+@[buffalo "thSz9ZHDK9o-32079"]
 theorem prop_32079 {M L L' : Type*} [AddCommGroup M] [Module A M] [AddCommGroup L] [Module A L]
     [AddCommGroup L'] [Module A L'] (q : M →ₗ[A] L) (q' : M →ₗ[A] L')
     (hq : Function.Surjective q) (hq' : Function.Surjective q') :

@@ -8,6 +8,7 @@ module
 public import Mathlib.LinearAlgebra.TensorProduct.Quotient
 public import Mathlib.RingTheory.Flat.Equalizer
 public import StacksFrontier.RingTheory.Flat.SquareZeroConormal
+import Grothendieck.Attr
 
 /-!
 # Folder 126, pages 4 to 7: deforming a flat equivalence relation across a nilpotent thickening
@@ -137,6 +138,7 @@ theorem smul_top_eq_top_of_subsingleton_lTensor {Q : Type*} [AddCommGroup Q] [Mo
 variable {M N : Type*} [AddCommGroup M] [Module A M] [AddCommGroup N] [Module A N]
 
 /-- A linear map which is surjective modulo a nilpotent ideal is surjective. -/
+@[montpellier "126, 7"]
 theorem surjective_of_lTensor_quotient_nilpotent (n : ℕ) (hn : I ^ n = ⊥) (u : M →ₗ[A] N)
     (hu : Function.Surjective (LinearMap.lTensor (A ⧸ I) u)) : Function.Surjective u := by
   have hex := lTensor_exact (A ⧸ I) (LinearMap.exact_map_mkQ_range u)
@@ -157,6 +159,7 @@ theorem surjective_of_lTensor_quotient_nilpotent (n : ℕ) (hn : I ^ n = ⊥) (u
 
 /-- **Page 7, the last step.** A linear map `u : M → N` into a flat module which is bijective
 modulo a nilpotent ideal `I` (that is, `(A ⧸ I) ⊗ u` is bijective) is bijective. -/
+@[montpellier "126, 7"]
 theorem bijective_of_lTensor_quotient_nilpotent_of_flat [Module.Flat A N] (n : ℕ)
     (hn : I ^ n = ⊥) (u : M →ₗ[A] N)
     (hu : Function.Bijective (LinearMap.lTensor (A ⧸ I) u)) : Function.Bijective u := by
@@ -199,6 +202,7 @@ with `J² = 0` (the ideal of `X₀ ⊂ X`), `B` flat over `A' ⧸ I`, and the ca
 (`R → X` flat) and `φ : B' ⊗_{A'} B' → C'` an `A'`-algebra map (`R → X ×_Y X`) whose reduction
 `(A' ⧸ I) ⊗ φ` is bijective. Then `B'` is flat over `A'` (`X → Y` is flat) and `φ` is bijective
 (`R ≅ X ×_Y X`). -/
+@[montpellier "126, 7"]
 theorem flat_and_bijective_of_thickening (hI2 : I ^ 2 = ⊥)
     (hJ2 : RingHom.ker (algebraMap B' B) ^ 2 = ⊥)
     (hsurj : Function.Surjective (algebraMap B' B)) (hflat : Module.Flat (A' ⧸ I) B)

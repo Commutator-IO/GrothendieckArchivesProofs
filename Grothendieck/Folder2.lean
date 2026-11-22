@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 public import Grothendieck.Upstream.DerivationLeibnizProd
+import Grothendieck.Attr
 
 /-!
 # Folder 2, pages 9 and 13: a nonzero class with trivial total Chern class
@@ -152,6 +153,7 @@ theorem logDeriv_zpow (u : A⟦X⟧ˣ) (n : ℤ) :
 
 /-- **Page 9**, over `ℤ`: `∏ (1 − iX)^{(−1)^i binom(r,i)} ≡ 1 + (−1)^{r−1}(r−1)! X^r`
 modulo `X^{r+1}`. -/
+@[montpellier "2, 9"]
 theorem chernPoint_int {r : ℕ} (hr : 1 ≤ r) :
     X ^ (r + 1) ∣ (↑(altProd r fun i => lin 1 (i : ℤ)) : ℤ⟦X⟧) -
       (1 + C ((-1) ^ (r - 1) * ((r - 1).factorial : ℤ)) * X ^ r) := by
@@ -213,6 +215,7 @@ theorem chernPoint_int {r : ℕ} (hr : 1 ≤ r) :
 
 /-- **Page 9**, over any commutative ring `A`: in `A[η]/(η^{r+1})`,
 `∏_{i=0}^{r} (1 − iη)^{(−1)^i binom(r,i)} = 1 + (−1)^{r−1}(r−1)! η^r`. -/
+@[montpellier "2, 9"]
 theorem chernPoint {r : ℕ} (hr : 1 ≤ r) :
     X ^ (r + 1) ∣ (↑(altProd r fun i => lin 1 (i : A)) : A⟦X⟧) -
       (1 + C ((-1) ^ (r - 1) * ((r - 1).factorial : A)) * X ^ r) := by
@@ -241,6 +244,7 @@ theorem prod_zpow_eq_zpow_sum {G : Type*} [CommGroup G] {ι : Type*} (c : G) (s 
 /-- **Page 13.** For `y ∈ A` with `1 − y` a unit and `(r−1)! · y = 0`, in `A[η]/(η^{r+1})`:
 `∏_{i=0}^{r} ((1 − iη) / (1 − y − iη))^{(−1)^i binom(r,i)} = 1`, that is
 `c(i_!(O_Y)) = 1` in the splitting-principle model, `y = x'`. -/
+@[montpellier "2, 13"]
 theorem chernImmersion {r : ℕ} (hr : 1 ≤ r) {y : A} (hy : IsUnit (1 - y))
     (h : ((r - 1).factorial : A) * y = 0) :
     X ^ (r + 1) ∣ (↑(∏ i ∈ range (r + 1),
@@ -290,6 +294,7 @@ theorem chernImmersion {r : ℕ} (hr : 1 ≤ r) {y : A} (hy : IsUnit (1 - y))
   linear_combination Units.mul_inv (altProd r fun i => lin w (i : A))
 
 /-- Page 13 with `y` nilpotent, as `x' ∈ Ã(X)` is. -/
+@[montpellier "2, 13"]
 theorem chernImmersion_of_isNilpotent {r : ℕ} (hr : 1 ≤ r) {y : A} (hy : IsNilpotent y)
     (h : ((r - 1).factorial : A) * y = 0) :
     X ^ (r + 1) ∣ (↑(∏ i ∈ range (r + 1),
@@ -325,6 +330,7 @@ theorem altProd_lin {r : ℕ} (hr : 1 ≤ r) (w : Aˣ) :
 
 /-- **Page 13**, two twists: for units `u, v` of `A` with `(r−1)! (u^{-r} − v^{-r}) = 0`,
 `∏_{i=0}^{r} ((u − iη)/(v − iη))^{(−1)^i binom(r,i)} = 1` in `A[η]/(η^{r+1})`. -/
+@[montpellier "2, 13"]
 theorem chernRatio {r : ℕ} (hr : 1 ≤ r) (u v : Aˣ)
     (h : ((r - 1).factorial : A) * ((↑u⁻¹ : A) ^ r - (↑v⁻¹ : A) ^ r) = 0) :
     X ^ (r + 1) ∣ (↑(∏ i ∈ range (r + 1),
@@ -370,6 +376,7 @@ theorem inv_one_sub_of_sq_eq_zero {p : A} (hp : p ^ 2 = 0) :
 /-- **Page 13, N.B.**, on a curve: for `p, q` with `p² = q² = 0` and `r! (p − q) = 0`,
 `∏_{i=0}^{r} ((1 − p − iη)/(1 − q − iη))^{(−1)^i binom(r,i)} = 1` in `A[η]/(η^{r+1})`,
 that is `c(i_!(x)) = 1` for `x = [O(−0)] − [O(−a)]`. -/
+@[montpellier "2, 13"]
 theorem chernCurve {r : ℕ} (hr : 1 ≤ r) {p q : A} (hp : p ^ 2 = 0) (hq : q ^ 2 = 0)
     (h : (r.factorial : A) * (p - q) = 0) :
     X ^ (r + 1) ∣ (↑(∏ i ∈ range (r + 1),
@@ -387,6 +394,7 @@ theorem chernCurve {r : ℕ} (hr : 1 ≤ r) {p q : A} (hp : p ^ 2 = 0) (hq : q ^
 
 /-- **Page 13, N.B.**, the example of the page: `r = 3` and `2(p − q) = 0` (a point `a ≠ 0`
 with `a + a = 0` on an elliptic curve) give `c(i_!(x)) = 1` in `A[η]/(η^4)`. -/
+@[montpellier "2, 13"]
 theorem chernEllipticNB {p q : A} (hp : p ^ 2 = 0) (hq : q ^ 2 = 0) (h : 2 * (p - q) = 0) :
     X ^ (3 + 1) ∣ (↑(∏ i ∈ range (3 + 1),
       (lin (IsNilpotent.isUnit_one_sub ⟨2, hp⟩ : IsUnit (1 - p)).unit (i : A) *
@@ -432,6 +440,7 @@ noncomputable def relIdeal (n : ℕ) : Ideal (Polynomial ℤ) :=
     Polynomial.C (coeff (m + 1) (cXi n)) * Polynomial.X ^ (m + 1))
 
 /-- The Chern ring `CK` of `K = K(P^{n−1})` with `L` geometric. -/
+@[montpellier "2, 21"]
 abbrev CK (n : ℕ) := Polynomial ℤ ⧸ relIdeal n
 
 /-- The graded ring `GK = ℤ[ζ]/(ζ^n)`. -/
@@ -449,12 +458,14 @@ theorem relIdeal_le {n : ℕ} (hn : 1 ≤ n) :
   · exact Ideal.mem_span_singleton.2 (dvd_mul_of_dvd_right (pow_dvd_pow _ h) _)
 
 /-- `φ_K : CK → GK`, `c¹(L) ↦ ζ`. -/
+@[montpellier "2, 21"]
 noncomputable def φ {n : ℕ} (hn : 1 ≤ n) : CK n →+* GK n := Ideal.Quotient.factor (relIdeal_le hn)
 
 theorem φ_surjective {n : ℕ} (hn : 1 ≤ n) : Function.Surjective (φ hn) :=
   Ideal.Quotient.factor_surjective (relIdeal_le hn)
 
 /-- **Page 21.** `(n − 1)! ζ^n = 0` in `CK`. -/
+@[montpellier "2, 21"]
 theorem factorial_mul_ζ_pow {n : ℕ} (hn : 1 ≤ n) :
     ((n - 1).factorial : CK n) * ζ n ^ n = 0 := by
   have hmem : Polynomial.C (coeff n (cXi n)) * Polynomial.X ^ n ∈ relIdeal n :=
@@ -544,6 +555,7 @@ theorem toT_ζ {n : ℕ} (hn : 1 ≤ n) : toT hn (ζ n) = hT n := by
   simp [toT, ζ]
 
 /-- **Page 21**, completed: for `n ≥ 3`, `ζ^n ≠ 0` in `CK`, so `CK` has torsion. -/
+@[montpellier "2, 21"]
 theorem ζ_pow_ne_zero {n : ℕ} (hn : 3 ≤ n) : ζ n ^ n ≠ 0 := by
   intro h
   have := congrArg (toT (by omega : 1 ≤ n)) h
@@ -552,6 +564,7 @@ theorem ζ_pow_ne_zero {n : ℕ} (hn : 3 ≤ n) : ζ n ^ n ≠ 0 := by
 
 /-- **Page 21.** For `n ≥ 3`, `φ_K : CK → GK` is surjective and not injective: `ζ^n` is a
 nonzero torsion element of `CK`, killed by `(n − 1)!`, while `GK` is torsion-free. -/
+@[montpellier "2, 21"]
 theorem φ_not_injective {n : ℕ} (hn : 3 ≤ n) :
     ¬ Function.Injective (φ (Nat.le_trans (Nat.le_add_left 1 2) hn)) := by
   intro hinj
@@ -561,6 +574,7 @@ theorem φ_not_injective {n : ℕ} (hn : 3 ≤ n) :
   exact Ideal.mem_span_singleton_self _
 
 /-- For `n ≤ 2` the factor `(n − 1)!` is `1`: `ζ^n = 0` in `CK` and `φ_K` is bijective. -/
+@[montpellier "2, 21"]
 theorem φ_bijective_of_le_two {n : ℕ} (h1 : 1 ≤ n) (h2 : n ≤ 2) : Function.Bijective (φ h1) := by
   refine ⟨(injective_iff_map_eq_zero _).2 fun x hx => ?_, φ_surjective h1⟩
   obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective x

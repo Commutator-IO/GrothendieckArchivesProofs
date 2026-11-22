@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.ClassicalTheory
+import Grothendieck.Attr
 
 /-!
 # Folder 16, page 49: `A⁰(X)`, `A′⁰(X)`, `A″⁰(X)` in a classical Weil cohomology theory
@@ -131,6 +132,7 @@ theorem odd_converse {p : V →ₗ[K] W} {q : W →ₗ[K] U} {L : V →ₗ[K] U}
 /-- Without the splitting, `n` odd: `L = q ∘ p` bijective, `p` injective, `q` onto, `A′⁰` and `A″⁰`
 hold, the maps respect algebraic classes, and `A⁰` fails. Here `V = U = ℚ`, `W = ℚ²`,
 `p = (1, 0)`, `q = pr₁`, `Z_V = 0`, `Z_W = ℚ·(1, 1)`, `Z_U = ℚ`. -/
+@[montpellier "16, 49"]
 theorem odd_step_fails_without_splitting :
     ∃ (p : ℚ →ₗ[ℚ] ℚ × ℚ) (q : ℚ × ℚ →ₗ[ℚ] ℚ) (ZV : Submodule ℚ ℚ)
       (ZW : Submodule ℚ (ℚ × ℚ)) (ZU : Submodule ℚ ℚ),
@@ -307,6 +309,7 @@ theorem sectionPushforward_mem {X Y : (SmoothProjective k).FullSubcategory} (φ 
 `dim X = 2r + 1`, every algebraic class of `H^{2r+2}(X)` is `L` of an algebraic class of
 `H^{2r}(X)`; for `dim X = 2r + 2`, every algebraic class of `H^{2r+4}(X)` is `L²` of an
 algebraic class of `H^{2r}(X)`. -/
+@[montpellier "16, 49"]
 def AZero (X : (SmoothProjective k).FullSubcategory) (h : Ch.group X 1) : Prop :=
   (∀ r : ℤ, (T.dimension X : ℤ) = 2 * r + 1 →
       ∀ z ∈ algebraicClasses T X (r + 1), ∃ x ∈ algebraicClasses T X r,
@@ -317,11 +320,13 @@ def AZero (X : (SmoothProjective k).FullSubcategory) (h : Ch.group X 1) : Prop :
 
 /-- `A′(X)`: for `2r ≤ dim X − 1`, a class of `H^{2r}(X)` whose restriction to `Y` is algebraic
 is algebraic. -/
+@[montpellier "16, 49"]
 def APrime {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X) : Prop :=
   ∀ r : ℤ, 2 * r ≤ (T.dimension X : ℤ) - 1 → ∀ x : (T.H X).piece (2 * r),
     T.pullback φ (2 * r) x ∈ algebraicClasses T Y r → x ∈ algebraicClasses T X r
 
 /-- `A′⁰(X)`: `A′(X)` in the critical dimension, `2r = dim X − 1` or `2r = dim X − 2`. -/
+@[montpellier "16, 49"]
 def APrimeZero {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X) : Prop :=
   ∀ r : ℤ, ((T.dimension X : ℤ) = 2 * r + 1 ∨ (T.dimension X : ℤ) = 2 * r + 2) →
     ∀ x : (T.H X).piece (2 * r),
@@ -329,6 +334,7 @@ def APrimeZero {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X) : Pro
 
 /-- `A″(X)`: for `2r ≥ dim X − 1`, every algebraic class of `H^{2r+2}(X)` is `φ_*` of an
 algebraic class of `H^{2r}(Y)`. -/
+@[montpellier "16, 49"]
 def ADoublePrime {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
     (hdim : T.dimension X = T.dimension Y + 1) : Prop :=
   ∀ r : ℤ, (T.dimension X : ℤ) - 1 ≤ 2 * r → ∀ z ∈ algebraicClasses T X (r + 1),
@@ -336,6 +342,7 @@ def ADoublePrime {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
 
 /-- `A″⁰(X)`: the condition of `A″(X)` in the critical dimension of the reading,
 `2r = dim X − 1` or `2r = dim X − 2` (the latter one step below the range of `A″`). -/
+@[montpellier "16, 49"]
 def ADoublePrimeZero {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
     (hdim : T.dimension X = T.dimension Y + 1) : Prop :=
   ∀ r : ℤ, ((T.dimension X : ℤ) = 2 * r + 1 ∨ (T.dimension X : ℤ) = 2 * r + 2) →
@@ -344,9 +351,11 @@ def ADoublePrimeZero {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
 
 variable {T}
 
+@[montpellier "16, 49"]
 theorem aPrimeZero_of_aPrime {X Y : (SmoothProjective k).FullSubcategory} {φ : Y ⟶ X}
     (hA' : APrime T φ) : APrimeZero T φ := fun r hr => hA' r (by omega)
 
+@[montpellier "16, 49"]
 theorem aDoublePrimeZero_odd_of_aDoublePrime {X Y : (SmoothProjective k).FullSubcategory}
     {φ : Y ⟶ X} {hdim : T.dimension X = T.dimension Y + 1} (hA'' : ADoublePrime T φ hdim)
     (r : ℤ) (hn : (T.dimension X : ℤ) = 2 * r + 1) :
@@ -357,6 +366,7 @@ theorem aDoublePrimeZero_odd_of_aDoublePrime {X Y : (SmoothProjective k).FullSub
 /-- `n = 2r + 1`: under hard Lefschetz (`L` injective on `H^{2r}`), `L = φ_*φ^*` and the
 splitting of `Z^r(Y)` along `Im φ^*` and `Ker φ_*`, `A⁰` in degree `r` is equivalent to the
 conjunction of `A′⁰` and `A″⁰` in degree `r`. -/
+@[montpellier "16, 49"]
 theorem aZero_odd_iff {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
     (hdim : T.dimension X = T.dimension Y + 1) (h : Ch.group X 1) (r : ℤ)
     (hfac : ∀ x, lefschetzOp T X h r x = sectionPushforward T φ hdim r (T.pullback φ (2 * r) x))
@@ -375,6 +385,7 @@ theorem aZero_odd_iff {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X
 
 /-- The « trivial » direction for `A′⁰`: `L = φ_*φ^*` and hard Lefschetz in the critical degree
 (`L`, resp. `L²`, injective) give `A⁰(X) ⇒ A′⁰(X)`. -/
+@[montpellier "16, 49"]
 theorem aPrimeZero_of_aZero {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
     (hdim : T.dimension X = T.dimension Y + 1) (h : Ch.group X 1)
     (hfac : ∀ r x,
@@ -392,6 +403,7 @@ theorem aPrimeZero_of_aZero {X Y : (SmoothProjective k).FullSubcategory} (φ : Y
       (fun _ hu => lefschetzOp_mem T X h (r + 1) hu) (hHL₂ r hn) (hA.2 r hn)
 
 /-- The « trivial » direction for `A″⁰`, `n` odd: `L = φ_*φ^*` gives `A⁰(X) ⇒ A″⁰(X)`. -/
+@[montpellier "16, 49"]
 theorem aDoublePrimeZero_odd_of_aZero {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
     (hdim : T.dimension X = T.dimension Y + 1) (h : Ch.group X 1) (r : ℤ)
     (hn : (T.dimension X : ℤ) = 2 * r + 1)
@@ -405,6 +417,7 @@ theorem aDoublePrimeZero_odd_of_aZero {X Y : (SmoothProjective k).FullSubcategor
 
 /-- `n = 2r + 2`, the half that `A′⁰ + A″⁰` give: with weak Lefschetz (`φ^*` onto in degree
 `2r`) and `L = φ_*φ^*`, every algebraic class of `H^{2r+2}(X)` is `L` of an algebraic class. -/
+@[montpellier "16, 49"]
 theorem lefschetz_surj_of_aPrimeZero_even {X Y : (SmoothProjective k).FullSubcategory}
     (φ : Y ⟶ X) (hdim : T.dimension X = T.dimension Y + 1) (h : Ch.group X 1) (r : ℤ)
     (hn : (T.dimension X : ℤ) = 2 * r + 2)
@@ -418,6 +431,7 @@ theorem lefschetz_surj_of_aPrimeZero_even {X Y : (SmoothProjective k).FullSubcat
 /-- `n = 2r + 2`: `A′⁰(X)`, the case `2r + 2` of `A″(X)` and `A⁰(Y)` give `A⁰(X)`, through
 `L² = L φ_* φ^* = φ_* L_Y φ^*`, with weak Lefschetz (`φ^*` onto in degree `2r`), `L = φ_*φ^*`
 and the projection formula `L φ_* = φ_* L_Y` as hypotheses. -/
+@[montpellier "16, 49"]
 theorem aZero_even_of {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
     (hdim : T.dimension X = T.dimension Y + 1) (h : Ch.group X 1) (hY : Ch.group Y 1)
     (hfac : ∀ r x,
@@ -436,6 +450,7 @@ theorem aZero_even_of {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X
 /-- `A′⁰(X) + A″(X) + A⁰(Y) ⇒ A⁰(X)`, with `L = φ_*φ^*`, the projection formula, weak Lefschetz
 in the critical degree for `n` even, and for `n` odd the splitting of the algebraic classes of
 the middle degree of `Y` along `Im φ^*` and `Ker φ_*`. -/
+@[montpellier "16, 49"]
 theorem aZero_of {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
     (hdim : T.dimension X = T.dimension Y + 1) (h : Ch.group X 1) (hY : Ch.group Y 1)
     (hfac : ∀ r x,

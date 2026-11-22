@@ -18,6 +18,7 @@ public import Mathlib.FieldTheory.Galois.Basic
 public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
 public import Mathlib.RingTheory.Polynomial.UniqueFactorization
 public import Mathlib.RingTheory.Polynomial.RationalRoot
+import Grothendieck.Attr
 
 /-!
 # Folder 160, pages 7–9 and 13–15: the Moore determinant and the Dickson coefficients
@@ -99,9 +100,11 @@ def mooreMat {n : ℕ} (ξ : Fin n → R) : Matrix (Fin n) (Fin n) R :=
   of fun i j => ξ j ^ p ^ (i : ℕ)
 
 /-- The Moore determinant `Δₙ(ξ) = det(ξ_j^{p^i})`. -/
+@[montpellier "160, 7–9"]
 def moore {n : ℕ} (ξ : Fin n → R) : R := (mooreMat p ξ).det
 
 /-- `Δₙ(cξ) = c^{1 + p + ⋯ + p^{n-1}} Δₙ(ξ)`, over any commutative ring. -/
+@[montpellier "160, 7–9"]
 theorem moore_smul {n : ℕ} (c : R) (ξ : Fin n → R) :
     moore p (c • ξ) = c ^ (∑ i ∈ Finset.range n, p ^ i) * moore p ξ := by
   have : mooreMat p (c • ξ) = of fun (i j : Fin n) => c ^ p ^ (i : ℕ) * mooreMat p ξ i j := by
@@ -110,6 +113,7 @@ theorem moore_smul {n : ℕ} (c : R) (ξ : Fin n → R) :
   rfl
 
 /-- **Homogeneity of degree `(pⁿ − 1)/(p − 1)`.** -/
+@[montpellier "160, 7–9"]
 theorem moore_smul' (hp : 2 ≤ p) {n : ℕ} (c : R) (ξ : Fin n → R) :
     moore p (c • ξ) = c ^ ((p ^ n - 1) / (p - 1)) * moore p ξ := by
   rw [moore_smul, Nat.geomSum_eq hp]
@@ -201,6 +205,7 @@ theorem finSuccEquiv_Δ (n : ℕ) :
     MvPolynomial.finSuccEquiv_X_succ]
 
 /-- `Δₙ ≠ 0` in `𝔽_p[X₁, …, Xₙ]`. -/
+@[montpellier "160, 7–9"]
 theorem Δ_ne_zero (n : ℕ) : Δ p n ≠ 0 := by
   induction n with
   | zero => simp [Δ, moore]
@@ -251,6 +256,7 @@ theorem D_eval_lin {n : ℕ} (l : Fin n → ZMod p) : (D p n).eval (lin p l) = 0
     simp [mul_comm]
 
 /-- The roots of `D` are the `p^n` forms `λ · X`. -/
+@[montpellier "160, 7–9"]
 theorem roots_D (n : ℕ) :
     (D p n).roots = (Finset.univ.image (lin p (n := n))).val := by
   symm
@@ -276,6 +282,7 @@ theorem card_roots_D (n : ℕ) : Multiset.card (D p n).roots = (D p n).natDegree
   rw [roots_D, natDegree_D, Finset.card_val, Finset.card_image_of_injective _ (lin_injective p n)]
   simp
 
+@[montpellier "160, 7–9"]
 theorem D_eq_C_mul_P (n : ℕ) : D p n = Polynomial.C ((-1) ^ n * Δ p n) * P p n := by
   rw [← leadingCoeff_D, P, Polynomial.C_leadingCoeff_mul_prod_multiset_X_sub_C (card_roots_D p n)]
 
@@ -324,6 +331,7 @@ theorem lin_single {n : ℕ} (k : Fin n) : lin p (Pi.single k 1) = MvPolynomial.
   simp [lin, Pi.single_apply]
 
 /-- **The Dickson relation**: `X_k^{pⁿ} + A_{n-1} X_k^{p^{n-1}} + ⋯ + A₀ X_k = 0`. -/
+@[montpellier "160, 7–9"]
 theorem dickson_relation {n : ℕ} (k : Fin n) :
     (MvPolynomial.X k : MvPolynomial (Fin n) (ZMod p)) ^ p ^ n +
       ∑ i : Fin n, A p n i * MvPolynomial.X k ^ p ^ (i : ℕ) = 0 := by
@@ -335,6 +343,7 @@ theorem dickson_relation {n : ℕ} (k : Fin n) :
   rw [add_comm]; exact h'
 
 /-- **`A₀ = (−1)ⁿ Δₙ^{p−1}`.** -/
+@[montpellier "160, 7–9"]
 theorem A_zero (n : ℕ) : A p n 0 = (-1) ^ n * Δ p n ^ (p - 1) := by
   have h := lc_mul_A p n 0
   simp only [Fin.val_zero, pow_zero, one_mul, minor_zero] at h
@@ -352,6 +361,7 @@ variable {S : Type*} [CommRing S] [Algebra (ZMod p) S]
 
 /-- The `A_i(ξ)` are defined for every `ξ ∈ V(E)`, not only where `Δₙ(ξ)` is invertible: the
 Dickson relation holds at every point. -/
+@[montpellier "160, 7–9, 13–15"]
 theorem dickson_relation_eval {n : ℕ} (ξ : Fin n → S) (k : Fin n) :
     ξ k ^ p ^ n + ∑ i : Fin n, MvPolynomial.aeval ξ (A p n i) * ξ k ^ p ^ (i : ℕ) = 0 := by
   simpa using congrArg (MvPolynomial.aeval ξ) (dickson_relation p k)
@@ -359,6 +369,7 @@ theorem dickson_relation_eval {n : ℕ} (ξ : Fin n → S) (k : Fin n) :
 /-- **Where `Δₙ(ξ)` is invertible, the coefficients of the relation are unique, and are the
 values of the polynomials `A_i`**: the `A_i^E` of the complement of the zero divisor of `Δₙ`
 extend to all of `V(E)`. -/
+@[montpellier "160, 7–9, 13–15"]
 theorem dickson_unique {n : ℕ} (ξ : Fin n → S) (hξ : IsUnit (moore p ξ)) (a : Fin n → S)
     (ha : ∀ k, ξ k ^ p ^ n + ∑ i : Fin n, a i * ξ k ^ p ^ (i : ℕ) = 0) :
     a = fun i : Fin n => MvPolynomial.aeval ξ (A p n i) := by
@@ -375,6 +386,7 @@ theorem dickson_unique {n : ℕ} (ξ : Fin n → S) (hξ : IsUnit (moore p ξ)) 
   funext i
   exact sub_eq_zero.1 (congrFun this i)
 
+@[montpellier "160, 7–9, 13–15"]
 theorem A_zero_eval {n : ℕ} (ξ : Fin n → S) :
     MvPolynomial.aeval ξ (A p n 0) = (-1) ^ n * moore p ξ ^ (p - 1) := by
   rw [A_zero, map_mul, map_pow, map_pow, map_neg, map_one, Δ]
@@ -389,6 +401,7 @@ theorem A_zero_eval {n : ℕ} (ξ : Fin n → S) :
 /-- **The Corollary of page 13 fails as stated.** Over `𝔽₃`, with `n = 1` and `M = 𝔽₃`, the
 kernel of `x³ − x`, one has `a₀ = A₀(1) = −1`, which has no square root in `𝔽₃`, while
 `Λ¹M = M` has two trivialisations (its two nonzero elements). -/
+@[montpellier "160, 13"]
 theorem corollaire_page13_faux :
     MvPolynomial.aeval (fun _ : Fin 1 => (1 : ZMod 3)) (A 3 1 0) = -1 ∧
       (¬ ∃ y : ZMod 3, y ^ (3 - 1) = -1) ∧ Fintype.card {t : ZMod 3 // t ≠ 0} = 2 := by
@@ -402,6 +415,7 @@ def act {n : ℕ} (g : Matrix (Fin n) (Fin n) (ZMod p)) (e : Fin n → S) : Fin 
 
 /-- **`Δₙ(g · e) = det g · Δₙ(e)`**: the coefficients of `g` are fixed by the Frobenius, so the
 Moore matrix of `g · e` is that of `e` times `gᵀ`. -/
+@[montpellier "160, 13"]
 theorem moore_act [CharP S p] {n : ℕ} (g : Matrix (Fin n) (Fin n) (ZMod p)) (e : Fin n → S) :
     moore p (act p g e) = algebraMap (ZMod p) S g.det * moore p e := by
   have h : mooreMat p (act p g e) = mooreMat p e * (g.map (algebraMap (ZMod p) S))ᵀ := by
@@ -413,6 +427,7 @@ theorem moore_act [CharP S p] {n : ℕ} (g : Matrix (Fin n) (Fin n) (ZMod p)) (e
   rw [moore, h, det_mul, det_transpose, RingHom.map_det, RingHom.mapMatrix_apply, mul_comm, moore]
 
 /-- `Δₙ(e)` is a `(p − 1)`-th root of `(−1)ⁿ a₀`, `a₀ = A₀(e)`. -/
+@[montpellier "160, 13"]
 theorem moore_pow_sub_one {n : ℕ} (e : Fin n → S) :
     moore p e ^ (p - 1) = (-1) ^ n * MvPolynomial.aeval e (A p n 0) := by
   rw [A_zero_eval, ← mul_assoc, ← mul_pow, neg_one_mul, neg_neg, one_pow, one_mul]
@@ -447,6 +462,7 @@ theorem eq_algebraMap_of_pow_eq (c : K) (hc : c ^ p = c) :
 /-- **The corrected Corollary, over a field.** For `e ∈ Kⁿ` with `Δₙ(e) ≠ 0` (a basis of an
 `n`-dimensional `𝔽_p`-subspace `M ⊂ K`), every `(p − 1)`-th root of `(−1)ⁿ a₀` is `Δₙ(g · e)`
 for some `g ∈ GLₙ(𝔽_p)`. -/
+@[montpellier "160, 13"]
 theorem moore_act_surj {n : ℕ} (hn : 0 < n) (e : Fin n → K) (he : moore p e ≠ 0) (y : K)
     (hy : y ^ (p - 1) = (-1) ^ n * MvPolynomial.aeval e (A p n 0)) :
     ∃ g : Matrix (Fin n) (Fin n) (ZMod p), IsUnit g.det ∧ moore p (act p g e) = y := by
@@ -473,6 +489,7 @@ theorem moore_act_surj {n : ℕ} (hn : 0 < n) (e : Fin n → K) (he : moore p e 
   rw [moore_act, hdet, ha, hcdef, div_mul_cancel₀ _ he]
 
 /-- **The fibres are the `SLₙ(𝔽_p)`-orbits**: `Δₙ(g · e) = Δₙ(h · e)` iff `det g = det h`. -/
+@[montpellier "160, 13"]
 theorem moore_act_eq_iff {n : ℕ} (e : Fin n → K) (he : moore p e ≠ 0)
     (g h : Matrix (Fin n) (Fin n) (ZMod p)) :
     moore p (act p g e) = moore p (act p h e) ↔ g.det = h.det := by
@@ -605,6 +622,7 @@ theorem algebraicIndependent_of {n : ℕ} (x : Fin n → MvPolynomial (Fin n) (Z
 
 /-- **The Dickson invariants are algebraically independent**: `𝔽_p[A₀, …, A_{n−1}]` is a
 polynomial algebra on them. -/
+@[montpellier "160, 9–12"]
 theorem dickson_algebraicIndependent (n : ℕ) : AlgebraicIndependent (ZMod p) (dickson p n) :=
   algebraicIndependent_of p _ fun i => Algebra.subset_adjoin ⟨i, rfl⟩
 
@@ -784,6 +802,7 @@ end
 A polynomial is invariant under every `g ∈ GLₙ(𝔽_p)`, acting by `X_j ↦ Σ_k g_{jk} X_k`, iff it
 lies in the subalgebra generated by the Dickson invariants; this subalgebra is a polynomial
 algebra on them (`dickson_algebraicIndependent`). -/
+@[montpellier "160, 9–11"]
 theorem dickson_theorem {n : ℕ} (f : MvPolynomial (Fin n) (ZMod p)) :
     (∀ g : Matrix (Fin n) (Fin n) (ZMod p), IsUnit g.det →
       MvPolynomial.aeval (act p g MvPolynomial.X) f = f) ↔
@@ -819,6 +838,7 @@ theorem dickson_mem_adjoin_SL {n : ℕ} (i : Fin n) :
   · exact Algebra.subset_adjoin ⟨i, by simp [dicksonSL, dickson, hi]⟩
 
 /-- `Δₙ, A₁, …, A_{n−1}` are algebraically independent. -/
+@[montpellier "160, 11–12"]
 theorem dicksonSL_algebraicIndependent (n : ℕ) :
     AlgebraicIndependent (ZMod p) (dicksonSL p n) :=
   algebraicIndependent_of p _ (dickson_mem_adjoin_SL p)
@@ -826,6 +846,7 @@ theorem dicksonSL_algebraicIndependent (n : ℕ) :
 /-- **The `SL` variant** (pages 11–12):
 `𝔽_p[X₁, …, Xₙ]^{SLₙ(𝔽_p)} = 𝔽_p[Δₙ, A₁, …, A_{n−1}]`, a polynomial algebra
 (`dicksonSL_algebraicIndependent`). -/
+@[montpellier "160, 11–12"]
 theorem dickson_theorem_SL {n : ℕ} (f : MvPolynomial (Fin n) (ZMod p)) :
     (∀ g : Matrix (Fin n) (Fin n) (ZMod p), g.det = 1 →
       MvPolynomial.aeval (act p g MvPolynomial.X) f = f) ↔

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 118, page 35: stability of `𝒲_A` under products without asphericity
@@ -64,18 +65,21 @@ variable (G : Type*) [Group G]
 
 /-- `f : X → Y` is in `𝒲_A`, `A = BG`, read through the action groupoids: bijective on
 orbits, and `Stab(f x) ⊆ Stab(x)` (the other inclusion always holds). -/
+@[montpellier "118, 35"]
 def IsWeq {X Y : Type*} [MulAction G X] [MulAction G Y] (f : X →[G] Y) : Prop :=
   (∀ y : Y, ∃ (x : X) (g : G), g • f x = y) ∧
   (∀ (x x' : X) (g : G), g • f x = f x' → ∃ h : G, h • x = x') ∧
   (∀ (x : X) (g : G), g • f x = f x → g • x = x)
 
 /-- `X//G` is aspherical: non-empty, connected, with trivial automorphism groups. -/
+@[montpellier "118, 35"]
 def Aspherical (X : Type*) [MulAction G X] : Prop :=
   Nonempty X ∧ (∀ x y : X, ∃ g : G, g • x = y) ∧ ∀ (x : X) (g : G), g • x = x → g = 1
 
 variable {G}
 
 /-- **Page 35**: for `A = BG`, `𝒲_A` consists of the isomorphisms. -/
+@[montpellier "118, 35"]
 theorem isWeq_iff_bijective {X Y : Type*} [MulAction G X] [MulAction G Y] (f : X →[G] Y) :
     IsWeq G f ↔ Function.Bijective f := by
   constructor
@@ -97,6 +101,7 @@ def prodHom {X Y X' Y' : Type*} [MulAction G X] [MulAction G Y] [MulAction G X']
   map_smul' g p := by simp [map_smul]
 
 /-- `𝒲_A` is stable under binary products (condition (ii)). -/
+@[montpellier "118, 35"]
 theorem isWeq_prod {X Y X' Y' : Type*} [MulAction G X] [MulAction G Y] [MulAction G X']
     [MulAction G Y'] {f : X →[G] Y} {f' : X' →[G] Y'} (hf : IsWeq G f) (hf' : IsWeq G f') :
     IsWeq G (prodHom f f') := by
@@ -110,12 +115,14 @@ def piHom {ι : Type*} {X Y : ι → Type*} [∀ i, MulAction G (X i)] [∀ i, M
   map_smul' g x := by funext i; simp [map_smul]
 
 /-- `𝒲_A` is stable under products of any family, finite or not. -/
+@[montpellier "118, 35"]
 theorem isWeq_pi {ι : Type*} {X Y : ι → Type*} [∀ i, MulAction G (X i)]
     [∀ i, MulAction G (Y i)] {f : ∀ i, X i →[G] Y i} (hf : ∀ i, IsWeq G (f i)) :
     IsWeq G (piHom f) :=
   (isWeq_iff_bijective _).2 (.piMap fun i => (isWeq_iff_bijective _).1 (hf i))
 
 /-- `A = A/e` is not aspherical when `G ≠ 1`. -/
+@[montpellier "118, 35"]
 theorem not_aspherical_point [Nontrivial G] : ¬ Aspherical G PUnit := by
   rintro ⟨-, -, h⟩
   obtain ⟨g, hg⟩ := exists_ne (1 : G)
@@ -123,6 +130,7 @@ theorem not_aspherical_point [Nontrivial G] : ¬ Aspherical G PUnit := by
 
 /-- `a × a` is not aspherical for the representable `a`, the regular `G`-set, when
 `G ≠ 1`: `(1, 1)` and `(1, g)` lie in different orbits. -/
+@[montpellier "118, 35"]
 theorem not_aspherical_regular_prod [Nontrivial G] : ¬ Aspherical G (G × G) := by
   rintro ⟨-, h, -⟩
   obtain ⟨a, ha⟩ := exists_ne (1 : G)
@@ -132,6 +140,7 @@ theorem not_aspherical_regular_prod [Nontrivial G] : ¬ Aspherical G (G × G) :=
 
 /-- **The answer « Non » of page 35**, for `A = BG`, `G ≠ 1`: `𝒲_A` is stable under
 products, but neither `A` nor `a × a` is aspherical. -/
+@[montpellier "118, 35"]
 theorem answer_page_35 [Nontrivial G] :
     (∀ {X Y X' Y' : Type} [MulAction G X] [MulAction G Y] [MulAction G X'] [MulAction G Y']
       (f : X →[G] Y) (f' : X' →[G] Y'), IsWeq G f → IsWeq G f' → IsWeq G (prodHom f f')) ∧
@@ -299,6 +308,7 @@ theorem not_isConnected_of_isEmpty (C : Type*) [Category C] [IsEmpty C] : ¬ IsC
   fun h => isEmptyElim h.is_nonempty.some
 
 /-- (iv) fails for a sum of two non-empty categories. -/
+@[montpellier "118, 35"]
 theorem not_connectedProducts_sum {A₁ A₂ : Type*} [Category A₁] [Category A₂] [Nonempty A₁]
     [Nonempty A₂] : ¬ ConnectedProducts (A₁ ⊕ A₂) := fun h =>
   @not_isConnected_of_isEmpty _ _ (isEmpty_elements_sum (Classical.arbitrary A₁)
@@ -316,12 +326,14 @@ theorem connectedProducts_point : ConnectedProducts (Discrete PUnit) := by
 
 /-- **Page 35, corrected**: (iv) is not stable under sums — the point satisfies it, the sum of
 two points does not. -/
+@[montpellier "118, 35"]
 theorem connectedProducts_not_stable_under_sums :
     ConnectedProducts (Discrete PUnit) ∧ ¬ ConnectedProducts (Discrete PUnit ⊕ Discrete PUnit) :=
   ⟨connectedProducts_point, not_connectedProducts_sum⟩
 
 /-- (iv) forces a non-empty `A` to be connected: an object of `A_{/a × b}` is a span
 `a ← c → b`. -/
+@[montpellier "118, 35"]
 theorem isConnected_of_connectedProducts {A : Type*} [Category A] [Nonempty A]
     (h : ConnectedProducts A) : IsConnected A :=
   zigzag_isConnected fun a b => by

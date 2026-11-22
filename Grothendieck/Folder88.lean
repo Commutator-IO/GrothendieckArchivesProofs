@@ -14,6 +14,7 @@ public import Mathlib.Logic.Equiv.Fin.Basic
 public import Mathlib.Tactic.IntervalCases
 public import Mathlib.Tactic.Group
 public import Mathlib.Tactic.Linarith
+import Grothendieck.Attr
 
 /-!
 # Folder 88: the order `2ν` (pages 6–8) and the trichotomy of (6) (page 14)
@@ -162,6 +163,7 @@ theorem sigmaAvant_mul_self : sigmaAvant (R := R) (I := I) n * sigmaAvant n = 1 
 def pi : Perm (R × Rep' n I) := sigmaDernier E n * sigmaAvant n
 
 /-- The footnote: `σ_{ℓ-2} σ_{ℓ-1}` is the inverse of `π`. -/
+@[montpellier "88, 6–8"]
 theorem sigmaAvant_mul_sigmaDernier :
     sigmaAvant n * sigmaDernier E n = (pi E n)⁻¹ := by
   rw [pi, mul_inv_rev, inv_eq_of_mul_eq_one_right (sigmaAvant_mul_self n),
@@ -241,6 +243,7 @@ noncomputable def nu (r₀ : R) : ℕ :=
 
 /-- **Proposition** (page 8). For `ℓ = n + 2 = Card I` and `R` non-empty, the
 order of `σ_{ℓ-2} σ_{ℓ-1}` on `R × Rep'(I)` is `2ν`. -/
+@[montpellier "88, 8"]
 theorem proposition_ordre (r₀ : R) (e : Rep' n I) :
     orderOf (sigmaAvant n * sigmaDernier E n) = 2 * nu E r₀ := by
   rw [sigmaAvant_mul_sigmaDernier, orderOf_inv]
@@ -279,6 +282,7 @@ def TypeAtteint (p q : ℕ) : Prop :=
 
 /-- **Spherical** (`1/p + 1/q > 1/2`, i.e. `pq < 2(p + q)`): exactly `p = 2`,
 `q = 2`, and `(3,3), (3,4), (4,3), (3,5), (5,3)`. -/
+@[montpellier "88, 14"]
 theorem spherique_iff (p q : ℕ) (h : TypeAtteint p q) :
     p * q < 2 * (p + q) ↔
       p = 2 ∨ q = 2 ∨ (p, q) = (3, 3) ∨ (p, q) = (3, 4) ∨ (p, q) = (4, 3) ∨
@@ -297,6 +301,7 @@ theorem spherique_iff (p q : ℕ) (h : TypeAtteint p q) :
   · rintro (rfl | rfl | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;> omega
 
 /-- **Euclidean** (`1/p + 1/q = 1/2`): exactly `(4,4), (3,6), (6,3)`. -/
+@[montpellier "88, 14"]
 theorem euclidien_iff (p q : ℕ) (h : TypeAtteint p q) :
     p * q = 2 * (p + q) ↔ (p, q) = (4, 4) ∨ (p, q) = (3, 6) ∨ (p, q) = (6, 3) := by
   obtain ⟨hp, hq, -, -⟩ := h
@@ -314,6 +319,7 @@ theorem euclidien_iff (p q : ℕ) (h : TypeAtteint p q) :
 
 /-- **Hyperbolic** (`1/p + 1/q < 1/2`), for `p, q ≥ 3`: exactly `p + q ≥ 9` with
 `(p, q) ≠ (3,6), (6,3)`. -/
+@[montpellier "88, 14"]
 theorem hyperbolique_iff (p q : ℕ) (hp : 3 ≤ p) (hq : 3 ≤ q) :
     2 * (p + q) < p * q ↔ 9 ≤ p + q ∧ (p, q) ≠ (3, 6) ∧ (p, q) ≠ (6, 3) := by
   simp only [ne_eq, Prod.mk.injEq]

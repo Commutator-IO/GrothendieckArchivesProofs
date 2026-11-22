@@ -7,6 +7,7 @@ module
 
 public import Buffalo.Topos.Part01d
 public import Buffalo.Topos.Part01c
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 2a: étale morphisms, ring objects, internal Hom (18 May 1973)
@@ -110,6 +111,7 @@ instance : ptSections.{u}.IsEquivalence where
 
 /-- URU5jgTvjhU-33248 (9:14:08) [prop] and URU5jgTvjhU-2745 (0:45:45) [prop] `Sh(pt) ≃ Set` via
 `F ↦ F(pt)`: the point topos. -/
+@[buffalo "URU5jgTvjhU-33248"]
 def sheafPtEquiv : TopCat.Sheaf (Type u) pt.{u} ≌ Type u :=
   ptSections.asEquivalence
 
@@ -120,12 +122,14 @@ def pointMap (y : Y) : pt.{u} ⟶ Y := TopCat.ofHom ⟨fun _ => y, continuous_co
 
 /-- URU5jgTvjhU-20360 (5:39:20) [prop] For `i_y : {y} → Y`, `i_y^*F ≃ F_y`: the stalk of the
 inverse image at the unique point is the stalk of `F` at `y`. -/
+@[buffalo "URU5jgTvjhU-20360"]
 def pointPullback_stalk (y : Y) (F : Y.Presheaf (Type u)) :
     F.stalk y ≅ ((TopCat.Presheaf.pullback (Type u) (pointMap y)).obj F).stalk PUnit.unit :=
   TopCat.Presheaf.stalkPullbackIso (Type u) (pointMap y) F PUnit.unit
 
 /-- URU5jgTvjhU-20491 (5:41:31) [prop] A composite of étale morphisms (local homeomorphisms) is
 étale. -/
+@[buffalo "URU5jgTvjhU-20491"]
 theorem etale_comp {A B C : Type*} [TopologicalSpace A] [TopologicalSpace B] [TopologicalSpace C]
     {g : B → C} {f : A → B} (hg : IsLocalHomeomorph g) (hf : IsLocalHomeomorph f) :
     IsLocalHomeomorph (g ∘ f) :=
@@ -133,6 +137,7 @@ theorem etale_comp {A B C : Type*} [TopologicalSpace A] [TopologicalSpace B] [To
 
 /-- URU5jgTvjhU-20491 (5:41:31) [prop] For an open embedding `U ⊆ Y`, `Sh(U)` is equivalent to the
 sheaves on the site `𝒪(Y)/U` (Mathlib's `Opens.sheafEquivOver`). -/
+@[buffalo "URU5jgTvjhU-20491"]
 def sheafOpenEquivOver (U : Opens Y) :
     Sheaf ((Opens.grothendieckTopology Y).over U) (Type u) ≌ Sheaf (Opens.grothendieckTopology U)
       (Type u) :=
@@ -147,12 +152,14 @@ example {C : Type*} [Category C] (X : C) {A B : Over X} (h : A ⟶ B) :
 /-- URU5jgTvjhU-20684 (5:44:44) [prop] The object `G × U → U` of `Sh(Y)/U` (Mathlib's
 `Over.star U`) has, as sections over `V → U`, the sections `G(V)`: these are the sections of the
 restriction `G|_U`. -/
+@[buffalo "URU5jgTvjhU-20684"]
 def star_sections (U : Opens Y) (G : TopCat.Sheaf (Type u) Y) (V : Over (opensSheaf U)) :
     (V ⟶ (Over.star (opensSheaf U)).obj G) ≃ (V.left ⟶ G) :=
   ((Over.forgetAdjStar (opensSheaf U)).homEquiv V G).symm
 
 /-- URU5jgTvjhU-20820 (5:47:00) [prop] For `g : X' → X`, `g^* : C/X → C/X'` is the base change
 `F ↦ F ×_X X'`, right adjoint to composition with `g`. -/
+@[buffalo "URU5jgTvjhU-20820"]
 def baseChange_adj {C : Type*} [Category C] [HasPullbacks C] {X' X : C} (g : X' ⟶ X) :
     Over.map g ⊣ Over.pullback g :=
   Over.mapPullbackAdj g
@@ -160,6 +167,7 @@ def baseChange_adj {C : Type*} [Category C] [HasPullbacks C] {X' X : C} (g : X' 
 /-- URU5jgTvjhU-21075 (5:51:15) [prop] `f_*` commutes with limits, hence sends group objects to
 group
 objects. -/
+@[buffalo "URU5jgTvjhU-21075"]
 def pushforward_grp (f : X ⟶ Y) :
     Grp (Sheaf (Opens.grothendieckTopology X) (Type u)) ⥤
       Grp (Sheaf (Opens.grothendieckTopology Y) (Type u)) :=
@@ -172,6 +180,7 @@ def pushforward_grp (f : X ⟶ Y) :
 
 /-- URU5jgTvjhU-21139 (5:52:19) [prop] and URU5jgTvjhU-13813 (3:50:13) [prop] `f^*` commutes with
 finite limits. -/
+@[buffalo "URU5jgTvjhU-21139"]
 instance pullback_preservesFiniteLimits (f : X ⟶ Y) :
     PreservesFiniteLimits (TopCat.Sheaf.pullback (Type u) f) := by
   have := @reflectsLimits_of_reflectsIsomorphisms
@@ -180,6 +189,7 @@ instance pullback_preservesFiniteLimits (f : X ⟶ Y) :
 
 /-- URU5jgTvjhU-21139 (5:52:19) [prop] `f^*` commutes with finite limits and colimits, hence sends
 group objects to group objects. -/
+@[buffalo "URU5jgTvjhU-21139"]
 def pullback_grp (f : X ⟶ Y) :
     Grp (Sheaf (Opens.grothendieckTopology Y) (Type u)) ⥤
       Grp (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
@@ -197,6 +207,7 @@ variable {C : Type*} [Category C]
 
 /-- URU5jgTvjhU-21393 (5:56:33) [def] A ring object of `C` is an object `A` with a (here
 commutative) ring structure on each `A(Z) = Hom(Z, A)`, functorial in `Z`. -/
+@[buffalo "URU5jgTvjhU-21393"]
 class RingObj (A : C) where
   /-- The ring structure on `Hom(Z, A)`. -/
   ring : ∀ Z : C, CommRing (Z ⟶ A)
@@ -239,6 +250,7 @@ abbrev unitsObj : C := pullback (ringMul A) (ringOne A)
 
 /-- URU5jgTvjhU-21458 (5:57:38) [prop] The units `A^*(Z) ⊂ A(Z)` are represented by the fibre
 product of `m : A × A → A` and `1 : e → A`. -/
+@[buffalo "URU5jgTvjhU-21458"]
 def unitsObj_hom (Z : C) : (Z ⟶ unitsObj A) ≃ (Z ⟶ A)ˣ where
   toFun g :=
     { val := g ≫ pullback.fst _ _ ≫ prod.fst
@@ -267,6 +279,7 @@ def unitsZeroArrow [HasBinaryCoproducts C] : unitsObj A ⨿ ⊤_ C ⟶ A :=
 
 /-- URU5jgTvjhU-21587 (5:59:47) [def] A ring object is a field object if `A^* ⊔ e → A` is an
 isomorphism. -/
+@[buffalo "URU5jgTvjhU-21587"]
 def IsFieldObj [HasBinaryCoproducts C] : Prop := IsIso (unitsZeroArrow A)
 
 /-- The object `m⁻¹(0) ⊂ A × A`. -/
@@ -284,11 +297,13 @@ def zeroDivRight : A ⟶ zeroDivObj A :=
 
 /-- URU5jgTvjhU-21778 (6:02:58) [def] Integrality, first condition: `A ⊔ A → m⁻¹(0)`,
 `x ↦ (x, 0)`, `x ↦ (0, x)`, is an epimorphism. -/
+@[buffalo "URU5jgTvjhU-21778"]
 def IsIntegralObj₁ [HasBinaryCoproducts C] : Prop :=
   Epi (coprod.desc (zeroDivLeft A) (zeroDivRight A))
 
 /-- URU5jgTvjhU-22099 (6:08:19) [def] Integrality, second condition (`0 ≠ 1`): the kernel `e' ⊂ e`
 of `0, 1 : e ⇉ A` is initial. -/
+@[buffalo "URU5jgTvjhU-22099"]
 def IsIntegralObj₂ [HasEqualizers C] : Prop := Nonempty (IsInitial (equalizer (ringZero A)
   (ringOne A)))
 
@@ -296,6 +311,7 @@ end RingObj
 
 /-- URU5jgTvjhU-22035 (6:07:15) [prop] A morphism `f : S → C` is an epimorphism iff the codiagonal
 `C ⊔_S C → C` is an isomorphism. -/
+@[buffalo "URU5jgTvjhU-22035"]
 theorem epi_iff_isIso_codiagonal {C : Type*} [Category C] {S T : C} (f : S ⟶ T)
     [HasPushout f f] : Epi f ↔ IsIso (pushout.desc (f := f) (g := f) (𝟙 T) (𝟙 T) rfl) := by
   rw [epi_iff_isIso_inl (pushout.isColimit f f)]
@@ -316,6 +332,7 @@ theorem epi_iff_isIso_codiagonal {C : Type*} [Category C] {S T : C} (f : S ⟶ T
 /-- URU5jgTvjhU-22099 (6:08:19) [def] In `Sh(X)`, `e'` is the largest open set where `A = 0`: the
 sections of a sheaf of rings `A` over `U` satisfy `0 = 1` iff `U` lies in the union of the open
 sets where `0 = 1`. -/
+@[buffalo "URU5jgTvjhU-22099"]
 theorem zero_eq_one_iff_le (A : TopCat.Sheaf CommRingCat.{u} X) (U : Opens X) :
     (0 : A.obj.obj (op U)) = 1 ↔ U ≤ sSup {V : Opens X | (0 : A.obj.obj (op V)) = 1} := by
   constructor
@@ -337,6 +354,7 @@ theorem zero_eq_one_iff_le (A : TopCat.Sheaf CommRingCat.{u} X) (U : Opens X) :
 
 /-- URU5jgTvjhU-22420 (6:13:40) [prop] A sheaf of rings is never a presheaf of fields: its value
 on `∅` is the zero ring. -/
+@[buffalo "URU5jgTvjhU-22420"]
 theorem sheaf_empty_not_field (A : TopCat.Sheaf CommRingCat.{u} X) :
     ¬ IsField (A.obj.obj (op ⊥)) := by
   intro h
@@ -352,6 +370,7 @@ instance sheaf_hasColimits : HasColimits (Sheaf (Opens.grothendieckTopology X) (
 
 /-- URU5jgTvjhU-22609 (6:16:49) [def] The constant sheaf `I_X` (Mathlib's `constantSheaf`, the
 sheaf associated to the constant presheaf, i.e. `p^*I` for `p : X → pt`). -/
+@[buffalo "URU5jgTvjhU-22609"]
 abbrev constSheaf (I : Type u) : Sheaf (Opens.grothendieckTopology X) (Type u) :=
   (constantSheaf (Opens.grothendieckTopology X) (Type u)).obj I
 
@@ -368,6 +387,7 @@ def constantSheaf_adj :
 
 /-- URU5jgTvjhU-22609 (6:16:49) [def] `I_X` is the coproduct of `I` copies of the terminal
 object. -/
+@[buffalo "URU5jgTvjhU-22609"]
 def constSheaf_iso_coprod (I : Type u) :
     constSheaf (X := X) I ≅ ∐ fun _ : I => ⊤_ (Sheaf (Opens.grothendieckTopology X) (Type u)) := by
   have : PreservesColimits (constantSheaf (Opens.grothendieckTopology X) (Type u)) :=
@@ -382,6 +402,7 @@ def constSheaf_iso_coprod (I : Type u) :
 
 /-- URU5jgTvjhU-22740 (6:19:00) [prop] Since `I ↦ I_X` commutes with finite limits, a group `I`
 gives a sheaf of groups `I_X`. -/
+@[buffalo "URU5jgTvjhU-22740"]
 def constSheaf_grp :
     Grp (Type u) ⥤ Grp (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
   haveI : PreservesFiniteProducts (constantSheaf (Opens.grothendieckTopology X) (Type u)) :=
@@ -390,6 +411,7 @@ def constSheaf_grp :
 
 /-- URU5jgTvjhU-22740 (6:19:00) [prop] A ring `I` gives a sheaf of rings `I_X` (Mathlib's constant
 sheaf with values in `CommRingCat`). -/
+@[buffalo "URU5jgTvjhU-22740"]
 abbrev constSheafRing (R : CommRingCat.{u}) :
     Sheaf (Opens.grothendieckTopology X) CommRingCat.{u} :=
   (constantSheaf (Opens.grothendieckTopology X) CommRingCat.{u}).obj R
@@ -400,6 +422,7 @@ example (R : Type*) [CommRing R] [IsDomain R] : Field (FractionRing R) := inferI
 /-- URU5jgTvjhU-22934 (6:22:14) [prop] On an irreducible space, every nonempty open set is
 connected, so a locally constant section of `I_X` over it is constant: the constant sheaf has
 value `I` on every nonempty open set. -/
+@[buffalo "URU5jgTvjhU-22934"]
 theorem irreducible_locallyConstant_const {Z I : Type*} [TopologicalSpace Z] [IrreducibleSpace Z]
     {U : Set Z} (hU : IsOpen U) {f : U → I} (hf : IsLocallyConstant f) (x y : U) : f x = f y := by
   have hpre : IsPreconnected U :=
@@ -412,6 +435,7 @@ theorem irreducible_locallyConstant_const {Z I : Type*} [TopologicalSpace Z] [Ir
 stalks of a presheaf of rings `A` are all fields iff `A` is nonzero over every nonempty open set and
 every section is, near each point, invertible or zero (the condition « `A^* ⊔ e → A` is an
 isomorphism », read on sections). -/
+@[buffalo "URU5jgTvjhU-22545"]
 theorem stalks_field_iff (A : X.Presheaf CommRingCat.{u}) :
     (∀ x, IsField (A.stalk x)) ↔
       (∀ (U : Opens X) (x : X), x ∈ U → (0 : A.obj (op U)) ≠ 1) ∧
@@ -480,11 +504,13 @@ variable {C : Type u₁} [Category.{v₁} C] [CartesianMonoidalCategory C] [Mono
 
 /-- URU5jgTvjhU-23169 (6:26:09) [prop] and URU5jgTvjhU-23366 (6:29:26) [def] `𝓗om(F,G)` represents
 `X' ↦ Hom(F × X', G)` (Mathlib's internal Hom `ihom F`). -/
+@[buffalo "URU5jgTvjhU-23169"]
 def ihom_homEquiv (F G X' : C) : (X' ⟶ (ihom F).obj G) ≃ (F ⊗ X' ⟶ G) :=
   ((ihom.adjunction F).homEquiv X' G).symm
 
 /-- URU5jgTvjhU-23169 (6:26:09) [prop] `Hom_{X'}(F × X', G × X') ≃ Hom(F × X', G)`: morphisms over
 `X'` between the objects `X' × F → X'` and `X' × G → X'` (Mathlib's `Over.star`). -/
+@[buffalo "URU5jgTvjhU-23169"]
 def star_homEquiv [HasBinaryProducts C] (F G X' : C) :
     ((Over.star X').obj F ⟶ (Over.star X').obj G) ≃ (X' ⨯ F ⟶ G) :=
   ((Over.forgetAdjStar X').homEquiv _ _).symm
@@ -495,6 +521,7 @@ example : MonoidalClosed (Sheaf (Opens.grothendieckTopology X) (Type u)) := infe
 attribute [local instance] Over.cartesianMonoidalCategory in
 /-- URU5jgTvjhU-23428 (6:30:28) [def] For group objects `F, G`, `Hom_gr(F_{X'}, G_{X'})`: the
 homomorphisms between the group objects `F × X'`, `G × X'` of `C/X'`. -/
+@[buffalo "URU5jgTvjhU-23428"]
 def HomGr [HasBinaryProducts C] [HasPullbacks C] (F G : Grp C) (X' : C) : Type _ :=
   have : PreservesLimits (Over.star X') := (Over.forgetAdjStar X').rightAdjoint_preservesLimits
   have : PreservesFiniteProducts (Over.star X') :=
@@ -504,13 +531,16 @@ def HomGr [HasBinaryProducts C] [HasPullbacks C] (F G : Grp C) (X' : C) : Type _
 variable [HasPullbacks C] (𝒞 : Subobject.Classifier C)
 
 /-- URU5jgTvjhU-23555 (6:32:35) [def] The object `𝓟(F) = Ω^F`. -/
+@[buffalo "URU5jgTvjhU-23555"]
 abbrev powerObj (F : C) : C := (ihom F).obj 𝒞.Ω
 
 /-- URU5jgTvjhU-23684 (6:34:44) [prop] `𝓟(F)` represents `X' ↦ Sub(F × X')`. -/
+@[buffalo "URU5jgTvjhU-23684"]
 def powerObj_homEquiv (F X' : C) : (X' ⟶ powerObj 𝒞 F) ≃ Subobject (F ⊗ X') :=
   (ihom_homEquiv F 𝒞.Ω X').trans 𝒞.representableBy.homEquiv
 
 /-- URU5jgTvjhU-23881 (6:38:01) [prop] `𝓟(e) = Ω` represents `X' ↦ Sub(X')`. -/
+@[buffalo "URU5jgTvjhU-23881"]
 def classifier_homEquiv (X' : C) : (X' ⟶ 𝒞.Ω) ≃ Subobject X' :=
   𝒞.representableBy.homEquiv
 
@@ -518,9 +548,11 @@ end Closed
 
 /-- URU5jgTvjhU-23555 (6:32:35) [def] For `X` a point (sets), the subobjects of `F` are its
 subsets. -/
+@[buffalo "URU5jgTvjhU-23555"]
 def subobject_types (F : Type u) : Subobject F ≃o Set F := Types.subobjectEquivSet F
 
 /-- URU5jgTvjhU-24070 (6:41:10) [prop] In `Set`, `𝓟(e) = Ω` has two elements. -/
+@[buffalo "URU5jgTvjhU-24070"]
 def classifier_types (𝒞 : Subobject.Classifier (Type u)) : 𝒞.Ω ≃ Bool :=
   (Equiv.mk (α := 𝒞.Ω) (β := PUnit.{u + 1} ⟶ 𝒞.Ω) (fun x => ↾fun _ => x) (fun f => f PUnit.unit)
     (fun _ => rfl) (fun _ => by ext ⟨⟩; rfl)).trans <|

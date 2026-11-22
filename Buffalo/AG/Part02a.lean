@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part01
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 02 (a): 5 June 1973
@@ -55,6 +56,7 @@ abbrev pt {A : Type u} [CommRing A] [Algebra k A] {k' : CommAlgCat.{u} k} (x : (
 (`Buffalo.AG.Part01.E1.corepresentableBy`); that of `K[T, T⁻¹]` is `K' ↦ K'ˣ`: a homomorphism
 `K[T, T⁻¹] → K'` is determined by the image of `T`, which can be any unit, and it restricts along
 `K[T] → K[T, T⁻¹]` to the point `T ↦ u(T)` of `K'`. -/
+@[buffalo "51wmmpHand0-17855"]
 theorem prop_17855 (k' : Type*) [CommRing k'] [Algebra k k'] :
     Function.Injective (fun φ : Localization.Away (Polynomial.X : Polynomial k) →ₐ[k] k' =>
         φ (algebraMap (Polynomial k) (Localization.Away (Polynomial.X : Polynomial k))
@@ -90,6 +92,7 @@ theorem prop_17855 (k' : Type*) [CommRing k'] [Algebra k k'] :
 
 /-- 51wmmpHand0-18250 (5:04:10) [prop] If `X = V_A`, the point `id_A ∈ X(A)` is universal: every
 point `x ∈ X(K')` is the image of `id_A` under a unique homomorphism `A → K'`. -/
+@[buffalo "51wmmpHand0-18250"]
 theorem prop_18250 (A : Type u) [CommRing A] [Algebra k A] (k' : CommAlgCat.{u} k)
     (x : (V k A).obj k') :
     ∃! h : CommAlgCat.of k A ⟶ k', (V k A).map h (AlgHom.id k A) = x := by
@@ -105,6 +108,7 @@ def Vmap {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B] (f
 
 /-- 51wmmpHand0-18383 (5:06:23) [prop] A homomorphism `f : A → B` of `K`-algebras is an
 epimorphism if and only if `V_B → V_A` is a monomorphism of functors (a subfunctor). -/
+@[buffalo "51wmmpHand0-18383"]
 theorem prop_18383 {A B : CommAlgCat.{u} k} (f : A ⟶ B) : Epi f ↔ Mono (Vmap k f.hom) := by
   rw [NatTrans.mono_iff_mono_app]
   simp_rw [mono_iff_injective]
@@ -119,6 +123,7 @@ theorem prop_18383 {A B : CommAlgCat.{u} k} (f : A ⟶ B) : Epi f ↔ Mono (Vmap
 
 /-- 51wmmpHand0-18446 (5:07:26) [cex] An epimorphism of rings need not be surjective:
 `ℤ → ℚ`. -/
+@[buffalo "51wmmpHand0-18446"]
 theorem cex_18446 :
     Epi (CommRingCat.ofHom (Int.castRingHom ℚ)) ∧ ¬ Function.Surjective (Int.castRingHom ℚ) := by
   refine ⟨⟨fun g h _ => CommRingCat.hom_ext (RingHom.ext_rat _ _)⟩, fun hs => ?_⟩
@@ -132,6 +137,7 @@ theorem cex_18446 :
 
 /-- 51wmmpHand0-18708 (5:11:48) [prop] For `X = V_A` and an ideal `J` of `A`, the subfunctor
 `Y_J : K' ↦ {u ∈ Hom(A, K') | u(J) = 0}` of `X`. -/
+@[buffalo "51wmmpHand0-18708"]
 def YJ {A : Type u} [CommRing A] [Algebra k A] (J : Ideal A) : Subfunctor (V k A) where
   obj k' := {u : A →ₐ[k] k' | ∀ f ∈ J, u f = 0}
   map {k' k''} g u hu f hf := by
@@ -140,6 +146,7 @@ def YJ {A : Type u} [CommRing A] [Algebra k A] (J : Ideal A) : Subfunctor (V k A
 
 /-- 51wmmpHand0-18446 (5:07:26) [cex] The surjective homomorphisms `f : A → B` correspond to
 closed immersions: `V_B → V_A` is then injective, with image the closed subspace `Y_{ker f}`. -/
+@[buffalo "51wmmpHand0-18446"]
 theorem cex_18446_surj {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     (f : A →ₐ[k] B) (hf : Function.Surjective f) (k' : CommAlgCat.{u} k) :
     Function.Injective ((Vmap k f).app k') ∧ ∀ x : (V k A).obj k',
@@ -161,6 +168,7 @@ theorem cex_18446_surj {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [A
 /-- 51wmmpHand0-18773 (5:12:53) [prop] The ideal `J` is recovered from `Y_J` as the set of
 `f ∈ A` such that `x(f) = 0` for every `K'` and every `x ∈ Y_J(K')` (it suffices to take
 `K' = A/J`). -/
+@[buffalo "51wmmpHand0-18773"]
 theorem prop_18773 {A : Type u} [CommRing A] [Algebra k A] (J : Ideal A) (f : A) :
     f ∈ J ↔ ∀ (k' : CommAlgCat.{u} k) (x : (V k A).obj k'), x ∈ (YJ k J).obj k' → pt k x f = 0 := by
   refine ⟨fun hf k' x hx => hx f hf, fun h => ?_⟩
@@ -170,6 +178,7 @@ theorem prop_18773 {A : Type u} [CommRing A] [Algebra k A] (J : Ideal A) (f : A)
 
 /-- 51wmmpHand0-18708 (5:11:48) [prop] `Y_J` is a closed subspace of `X = V_A`: it is represented
 by `A/J`. -/
+@[buffalo "51wmmpHand0-18708"]
 def YJ.corepresentableBy {A : Type u} [CommRing A] [Algebra k A] (J : Ideal A) :
     (YJ k J).toFunctor.CorepresentableBy (CommAlgCat.of k (A ⧸ J)) where
   homEquiv {k'} :=
@@ -185,6 +194,7 @@ def YJ.corepresentableBy {A : Type u} [CommRing A] [Algebra k A] (J : Ideal A) :
 
 /-- 51wmmpHand0-18708 (5:11:48) [prop] `J ↦ Y_J` is an order-reversing bijection from the ideals
 of `A` onto the closed subspaces `Y_J` of `X`. -/
+@[buffalo "51wmmpHand0-18708"]
 theorem prop_18708 {A : Type u} [CommRing A] [Algebra k A] :
     (∀ J J' : Ideal A, J ≤ J' ↔ YJ k J' ≤ YJ k J) ∧ Function.Injective (YJ k (A := A)) := by
   have key : ∀ J J' : Ideal A, J ≤ J' ↔ YJ k J' ≤ YJ k J := fun J J' =>
@@ -195,6 +205,7 @@ theorem prop_18708 {A : Type u} [CommRing A] [Algebra k A] :
 /-- 51wmmpHand0-18837 (5:13:57) [disc] Not every subfunctor of an affine space is closed: the
 subfunctor `K' ↦ K'ˣ` of the line `V_{K[T]}` (points sending `T` to a unit) is not of the form
 `Y_J` when `K ≠ 0`. -/
+@[buffalo "51wmmpHand0-18837"]
 theorem disc_18837 [Nontrivial k] :
     ¬ ∃ J : Ideal (Polynomial k), ∀ (k' : CommAlgCat.{u} k) (x : (V k (Polynomial k)).obj k'),
       x ∈ (YJ k J).obj k' ↔ IsUnit (pt k x Polynomial.X) := by
@@ -215,17 +226,20 @@ theorem disc_18837 [Nontrivial k] :
 
 /-- 51wmmpHand0-18901 (5:15:01) [prop] The ring `A` is identified with `Hom(X, 𝔸¹_K)`:
 `f ∈ A` defines `x ↦ x(f)`, functorially in `K'` (`Buffalo.AG.Part01.prop_9373`). -/
+@[buffalo "51wmmpHand0-18901"]
 theorem prop_18901 (A : Type u) [CommRing A] [Algebra k A] (a : A) (k' : CommAlgCat.{u} k)
     (x : (V k A).obj k') : ((prop_9373 k A).symm a).app k' x = (show A →ₐ[k] k' from x) a :=
   prop_9373_apply k A a k' x
 
 /-- 51wmmpHand0-19161 (5:19:21) [def] The algebra of dual numbers `D_K(N) = K × N` (mathlib's
 trivial square-zero extension `TrivSqZeroExt K N`). -/
+@[buffalo "51wmmpHand0-19161"]
 abbrev D (N : Type*) [AddCommGroup N] [Module k N] [Module kᵐᵒᵖ N] [IsCentralScalar k N] :=
   TrivSqZeroExt k N
 
 /-- 51wmmpHand0-19161 (5:19:21) [def] In `D_K(N)`, `(λ, x)(λ', x') = (λλ', λx' + λ'x)`, `N` is an
 ideal of square zero, and `D_K(N)` is functorial in `N`. -/
+@[buffalo "51wmmpHand0-19161"]
 theorem def_19161 {N N' N'' : Type*} [AddCommGroup N] [Module k N] [Module kᵐᵒᵖ N]
     [IsCentralScalar k N] [AddCommGroup N'] [Module k N'] [Module kᵐᵒᵖ N'] [IsCentralScalar k N']
     [AddCommGroup N''] [Module k N''] [Module kᵐᵒᵖ N''] [IsCentralScalar k N'']
@@ -250,6 +264,7 @@ def tauD (N : Type*) [AddCommGroup N] [Module k N] [Module kᵐᵒᵖ N] [IsCent
   right_inv q := by ext <;> simp
 
 /-- 51wmmpHand0-19362 (5:22:42) [prop] `M ⊗_K D_K(N) ≃ M ⊕ (M ⊗_K N)` (as `K`-modules). -/
+@[buffalo "51wmmpHand0-19362"]
 def prop_19362 (M N : Type*) [AddCommGroup M] [Module k M] [AddCommGroup N] [Module k N]
     [Module kᵐᵒᵖ N] [IsCentralScalar k N] :
     TensorProduct k M (D k N) ≃ₗ[k] M × TensorProduct k M N :=
@@ -258,6 +273,7 @@ def prop_19362 (M N : Type*) [AddCommGroup M] [Module k M] [AddCommGroup N] [Mod
 
 /-- 51wmmpHand0-19362 (5:22:42) [prop] The isomorphism `M ⊗ D_K(N) ≃ M ⊕ (M ⊗ N)` is functorial
 in `N`: it carries `M ⊗ D(f)` to `id ⊕ (M ⊗ f)`. -/
+@[buffalo "51wmmpHand0-19362"]
 theorem prop_19362_natural (M N N' : Type*) [AddCommGroup M] [Module k M] [AddCommGroup N]
     [Module k N] [Module kᵐᵒᵖ N] [IsCentralScalar k N] [AddCommGroup N'] [Module k N']
     [Module kᵐᵒᵖ N'] [IsCentralScalar k N'] (f : N →ₗ[k] N') (z : TensorProduct k M (D k N)) :
@@ -273,6 +289,7 @@ theorem prop_19362_natural (M N N' : Type*) [AddCommGroup M] [Module k M] [AddCo
 /-- 51wmmpHand0-19097 (5:18:17) [prop] A `K`-module `M` is flat if and only if
 `M ⊗ K' → M ⊗ K''` is injective for every injective homomorphism of `K`-algebras `K' → K''`
 (test with `D_K(J) → D_K(K)` for the ideals `J` of `K`, by `prop_19362`). -/
+@[buffalo "51wmmpHand0-19097"]
 theorem prop_19097 (M : Type u) [AddCommGroup M] [Module k M] :
     Module.Flat k M ↔ ∀ (K' K'' : Type u) [CommRing K'] [CommRing K''] [Algebra k K']
       [Algebra k K''] (f : K' →ₐ[k] K''), Function.Injective f →
@@ -303,6 +320,7 @@ theorem prop_19097 (M : Type u) [AddCommGroup M] [Module k M] :
 /-- 51wmmpHand0-19491 (5:24:51) [prop] Products of affine spaces correspond to tensor products of
 algebras (`Buffalo.AG.Part01.prop_10867`, `prop_11633`) and fibre products to `A ⊗_C B`
 (`Buffalo.AG.Part01.prop_12165`): `Hom(A ⊗_K B, C) ≃ Hom(A, C) × Hom(B, C)`. -/
+@[buffalo "51wmmpHand0-19491"]
 def prop_19491 (A B C : Type u) [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     [CommRing C] [Algebra k C] :
     (TensorProduct k A B →ₐ[k] C) ≃ (A →ₐ[k] C) × (B →ₐ[k] C) :=
@@ -311,6 +329,7 @@ def prop_19491 (A B C : Type u) [CommRing A] [Algebra k A] [CommRing B] [Algebra
 /-- 51wmmpHand0-19491 (5:24:51) [prop] The kernel of `u, v : A ⇉ B` of algebras (the equalizer of
 the corresponding pair `V_B ⇉ V_A`) is the closed subspace `Y_J` of `V_B` defined by the ideal `J`
 generated by the `u(x) - v(x)`; it is represented by `B/J` (`Buffalo.AG.Part01.prop_13847`). -/
+@[buffalo "51wmmpHand0-19491"]
 theorem prop_19491_ker {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     (u v : A →ₐ[k] B) (k' : CommAlgCat.{u} k) (w : (V k B).obj k') :
     w ∈ (YJ k (Ideal.span (Set.range fun x => u x - v x))).obj k' ↔
@@ -334,6 +353,7 @@ theorem prop_19491_ker {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [A
 with unit section `ε : B → K`) is the closed subspace `Y_J` of `G` with `J = φ(ker ε)A`; the
 stabilizer of a rational point is likewise the equalizer of two morphisms `G → X`, closed by
 `prop_19491_ker`. -/
+@[buffalo "51wmmpHand0-19557"]
 theorem prop_19557 {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     (φ : B →ₐ[k] A) (ε : B →ₐ[k] k) (k' : CommAlgCat.{u} k) (g : (V k A).obj k') :
     g ∈ (YJ k ((RingHom.ker ε).map φ)).obj k' ↔
@@ -375,6 +395,7 @@ theorem nonempty_isInitial_iff (B : CommAlgCat.{u} k) :
 projective limits (`Buffalo.AG.Part01.prop_11436`) but not with inductive limits: the sum of two
 copies of the final object `V_K` is `V_{K × K}`, but at `K' = 0` the sum of functors has two points
 and `V_{K × K}(0)` only one. -/
+@[buffalo "51wmmpHand0-19684"]
 theorem rem_19684 :
     ¬ Function.Injective (fun x : (V k k).obj (CommAlgCat.of k PUnit.{u + 1}) ⊕
         (V k k).obj (CommAlgCat.of k PUnit.{u + 1}) =>
@@ -397,6 +418,7 @@ def piFan : Fan (fun i => CommAlgCat.of k (A i)) :=
 /-- 51wmmpHand0-19812 (5:30:12) [prop] The sum of the affine spaces `X_i = V_{A_i}` is the affine
 space with ring `∏ A_i`, the canonical injections corresponding to the projections: `∏ A_i` is the
 product in `CommAlgCat k`, i.e. the sum in `𝒞` (finiteness is not needed here). -/
+@[buffalo "51wmmpHand0-19812"]
 def prop_19812 : IsLimit (piFan k A) :=
   Fan.IsLimit.mk _ (fun s => CommAlgCat.ofHom (AlgHom.pi fun i => (s.proj i).hom))
     (fun _ _ => rfl) fun s m hm => by
@@ -407,6 +429,7 @@ def prop_19812 : IsLimit (piFan k A) :=
 
 /-- 51wmmpHand0-19886 (5:31:26) [prop] The projections `∏ A_j → A_i` are surjective, so
 `X_i → ∐ X_j` is a closed immersion, injective on points with values in every `K'`. -/
+@[buffalo "51wmmpHand0-19886"]
 theorem prop_19886 [DecidableEq ι] (i : ι) :
     Function.Surjective (Pi.evalAlgHom k A i) ∧
       ∀ (k' : Type*) [CommRing k'] [Algebra k k'],
@@ -421,6 +444,7 @@ end Sums
 
 /-- 51wmmpHand0-20208 (5:36:48) [def] An object `X` of a category is connected if, for every
 decomposition `X = X' ⊔ X''` as a sum, `X'` or `X''` is initial. -/
+@[buffalo "51wmmpHand0-20208"]
 def IsConnectedObj {C : Type*} [Category C] (X : C) : Prop :=
   ∀ (X' X'' : C) (i' : X' ⟶ X) (i'' : X'' ⟶ X), Nonempty (IsColimit (BinaryCofan.mk i' i'')) →
     Nonempty (IsInitial X') ∨ Nonempty (IsInitial X'')
@@ -438,6 +462,7 @@ theorem TopCat.nonempty_isInitial_iff (Y : TopCat.{u}) : Nonempty (IsInitial Y) 
 /-- 51wmmpHand0-20208 (5:36:48) [def] In topological spaces one recovers connectedness: `X` is a
 connected object of `TopCat` if and only if it is preconnected (the empty space is connected in
 the categorical sense, as in mathlib's `PreconnectedSpace`). -/
+@[buffalo "51wmmpHand0-20208"]
 theorem def_20208_top (X : Type u) [TopologicalSpace X] :
     IsConnectedObj (TopCat.of X) ↔ PreconnectedSpace X := by
   rw [preconnectedSpace_iff_clopen]
@@ -477,6 +502,7 @@ theorem def_20208_top (X : Type u) [TopologicalSpace X] :
 /-- 51wmmpHand0-20350 (5:39:10) [prop] `Hom(0, K')` is nonempty if and only if `K' = 0`, and has
 at most one element; the affine space of the zero algebra, "empty", is the initial object of
 `𝒞`. -/
+@[buffalo "51wmmpHand0-20350"]
 theorem prop_20350 (k' : Type*) [CommRing k'] [Algebra k k'] :
     (Nonempty (PUnit.{u + 1} →ₐ[k] k') ↔ Subsingleton k') ∧
       Subsingleton (PUnit.{u + 1} →ₐ[k] k') ∧
@@ -489,6 +515,7 @@ theorem prop_20350 (k' : Type*) [CommRing k'] [Algebra k k'] :
 /-- 51wmmpHand0-20474 (5:41:14) [prop] A decomposition of an affine space as a sum of two affine
 spaces is a decomposition of its ring as a product: `A' × A''`, with its projections, is the
 product of `A'` and `A''` in `CommAlgCat k` (the sum in `𝒞`). -/
+@[buffalo "51wmmpHand0-20474"]
 def prop_20474 (A' A'' : Type u) [CommRing A'] [Algebra k A'] [CommRing A''] [Algebra k A''] :
     IsLimit (BinaryFan.mk (P := CommAlgCat.of k (A' × A''))
       (CommAlgCat.ofHom (AlgHom.fst k A' A'')) (CommAlgCat.ofHom (AlgHom.snd k A' A''))) :=
@@ -527,6 +554,7 @@ theorem bijective_prod_of_idempotent {A : Type*} [CommRing A] [Algebra k A] {e :
 /-- 51wmmpHand0-20539 (5:42:19) [prop] A decomposition `A = A' × A''` amounts to orthogonal
 idempotents `e', e''` with sum `1`: in `A' × A''` these are `(1,0)` and `(0,1)`, and conversely an
 idempotent `e` (with `e'' = 1 - e`) gives `A ≃ A/(1 - e) × A/(e)`. -/
+@[buffalo "51wmmpHand0-20539"]
 theorem prop_20539 {A' A'' : Type*} [CommRing A'] [CommRing A''] {A : Type*} [CommRing A]
     [Algebra k A] {e : A} (he : IsIdempotentElem e) :
     (IsIdempotentElem ((1, 0) : A' × A'') ∧ IsIdempotentElem ((0, 1) : A' × A'') ∧
@@ -540,6 +568,7 @@ theorem prop_20539 {A' A'' : Type*} [CommRing A'] [CommRing A''] {A : Type*} [Co
 `n` pairwise orthogonal idempotents with sum `1`: `A ≃ ∏ A/(1 - e_i)` (mathlib:
 `CompleteOrthogonalIdempotents.bijective_pi`), and the `Pi.single i 1` of a product form such a
 family (`CompleteOrthogonalIdempotents.single`). -/
+@[buffalo "51wmmpHand0-20656"]
 theorem prop_20656 {ι : Type*} [Fintype ι] [DecidableEq ι] {A : Type*} [CommRing A] {e : ι → A}
     (he : CompleteOrthogonalIdempotents e) (B : ι → Type*) [∀ i, CommRing (B i)] :
     Function.Bijective (RingHom.pi fun i => Ideal.Quotient.mk (Ideal.span {1 - e i})) ∧
@@ -548,6 +577,7 @@ theorem prop_20656 {ι : Type*} [Fintype ι] [DecidableEq ι] {A : Type*} [CommR
 
 /-- 51wmmpHand0-20722 (5:45:22) [prop] If `e` is idempotent, so is `1 - e`, and `e(1 - e) = 0`;
 a pair of orthogonal idempotents with sum `1` is the same as one idempotent. -/
+@[buffalo "51wmmpHand0-20722"]
 theorem prop_20722 {A : Type*} [CommRing A] (e : A) :
     (IsIdempotentElem e → IsIdempotentElem (1 - e) ∧ e * (1 - e) = 0) ∧
       ((∃ e'', IsIdempotentElem e ∧ IsIdempotentElem e'' ∧ e * e'' = 0 ∧ e + e'' = 1) ↔
@@ -558,6 +588,7 @@ theorem prop_20722 {A : Type*} [CommRing A] (e : A) :
 
 /-- 51wmmpHand0-20786 (5:46:26) [prop] A ring `A` is connected (its affine space is a connected
 object of `𝒞`) if and only if its only idempotents are `0` and `1`. -/
+@[buffalo "51wmmpHand0-20786"]
 theorem prop_20786 (A : Type u) [CommRing A] [Algebra k A] :
     IsConnectedObj (Opposite.op (CommAlgCat.of k A)) ↔
       ∀ e : A, IsIdempotentElem e → e = 0 ∨ e = 1 := by
@@ -641,11 +672,13 @@ theorem prop_20786 (A : Type u) [CommRing A] [Algebra k A] :
 
 /-- 51wmmpHand0-20850 (5:47:30) [def] An object is `0`-connected if it is connected and not
 initial. -/
+@[buffalo "51wmmpHand0-20850"]
 def IsZeroConnected {C : Type*} [Category C] (X : C) : Prop :=
   IsConnectedObj X ∧ IsEmpty (IsInitial X)
 
 /-- 51wmmpHand0-20850 (5:47:30) [def] A ring is `0`-connected (its affine space is) if and only if
 it is connected and nonzero. -/
+@[buffalo "51wmmpHand0-20850"]
 theorem def_20850 (A : Type u) [CommRing A] [Algebra k A] :
     IsZeroConnected (Opposite.op (CommAlgCat.of k A)) ↔
       (∀ e : A, IsIdempotentElem e → e = 0 ∨ e = 1) ∧ Nontrivial A := by
@@ -655,6 +688,7 @@ theorem def_20850 (A : Type u) [CommRing A] [Algebra k A] :
 /-- 51wmmpHand0-21041 (5:50:41) [prop] A morphism `Z = V_C → ∐ X_i` (finite sum, `X_i = V_{A_i}`),
 i.e. a homomorphism `∏ A_i → C`, decomposes `Z`: the images of the unit idempotents of `∏ A_i`
 form a complete family of orthogonal idempotents of `C`. -/
+@[buffalo "51wmmpHand0-21041"]
 theorem prop_21041 {ι : Type*} [Fintype ι] [DecidableEq ι] (A : ι → Type*)
     [∀ i, CommRing (A i)] [∀ i, Algebra k (A i)] {C : Type*} [CommRing C] [Algebra k C]
     (φ : (∀ i, A i) →ₐ[k] C) :
@@ -663,6 +697,7 @@ theorem prop_21041 {ι : Type*} [Fintype ι] [DecidableEq ι] (A : ι → Type*)
 
 /-- 51wmmpHand0-21173 (5:52:53) [prop] If `K'` is `0`-connected, the map
 `∐ X_i(K') → X(K')`, `X = ∐ X_i` (finite sum), is bijective. -/
+@[buffalo "51wmmpHand0-21173"]
 theorem prop_21173 {ι : Type*} [Fintype ι] [DecidableEq ι] (A : ι → Type*)
     [∀ i, CommRing (A i)] [∀ i, Algebra k (A i)] (k' : Type*) [CommRing k'] [Algebra k k']
     [Nontrivial k'] (hk' : ∀ e : k', IsIdempotentElem e → e = 0 ∨ e = 1) :
@@ -717,11 +752,13 @@ theorem prop_21173 {ι : Type*} [Fintype ι] [DecidableEq ι] (A : ι → Type*)
     rw [this, map_mul, hi, mul_one]
 
 /-- 51wmmpHand0-21173 (5:52:53) [prop] An integral domain is `0`-connected. -/
+@[buffalo "51wmmpHand0-21173"]
 theorem prop_21173_domain (A : Type*) [CommRing A] [IsDomain A] :
     (∀ e : A, IsIdempotentElem e → e = 0 ∨ e = 1) ∧ Nontrivial A :=
   ⟨fun _ he => IsIdempotentElem.iff_eq_zero_or_one.1 he, inferInstance⟩
 
 /-- 51wmmpHand0-21237 (5:53:57) [prop] A local ring is `0`-connected. -/
+@[buffalo "51wmmpHand0-21237"]
 theorem prop_21237 (A : Type*) [CommRing A] [IsLocalRing A] :
     (∀ e : A, IsIdempotentElem e → e = 0 ∨ e = 1) ∧ Nontrivial A := by
   have key : ∀ x : A, IsIdempotentElem x → IsUnit x → x = 1 := fun x hx ⟨u, hu⟩ => by
@@ -739,6 +776,7 @@ theorem prop_21237 (A : Type*) [CommRing A] [IsLocalRing A] :
 /-- 51wmmpHand0-21237 (5:53:57) [rem] An affine space is connected (resp. empty) if and only if
 the topological space `Spec A` is (mathlib: `PrimeSpectrum.isIdempotentElemEquivClopens`,
 `PrimeSpectrum.isEmpty_iff_subsingleton`). -/
+@[buffalo "51wmmpHand0-21237"]
 theorem rem_21237 (A : Type*) [CommRing A] :
     ((∀ e : A, IsIdempotentElem e → e = 0 ∨ e = 1) ↔ PreconnectedSpace (PrimeSpectrum A)) ∧
       (IsEmpty (PrimeSpectrum A) ↔ Subsingleton A) := by
@@ -776,6 +814,7 @@ theorem rem_21237 (A : Type*) [CommRing A] :
 /-- 51wmmpHand0-21337 (5:55:37) [cex] For `K' = 0` the hypothesis "nonzero" is necessary: `X(0)`
 is a singleton while `∐ X_i(0)` has one point for each `i`, so the map of `prop_21173` is not
 injective as soon as there are two indices. -/
+@[buffalo "51wmmpHand0-21337"]
 theorem cex_21337 {ι : Type*} [Fintype ι] (A : ι → Type*) [∀ i, CommRing (A i)]
     [∀ i, Algebra k (A i)] {i j : ι} (hij : i ≠ j) :
     ¬ Function.Injective (fun x : (Σ i, A i →ₐ[k] PUnit.{u + 1}) =>
@@ -789,6 +828,7 @@ theorem cex_21337 {ι : Type*} [Fintype ι] (A : ι → Type*) [∀ i, CommRing 
 /-- 51wmmpHand0-21723 (6:02:03) [def] Points `u' ∈ X(K')`, `u'' ∈ X(K'')` with values in fields
 are equivalent if they have the same image in `X(K''')` for some `K', K'' → K'''` into a field
 (stated for rings, `K = ℤ`). -/
+@[buffalo "51wmmpHand0-21723"]
 def PtEquiv {A K' K'' : Type u} [CommRing A] [Field K'] [Field K''] (u' : A →+* K')
     (u'' : A →+* K'') : Prop :=
   ∃ (L : Type u) (_ : Field L) (f : K' →+* L) (g : K'' →+* L), f.comp u' = g.comp u''
@@ -801,6 +841,7 @@ theorem ker_comp_field {A K' L : Type*} [CommRing A] [Field K'] [Field L] (u : A
 
 /-- 51wmmpHand0-21859 (6:04:19) [prop] Two homomorphisms `u' : A → K'`, `u'' : A → K''` into
 fields are equivalent if and only if `ker u' = ker u''` (hence an equivalence relation). -/
+@[buffalo "51wmmpHand0-21859"]
 theorem prop_21859 {A K' K'' : Type u} [CommRing A] [Field K'] [Field K''] (u' : A →+* K')
     (u'' : A →+* K'') : PtEquiv u' u'' ↔ RingHom.ker u' = RingHom.ker u'' := by
   constructor
@@ -843,6 +884,7 @@ theorem prop_21859 {A K' K'' : Type u} [CommRing A] [Field K'] [Field K''] (u' :
 /-- 51wmmpHand0-21989 (6:06:29) [prop] The kernel of a homomorphism from `A` into a field is a
 prime ideal `P`, and the homomorphisms `A → K'` with kernel `P` correspond to the homomorphisms
 `κ(P) = Frac(A/P) → K'`. -/
+@[buffalo "51wmmpHand0-21989"]
 theorem prop_21989 {A : Type*} [CommRing A] (P : Ideal A) [P.IsPrime] (K' : Type*) [Field K'] :
     (∀ u : A →+* K', (RingHom.ker u).IsPrime) ∧
       Nonempty ({u : A →+* K' // RingHom.ker u = P} ≃ (FractionRing (A ⧸ P) →+* K')) := by
@@ -879,6 +921,7 @@ theorem prop_21989 {A : Type*} [CommRing A] (P : Ideal A) [P.IsPrime] (K' : Type
 
 /-- 51wmmpHand0-22052 (6:07:32) [prop] Two extensions `K'`, `K''` of a field `κ` have a common
 extension: `K' ⊗_κ K''` is nonzero, hence has a quotient that is a field. -/
+@[buffalo "51wmmpHand0-22052"]
 theorem prop_22052 (κ K' K'' : Type u) [Field κ] [Field K'] [Field K''] [Algebra κ K']
     [Algebra κ K''] :
     Nontrivial (TensorProduct κ K' K'') ∧ ∃ (L : Type u) (_ : Field L) (_ : Algebra κ L),
@@ -894,6 +937,7 @@ theorem prop_22052 (κ K' K'' : Type u) [Field κ] [Field K'] [Field K''] [Algeb
 /-- 51wmmpHand0-22123 (6:08:43) [prop] The classes of points with values in fields are identified
 with `Spec A`: `u ↦ ker u` takes every prime as value (`A → κ(P)`), and two points have the same
 kernel exactly when they are equivalent (`prop_21859`). -/
+@[buffalo "51wmmpHand0-22123"]
 theorem prop_22123 (A : Type u) [CommRing A] :
     (∀ P : PrimeSpectrum A, ∃ (K : Type u) (_ : Field K) (u : A →+* K),
       RingHom.ker u = P.asIdeal) ∧
@@ -912,6 +956,7 @@ open PrimeSpectrum
 
 /-- 51wmmpHand0-22510 (6:15:10) [prop] `V(S) = V(J_S) = V(√J_S)` (mathlib:
 `PrimeSpectrum.zeroLocus_span`, `PrimeSpectrum.zeroLocus_radical`). -/
+@[buffalo "51wmmpHand0-22510"]
 theorem prop_22510 {A : Type*} [CommRing A] (S : Set A) :
     zeroLocus S = zeroLocus (Ideal.span S : Set A) ∧
       zeroLocus S = zeroLocus ((Ideal.span S).radical : Set A) := by
@@ -920,6 +965,7 @@ theorem prop_22510 {A : Type*} [CommRing A] (S : Set A) :
 
 /-- 51wmmpHand0-22575 (6:16:15) [prop] The radical of an ideal is the intersection of the primes
 containing it (mathlib: `Ideal.radical_eq_sInf`), so `J ↦ V(J)` is injective on radical ideals. -/
+@[buffalo "51wmmpHand0-22575"]
 theorem prop_22575 {A : Type*} [CommRing A] (J : Ideal A) :
     J.radical = sInf {P | J ≤ P ∧ P.IsPrime} ∧
       ∀ J' : Ideal A, J.IsRadical → J'.IsRadical →
@@ -929,18 +975,21 @@ theorem prop_22575 {A : Type*} [CommRing A] (J : Ideal A) :
     ← vanishingIdeal_zeroLocus_eq_radical, h]
 
 /-- 51wmmpHand0-22644 (6:17:24) [prop] For radical `J`, `J'`, `V(J) ⊆ V(J')` iff `J ⊇ J'`. -/
+@[buffalo "51wmmpHand0-22644"]
 theorem prop_22644 {A : Type*} [CommRing A] (J J' : Ideal A) (hJ : J.IsRadical) :
     zeroLocus (J : Set A) ⊆ zeroLocus J' ↔ J' ≤ J := by
   rw [zeroLocus_subset_zeroLocus_iff, hJ.radical]
 
 /-- 51wmmpHand0-22774 (6:19:34) [prop] `⋂ V(J_i) = V(∑ J_i)` (mathlib:
 `PrimeSpectrum.zeroLocus_iSup`). -/
+@[buffalo "51wmmpHand0-22774"]
 theorem prop_22774 {A ι : Type*} [CommRing A] (J : ι → Ideal A) :
     zeroLocus ((⨆ i, J i : Ideal A) : Set A) = ⋂ i, zeroLocus (J i : Set A) :=
   zeroLocus_iSup J
 
 /-- 51wmmpHand0-22837 (6:20:37) [prop] For a finite family of ideals,
 `⋃ V(J_i) = V(⋂ J_i) = V(∏ J_i)`. -/
+@[buffalo "51wmmpHand0-22837"]
 theorem prop_22837 {A ι : Type*} [CommRing A] (s : Finset ι) (J : ι → Ideal A) :
     zeroLocus ((s.inf J : Ideal A) : Set A) = ⋃ i ∈ s, zeroLocus (J i : Set A) ∧
       zeroLocus ((s.prod J : Ideal A) : Set A) = ⋃ i ∈ s, zeroLocus (J i : Set A) := by
@@ -954,6 +1003,7 @@ theorem prop_22837 {A ι : Type*} [CommRing A] (s : Finset ι) (J : ι → Ideal
 
 /-- 51wmmpHand0-23031 (6:23:51) [prop] The `V(J)` are the closed sets of a topology on `Spec A`,
 in bijection with the radical ideals (`Z ↦ I(Z)`, `J ↦ V(J)`). -/
+@[buffalo "51wmmpHand0-23031"]
 theorem prop_23031 {A : Type*} [CommRing A] :
     (∀ Z : Set (PrimeSpectrum A), IsClosed Z ↔ ∃ J : Ideal A, Z = zeroLocus J) ∧
       (∀ Z : Set (PrimeSpectrum A), IsClosed Z → zeroLocus (vanishingIdeal Z : Set A) = Z) ∧
@@ -964,11 +1014,13 @@ theorem prop_23031 {A : Type*} [CommRing A] :
 
 /-- 51wmmpHand0-23031 (6:23:51) [prop] `Spec A` is quasi-compact (mathlib:
 `PrimeSpectrum.compactSpace`). -/
+@[buffalo "51wmmpHand0-23031"]
 theorem prop_23031_compact (A : Type*) [CommRing A] : CompactSpace (PrimeSpectrum A) :=
   PrimeSpectrum.compactSpace
 
 /-- 51wmmpHand0-23167 (6:26:07) [prop] `V(J) = ∅` iff `J = A` (mathlib:
 `PrimeSpectrum.zeroLocus_empty_iff_eq_top`). -/
+@[buffalo "51wmmpHand0-23167"]
 theorem prop_23167 {A : Type*} [CommRing A] (J : Ideal A) :
     zeroLocus (J : Set A) = ∅ ↔ J = ⊤ :=
   zeroLocus_empty_iff_eq_top
@@ -976,12 +1028,14 @@ theorem prop_23167 {A : Type*} [CommRing A] (J : Ideal A) :
 /-- 51wmmpHand0-23294 (6:28:14) [prop] The closure of the point `x` is `V(P_x)`; `y` lies in the
 closure of `x` iff `P_y ⊇ P_x` (mathlib: `PrimeSpectrum.closure_singleton`,
 `PrimeSpectrum.le_iff_mem_closure`). -/
+@[buffalo "51wmmpHand0-23294"]
 theorem prop_23294 {A : Type*} [CommRing A] (x y : PrimeSpectrum A) :
     closure {x} = zeroLocus (x.asIdeal : Set A) ∧ (y ∈ closure {x} ↔ x.asIdeal ≤ y.asIdeal) :=
   ⟨closure_singleton x, (le_iff_mem_closure x y).symm⟩
 
 /-- 51wmmpHand0-23357 (6:29:17) [prop] Specialization on `Spec A` is the reverse inclusion of
 primes, and `Spec A` is sober: every irreducible closed set is the closure of a unique point. -/
+@[buffalo "51wmmpHand0-23357"]
 theorem prop_23357 {A : Type*} [CommRing A] :
     (∀ x y : PrimeSpectrum A, x ⤳ y ↔ x.asIdeal ≤ y.asIdeal) ∧
       ∀ Z : Set (PrimeSpectrum A), IsIrreducible Z → IsClosed Z → ∃! x, closure {x} = Z :=
@@ -993,6 +1047,7 @@ theorem prop_23357 {A : Type*} [CommRing A] :
 
 /-- 51wmmpHand0-23485 (6:31:25) [prop] A space is irreducible iff it is nonempty and not the union
 of two strictly smaller closed sets; the closure of an irreducible subset is irreducible. -/
+@[buffalo "51wmmpHand0-23485"]
 theorem prop_23485 (X : Type*) [TopologicalSpace X] :
     (IrreducibleSpace X ↔ Nonempty X ∧ ∀ Z₁ Z₂ : Set X, IsClosed Z₁ → IsClosed Z₂ →
       Z₁ ∪ Z₂ = Set.univ → Z₁ = Set.univ ∨ Z₂ = Set.univ) ∧
@@ -1006,12 +1061,14 @@ theorem prop_23485 (X : Type*) [TopologicalSpace X] :
 /-- 51wmmpHand0-23485 (6:31:25) [prop] The closure of a point is irreducible; the image of an
 irreducible space under a continuous map is irreducible (mathlib: `isIrreducible_singleton`,
 `IsIrreducible.image`). -/
+@[buffalo "51wmmpHand0-23485"]
 theorem prop_23485_image {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] (x : X)
     (f : X → Y) (hf : Continuous f) (s : Set X) (hs : IsIrreducible s) :
     IsIrreducible (closure {x}) ∧ IsIrreducible (f '' s) :=
   ⟨isIrreducible_singleton.closure, hs.image f hf.continuousOn⟩
 
 /-- 51wmmpHand0-23547 (6:32:27) [prop] A Hausdorff space is irreducible iff it is a point. -/
+@[buffalo "51wmmpHand0-23547"]
 theorem prop_23547 (X : Type*) [TopologicalSpace X] [T2Space X] :
     IrreducibleSpace X ↔ ∃ x : X, (Set.univ : Set X) = {x} := by
   rw [irreducibleSpace_def]
@@ -1027,6 +1084,7 @@ theorem prop_23547 (X : Type*) [TopologicalSpace X] [T2Space X] :
 /-- 51wmmpHand0-23611 (6:33:31) [prop] `Spec A` with its topology does not change when `A` is
 replaced by `A / nil(A)`: `Spec(A/nil A) → Spec A` is a homeomorphism, every prime containing the
 nilradical. -/
+@[buffalo "51wmmpHand0-23611"]
 theorem prop_23611 (A : Type*) [CommRing A] :
     Nonempty (PrimeSpectrum (A ⧸ nilradical A) ≃ₜ PrimeSpectrum A) := by
   have hs : Function.Surjective (Ideal.Quotient.mk (nilradical A)) := Ideal.Quotient.mk_surjective
@@ -1038,11 +1096,13 @@ theorem prop_23611 (A : Type*) [CommRing A] :
 
 /-- 51wmmpHand0-23676 (6:34:36) [prop] `Spec A = ∅` iff `A = 0` (mathlib:
 `PrimeSpectrum.isEmpty_iff_subsingleton`). -/
+@[buffalo "51wmmpHand0-23676"]
 theorem prop_23676 (A : Type*) [CommRing A] : IsEmpty (PrimeSpectrum A) ↔ Subsingleton A :=
   PrimeSpectrum.isEmpty_iff_subsingleton
 
 /-- 51wmmpHand0-23738 (6:35:38) [prop] For `A` reduced, `Spec A = V(J') ∪ V(J'')` iff `J'J'' = 0`
 (the radicality of `J'`, `J''` is not needed). -/
+@[buffalo "51wmmpHand0-23738"]
 theorem prop_23738 {A : Type*} [CommRing A] [IsReduced A] (J' J'' : Ideal A) :
     zeroLocus (J' : Set A) ∪ zeroLocus J'' = Set.univ ↔ J' * J'' = ⊥ := by
   rw [← zeroLocus_mul, zeroLocus_eq_univ_iff, nilradical_eq_zero, Submodule.zero_eq_bot,
@@ -1050,6 +1110,7 @@ theorem prop_23738 {A : Type*} [CommRing A] [IsReduced A] (J' J'' : Ideal A) :
 
 /-- 51wmmpHand0-23801 (6:36:41) [prop] `Spec A` is irreducible iff `A / nil(A)` is an integral
 domain. -/
+@[buffalo "51wmmpHand0-23801"]
 theorem prop_23801 (A : Type*) [CommRing A] :
     IrreducibleSpace (PrimeSpectrum A) ↔ IsDomain (A ⧸ nilradical A) := by
   rw [irreducibleSpace_def, Set.top_eq_univ, isIrreducible_iff_vanishingIdeal_isPrime,

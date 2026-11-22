@@ -10,6 +10,7 @@ public import Mathlib.Algebra.CharP.Frobenius
 public import Mathlib.Algebra.Polynomial.Eval.Defs
 public import Mathlib.Algebra.Polynomial.Basic
 public import Mathlib.LinearAlgebra.Finsupp.Defs
+import Grothendieck.Attr
 
 /-!
 # Folder 43, pages 165–169: additive polynomials modulo `F − 1` and the perfection
@@ -115,6 +116,7 @@ def mkHom (i : ℕ) : R →+ PerfectClosure R p where
     exact PerfectClosure.R.sound R p i i (a + b) _ rfl
 
 /-- `Φ (a) = Σ [aᵢ]ᵢ`. -/
+@[montpellier "43, 169"]
 noncomputable def Φ : (ℕ →₀ R) →+ PerfectClosure R p := Finsupp.liftAddHom (mkHom R p)
 
 theorem Φ_single (i : ℕ) (c : R) : Φ R p (Finsupp.single i c) = PerfectClosure.mk R p (i, c) :=
@@ -129,9 +131,11 @@ theorem Φ_Fr (a : ℕ →₀ R) : Φ R p (Fr R p a) = Φ R p a := by
       PerfectClosure.R.sound R p 1 i c (c ^ p) (by simp [frobenius_def]), add_comm]
 
 /-- **`Φ` kills `F − 1`.** -/
+@[montpellier "43, 169"]
 theorem Φ_D (a : ℕ →₀ R) : Φ R p (D R p a) = 0 := by
   simp [D, Φ_Fr]
 
+@[montpellier "43, 169"]
 theorem Φ_surjective : Function.Surjective (Φ R p) := fun x => by
   induction x using PerfectClosure.induction_on with
   | _ x => exact ⟨Finsupp.single x.1 x.2, Φ_single R p _ _⟩
@@ -152,6 +156,7 @@ theorem single_sub_single_mem (N z : ℕ) (c : R) :
 
 /-- **Every additive polynomial is, modulo `F − 1`, a single term `c t^{p^M}`**, for every `M`
 large enough. -/
+@[montpellier "43, 169"]
 theorem exists_single (a : ℕ →₀ R) :
     ∃ N, ∀ M ≥ N, ∃ c : R, a - Finsupp.single M c ∈ (D R p).range := by
   induction a using Finsupp.induction_linear with
@@ -171,6 +176,7 @@ theorem exists_single (a : ℕ →₀ R) :
     rwa [Nat.add_sub_cancel' hM] at this
 
 /-- **The kernel of `Φ` is the image of `F − 1`.** -/
+@[montpellier "43, 169"]
 theorem ker_Φ : (Φ R p).ker = (D R p).range := by
   refine le_antisymm (fun a ha => ?_) (fun _ ⟨b, hb⟩ => hb ▸ Φ_D R p b)
   obtain ⟨N, hN⟩ := exists_single R p a
@@ -189,6 +195,7 @@ theorem ker_Φ : (Φ R p).ker = (D R p).range := by
   rwa [sub_add_cancel] at this
 
 /-- **`R{F} / (F − 1) R{F} ≅ R^{p^{-∞}}`** as additive groups. -/
+@[montpellier "43, 169"]
 noncomputable def quotientEquiv : ((ℕ →₀ R) ⧸ (D R p).range) ≃+ PerfectClosure R p :=
   (QuotientAddGroup.quotientAddEquivOfEq (ker_Φ R p).symm).trans
     (QuotientAddGroup.quotientKerEquivOfSurjective _ (Φ_surjective R p))

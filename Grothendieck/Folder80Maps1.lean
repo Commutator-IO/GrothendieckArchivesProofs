@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 80, page 26: the « cas latticiel » — a counterexample and the correct criterion
@@ -76,6 +77,7 @@ def PCl (L : Set (E → SignType)) (X : E → SignType) : Set (E → SignType) :
   {Z | Z ∈ L ∧ Z ≠ 0 ∧ (Conf Z X ∨ Conf Z (-X))}
 
 /-- The « cas latticiel »: two closed cells meet in nothing or in a single closed cell. -/
+@[montpellier "80, 26"]
 def Lattice (L : Set (E → SignType)) : Prop :=
   ∀ X ∈ L, ∀ Y ∈ L, X ≠ 0 → Y ≠ 0 →
     PCl L X ∩ PCl L Y = ∅ ∨ ∃ W ∈ L, W ≠ 0 ∧ PCl L X ∩ PCl L Y = PCl L W
@@ -195,6 +197,7 @@ set_option linter.unusedFintypeInType false in
 /-- **The lattice criterion for covectors.** For a symmetric set of sign vectors closed under
 composition, the closed cells of `ℝP²` meet pairwise in nothing or a single closed cell iff no two
 nonzero covectors have disjoint supports. -/
+@[montpellier "80, 26"]
 theorem lattice_iff [Fintype E] (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L)
     (hN : ∀ X ∈ L, -X ∈ L) :
     Lattice L ↔ ¬ ∃ v ∈ L, ∃ w ∈ L, v ≠ 0 ∧ w ≠ 0 ∧ ∀ e, v e = 0 ∨ w e = 0 := by
@@ -291,6 +294,7 @@ theorem closure_cell [Finite ι] {X : ι → SignType} (hX : X ∈ cov ℓ) :
 set_option linter.unusedFintypeInType false in
 /-- **The lattice criterion for lines.** The arrangement is latticial iff no two points carry
 every line between them. -/
+@[montpellier "80, 26"]
 theorem lattice_iff_not_twoPencil [Fintype ι] : Lattice (cov ℓ) ↔ ¬ TwoPencil ℓ := by
   rw [lattice_iff (fun _ hX _ hY => comp_mem_cov hX hY) fun _ => neg_mem_cov]
   simp only [cov, Set.exists_range_iff, TwoPencil, sgn_eq_zero]
@@ -314,6 +318,7 @@ def NoCommonVertex {R : Type*} [CommRing R] (ℓ : ι → Fin 3 → R) : Prop :=
 
 set_option linter.unusedFintypeInType false in
 /-- **Condition a) is necessary**: a bigonal line breaks the lattice property. -/
+@[montpellier "80, 26"]
 theorem not_lattice_of_bigonal [Fintype ι] (hnd : NoCommonVertex ℓ) {i : ι} (h : Bigonal ℓ i) :
     ¬ Lattice (cov ℓ) := by
   rw [lattice_iff_not_twoPencil, not_not]
@@ -325,6 +330,7 @@ theorem not_lattice_of_bigonal [Fintype ι] (hnd : NoCommonVertex ℓ) {i : ι} 
 
 /-- **Condition b) is necessary**: four lines with no three concurrent (`II_4`) are not
 latticial; the two opposite vertices `0 ∩ 1` and `2 ∩ 3` carry all four lines. -/
+@[montpellier "80, 26"]
 theorem not_lattice_of_four (ℓ : Fin 4 → Fin 3 → ℝ)
     (h : ∀ i j k, i ≠ j → j ≠ k → i ≠ k → tp (ℓ i) (ℓ j) (ℓ k) ≠ 0) : ¬ Lattice (cov ℓ) := by
   rw [lattice_iff_not_twoPencil, not_not]
@@ -367,12 +373,14 @@ theorem II32_twoPencil : TwoPencil II32 := by
   · fin_cases i <;> simp [II32, L32, dotProduct, Fin.sum_univ_three]
 
 /-- **`II′_{3,2}` is not latticial**, against page 24. -/
+@[montpellier "80, 24"]
 theorem II32_not_lattice : ¬ Lattice (cov II32) := fun h =>
   lattice_iff_not_twoPencil.1 h II32_twoPencil
 
 /-- **The criterion of page 26 is false** in the edition's reading (b: « not `II_4` », which for
 an arrangement without bigonal lines means « not four lines »): `II′_{3,2}` has five lines, no
 bigonal line, and is not latticial. -/
+@[montpellier "80, 26"]
 theorem lattice_criterion_false :
     ¬ ∀ (n : ℕ) (ℓ : Fin n → Fin 3 → ℝ), NoCommonVertex ℓ →
       (Lattice (cov ℓ) ↔ (∀ i, ¬ Bigonal ℓ i) ∧ n ≠ 4) := fun h =>

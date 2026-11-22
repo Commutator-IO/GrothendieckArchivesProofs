@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 72: regular polytopes and pseudo-reflections in any dimension
@@ -76,7 +77,7 @@ variable {R : Type u} [CommRing R]
 /-! ### The group `𝒰_ρ` -/
 
 /-- The `R`-points of `𝒰_ρ = Spec R[T]_{(1+ρT)}`. -/
-@[ext]
+@[montpellier "72, 37", ext]
 structure U (ρ : R) where
   /-- the coordinate `λ` -/
   val : R
@@ -139,10 +140,12 @@ theorem toGm_bijective {ρ : R} (hρ : IsUnit ρ) : Function.Bijective (toGm (ρ
         ext; simp only [toGm_val]; linear_combination ((v : R) - 1) * hρ.mul_val_inv⟩⟩
 
 /-- Where `ρ` is invertible, `𝒰_ρ ≅ 𝔾_m` (the centre at finite distance). -/
+@[montpellier "72, 37–38"]
 noncomputable def toUnitsEquiv {ρ : R} (hρ : IsUnit ρ) : U ρ ≃* Rˣ :=
   MulEquiv.ofBijective toGm (toGm_bijective hρ)
 
 /-- For `ρ = 0`, `𝒰₀ = 𝔾_a` (the centre at infinity). -/
+@[montpellier "72, 37–38"]
 def U_zero : U (0 : R) ≃* Multiplicative R where
   toFun x := Multiplicative.ofAdd x.val
   invFun a := ⟨a.toAdd, by simp⟩
@@ -153,6 +156,7 @@ def U_zero : U (0 : R) ≃* Multiplicative R where
 /-- `λ ↦ 1 + ρλ` is onto the units over every `R`-algebra iff `ρ` is a unit: the
 morphism `𝒰_ρ → 𝔾_m` is an isomorphism exactly where the centre is at finite
 distance. -/
+@[montpellier "72, 37–38"]
 theorem forall_surjective_iff (ρ : R) :
     (∀ (A : Type u) [CommRing A] [Algebra R A],
         Function.Surjective (toGm (ρ := algebraMap R A ρ))) ↔ IsUnit ρ := by
@@ -351,6 +355,7 @@ lemma co_ct_top : co n (n + 1) (ct n μ β) = 1 := by rw [ct, co_vec le_rfl, y_t
 lemma co_ct_zero : co n 0 (ct n μ β) = ρ n μ β := by rw [ct, co_vec le_rfl]; rfl
 
 /-- For `n = 1`, `ρ = μ₀μ₁ − β₀`; for reflections (`μᵢ = −2`), `4 − β₀`. -/
+@[montpellier "72, 41"]
 theorem ρ_one : ρ 1 μ β = μ 0 * μ 1 - β 0 := by
   simp [ρ, y, cc]; ring
 
@@ -366,6 +371,7 @@ lemma u_apply (t : R) (x : Fin (n + 2) → R) :
   simp [u, P_apply, smul_smul]
 
 /-- `u_λ u_λ' = u_{λ + λ' + ρλλ'}`. -/
+@[montpellier "72, 37"]
 theorem u_mul (s t : R) : u n μ β s * u n μ β t = u n μ β (s + t + ρ n μ β * s * t) := by
   simp only [u, add_mul, mul_add, one_mul, mul_one, smul_mul_smul_comm, P_mul_P, smul_smul,
     add_smul]
@@ -420,6 +426,7 @@ lemma F_e_zero {i : ℕ} (hi : 1 ≤ i) : F n μ β i (e n 0) = 0 := by
 
 /-- The commutant of the `τᵢ`: an endomorphism commutes with all of them iff it is
 `c + t π ⊗ c̃`. -/
+@[montpellier "72, 38"]
 theorem commute_iff (g : Module.End R (Fin (n + 2) → R)) :
     (∀ i ≤ n, g * τ n μ β i = τ n μ β i * g) ↔
       ∃ c t : R, g = c • 1 + t • P n μ β := by
@@ -489,6 +496,7 @@ lemma smul_one_add_mul (c t c' t' : R) :
   abel
 
 /-- `c + t π ⊗ c̃` is invertible iff `c` and `c + tρ` are units. -/
+@[montpellier "72, 38"]
 theorem isUnit_iff (c t : R) :
     IsUnit (c • (1 : Module.End R (Fin (n + 2) → R)) + t • P n μ β) ↔
       IsUnit c ∧ IsUnit (c + t * ρ n μ β) := by
@@ -568,6 +576,7 @@ noncomputable def cuHom : Rˣ × U (ρ n μ β) →* centraliser n μ β where
     simp
 
 /-- **`𝔾_m × 𝒰_ρ ≅ Aut(E, (τᵢ))`** on `R`-points: `(c, λ) ↦ c u_λ`. -/
+@[montpellier "72, 38"]
 noncomputable def centraliserEquiv : Rˣ × U (ρ n μ β) ≃* centraliser n μ β :=
   MulEquiv.ofBijective cuHom
     ⟨by
@@ -624,6 +633,7 @@ def startPoints : Set (Fin (n + 2) → R) :=
   {s | (∀ i, 1 ≤ i → i ≤ n → F n μ β i s = 0) ∧ F n μ β 0 s = 1 ∧ IsUnit (co n 0 s)}
 
 /-- `D₀ ∖ {c, d} = 𝒰_ρ · s₀`. -/
+@[montpellier "72, 38"]
 theorem mem_startPoints_iff (s : Fin (n + 2) → R) :
     s ∈ startPoints (n := n) (μ := μ) (β := β) ↔ ∃ x : U (ρ n μ β), s = u n μ β x.val (e n 0) := by
   constructor
@@ -644,6 +654,7 @@ theorem mem_startPoints_iff (s : Fin (n + 2) → R) :
       rw [this]; exact x.isUnit
 
 /-- The orbit map `λ ↦ u_λ s₀` is injective: the action is free. -/
+@[montpellier "72, 38"]
 theorem u_e0_injective {x y : U (ρ n μ β)}
     (h : u n μ β x.val (e n 0) = u n μ β y.val (e n 0)) : x = y := by
   exact U.ext (by
@@ -651,6 +662,7 @@ theorem u_e0_injective {x y : U (ρ n μ β)}
       using congrArg (co n (n + 1)) h)
 
 /-- The action: `u_μ (u_λ s₀) = u_{λ * μ} s₀`. -/
+@[montpellier "72, 38"]
 theorem u_u_e0 (x y : U (ρ n μ β)) :
     u n μ β y.val (u n μ β x.val (e n 0)) = u n μ β (x * y).val (e n 0) := by
   rw [← Module.End.mul_apply, u_mul, U.mul_val]
@@ -737,6 +749,7 @@ theorem Zs_invariant {i : ℕ} (hβ : β i = 0) : Invariant n μ β (Zs n i) := 
     intro k hk
     exact co_e_ne (by omega)
 
+@[montpellier "72, 79, 81"]
 theorem Zs_le_Zp_iff {i : ℕ} (hi : i < n) : Zs n i ≤ Zp n μ β i ↔ β i = 0 := by
   constructor
   · intro h
@@ -783,6 +796,7 @@ lemma sub_low_mem_Zs (i : ℕ) (x : Fin (n + 2) → K) : x - low (i + 1) x ∈ Z
   intro k hk; simp [co_low, hk]
 
 /-- **Page 79.** The subspaces stable under all the `τᵢ`. -/
+@[montpellier "72, 79"]
 theorem invariant_iff (W : Submodule K (Fin (n + 2) → K)) :
     Invariant n μ' β' W ↔
       W = ⊥ ∨ W = ⊤ ∨ W = K ∙ ct n μ' β' ∨ W = Vh n ∨
@@ -937,6 +951,7 @@ theorem invariant_iff (W : Submodule K (Fin (n + 2) → K)) :
     · exact Zs_invariant hβ
 
 /-- Corollary (c) of page 80: if all `βᵢ` are nonzero, the four are the only ones. -/
+@[montpellier "72, 80"]
 theorem invariant_iff_of_ne_zero (hβ : ∀ i < n, β' i ≠ 0) (W : Submodule K (Fin (n + 2) → K)) :
     Invariant n μ' β' W ↔ W = ⊥ ∨ W = ⊤ ∨ W = K ∙ ct n μ' β' ∨ W = Vh n := by
   rw [invariant_iff]
@@ -1206,6 +1221,7 @@ theorem condB_of_condA {n : ℕ} (hA : CondA n a a' s0) : CondB n a a' s0 := by
     · exact hdiag j (by omega)
 
 /-- **Pages 96–100.** (Ā) ⇔ (B̄). -/
+@[montpellier "72, 96–100"]
 theorem condA_iff_condB (n : ℕ) : CondA n a a' s0 ↔ CondB n a a' s0 :=
   ⟨condB_of_condA, condA_of_condB⟩
 
@@ -1240,6 +1256,7 @@ theorem model_condB (n : ℕ) (μ β : ℕ → k) :
   · rw [ν_model n μ β n le_rfl]; exact isUnit_one
 
 /-- In the model, `τᵢ` is invertible iff `λᵢ = 1 + μᵢ` is a unit. -/
+@[montpellier "72, 91–105"]
 theorem model_isUnit_iff (n : ℕ) (μ β : ℕ → k) {i : ℕ} (hi : i ≤ n) :
     IsUnit (τ n μ β i) ↔ IsUnit (1 + μ i) := by
   have hτe : τ n μ β i (e n (i + 1)) = (1 + μ i) • e n (i + 1) := by
@@ -1268,6 +1285,7 @@ theorem model_isUnit_iff (n : ℕ) (μ β : ℕ → k) {i : ℕ} (hi : i ≤ n) 
 /-- **The classification** (margin of page 13, with the coordinates of page 91): a
 normalised pinned realisation is isomorphic to the model with `μᵢ = ⟨aᵢ, a'ᵢ⟩`,
 `βᵢ = ⟨a_{i+1}, a'ᵢ⟩`. -/
+@[montpellier "72, 13, 91"]
 theorem pinned_classification {n : ℕ} (hB : CondB n a a' s0) (h0 : a' 0 s0 = 1)
     (h1 : ∀ i < n, a' (i + 1) (a i) = 1) :
     ∃ φ : M ≃ₗ[k] (Fin (n + 2) → k), φ s0 = e n 0 ∧ ∀ i ≤ n,
@@ -1322,6 +1340,7 @@ lemma map_sv {M₂ : Type*} [AddCommGroup M₂] [Module k M₂] {b : ℕ → M�
     rw [sv, this, ih (by omega)]; rfl
 
 /-- Rigidity: the isomorphism with the model is unique. -/
+@[montpellier "72, 91–105"]
 theorem pinned_rigid {n : ℕ} (hB : CondB n a a' s0) (μ β : ℕ → k)
     (φ ψ : M →ₗ[k] (Fin (n + 2) → k)) (hφ0 : φ s0 = e n 0) (hψ0 : ψ s0 = e n 0)
     (hφ : ∀ i ≤ n, φ ∘ₗ ps a a' i = τ n μ β i ∘ₗ φ)
@@ -1346,6 +1365,7 @@ lemma a_eq_sub {n : ℕ} (hB : CondB n a a' s0) (h0 : a' 0 s0 = 1)
 
 /-- **The invariants**: a linear map compatible with `s₀` and the `τᵢ` between two
 normalised realisations forces the same `(μᵢ, βᵢ)`. -/
+@[montpellier "72, 91–105"]
 theorem invariants_eq {M₂ : Type*} [AddCommGroup M₂] [Module k M₂] {b : ℕ → M₂}
     {b' : ℕ → Module.Dual k M₂} {t0 : M₂} {n : ℕ}
     (hB : CondB n a a' s0) (h0 : a' 0 s0 = 1) (h1 : ∀ i < n, a' (i + 1) (a i) = 1)
@@ -1418,6 +1438,7 @@ lemma ct_ne_zero : ct n μ' β' ≠ 0 := by
   simpa [h] using co_ct_top (n := n) (μ := μ') (β := β')
 
 /-- **Pages 80–82.** The invariant subspaces contained in `C`, in general. -/
+@[montpellier "72, 80–82"]
 theorem invariant_le_Vh_iff (W : Submodule K (Fin (n + 2) → K)) :
     (Invariant n μ' β' W ∧ W ≤ Vh n) ↔
       W = ⊥ ∨ W = Vh n ∨ (ρ n μ' β' = 0 ∧ W = K ∙ ct n μ' β') ∨
@@ -1441,6 +1462,7 @@ theorem invariant_le_Vh_iff (W : Submodule K (Fin (n + 2) → K)) :
     · exact ⟨Zp_invariant hi hβ, hle⟩
 
 /-- If all `βᵢ ≠ 0`, the invariant subspaces of `C` are `0`, `C`, and `K c̃` when `ρ = 0`. -/
+@[montpellier "72, 80–82"]
 theorem invariant_le_Vh_iff_of_ne_zero (hβ : ∀ i < n, β' i ≠ 0)
     (W : Submodule K (Fin (n + 2) → K)) :
     (Invariant n μ' β' W ∧ W ≤ Vh n) ↔
@@ -1470,6 +1492,7 @@ lemma span_ct_eq_Vh_of_zero {μ'' β'' : ℕ → K} (h0 : ρ 0 μ'' β'' = 0) :
 
 /-- **Irreducibility on `C`** (pages 80–82): no subspace of `C` other than `0` and `C`
 is stable under all `τᵢ` iff all `βᵢ ≠ 0` and, for `n ≥ 1`, `ρ ≠ 0`. -/
+@[montpellier "72, 80–82"]
 theorem irreducible_on_C_iff :
     (∀ W : Submodule K (Fin (n + 2) → K), W ≤ Vh n → Invariant n μ' β' W →
         W = ⊥ ∨ W = Vh n) ↔
@@ -1559,6 +1582,7 @@ lemma isBasisFam_of_lowtri {m : ℕ} (b : Basis (Fin m) k M) (v : Fin m → M)
 
 /-- **The start vectors** (pages 104–105): with `(v, a₀, …, aₙ)` a basis and `φ` the
 coordinate on `v`, `s₀` satisfies (B̄′) iff it lies in `F`, off `D` and off `Δ`. -/
+@[montpellier "72, 104–105"]
 theorem condB'_iff_of_basis {v : M} (hv : IsBasisFam k (fun j : Fin (n + 2) => av a v j))
     (hb : ∀ i j, i + 2 ≤ j → j ≤ n → a' j (a i) = 0) (hc : ∀ i < n, IsUnit (a' (i + 1) (a i))) :
     CondB' n a a' s0 ↔ (∀ i, 1 ≤ i → i ≤ n → a' i s0 = 0) ∧ IsUnit (a' 0 s0) ∧
@@ -1612,6 +1636,7 @@ lemma exists_mem_F (hb : ∀ i j, i + 2 ≤ j → j ≤ n → a' j (a i) = 0)
 
 /-- **Local existence of the start vector** (pages 102–105): over a local ring, a start
 vector satisfying (B̄′) exists iff a), a′), b), c) hold. -/
+@[montpellier "72, 102–105"]
 theorem exists_condB'_iff [IsLocalRing k] :
     (∃ s0, CondB' n a a' s0) ↔ (∃ v, IsBasisFam k (fun j : Fin (n + 2) => av a v j)) ∧
       Function.Surjective (fun x : M => fun i : Fin (n + 1) => a' i x) ∧
@@ -1818,6 +1843,7 @@ lemma isBasisFam_res {m : ℕ} {f : Fin m → M} {g : Fin m → N} (hg : ∀ j, 
     Submodule.map_injective_of_injective N.injective_subtype (h.trans N.map_subtype_top.symm)⟩
 
 /-- (A) ⇔ (B) in the strict sense, for any module. -/
+@[montpellier "72, 96–100, 103"]
 theorem condAs_iff_condBs : CondAs n a a' s0 ↔ CondBs n a a' s0 := by
   constructor
   · rintro ⟨h7, h8, hli, Q, hQ⟩
@@ -1871,6 +1897,7 @@ theorem condAs_iff_condBs : CondAs n a a' s0 ↔ CondBs n a a' s0 := by
 /-- In the weak sense (independence only), (A) does not give (13): over `ℤ`, `n = 0`,
 `s₀ = e₀`, `a₀ = e₁`, `a'₀ = 2e₀*`, `(s₀, s₁) = (e₀, e₀ + 2e₁)` is independent and
 `ν₀ = 2`. -/
+@[montpellier "72, 96–100, 103"]
 theorem not_condAw_imp : ∃ (a : ℕ → Fin 2 → ℤ) (a' : ℕ → Module.Dual ℤ (Fin 2 → ℤ)) (s0 : _),
     LinearIndependent ℤ (fun j : Fin 2 => sv a a' s0 j) ∧ ¬IsUnit (ν a a' s0 0) := by
   refine ⟨fun _ => Pi.single 1 1, fun _ => 2 • LinearMap.proj 0, Pi.single 0 1, ?_, ?_⟩
@@ -1886,6 +1913,7 @@ theorem not_condAw_imp : ∃ (a : ℕ → Fin 2 → ℤ) (a' : ℕ → Module.Du
   · simp [ν, Int.isUnit_iff]
 
 /-- (Ā) forces `E` to be free. -/
+@[montpellier "72, 96–100, 103"]
 theorem free_of_condA (h : CondA n a a' s0) : Module.Free k M := .of_basis (bas h.2.2)
 
 end Strict

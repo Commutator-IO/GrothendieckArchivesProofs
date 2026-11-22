@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 156-3, betweenness read on the cuts of a tronçon (pages 11–15)
@@ -94,6 +95,7 @@ def SamePiece (a b s t : α) : Prop :=
 def piece (a b t : α) : Set α := {s | InC a b s ∧ SamePiece a b s t}
 
 /-- A tronçon ordonné (page 8). -/
+@[montpellier "156-3, 8"]
 structure Troncon (α : Type*) [PartialOrder α] : Prop where
   /-- a) `L_{>a}` is directed downwards. -/
   dir_down : ∀ a x y : α, a < x → a < y → ∃ z, a < z ∧ z ≤ x ∧ z ≤ y
@@ -129,6 +131,7 @@ theorem piece_comm (a b t : α) : piece a b t = piece b a t := by
   tauto
 
 /-- Page 15: for `a < b < t`, the piece of `C({a, b})` containing `t` is `L_{>b}`. -/
+@[montpellier "156-3, 15"]
 theorem piece_above (hab : a < b) (hbt : b < t) : piece a b t = {s | b < s} := by
   ext s
   constructor
@@ -144,6 +147,7 @@ theorem piece_above (hab : a < b) (hbt : b < t) : piece a b t = {s | b < s} := b
       Or.inr (Or.inr ⟨hab.trans hs, hs, hab.trans hbt, hbt⟩)⟩
 
 /-- Page 15: for `t < a < b`, the piece of `C({a, b})` containing `t` is `L_{<a}`. -/
+@[montpellier "156-3, 15"]
 theorem piece_below (hab : a < b) (hta : t < a) : piece a b t = {s | s < a} := by
   ext s
   constructor
@@ -159,6 +163,7 @@ theorem piece_below (hab : a < b) (hta : t < a) : piece a b t = {s | s < a} := b
       Or.inl ⟨hs, hs.trans hab, hta, hta.trans hab⟩⟩
 
 /-- Page 15: for `a < t < b`, the piece of `C({a, b})` containing `t` is `]a, b[`. -/
+@[montpellier "156-3, 15"]
 theorem piece_between (hat : a < t) (htb : t < b) : piece a b t = Ioo a b := by
   ext s
   constructor
@@ -175,6 +180,7 @@ theorem piece_between (hat : a < t) (htb : t < b) : piece a b t = Ioo a b := by
 /-- **Page 15.** In a 3-chain `{p, q, r}` of a dense poset, `q` is strictly
 between `p` and `r` iff the piece of `C({p, q})` containing `r` and the piece of
 `C({q, r})` containing `p` are disjoint. -/
+@[montpellier "156-3, 15"]
 theorem middle_iff (hd : ∀ x y : α, x < y → ∃ z, x < z ∧ z < y) {p q r : α}
     (hpq : p ≠ q) (hqr : q ≠ r) (hpr : p ≠ r) (cpq : Cmp p q) (cqr : Cmp q r)
     (cpr : Cmp p r) : Btw p q r ↔ Disjoint (piece p q r) (piece q r p) := by
@@ -261,6 +267,7 @@ theorem disjoint_preimage_equiv (e : α ≃ β) (X Y : Set β) :
 
 /-- **Pages 14–15.** A bijection between dense posets that preserves
 comparability and the partitions of the `C(ε)` preserves strict betweenness. -/
+@[montpellier "156-3, 14–15"]
 theorem btw_transport (hdα : ∀ x y : α, x < y → ∃ z, x < z ∧ z < y)
     (hdβ : ∀ x y : β, x < y → ∃ z, x < z ∧ z < y) {e : α ≃ β} (he : PreservesCuts e)
     (p q r : α) : Btw (e p) (e q) (e r) ↔ Btw p q r := by
@@ -285,6 +292,7 @@ variable {α β : Type*} [PartialOrder α] [PartialOrder β]
 
 /-- Page 11, with the exact condition: `𝓡̄(a, b, c)` iff `𝓡(a, b, c)`, or
 `b ∈ {a, c}` with `a, c` comparable. -/
+@[montpellier "156-3, 11"]
 theorem btwLe_iff (a b c : α) : BtwLe a b c ↔ Btw a b c ∨ ((b = a ∨ b = c) ∧ Cmp a c) := by
   constructor
   · rintro (⟨h1, h2⟩ | ⟨h1, h2⟩)
@@ -308,6 +316,7 @@ theorem btwLe_iff (a b c : α) : BtwLe a b c ↔ Btw a b c ∨ ((b = a ∨ b = c
 
 /-- The reading's form « `𝓡̄(a, b, c)` iff `𝓡(a, b, c)` or `b ∈ {a, c}` » fails
 for incomparable `a, c`: here `b = a` and `𝓡̄(a, a, c)` is false. -/
+@[montpellier "156-3, 11"]
 theorem btwLe_reading_fails : ¬ BtwLe ((0 : ℕ), (1 : ℕ)) (0, 1) (1, 0) := by
   simp [BtwLe, Prod.le_def]
 
@@ -319,6 +328,7 @@ def ReadLe (a b u v : α) : Prop :=
 
 /-- **Pages 11–13.** On a poset directed both ways (condition b), the order is
 read on betweenness from any pair `a < b`. -/
+@[montpellier "156-3, 11–13"]
 theorem le_iff_readLe (low : ∀ x y : α, ∃ z, z ≤ x ∧ z ≤ y)
     (high : ∀ x y : α, ∃ z, x ≤ z ∧ y ≤ z) {a b : α} (hab : a < b) (u v : α) :
     u ≤ v ↔ ReadLe a b u v := by
@@ -373,6 +383,7 @@ theorem iso_of_lt (lowα : ∀ x y : α, ∃ z, z ≤ x ∧ z ≤ y)
 /-- **Pages 11–13.** On posets directed both ways, a bijection preserving
 comparability and strict betweenness is an order isomorphism or an order
 anti-isomorphism: betweenness determines the order up to reversal. -/
+@[montpellier "156-3, 11–13"]
 theorem order_eq_or_dual (lowα : ∀ x y : α, ∃ z, z ≤ x ∧ z ≤ y)
     (highα : ∀ x y : α, ∃ z, x ≤ z ∧ y ≤ z) (lowβ : ∀ x y : β, ∃ z, z ≤ x ∧ z ≤ y)
     (highβ : ∀ x y : β, ∃ z, x ≤ z ∧ y ≤ z) (e : α ≃ β)
@@ -404,6 +415,7 @@ theorem order_eq_or_dual (lowα : ∀ x y : α, ∃ z, z ≤ x ∧ z ≤ y)
 preserves comparability and, for every comparable pair `ε`, the partition of
 `C(ε)` into its pieces, is an order isomorphism or an order anti-isomorphism.
 Only conditions b) and c) of page 8 are used. -/
+@[montpellier "156-3, 11–15"]
 theorem order_of_cuts (hα : Troncon α) (hβ : Troncon β) {e : α ≃ β}
     (he : PreservesCuts e) :
     (∀ x y, e x ≤ e y ↔ x ≤ y) ∨ (∀ x y, e y ≤ e x ↔ x ≤ y) :=
@@ -422,6 +434,7 @@ theorem troncon_rat : Troncon ℚ where
 /-- Comparability alone does not determine the order up to reversal, already
 for the totally ordered tronçon `ℚ`: the transposition of `0` and `1` preserves
 comparability and is neither increasing nor decreasing. -/
+@[montpellier "156-3, 11–15"]
 theorem cmp_alone_insufficient :
     ∃ e : ℚ ≃ ℚ, (∀ x y, Cmp (e x) (e y) ↔ Cmp x y) ∧
       ¬ ((∀ x y, e x ≤ e y ↔ x ≤ y) ∨ (∀ x y, e y ≤ e x ↔ x ≤ y)) := by

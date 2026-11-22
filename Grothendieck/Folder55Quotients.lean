@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.Folder55Ideals
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -516,6 +517,7 @@ noncomputable def stalkEquivQ (x : Xsp) : (Qpre 𝒥).stalk x ≃+* Fib 𝒥 x :
         stalkEvalQ_germ 𝒥 hx ⟨cls 𝒥 hs, isQ_cls 𝒥 hs⟩⟩⟩
 
 /-- **The stalks of `𝒪/𝒥` are the quotients `𝒪_x/𝒥_x` of the stalks of `𝒪`.** -/
+@[montpellier "55, 13"]
 noncomputable def stalkQuotientEquiv (x : Xsp) :
     (Qpre 𝒥).stalk x ≃+* (Opre κ ε ι).stalk x ⧸ Jgerm 𝒥 x :=
   (stalkEquivQ 𝒥 x).trans (fibEquiv 𝒥 x)
@@ -1205,6 +1207,7 @@ theorem identity_principle_quotient_infty (hft : 𝒥.toSheafOfModules.IsFiniteT
 /-- **Condition (v) of Lemme B, for every Ideal of finite type `𝒥`.** Every point `y` of
 `Y = Supp 𝒪/𝒥` has an open neighbourhood `U` on which a section of `𝒪_Y = 𝒪/𝒥` vanishing near `y`
 vanishes; the hypothesis of (v) that `𝒪_{Y,y}` be a domain is not needed. -/
+@[montpellier "55, 13"]
 theorem identity_principle_quotient (hft : 𝒥.toSheafOfModules.IsFiniteType) {y : Xsp}
     (hy : y ∈ Supp 𝒥) :
     ∃ U : Opens Xsp, y ∈ U ∧ ∀ σ : (Qpre 𝒥).obj (op U),
@@ -1218,6 +1221,7 @@ theorem identity_principle_quotient (hft : 𝒥.toSheafOfModules.IsFiniteType) {
 `𝒥`: at every point `y` where the stalk of `𝒪_Y = 𝒪/𝒥` is a domain (in particular `y ∈ Y`),
 there is an open neighbourhood `U` of `y` such that a section of `𝒪/𝒥` over `U` whose
 restriction to some open neighbourhood of `y` is `0` is `0`. -/
+@[montpellier "55, 13"]
 theorem identity_principle_quotient' (hft : 𝒥.toSheafOfModules.IsFiniteType) {y : Xsp}
     (hy : IsDomain ((Qpre 𝒥).stalk y)) :
     ∃ U : Opens Xsp, y ∈ U ∧ ∀ σ : (Qpre 𝒥).obj (op U),
@@ -1242,6 +1246,7 @@ variable (k : Type) [Field k]
 `𝒪_{Y,y}` is a domain, some open neighbourhood `U` of `y` has the property that a section of
 `𝒪/𝒥` over `U` vanishing near `y` vanishes. Yet the coherent Ideals `𝒢_j` of `𝒪` form an
 increasing sequence which is not stationary. -/
+@[montpellier "55, 13"]
 theorem lemmeB_counterexample_v :
     CompactSpace Xsp ∧
       Stacks.SheafOfModules.IsCoherent (SheafOfModules.unit (Osheaf (κ₀ k) (ε₀ k) (ι₀ k))) ∧

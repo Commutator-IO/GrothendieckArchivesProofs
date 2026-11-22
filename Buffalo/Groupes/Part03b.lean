@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic groups, Part 03 (b): regularity, smoothness, normality
@@ -46,6 +47,7 @@ universe u
 
 /-- 3ULFIl_2Wis-9030 (2:30:30) [thm] Regularity is preserved by extension of the base field: the
 case of affine space, `𝔸ⁿ_{k'} = Spec k'[X₁,…,Xₙ]` is regular for every field `k'`. -/
+@[buffalo "3ULFIl_2Wis-9030"]
 theorem affineSpace_regular (K' : Type*) [Field K'] (n : ℕ) :
     IsRegularRing (MvPolynomial (Fin n) K') :=
   inferInstance
@@ -53,6 +55,7 @@ theorem affineSpace_regular (K' : Type*) [Field K'] (n : ℕ) :
 /-- 3ULFIl_2Wis-9092 (2:31:32) [def] Essentially of finite type is Mathlib's
 `Algebra.EssFiniteType`; a field extension essentially of finite type is finitely generated as a
 field. -/
+@[buffalo "3ULFIl_2Wis-9092"]
 theorem essFiniteType_field_fg (K L : Type*) [Field K] [Field L] [Algebra K L]
     [Algebra.EssFiniteType K L] : (⊤ : IntermediateField K L).FG :=
   IntermediateField.fg_top K L
@@ -63,13 +66,16 @@ def IsRegularScheme : ObjectProperty Scheme.{u} :=
 
 /-- 3ULFIl_2Wis-9541 (2:39:01) [def] `X` is geometrically regular over `k` if every base change to
 a field is regular. -/
+@[buffalo "3ULFIl_2Wis-9541"]
 def GeometricallyRegular : MorphismProperty Scheme.{u} := geometrically IsRegularScheme
 
 /-- 3ULFIl_2Wis-9541 (2:39:01) [def] ... and smooth if moreover locally of finite type. -/
+@[buffalo "3ULFIl_2Wis-9541"]
 def IsSmoothGR {X Y : Scheme.{u}} (f : X ⟶ Y) : Prop :=
   LocallyOfFiniteType f ∧ GeometricallyRegular f
 
 /-- 3ULFIl_2Wis-10463 (2:54:23) [prop] A geometrically regular scheme over `k` is regular. -/
+@[buffalo "3ULFIl_2Wis-10463"]
 theorem isRegular_of_geometricallyRegular {K : Type u} [Field K] {X : Scheme.{u}}
     (f : X ⟶ Spec (.of K)) (hf : GeometricallyRegular f) : IsRegularScheme X :=
   hf (𝟙 _) (𝟙 X) f IsPullback.of_id_snd.flip
@@ -80,12 +86,14 @@ variable {K : Type} [Field K] (p : ℕ) [hp : Fact p.Prime] (a : K)
 
 /-- 3ULFIl_2Wis-10463 (2:54:23) [prop] Over an imperfect field `K` (`a ∈ K` not a `p`-th power),
 `X^p - a` is irreducible, so `L = K[X]/(X^p - a)` is a field. -/
+@[buffalo "3ULFIl_2Wis-10463"]
 theorem insep_irreducible (ha : ∀ b : K, b ^ p ≠ a) : Irreducible (X ^ p - C a : K[X]) :=
   X_pow_sub_C_irreducible_of_prime hp.out ha
 
 /-- 3ULFIl_2Wis-10463 (2:54:23) [prop] ... but `L ⊗_K L` is not reduced: `Spec L` is regular (a
 field) and not geometrically regular (nor geometrically normal, nor geometrically reduced), so the
 converse fails over every imperfect field. -/
+@[buffalo "3ULFIl_2Wis-10463"]
 theorem insep_tensor_not_reduced [CharP K p] (ha : ∀ b : K, b ^ p ≠ a) :
     ¬ IsReduced (AdjoinRoot (X ^ p - C a : K[X]) ⊗[K] AdjoinRoot (X ^ p - C a : K[X])) := by
   set f : K[X] := X ^ p - C a
@@ -131,11 +139,13 @@ end Insep
 
 /-- 3ULFIl_2Wis-10525 (2:55:25) [prop] Geometric regularity is invariant under extension of the
 base (stable under base change). -/
+@[buffalo "3ULFIl_2Wis-10525"]
 instance : GeometricallyRegular.IsStableUnderBaseChange :=
   inferInstanceAs (geometrically IsRegularScheme).IsStableUnderBaseChange
 
 /-- 3ULFIl_2Wis-10920 (3:02:00) [def] `X → Y` is geometrically regular at `x` if, after every base
 change to a field, the local rings at the points over `x` are regular. -/
+@[buffalo "3ULFIl_2Wis-10920"]
 def GeometricallyRegularAt {X Y : Scheme.{u}} (f : X ⟶ Y) (x : X) : Prop :=
   ∀ ⦃K : Type u⦄ [Field K] (y : Spec (.of K) ⟶ Y) ⦃Z : Scheme.{u}⦄ (fst : Z ⟶ X)
     (snd : Z ⟶ Spec (.of K)), IsPullback fst snd f y →
@@ -143,6 +153,7 @@ def GeometricallyRegularAt {X Y : Scheme.{u}} (f : X ⟶ Y) (x : X) : Prop :=
 
 /-- 3ULFIl_2Wis-11054 (3:04:14) [thm] Jacobian criterion, one direction: a smooth morphism is,
 locally on the source, étale over an affine space `𝔸ⁿ` of the base. -/
+@[buffalo "3ULFIl_2Wis-11054"]
 theorem smooth_locally_etale_over_affineSpace {X Y : Scheme.{u}} (f : X ⟶ Y) [Smooth f]
     (x : X) : ∃ (U : Y.Opens) (_ : IsAffineOpen U) (V : X.Opens) (_ : IsAffineOpen V) (_ : x ∈ V)
       (e : V ≤ f ⁻¹ᵁ U), ∃ n, ∃ g : MvPolynomial (Fin n) Γ(Y, U) →+* Γ(X, V),
@@ -152,6 +163,7 @@ theorem smooth_locally_etale_over_affineSpace {X Y : Scheme.{u}} (f : X ⟶ Y) [
 
 /-- 3ULFIl_2Wis-11119 (3:05:19) [def] Étale over a field (Mathlib's `Algebra.Etale`) means a finite
 product of finite separable extensions. -/
+@[buffalo "3ULFIl_2Wis-11119"]
 theorem etale_field_iff (K A : Type u) [Field K] [CommRing A] [Algebra K A] :
     Algebra.Etale K A ↔
       ∃ (I : Type u) (_ : Finite I) (Ai : I → Type u) (_ : ∀ i, Field (Ai i))
@@ -160,6 +172,7 @@ theorem etale_field_iff (K A : Type u) [Field K] [CommRing A] [Algebra K A] :
   Algebra.Etale.iff_exists_algEquiv_prod K A
 
 /-- 3ULFIl_2Wis-11314 (3:08:34) [def] A scheme étale over `𝔸ⁿ_k` is smooth over `k`. -/
+@[buffalo "3ULFIl_2Wis-11314"]
 theorem smooth_of_etale_over_affineSpace (K A : Type*) [Field K] [CommRing A] [Algebra K A]
     (n : ℕ) [Algebra (MvPolynomial (Fin n) K) A] [IsScalarTower K (MvPolynomial (Fin n) K) A]
     [Algebra.Etale (MvPolynomial (Fin n) K) A] : Algebra.Smooth K A :=
@@ -167,24 +180,28 @@ theorem smooth_of_etale_over_affineSpace (K A : Type*) [Field K] [CommRing A] [A
 
 /-- 3ULFIl_2Wis-11575 (3:12:55) [prop] Over a perfect field, every finitely generated extension is
 separably generated (a finite separable extension of a purely transcendental one). -/
+@[buffalo "3ULFIl_2Wis-11575"]
 theorem separablyGenerated_of_perfectField (K L : Type*) [Field K] [Field L] [Algebra K L]
     [PerfectField K] [Algebra.EssFiniteType K L] : Algebra.IsSeparablyGenerated K L :=
   inferInstance
 
 /-- 3ULFIl_2Wis-12229 (3:23:49) [prop] For an algebra of finite presentation, the étale locus is
 open. -/
+@[buffalo "3ULFIl_2Wis-12229"]
 theorem isOpen_etaleLocus (R A : Type*) [CommRing R] [CommRing A] [Algebra R A]
     [Algebra.FinitePresentation R A] : IsOpen (Algebra.etaleLocus R A) :=
   Algebra.isOpen_etaleLocus
 
 /-- 3ULFIl_2Wis-12422 (3:27:02) [prop] The smooth locus of a morphism locally of finite
 presentation (e.g. of a scheme locally of finite type over a field) is open. -/
+@[buffalo "3ULFIl_2Wis-12422"]
 theorem isOpen_smoothLocus {X Y : Scheme} (f : X ⟶ Y) [LocallyOfFinitePresentation f] :
     IsOpen (f.smoothLocus : Set X) :=
   f.smoothLocus.2
 
 /-- 3ULFIl_2Wis-12486 (3:28:06) [prop] In a quasi-sober space with finitely many irreducible
 components, an open set is dense iff it contains the generic points of all the components. -/
+@[buffalo "3ULFIl_2Wis-12486"]
 theorem dense_iff_genericPoints {X : Type*} [TopologicalSpace X] [QuasiSober X]
     (hfin : (irreducibleComponents X).Finite) {U : Set X} (hU : IsOpen U) :
     Dense U ↔ ∀ Z ∈ irreducibleComponents X, ∀ η : X, IsGenericPoint η Z → η ∈ U := by
@@ -215,6 +232,7 @@ theorem dense_iff_genericPoints {X : Type*} [TopologicalSpace X] [QuasiSober X]
 
 /-- 3ULFIl_2Wis-12486 (3:28:06) [prop] For `X` quasi-compact and locally of finite type over `k`,
 the smooth locus is dense iff `X` is smooth at its maximal (generic) points. -/
+@[buffalo "3ULFIl_2Wis-12486"]
 theorem dense_smoothLocus_iff {K : Type u} [Field K] {X : Scheme.{u}} (f : X ⟶ Spec (.of K))
     [LocallyOfFiniteType f] [CompactSpace X] :
     Dense (f.smoothLocus : Set X) ↔
@@ -225,6 +243,7 @@ theorem dense_smoothLocus_iff {K : Type u} [Field K] {X : Scheme.{u}} (f : X ⟶
 
 /-- 3ULFIl_2Wis-12550 (3:29:10) [prop] A separably generated extension (with a separating
 transcendence basis) is formally smooth, i.e. geometrically regular. -/
+@[buffalo "3ULFIl_2Wis-12550"]
 theorem formallySmooth_of_separatingBasis {K L ι : Type*} [Field K] [Field L] [Algebra K L]
     {v : ι → L} (hv : AlgebraicIndependent K v)
     [Algebra.IsSeparable (IntermediateField.adjoin K (Set.range v)) L] :
@@ -233,6 +252,7 @@ theorem formallySmooth_of_separatingBasis {K L ι : Type*} [Field K] [Field L] [
 
 /-- 3ULFIl_2Wis-12689 (3:31:29) [prop] Over a perfect field, the smooth points of a reduced scheme
 locally of finite type form a dense open set. -/
+@[buffalo "3ULFIl_2Wis-12689"]
 theorem smoothLocus_open_dense {K : Type u} [Field K] [PerfectField K] {X : Scheme.{u}}
     [IsReduced X] (f : X ⟶ Spec (.of K)) [LocallyOfFinitePresentation f] :
     IsOpen (f.smoothLocus : Set X) ∧ Dense (f.smoothLocus : Set X) :=
@@ -248,11 +268,13 @@ def IsNormalScheme : ObjectProperty Scheme.{u} :=
 def GeometricallyNormal : MorphismProperty Scheme.{u} := geometrically IsNormalScheme
 
 /-- 3ULFIl_2Wis-13011 (3:36:51) [prop] Geometric normality is stable under base change ... -/
+@[buffalo "3ULFIl_2Wis-13011"]
 instance : GeometricallyNormal.IsStableUnderBaseChange :=
   inferInstanceAs (geometrically IsNormalScheme).IsStableUnderBaseChange
 
 /-- 3ULFIl_2Wis-13011 (3:36:51) [prop] ... and implies normality (the converse fails over an
 imperfect field, `insep_tensor_not_reduced`). -/
+@[buffalo "3ULFIl_2Wis-13011"]
 theorem isNormal_of_geometricallyNormal {K : Type u} [Field K] {X : Scheme.{u}}
     (f : X ⟶ Spec (.of K)) (hf : GeometricallyNormal f) : IsNormalScheme X :=
   hf (𝟙 _) (𝟙 X) f IsPullback.of_id_snd.flip
@@ -261,6 +283,7 @@ theorem isNormal_of_geometricallyNormal {K : Type u} [Field K] {X : Scheme.{u}}
 
 /-- 3ULFIl_2Wis-13091 (3:38:11) [prop] A geometrically reduced (separable) group scheme locally of
 finite type over a field is smooth (Mathlib `smooth_of_grpObj`). -/
+@[buffalo "3ULFIl_2Wis-13091"]
 theorem grp_smooth_of_geometricallyReduced {K : Type u} [Field K] {G : Scheme.{u}}
     (f : G ⟶ Spec (.of K)) [LocallyOfFiniteType f] [GrpObj (Over.mk f)] [GeometricallyReduced f] :
     Smooth f :=
@@ -268,6 +291,7 @@ theorem grp_smooth_of_geometricallyReduced {K : Type u} [Field K] {G : Scheme.{u
 
 /-- 3ULFIl_2Wis-13937 (3:52:17) [prop] In a noetherian space, the connected components are the
 irreducible components iff only one irreducible component passes through each point. -/
+@[buffalo "3ULFIl_2Wis-13937"]
 theorem connected_eq_irreducible_iff {X : Type*} [TopologicalSpace X]
     [TopologicalSpace.NoetherianSpace X] :
     (∀ x : X, connectedComponent x ∈ irreducibleComponents X) ↔

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 62, pages 35–47: the invariant `j` of a conic with an étale trisection
@@ -65,9 +66,11 @@ def num (t : K) : K := (t + 1) * (2 * t - 1) * (t - 2)
 def den (t : K) : K := t * (t - 1)
 
 /-- The invariant (11): `j(t) = −(1/27) (num t / den t)²`. -/
+@[montpellier "62, 35–47"]
 noncomputable def j (t : K) : K := -(1 / 27) * (num t / den t) ^ 2
 
 /-- The involution `κ(t) = (t − 2)/(2t − 1)`. -/
+@[montpellier "62, 35–47"]
 noncomputable def kappa (t : K) : K := (t - 2) / (2 * t - 1)
 
 theorem sub_one_ne {t : K} (ht1 : t ≠ 1) : t - 1 ≠ 0 := sub_ne_zero.2 ht1
@@ -81,6 +84,7 @@ theorem three_pow_ne (h3 : (3 : K) ≠ 0) : (27 : K) ≠ 0 :=
   (by norm_num : (3 : K) ^ 3 = 27) ▸ pow_ne_zero 3 h3
 
 /-- `j s − j t` as the product of the six factors `s − g(t)`, denominators cleared. -/
+@[montpellier "62, 35–47"]
 theorem j_sub_j (h3 : (3 : K) ≠ 0) {s t : K} (hs0 : s ≠ 0) (hs1 : s ≠ 1) (ht0 : t ≠ 0)
     (ht1 : t ≠ 1) :
     j s - j t = 4 / 27 * ((s - t) * ((1 - t) * s - 1) * (t * s - t + 1) *
@@ -95,6 +99,7 @@ theorem j_sub_j (h3 : (3 : K) ≠ 0) {s t : K} (hs0 : s ≠ 0) (hs1 : s ≠ 1) (
 
 /-- **The fibres of `j` are the `𝔖₃`-orbits.** For `s, t ∉ {0, 1}` in a field where `6` is
 invertible, `j s = j t` iff `s` is one of the six anharmonic images of `t`. -/
+@[montpellier "62, 35–47"]
 theorem j_eq_iff (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {s t : K} (hs0 : s ≠ 0) (hs1 : s ≠ 1)
     (ht0 : t ≠ 0) (ht1 : t ≠ 1) :
     j s = j t ↔ s = t ∨ s = 1 / t ∨ s = 1 - t ∨ s = t / (t - 1) ∨ s = 1 / (1 - t) ∨
@@ -126,14 +131,17 @@ section
 variable (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {t : K} (ht0 : t ≠ 0) (ht1 : t ≠ 1)
 include h2 h3 ht0 ht1
 
+@[montpellier "62, 35–47"]
 theorem j_inv : j (1 / t) = j t :=
   (j_eq_iff h2 h3 (one_div_ne_zero ht0)
     (fun h => ht1 ((div_eq_one_iff_eq ht0).1 h).symm) ht0 ht1).2 (Or.inr (Or.inl rfl))
 
+@[montpellier "62, 35–47"]
 theorem j_one_sub : j (1 - t) = j t :=
   (j_eq_iff h2 h3 (fun h => ht1 (by linear_combination -h))
     (fun h => ht0 (by linear_combination -h)) ht0 ht1).2 (Or.inr (Or.inr (Or.inl rfl)))
 
+@[montpellier "62, 35–47"]
 theorem j_div_sub_one : j (t / (t - 1)) = j t := by
   have h1 := sub_one_ne ht1
   refine (j_eq_iff h2 h3 (div_ne_zero ht0 h1) (fun h => ?_) ht0 ht1).2
@@ -141,6 +149,7 @@ theorem j_div_sub_one : j (t / (t - 1)) = j t := by
   rw [div_eq_one_iff_eq h1] at h
   exact one_ne_zero (by linear_combination h : (1 : K) = 0)
 
+@[montpellier "62, 35–47"]
 theorem j_one_div_one_sub : j (1 / (1 - t)) = j t := by
   have h1' := one_sub_ne ht1
   refine (j_eq_iff h2 h3 (one_div_ne_zero h1') (fun h => ?_) ht0 ht1).2
@@ -148,6 +157,7 @@ theorem j_one_div_one_sub : j (1 / (1 - t)) = j t := by
   rw [div_eq_one_iff_eq h1'] at h
   exact ht0 (by linear_combination h)
 
+@[montpellier "62, 35–47"]
 theorem j_sub_one_div : j ((t - 1) / t) = j t := by
   have h1 := sub_one_ne ht1
   refine (j_eq_iff h2 h3 (div_ne_zero h1 ht0) (fun h => ?_) ht0 ht1).2
@@ -158,6 +168,7 @@ theorem j_sub_one_div : j ((t - 1) / t) = j t := by
 end
 
 /-- `j t = 0` iff `t ∈ {−1, 2, 1/2}` (`t ∉ {0, 1}`). -/
+@[montpellier "62, 35–47"]
 theorem j_eq_zero_iff (h3 : (3 : K) ≠ 0) {t : K} (ht0 : t ≠ 0) (ht1 : t ≠ 1) :
     j t = 0 ↔ t = -1 ∨ t = 2 ∨ 2 * t = 1 := by
   have h27 := three_pow_ne h3
@@ -178,6 +189,7 @@ theorem one_sub_j (h3 : (3 : K) ≠ 0) {t : K} (ht0 : t ≠ 0) (ht1 : t ≠ 1) :
   ring
 
 /-- `j t = 1` iff `t² − t + 1 = 0` (`t ∉ {0, 1}`, `6` invertible). -/
+@[montpellier "62, 35–47"]
 theorem j_eq_one_iff (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {t : K} (ht0 : t ≠ 0)
     (ht1 : t ≠ 1) : j t = 1 ↔ t ^ 2 - t + 1 = 0 := by
   have h4 : (4 / 27 : K) ≠ 0 :=
@@ -189,6 +201,7 @@ theorem j_eq_one_iff (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {t : K} (ht0 : t 
 /-- **The orbit is free exactly where `j(j − 1)` is invertible.** For `t ∉ {0, 1}` in a
 field where `6` is invertible, no non-trivial anharmonic substitution fixes `t` iff
 `j t ≠ 0` and `j t ≠ 1`. -/
+@[montpellier "62, 41"]
 theorem stabilizer_trivial_iff (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {t : K} (ht0 : t ≠ 0)
     (ht1 : t ≠ 1) :
     (1 / t ≠ t ∧ 1 - t ≠ t ∧ t / (t - 1) ≠ t ∧ 1 / (1 - t) ≠ t ∧ (t - 1) / t ≠ t) ↔
@@ -212,6 +225,7 @@ theorem stabilizer_trivial_iff (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {t : K}
   tauto
 
 /-- `j = 1 − j_cl/1728`, `j_cl = 256 (t² − t + 1)³ / (t²(t − 1)²)` (`t ∉ {0, 1}`). -/
+@[montpellier "62, 35–47"]
 theorem j_eq_one_sub_jcl (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {t : K} (ht0 : t ≠ 0)
     (ht1 : t ≠ 1) :
     j t = 1 - 256 * (t ^ 2 - t + 1) ^ 3 / (t ^ 2 * (t - 1) ^ 2) / 1728 := by
@@ -225,6 +239,7 @@ theorem j_eq_one_sub_jcl (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {t : K} (ht0 
   ring
 
 /-- `κ` is an involution (`2t ≠ 1`, `3` invertible). -/
+@[montpellier "62, 35–47"]
 theorem kappa_kappa (h3 : (3 : K) ≠ 0) {t : K} (ht : 2 * t - 1 ≠ 0) : kappa (kappa t) = t := by
   have hk : kappa t * (2 * t - 1) = t - 2 := div_mul_cancel₀ _ ht
   have h2k : 2 * kappa t - 1 ≠ 0 := fun h => h3 (by linear_combination 2 * hk - (2 * t - 1) * h)
@@ -233,6 +248,7 @@ theorem kappa_kappa (h3 : (3 : K) ≠ 0) {t : K} (ht : 2 * t - 1 ≠ 0) : kappa 
   linear_combination -hk
 
 /-- (12): `j(κt) · j(t) = 1` for `t ∉ {0, 1, −1, 2, 1/2}`. -/
+@[montpellier "62, 35–47"]
 theorem j_kappa_mul (h3 : (3 : K) ≠ 0) {t : K} (ht0 : t ≠ 0) (ht1 : t ≠ 1) (htm : t + 1 ≠ 0)
     (ht2 : t - 2 ≠ 0) (ht : 2 * t - 1 ≠ 0) : j (kappa t) * j t = 1 := by
   set k := kappa t with hkdef

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 1a: presheaves and sheaves on a space (4 April 1973)
@@ -44,6 +45,7 @@ variable {X : TopCat.{u}}
 
 /-- URU5jgTvjhU-206 (0:03:26) [prop] The open sets `𝒪(X)`, ordered by inclusion, form a category:
 `Hom(U,V)` is a singleton if `U ⊆ V`, empty otherwise. -/
+@[buffalo "URU5jgTvjhU-206"]
 theorem opens_hom (U V : Opens X) : Subsingleton (U ⟶ V) ∧ (Nonempty (U ⟶ V) ↔ U ≤ V) :=
   ⟨inferInstance, fun ⟨f⟩ => f.le, fun h => ⟨homOfLE h⟩⟩
 
@@ -55,12 +57,14 @@ example (F G : X.Presheaf (Type u)) : (F ⟶ G) = NatTrans F G := rfl
 
 /-- URU5jgTvjhU-596 (0:09:56) [def] `F` is separated if, for every open covering `U = ⋃ Uᵢ`,
 `F(U) → ∏ F(Uᵢ)` is injective. -/
+@[buffalo "URU5jgTvjhU-596"]
 def IsSeparated (F : X.Presheaf (Type u)) : Prop :=
   ∀ ⦃ι : Type u⦄ (U : ι → Opens X) (s t : F.obj (op (iSup U))),
     (∀ i, F.map (Opens.leSupr U i).op s = F.map (Opens.leSupr U i).op t) → s = t
 
 /-- URU5jgTvjhU-859 (0:14:19) [def] `F` is a sheaf if, for every covering, `F(U)` is the equalizer
 of `∏ F(Uᵢ) ⇉ ∏ F(Uᵢ ∩ Uⱼ)`: Mathlib's sheaf condition is equivalent to this one. -/
+@[buffalo "URU5jgTvjhU-859"]
 theorem isSheaf_iff_equalizer (F : X.Presheaf (Type u)) :
     F.IsSheaf ↔ F.IsSheafEqualizerProducts :=
   TopCat.Presheaf.isSheaf_iff_isSheafEqualizerProducts F
@@ -71,6 +75,7 @@ theorem IsSeparated.of_isSheaf {F : X.Presheaf (Type u)} (hF : F.IsSheaf) : IsSe
   exact TopCat.Sheaf.eq_of_locally_eq ⟨F, hF⟩ U s t h
 
 /-- URU5jgTvjhU-988 (0:16:28) [prop] The sheaves form a full subcategory of the presheaves. -/
+@[buffalo "URU5jgTvjhU-988"]
 def sheafToPresheaf_fullyFaithful :
     (sheafToPresheaf (Opens.grothendieckTopology X) (Type u)).FullyFaithful :=
   fullyFaithfulSheafToPresheaf _ _
@@ -78,6 +83,7 @@ def sheafToPresheaf_fullyFaithful :
 /-! ## Examples of sheaves -/
 
 /-- URU5jgTvjhU-1127 (0:18:47) [ex] For a set `E`, `U ↦ E^U` is a sheaf. -/
+@[buffalo "URU5jgTvjhU-1127"]
 theorem maps_isSheaf (E : Type u) : (X.presheafToTypes fun _ => E).IsSheaf :=
   TopCat.Presheaf.toTypes_isSheaf X _
 
@@ -88,6 +94,7 @@ example (F : X.Presheaf (Type u)) (G : Subfunctor F) (U V : (Opens X)ᵒᵖ) (i 
   G.map i
 
 /-- URU5jgTvjhU-1452 (0:24:12) [prop] A subpresheaf of a separated presheaf is separated. -/
+@[buffalo "URU5jgTvjhU-1452"]
 theorem IsSeparated.subfunctor {F : X.Presheaf (Type u)} (hF : IsSeparated F) (G : Subfunctor F) :
     IsSeparated (G.toFunctor : X.Presheaf (Type u)) := by
   intro ι U s t h
@@ -98,6 +105,7 @@ theorem IsSeparated.subfunctor {F : X.Presheaf (Type u)} (hF : IsSeparated F) (G
 
 /-- URU5jgTvjhU-1452 (0:24:12) [prop] A subpresheaf `G` of a sheaf `F` is a sheaf if and only if
 membership of a section in `G` is a local property. -/
+@[buffalo "URU5jgTvjhU-1452"]
 theorem subfunctor_isSheaf_iff {F : X.Presheaf (Type u)} (hF : F.IsSheaf) (G : Subfunctor F) :
     TopCat.Presheaf.IsSheaf (X := X) G.toFunctor ↔
       ∀ ⦃ι : Type u⦄ (U : ι → Opens X) (s : F.obj (op (iSup U))),
@@ -127,6 +135,7 @@ theorem subfunctor_isSheaf_iff {F : X.Presheaf (Type u)} (hF : F.IsSheaf) (G : S
 
 /-- URU5jgTvjhU-1579 (0:26:19) [ex] For a topological space `E`, the continuous maps from open sets
 of `X` to `E` form a subsheaf of `U ↦ E^U` (Mathlib's `TopCat.continuousLocal`). -/
+@[buffalo "URU5jgTvjhU-1579"]
 def continuousSheaf (E : Type u) [TopologicalSpace E] : TopCat.Sheaf (Type u) X :=
   TopCat.subsheafToTypes (TopCat.continuousLocal X E)
 
@@ -144,11 +153,13 @@ def sectionPred {E : Type u} [TopologicalSpace E] (p : E → X) :
 
 /-- URU5jgTvjhU-1769 (0:29:29) [ex] For `p : E → X` continuous, the continuous sections of `p`
 over the open sets form a sheaf. -/
+@[buffalo "URU5jgTvjhU-1769"]
 def sectionSheaf {E : Type u} [TopologicalSpace E] (p : E → X) : TopCat.Sheaf (Type u) X :=
   TopCat.subsheafToTypes (sectionPred p)
 
 /-- URU5jgTvjhU-1965 (0:32:45) [prop] The sheaf of continuous maps to `E` is isomorphic to the sheaf
 of sections of the second projection `E × X → X`. -/
+@[buffalo "URU5jgTvjhU-1965"]
 def continuousIsoSections (E : Type u) [TopologicalSpace E] :
     (continuousSheaf (X := X) E).obj ≅ (sectionSheaf (Prod.snd : E × X → X)).obj :=
   NatIso.ofComponents
@@ -164,6 +175,7 @@ def continuousIsoSections (E : Type u) [TopologicalSpace E] :
 
 /-- URU5jgTvjhU-2164 (0:36:04) [ex] `U ↦ {subsets of U}`, restriction by intersection, is a sheaf
 (a subset of `U` being a map `U → Prop`). -/
+@[buffalo "URU5jgTvjhU-2164"]
 theorem subsets_isSheaf : (X.presheafToTypes fun _ => Prop).IsSheaf :=
   TopCat.Presheaf.toTypes_isSheaf X _
 
@@ -176,6 +188,7 @@ noncomputable abbrev sectionsOver (E : Over X) : X.Presheaf (Type u) :=
 /-- URU5jgTvjhU-2487 (0:41:27) [prop] The sheaf of sections defines a functor from spaces over `X`
 to sheaves on `X`, `f ↦ (s ↦ f ∘ s)` (here with values in presheaves; each value is a sheaf by
 `sectionSheaf`). -/
+@[buffalo "URU5jgTvjhU-2487"]
 noncomputable def sectionsFunctor : Over X ⥤ X.Presheaf (Type u) where
   obj E := sectionsOver E
   map {E E'} g :=
@@ -191,6 +204,7 @@ noncomputable def sectionsFunctor : Over X ⥤ X.Presheaf (Type u) where
 /-- URU5jgTvjhU-2680 (0:44:40) [cex] Over a point the functor of sections is the forgetful functor
 from spaces to sets, which is not full (hence not fully faithful): `decide : Prop → Bool` is a map
 of sets from the Sierpiński space to the discrete space `Bool` that is not continuous. -/
+@[buffalo "URU5jgTvjhU-2680"]
 theorem forget_topCat_not_full : ¬ (forget TopCat.{0}).Full := by
   intro hfull
   let d : Prop → Bool := fun p => @decide p (Classical.dec p)
@@ -207,6 +221,7 @@ theorem forget_topCat_not_full : ¬ (forget TopCat.{0}).Full := by
   simp [d] at this
 
 /-- URU5jgTvjhU-2811 (0:46:51) [def] For `U` open, `Γ_U : F ↦ F(U)` is a functor `Sh(X) → Set`. -/
+@[buffalo "URU5jgTvjhU-2811"]
 def sectionsOn (U : Opens X) : TopCat.Sheaf (Type u) X ⥤ Type u :=
   sheafToPresheaf _ _ ⋙ (evaluation _ _).obj (op U)
 
@@ -219,6 +234,7 @@ example {C : Type*} [Category C] {I : C} (h : IsInitial I) : IsTerminal (op I) :
 
 /-- URU5jgTvjhU-5888 (1:38:08) [prop] In `Set`, the initial object is `∅` and coproducts are
 disjoint unions. -/
+@[buffalo "URU5jgTvjhU-5888"]
 theorem types_initial_coproduct {J : Type u} (F : J → Type u) :
     Nonempty (IsInitial (PEmpty.{u + 1})) ∧
       (Types.coproductColimitCocone.{u, u} F).cocone.pt = Σ j, F j :=
@@ -227,6 +243,7 @@ theorem types_initial_coproduct {J : Type u} (F : J → Type u) :
 /-- URU5jgTvjhU-5888 (1:38:08) [prop] In `Set`, the coequalizer of `f, g : E ⇉ F` (Mathlib's
 `Types.coequalizerColimit`, on `Function.Coequalizer f g`) is the quotient of `F` by the
 equivalence relation generated by the image of `E` in `F × F`. -/
+@[buffalo "URU5jgTvjhU-5888"]
 theorem types_coequalizer {E F : Type u} (f g : E → F) (a b : F) :
     (Types.coequalizerColimit (↾f) (↾g)).cocone.pt = Function.Coequalizer f g ∧
     (Function.Coequalizer.mk f g a = Function.Coequalizer.mk f g b ↔
@@ -242,6 +259,7 @@ theorem types_coequalizer {E F : Type u} (f g : E → F) (a b : F) :
 
 /-- URU5jgTvjhU-6015 (1:40:15) [ex] In groups the coproduct is the free product (universal property
 of `Monoid.CoprodI`); the free product of copies of `ℤ` indexed by `ι` is the free group on `ι`. -/
+@[buffalo "URU5jgTvjhU-6015"]
 def coprodI_int_equiv_freeGroup (ι : Type u) :
     Monoid.CoprodI (fun _ : ι => Multiplicative ℤ) ≃* FreeGroup ι :=
   MonoidHom.toMulEquiv
@@ -251,6 +269,7 @@ def coprodI_int_equiv_freeGroup (ι : Type u) :
     (FreeGroup.ext_hom _ _ fun i => by simp)
 
 /-- URU5jgTvjhU-6015 (1:40:15) [ex] The free product is the coproduct of groups. -/
+@[buffalo "URU5jgTvjhU-6015"]
 def coprodI_universal {ι : Type u} (G : ι → Type u) [∀ i, Group (G i)] (H : Type u) [Group H] :
     (∀ i, G i →* H) ≃ (Monoid.CoprodI G →* H) :=
   Monoid.CoprodI.lift
@@ -258,6 +277,7 @@ def coprodI_universal {ι : Type u} (G : ι → Type u) [∀ i, Group (G i)] (H 
 /-- URU5jgTvjhU-6082 (1:41:22) [rem] For groups, limits are computed on the underlying sets
 (the forgetful functor preserves limits) but colimits are not: the initial group is not sent to the
 initial (empty) set. -/
+@[buffalo "URU5jgTvjhU-6082"]
 theorem grp_forget_limits_not_colimits :
     Nonempty (PreservesLimits (forget GrpCat.{u})) ∧
       ¬ Nonempty (IsInitial ((forget GrpCat.{u}).obj (⊥_ GrpCat.{u}))) := by
@@ -266,6 +286,7 @@ theorem grp_forget_limits_not_colimits :
 
 /-- URU5jgTvjhU-6212 (1:43:32) [prop] If `S` has limits of shape `J`, so has `Hom(Cᵒᵖ, S)`, and they
 are computed argumentwise (evaluation preserves them); likewise for colimits. -/
+@[buffalo "URU5jgTvjhU-6212"]
 theorem functor_limits {C S J : Type*} [Category C] [Category S] [Category J]
     [HasLimitsOfShape J S] [HasColimitsOfShape J S] (c : Cᵒᵖ) :
     HasLimitsOfShape J (Cᵒᵖ ⥤ S) ∧ Nonempty (PreservesLimitsOfShape J ((evaluation Cᵒᵖ S).obj c)) ∧
@@ -274,22 +295,26 @@ theorem functor_limits {C S J : Type*} [Category C] [Category S] [Category J]
   ⟨inferInstance, ⟨inferInstance⟩, inferInstance, ⟨inferInstance⟩⟩
 
 /-- URU5jgTvjhU-6275 (1:44:35) [prop] The category opposite to `Hom(Cᵒᵖ, S)` is `Hom(C, Sᵒᵖ)`. -/
+@[buffalo "URU5jgTvjhU-6275"]
 def functor_op_equiv (C S : Type*) [Category C] [Category S] : (Cᵒᵖ ⥤ S)ᵒᵖ ≌ (C ⥤ Sᵒᵖ) :=
   (Functor.opUnopEquiv Cᵒᵖ S).trans (opOpEquivalence C).congrLeft
 
 /-- URU5jgTvjhU-6401 (1:46:41) [prop] Presheaves on `X` admit all colimits, computed open set by
 open set. -/
+@[buffalo "URU5jgTvjhU-6401"]
 theorem presheaf_colimits (U : Opens X) :
     HasColimits (X.Presheaf (Type u)) ∧
       Nonempty (PreservesColimits ((evaluation (Opens X)ᵒᵖ (Type u)).obj (op U))) :=
   ⟨inferInstance, ⟨inferInstance⟩⟩
 
 /-- URU5jgTvjhU-6730 (1:52:10) [prop] For every sheaf `F`, `F(∅)` is a singleton. -/
+@[buffalo "URU5jgTvjhU-6730"]
 theorem sheaf_empty_unique (F : TopCat.Sheaf (Type u) X) : Nonempty (Unique (F.obj.obj (op ⊥))) :=
   ⟨Types.isTerminalEquivUnique _ (TopCat.Sheaf.isTerminalOfEmpty F)⟩
 
 /-- URU5jgTvjhU-6602 (1:50:02) [ex] The constant presheaf with two elements (the coproduct, taken
 in presheaves, of the terminal object with itself) is not a sheaf. -/
+@[buffalo "URU5jgTvjhU-6602"]
 theorem const_bool_not_isSheaf :
     ¬ TopCat.Presheaf.IsSheaf (X := X) ((Functor.const (Opens X)ᵒᵖ).obj (ULift.{u} Bool)) := by
   intro h
@@ -297,6 +322,7 @@ theorem const_bool_not_isSheaf :
   exact absurd (hu.uniq ⟨true⟩ ▸ (hu.uniq ⟨false⟩).symm) (by simp)
 
 /-- URU5jgTvjhU-6797 (1:53:17) [ex] The initial presheaf `U ↦ ∅` is not a sheaf. -/
+@[buffalo "URU5jgTvjhU-6797"]
 theorem const_empty_not_isSheaf :
     ¬ TopCat.Presheaf.IsSheaf (X := X) ((Functor.const (Opens X)ᵒᵖ).obj PEmpty.{u + 1}) := by
   intro h
@@ -305,6 +331,7 @@ theorem const_empty_not_isSheaf :
 
 /-- URU5jgTvjhU-6469 (1:47:49) [cex] `Sh(X)` is not stable in presheaves under the usual colimits:
 neither the initial presheaf nor the presheaf coproduct `1 ⊔ 1` is a sheaf, on any space. -/
+@[buffalo "URU5jgTvjhU-6469"]
 theorem sheaves_not_stable_colimits :
     ¬ TopCat.Presheaf.IsSheaf (X := X) ((Functor.const (Opens X)ᵒᵖ).obj PEmpty.{u + 1}) ∧
       ¬ TopCat.Presheaf.IsSheaf (X := X) ((Functor.const (Opens X)ᵒᵖ).obj (ULift.{u} Bool)) :=
@@ -314,16 +341,19 @@ theorem sheaves_not_stable_colimits :
 
 /-- URU5jgTvjhU-7053 (1:57:33) [def] The sheaf associated to `P` is a sheaf `aP` with `P → aP`
 universal among morphisms from `P` to sheaves (Mathlib's `presheafToSheaf`, `toSheafify`). -/
+@[buffalo "URU5jgTvjhU-7053"]
 def sheafifyUniversal (P : X.Presheaf (Type u)) (F : TopCat.Sheaf (Type u) X) :
     ((presheafToSheaf (Opens.grothendieckTopology X) (Type u)).obj P ⟶ F) ≃ (P ⟶ F.obj) :=
   (sheafificationAdjunction _ _).homEquiv P F
 
 /-- URU5jgTvjhU-7116 (1:58:36) [thm] Every presheaf admits an associated sheaf (unique up to unique
 isomorphism, as the left adjoint of the inclusion). -/
+@[buffalo "URU5jgTvjhU-7116"]
 theorem hasSheafify : HasSheafify (Opens.grothendieckTopology X) (Type u) := inferInstance
 
 /-- URU5jgTvjhU-7310 (2:01:50) [prop] `Sh(X)` admits all colimits, and the associated-sheaf functor
 preserves them: the colimit of sheaves is the sheaf associated to the presheaf colimit. -/
+@[buffalo "URU5jgTvjhU-7310"]
 theorem sheaf_colimits :
     (∀ (K : Type u) [SmallCategory K],
       HasColimitsOfShape K (Sheaf (Opens.grothendieckTopology X) (Type u))) ∧
@@ -332,6 +362,7 @@ theorem sheaf_colimits :
   exact ⟨fun K _ => inferInstance, ⟨inferInstance⟩⟩
 
 /-- URU5jgTvjhU-7310 (2:01:50) [prop] A presheaf and its associated sheaf have the same stalks. -/
+@[buffalo "URU5jgTvjhU-7310"]
 def sheafify_stalk (F : X.Presheaf (Type u)) (x : X) :
     TopCat.Presheaf.stalk F.sheafify.obj x ≅ F.stalk x :=
   TopCat.Presheaf.sheafifyStalkIso F x
@@ -350,6 +381,7 @@ theorem isLocalHomeomorph_of_isOpenMap {A B : Type*} [TopologicalSpace A] [Topol
 
 /-- URU5jgTvjhU-7450 (2:04:10) [prop] The disjoint topological sum of a family of étalé spaces over
 `X` is étalé over `X`. -/
+@[buffalo "URU5jgTvjhU-7450"]
 theorem sigma_isLocalHomeomorph {B ι : Type*} [TopologicalSpace B] {E : ι → Type*}
     [∀ i, TopologicalSpace (E i)] (p : ∀ i, E i → B) (hp : ∀ i, IsLocalHomeomorph (p i)) :
     IsLocalHomeomorph fun z : Σ i, E i => p z.1 z.2 := by
@@ -364,6 +396,7 @@ theorem sigma_isLocalHomeomorph {B ι : Type*} [TopologicalSpace B] {E : ι → 
 /-- URU5jgTvjhU-7516 (2:05:16) [prop] For étalé `q : G → X` and two maps `a, b : F ⇉ G` over `X`
 (continuous and open, as maps of étalé spaces are), the quotient `G/R` of `G` by the equivalence
 relation generated by `a(e) ~ b(e)`, with the quotient topology, is étalé over `X`. -/
+@[buffalo "URU5jgTvjhU-7516"]
 theorem quot_isLocalHomeomorph {F G B : Type*} [TopologicalSpace F] [TopologicalSpace G]
     [TopologicalSpace B] (q : G → B) (hq : IsLocalHomeomorph q) (a b : F → G)
     (hac : Continuous a) (hbc : Continuous b) (ha : IsOpenMap a) (hb : IsOpenMap b)
@@ -446,6 +479,7 @@ theorem quot_isLocalHomeomorph {F G B : Type*} [TopologicalSpace F] [Topological
 
 /-- URU5jgTvjhU-7642 (2:07:22) [prop] Coproducts and coequalizers suffice to construct all
 colimits. -/
+@[buffalo "URU5jgTvjhU-7642"]
 theorem colimits_of_coproducts_coequalizers {C : Type*} [Category C] [HasCoproducts.{u} C]
     [HasCoequalizers C] : HasColimitsOfSize.{u, u} C :=
   has_colimits_of_hasCoequalizers_and_coproducts
@@ -455,6 +489,7 @@ theorem colimits_of_coproducts_coequalizers {C : Type*} [Category C] [HasCoprodu
 /-- URU5jgTvjhU-7960 (2:12:40) [prop] In a category of presheaves of sets, limits and colimits are
 computed argumentwise; in particular a morphism is an epimorphism if and only if it is surjective
 on every argument. -/
+@[buffalo "URU5jgTvjhU-7960"]
 theorem presheaf_epi_iff {C : Type u} [SmallCategory C] {F G : Cᵒᵖ ⥤ Type u} (f : F ⟶ G) :
     Epi f ↔ ∀ c, Function.Surjective (f.app c) := by
   rw [NatTrans.epi_iff_epi_app]
@@ -462,6 +497,7 @@ theorem presheaf_epi_iff {C : Type u} [SmallCategory C] {F G : Cᵒᵖ ⥤ Type 
 
 /-- URU5jgTvjhU-8025 (2:13:45) [prop] The associated-sheaf functor `a` is left adjoint to the
 inclusion; hence it commutes with colimits. -/
+@[buffalo "URU5jgTvjhU-8025"]
 theorem sheafify_adjoint :
     Nonempty (presheafToSheaf (Opens.grothendieckTopology X) (Type u) ⊣
       sheafToPresheaf (Opens.grothendieckTopology X) (Type u)) ∧
@@ -469,12 +505,14 @@ theorem sheafify_adjoint :
   ⟨⟨sheafificationAdjunction _ _⟩, ⟨inferInstance⟩⟩
 
 /-- URU5jgTvjhU-8089 (2:14:49) [thm] The associated-sheaf functor is left exact. -/
+@[buffalo "URU5jgTvjhU-8089"]
 theorem sheafify_leftExact :
     Nonempty (PreservesFiniteLimits (presheafToSheaf (Opens.grothendieckTopology X) (Type u))) :=
   ⟨inferInstance⟩
 
 /-- URU5jgTvjhU-8672 (2:24:32) [prop] In `Sh(X)`, (finite) coproducts are stable under base change
 and disjoint: `Sh(X)` is finitary extensive. -/
+@[buffalo "URU5jgTvjhU-8672"]
 theorem sheaf_finitaryExtensive :
     FinitaryExtensive (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
   inferInstance
@@ -483,29 +521,34 @@ theorem sheaf_finitaryExtensive :
 
 /-- URU5jgTvjhU-8863 (2:27:43) [def] A quotient object of `F` is an epimorphism out of `F` up to
 isomorphism under `F`, i.e. a subobject of `F` in the opposite category. -/
+@[buffalo "URU5jgTvjhU-8863"]
 abbrev QuotientObject {C : Type*} [Category C] (F : C) := Subobject (op F)
 
 /-- URU5jgTvjhU-8923 (2:28:43) [prop] For every morphism `f : F → G` of presheaves, the fibre
 product
 `F ×_G F ⊆ F × F`, computed section by section, is an equivalence relation on each `F(U)`. -/
+@[buffalo "URU5jgTvjhU-8923"]
 theorem kernelPair_equivalence {F G : X.Presheaf (Type u)} (f : F ⟶ G) (U : (Opens X)ᵒᵖ) :
     Equivalence fun a b : F.obj U => f.app U a = f.app U b :=
   ⟨fun _ => rfl, fun h => h.symm, fun h₁ h₂ => h₁.trans h₂⟩
 
 /-- URU5jgTvjhU-8987 (2:29:47) [prop] The coequalizer of `R ⇉ F` is a quotient of `F`
 (an epimorphism). -/
+@[buffalo "URU5jgTvjhU-8987"]
 theorem coequalizer_epi {C : Type*} [Category C] {R F : C} (r₁ r₂ : R ⟶ F)
     [HasCoequalizer r₁ r₂] : Epi (coequalizer.π r₁ r₂) :=
   inferInstance
 
 /-- URU5jgTvjhU-9052 (2:30:52) [def] A relation `r₁, r₂ : R ⇉ F` is effective if it is the kernel
 pair of its quotient `F → F/R`. (An effective quotient is Mathlib's `EffectiveEpi`.) -/
+@[buffalo "URU5jgTvjhU-9052"]
 def IsEffectiveRelation {C : Type*} [Category C] {R F : C} (r₁ r₂ : R ⟶ F)
     [HasCoequalizer r₁ r₂] : Prop :=
   Nonempty (IsKernelPair (coequalizer.π r₁ r₂) r₁ r₂)
 
 /-- URU5jgTvjhU-9117 (2:31:57) [prop] In `Sh(X)`, as in `Set`, quotients are effective: every
 epimorphism is regular (the effectivity of equivalence relations is not formalised). -/
+@[buffalo "URU5jgTvjhU-9117"]
 theorem sheaf_isRegularEpiCategory :
     IsRegularEpiCategory (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
   inferInstance

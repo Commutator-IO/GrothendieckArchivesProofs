@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 11 (pages 50–56): the tautological subalgebra of `H*(Xᵏ)`, an algebraic model
@@ -453,6 +454,7 @@ theorem F_contract (c : ℕ) {V : Finset I} {i j r : I} (hi : i ∈ V) (hj : j �
 /-- **The multigraph rule.** For a multigraph `E` with edges in `V` connecting `V`, and any
 root `r ∈ V`: `|V| ≤ |E| + 1`, and the product of the edge classes is `δ_V` for a tree,
 `χ ∏ y_v` with one cycle, `0` with two or more. -/
+@[montpellier "11, 50–56"]
 theorem graph_rule (n : ℕ) : ∀ (E : Multiset (I × I)) (V : Finset I), Multiset.card E = n →
     (∀ e ∈ E, e.1 ∈ V ∧ e.2 ∈ V) → Conn E V → ∀ r ∈ V,
     V.card ≤ Multiset.card E + 1 ∧ P D ι E = F D ι (Multiset.card E + 1 - V.card) V r := by
@@ -567,6 +569,7 @@ def Joined (R R' : Finpartition (Finset.univ : Finset I)) : Prop :=
 /-- **Page 56.** For two partitions `R`, `R'` of the `k` indices with coarse join and `s`, `s'`
 blocks: `s + s' ≤ k + 1`, and `δ_R δ_{R'}` is the small diagonal if `s + s' = k + 1`,
 `χ y₁⋯y_k` if `s + s' = k`, and `0` if `s + s' < k`. -/
+@[montpellier "11, 56"]
 theorem product_rule (R R' : Finpartition (Finset.univ : Finset I)) (h : Joined R R') (r : I) :
     R.parts.card + R'.parts.card ≤ Fintype.card I + 1 ∧
     δR D ι R * δR D ι R' =
@@ -594,6 +597,7 @@ theorem product_rule (R R' : Finpartition (Finset.univ : Finset I)) (h : Joined 
 
 /-- With one block of points: `y_j δ_R δ_{R'}` is `y₁⋯y_k` if `s + s' = k + 1` and `0`
 otherwise; with two, `y_j y_{j'} δ_R δ_{R'} = 0`. -/
+@[montpellier "11, 50–56"]
 theorem product_rule_pointed (R R' : Finpartition (Finset.univ : Finset I)) (h : Joined R R')
     (j j' : I) :
     yy D ι j * (δR D ι R * δR D ι R') =
@@ -628,6 +632,7 @@ variable {k A : Type*} [CommRing k] [CommRing A] [Algebra k A] (D : DiagData k A
   {B : Type*} [CommRing B] [Algebra k B]
 
 /-- `T(X²)`: `y₁δ = y₂δ = y₁y₂` and `δ² = χ y₁y₂`. -/
+@[montpellier "11, 50"]
 theorem table_two (ι : Fin 2 → A →ₐ[k] B) :
     yy D ι 0 * d D ι 0 1 = yy D ι 0 * yy D ι 1 ∧
     yy D ι 1 * d D ι 0 1 = yy D ι 0 * yy D ι 1 ∧
@@ -639,6 +644,7 @@ theorem table_two (ι : Fin 2 → A →ₐ[k] B) :
 
 /-- `T(X³)`, with `δ = δ₁₂δ₁₃` the small diagonal: `δ₁₂δ₂₃ = δ₁₂δ₁₃ = δ₂₃δ₁₃ = δ`,
 `δ yᵢ = y₁y₂y₃`, `δ² = 0`, `δᵢⱼ δ = χ y₁y₂y₃`, `δᵢⱼ² = χ yᵢyⱼ`, `δᵢⱼ yᵢ = yᵢyⱼ`. -/
+@[montpellier "11, 50"]
 theorem table_three (ι : Fin 3 → A →ₐ[k] B) :
     let δ := d D ι 0 1 * d D ι 0 2
     d D ι 0 1 * d D ι 1 2 = δ ∧ d D ι 1 2 * d D ι 0 2 = δ ∧
@@ -710,10 +716,12 @@ theorem push_tmul (x : B) (a : A) : push D (x ⊗ₜ a) = D.tr a • x := by
   simp [push]
 
 /-- A class not involving the new factor is killed (`∫ 1 = 0`). -/
+@[montpellier "11, 50–56"]
 theorem push_old (x : B) : push D (includeLeft (R := k) (S := k) x : B ⊗[k] A) = 0 := by
   simp [push_tmul, D.tr_one]
 
 /-- `p_*(x · y_∗) = x`. -/
+@[montpellier "11, 50–56"]
 theorem push_point (x : B) :
     push D ((includeLeft (R := k) (S := k) x : B ⊗[k] A) * yy D (ext ι) none) = x := by
   simp [yy, ext, push_tmul, D.tr_y]
@@ -727,11 +735,13 @@ theorem push_productMap (f : A →ₐ[k] B) (x : B) (z : A ⊗[k] A) :
   | add z w hz hw => simp only [map_add, mul_add, hz, hw]
 
 /-- `p_*(x · δ_{i∗}) = x`: the new index leaves its diagonal block. -/
+@[montpellier "11, 50–56"]
 theorem push_diag (x : B) (i : I) :
     push D ((includeLeft (R := k) (S := k) x : B ⊗[k] A) * d D (ext ι) (some i) none) = x := by
   rw [d, ext, ext, push_productMap, D.slice, map_one, mul_one]
 
 /-- The pull-back sends diagonals to diagonals and point classes to point classes. -/
+@[montpellier "11, 50–56"]
 theorem pull_d (i j : I) :
     (includeLeft (R := k) (S := k) (d D ι i j) : B ⊗[k] A) = d D (ext ι) (some i) (some j) ∧
     (includeLeft (R := k) (S := k) (yy D ι i) : B ⊗[k] A) = yy D (ext ι) (some i) := by
@@ -799,6 +809,7 @@ theorem form_nondeg (hD : IsPoincare D κD) : (form κD).Nondegenerate :=
 
 /-- The push-forward adjoint to an algebra map `h : D → E` into a Poincaré algebra `D`:
 `κ_D(y · h_*(x)) = κ_E(h(y) · x)` (page 33). -/
+@[montpellier "11, 33"]
 noncomputable def adj (hD : IsPoincare D κD) (κE : E →ₗ[k] k) (h : D →ₐ[k] E) : E →ₗ[k] D :=
   haveI := hD.1
   ((form κD).toDual (form_nondeg hD)).symm.toLinearMap ∘ₗ
@@ -812,6 +823,7 @@ theorem adj_spec (hD : IsPoincare D κD) (κE : E →ₗ[k] k) (h : D →ₐ[k] 
   rw [mul_comm]
   exact LinearMap.BilinForm.apply_toDual_symm_apply (B := form κD) (hB := form_nondeg hD) _ y
 
+@[montpellier "11, 33"]
 theorem adj_unique (hD : IsPoincare D κD) (κE : E →ₗ[k] k) (h : D →ₐ[k] E) (f : E →ₗ[k] D)
     (hf : ∀ x y, κD (y * f x) = κE (h y * x)) : f = adj hD κE h :=
   LinearMap.ext fun x => eq_of_pairing hD fun y => by rw [hf, adj_spec]
@@ -847,6 +859,7 @@ theorem tgauge_tmul (b : B) (c : C) : tgauge κB κC (b ⊗ₜ c) = κB b * κC 
   simp [tgauge]
 
 /-- The tensor product of two Poincaré algebras is Poincaré. -/
+@[montpellier "11, 37, 41"]
 theorem poincare_tensor (hB : IsPoincare B κB) (hC : IsPoincare C κC) :
     IsPoincare (B ⊗[k] C) (tgauge κB κC) := by
   have := hB.1
@@ -885,6 +898,7 @@ The category of finite non-empty sets is replaced by its skeleton: the object `n
 `k`-algebras with morphisms `(f_*, f^*)` (page 33): for `α : I → J`, the pull-back
 `A(I) → A(J)` is an algebra map, the push-forward `A(J) → A(I)` satisfies the projection
 formula and preserves the gauges. -/
+@[montpellier "11, 33"]
 structure SFun (k : Type u) [Field k] where
   obj : ℕ → Type u
   [ring : ∀ n, CommRing (obj n)]
@@ -929,6 +943,7 @@ end SFun
 /-- A special simplicial algebra (pages 37 and 41, with the edition's precisions): `A(pt)` is
 Poincaré, the Künneth maps `A(I) ⊗ A(pt) → A(I ⊔ pt)` are isomorphisms and the gauges are
 multiplicative. -/
+@[montpellier "11, 37, 41"]
 structure Special (A : SFun k) : Prop where
   poincare : IsPoincare (A.obj 0) (A.κ 0)
   kunneth : ∀ n, Function.Bijective (A.kun n)
@@ -940,6 +955,7 @@ variable {A : SFun k} (hA : Special A)
 include hA
 
 /-- Every `A(I)` of a special object is a Poincaré algebra. -/
+@[montpellier "11, 37, 41"]
 theorem poincare_all : ∀ n, IsPoincare (A.obj n) (A.κ n)
   | 0 => hA.poincare
   | n + 1 => by
@@ -950,6 +966,7 @@ theorem poincare_all : ∀ n, IsPoincare (A.obj n) (A.κ n)
     exact LinearMap.congr_fun this x
 
 /-- `A(I)` is generated by the pull-backs of `A(pt)` along the points of `I`. -/
+@[montpellier "11, 37, 41"]
 theorem gen {C : Type*} [Semiring C] [Algebra k C] :
     ∀ (n : ℕ) (f g : A.obj n →ₐ[k] C),
       (∀ i, f.comp (A.pull (SFun.pt i)) = g.comp (A.pull (SFun.pt i))) → f = g
@@ -970,6 +987,7 @@ end Special
 
 /-- A morphism of `𝒞` between two gauged algebras (page 33): an algebra map `f^*` backwards and
 an additive `f_*` forwards, with the projection formula and `κ_B f_* = κ_A`. -/
+@[montpellier "11, 33"]
 structure GHom (A B : Type*) [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     (κA : A →ₗ[k] k) (κB : B →ₗ[k] k) where
   push : A →ₗ[k] B
@@ -991,6 +1009,7 @@ structure NatT (A B : SFun k) where
 
 /-- **Faithfulness.** If `B` is special, a natural transformation `A → B` is determined by
 its pull-back at a point. -/
+@[montpellier "11, 37, 41"]
 theorem faithful {A B : SFun k} (hB : Special B) (φ ψ : NatT A B) (h : φ.pull 0 = ψ.pull 0)
     (n : ℕ) : φ.pull n = ψ.pull n ∧ φ.push n = ψ.push n := by
   have hp : φ.pull n = ψ.pull n := hB.gen n _ _ fun i => by
@@ -1031,6 +1050,7 @@ theorem extend {A B : SFun k} (hB : Special B) (g : B.obj 0 →ₐ[k] A.obj 0) :
 
 /-- **Fullness.** If `B` is special, every morphism `A(pt) → B(pt)` of `𝒞` is the value at a
 point of a natural transformation `A → B`. -/
+@[montpellier "11, 37, 41"]
 theorem full {A B : SFun k} (hB : Special B) (g : GHom (A.obj 0) (B.obj 0) (A.κ 0) (B.κ 0)) :
     ∃ φ : NatT A B, φ.pull 0 = g.pull ∧ φ.push 0 = g.push := by
   choose h hh using extend hB g.pull
@@ -1173,6 +1193,7 @@ theorem powPoincare (hP : IsPoincare P κ) : ∀ n, IsPoincare (Pow k P n) (powG
       (kunT_bijective n) (kunT_gauge κ n)
 
 /-- The special simplicial algebra `I ↦ P^{⊗ I}`, push-forwards adjoint to pull-backs. -/
+@[montpellier "11, 37, 41"]
 noncomputable def powFun (hP : IsPoincare P κ) : SFun k where
   obj n := Pow k P n
   κ n := powGauge κ n
@@ -1195,6 +1216,7 @@ theorem powFun_special (hP : IsPoincare P κ) : Special (powFun hP) where
 
 /-- **Essential surjectivity.** Every Poincaré algebra is, up to a gauge-preserving algebra
 isomorphism, the value at a point of a special simplicial bivariant algebra. -/
+@[montpellier "11, 37, 41"]
 theorem essSurj (hP : IsPoincare P κ) :
     ∃ (A : SFun k) (_ : Special A) (e : P ≃ₐ[k] A.obj 0), ∀ x, A.κ 0 (e x) = κ x :=
   ⟨powFun hP, powFun_special hP, AlgEquiv.ofBijective (single 0) single_zero_bijective,
@@ -1215,6 +1237,7 @@ noncomputable def GHom.ofEquiv {A B : Type*} [CommRing A] [Algebra k A] [CommRin
 /-- **Pages 37 and 41, in the edition's precise form (commutative case).** Evaluation at a
 point, from special simplicial bivariant algebras to Poincaré algebras, is faithful, full and
 essentially surjective, hence an equivalence. -/
+@[montpellier "11, 37, 41"]
 theorem evaluation_equivalence :
     (∀ {A B : SFun k}, Special B → ∀ φ ψ : NatT A B, φ.pull 0 = ψ.pull 0 →
       ∀ n, φ.pull n = ψ.pull n ∧ φ.push n = ψ.push n) ∧
@@ -1256,6 +1279,7 @@ variable {D D' E E' : Type*} [CommRing D] [Algebra k D] [CommRing D'] [Algebra k
   {κD : D →ₗ[k] k} {κD' : D' →ₗ[k] k}
 
 /-- **Page 41.** Into Poincaré algebras, the push-forward of `h ⊗ h'` is `h_* ⊗ h'_*`. -/
+@[montpellier "11, 41"]
 theorem adj_tensor (hD : IsPoincare D κD) (hD' : IsPoincare D' κD') (κE : E →ₗ[k] k)
     (κE' : E' →ₗ[k] k) (h : D →ₐ[k] E) (h' : D' →ₐ[k] E') :
     adj (poincare_tensor hD hD') (tgauge κE κE') (Algebra.TensorProduct.map h h') =
@@ -1278,6 +1302,7 @@ def sumPt {m n : ℕ} (α : Fin (m + 1) → Fin (n + 1)) : Fin (m + 2) → Fin (
 
 variable (A : SFun k)
 
+@[montpellier "11, 41"]
 theorem pull_sumPt {m n : ℕ} (α : Fin (m + 1) → Fin (n + 1)) :
     (A.pull (sumPt α)).comp (A.kun m) =
       (A.kun n).comp (Algebra.TensorProduct.map (A.pull α) (AlgHom.id k _)) := by
@@ -1300,6 +1325,7 @@ theorem Special.gauge_kun {A : SFun k} (hA : Special A) (n : ℕ) (z : A.obj n �
 
 /-- **Page 41, `(α ⊔ β)_* = α_* ⊗ β_*` for `β = id_pt`.** In a special simplicial bivariant
 algebra, through the Künneth isomorphisms, the push-forward along `α ⊔ id_pt` is `α_* ⊗ id`. -/
+@[montpellier "11, 41"]
 theorem push_sumPt {A : SFun k} (hA : Special A) {m n : ℕ} (α : Fin (m + 1) → Fin (n + 1))
     (z : A.obj n ⊗[k] A.obj 0) :
     A.push (SFun.sumPt α) (A.kun n z) =
@@ -1322,6 +1348,7 @@ section Const
 variable {P : Type*} [CommRing P] [Algebra k P]
 
 /-- The constant simplicial bivariant algebra `I ↦ P`, every image the identity. -/
+@[montpellier "11, 37, 41"]
 def constFun (P : Type u) [CommRing P] [Algebra k P] (κ : P →ₗ[k] k) : SFun k where
   obj _ := P
   κ _ := κ
@@ -1355,6 +1382,7 @@ theorem exists_ne_of_poincare {κ : P →ₗ[k] k} (hP : IsPoincare P κ)
 
 /-- The constant object is not special: its Künneth map `P ⊗ P → P` is the multiplication,
 which identifies `a ⊗ 1` and `1 ⊗ a`. -/
+@[montpellier "11, 37, 41"]
 theorem constFun_not_special {P : Type u} [CommRing P] [Algebra k P] {κ : P →ₗ[k] k}
     (hP : IsPoincare P κ) (hk : ¬ Function.Surjective (algebraMap k P)) :
     ¬ Special (constFun P κ) := fun hA => by
@@ -1371,6 +1399,7 @@ theorem constFun_not_special {P : Type u} [CommRing P] [Algebra k P] {κ : P →
 `I ↦ P^{⊗ I}` have the same Poincaré value `P` at a point, yet no natural transformation from
 the second to the first is onto at a point: in particular the two are not isomorphic, and the
 isomorphism `P^{⊗ pt} ≅ P` of `𝒞` is not the value of a natural transformation. -/
+@[montpellier "11, 37"]
 theorem constFun_not_full {P : Type u} [CommRing P] [Algebra k P] {κ : P →ₗ[k] k}
     (hP : IsPoincare P κ) (hk : ¬ Function.Surjective (algebraMap k P))
     (φ : NatT (powFun hP) (constFun P κ)) : ¬ Function.Surjective (φ.pull 0) := fun hs => by
@@ -1531,6 +1560,7 @@ theorem conn_block {R R' R'' : Finpartition (Finset.univ : Finset I)} (hR : R �
 the numbers of blocks of `R`, `R'` inside a block `C`: `b + b' ≤ |C| + 1`, and `δ_R δ_{R'}` is
 the product over the blocks `C` of the small diagonal `δ_C` if `b + b' = |C| + 1`,
 `χ ∏_C y_v` if `b + b' = |C|`, `0` if `b + b' < |C|`. -/
+@[montpellier "11, 54"]
 theorem join_rule (R R' R'' : Finpartition (Finset.univ : Finset I)) (hR : R ≤ R'')
     (hR' : R' ≤ R'') (hc : ∀ C ∈ R''.parts, ∀ v ∈ C, ∀ w ∈ C, Relation.EqvGen (Rel R R') v w) :
     (∀ C ∈ R''.parts, nb R C + nb R' C ≤ C.card + 1) ∧
@@ -1606,6 +1636,7 @@ theorem marks_F (c : ℕ) {V S : Finset I} {r : I} (hS : S ⊆ V) (hr : r ∈ V)
 /-- **Page 54, with marked points.** For a set `M` of marked indices, `∏_M y_m · δ_R δ_{R'}` is
 the product over the blocks `C` of `R''` of the value of `C` without marks if `M ∩ C = ∅`,
 `∏_C y_v` if `C` has one mark and `b + b' = |C| + 1`, and `0` otherwise. -/
+@[montpellier "11, 54"]
 theorem join_rule_marked (R R' R'' : Finpartition (Finset.univ : Finset I)) (hR : R ≤ R'')
     (hR' : R' ≤ R'') (hc : ∀ C ∈ R''.parts, ∀ v ∈ C, ∀ w ∈ C, Relation.EqvGen (Rel R R') v w)
     (M : Finset I) :
@@ -1622,6 +1653,7 @@ theorem join_rule_marked (R R' R'' : Finpartition (Finset.univ : Finset I)) (hR 
   simp [Subtype.ext_iff, R''.part_eq_iff_mem C.2]
 
 /-- Two marks in one block of `R''` give `0`. -/
+@[montpellier "11, 54"]
 theorem join_rule_two_marks (R R' R'' : Finpartition (Finset.univ : Finset I)) (hR : R ≤ R'')
     (hR' : R' ≤ R'') (hc : ∀ C ∈ R''.parts, ∀ v ∈ C, ∀ w ∈ C, Relation.EqvGen (Rel R R') v w)
     {j j' : I} (hjj : j ≠ j') {C : Finset I} (hC : C ∈ R''.parts) (hj : j ∈ C) (hj' : j' ∈ C) :

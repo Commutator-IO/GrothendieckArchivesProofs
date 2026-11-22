@@ -20,6 +20,7 @@ public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.Data.Nat.Choose.Vandermonde
 public import Mathlib.Algebra.Polynomial.Basis
+import Grothendieck.Attr
 
 /-!
 # Folder 153: integer-valued polynomials, co-operations, analyseurs
@@ -172,6 +173,7 @@ theorem ev_apply (x : k₀) (F : K₀[X]) : ev x F = F.eval (algebraMap k₀ K�
 
 variable (k₀ K₀) in
 /-- `Ω = Int(k₀)`: the polynomials of `K₀[T]` taking values in `k₀` on `k₀`. -/
+@[montpellier "153, 3"]
 noncomputable def Omega : Subalgebra k₀ K₀[X] where
   carrier := {F | ∀ x : k₀, F.eval (algebraMap k₀ K₀ x) ∈ (algebraMap k₀ K₀).range}
   mul_mem' {F G} hF hG x := by rw [eval_mul]; exact mul_mem (hF x) (hG x)
@@ -198,6 +200,7 @@ theorem range_mk_one :
 
 /-- **Lemme, coordinate by coordinate.** In a basis `b` of `M`, `F ∈ K₀[T] ⊗ M`
 takes values in `M` on `k₀` iff each of its coordinates lies in `Ω = Int(k₀)`. -/
+@[montpellier "153, 3"]
 theorem lemme_coordonnees {ι : Type*} [DecidableEq ι] (b : Module.Basis ι k₀ M)
     (F : K₀[X] ⊗[k₀] M) :
     F ∈ valeursDansM K₀ M ↔ ∀ i, coords b K₀[X] F i ∈ Omega k₀ K₀ := by
@@ -206,12 +209,14 @@ theorem lemme_coordonnees {ι : Type*} [DecidableEq ι] (b : Module.Basis ι k�
   exact ⟨fun h i x => h x i, fun h x i => h i x⟩
 
 /-- **Lemme (1).** For `M` free, `Ω ⊗ M → K₀[T] ⊗ M` is injective. -/
+@[montpellier "153, 3"]
 theorem lemme_injective [Module.Free k₀ M] :
     Function.Injective ((Omega k₀ K₀).val.toLinearMap.rTensor M) :=
   Module.Flat.rTensor_preserves_injective_linearMap _ Subtype.val_injective
 
 /-- **Lemme (2).** For `M` free, the image of `Ω ⊗ M → K₀[T] ⊗ M` is exactly the
 set of `F` with `F(x) ∈ M` for every `x ∈ k₀`. -/
+@[montpellier "153, 3"]
 theorem lemme_range [Module.Free k₀ M] :
     (LinearMap.range ((Omega k₀ K₀).val.toLinearMap.rTensor M) : Set (K₀[X] ⊗[k₀] M)) =
       valeursDansM K₀ M := by
@@ -227,6 +232,7 @@ theorem mem_Omega {F : K₀[X]} :
     F ∈ Omega k₀ K₀ ↔ ∀ x : k₀, F.eval (algebraMap k₀ K₀ x) ∈ (algebraMap k₀ K₀).range :=
   Iff.rfl
 
+@[montpellier "153, 3, 9"]
 theorem comp_mem_Omega {F G : K₀[X]} (hF : F ∈ Omega k₀ K₀) (hG : G ∈ Omega k₀ K₀) :
     F.comp G ∈ Omega k₀ K₀ := fun x => by
   obtain ⟨y, hy⟩ := hG x
@@ -308,6 +314,7 @@ theorem evPQ_comul (F P Q : K₀[X]) : evPQ P Q (comul F) = F.comp (P * Q) := by
 
 /-- **Page 3, the rule `F ∘ (P + Q) = ∑ (Gᵢ ∘ P)(Hᵢ ∘ Q)`.** Whenever `∑ Gᵢ ⊗ Hᵢ`
 represents `F(X + Y)`, composition with a sum follows. -/
+@[montpellier "153, 3"]
 theorem comp_add_eq {ι : Type*} (s : Finset ι) (G H : ι → Omega k₀ K₀) (F : K₀[X])
     (h : Phi k₀ K₀ (∑ i ∈ s, G i ⊗ₜ H i) = coadd F) (P Q : K₀[X]) :
     F.comp (P + Q) = ∑ i ∈ s, (G i : K₀[X]).comp P * (H i : K₀[X]).comp Q := by
@@ -315,6 +322,7 @@ theorem comp_add_eq {ι : Type*} (s : Finset ι) (G H : ι → Omega k₀ K₀) 
   simp only [Phi_tmul, evPQ_tmul]
 
 /-- **Page 3, the rule `F ∘ (PQ) = ∑ (Jₐ ∘ P)(Kₐ ∘ Q)`.** -/
+@[montpellier "153, 3"]
 theorem comp_mul_eq {ι : Type*} (s : Finset ι) (J K : ι → Omega k₀ K₀) (F : K₀[X])
     (h : Phi k₀ K₀ (∑ i ∈ s, J i ⊗ₜ K i) = comul F) (P Q : K₀[X]) :
     F.comp (P * Q) = ∑ i ∈ s, (J i : K₀[X]).comp P * (K i : K₀[X]).comp Q := by
@@ -369,6 +377,7 @@ theorem X_pow_mem_Omega (n : ℕ) : (X ^ n : K₀[X]) ∈ Omega k₀ K₀ :=
   mem_Omega.mpr fun x => ⟨x ^ n, by simp⟩
 
 /-- `K₀ ⊗_{k₀} Ω → K₀[T]` is always surjective: `k₀[T] ⊂ Ω`. -/
+@[montpellier "153, 3"]
 theorem omegaBaseChange_surjective : Function.Surjective (omegaBaseChange k₀ K₀) := by
   intro p
   change p ∈ LinearMap.range (omegaBaseChange k₀ K₀)
@@ -396,6 +405,7 @@ theorem sum_smul_basis_eq_zero_of_injective (hK : Function.Injective (omegaBaseC
 
 /-- **`K₀` flat over `k₀` with `K₀ ⊗_{k₀} K₀ = K₀`** (multiplication injective, i.e.
 `K₀[X] ⊗_{k₀} K₀[Y] = K₀[X, Y]`): then `K₀ ⊗_{k₀} Ω → K₀[T]` is injective. -/
+@[montpellier "153, 3"]
 theorem omegaBaseChange_injective_of_flat [Module.Flat k₀ K₀]
     (hmul : Function.Injective (LinearMap.mul' k₀ K₀)) :
     Function.Injective (omegaBaseChange k₀ K₀) := by
@@ -451,6 +461,7 @@ theorem exists_decomp {I : Type*} (e : Module.Basis I k₀ (Omega k₀ K₀)) (P
 and `Ω` is free, a
 polynomial of `K₀[X, Y]` lies in the image of `Ω ⊗ Ω` iff it takes values in `k₀`
 on `k₀ × k₀`. -/
+@[montpellier "153, 3"]
 theorem mem_range_Phi_iff_of_injective [Module.Free k₀ (Omega k₀ K₀)]
     (hK : Function.Injective (omegaBaseChange k₀ K₀)) (P : K₀[X][X]) :
     P ∈ LinearMap.range (Phi k₀ K₀) ↔ ∀ x y : k₀,
@@ -487,6 +498,7 @@ theorem mem_range_Phi_iff_of_injective [Module.Free k₀ (Omega k₀ K₀)]
   refine ⟨∑ j ∈ g.support, (⟨g j, hg j⟩ : Omega k₀ K₀) ⊗ₜ e j, ?_⟩
   simp [map_sum, Phi_tmul, Finsupp.sum]
 
+@[montpellier "153, 3"]
 /-- **Uniqueness.** When `K₀ ⊗_{k₀} Ω → K₀[T]` is injective and `Ω` is free,
 `Φ : Ω ⊗ Ω → K₀[X, Y]` is injective. -/
 theorem Phi_injective_of_injective [Module.Free k₀ (Omega k₀ K₀)]
@@ -521,6 +533,7 @@ theorem Phi_injective_of_injective [Module.Free k₀ (Omega k₀ K₀)]
 /-- **The co-addition is well defined (page 3), for any `k₀ → K₀` with
 `K₀ ⊗_{k₀} Ω ↪ K₀[T]`.** For `F ∈ Ω`, `F(X + Y)` is the image of exactly one
 element of `Ω ⊗ Ω`. -/
+@[montpellier "153, 3"]
 theorem coaddition_existsUnique_of_injective [Module.Free k₀ (Omega k₀ K₀)]
     (hK : Function.Injective (omegaBaseChange k₀ K₀)) {F : K₀[X]}
     (hF : F ∈ Omega k₀ K₀) : ∃! t, Phi k₀ K₀ t = coadd F := by
@@ -529,6 +542,7 @@ theorem coaddition_existsUnique_of_injective [Module.Free k₀ (Omega k₀ K₀)
   exact ⟨t, ht, fun t' ht' => Phi_injective_of_injective hK (ht'.trans ht.symm)⟩
 
 /-- **The co-multiplication is well defined (page 3), same hypothesis.** -/
+@[montpellier "153, 3"]
 theorem comultiplication_existsUnique_of_injective [Module.Free k₀ (Omega k₀ K₀)]
     (hK : Function.Injective (omegaBaseChange k₀ K₀)) {F : K₀[X]}
     (hF : F ∈ Omega k₀ K₀) : ∃! t, Phi k₀ K₀ t = comul F := by
@@ -573,6 +587,7 @@ theorem sum_smul_basis_eq_zero {I : Type*} (e : Module.Basis I k₀ (Omega k₀ 
   · exact Finsupp.notMem_support_iff.mp hj
 
 /-- When `K₀ = S⁻¹k₀` and `Ω` is free, `K₀ ⊗_{k₀} Ω → K₀[T]` is injective. -/
+@[montpellier "153, 3"]
 theorem omegaBaseChange_injective [Module.Free k₀ (Omega k₀ K₀)] :
     Function.Injective (omegaBaseChange k₀ K₀) := by
   set e := Module.Free.chooseBasis k₀ (Omega k₀ K₀)
@@ -584,22 +599,26 @@ theorem omegaBaseChange_injective [Module.Free k₀ (Omega k₀ K₀)] :
 /-- **Two-variable form of the Lemme.** For `K₀ = S⁻¹k₀` and `Ω` free, a
 polynomial of `K₀[X, Y]` lies in the image of `Ω ⊗ Ω` iff it takes values in `k₀`
 on `k₀ × k₀`. -/
+@[montpellier "153, 3"]
 theorem mem_range_Phi_iff [Module.Free k₀ (Omega k₀ K₀)] (P : K₀[X][X]) :
     P ∈ LinearMap.range (Phi k₀ K₀) ↔ ∀ x y : k₀,
       (P.eval (C (algebraMap k₀ K₀ x))).eval (algebraMap k₀ K₀ y) ∈ (algebraMap k₀ K₀).range :=
   mem_range_Phi_iff_of_injective (omegaBaseChange_injective S) P
 
 /-- **Uniqueness.** For `K₀ = S⁻¹k₀` and `Ω` free, `Φ : Ω ⊗ Ω → K₀[X, Y]` is injective. -/
+@[montpellier "153, 3"]
 theorem Phi_injective [Module.Free k₀ (Omega k₀ K₀)] : Function.Injective (Phi k₀ K₀) :=
   Phi_injective_of_injective (omegaBaseChange_injective S)
 
 /-- **The co-addition is well defined (page 3).** For `K₀ = S⁻¹k₀`, `Ω` free and
 `F ∈ Ω`, `F(X + Y)` is the image of exactly one element of `Ω ⊗ Ω`. -/
+@[montpellier "153, 3"]
 theorem coaddition_existsUnique [Module.Free k₀ (Omega k₀ K₀)] {F : K₀[X]}
     (hF : F ∈ Omega k₀ K₀) : ∃! t, Phi k₀ K₀ t = coadd F :=
   coaddition_existsUnique_of_injective (omegaBaseChange_injective S) hF
 
 /-- **The co-multiplication is well defined (page 3).** -/
+@[montpellier "153, 3"]
 theorem comultiplication_existsUnique [Module.Free k₀ (Omega k₀ K₀)] {F : K₀[X]}
     (hF : F ∈ Omega k₀ K₀) : ∃! t, Phi k₀ K₀ t = comul F :=
   comultiplication_existsUnique_of_injective (omegaBaseChange_injective S) hF
@@ -644,6 +663,7 @@ theorem binom_linearIndependent : LinearIndependent ℤ binom := by
 
 /-- **Pólya (1919).** A polynomial of `ℚ[T]` taking integer values on `ℤ` is an
 integer combination of the `binom(T, k)`, `k ≤ deg P`. -/
+@[montpellier "153, 2"]
 theorem polya {P : ℚ[X]} (hP : P ∈ Omega ℤ ℚ) :
     ∃ c : ℕ → ℤ, P = ∑ k ∈ Finset.range (P.natDegree + 1), (c k : ℚ) • binom k := by
   have hf : ∀ m : ℕ, ∃ z : ℤ, (z : ℚ) = P.eval (m : ℚ) := fun m => by
@@ -680,6 +700,7 @@ theorem polya {P : ℚ[X]} (hP : P ∈ Omega ℤ ℚ) :
     simp
 
 /-- **Pólya's basis**: `Int(ℤ)` is the free `ℤ`-module with basis `binom(T, n)`. -/
+@[montpellier "153, 2"]
 noncomputable def polyaBasis : Module.Basis ℕ ℤ (Omega ℤ ℚ) :=
   Module.Basis.mk (v := fun n => (⟨binom n, binom_mem n⟩ : Omega ℤ ℚ))
     (LinearIndependent.of_comp (Omega ℤ ℚ).val.toLinearMap binom_linearIndependent)
@@ -699,6 +720,7 @@ instance : Module.Free ℤ (Omega ℤ ℚ) := Module.Free.of_basis polyaBasis
 
 /-- **Vandermonde**, as an identity in `ℚ[X, Y]`:
 `binom(X + Y, m) = ∑_{i + j = m} binom(X, i) binom(Y, j)`. -/
+@[montpellier "153, 2"]
 theorem vandermonde (m : ℕ) :
     coadd (binom m) = ∑ ij ∈ Finset.antidiagonal m, (binom ij.1).map C * C (binom ij.2) := by
   have h1 : coadd (binom m) = Ring.choose (X + C X : ℚ[X][X]) m := by
@@ -714,6 +736,7 @@ theorem vandermonde (m : ℕ) :
 
 /-- **The co-addition of `Int(ℤ)`** is `Fₘ ↦ ∑_{i+j=m} Fᵢ ⊗ Fⱼ`, and it is the only
 element of `Int(ℤ) ⊗ Int(ℤ)` representing `Fₘ(X + Y)`. -/
+@[montpellier "153, 2"]
 theorem coaddition_binom (m : ℕ) (t : Omega ℤ ℚ ⊗[ℤ] Omega ℤ ℚ) :
     Phi ℤ ℚ t = coadd (binom m) ↔
       t = ∑ ij ∈ Finset.antidiagonal m, polyaBasis ij.1 ⊗ₜ polyaBasis ij.2 := by
@@ -725,11 +748,13 @@ theorem coaddition_binom (m : ℕ) (t : Omega ℤ ℚ ⊗[ℤ] Omega ℤ ℚ) :
 
 /-- **The co-multiplication of `Int(ℤ)`**: `Fₘ(XY) = ∑ δᵢⱼᵐ Fᵢ(X) Fⱼ(Y)` for a
 unique element of `Int(ℤ) ⊗ Int(ℤ)`, i.e. unique integers `δᵢⱼᵐ`. -/
+@[montpellier "153, 2"]
 theorem comultiplication_binom (m : ℕ) : ∃! t, Phi ℤ ℚ t = comul (binom m) :=
   comultiplication_existsUnique (nonZeroDivisors ℤ) (binom_mem m)
 
 /-- On `Int(ℤ)` the map to `Appl(ℤ, ℤ)` is injective: a polynomial of `ℚ[T]` is
 determined by its values on `ℤ`. -/
+@[montpellier "153, 7"]
 theorem eq_of_comp_intCast {F G : ℚ[X]} (h : ∀ n : ℤ, F.comp (C (n : ℚ)) = G.comp (C (n : ℚ))) :
     F = G := by
   apply eq_of_infinite_eval_eq
@@ -745,6 +770,7 @@ theorem eq_of_comp_intCast {F G : ℚ[X]} (h : ∀ n : ℤ, F.comp (C (n : ℚ))
 /-- The composition part of the axioms 1) and 2) of page 5, on a pseudo-ring `Ω`:
 `∘` associative with unit `T`, and `F ↦ F ∘ G` a morphism of pseudo-rings. The
 axioms 3) are not needed below. -/
+@[montpellier "153, 5"]
 structure Composition (Ω : Type*) [NonUnitalCommRing Ω] where
   comp : Ω → Ω → Ω
   T : Ω
@@ -788,6 +814,7 @@ def zeroPart : AddSubgroup Ω where
 theorem mem_zeroPart {F : Ω} : F ∈ c.zeroPart ↔ c.comp F 0 = 0 := Iff.rfl
 
 /-- `Ω⁰` is an ideal. -/
+@[montpellier "153, 5"]
 theorem mul_mem_zeroPart (G : Ω) {F : Ω} (hF : F ∈ c.zeroPart) : G * F ∈ c.zeroPart := by
   rw [mem_zeroPart, c.mul_comp, c.mem_zeroPart.mp hF, mul_zero]
 
@@ -796,6 +823,7 @@ theorem comp_mem_constants (F : Ω) {l : Ω} (hl : l ∈ c.constants) : c.comp F
   fun G => by rw [c.comp_assoc, c.mem_constants.mp hl G]
 
 /-- **N.B. of page 5**: `F ∘ 0` is a constant. -/
+@[montpellier "153, 5"]
 theorem comp_zero_mem_constants (F : Ω) : c.comp F 0 ∈ c.constants :=
   c.comp_mem_constants F (zero_mem _)
 
@@ -807,6 +835,7 @@ theorem sub_comp_zero_mem_zeroPart (F : Ω) : F - c.comp F 0 ∈ c.zeroPart := b
   rw [mem_zeroPart, c.sub_comp, c.mem_constants.mp (c.comp_zero_mem_constants F) 0, sub_self]
 
 /-- **`Ω = Ω₀ ⊕ Ω⁰` (page 5)**, as abelian groups, through `F = F(0) + (F - F(0))`. -/
+@[montpellier "153, 5"]
 theorem isCompl_constants_zeroPart : IsCompl c.constants.toAddSubgroup c.zeroPart :=
   ⟨AddSubgroup.disjoint_def.mpr fun hl h0 => c.eq_zero_of_mem_constants_of_mem_zeroPart hl h0,
     codisjoint_iff_le_sup.mpr fun F _ => AddSubgroup.mem_sup.mpr ⟨c.comp F 0,
@@ -853,6 +882,7 @@ theorem mem_constants_appl {A : Type*} [NonUnitalCommRing A] (l : A → A) :
     rfl⟩
 
 /-- `(Ω_A)₀ ≃ A`. -/
+@[montpellier "153, 7"]
 def applConstantsEquiv (A : Type*) [NonUnitalCommRing A] : (appl A).constants ≃+* A where
   toFun l := l.1 0
   invFun a := ⟨fun _ => a, (mem_constants_appl _).mpr ⟨a, rfl⟩⟩
@@ -863,6 +893,7 @@ def applConstantsEquiv (A : Type*) [NonUnitalCommRing A] : (appl A).constants �
 
 /-- **`Appl(A, A)` does not satisfy 3a)** for `A` an infinite nonzero commutative ring:
 the indicator of `0` has no finite co-addition. -/
+@[montpellier "153, 7"]
 theorem appl_not_coaddition (A : Type*) [CommRing A] [Nontrivial A] [Infinite A]
     [DecidableEq A] :
     ¬ ∃ (n : ℕ) (F' F'' : Fin n → A → A), ∀ G' G'' : A → A,
@@ -899,6 +930,7 @@ noncomputable def poly (k : Type*) [CommRing k] : Composition k[X] where
   mul_comp F F' G := Polynomial.mul_comp F F' G
 
 /-- The constants of `k[T]` are `k`. -/
+@[montpellier "153, 7"]
 theorem mem_constants_poly {k : Type*} [CommRing k] (l : k[X]) :
     l ∈ (poly k).constants ↔ ∃ a, l = C a :=
   ⟨fun hl => ⟨l.eval 0, (hl (C 0)).symm.trans comp_C⟩, by
@@ -907,6 +939,7 @@ theorem mem_constants_poly {k : Type*} [CommRing k] (l : k[X]) :
 
 /-- **`Ω → Ω_{Ω₀}` is not injective (page 7)**: for `k` a finite field with `q`
 elements, `T^q - T ≠ 0` acts as zero on every constant of `k[T]`. -/
+@[montpellier "153, 7"]
 theorem poly_toAppl_not_injective (k : Type*) [Field k] [Fintype k] :
     (X ^ Fintype.card k - X : k[X]) ≠ 0 ∧
       ∀ l ∈ (poly k).constants, (poly k).comp (X ^ Fintype.card k - X) l = 0 := by
@@ -915,6 +948,7 @@ theorem poly_toAppl_not_injective (k : Type*) [Field k] [Fintype k] :
   simp [poly, comp_C, FiniteField.pow_card]
 
 /-- For `k` an infinite domain, `k[T] → Ω_{Ω₀}` is injective. -/
+@[montpellier "153, 7"]
 theorem poly_toAppl_injective (k : Type*) [CommRing k] [IsDomain k] [Infinite k] (F G : k[X])
     (h : ∀ l ∈ (poly k).constants, (poly k).comp F l = (poly k).comp G l) : F = G :=
   Polynomial.funext fun r => by
@@ -958,6 +992,7 @@ theorem pascal_det (k : Type*) [CommRing k] (N : ℕ) :
 `F(X + Y) = ∑_{m ≥ 1} (X + Y)^m` (`F = ∑_{m ≥ 1} T^m`) are `binom(p + q, p)` off
 `(0, 0)` and `0` at `(0, 0)`; they are not those of a finite sum `∑ᵢ aᵢ(X) bᵢ(Y)`,
 whose coefficients are `∑ᵢ aᵢ,ₚ bᵢ,q`. -/
+@[montpellier "153, 7"]
 theorem geom_not_finite_coaddition (k : Type*) [CommRing k] [Nontrivial k] (n : ℕ)
     (a b : Fin n → ℕ → k) :
     ¬ ∀ p q : ℕ, (if p = 0 ∧ q = 0 then 0 else ((p + q).choose p : k)) = ∑ i, a i p * b i q := by

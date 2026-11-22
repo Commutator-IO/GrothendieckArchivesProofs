@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 90, page 9: a flat irreducible group whose components have non-empty fibres, and a
@@ -92,6 +93,7 @@ namespace Grothendieck.Folder90
 variable (R : Type*) [CommRing R] (K : Type*) [Field K] [Algebra R K]
 
 /-- `B = {f ∈ K[T] : f(0) ∈ R}`. -/
+@[montpellier "90, 9"]
 def B : Subalgebra R K[X] where
   carrier := {f | f.coeff 0 ∈ (algebraMap R K).range}
   mul_mem' {f g} hf hg := by
@@ -114,6 +116,7 @@ variable (R K) [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K]
 example : IsDomain (B R K) := inferInstance
 
 /-- **`B` is flat over `R`.** -/
+@[montpellier "90, 9"]
 theorem flat : Module.Flat R (B R K) := by
   rw [Module.Flat.flat_iff_torsion_eq_bot_of_isBezout]
   refine eq_bot_iff.2 fun b hb => ?_
@@ -156,11 +159,13 @@ theorem ev0_algebraMap (r : R) : ev0 R K (algebraMap R (B R K) r) = r :=
 noncomputable def residueB : B R K →+* IsLocalRing.ResidueField R :=
   (IsLocalRing.residue R).comp (ev0 R K)
 
+@[montpellier "90, 9"]
 theorem residue_surjective : Function.Surjective (residueB R K) := fun x => by
   obtain ⟨r, rfl⟩ := IsLocalRing.residue_surjective x
   exact ⟨algebraMap R (B R K) r, by simp [residueB, ev0_algebraMap]⟩
 
 /-- **`B/ϖB = k`**: the kernel of the reduction is `ϖB`. -/
+@[montpellier "90, 9"]
 theorem ker_residue {ϖ : R} (hϖ : Irreducible ϖ) :
     RingHom.ker (residueB R K) = Ideal.span {algebraMap R (B R K) ϖ} := by
   ext f
@@ -186,6 +191,7 @@ theorem ker_residue {ϖ : R} (hϖ : Irreducible ϖ) :
 
 omit [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] in
 /-- **The generic fibre is non-empty**: `K ⊗_R B ≠ 0`. -/
+@[montpellier "90, 9"]
 theorem generic_nontrivial : Nontrivial (K ⊗[R] B R K) := by
   let φ : K ⊗[R] B R K →ₗ[R] K[X] := TensorProduct.lift
     (LinearMap.mk₂ R (fun (k : K) (b : B R K) => C k * (b : K[X]))
@@ -200,6 +206,7 @@ theorem generic_nontrivial : Nontrivial (K ⊗[R] B R K) := by
 
 omit [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] in
 /-- **The comultiplication preserves `B`**: `f(x + y) = Σᵢ bᵢ(x) cᵢ(y)` with `bᵢ, cᵢ ∈ B`. -/
+@[montpellier "90, 9"]
 theorem comul (f : K[X]) (hf : f ∈ B R K) :
     ∃ (s : Finset (ℕ × ℕ)) (b c : ℕ × ℕ → K[X]), (∀ i, b i ∈ B R K) ∧ (∀ i, c i ∈ B R K) ∧
       ∀ x y : K, f.eval (x + y) = ∑ i ∈ s, (b i).eval x * (c i).eval y := by
@@ -261,6 +268,7 @@ def KT : Submodule R (B R K) where
       simp [hc, Algebra.smul_def, Polynomial.algebraMap_apply, mul_assoc]⟩
 
 /-- **The saturation of `R · T` is `K · T`.** -/
+@[montpellier "90, 9"]
 theorem saturation_eq : saturation R K = KT R K := by
   ext b
   constructor
@@ -286,6 +294,7 @@ theorem saturation_eq : saturation R K = KT R K := by
 
 /-- **`K · T` is not a finitely generated `R`-module**: otherwise `K` would be finite over
 `R`, hence integral, and `ϖ⁻¹ ∈ K` would lie in `R`. -/
+@[montpellier "90, 9"]
 theorem not_fg_saturation : ¬ (KT R K).FG := by
   intro h
   -- the coefficient of `T` maps `K · T` onto `K`
@@ -317,6 +326,7 @@ variable {A : Type*} [CommRing A] (π : A)
 /-- **A component missing the special fibre gives `d(A) ≠ 0`.** If a minimal prime `𝔭`
 satisfies `𝔭 + πA = A`, write `1 - cπ ∈ 𝔭`; it is a zero divisor, say `a(1 - cπ) = 0`
 with `a ≠ 0`, and then `a = a(cπ)ⁿ ∈ πⁿA` for all `n`. -/
+@[montpellier "90, 9"]
 theorem iInf_pow_ne_bot_of_minimalPrime {p : Ideal A} (hp : p ∈ minimalPrimes A)
     (h : p ⊔ Ideal.span {π} = ⊤) : ⨅ n : ℕ, Ideal.span {π} ^ n ≠ ⊥ := by
   obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.1 (h ▸ Submodule.mem_top (x := (1 : A)))
@@ -334,6 +344,7 @@ theorem iInf_pow_ne_bot_of_minimalPrime {p : Ideal A} (hp : p ∈ minimalPrimes 
 For a minimal prime `𝔭`, `A/𝔭` is a Noetherian domain in which `π` generates a proper ideal,
 so `⋂ₙ πⁿ(A/𝔭) = 0` by Krull's intersection theorem: `d(A) ⊆ 𝔭`. The intersection of the
 minimal primes is the nilradical, which is `0`. -/
+@[montpellier "90, 9"]
 theorem iInf_pow_eq_bot_of_minimalPrimes [IsNoetherianRing A] [IsReduced A]
     (h : ∀ p ∈ minimalPrimes A, p ⊔ Ideal.span {π} ≠ ⊤) :
     ⨅ n : ℕ, Ideal.span {π} ^ n = ⊥ := by
@@ -350,6 +361,7 @@ theorem iInf_pow_eq_bot_of_minimalPrimes [IsNoetherianRing A] [IsReduced A]
 
 /-- **The criterion for `A` reduced and Noetherian**: `⋂ₙ πⁿA = 0` if and only if every
 irreducible component of `Spec A` meets the special fibre `V(π)`. -/
+@[montpellier "90, 9"]
 theorem iInf_pow_eq_bot_iff [IsNoetherianRing A] [IsReduced A] :
     ⨅ n : ℕ, Ideal.span {π} ^ n = ⊥ ↔ ∀ p ∈ minimalPrimes A, p ⊔ Ideal.span {π} ≠ ⊤ :=
   ⟨fun h0 _ hp h => iInf_pow_ne_bot_of_minimalPrime π hp h h0,

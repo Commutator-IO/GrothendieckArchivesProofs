@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 public import Grothendieck.Upstream.ChoosePrimePowSubOne
+import Grothendieck.Attr
 
 /-!
 # Folder 136, pages 19–31: the binomial lemma behind the « ombres »
@@ -171,6 +172,7 @@ theorem span_choose_eq_top (N i : ℕ) :
 /-- **The theorem of pages 26–31**, for every `i`: if
 `c_{l,k} ξ_k = c_{l,k−i} ξ_{k+l}` for `k ≥ N`, `l ≥ 0`, with `c_{a,b} = binom(a+b, a)`,
 there is a unique `ξ` with `ξ_k = binom(k, i) ξ` for every `k ≥ N`. -/
+@[montpellier "136, 26–31"]
 theorem binomial_shadow_existsUnique {A : Type*} [AddCommGroup A] (ξ : ℕ → A) (N i : ℕ)
     (h : ∀ k l, N ≤ k → (k + l).choose l • ξ k = (k + l - i).choose l • ξ (k + l)) :
     ∃! x : A, ∀ k, N ≤ k → ξ k = k.choose i • x := by
@@ -201,6 +203,7 @@ theorem binomial_shadow_existsUnique {A : Type*} [AddCommGroup A] (ξ : ℕ → 
 
 /-- **Théorème 1 (p. 22).** If `binom(j, i)(x_j − x_i) = 0` for all `j > i ≥ N` in an
 abelian group, then `x_j = x_N` for every `j ≥ N`. -/
+@[montpellier "136, 22"]
 theorem binomial_constant {A : Type*} [AddCommGroup A] (x : ℕ → A) (N : ℕ)
     (h : ∀ i j, N ≤ i → i < j → j.choose i • (x j - x i) = 0) :
     ∀ j, N ≤ j → x j = x N := by
@@ -217,6 +220,7 @@ theorem binomial_constant {A : Type*} [AddCommGroup A] (x : ℕ → A) (N : ℕ)
 
 /-- Corollary 1 a) on coefficients: a family of additive maps `u_k : M → M'` with
 `binom(j, k)(u_j − u_k) = 0` for `j > k ≥ N` is constant from `N` on. -/
+@[montpellier "136, 19–31"]
 theorem hom_family_constant {M M' : Type*} [AddCommGroup M] [AddCommGroup M']
     (u : ℕ → M →+ M') (N : ℕ)
     (h : ∀ i j, N ≤ i → i < j → j.choose i • (u j - u i) = 0) :
@@ -327,6 +331,7 @@ def pdD (f : ℕ → (σ → ℕ) → Finset σ → k) : ℕ → (σ → ℕ) �
   fun a β J => ∑ j ∈ J, kSign J j * f a (β + Pi.single j 1) (J.erase j)
 
 /-- `d ∘ d = 0`. -/
+@[montpellier "136, 5–10, 226–232"]
 theorem pdD_pdD (f : ℕ → (σ → ℕ) → Finset σ → k) : pdD (pdD f) = 0 := by
   funext a β J
   simp only [pdD, Finset.mul_sum, Pi.zero_apply]
@@ -394,6 +399,7 @@ theorem pdSupp_sub_insert {β : σ → ℕ} {I : Finset σ} {j : σ} (hβ : β j
   by_cases hx : x = j <;> simp [pdSupp, hx, hβ, Pi.single_apply]
 
 /-- **The homotopy formula**: `H d + d H = 1 − P`, `P` the projection on the constants. -/
+@[montpellier "136, 5–10, 226–232"]
 theorem pdH_pdD_add (f : ℕ → (σ → ℕ) → Finset σ → k) (a : ℕ) (β : σ → ℕ) (I : Finset σ) :
     pdH (pdD f) a β I + pdD (pdH f) a β I = f a β I - pdP f a β I := by
   by_cases hS : pdSupp β I = ∅
@@ -505,6 +511,7 @@ theorem IsBideg.eq_zero_of_gt {n q : ℕ} {f : ℕ → (σ → ℕ) → Finset �
 
 /-- **Exactness of the row in exterior degree `q ≥ 1`**: a cocycle of bidegree `(n, q)` is the
 coboundary of a form of bidegree `(n, q − 1)`, namely of `H f`. -/
+@[montpellier "136, 8"]
 theorem exact_of_pos {n q : ℕ} {f : ℕ → (σ → ℕ) → Finset σ → k} (hf : IsBideg n (q + 1) f)
     (hd : pdD f = 0) : IsBideg n q (pdH f) ∧ pdD (pdH f) = f := by
   refine ⟨hf.pdH, ?_⟩
@@ -576,6 +583,7 @@ theorem pdH_eq_zero_of_isBideg_zero {n : ℕ} {f : ℕ → (σ → ℕ) → Fins
 
 /-- **Exterior degree `0`**: the cocycles of bidegree `(n, 0)` are the `c T^{(n)}`, and
 `c ↦ c T^{(n)}` is injective: `H^{n,0} ≅ k`, through the augmentation `1 ↦ T^{(n)}`. -/
+@[montpellier "136, 8"]
 theorem cocycle_zero {n : ℕ} {f : ℕ → (σ → ℕ) → Finset σ → k} (hf : IsBideg n 0 f)
     (hd : pdD f = 0) : f = f n 0 ∅ • tPow n := by
   funext a β I
@@ -609,6 +617,7 @@ def tMul (j : ℕ) (f : ℕ → (σ → ℕ) → Finset σ → k) : ℕ → (σ 
 
 omit [Fintype σ] in
 /-- The differential is `k{T}`-linear. -/
+@[montpellier "136, 5–10, 226–232"]
 theorem pdD_tMul (j : ℕ) (f : ℕ → (σ → ℕ) → Finset σ → k) :
     pdD (tMul j f) = tMul j (pdD f) := by
   funext a β J
@@ -619,6 +628,7 @@ theorem pdD_tMul (j : ℕ) (f : ℕ → (σ → ℕ) → Finset σ → k) :
 
 omit [LinearOrder σ] [Fintype σ] in
 /-- `T^{(i)} (T^{(j)} f) = c_{i,j} T^{(i+j)} f`: the forms are a `k{T}`-module. -/
+@[montpellier "136, 5–10, 226–232"]
 theorem tMul_tMul (i j : ℕ) (f : ℕ → (σ → ℕ) → Finset σ → k) :
     tMul i (tMul j f) = ((i + j).choose i : k) • tMul (i + j) f := by
   funext a β I
@@ -649,6 +659,7 @@ theorem IsBideg.tMul {n q : ℕ} {f : ℕ → (σ → ℕ) → Finset σ → k} 
   · exact absurd rfl h
 
 /-- **The shadow structure** (p. 9): `T^{(j)} T^{(n)} = c_{j,n} T^{(n+j)}`. -/
+@[montpellier "136, 9"]
 theorem tMul_tPow (j n : ℕ) :
     tMul j (tPow n : ℕ → (σ → ℕ) → Finset σ → k) = ((n + j).choose j : k) • tPow (n + j) := by
   funext a β I
@@ -667,6 +678,7 @@ every cocycle of exterior degree `q + 1` is a coboundary; the cocycles of exteri
 `H^{n,0} ≅ k` through `1 ↦ T^{(n)}`; nothing lives in exterior degree `q > n`; and
 `T^{(j)}` sends the class `T^{(n)}` to `c_{j,n} T^{(n+j)}`. Graded by total degree,
 the cohomology is `k{T} = τ_{≥0}(H^0 ⊗_k k{T})`, the shadow of `H^•(Δ[m], k) = k`. -/
+@[montpellier "136, 8–9, 232"]
 theorem pd_row_cohomology (n : ℕ) :
     (∀ q (f : ℕ → (σ → ℕ) → Finset σ → k), IsBideg n (q + 1) f → pdD f = 0 →
         ∃ g, IsBideg n q g ∧ pdD g = f) ∧
@@ -1081,6 +1093,7 @@ theorem pdModelMap_comp (q : ℕ) {n l : ℕ} (θ : Fin (n + 1) → Fin (m + 1))
 variable (k) in
 /-- **The simplicial `k`-module `C^{•,q}_* = Γ^•Φ_* ⊗ Λ^qΨ_*`** (pages 5–7), with
 `Φ_* : [n] ↦ k^{n+1}` and `Ψ_* = Φ_*/k_*`. -/
+@[montpellier "136, 5–7"]
 noncomputable def pdSimplicial (q : ℕ) :
     CategoryTheory.Functor SimplexCategoryᵒᵖ (ModuleCat k) where
   obj n := ModuleCat.of k (PDModel k n.unop.len q)
@@ -1090,6 +1103,7 @@ noncomputable def pdSimplicial (q : ℕ) :
 
 /-- `T^{(p)}` is a simplicial section: `θ^*(T^{(p)} ⊗ ω) = T^{(p)} ⊗ θ^*ω`, so
 `1 ↦ T^{(p)}` is the augmentation `k_* → C^{p,0}_*`. -/
+@[montpellier "136, 5–7"]
 theorem pdModelMap_tPow (q : ℕ) {n : ℕ} (θ : Fin (n + 1) → Fin (m + 1)) (p : ℕ)
     (w : ⋀[k]^q (PsiM k m)) :
     pdModelMap q θ (DividedPowerAlgebra.dp k p 1 ⊗ₜ w) =
@@ -1105,6 +1119,7 @@ variable (k : Type*) [CommRing k] (m : ℕ)
 
 /-- **The coordinate model** (pages 5–7): `C^{•,q}_{[m]} = Γ(Φ_[m]) ⊗ Λ^qΨ_[m]` is free on
 the `T^{(a)} Y^{(β)} ⊗ dY_I`, `a ∈ ℕ`, `β ∈ ℕ^m`, `I ⊆ {1, …, m}` with `|I| = q`. -/
+@[montpellier "136, 5–7"]
 noncomputable def pdModelBasis (q : ℕ) :
     Module.Basis ((Option (Fin m) →₀ ℕ) × Set.powersetCard (Fin m) q) k (PDModel k m q) :=
   (dpBasis k (tyBasis k m)).tensorProduct ((psiBasis k m).exteriorPower q)
@@ -1116,6 +1131,7 @@ theorem pdModelBasis_apply (q : ℕ) (a : Option (Fin m) →₀ ℕ) (I : Set.po
 
 /-- **The `k{T}`-module structure** in the basis: `T^{(j)} · T^{(a)} Y^{(β)} =
 c_{j,a} T^{(a+j)} Y^{(β)}`, the multiplication `tMul` of the coefficient model. -/
+@[montpellier "136, 5–7"]
 theorem dp_one_mul_dpBasis (j : ℕ) (a : Option (Fin m) →₀ ℕ) :
     DividedPowerAlgebra.dp k j 1 * dpBasis k (tyBasis k m) a =
       (a none + j).choose j • dpBasis k (tyBasis k m) (a + Finsupp.single none j) := by

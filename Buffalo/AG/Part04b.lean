@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part04a
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 04 (b): 13 June 1973, locally ringed spaces and schemes
@@ -37,6 +38,7 @@ noncomputable section
 /-- thSz9ZHDK9o-8874 (2:27:54) [def] For `f ∈ 𝒪_X(U)`, `U_f` is the set of `x ∈ U` where `f_x`
 is invertible (mathlib's `RingedSpace.basicOpen`); in a locally ringed space this is the set
 where the value `f(x) ∈ κ(x)` is nonzero. -/
+@[buffalo "thSz9ZHDK9o-8874"]
 theorem def_8874 (X : LocallyRingedSpace.{u}) {U : Opens X} (f : X.presheaf.obj (op U)) (x : X)
     (hx : x ∈ U) :
     (x ∈ X.toRingedSpace.basicOpen f ↔ IsUnit (X.presheaf.germ U x hx f)) ∧
@@ -47,6 +49,7 @@ theorem def_8874 (X : LocallyRingedSpace.{u}) {U : Opens X} (f : X.presheaf.obj 
 
 /-- thSz9ZHDK9o-9004 (2:30:04) [prop] A ringed space with nonzero fibres is locally ringed iff,
 for `f₁, …, fₙ ∈ 𝒪_X(U)` with `∑ fᵢ = 1`, the `U_{fᵢ}` cover `U`. -/
+@[buffalo "thSz9ZHDK9o-9004"]
 theorem prop_9004 (X : RingedSpace.{u}) (hX : ∀ x : X, Nontrivial (X.presheaf.stalk x)) :
     (∀ x : X, IsLocalRing (X.presheaf.stalk x)) ↔
       ∀ (U : Opens X) (n : ℕ) (f : Fin n → X.presheaf.obj (op U)), ∑ i, f i = 1 →
@@ -72,18 +75,21 @@ theorem prop_9004 (X : RingedSpace.{u}) (hX : ∀ x : X, Nontrivial (X.presheaf.
     · right; simpa using hi
 
 /-- thSz9ZHDK9o-9067 (2:31:07) [prop] For `u : A → B`, `𝔭 ↦ u⁻¹(𝔭)` is continuous. -/
+@[buffalo "thSz9ZHDK9o-9067"]
 theorem prop_9067 {A B : Type u} [CommRing A] [CommRing B] (u : A →+* B) :
     Continuous (fun p : PrimeSpectrum B => PrimeSpectrum.comap u p) :=
   PrimeSpectrum.continuous_comap u
 
 /-- thSz9ZHDK9o-9194 (2:33:14) [prop] `φ⁻¹(Y_f) = X_{u(f)}`, and `u` defines a morphism of
 (locally) ringed spaces `Spec B → Spec A` (`Spec.map`). -/
+@[buffalo "thSz9ZHDK9o-9194"]
 theorem prop_9194 {A B : CommRingCat.{u}} (u : A ⟶ B) (f : A) :
     Spec.map u ⁻¹ᵁ PrimeSpectrum.basicOpen f = PrimeSpectrum.basicOpen (u f) :=
   SpecMap_preimage_basicOpen u f
 
 /-- thSz9ZHDK9o-9257 (2:34:17) [prop] For an `A`-algebra `B` and `f ∈ A`, the localization of the
 ring `B` at the image of `f` is the localization of the `A`-module `B` at `f`. -/
+@[buffalo "thSz9ZHDK9o-9257"]
 theorem prop_9257 {A B : Type u} [CommRing A] [CommRing B] [Algebra A B] (f : A) :
     IsLocalizedModule (Submonoid.powers f)
       (IsScalarTower.toAlgHom A B (Localization.Away (algebraMap A B f))).toLinearMap := by
@@ -93,6 +99,7 @@ theorem prop_9257 {A B : Type u} [CommRing A] [CommRing B] [Algebra A B] (f : A)
 
 /-- thSz9ZHDK9o-9386 (2:36:26) [prop] `u` is recovered as `Γ(φ^♯)` (up to `Γ(Spec A) ≅ A`), and
 `Hom(A, B) → Hom(Spec B, Spec A)` is injective. -/
+@[buffalo "thSz9ZHDK9o-9386"]
 theorem prop_9386 {A B : CommRingCat.{u}} (u : A ⟶ B) :
     (Spec.map u).appTop ≫ (Scheme.ΓSpecIso B).hom = (Scheme.ΓSpecIso A).hom ≫ u ∧
       Function.Injective (Spec.map : (A ⟶ B) → (Spec B ⟶ Spec A)) :=
@@ -101,6 +108,7 @@ theorem prop_9386 {A B : CommRingCat.{u}} (u : A ⟶ B) :
 /-- thSz9ZHDK9o-9833 (2:43:53) [prop] `Hom_{𝒪_Y}(M^~, G) ≃ Hom_A(M, Γ(Y, G))` (the adjunction
 `tilde ⊣ Γ`, applied to `G = φ_* N^~`, whose global sections are `N_{[A]}`) and
 `Hom_A(M, N_{[A]}) ≃ Hom_B(M ⊗_A B, N)` (extension ⊣ restriction of scalars). -/
+@[buffalo "thSz9ZHDK9o-9833"]
 def prop_9833 {A B : CommRingCat.{u}} (u : A ⟶ B) (M : ModuleCat.{u} A)
     (G : (Spec A).Modules) (N : ModuleCat.{u} B) :
     (((tilde.functor A).obj M ⟶ G) ≃ (M ⟶ moduleSpecΓFunctor.obj G)) ×
@@ -112,6 +120,7 @@ def prop_9833 {A B : CommRingCat.{u}} (u : A ⟶ B) (M : ModuleCat.{u} A)
 /-- thSz9ZHDK9o-9513 (2:38:33) [prop] The direct image of a quasi-coherent module `N^~` on
 `Spec B` is again of the form `M^~` (with `M` its module of global sections, `N_{[A]}`): the
 canonical map `Γ(φ_* N^~)^~ → φ_* N^~` is an isomorphism. -/
+@[buffalo "thSz9ZHDK9o-9513"]
 theorem prop_9513 {A B : CommRingCat.{u}} (u : A ⟶ B) (N : (Spec B).Modules)
     [IsIso N.fromTildeΓ] :
     IsIso ((Scheme.Modules.pushforward (Spec.map u)).obj N).fromTildeΓ :=
@@ -120,12 +129,14 @@ theorem prop_9513 {A B : CommRingCat.{u}} (u : A ⟶ B) (N : (Spec B).Modules)
 /-- thSz9ZHDK9o-10229 (2:50:29) [def] `u : O → O'` between local rings is local
 (`IsLocalHom u`) iff `u⁻¹(𝔪') = 𝔪`; a morphism of ringed spaces induces the maps of stalks
 `Hom.stalkMap`. -/
+@[buffalo "thSz9ZHDK9o-10229"]
 theorem def_10229 {O O' : Type u} [CommRing O] [CommRing O'] [IsLocalRing O] [IsLocalRing O']
     (u : O →+* O') : IsLocalHom u ↔ (maximalIdeal O').comap u = maximalIdeal O :=
   (IsLocalRing.local_hom_TFAE u).out 1 5
 
 /-- thSz9ZHDK9o-10435 (2:53:55) [prop] For `u : O → O'` between local rings, `u⁻¹(𝔪') ⊂ 𝔪`
 always; `u` is local iff `u(𝔪) ⊂ 𝔪'`, iff (`f ∈ O^* ⇔ u(f) ∈ O'^*`). -/
+@[buffalo "thSz9ZHDK9o-10435"]
 theorem prop_10435 {O O' : Type u} [CommRing O] [CommRing O'] [IsLocalRing O] [IsLocalRing O']
     (u : O →+* O') :
     (maximalIdeal O').comap u ≤ maximalIdeal O ∧
@@ -143,6 +154,7 @@ example {X Y : LocallyRingedSpace.{u}} (f : X ⟶ Y) (x : X) :
 
 /-- thSz9ZHDK9o-10708 (2:58:28) [prop] For a morphism of ringed spaces `φ : X → Y` between
 locally ringed spaces, `φ⁻¹(Y_f) ⊂ X_{φ^*(f)}`; `φ` is local iff this is always an equality. -/
+@[buffalo "thSz9ZHDK9o-10708"]
 theorem prop_10708 {X Y : LocallyRingedSpace.{u}} (φ : X.toPresheafedSpace ⟶ Y.toPresheafedSpace) :
     (∀ (U : Opens Y) (f : Y.presheaf.obj (op U)),
       (Opens.map φ.base).obj (Y.toRingedSpace.basicOpen f) ≤
@@ -193,6 +205,7 @@ the morphism of ringed spaces `Spec K → Spec V` sending the point to the close
 a local homomorphism; and it does not come from a ring homomorphism, since `Γ` would force
 `u = (V ⊂ K)`, and `Spec` of the inclusion sends the point to the generic point `(0) ≠ 𝔪`.
 (The ringed-space morphism itself is not constructed.) -/
+@[buffalo "thSz9ZHDK9o-12148"]
 theorem cex_12148 (V K : Type u) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field K]
     [Algebra V K] [IsFractionRing V K] :
     ¬ IsLocalHom (algebraMap V K) ∧
@@ -219,6 +232,7 @@ theorem cex_12148 (V K : Type u) [CommRing V] [IsDomain V] [IsDiscreteValuationR
 /-- thSz9ZHDK9o-12408 (3:26:48) [prop] A morphism of locally ringed spaces (of schemes)
 `φ : Spec B → Spec A` is `Spec u` for `u` the ring homomorphism it induces on global sections;
 on points `φ(𝔭) = u⁻¹(𝔭)`. -/
+@[buffalo "thSz9ZHDK9o-12408"]
 theorem prop_12408 {A B : CommRingCat.{u}} (φ : Spec B ⟶ Spec A) :
     ∃ u : A ⟶ B, φ = Spec.map u ∧
       φ.appTop ≫ (Scheme.ΓSpecIso B).hom = (Scheme.ΓSpecIso A).hom ≫ u ∧
@@ -230,6 +244,7 @@ theorem prop_12408 {A B : CommRingCat.{u}} (φ : Spec B ⟶ Spec A) :
     rfl
 
 /-- thSz9ZHDK9o-12471 (3:27:51) [prop] `Hom(A, B) → Hom_loc(Spec B, Spec A)` is bijective. -/
+@[buffalo "thSz9ZHDK9o-12471"]
 theorem prop_12471 (A B : CommRingCat.{u}) :
     Function.Bijective (Spec.map : (A ⟶ B) → (Spec B ⟶ Spec A)) :=
   ⟨Spec.map_injective, fun φ => ⟨Spec.preimage φ, Spec.map_preimage φ⟩⟩
@@ -248,6 +263,7 @@ example : AffineScheme.{u} ≌ CommRingCat.{u}ᵒᵖ := AffineScheme.equivCommRi
 /-- thSz9ZHDK9o-12665 (3:31:05) [prop] The global functions on the projective line, glued from
 two affine lines along `k^×` (`ex_22963`), are the constants: inside `k[T, T⁻¹]`, a function
 regular on both charts is a polynomial in `T` and in `T⁻¹`, hence constant. -/
+@[buffalo "thSz9ZHDK9o-12665"]
 theorem prop_12665 {R : Type u} [CommRing R] (f : LaurentPolynomial R) (p q : Polynomial R)
     (hp : f = p.toLaurent) (hq : f = LaurentPolynomial.invert q.toLaurent) :
     f = LaurentPolynomial.C (f.coeff 0) := by
@@ -272,17 +288,20 @@ example (X : Scheme.{u}) : Opens.IsBasis X.affineOpens := X.isBasis_affineOpens
 
 /-- thSz9ZHDK9o-12791 (3:33:11) [prop] A `k`-scheme structure on `X`, a morphism `X → Spec k`,
 amounts to a ring homomorphism `k → Γ(X, 𝒪_X)`. -/
+@[buffalo "thSz9ZHDK9o-12791"]
 def prop_12791 (X : Scheme.{u}) (k : CommRingCat.{u}) : (X ⟶ Spec k) ≃ (k ⟶ Γ(X, ⊤)) :=
   (ΓSpec.adjunction.homEquiv X (op k)).symm.trans (opEquiv _ _)
 
 /-- thSz9ZHDK9o-14251 (3:57:31) [prop] For `X` a locally ringed space,
 `Hom_loc(X, Spec A) ≃ Hom(A, Γ(X, 𝒪_X))`. -/
+@[buffalo "thSz9ZHDK9o-14251"]
 def prop_14251 (X : LocallyRingedSpace.{u}) (A : CommRingCat.{u}) :
     (X ⟶ Spec.toLocallyRingedSpace.obj (op A)) ≃ (A ⟶ LocallyRingedSpace.Γ.obj (op X)) :=
   (ΓSpec.locallyRingedSpaceAdjunction.homEquiv X (op A)).symm.trans (opEquiv _ _)
 
 /-- thSz9ZHDK9o-13111 (3:38:31) [def] `X(k') = Hom_k(Spec k', X)`; for `X = Spec A` one
 recovers `Hom_{k-alg}(A, k')`. -/
+@[buffalo "thSz9ZHDK9o-13111"]
 def def_13111 (k A k' : Type u) [CommRing k] [CommRing A] [Algebra k A] [CommRing k']
     [Algebra k k'] :
     {f : Spec (CommRingCat.of k') ⟶ Spec (CommRingCat.of A) //
@@ -362,6 +381,7 @@ theorem pts_full_aux {X Y : Scheme.{u}} (𝒰 : X.AffineOpenCover) (η : pts.obj
 
 /-- thSz9ZHDK9o-13183 (3:39:43) [prop] The functor associating to a scheme its functor of points
 on rings is fully faithful (here over `k = ℤ`, i.e. all schemes and all rings). -/
+@[buffalo "thSz9ZHDK9o-13183"]
 theorem prop_13183 : pts.{u}.Faithful ∧ pts.{u}.Full := by
   refine ⟨⟨fun {X Y} f g h => ext_of_affine f g fun R a => ?_⟩,
     ⟨fun {X Y} η => pts_full_aux X.affineOpenCover η⟩⟩
@@ -370,6 +390,7 @@ theorem prop_13183 : pts.{u}.Faithful ∧ pts.{u}.Full := by
 
 /-- thSz9ZHDK9o-13375 (3:42:55) [prop] If `X = Spec A` is affine, `Hom(X, Y) → Hom(X', Y')` is
 bijective (Yoneda, `X'` being representable). -/
+@[buffalo "thSz9ZHDK9o-13375"]
 theorem prop_13375 (A : CommRingCat.{u}) (Y : Scheme.{u}) :
     Function.Bijective (pts.map : (Spec A ⟶ Y) → (pts.obj (Spec A) ⟶ pts.obj Y)) := by
   obtain ⟨_, _⟩ := prop_13183.{u}
@@ -378,6 +399,7 @@ theorem prop_13375 (A : CommRingCat.{u}) (Y : Scheme.{u}) :
 /-- thSz9ZHDK9o-13648 (3:47:28) [prop] For an open covering `(X_i)` of a scheme `X`,
 `Hom(X, Y) → ∏ Hom(X_i, Y) ⇉ ∏ Hom(X_{ij}, Y)` is exact (here for `Y` a scheme;
 `X_{ij} = X_i ×_X X_j = X_i ∩ X_j`). -/
+@[buffalo "thSz9ZHDK9o-13648"]
 theorem prop_13648 {X Y : Scheme.{u}} (𝒰 : X.OpenCover) :
     (∀ f g : X ⟶ Y, (∀ i, 𝒰.f i ≫ f = 𝒰.f i ≫ g) → f = g) ∧
       ∀ (f : ∀ i, 𝒰.X i ⟶ Y),
@@ -396,6 +418,7 @@ namespace Buffalo.AG.Part04
 left adjoints these are — `φ^* ⊣ φ_*` on modules over schemes and extension ⊣ restriction of
 scalars — are in mathlib (`prop_9833`), but not the identification `Γ ∘ φ_* ≅ (·)_{[A]} ∘ Γ`
 that makes the two left adjoints agree on `M^~`. -/
+@[buffalo "thSz9ZHDK9o-9961"]
 noncomputable def prop_9961 {A B : CommRingCat.{u}} (u : A ⟶ B) :
     Scheme.Modules.pullback (Spec.map u) ⊣ Scheme.Modules.pushforward (Spec.map u) :=
   Scheme.Modules.pullbackPushforwardAdjunction (Spec.map u)

@@ -9,6 +9,7 @@ public import Mathlib.AlgebraicTopology.ModelCategory.Basic
 public import Mathlib.AlgebraicTopology.ModelCategory.Cylinder
 public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
 public import Mathlib.CategoryTheory.Limits.Shapes.IsTerminal
+import Grothendieck.Attr
 
 /-!
 # Folder 107: rectification of a relative square (pages 20 and 22)
@@ -119,6 +120,7 @@ variable {X X' Y Y' : C} {i : X ⟶ X'} {p : Y ⟶ Y'} (R : RelativeCylinder i)
 `h : p φ ⟶ g'` are compatible, `k ≫ p = (i ⊗ J) ≫ h`, then the diagonal `φ`
 can be replaced by a homotopic `φ̄` making both triangles commute strictly;
 the homotopy `L : φ ⟶ φ̄` extends `k` and covers `h`. -/
+@[montpellier "107, 22"]
 theorem rectification (hR : CoveringHomotopyExtension R p) {g : X ⟶ Y} {g' : X' ⟶ Y'}
     (φ : X' ⟶ Y) (k : R.P.I ⟶ Y) (h : R.P'.I ⟶ Y')
     (hk : IsHomotopy R.P k (i ≫ φ) g) (hh : IsHomotopy R.P' h (φ ≫ p) g')
@@ -133,6 +135,7 @@ theorem rectification (hR : CoveringHomotopyExtension R p) {g : X ⟶ Y} {g' : X
 /-- **The reading's necessity.** If `φ̄` makes both triangles commute and
 `K : φ ⟶ φ̄` is a homotopy on `X' ⊗ J`, then `k = (i ⊗ J) ≫ K` and `h = K ≫ p`
 are homotopies `φ i ⟶ g` and `p φ ⟶ g'`, and they are compatible. -/
+@[montpellier "107, 20, 22"]
 theorem compatible_of_rectification {g : X ⟶ Y} {g' : X' ⟶ Y'} (φ φbar : X' ⟶ Y)
     (hg : i ≫ φbar = g) (hg' : φbar ≫ p = g') (K : R.P'.I ⟶ Y)
     (hK : IsHomotopy R.P' K φ φbar) :
@@ -148,6 +151,7 @@ theorem compatible_of_rectification {g : X ⟶ Y} {g' : X' ⟶ Y'} (φ φbar : X
 property, a diagonal `φ̄` homotopic to `φ` (on `X' ⊗ J`) and making both
 triangles commute strictly exists if and only if there are homotopies
 `k : φ i ⟶ g`, `h : p φ ⟶ g'` compatible with `i` and `p`. -/
+@[montpellier "107, 20, 22"]
 theorem rectification_iff (hR : CoveringHomotopyExtension R p) {g : X ⟶ Y} {g' : X' ⟶ Y'}
     (φ : X' ⟶ Y) :
     (∃ (φbar : X' ⟶ Y) (K : R.P'.I ⟶ Y),
@@ -163,6 +167,7 @@ theorem rectification_iff (hR : CoveringHomotopyExtension R p) {g : X ⟶ Y} {g'
 /-- **Page 22, « in case `Y'` is final object we are evidently through ».**
 When `Y'` is terminal, a homotopy `k : φ i ⟶ g` alone gives `φ̄`: the
 compatibility, and the homotopy `h`, are automatic. -/
+@[montpellier "107, 22"]
 theorem rectification_of_isTerminal (hY' : IsTerminal Y') (hR : CoveringHomotopyExtension R p)
     {g : X ⟶ Y} {g' : X' ⟶ Y'} (φ : X' ⟶ Y) (k : R.P.I ⟶ Y)
     (hk : IsHomotopy R.P k (i ≫ φ) g) :
@@ -199,6 +204,7 @@ theorem coveringHomotopyExtension_of_trivialCofibration (p : Y ⟶ Y') [Fibratio
 /-- **Pages 20 and 22 in a model category.** With `p` a fibration and the
 corner map of the relative cylinder a trivial cofibration, the diagonal `φ`
 can be rectified if and only if the homotopies can be chosen compatible. -/
+@[montpellier "107, 20, 22"]
 theorem rectification_modelCategory (p : Y ⟶ Y') [Fibration p]
     [Cofibration (pushout.desc R.iJ R.P'.i₀ R.w₀)]
     [WeakEquivalence (pushout.desc R.iJ R.P'.i₀ R.w₀)]

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 156-1, the segment model is a biorder (pages 10–13)
@@ -103,6 +104,7 @@ def OrderTwo (x : L) : Prop :=
 
 /-- The axioms F1–F5 and F′3 of the third draft (pages 5–8), as the reading
 states them. -/
+@[montpellier "156-1, 5–8"]
 structure Axioms : Prop where
   /-- `∂I` is a two-element set. -/
   bd_pair : ∀ I, ∃ x y, x ≠ y ∧ M.bd I = {x, y}
@@ -138,6 +140,7 @@ def le (x0 : L) (a b : L) : Prop := a = b ∨ ∃ J, M.bd J = {x0, b} ∧ a ∈ 
 def lt (x0 : L) (a b : L) : Prop := M.le x0 a b ∧ a ≠ b
 
 /-- A model which is a single segment `I = L` (page 10), with `∂I = {x₀, x₁}`. -/
+@[montpellier "156-1, 10"]
 structure SegModel (I : S) (x0 x1 : L) : Prop where
   ax : M.Axioms
   car_eq : M.car I = univ
@@ -441,6 +444,7 @@ greatest element `x₁`, distinct; it is dense and locally directed downwards an
 upwards; every segment is an interval `[a, b]`, `a < b`, with `∂ = {a, b}`, and
 every such interval is carried by exactly one segment. Only F1, F2, F′3 and F4
 are used. -/
+@[montpellier "156-1, 10–13"]
 theorem biorder :
     letI := h.toPartialOrder
     (∀ a, x0 ≤ a) ∧ (∀ a, a ≤ x1) ∧ x0 ≠ x1 ∧ DenselyOrdered L ∧ LocDirDown L ∧
@@ -470,6 +474,7 @@ theorem biorder :
 
 /-- **Page 13.** Exchanging the extremities replaces the order by its opposite:
 a segment structure is a biorder. -/
+@[montpellier "156-1, 13"]
 theorem le_swap (a b : L) : M.le x1 a b ↔ M.le x0 b a := by
   have h' : M.SegModel I x1 x0 := ⟨h.ax, h.car_eq, by rw [h.bd_eq, pair_comm]⟩
   by_cases hb : b = x1
@@ -552,6 +557,7 @@ theorem intervals_sameBranch_down {x a c : α} (hax : a < x) (hcx : c < x)
 /-- **Page 12, converse.** On a dense poset, locally directed downwards and
 upwards, the intervals `[x, y]`, `x < y`, satisfy F1–F5 and F′3. (No bound is
 needed for this; F4 holds without its regularity hypothesis.) -/
+@[montpellier "156-1, 12"]
 theorem intervals_axioms [DenselyOrdered α] (hd : LocDirDown α) (hu : LocDirUp α) :
     (intervals α).Axioms where
   bd_pair p := ⟨p.1.1, p.1.2, p.2.ne, rfl⟩
@@ -663,12 +669,14 @@ def topSeg (h : (⊥ : α) ≠ ⊤) : Seg α := ⟨(⊥, ⊤), bot_lt_iff_ne_bot
 
 /-- **Page 12, converse.** A bounded poset with `⊥ ≠ ⊤`, dense and locally
 directed both ways, is a model-segment with extremities `⊥, ⊤`. -/
+@[montpellier "156-1, 12"]
 theorem intervals_segModel [DenselyOrdered α] (hd : LocDirDown α) (hu : LocDirUp α)
     (h : (⊥ : α) ≠ ⊤) : (intervals α).SegModel (topSeg h) ⊥ ⊤ :=
   ⟨intervals_axioms hd hu, Icc_bot_top, rfl⟩
 
 /-- The order read back from the model-segment at `⊥` (page 11) is the given
 order: the two constructions are inverse to each other. -/
+@[montpellier "156-1, 11"]
 theorem intervals_le_iff (a b : α) : (intervals α).le ⊥ a b ↔ a ≤ b := by
   constructor
   · rintro (rfl | ⟨J, hJ, ha⟩)
@@ -813,6 +821,7 @@ theorem not_total : ∃ a b : T, ¬ a ≤ b ∧ ¬ b ≤ a := by
 /-- **Page 12, « the order need not be total ».** `T` is a bounded poset with
 `⊥ ≠ ⊤`, dense and locally directed both ways, not totally ordered; its
 intervals form a model-segment. -/
+@[montpellier "156-1, 12"]
 theorem example_segModel :
     (⊥ : T) ≠ ⊤ ∧ (∃ a b : T, ¬ a ≤ b ∧ ¬ b ≤ a) ∧
       ∃ h : (⊥ : T) ≠ ⊤, (intervals T).SegModel (topSeg h) ⊥ ⊤ := by

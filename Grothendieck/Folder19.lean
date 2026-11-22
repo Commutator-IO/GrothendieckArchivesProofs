@@ -16,6 +16,7 @@ public import Mathlib.CategoryTheory.Category.GaloisConnection
 public import Mathlib.CategoryTheory.Adjunction.Whiskering
 public import Mathlib.CategoryTheory.Adjunction.Opposites
 public import Mathlib.Order.Sum.Order
+import Grothendieck.Attr
 
 /-!
 # Folder 19: the comonadicity theorem (page 4), the comonad over a product base
@@ -156,6 +157,7 @@ variable {f : A ⥤ B} {g : B ⥤ A} (adj : f ⊣ g)
 
 /-- **Condition C** (margin of page 4): for every pair `(u, v)` of `A` such that
 `Ker(f u, f v)` exists, `Ker(u, v)` exists and `f` commutes with it. -/
+@[montpellier "19, 4"]
 def ConditionC (f : A ⥤ B) : Prop :=
   ∀ ⦃X Y : A⦄ (u v : X ⟶ Y), HasEqualizer (f.map u) (f.map v) →
     HasEqualizer u v ∧ PreservesLimit (parallelPair u v) f
@@ -163,6 +165,7 @@ def ConditionC (f : A ⥤ B) : Prop :=
 open Comonad ComonadicityInternal in
 /-- **Théorème 1.12 a)**, in the margin's form: under condition C the comparison
 functor `h : A → φ-Coalg` is essentially surjective. -/
+@[montpellier "19, 4"]
 theorem theoreme_a (hC : ConditionC f) : (Comonad.comparison adj).EssSurj := by
   have hE : ∀ X : adj.toComonad.Coalgebra,
       HasEqualizer (g.map X.a) (adj.unit.app (g.obj X.A)) := fun X =>
@@ -182,12 +185,14 @@ theorem theoreme_a (hC : ConditionC f) : (Comonad.comparison adj).EssSurj := by
 
 /-- **Théorème 1.12 a)**, as the text states it: if the equalizers of pairs exist
 in `A` and `f` commutes with them, `h` is essentially surjective. -/
+@[montpellier "19, 4"]
 theorem theoreme_a' [HasEqualizers A] [PreservesLimitsOfShape WalkingParallelPair f] :
     (Comonad.comparison adj).EssSurj :=
   theoreme_a adj fun _ _ _ _ _ => ⟨inferInstance, inferInstance⟩
 
 /-- **Théorème 1.12 b), sufficiency.** If `f` is conservative and satisfies
 condition C, the comparison functor is an equivalence. -/
+@[montpellier "19, 4"]
 theorem theoreme_b_suffisance [f.ReflectsIsomorphisms] (hC : ConditionC f) :
     (Comonad.comparison adj).IsEquivalence := by
   have : Comonad.HasEqualizerOfIsCosplitPair f := ⟨fun u v _ => (hC u v inferInstance).1⟩
@@ -198,6 +203,7 @@ theorem theoreme_b_suffisance [f.ReflectsIsomorphisms] (hC : ConditionC f) :
 reading's b) should carry): the comparison functor is an equivalence iff `f` is
 conservative and, for every `f`-split pair `(u, v)` — one whose image has a
 *split* equalizer — `Ker(u, v)` exists and `f` commutes with it. -/
+@[montpellier "19, 4"]
 theorem beck_iff : (Comonad.comparison adj).IsEquivalence ↔
     f.ReflectsIsomorphisms ∧ ∀ ⦃X Y : A⦄ (u v : X ⟶ Y), f.IsCosplitPair u v →
       HasEqualizer u v ∧ PreservesLimit (parallelPair u v) f := by
@@ -301,6 +307,7 @@ theorem non_conditionC : ¬ ConditionC P.ι := by
 `f ⊣ g` whose comparison functor is an equivalence, and yet `f` does not satisfy
 condition C. The correct necessary condition is the one of `beck_iff`, on
 `f`-split pairs only. -/
+@[montpellier "19, 4"]
 theorem theoreme_b_necessite_fausse :
     (Comonad.comparison adjP).IsEquivalence ∧ ¬ ConditionC P.ι :=
   ⟨comonadique, non_conditionC⟩
@@ -314,6 +321,7 @@ category with a generator `U` (mathlib: a *separator*), `R = End(U)`. Then
 `Hom_C(U, -) : C → Mod_R` (right `R`-modules, i.e. modules over `Rᵐᵒᵖ`) is fully
 faithful, and its left adjoint `- ⊗_R U` is exact. This is mathlib's
 Gabriel–Popescu theorem. -/
+@[montpellier "19, 14–15"]
 theorem gabriel_popescu {C : Type u₁} [Category.{v} C] [Abelian C]
     [IsGrothendieckAbelian.{v} C] (U : C) (hU : IsSeparator U) :
     (preadditiveCoyonedaObj U).Full ∧ (preadditiveCoyonedaObj U).Faithful ∧
@@ -338,6 +346,7 @@ noncomputable abbrev gPi [HasProductsOfShape I A] : (∀ i, B i) ⥤ A where
 variable [HasProductsOfShape I A]
 
 /-- (3.4) `f = (fᵢ) : A → ∏ Bᵢ` is left adjoint to `g = ∏ gᵢ`. -/
+@[montpellier "19, 7–11"]
 noncomputable def adjPi : Functor.pi' f ⊣ gPi g := Adjunction.mkOfHomEquiv
   { homEquiv := fun Y X =>
       { toFun := fun φ => Limits.Pi.lift fun i => (adj i).homEquiv _ _ (φ i)
@@ -394,12 +403,14 @@ def lam (k j i : I) : phi f g k i ⟶ phi f g j i ⋙ phi f g k j where
 /-- (3.5)–(3.6) **The matrix.** If `f_j` commutes with `I`-indexed products, the
 `j`-th component of `φ((Xᵢ))` is the product of the `φ_ji(Xᵢ)`, with projections
 `f_j(prᵢ)`. -/
+@[montpellier "19, 7–11"]
 noncomputable def matrice (X : ∀ i, B i) (j : I) [PreservesLimitsOfShape (Discrete I) (f j)] :
     IsLimit (Fan.mk ((adjPi f g adj).toComonad.obj X j)
       fun i => (f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i)) :=
   (isLimitMapConeFanMkEquiv (f j) _ _) (isLimitOfPreserves (f j) (productIsProduct _))
 
 /-- (3.9), first line: the counit of `φ` is diagonal, `ᾱ_k = α_k(X_k) ∘ pr_k`. -/
+@[montpellier "19, 7–11"]
 theorem counit_matrice (X : ∀ i, B i) (k : I) :
     (adjPi f g adj).toComonad.ε.app X k =
       (f k).map (Limits.Pi.π (fun i => (g i).obj (X i)) k) ≫ (adj k).counit.app (X k) :=
@@ -407,6 +418,7 @@ theorem counit_matrice (X : ∀ i, B i) (k : I) :
 
 /-- (3.9), second line: the `(k, j, i)` entry of the comultiplication of `φ` is
 `λ̄_kji = λ_kji(Xᵢ) ∘ prᵢ`. -/
+@[montpellier "19, 7–11"]
 theorem comult_matrice (X : ∀ i, B i) (k j i : I) :
     (adjPi f g adj).toComonad.δ.app X k ≫
         (f k).map (Limits.Pi.π _ j ≫
@@ -421,6 +433,7 @@ theorem comult_matrice (X : ∀ i, B i) (k j i : I) :
 /-- **The comultiplication is the family `λ_kji`.** If the `f_j` commute with
 `I`-indexed products, a morphism `(φX)_k → (φ²X)_k` with the entries `λ̄_kji` of
 `comult_matrice` is the `k`-th component of the comultiplication. -/
+@[montpellier "19, 7–11"]
 theorem comult_unique [∀ j, PreservesLimitsOfShape (Discrete I) (f j)] (X : ∀ i, B i) (k : I)
     (t : (adjPi f g adj).toComonad.obj X k ⟶
       ((adjPi f g adj).toComonad.obj ((adjPi f g adj).toComonad.obj X)) k)
@@ -451,6 +464,7 @@ theorem comult_unique [∀ j, PreservesLimitsOfShape (Discrete I) (f j)] (X : �
 omit [HasProductsOfShape I A] in
 /-- Marginal note of page 8: for `i = j = k`, `λ_kji` is the comultiplication `λ_i`
 of the comonad `φ_i = f_i g_i`. -/
+@[montpellier "19, 8"]
 theorem lam_diag (i : I) : lam f g adj i i i = (adj i).toComonad.δ := by
   ext X
   rfl
@@ -466,6 +480,7 @@ noncomputable def diagIso (i : I) [(g i).Full] [(g i).Faithful] : phi f g i i �
 omit [HasProductsOfShape I A] in
 /-- Pages 8–9, the degenerate cases `k = j`: if `g_k` is fully faithful,
 `λ_kki : φ_ki → φ_kk φ_ki` is an isomorphism. -/
+@[montpellier "19, 8–9"]
 theorem lam_isIso_left (k i : I) [(g k).Full] [(g k).Faithful] :
     IsIso (lam f g adj k k i) := by
   have : ∀ X, IsIso ((lam f g adj k k i).app X) := fun X =>
@@ -475,6 +490,7 @@ theorem lam_isIso_left (k i : I) [(g k).Full] [(g k).Faithful] :
 omit [HasProductsOfShape I A] in
 /-- Pages 8–9, the degenerate cases `j = i`: if `g_j` is fully faithful,
 `λ_kjj : φ_kj → φ_kj φ_jj` is an isomorphism. -/
+@[montpellier "19, 8–9"]
 theorem lam_isIso_right (k j : I) [(g j).Full] [(g j).Faithful] :
     IsIso (lam f g adj k j j) := by
   have : ∀ X, IsIso ((lam f g adj k j j).app X) := fun X => by
@@ -485,6 +501,7 @@ theorem lam_isIso_right (k j : I) [(g j).Full] [(g j).Faithful] :
 omit [HasProductsOfShape I A] in
 /-- (3.11 b), (3.14) The unit `λ' : id_{B_i} → φ_ij φ_ji` (`i ≠ j`) when `g_i` is
 fully faithful: `λ_iji` read through `φ_ii ≅ id`. -/
+@[montpellier "19, 7–11"]
 noncomputable def lamUnit (i j : I) [(g i).Full] [(g i).Faithful] :
     𝟭 (B i) ⟶ phi f g j i ⋙ phi f g i j :=
   (diagIso f g adj i).inv ≫ lam f g adj i j i
@@ -492,6 +509,7 @@ noncomputable def lamUnit (i j : I) [(g i).Full] [(g i).Faithful] :
 omit [HasProductsOfShape I A] in
 /-- `λ_iji = λ' ∘ α_i`: the entry `(i, j, i)` is the unit `λ'` after the counit
 `φ_ii → id`. -/
+@[montpellier "19, 7–11"]
 theorem lam_eq_counit_comp_lamUnit (i j : I) [(g i).Full] [(g i).Faithful] :
     lam f g adj i j i = (adj i).counit ≫ lamUnit f g adj i j := by
   simp [lamUnit, diagIso]
@@ -561,6 +579,7 @@ variable [HasProductsOfShape WalkingPair A]
 
 /-- (3.12)–(3.14), first factor. With `g'` fully faithful and `f'` commuting with
 binary products, `pr' φ(X', X'') = X' × φ'(X'')`, `φ' = f' g''`. -/
+@[montpellier "19, 7–11"]
 noncomputable def deuxFacteurs_left (X : ∀ i, B i) [(g .left).Full] [(g .left).Faithful]
     [PreservesLimitsOfShape (Discrete WalkingPair) (f .left)] :
     IsLimit (BinaryFan.mk
@@ -571,6 +590,7 @@ noncomputable def deuxFacteurs_left (X : ∀ i, B i) [(g .left).Full] [(g .left)
   binaryFanOfFanLeft _ (matrice f g adj X .left) (asIso ((adj .left).counit.app (X .left)))
 
 /-- (3.12)–(3.14), second factor: `pr'' φ(X', X'') = φ''(X') × X''`, `φ'' = f'' g'`. -/
+@[montpellier "19, 7–11"]
 noncomputable def deuxFacteurs_right (X : ∀ i, B i) [(g .right).Full] [(g .right).Faithful]
     [PreservesLimitsOfShape (Discrete WalkingPair) (f .right)] :
     IsLimit (BinaryFan.mk
@@ -608,6 +628,7 @@ def adjB : Fb ⊣ Gb := Adjunction.mkOfHomEquiv
 `f_i = Bool × -` (left adjoint of `Bool → -`), `pr_j φ((Xᵢ))` is not a product of the
 `φ_ji(Xᵢ)`: for `Xᵢ = *` the first has two elements, the second four. The finite
 products of `I` are not automatically preserved by the left adjoints `f_j`. -/
+@[montpellier "19, 7"]
 theorem matrice_fini_fausse :
     ¬ Nonempty ((adjPi (B := fun _ : Bool => Type) (fun _ => Fb) (fun _ => Gb)
         (fun _ => adjB)).toComonad.obj (fun _ => PUnit) true ≅
@@ -738,9 +759,11 @@ abbrev chain (k : ℤ) : ((ℤ ⊕ ℤ)ᵒᵖ ⥤ Type) ⥤ ((ℤ ⊕ ℤ)ᵒᵖ
 /-- **Infinite in both directions**: `chain k ⊣ chain (k + 1)` for every `k ∈ ℤ`. -/
 def chainAdj (k : ℤ) : chain k ⊣ chain (k + 1) := preAdj (gc k).adjunction
 
+@[montpellier "19, 79–80"]
 theorem chain_adj (k : ℤ) : Nonempty (chain k ⊣ chain (k + 1)) := ⟨chainAdj k⟩
 
 /-- No functor of the chain is faithful. -/
+@[montpellier "19, 79–80"]
 theorem chain_not_faithful (k : ℤ) : ¬ (chain k).Faithful := by
   by_cases hk : k % 2 = 0
   · refine not_faithful (chainFun k) (Sum.inl (k / 2 + 1)) (Sum.inl (k / 2))
@@ -767,6 +790,7 @@ theorem chain_not_fullyFaithful (k : ℤ) : ¬ ((chain k).Full ∧ (chain k).Fai
 
 /-- **Page 80, Proposition.** For every `n`, `n` functors between presheaf topoi on a small
 category, each right adjoint to the previous, none fully faithful. -/
+@[montpellier "19, 80"]
 theorem proposition_page80 (n : ℕ) :
     ∃ G : Fin n → (((ℤ ⊕ ℤ)ᵒᵖ ⥤ Type) ⥤ ((ℤ ⊕ ℤ)ᵒᵖ ⥤ Type)),
       (∀ (i : Fin n) (h : i.1 + 1 < n), Nonempty (G i ⊣ G ⟨i.1 + 1, h⟩)) ∧
@@ -807,12 +831,14 @@ variable {I : Type w} {A : Type u₁} [Category.{v} A] {B : I → Type u₂}
 variable (f : ∀ i, A ⥤ B i) (g : ∀ i, B i ⥤ A) (adj : ∀ i, f i ⊣ g i)
 
 /-- Right counit relation: `φ_ki(α_i) ∘ λ_kii = id`. -/
+@[montpellier "19, 7–11"]
 theorem lam_counit_right (k i : I) (X : B i) :
     (lam f g adj k i i).app X ≫ (phi f g k i).map ((adj i).counit.app X) = 𝟙 _ := by
   simp only [lam_app, Functor.comp_map, ← Functor.map_comp, Adjunction.right_triangle_components]
   exact (f k).map_id _
 
 /-- Left counit relation: `α_k φ_ki ∘ λ_kki = id`. -/
+@[montpellier "19, 7–11"]
 theorem lam_counit_left (k i : I) (X : B i) :
     (lam f g adj k k i).app X ≫ (adj k).counit.app ((phi f g k i).obj X) = 𝟙 _ := by
   simp only [lam_app]
@@ -820,6 +846,7 @@ theorem lam_counit_left (k i : I) (X : B i) :
 
 /-- **Coassociativity of the matrix**: `φ_lk(λ_kji) ∘ λ_lki = λ_lkj φ_ji ∘ λ_lji`,
 both being `f_l(η_k) ∘ f_l(η_j)` in different orders (naturality of `η_k`). -/
+@[montpellier "19, 7–11"]
 theorem lam_coassoc (l k j i : I) (X : B i) :
     (lam f g adj l k i).app X ≫ (phi f g l k).map ((lam f g adj k j i).app X) =
       (lam f g adj l j i).app X ≫ (lam f g adj l k j).app ((phi f g j i).obj X) := by
@@ -879,6 +906,7 @@ noncomputable def entree {X : ∀ i, B i} (a : X ⟶ (comPi f g adj).obj X) (k i
   a k ≫ (f k).map (Limits.Pi.π (fun i => (g i).obj (X i)) i)
 
 /-- **The counit, entry by entry**: `a` is counital iff `α_k ∘ u_kk = id` for all `k`. -/
+@[montpellier "19, 7–11"]
 theorem counit_iff {X : ∀ i, B i} (a : X ⟶ (comPi f g adj).obj X) :
     a ≫ (comPi f g adj).ε.app X = 𝟙 X ↔
       ∀ k, entree f g adj a k k ≫ (adj k).counit.app (X k) = 𝟙 _ := by
@@ -938,6 +966,7 @@ theorem map_π {X Y : ∀ i, B i} (h : X ⟶ Y) (k i : I) :
 
 /-- **Coassociativity as relations between the `λ_kji`**: `a` is coassociative iff
 `λ_kji ∘ u_ki = φ_kj(u_ji) ∘ u_kj` for all `k, j, i`. -/
+@[montpellier "19, 7–11"]
 theorem coassoc_iff [∀ j, PreservesLimitsOfShape (Discrete I) (f j)] {X : ∀ i, B i}
     (a : X ⟶ (comPi f g adj).obj X) :
     a ≫ (comPi f g adj).δ.app X = a ≫ (comPi f g adj).map a ↔
@@ -961,6 +990,7 @@ theorem coassoc_iff [∀ j, PreservesLimitsOfShape (Discrete I) (f j)] {X : ∀ 
       ((h2 k j i).symm.trans (Category.assoc _ _ _).symm)))
 
 /-- Morphisms of coalgebras, entry by entry. -/
+@[montpellier "19, 7–11"]
 theorem hom_iff [∀ j, PreservesLimitsOfShape (Discrete I) (f j)] {X Y : ∀ i, B i}
     (a : X ⟶ (comPi f g adj).obj X) (b : Y ⟶ (comPi f g adj).obj Y) (h : X ⟶ Y) :
     a ≫ (comPi f g adj).map h = h ≫ b ↔
@@ -1000,6 +1030,7 @@ variable [(g .left).Full] [(g .left).Faithful] [(g .right).Full] [(g .right).Fai
 /-- (pages 9–10) A quadruple `(X', X'', u', u'')`, `u' : X' → φ'(X'')`,
 `u'' : X'' → φ''(X')`, subject to the two triangles `λ'(X') = φ'(u'') ∘ u'` and
 `λ''(X'') = φ''(u') ∘ u''`. -/
+@[montpellier "19, 9–10"]
 structure Quadruplet where
   X' : B .left
   X'' : B .right
@@ -1048,6 +1079,7 @@ def pairHom {X Y : ∀ i, B i} (h' : X .left ⟶ Y .left) (h'' : X .right ⟶ Y 
   | .right => h''
 
 /-- (pages 9–10) A coalgebra of `φ` gives the quadruple of its off-diagonal entries. -/
+@[montpellier "19, 9–10"]
 noncomputable def versQuadruplets : (comPi f g adj).Coalgebra ⥤ Quadruplet f g adj where
   obj C :=
     { X' := C.A .left
@@ -1155,11 +1187,13 @@ instance : (versQuadruplets f g adj).EssSurj where
 /-- **Pages 9–10: coalgebras of `φ` are the quadruples.** For two factors with `g'`, `g''`
 fully faithful and `f'`, `f''` commuting with binary products, the category of coalgebras
 of `φ` is equivalent to the category of quadruples `(X', X'', u', u'')`. -/
+@[montpellier "19, 9–10"]
 instance versQuadruplets_isEquivalence : (versQuadruplets f g adj).IsEquivalence where
 
 /-- **Pages 9–10: the description of `A` by quadruples.** If moreover `f = (f', f'')` is
 comonadic, `A` is equivalent to the category of quadruples, by
 `Y ↦ (f'Y, f''Y, f'(η''_Y), f''(η'_Y))` (`quadruplet_u'`, `quadruplet_u''`). -/
+@[montpellier "19, 9–10"]
 theorem quadruplets [(Comonad.comparison (adjPi f g adj)).IsEquivalence] :
     (Comonad.comparison (adjPi f g adj) ⋙ versQuadruplets f g adj).IsEquivalence :=
   inferInstance
@@ -1222,6 +1256,7 @@ set_option linter.unusedDecidableInType false in
 /-- **The essential image of `g_i`.** If `g_i` is fully faithful and `f = (f_j)` is
 conservative, `Y` lies in the essential image of `g_i` iff `f_j(η_i,Y)` is invertible for
 every `j ≠ i`. -/
+@[montpellier "19, 10–11"]
 theorem essImage_iff [DecidableEq I] (i : I) [(g i).Full] [(g i).Faithful]
     [(Functor.pi' f).ReflectsIsomorphisms] (Y : A) :
     (g i).essImage Y ↔ ∀ j, j ≠ i → IsIso ((f j).map ((adj i).unit.app Y)) := by
@@ -1252,6 +1287,7 @@ variable [(g .left).Full] [(g .left).Faithful] [(g .right).Full] [(g .right).Fai
 variable {f g adj} in
 /-- **The degenerate case: no condition.** If `φ'φ''` and `φ''φ'` take final values, every
 `(X', X'', u', u'')` is a quadruple. -/
+@[montpellier "19, 10–11"]
 def Quadruplet.degenere
     (h' : ∀ X, IsTerminal ((phi f g .left .right).obj ((phi f g .right .left).obj X)))
     (h'' : ∀ X, IsTerminal ((phi f g .right .left).obj ((phi f g .left .right).obj X)))
@@ -1311,6 +1347,7 @@ noncomputable abbrev versQ : A ⥤ Quadruplet f g adj :=
 
 /-- **Pages 10–11: the essential image of `g'`.** `Y` lies in the essential image of `g'`
 iff the `u''` of its quadruple, `f''(η'_Y)`, is invertible. -/
+@[montpellier "19, 10–11"]
 theorem essImage_g'_iff (Y : A) :
     (g .left).essImage Y ↔ IsIso ((versQ f g adj).obj Y).u'' := by
   have := reflectsIso_of_comonadic f g adj
@@ -1320,6 +1357,7 @@ theorem essImage_g'_iff (Y : A) :
 
 /-- **Pages 10–11: the essential image of `g''`.** `Y` lies in the essential image of `g''`
 iff the `u'` of its quadruple, `f'(η''_Y)`, is invertible. -/
+@[montpellier "19, 10–11"]
 theorem essImage_g''_iff (Y : A) :
     (g .right).essImage Y ↔ IsIso ((versQ f g adj).obj Y).u' := by
   have := reflectsIso_of_comonadic f g adj
@@ -1329,6 +1367,7 @@ theorem essImage_g''_iff (Y : A) :
 
 /-- **Pages 10–11, on the quadruples.** A quadruple lies in the essential image of
 `g' ⋙ Φ` iff `u''` is invertible. -/
+@[montpellier "19, 10–11"]
 theorem essImage_g'_quadruplets (Q : Quadruplet f g adj) :
     (g .left ⋙ versQ f g adj).essImage Q ↔ IsIso Q.u'' := by
   obtain ⟨Y, ⟨e⟩⟩ := Functor.EssSurj.mem_essImage (F := versQ f g adj) Q
@@ -1340,6 +1379,7 @@ theorem essImage_g'_quadruplets (Q : Quadruplet f g adj) :
 
 /-- **Pages 10–11, on the quadruples.** A quadruple lies in the essential image of
 `g'' ⋙ Φ` iff `u'` is invertible. -/
+@[montpellier "19, 10–11"]
 theorem essImage_g''_quadruplets (Q : Quadruplet f g adj) :
     (g .right ⋙ versQ f g adj).essImage Q ↔ IsIso Q.u' := by
   obtain ⟨Y, ⟨e⟩⟩ := Functor.EssSurj.mem_essImage (F := versQ f g adj) Q
@@ -1350,6 +1390,7 @@ theorem essImage_g''_quadruplets (Q : Quadruplet f g adj) :
   exact ⟨fun _ => Quadruplet.isIso_u'_of_iso e, fun _ => Quadruplet.isIso_u'_of_iso e.symm⟩
 
 /-- The intersection of the two essential images: `u'` and `u''` invertible. -/
+@[montpellier "19, 10–11"]
 theorem essImage_inter (Q : Quadruplet f g adj) :
     ((g .left ⋙ versQ f g adj).essImage Q ∧ (g .right ⋙ versQ f g adj).essImage Q) ↔
       (IsIso Q.u' ∧ IsIso Q.u'') := by
@@ -1357,6 +1398,7 @@ theorem essImage_inter (Q : Quadruplet f g adj) :
   exact And.comm
 
 /-- In the degenerate case, a quadruple of the intersection has `X'` and `X''` final. -/
+@[montpellier "19, 10–11"]
 theorem final_of_inter
     (h' : ∀ X, IsTerminal ((phi f g .left .right).obj ((phi f g .right .left).obj X)))
     (h'' : ∀ X, IsTerminal ((phi f g .right .left).obj ((phi f g .left .right).obj X)))

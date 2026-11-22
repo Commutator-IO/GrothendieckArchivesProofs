@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 90, pages 7–9 and 13–15: the smallest subcomodule, over `X = S = Spec A`
@@ -91,6 +92,7 @@ variable {A : Type*} [CommRing A]
 
 /-- A comodule over an `A`-coalgebra `B`: an `A`-module `E` with a coaction `δ : E → B ⊗ E`,
 counital and coassociative (page 7 of folder 90; « `A`-`G`-module »). -/
+@[montpellier "90, 7"]
 class Comodule (A : Type*) (B E : Type*) [CommRing A] [AddCommGroup B] [Module A B]
     [Coalgebra A B] [AddCommGroup E] [Module A E] where
   coact : E →ₗ[A] B ⊗[A] E
@@ -115,6 +117,7 @@ theorem rTensor_subtype_injective {B : Type*} [AddCommGroup B] [Module A B] (N :
 variable {B E : Type*} [AddCommGroup B] [Module A B] [Coalgebra A B] [AddCommGroup E] [Module A E]
 
 /-- A submodule `N ⊆ E` is a **subcomodule** (« stable par `G` ») if `δ N ⊆ B ⊗ N`. -/
+@[montpellier "90, 7–9, 13–15"]
 def IsSubcomodule (B : Type*) [AddCommGroup B] [Module A B] [Coalgebra A B]
     [Comodule A B E] (N : Submodule A E) : Prop :=
   ∀ e ∈ N, Comodule.coact (A := A) (B := B) e ∈ LinearMap.range (N.subtype.lTensor B)
@@ -167,6 +170,7 @@ theorem IsSubcomodule.map {E₂ : Type*} [AddCommGroup E₂] [Module A E₂] [Co
 
 /-- The hypothesis of pages 7 and 13: `B` is the filtered union of submodules `Bᵢ`, finite
 projective, with `B ⧸ Bᵢ` flat and `Δ Bᵢ ⊆ Bᵢ ⊗ Bᵢ`. -/
+@[montpellier "90, 7, 13"]
 structure Exhaustion (A : Type*) (B : Type*) [CommRing A] [AddCommGroup B] [Module A B]
     [Coalgebra A B] (ι : Type*) where
   Bi : ι → Submodule A B
@@ -411,6 +415,7 @@ def lifts (F : Submodule A E) : Set E :=
     (H.Bi i).subtype.rTensor E y = Comodule.coact (A := A) (B := B) f ∧ H.coeff E i y u = e}
 
 /-- **`F′ = Σᵢ Uᵢ · (F ∩ Eᵢ)`** (the formula of the reading, pages 13–15). -/
+@[montpellier "90, 13–15"]
 def closure (F : Submodule A E) : Submodule A E :=
   Submodule.span A (H.lifts F)
 
@@ -445,12 +450,14 @@ theorem closure_le {F N : Submodule A E} (hN : IsSubcomodule B N) (hF : F ≤ N)
 
 /-- **Statement 1) of page 13, for `X = S = Spec A`**: every submodule `F` of a comodule lies
 in a smallest subcomodule, `F′`. -/
+@[montpellier "90, 13"]
 theorem isLeast_closure (F : Submodule A E) :
     IsLeast {N : Submodule A E | IsSubcomodule B N ∧ F ≤ N} (H.closure F) :=
   ⟨⟨H.isSubcomodule_closure F, H.le_closure F⟩, fun _ hN => H.closure_le hN.1 hN.2⟩
 
 /-- **`F′` is of finite type when `F` is**: for `F = A·f₁ + ⋯ + A·fₘ` with every `δ fⱼ` in a
 common `Bᵢ ⊗ E`, `F′ = Uᵢ · F` is spanned by the `bₖ* · fⱼ`. -/
+@[montpellier "90, 13"]
 theorem closure_fg {F : Submodule A E} (hF : F.FG) : (H.closure F).FG := by
   classical
   obtain ⟨S, rfl⟩ := hF
@@ -480,6 +487,7 @@ include H in
 /-- **Statement 2) of page 13, for `X = S = Spec A`**: every element lies in a subcomodule of
 finite type, and the subcomodules of finite type form a directed family; `E` is their filtered
 union. -/
+@[montpellier "90, 13"]
 theorem exists_fg_isSubcomodule (e : E) :
     ∃ N : Submodule A E, N.FG ∧ IsSubcomodule B N ∧ e ∈ N :=
   ⟨H.closure (A ∙ e), H.closure_fg (Submodule.fg_span_singleton e),
@@ -490,6 +498,7 @@ theorem fg_sup_isSubcomodule {N₁ N₂ : Submodule A E} (h₁ : N₁.FG ∧ IsS
   ⟨h₁.1.sup h₂.1, h₁.2.sup h₂.2⟩
 
 /-- **The formation of `F′` commutes with morphisms of comodules**: `φ(F′) = (φ F)′`. -/
+@[montpellier "90, 7–9, 13–15"]
 theorem map_closure {E₂ : Type*} [AddCommGroup E₂] [Module A E₂] [Comodule A B E₂]
     (φ : E →ₗ[A] E₂) (hφ : Comodule.coact (A := A) (B := B) ∘ₗ φ =
       φ.lTensor B ∘ₗ Comodule.coact (A := A) (B := B)) (F : Submodule A E) :
@@ -683,6 +692,7 @@ variable {ι : Type*} (H : Exhaustion A B ι)
 /-- **Base change.** For any `A`-algebra `A'`, the image of `A' ⊗ F′` in `A' ⊗ E` is the
 smallest subcomodule of `A' ⊗ E` (over the `A'`-coalgebra `A' ⊗ B`) containing the image of
 `A' ⊗ F`: the formation of `F′` commutes with base change. -/
+@[montpellier "90, 13"]
 theorem isLeast_closure_baseChange (F : Submodule A E) :
     IsLeast {N : Submodule A' (A' ⊗[A] E) | IsSubcomodule (A' ⊗[A] B) N ∧
         LinearMap.range (F.subtype.baseChange A') ≤ N}
@@ -722,6 +732,7 @@ theorem isLeast_closure_baseChange (F : Submodule A E) :
 
 /-- For `A'` flat over `A`, `A' ⊗ F′ → A' ⊗ E` is injective, so the image above is
 `A' ⊗ F′` itself. -/
+@[montpellier "90, 13"]
 theorem baseChange_closure_injective [Module.Flat A A'] (F : Submodule A E) :
     Function.Injective ((H.closure F).subtype.baseChange A') := by
   rw [LinearMap.baseChange_eq_lTensor]

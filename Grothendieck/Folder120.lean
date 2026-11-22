@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 120, pages 20–23: collapsing a tame subset over a field
@@ -113,6 +114,7 @@ universe u
 
 /-- The axioms (M′1)–(M′4) of page 2 (with (M′) for finite index sets, page 4): a family
 `M I ⊂ 𝔓(R^I)` of tame subsets, `u^* x = x ∘ u`. -/
+@[montpellier "120, 2, 4"]
 structure TameModel (R : Type u) where
   /-- The tame subsets of `R^I`. -/
   M : (I : Type) → Set (Set (I → R))
@@ -146,11 +148,13 @@ def IsTameFun {I : Type} (X : Set (I → R)) (f : (I → R) → R) : Prop :=
 def R0 : Set R := {c | {fun _ : Unit => c} ∈ T.M Unit}
 
 /-- (M11) b) (page 20): `x - y` and `xy` are tame on every tame `A ⊂ R²`. -/
+@[montpellier "120, 20"]
 def RingOps [CommRing R] : Prop :=
   ∀ A ∈ T.M (Fin 2), T.IsTameFun A (fun z => z 0 - z 1) ∧ T.IsTameFun A (fun z => z 0 * z 1)
 
 /-- (M11) in full, for a field (page 20): `0` and `1` tame points, b), and a tame set
 containing the inverses of a tame `A ⊂ R^*`. -/
+@[montpellier "120, 20"]
 structure M11 [Field R] : Prop where
   zero_mem : (0 : R) ∈ T.R0
   one_mem : (1 : R) ∈ T.R0
@@ -223,6 +227,7 @@ theorem isTameFun_comp {I K : Type} [Finite I] [Finite K] {X : Set (I → R)}
     exact ⟨hy, fun _ => (hyh ()).trans (congrArg h (funext hyk))⟩
 
 /-- The tame functions are stable by product (page 20). -/
+@[montpellier "120, 20"]
 theorem isTameFun_mul [CommRing R] (h11 : T.RingOps) {I : Type} [Finite I]
     {X : Set (I → R)} {f g : (I → R) → R} (hf : T.IsTameFun X f) (hg : T.IsTameFun X g) :
     T.IsTameFun X (fun x => f x * g x) := by
@@ -230,6 +235,7 @@ theorem isTameFun_mul [CommRing R] (h11 : T.RingOps) {I : Type} [Finite I]
   simpa using T.isTameFun_comp hP (h11 _ (T.image_mem hP)).2
 
 /-- The tame functions are stable by difference (page 20). -/
+@[montpellier "120, 20"]
 theorem isTameFun_sub [CommRing R] (h11 : T.RingOps) {I : Type} [Finite I]
     {X : Set (I → R)} {f g : (I → R) → R} (hf : T.IsTameFun X f) (hg : T.IsTameFun X g) :
     T.IsTameFun X (fun x => f x - g x) := by
@@ -237,6 +243,7 @@ theorem isTameFun_sub [CommRing R] (h11 : T.RingOps) {I : Type} [Finite I]
   simpa using T.isTameFun_comp hP (h11 _ (T.image_mem hP)).1
 
 /-- A constant `c ∈ R₀` is a tame function on a tame `X` ((M′4)): its graph is `X × {c}`. -/
+@[montpellier "120, 20–23"]
 theorem isTameFun_const {I : Type} [Finite I] {X : Set (I → R)} (hX : X ∈ T.M I) {c : R}
     (hc : c ∈ T.R0) : T.IsTameFun X (fun _ => c) := by
   unfold IsTameFun
@@ -246,6 +253,7 @@ theorem isTameFun_const {I : Type} [Finite I] {X : Set (I → R)} (hX : X ∈ T.
   exact and_congr_right fun _ => ⟨fun h => funext h, fun h k => congrFun h k⟩
 
 /-- The coordinates are tame functions on a tame `X` ((M′1)). -/
+@[montpellier "120, 20–23"]
 theorem isTameFun_coord {I : Type} [Finite I] {X : Set (I → R)} (hX : X ∈ T.M I) (i : I) :
     T.IsTameFun X (fun x => x i) := by
   unfold IsTameFun
@@ -279,6 +287,7 @@ theorem collapseFamily_eq_zero_iff {R X A B : Type*} [MulZeroClass R] (f : A →
 /-- Pages 22–23, the argument: if `x` is off the zero set of the `f_α` and some `g_β`
 separates `x` and `y`, the `f_α` and `f_α g_β` separate `x` and `y`. Any ring without zero
 divisors, any set. -/
+@[montpellier "120, 22–23"]
 theorem separates_off_zeroSet {R X A B : Type*} [Ring R] [NoZeroDivisors R] (f : A → X → R)
     (g : B → X → R) {x y : X} (hx : ∃ a, f a x ≠ 0) (hg : ∃ b, g b x ≠ g b y) :
     ∃ c, collapseFamily f g c x ≠ collapseFamily f g c y := by
@@ -306,6 +315,7 @@ variable {R : Type u} (T : TameModel R)
 /-- **Proposition (page 23)**, with the translation of page 22: for tame `f_α`, tame points
 `e_α`, and tame `g_β` embedding `X`, the functions `f_α - e_α` and `(f_α - e_α) g_β` are tame,
 vanish together exactly on `Y = ⋂ f_α⁻¹(e_α)`, and separate the points of `X ∖ Y`. -/
+@[montpellier "120, 22–23"]
 theorem collapse_separation [CommRing R] [NoZeroDivisors R] (h11 : T.RingOps) {I : Type}
     [Finite I] {X : Set (I → R)} (hX : X ∈ T.M I) {A B : Type} (f : A → (I → R) → R)
     (hf : ∀ a, T.IsTameFun X (f a)) (e : A → R) (he : ∀ a, e a ∈ T.R0)
@@ -329,6 +339,7 @@ theorem collapse_separation [CommRing R] [NoZeroDivisors R] (h11 : T.RingOps) {I
 /-- **Proposition (page 23)** as an existence: a tame `Y = ⋂ f_α⁻¹(e_α)` of a tame `X` is the
 common zero set of a finite family of tame functions separating the points of `X ∖ Y`
 (the coordinates serve as the `g_β`). -/
+@[montpellier "120, 23"]
 theorem exists_separating_family [CommRing R] [NoZeroDivisors R] (h11 : T.RingOps)
     {I : Type} [Finite I] {X : Set (I → R)} (hX : X ∈ T.M I) {A : Type} [Finite A]
     (f : A → (I → R) → R) (hf : ∀ a, T.IsTameFun X (f a)) (e : A → R)
@@ -340,6 +351,7 @@ theorem exists_separating_family [CommRing R] [NoZeroDivisors R] (h11 : T.RingOp
     (T.isTameFun_coord hX) fun _ _ _ _ h => h⟩
 
 /-- The Proposition under (M11) for a field, as the page states it. -/
+@[montpellier "120, 23"]
 theorem exists_separating_family_of_field [Field R] (h11 : T.M11) {I : Type} [Finite I]
     {X : Set (I → R)} (hX : X ∈ T.M I) {A : Type} [Finite A] (f : A → (I → R) → R)
     (hf : ∀ a, T.IsTameFun X (f a)) (e : A → R) (he : ∀ a, e a ∈ T.R0) :
@@ -364,11 +376,13 @@ variable {R : Type u} (T : TameModel R)
 `120-axiomatic-pushouts-along-embeddings` -/
 
 /-- (M5′) (page 9): each `𝓜_I` contains `∅` and is stable under binary unions. -/
+@[montpellier "120, 9"]
 def Unions : Prop :=
   ∀ (I : Type) [Finite I], ∅ ∈ T.M I ∧ ∀ A ∈ T.M I, ∀ B ∈ T.M I, A ∪ B ∈ T.M I
 
 /-- (M6) (page 12): a tame `Z ⊂ X` is the fibre `F⁻¹(e)` over a tame point of a finite tame
 family `F : X → R^A`, which may be taken injective off `Z`. -/
+@[montpellier "120, 12"]
 def M6 : Prop :=
   ∀ {I : Type} [Finite I] {X Z : Set (I → R)}, X ∈ T.M I → Z ∈ T.M I → Z ⊆ X →
     ∃ (A : Type) (_ : Finite A) (F : (I → R) → A → R) (e : A → R),
@@ -377,11 +391,13 @@ def M6 : Prop :=
 
 /-- (M7) (page 12), a tame Tietze theorem: a tame function on a tame `Z ⊂ X` extends to a
 tame function on `X`. -/
+@[montpellier "120, 12"]
 def M7 : Prop :=
   ∀ {I : Type} [Finite I] {X Z : Set (I → R)} {f : (I → R) → R}, X ∈ T.M I → Z ∈ T.M I →
     Z ⊆ X → T.IsTameFun Z f → ∃ g : (I → R) → R, T.IsTameFun X g ∧ ∀ z ∈ Z, g z = f z
 
 /-- The coordinates of a family with tame graph are tame functions ((M′1)). -/
+@[montpellier "120, 8–13"]
 theorem isTameFun_of_graph {I K : Type} [Finite I] [Finite K] {X : Set (I → R)}
     {F : (I → R) → K → R} (hF : graphOn X F ∈ T.M (I ⊕ K)) (k : K) :
     T.IsTameFun X (fun x => F x k) := by
@@ -400,6 +416,7 @@ theorem isTameFun_of_graph {I K : Type} [Finite I] [Finite K] {X : Set (I → R)
 
 /-- A finite family of tame functions on a tame `X` has a tame graph ((M′1), (M′2), (M′4),
 by induction on the index set). -/
+@[montpellier "120, 8–13"]
 theorem graph_mem_of_coords {I : Type} [Finite I] {X : Set (I → R)} (hX : X ∈ T.M I)
     {K : Type} [Finite K] {F : (I → R) → K → R} (hF : ∀ k, T.IsTameFun X (fun x => F x k)) :
     graphOn X F ∈ T.M (I ⊕ K) := by
@@ -470,6 +487,7 @@ families on `X₁`, `X₂` with values in `R^N` such that a) `J₁ i₁ = J₂ i
 `J₂` are injective, c) `J₁ x₁ ≠ J₂ x₂` off `i₁(Z)`, `i₂(Z)`. Then `P = J₁(X₁) ∪ J₂(X₂)` is
 tame, it is the set-theoretic pushout (`J₁ x₁ = J₂ x₂` iff `x₁ = i₁ z`, `x₂ = i₂ z`), and it
 has the universal property for tame maps (the principle of pages 8 and 11). -/
+@[montpellier "120, 10–11"]
 theorem pushout_of_criterion [Nonempty R] (hU : T.Unions) {I₁ I₂ K N : Type} [Finite I₁] [Finite I₂]
     [Finite N] {X₁ : Set (I₁ → R)} {X₂ : Set (I₂ → R)} {Z : Set (K → R)}
     (hX₁ : X₁ ∈ T.M I₁) (hX₂ : X₂ ∈ T.M I₂) {i₁ : (K → R) → I₁ → R} {i₂ : (K → R) → I₂ → R}
@@ -552,6 +570,7 @@ theorem pushout_of_criterion [Nonempty R] (hU : T.Unions) {I₁ I₂ K N : Type}
 /-- One side of the construction of page 13: for a tame embedding `i : Z ↪ X`, a tame
 family `Φ : X → R^K` with `Φ ∘ i = id` ((M7) coordinate by coordinate) and a tame
 `F : X → R^A`, `e ∈ R₀^A`, with `i(Z) = F⁻¹(e)` and `F` injective off `i(Z)` ((M6)). -/
+@[montpellier "120, 13"]
 theorem side_data [Nonempty R] (h6 : T.M6) (h7 : T.M7) {I K : Type} [Finite I] [Finite K]
     {X : Set (I → R)} {Z : Set (K → R)} (hX : X ∈ T.M I) {i : (K → R) → I → R}
     (hi : graphOn Z i ∈ T.M (K ⊕ I)) (hm : Set.MapsTo i Z X) (hinj : Set.InjOn i Z) :
@@ -602,6 +621,7 @@ theorem side_data [Nonempty R] (h6 : T.M6) (h7 : T.M7) {I K : Type} [Finite I] [
 `J₁`, `J₂` into some `R^N` (diagram (*): `X₁` on the level `e₂`, `X₂` on the level `e₁`)
 whose images meet exactly along `Z`, with tame union, and with the universal property for
 tame maps. -/
+@[montpellier "120, 12–13"]
 theorem pushout_exists [Nonempty R] (hU : T.Unions) (h6 : T.M6) (h7 : T.M7)
     {I₁ I₂ K : Type} [Finite I₁] [Finite I₂] [Finite K] {X₁ : Set (I₁ → R)}
     {X₂ : Set (I₂ → R)} {Z : Set (K → R)} (hX₁ : X₁ ∈ T.M I₁) (hX₂ : X₂ ∈ T.M I₂)
@@ -697,6 +717,7 @@ def IsSetPushout {I₁ I₂ K N : Type} (Z : Set (K → R)) (X₁ : Set (I₁ �
 cocone `q₁`, `q₂` into `P ⊂ R^N` is a pushout in sets, the coordinates of `q₁`, `q₂` are tame
 functions satisfying a), b), c). Neither (M5′), (M6), (M7) nor the tameness of `P` is used;
 c) holds in the stronger form `q₁ x₁ = q₂ x₂ → x₂ ∈ i₂(Z)`. -/
+@[montpellier "120, 10"]
 theorem criterion_of_pushout {I₁ I₂ K N : Type} [Finite I₁] [Finite I₂] [Finite N]
     {X₁ : Set (I₁ → R)} {X₂ : Set (I₂ → R)} {Z : Set (K → R)}
     {i₁ : (K → R) → I₁ → R} {i₂ : (K → R) → I₂ → R}
@@ -730,6 +751,7 @@ theorem criterion_of_pushout {I₁ I₂ K N : Type} [Finite I₁] [Finite I₂] 
 under (M5′): there are tame families `f`, `g` satisfying a), b), c) iff there is a tame
 `P ⊂ R^N` with a tame cocone which is a pushout in sets (the forgetful functor respects it)
 and has the universal property for tame maps (the pushout exists in tame spaces). -/
+@[montpellier "120, 10–11"]
 theorem criterion_iff [Nonempty R] (hU : T.Unions) {I₁ I₂ K : Type} [Finite I₁] [Finite I₂]
     {X₁ : Set (I₁ → R)} {X₂ : Set (I₂ → R)} {Z : Set (K → R)}
     (hX₁ : X₁ ∈ T.M I₁) (hX₂ : X₂ ∈ T.M I₂) {i₁ : (K → R) → I₁ → R} {i₂ : (K → R) → I₂ → R}

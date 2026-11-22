@@ -8,6 +8,7 @@ module
 public import Mathlib.Data.Set.Lattice.Indexed
 public import Mathlib.Logic.Relation
 public import Mathlib.Data.Fintype.Powerset
+import Grothendieck.Attr
 
 /-!
 # Folder 156-5: the set-theoretic model of the axioms, and the gluing of ultra-topologies
@@ -84,6 +85,7 @@ def stratum (F : Set (Set L)) (A : Set L) : Set L :=
 
 /-- An admissible family (page 3): every point of a member lies in a least member, and every
 member has a non-empty open stratum. -/
+@[montpellier "156-5, 3"]
 def Admissible (F : Set (Set L)) : Prop :=
   (∀ x, ∀ A ∈ F, x ∈ A → ∃ A₀ ∈ F, x ∈ A₀ ∧ ∀ B ∈ F, x ∈ B → A₀ ⊆ B) ∧
     ∀ A ∈ F, (stratum F A).Nonempty
@@ -94,6 +96,7 @@ def SubFig (G F : Set (Set L)) : Prop :=
   G ⊆ F ∧ ∀ A ∈ G, ∀ B ∈ F, B ⊆ A → B ∈ G
 
 /-- A multiplicity (page 11): a figure with a greatest member. -/
+@[montpellier "156-5, 11"]
 def Mult (F : Set (Set L)) : Prop :=
   Admissible F ∧ ∃ A ∈ F, ∀ B ∈ F, B ⊆ A
 
@@ -106,6 +109,7 @@ def Adj (F G : Set (Set L)) : Prop :=
   Mult F ∧ Mult G ∧ (SubFig F G ∨ SubFig G F)
 
 /-- Two multiplicities are in the same connected component of `(𝓜, ≤)`. -/
+@[montpellier "156-5, 12–14"]
 def SameComp (F G : Set (Set L)) : Prop :=
   Relation.EqvGen Adj F G
 
@@ -147,6 +151,7 @@ theorem mult_singleton (x : L) : Mult ({{x}} : Set (Set L)) := by
     exact hBs.ne hB
 
 /-- Pages 12–14: the multiplicity `{L}` is alone in its connected component of `(𝓜, ≤)`. -/
+@[montpellier "156-5, 12–14"]
 theorem sameComp_univ {G : Set (Set L)} (h : SameComp {Set.univ} G) : G = {Set.univ} := by
   suffices key : ∀ F G : Set (Set L), SameComp F G → (F = {Set.univ} ↔ G = {Set.univ}) from
     (key _ _ h).1 rfl
@@ -165,6 +170,7 @@ theorem sameComp_univ {G : Set (Set L)} (h : SameComp {Set.univ} G) : G = {Set.u
   | trans _ _ _ _ _ ih₁ ih₂ => exact ih₁.trans ih₂
 
 /-- `{L}` and `{{x}}` are not compatible when `L ≠ {x}`. -/
+@[montpellier "156-5, 12–14"]
 theorem not_compatible_univ {x : L} (hx : (Set.univ : Set L) ≠ {x}) :
     ¬ Compatible {Set.univ} {{x}} := by
   rintro ⟨H, -, hH, hH'⟩
@@ -176,6 +182,7 @@ theorem not_compatible_univ {x : L} (hx : (Set.univ : Set L) ≠ {x}) :
 /-- Pages 12–14: as soon as `L` has two distinct points, `{L}` and `{{x}}` are multiplicities
 in different components of `𝓜` which are not compatible. So `𝓜` is not connected and the
 axiom C 4 fails. -/
+@[montpellier "156-5, 12–14"]
 theorem not_C4 {x y : L} (hxy : x ≠ y) :
     Mult ({Set.univ} : Set (Set L)) ∧ Mult ({{x}} : Set (Set L)) ∧
       ¬ SameComp ({Set.univ} : Set (Set L)) {{x}} ∧
@@ -221,6 +228,7 @@ def cl (p : α → α → Prop) (A : Set α) : Set α :=
 /-- The preorder of the glued topology `τ'` (point (d) of the lemma of pages 40–41): on `T`
 the preorder of `τ'₀`; below a point of `U = S ∖ T`, the preorder of `τ`; never a point of `U`
 below a point of `T`. -/
+@[montpellier "156-5, 40–41"]
 def glue (r : α → α → Prop) (T : Set α) (r₀ : α → α → Prop) (x y : α) : Prop :=
   (x ∈ T ∧ y ∈ T ∧ r₀ x y) ∨ (y ∉ T ∧ r x y)
 
@@ -230,6 +238,7 @@ def Admits (r : α → α → Prop) (T : Set α) (r₀ : α → α → Prop) (h 
 
 variable {r r₀ : α → α → Prop} {T : Set α}
 
+@[montpellier "156-5, 38–48"]
 theorem glue_isPreorder (hr : IsPre r) (hr₀ : IsPre r₀) (h₀ : ∀ x ∈ T, ∀ y ∈ T, r₀ x y → r x y) :
     IsPre (glue r T r₀) := by
   refine ⟨fun x => ?_, fun x y z hxy hyz => ?_⟩
@@ -247,6 +256,7 @@ theorem glue_isPreorder (hr : IsPre r) (hr₀ : IsPre r₀) (h₀ : ∀ x ∈ T,
       exact Or.inr ⟨hz, hr.2 _ _ _ hxy' hyz⟩
 
 /-- The glued topology belongs to `𝔗`. -/
+@[montpellier "156-5, 38–48"]
 theorem glue_admits (h₀ : ∀ x ∈ T, ∀ y ∈ T, r₀ x y → r x y) : Admits r T r₀ (glue r T r₀) := by
   refine ⟨fun x y hxy => ?_, fun x hx y hy => ⟨fun hxy => ?_, fun hxy => Or.inl ⟨hx, hy, hxy⟩⟩⟩
   · rcases hxy with ⟨hx, hy, hxy⟩ | ⟨-, hxy⟩
@@ -258,6 +268,7 @@ theorem glue_admits (h₀ : ∀ x ∈ T, ∀ y ∈ T, r₀ x y → r x y) : Admi
 
 /-- Lemma of page 40, point (a): every topology of `𝔗` is finer than `τ'`, which is therefore
 the least fine element of `𝔗`. -/
+@[montpellier "156-5, 40"]
 theorem le_glue (hT : DownClosed r T) {h : α → α → Prop} (hh : Admits r T r₀ h) {x y : α}
     (hxy : h x y) : glue r T r₀ x y := by
   by_cases hy : y ∈ T
@@ -275,6 +286,7 @@ theorem glue_of_not_mem {y : α} (hy : y ∉ T) (x : α) : glue r T r₀ x y ↔
 
 /-- Corollary of page 45 (property (iv) of page 42, on `S`): a part of `S` is closed for `τ` iff
 it is closed for `τ'` and its trace on `T` is closed for `τ|_T`. -/
+@[montpellier "156-5, 45"]
 theorem glue_downClosed_iff (hT : DownClosed r T) (h₀ : ∀ x ∈ T, ∀ y ∈ T, r₀ x y → r x y)
     (X : Set α) :
     DownClosed r X ↔
@@ -290,6 +302,7 @@ theorem glue_downClosed_iff (hT : DownClosed r T) (h₀ : ∀ x ∈ T, ∀ y ∈
 
 /-- Page 48, the closing condition, for points: a topology of `𝔗` is `τ'` iff every point of
 `U` has the same closure as for `τ`. -/
+@[montpellier "156-5, 48"]
 theorem eq_glue_iff (hT : DownClosed r T) {h : α → α → Prop} (hh : Admits r T r₀ h) :
     (∀ y, y ∉ T → ∀ x, (h x y ↔ r x y)) ↔ ∀ x y, (h x y ↔ glue r T r₀ x y) := by
   constructor
@@ -303,6 +316,7 @@ theorem eq_glue_iff (hT : DownClosed r T) {h : α → α → Prop} (hh : Admits 
 
 /-- Page 48, the closing condition as written: « pour `A ⊂ U`, l'adhérence de `A` pour `τ` et
 pour `τ'` est la même » characterises `τ'` in `𝔗`. -/
+@[montpellier "156-5, 48"]
 theorem eq_glue_iff_closure (hT : DownClosed r T) {h : α → α → Prop} (hh : Admits r T r₀ h) :
     (∀ A : Set α, A ⊆ Tᶜ → cl h A = cl r A) ↔ ∀ x y, (h x y ↔ glue r T r₀ x y) := by
   rw [← eq_glue_iff hT hh]
@@ -347,6 +361,7 @@ open ThreePoint in
 and inducing `τ'₀` on `T`, (iii) inducing `τ` on `U`, (iv) `τ` final for `(S, τ'') → S` and
 `(T, τ|_T) → S`, and still differs from `τ'`: the closure of `{b}` is `S` for `τ` and `τ'`,
 `{a, b}` for `τ''`. The data satisfy the hypotheses of the lemma of page 40. -/
+@[montpellier "156-5, 48"]
 theorem threePoint_e_false :
     IsPre r ∧ IsPre r₀ ∧ DownClosed r T ∧ (∀ x ∈ T, ∀ y ∈ T, r₀ x y → r x y) ∧
       IsPre h ∧ Admits r T r₀ h ∧

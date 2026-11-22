@@ -27,6 +27,7 @@ public import Mathlib.CategoryTheory.Limits.MonoCoprod
 public import Mathlib.CategoryTheory.Extensive
 public import Mathlib.CategoryTheory.Adjunction.Limits
 public import Grothendieck.Upstream.SemiSimplexCategoryReedy
+import Grothendieck.Attr
 
 /-!
 # Folder 104: categories of models, their three examples, and the globular complex
@@ -150,6 +151,7 @@ variable {M : Type*} [Category M]
 include hend in
 /-- (*) `Hom(D', D) → D̃`, `u ↦ u(D')`, is injective. The `Mono` instances are
 what (i) supplies in `M` (`hmono u`); only (ii) is used in the proof. -/
+@[montpellier "104, 6–10"]
 theorem etoile_injective {D' D : M} (u v : D' ⟶ D) [Mono u] [Mono v]
     (h : Subobject.mk u = Subobject.mk v) : u = v := by
   have e := Subobject.ofMkLEMk_comp h.le
@@ -165,12 +167,14 @@ theorem etoile_injective' {D' D : M} (u v : D' ⟶ D)
 include hend in
 /-- Two arrows `D' → D → D'` are inverse isomorphisms: the preorder on classes
 is an order. -/
+@[montpellier "104, 6–10"]
 theorem isIso_of_aller_retour {A B : M} (f : A ⟶ B) (g : B ⟶ A) : IsIso f :=
   ⟨g, hend _, hend _⟩
 
 include hend in
 /-- Two sub-objects `x ⊆ y` of the same type (there is an arrow `y → x`) are
 equal. In particular `τ_n⁻¹(n) = {d_n}`, and `τ_n` is strictly increasing. -/
+@[montpellier "104, 6–10"]
 theorem sousObjet_eq_of_meme_type {D : M} {x y : Subobject D} (hxy : x ≤ y)
     (g : (y : M) ⟶ (x : M)) : x = y := by
   refine le_antisymm hxy (Subobject.le_of_comm g ?_)
@@ -179,6 +183,7 @@ theorem sousObjet_eq_of_meme_type {D : M} {x y : Subobject D} (hxy : x ≤ y)
 
 /-- In the converse construction: the composition law gives `u_d ∘ u_d = u_d`,
 and `u_d` being bijective it is the identity. -/
+@[montpellier "104, 6–10"]
 theorem id_of_idempotent_bijective {α : Type*} (f : α → α) (hf : Function.Bijective f)
     (h : f ∘ f = f) : f = id :=
   funext fun x => hf.1 (congrFun h x)
@@ -199,12 +204,14 @@ def Strict (X Y : M) : Prop := Nonempty (X ⟶ Y) ∧ IsEmpty (Y ⟶ X)
 
 include hend in
 /-- Under (ii), a non-invertible arrow `X → Y` admits no arrow back. -/
+@[montpellier "104, 6"]
 theorem strict_of_not_isIso {X Y : M} (f : X ⟶ Y) (hf : ¬ IsIso f) : Strict X Y :=
   ⟨⟨f⟩, ⟨fun g => hf ⟨g, hend _, hend _⟩⟩⟩
 
 include hend in
 /-- In a skeletal category satisfying (ii), an arrow that is not an identity
 is not invertible, hence strict. -/
+@[montpellier "104, 6"]
 theorem strict_of_not_identities (hsk : Skeletal M) {X Y : M} (f : X ⟶ Y)
     (hf : ¬ MorphismProperty.identities M f) : Strict X Y := by
   refine strict_of_not_isIso hend f fun hi => hf ?_
@@ -217,6 +224,7 @@ include hend in
 objects is well founded is a direct category: the relation « there is a
 non-identity arrow `X ⟶ Y` » is contained in the strict order, hence well founded,
 and `ReedyStructure.ofWellFounded` (`Upstream/`) takes the rank for it as degree. -/
+@[montpellier "104, 6"]
 noncomputable def reedyDirecte (hsk : Skeletal M) (hwf : WellFounded (Strict (M := M))) :
     HomotopicalAlgebra.ReedyStructure (MorphismProperty.identities M) ⊤ Ordinal.{u} :=
   HomotopicalAlgebra.ReedyStructure.ofWellFounded
@@ -224,6 +232,7 @@ noncomputable def reedyDirecte (hsk : Skeletal M) (hwf : WellFounded (Strict (M 
 
 /-- Conversely, a degree into a well-founded order that every non-identity arrow
 raises makes the strict order well founded. -/
+@[montpellier "104, 6"]
 theorem wf_of_degre {α : Type*} [Preorder α] [WellFoundedLT α] (deg : M → α)
     (hdeg : ∀ {X Y : M} (f : X ⟶ Y), ¬ MorphismProperty.identities M f → deg X < deg Y) :
     WellFounded (Strict (M := M)) := by
@@ -233,6 +242,7 @@ theorem wf_of_degre {α : Type*} [Preorder α] [WellFoundedLT α] (deg : M → �
 
 /-- (i) and (ii) do not make a direct category: the ordered set `ℤ`, as a
 category, satisfies both, and its strict order is not well founded. -/
+@[montpellier "104, 6"]
 theorem entiers_relatifs_non_directe :
     (∀ {X Y : ℤ} (f : X ⟶ Y), Mono f) ∧ (∀ {X : ℤ} (f : X ⟶ X), f = 𝟙 X) ∧
       ¬ WellFounded (Strict (M := ℤ)) := by
@@ -247,6 +257,7 @@ end Reedy
 
 /-- **Example 1.** The finite total orders `Δ_n = {0, …, n}` and the strictly
 increasing maps. -/
+@[montpellier "104, 6–10"]
 structure DeltaInj where
   /-- `Δ_n` is `{0, …, n}`. -/
   n : ℕ
@@ -257,11 +268,13 @@ instance : Category DeltaInj where
   comp f g := ⟨g.1 ∘ f.1, g.2.comp f.2⟩
 
 /-- (i) for `Δ`: every arrow is a monomorphism. -/
+@[montpellier "104, 6–10"]
 theorem deltaInj_mono {m n : DeltaInj} (f : m ⟶ n) : Mono f :=
   ⟨fun _ _ H => Subtype.ext <| funext fun x =>
     f.2.injective (congrFun (congrArg Subtype.val H) x)⟩
 
 /-- (ii) for `Δ`: every endomorphism is the identity. -/
+@[montpellier "104, 6–10"]
 theorem deltaInj_end {a : DeltaInj} (f : a ⟶ a) : f = 𝟙 a := by
   have hcard : (Finset.univ : Finset (Fin (a.n + 1))).card = a.n + 1 := by simp
   have h1 := Finset.orderEmbOfFin_unique hcard (f := f.1) (fun _ => Finset.mem_univ _) f.2
@@ -277,6 +290,7 @@ def DeltaInj.δ {n : ℕ} (i : Fin (n + 2)) : DeltaInj.mk n ⟶ DeltaInj.mk (n +
 /-- **The simplicial identities** (faces): `δ_j δ_i = δ_i δ_{j-1}` for `i < j`,
 written `δ_i ≫ δ_{j+1} = δ_j ≫ δ_i` for `i ≤ j`, as in mathlib's
 `SimplexCategory.δ_comp_δ`. -/
+@[montpellier "104, 6–10"]
 theorem DeltaInj.δ_comp_δ {n : ℕ} {i j : Fin (n + 2)} (H : i ≤ j) :
     DeltaInj.δ i ≫ DeltaInj.δ j.succ = DeltaInj.δ j ≫ DeltaInj.δ i.castSucc := by
   refine Subtype.ext (funext fun k => ?_)
@@ -290,6 +304,7 @@ theorem DeltaInj.δ_comp_δ {n : ℕ} {i j : Fin (n + 2)} (H : i ≤ j) :
 
 /-- Every arrow `Δ_m → Δ_{n+1}` with `m ≤ n` factors through a face: a strictly
 increasing map that is not surjective misses some `i`, and is `δ_i ∘ g`. -/
+@[montpellier "104, 6–10"]
 theorem DeltaInj.factorise_face {m n : ℕ} (hmn : m ≤ n)
     (f : DeltaInj.mk m ⟶ DeltaInj.mk (n + 1)) :
     ∃ (i : Fin (n + 2)) (g : DeltaInj.mk m ⟶ DeltaInj.mk n), f = g ≫ DeltaInj.δ i := by
@@ -307,6 +322,7 @@ theorem DeltaInj.factorise_face {m n : ℕ} (hmn : m ≤ n)
 
 
 /-- `Δ` is skeletal: `Δ_m ≅ Δ_n` forces `m = n`. -/
+@[montpellier "104, 6–10"]
 theorem deltaInj_skeletal : Skeletal DeltaInj := by
   rintro ⟨m⟩ ⟨n⟩ ⟨e⟩
   have h1 := Fintype.card_le_of_injective _ e.hom.2.injective
@@ -315,6 +331,7 @@ theorem deltaInj_skeletal : Skeletal DeltaInj := by
   rw [show m = n by omega]
 
 /-- In `Δ`, an arrow that is not an identity raises the dimension. -/
+@[montpellier "104, 6–10"]
 theorem deltaInj_lt {X Y : DeltaInj} (f : X ⟶ Y)
     (hf : ¬ MorphismProperty.identities DeltaInj f) : X.n < Y.n := by
   obtain ⟨m⟩ := X
@@ -329,12 +346,14 @@ theorem deltaInj_lt {X Y : DeltaInj} (f : X ⟶ Y)
 
 /-- **Example 1 is a direct category**: the strict order of `Δ` is well
 founded, and `reedyDirecte` applies. -/
+@[montpellier "104, 6–10"]
 noncomputable def deltaInjReedy :
     HomotopicalAlgebra.ReedyStructure (MorphismProperty.identities DeltaInj) ⊤ Ordinal.{0} :=
   reedyDirecte deltaInj_end deltaInj_skeletal (wf_of_degre DeltaInj.n deltaInj_lt)
 
 /-- **Example 1**: `I_n = 𝔓*(Δ_n)`, the non-empty subsets, has `2^{n+1} - 1`
 elements. -/
+@[montpellier "104, 6–10"]
 theorem card_I_simplexe (n : ℕ) :
     ((Finset.univ : Finset (Finset (Fin (n + 1)))).filter (·.Nonempty)).card = 2 ^ (n + 1) - 1 := by
   have : (Finset.univ : Finset (Finset (Fin (n + 1)))).filter (·.Nonempty) =
@@ -346,10 +365,12 @@ theorem card_I_simplexe (n : ℕ) :
 /-- **Example 2**: a face of `[0,1]^n` fixes some coordinates to `0` or `1` and
 leaves the others free — a partial section of `Δ_{n-1} × {±1} → Δ_{n-1}` —
 so `Card I_n = 3^n`. -/
+@[montpellier "104, 6–10"]
 theorem card_I_cube (n : ℕ) : Fintype.card (Fin n → Option Bool) = 3 ^ n := by
   simp
 
 /-- Page 5: `1 + n·2 + C(n,2)·2² + ⋯ + 2ⁿ = (1 + 2)ⁿ`. -/
+@[montpellier "104, 5"]
 theorem somme_faces_cube (n : ℕ) :
     ∑ k ∈ Finset.range (n + 1), n.choose k * 2 ^ k = 3 ^ n := by
   rw [show (3 : ℕ) = 2 + 1 from rfl, add_pow]
@@ -357,6 +378,7 @@ theorem somme_faces_cube (n : ℕ) :
 
 /-- **Example 3**, the hemispherical disc `D_n`: `I_n = (Δ_{n-1} × {±1}) ⊔ {d_n}`
 (`none` is `d_n`). -/
+@[montpellier "104, 6–10"]
 def Hemi (n : ℕ) : Type := Option (Fin n × Bool)
 
 instance (n : ℕ) : Fintype (Hemi n) := inferInstanceAs (Fintype (Option (Fin n × Bool)))
@@ -392,6 +414,7 @@ instance (n : ℕ) : PartialOrder (Hemi n) where
     · exact absurd (h₁.trans h₂) (lt_irrefl _)
 
 /-- `Card I_n = 2n + 1` (with the leaf's `Δ_n` it would be `2n + 3`). -/
+@[montpellier "104, 6–10"]
 theorem card_I_hemi (n : ℕ) : Fintype.card (Hemi n) = 2 * n + 1 := by
   change Fintype.card (Option (Fin n × Bool)) = _
   simp [mul_comm]
@@ -399,6 +422,7 @@ theorem card_I_hemi (n : ℕ) : Fintype.card (Hemi n) = 2 * n + 1 := by
 /-- For `k < n` there are exactly two sub-objects of type `k`, the two
 hemispheres of dimension `k`: `Hom(D_k, D_n)` has two elements (counted on the
 carrier `Option (Fin n × Bool)` of `Hemi n`). -/
+@[montpellier "104, 6–10"]
 theorem card_type_hemi (n : ℕ) (k : Fin n) :
     ((Finset.univ : Finset (Option (Fin n × Bool))).filter
       (fun x => ∃ e : Bool, x = some (k, e))).card = 2 := by
@@ -414,6 +438,7 @@ theorem card_type_hemi (n : ℕ) (k : Fin n) :
 
 /-- With `{±1}` carrying the chaotic preorder, `(k, ε) ≤ (k', ε')` iff `k ≤ k'`,
 and the product is not antisymmetric: it is a preorder, not an order. -/
+@[montpellier "104, 6–10"]
 theorem chaotique_non_antisymetrique (n : ℕ) (k : Fin n) :
     let R : Fin n × Bool → Fin n × Bool → Prop := fun a b => a.1 ≤ b.1
     R (k, true) (k, false) ∧ R (k, false) (k, true) ∧ (k, true) ≠ (k, false) := by
@@ -424,6 +449,7 @@ theorem chaotique_non_antisymetrique (n : ℕ) (k : Fin n) :
 /-- Page 4. For sources and targets `sₙ, tₙ : Fₙ → Fₙ₋₁` satisfying the globular
 identities `sₙ₋₁ sₙ = sₙ₋₁ tₙ`, `tₙ₋₁ sₙ = tₙ₋₁ tₙ`, the maps
 `tₙ - sₙ : ℤ[Fₙ] → ℤ[Fₙ₋₁]` compose to zero. -/
+@[montpellier "104, 4"]
 theorem globulaire_complexe {F₂ F₁ F₀ : Type*} (s₂ t₂ : F₂ → F₁) (s₁ t₁ : F₁ → F₀)
     (hs : s₁ ∘ s₂ = s₁ ∘ t₂) (ht : t₁ ∘ s₂ = t₁ ∘ t₂) :
     (Finsupp.lmapDomain ℤ ℤ t₁ - Finsupp.lmapDomain ℤ ℤ s₁) ∘ₗ
@@ -452,6 +478,7 @@ variable (M) in
 `τ_K : K → N` (here `N` is the skeletal `M` itself, ordered by the existence of an arrow), and
 for each `ξ` of type `n` an isomorphism `u_ξ : I_n ≅ K_{≤ξ}` with `u_ξ(d_n) = ξ`, satisfying
 (1) `τ_K ∘ u_ξ = τ_n` and (2) `u_ξ ∘ u^n_y = u_{u_ξ(y)}`. -/
+@[montpellier "104, 12–13"]
 structure Epingle where
   /-- The poset. -/
   K : Type w
@@ -520,6 +547,7 @@ def EstModele {X : Mᵒᵖ ⥤ Type w} (S : Subfunctor X) : Prop :=
 
 /-- **The admissible objects** of page 12: `X` is the supremum of its model sub-objects, and the
 intersection of two model sub-objects is the supremum of the model sub-objects it contains. -/
+@[montpellier "104, 12"]
 def Admissible (X : Mᵒᵖ ⥤ Type w) : Prop :=
   sSup {S : Subfunctor X | EstModele S} = ⊤ ∧
     ∀ S T : Subfunctor X, EstModele S → EstModele T →
@@ -555,6 +583,7 @@ include hmono in
 /-- **Page 12, read in the presheaf language.** When every arrow of `M` is a monomorphism, a
 presheaf is admissible iff it is non-singular: every element is a monomorphism `yoneda D → X`.
 The first condition of page 12 alone implies it; the second then follows. -/
+@[montpellier "104, 12"]
 theorem admissible_iff (X : Mᵒᵖ ⥤ Type w) : Admissible X ↔ NonSingulier X := by
   constructor
   · rintro ⟨h1, -⟩ D D' x a b hab
@@ -732,6 +761,7 @@ instance : (versEpingle hmono hend hsk).Full where
 
 /-- **The presheaf of an `M`-pinned poset**: `X_K(D)` is the set of elements of type `D`, and
 `a : D' → D` acts by the pinning, `ξ ↦ u_ξ(D', a)`. -/
+@[montpellier "104, 13"]
 def versPrefaisceau (K : Epingle M) : Mᵒᵖ ⥤ Type w where
   obj U := {ξ : K.K // K.τ ξ = U.unop}
   map {U V} g := TypeCat.ofHom fun ξ =>
@@ -821,10 +851,12 @@ instance : (versEpingle hmono hend hsk).EssSurj where
 include hmono in
 /-- **Page 13, « est équivalente à ».** For a skeletal `M` satisfying (i) and (ii), `X ↦ X̃` is
 an equivalence between the admissible presheaves on `M` and the `M`-pinned posets. -/
+@[montpellier "104, 13"]
 theorem versEpingle_isEquivalence : (versEpingle hmono hend hsk).IsEquivalence where
 
 include hmono hend hsk in
 /-- The equivalence of page 13, as an equivalence of categories `𝔹₀ ≌ (M-pinned posets)`. -/
+@[montpellier "104, 13"]
 theorem equivalence_page13 : Nonempty (Adm M ≌ Epingle M) :=
   haveI := versEpingle_isEquivalence hmono hend hsk
   ⟨(versEpingle hmono hend hsk).asEquivalence⟩
@@ -832,6 +864,7 @@ theorem equivalence_page13 : Nonempty (Adm M ≌ Epingle M) :=
 include hmono in
 /-- Page 14: the monomorphisms of `M̂` between admissible presheaves are the morphisms whose
 map `X̃ → Ỹ` is injective. -/
+@[montpellier "104, 14"]
 theorem mono_iff_injective_versEpingle {X Y : Adm M} (α : X ⟶ Y) :
     Mono α.hom ↔ Function.Injective ((versEpingle hmono hend hsk).map α).f := by
   rw [NatTrans.mono_iff_mono_app]
@@ -851,12 +884,14 @@ theorem mono_iff_injective_versEpingle {X Y : Adm M} (α : X ⟶ Y) :
 
 /-- A presheaf with a morphism to a non-singular one is non-singular; in particular a
 sub-object of an admissible object is admissible. -/
+@[montpellier "104, 16"]
 lemma nonSingulier_of_hom {Z X : Mᵒᵖ ⥤ Type w} (f : Z ⟶ X) (hX : NonSingulier X) :
     NonSingulier Z := fun _ _ z a b hab =>
   hX (f.app _ z) a b (by rw [← NatTrans.naturality_apply, ← NatTrans.naturality_apply, hab])
 
 include hmono in
 /-- **Page 16, sums.** A sum of admissible presheaves is admissible. -/
+@[montpellier "104, 16"]
 theorem admissible_coproduit {ι : Type w} (X : ι → Mᵒᵖ ⥤ Type w) (hX : ∀ i, Admissible (X i))
     (c : Cofan X) (hc : IsColimit c) : Admissible c.pt := by
   simp only [admissible_iff hmono] at hX ⊢
@@ -872,6 +907,7 @@ theorem admissible_coproduit {ι : Type w} (X : ι → Mᵒᵖ ⥤ Type w) (hX :
 include hmono in
 /-- **Page 16, amalgamated sums.** A pushout of admissible presheaves along monomorphisms is
 admissible. -/
+@[montpellier "104, 16"]
 theorem admissible_pushout {Z X Y P : Mᵒᵖ ⥤ Type w} {f : Z ⟶ X} {g : Z ⟶ Y} {l : X ⟶ P}
     {r : Y ⟶ P} (h : IsPushout f g l r) [Mono f] [Mono g] (hX : Admissible X)
     (hY : Admissible Y) : Admissible P := by
@@ -892,6 +928,7 @@ include hmono in
 /-- **Page 16, « le foncteur `X ↦ X̃` commute à ces opérations », sums.** The sum, computed in
 `M̂`, of admissible presheaves is a sum in `𝔹₀`, and `X ↦ X̃` sends it to a sum of pinned
 posets. -/
+@[montpellier "104, 16"]
 theorem versEpingle_coproduit {ι : Type w} (X : ι → Adm M) (c : Cofan fun i => (X i).obj)
     (hc : IsColimit c) :
     Nonempty (IsColimit ((versEpingle hmono hend hsk).mapCocone
@@ -912,6 +949,7 @@ theorem versEpingle_coproduit {ι : Type w} (X : ι → Adm M) (c : Cofan fun i 
 include hmono in
 /-- **Page 16, amalgamated sums.** A pushout in `M̂` of admissible presheaves along
 monomorphisms is a pushout in `𝔹₀`, and `X ↦ X̃` sends it to a pushout of pinned posets. -/
+@[montpellier "104, 16"]
 theorem versEpingle_pushout {Z X Y P : Adm M} {f : Z ⟶ X} {g : Z ⟶ Y} {l : X ⟶ P}
     {r : Y ⟶ P} (h : IsPushout f.hom g.hom l.hom r.hom) :
     IsPushout ((versEpingle hmono hend hsk).map f) ((versEpingle hmono hend hsk).map g)

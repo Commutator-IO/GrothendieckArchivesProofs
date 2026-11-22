@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 150, page 19: without `Xᵢ ∩ Y = f(Ẋᵢ)`, the reconstruction is not faithful
@@ -73,6 +74,7 @@ def Xstar : Set ℝ := Icc (1 / 2) 1
 def cone (S : Set ℝ) : Set ℝ := (fun p : ℝ × ℝ => p.1 * p.2) '' (Icc 0 1 ×ˢ S)
 
 /-- `C ⊂ T` is conic: `C = I · (C ∩ Ṫ) ∪ (C ∩ Y)` (page 15). -/
+@[montpellier "150, 15"]
 def IsConic (C : Set ℝ) : Prop := C ⊆ T ∧ C = cone (C ∩ Tdot) ∪ (C ∩ Y)
 
 /-- `T` is compatible with the closed part `X₁ ⊂ X`: `X₁ ∩ T` is conic. -/
@@ -85,6 +87,7 @@ def IsCollarCompatible (X₁ : Set ℝ) : Prop :=
 
 /-- Strict compatibility as the reading defines it: compatible, compatible with the collar,
 and `X₁ ∩ Y = f(Ẋ₁)` with `f t = 0 · t` and `Ẋ₁ = X₁ ∩ Ṫ`. -/
+@[montpellier "150, 19"]
 def IsStrictlyCompatible (X₁ : Set ℝ) : Prop :=
   IsCompatible X₁ ∧ IsCollarCompatible X₁ ∧ X₁ ∩ Y = (fun t : ℝ => 0 * t) '' (X₁ ∩ Tdot)
 
@@ -97,11 +100,13 @@ lemma cone_half : cone Tdot = T := by
   · rintro ⟨h0, h1⟩
     exact ⟨2 * x, 1 / 2, ⟨⟨by linarith, by linarith⟩, rfl⟩, by ring⟩
 
+@[montpellier "150, 19"]
 theorem isConic_T : IsConic T := ⟨subset_rfl, by
   rw [(inter_eq_right.2 (by norm_num [Tdot, T]) : T ∩ Tdot = Tdot), cone_half,
     union_eq_left.2 inter_subset_left]⟩
 
 /-- `T` is strict: `T = ½ · X`, with `X = [0, 1]` itself conic for the same action. -/
+@[montpellier "150, 19"]
 theorem T_eq_half_smul : T = (fun t => 1 / 2 * t) '' X := by
   ext x
   simp only [T, X, mem_image, mem_Icc]
@@ -121,6 +126,7 @@ lemma IsConic.cases {C : Set ℝ} (h : IsConic C) :
 both compatible with `T` and with the collar, and have the same trace on `X*` — the same
 right-hand data `(X*, Ṫ, X₁*, Y, f)` — but `{0}` is nonempty and `∅` is not, so no
 isomorphism of systems takes one to the other. -/
+@[montpellier "150, 19"]
 theorem compatible_not_determined :
     IsCompatible {0} ∧ IsCompatible ∅ ∧ IsCollarCompatible {0} ∧ IsCollarCompatible ∅ ∧
       ({0} : Set ℝ) ∩ Xstar = ∅ ∩ Xstar ∧ ({0} : Set ℝ).Nonempty := by
@@ -135,6 +141,7 @@ theorem compatible_not_determined :
   · norm_num [Xstar]
 
 /-- `{0}` is not strictly compatible: `{0} ∩ Y = {0}`, while `Ẋ₁ = ∅`. -/
+@[montpellier "150, 19"]
 theorem not_strictlyCompatible_singleton_zero : ¬ IsStrictlyCompatible {0} := by
   rintro ⟨-, -, h⟩
   rw [show ({0} : Set ℝ) ∩ Tdot = ∅ by norm_num [Tdot], image_empty] at h
@@ -151,6 +158,7 @@ lemma IsStrictlyCompatible.inter_T {X₁ : Set ℝ} (h : IsStrictlyCompatible X�
     exact subset_empty_iff.1 fun x hx => hY ▸ ⟨hx.1, hc.2 (fun h' => h2 h'.1) hx⟩
 
 /-- With `X₁ ∩ Y = f(Ẋ₁)`, a strictly compatible `X₁` is determined by its trace on `X*`. -/
+@[montpellier "150, 19"]
 theorem eq_of_strictlyCompatible {X₁ X₂ : Set ℝ} (h₁ : IsStrictlyCompatible X₁)
     (h₂ : IsStrictlyCompatible X₂) (h : X₁ ∩ Xstar = X₂ ∩ Xstar) : X₁ = X₂ := by
   have split : ∀ Z : Set ℝ, Z ⊆ X → Z = Z ∩ T ∪ Z ∩ Xstar := fun Z hZ => by
@@ -217,6 +225,7 @@ theorem lt_of_mem_Ioo {a' b' y : I} (h : Consec D a b) (h' : Consec D a' b')
   exact h₁.eq_or_lt.elim (·.ge) fun h₁ => (h.2.2.2 a' h'.1 ⟨ha, h₁⟩).elim
 
 include hm ht htop in
+@[montpellier "150, 45–47"]
 theorem mem_gaps_iff : x ∈ gaps D m ↔ x ∉ D ∧ m < x ∧ x < t ∧ ∀ y ∈ D, x ≤ y ∨ y ≤ x := by
   classical
   constructor
@@ -269,6 +278,7 @@ theorem above_iff : Above D m t e ↔ IsChain (· ≤ ·) (e : Set I) ∧ D ⊆ 
 
 include hm ht htop in
 /-- `e ↦ e \ D` identifies the flags above `D` with the flags of the ordinal sum. -/
+@[montpellier "150, 45–47"]
 def aboveEquiv : {e // Above D m t e} ≃ {c : Finset I // IsChain (· ≤ ·) (c : Set I) ∧
     (c : Set I) ⊆ gaps D m} where
   toFun e := ⟨e.1 \ D, ((above_iff hD hm ht htop).1 e.2).1.mono (by simp),
@@ -282,10 +292,12 @@ def aboveEquiv : {e // Above D m t e} ≃ {c : Finset I // IsChain (· ≤ ·) (
   right_inv c := Subtype.ext (Finset.union_sdiff_cancel_right (Finset.disjoint_left.2
     fun _ hx => ((mem_gaps_iff hD hm ht htop).1 (c.2.2 hx)).1))
 
+@[montpellier "150, 45–47"]
 theorem aboveEquiv_eq_empty (e : {e // Above D m t e}) :
     (aboveEquiv hD hm ht htop e).1 = ∅ ↔ e.1 = D := by
   exact Finset.sdiff_eq_empty_iff_subset.trans ⟨(·.antisymm e.2.2.1), (·.le)⟩
 
+@[montpellier "150, 45–47"]
 theorem aboveEquiv_subset (e e' : {e // Above D m t e}) :
     (aboveEquiv hD hm ht htop e).1 ⊆ (aboveEquiv hD hm ht htop e').1 ↔ e.1 ⊆ e'.1 := by
   change e.1 \ D ⊆ e'.1 \ D ↔ _
@@ -294,6 +306,7 @@ theorem aboveEquiv_subset (e e' : {e // Above D m t e}) :
 
 omit hD [DecidableEq I] in
 /-- (a): the ordinal sum is empty exactly when every step of `D` from `m` on is a cover. -/
+@[montpellier "150, 45–47"]
 theorem gaps_eq_empty_iff : gaps D m = ∅ ↔ ∀ a b, Consec D a b → m ≤ a → a ⋖ b := by
   simp only [Set.eq_empty_iff_forall_notMem, gaps, Set.mem_ofPred_eq, not_exists, not_and]
   exact ⟨fun h a b hab hm => ⟨hab.2.2.1, fun c h₁ h₂ => h c a b hab hm ⟨h₁, h₂⟩⟩,
@@ -301,6 +314,7 @@ theorem gaps_eq_empty_iff : gaps D m = ∅ ↔ ∀ a b, Consec D a b → m ≤ a
 
 omit hD [DecidableEq I] in
 /-- (a), as stated: the ordinal sum has no non-empty flag exactly when each step is a cover. -/
+@[montpellier "150, 45–47"]
 theorem flags_gaps_iff : (∀ c : Finset I, IsChain (· ≤ ·) (c : Set I) →
     (c : Set I) ⊆ gaps D m → c = ∅) ↔ ∀ a b, Consec D a b → m ≤ a → a ⋖ b := by
   rw [← gaps_eq_empty_iff]
@@ -312,6 +326,7 @@ include hm ht htop in
 set_option linter.unusedDecidableInType false in
 /-- (b) with (a): `D` is the only flag above itself, i.e. the fibres of `Σ_{d'} → Σ_d` have no
 boundary strata, exactly when every step of `D` from `m = i_p` on is a cover. -/
+@[montpellier "150, 45–47"]
 theorem above_eq_iff : (∀ e, Above D m t e → e = D) ↔ ∀ a b, Consec D a b → m ≤ a → a ⋖ b := by
   rw [← flags_gaps_iff]
   refine ⟨fun h c hc hcg => ?_, fun h e he => ?_⟩

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 137, pages 74–83: polynomial categories and `⊗`-pd-categories
@@ -82,6 +83,7 @@ variable {C : Type u} [Category.{v} C]
 /-- A `⊗-pd`-category without its tensor product (pp. 80–82): functors `Γⁿ`, maps
 `α_{p,q} : Γ^{pq} → Γ^p Γ^q` with the associativity square of p. 80, and the unit
 conditions (**) for `Γ¹ ≅ id`. -/
+@[montpellier "137, 80–82"]
 structure PDCategory (C : Type u) [Category.{v} C] where
   Γ : ℕ → C ⥤ C
   α : ∀ p q n : ℕ, p * q = n → (Γ n ⟶ Γ q ⋙ Γ p)
@@ -98,6 +100,7 @@ structure PDCategory (C : Type u) [Category.{v} C] where
 /-- The composition structure of a polynomial category (pp. 74–76): degrees multiply
 under composition (axiom e)), with `C` as its subcategory of degree-one maps. The
 composite of `f ∈ 𝐏_p(X, Y)` and `g ∈ 𝐏_q(Y, Z)` has degree `q * p`. -/
+@[montpellier "137, 74–76"]
 structure PolynomialCategory (C : Type u) [Category.{v} C] where
   Hom : ℕ → C → C → Type v
   comp : ∀ {p q n : ℕ} {X Y Z : C}, Hom p X Y → Hom q Y Z → q * p = n → Hom n X Z
@@ -132,6 +135,7 @@ lemma α_assoc' (p q r m l n : ℕ) (hm : q * r = m) (hl : p * q = l) (h₁ : p 
 
 /-- The polynomial category of a `⊗-pd`-category (pp. 81–82): `𝐏_p(X, Y) = Hom(Γ^p X, Y)`,
 `g ∘ f = g ∘ Γ^q(f) ∘ α_{q,p}`, identity `ε : Γ¹ X → X`. -/
+@[montpellier "137, 81–82"]
 def toPoly : PolynomialCategory C where
   Hom p X Y := (G.Γ p).obj X ⟶ Y
   comp {p q n X Y Z} f g h := (G.α q p n h).app X ≫ (G.Γ q).map f ≫ g
@@ -189,6 +193,7 @@ lemma ι_comp' {X Y Z : C} (f : X ⟶ Y) (g : Y ⟶ Z) (h : 1 * 1 = 1) :
 
 /-- Representability of `P_n(X, -)` on the degree-one maps: an object `Γⁿ X` and a
 universal map `γₙ : X → Γⁿ X` of degree `n` (pp. 77–78). -/
+@[montpellier "137, 77–78"]
 structure Representation (P : PolynomialCategory C) where
   obj : ℕ → C → C
   γ : ∀ (n : ℕ) (X : C), P.Hom n X (obj n X)
@@ -311,6 +316,7 @@ noncomputable def ε : R.functor 1 ≅ 𝟭 C :=
 
 /-- The `⊗-pd`-structure (without `⊗`) of a polynomial category with representable
 degrees: the functors `Γⁿ`, the maps `α_{p,q}` and the unit conditions (pp. 77–80). -/
+@[montpellier "137, 77–80"]
 noncomputable def toPD : PDCategory C where
   Γ := R.functor
   α := R.α
@@ -355,6 +361,7 @@ lemma toPoly_comp {p q n : ℕ} {X Y Z : C} (f : (G.Γ p).obj X ⟶ Y) (g : (G.�
 
 /-- Composition `g ∘ f = g ∘ Γ^q(f) ∘ α_{q,p}` is additive in the outer variable `g`
 (p. 82), when the degree-one category is additive. -/
+@[montpellier "137, 82"]
 lemma toPoly_comp_add [Preadditive C] {p q n : ℕ} {X Y Z : C} (f : (G.Γ p).obj X ⟶ Y)
     (g g' : (G.Γ q).obj Y ⟶ Z) (h : q * p = n) :
     G.toPoly.comp (X := X) f (g + g') h =
@@ -365,6 +372,7 @@ lemma toPoly_comp_add [Preadditive C] {p q n : ℕ} {X Y Z : C} (f : (G.Γ p).ob
 /-- In the polynomial category of a `⊗-pd`-category, `P_n(X, -)` is represented on the
 degree-one maps by `Γⁿ X`, with universal map `γₙ = id_{Γⁿ X}` (p. 82: `𝐏_p(X, Y) =
 Hom(Γ^p X, Y)`). -/
+@[montpellier "137, 82"]
 def representation : G.toPoly.Representation where
   obj n X := (G.Γ n).obj X
   γ n X := 𝟙 ((G.Γ n).obj X)
@@ -381,6 +389,7 @@ lemma representation_rep {n : ℕ} {X Y : C} (φ : (G.Γ n).obj X ⟶ Y) :
   simp [G.α_one_left'_assoc]
 
 /-- Round trip `⊗-pd → polynomial → ⊗-pd`: the functors `Γⁿ` are recovered. -/
+@[montpellier "137, 74–83"]
 theorem toPD_representation_Γ_map (n : ℕ) {X X' : C} (f : X ⟶ X') :
     (G.representation.toPD.Γ n).map f = (G.Γ n).map f := by
   apply G.representation.hom_ext
@@ -391,6 +400,7 @@ theorem toPD_representation_Γ_map (n : ℕ) {X X' : C} (f : X ⟶ X') :
   rw [Category.comp_id, Functor.map_comp, G.α_one_right'_assoc]
 
 /-- Round trip: the maps `α_{p,q}` are recovered. -/
+@[montpellier "137, 74–83"]
 theorem toPD_representation_α (p q n : ℕ) (h : p * q = n) (X : C) :
     (G.representation.toPD.α p q n h).app X = (G.α p q n h).app X := by
   apply G.representation.hom_ext
@@ -401,6 +411,7 @@ theorem toPD_representation_α (p q n : ℕ) (h : p * q = n) (X : C) :
   simp
 
 /-- Round trip: the counit `Γ¹ ≅ id` is recovered. -/
+@[montpellier "137, 74–83"]
 theorem toPD_representation_ε (X : C) :
     G.representation.toPD.ε.hom.app X = G.ε.hom.app X := by
   apply G.representation.hom_ext
@@ -426,6 +437,7 @@ lemma toPD_toPoly_comp {p q n : ℕ} {X Y Z : C} (f : R.obj p X ⟶ Y) (g : R.ob
 /-- Round trip `polynomial → ⊗-pd → polynomial`: the polynomial category built from
 `(Γ, α, ε)` by `𝐏_p(X, Y) = Hom(Γ^p X, Y)` and `g ∘ f = g ∘ Γ^q(f) ∘ α_{q,p}` is
 isomorphic to the one we started from, by `φ ↦ φ ∘ γ_p`. -/
+@[montpellier "137, 74–83"]
 noncomputable def toPDToPolyIso : R.toPD.toPoly.Iso P where
   e n X Y := R.rep n X Y
   map_comp f g h := R.toPD_toPoly_comp f g h
@@ -651,6 +663,7 @@ lemma smul_f_apply {X Y : ChainComplex (ModuleCat.{u} k) ℕ} (c : k) (f : X ⟶
     (x : X.X m) : ((c • f).f m).hom x = c • (f.f m).hom x := rfl
 
 /-- Proposition 1 (p. 40), the endomorphisms of a disc: `End(ℂⁿ) = k · id`. -/
+@[montpellier "137, 40"]
 lemma disc_endo {n : ℕ} (f : disc k n ⟶ disc k n) :
     f = dv k ((f.f (n + 1)).hom (one k n)) • 𝟙 _ := by
   refine disc_hom_ext (disc_ext k ?_)
@@ -659,12 +672,14 @@ lemma disc_endo {n : ℕ} (f : disc k n ⟶ disc k n) :
   rw [dv_one, mul_one]
 
 /-- Proposition 1 (p. 40): `Hom(ℂⁿ, ℂⁿ⁺¹) = k · dⁿ`. -/
+@[montpellier "137, 40"]
 lemma disc_succ {n : ℕ} (f : disc k n ⟶ disc k (n + 1)) :
     f = dv k ((f.f (n + 1)).hom (one k n)) • dmap k n := by
   refine disc_hom_ext (disc_ext k ?_)
   rw [smul_f_apply, dv_smul, dv_dmap, ite_eq_left rfl, dv_one, mul_one]
 
 /-- Proposition 1 (p. 40): `Hom(ℂⁿ, ℂʲ) = 0` for `j ∉ {n, n + 1}`. -/
+@[montpellier "137, 40"]
 lemma disc_zero {n j : ℕ} (f : disc k n ⟶ disc k j) (h₁ : j ≠ n) (h₂ : j ≠ n + 1) : f = 0 := by
   refine disc_hom_ext (disc_ext k ?_)
   rw [dv_eq_zero k (by omega)]
@@ -818,6 +833,7 @@ def perfect : ObjectProperty (ChainComplex (ModuleCat.{u} k) ℕ) := fun L =>
 
 variable (k) in
 /-- The category `𝒫` of p. 48. -/
+@[montpellier "137, 48"]
 abbrev Perf := (perfect k).FullSubcategory
 
 lemma free_finite_top_bot (S : Submodule k k) (h : S = ⊤ ∨ S = ⊥) :
@@ -872,12 +888,14 @@ def dP (n : ℕ) : D k n ⟶ D k (n + 1) := ObjectProperty.homMk (dmap k n)
 
 variable (k) in
 /-- The universal cochain complex `ℂ⁰ → ℂ¹ → ⋯` of `𝒫` (p. 39). -/
+@[montpellier "137, 39"]
 def univ : CochainComplex (Perf k) ℕ :=
   CochainComplex.of (D k) (dP k) (fun n => by
     ext : 1
     exact dmap_comp_dmap n)
 
 /-- The class `Σ` of p. 48: sequences `0 → L' → L → L'' → 0` exact in each degree. -/
+@[montpellier "137, 48"]
 structure IsSigma {L' L L'' : Perf k} (f : L' ⟶ L) (g : L ⟶ L'') : Prop where
   injective : ∀ m, Function.Injective (f.hom.f m).hom
   surjective : ∀ m, Function.Surjective (g.hom.f m).hom
@@ -907,6 +925,7 @@ lemma ιP_comp_πP (L : Perf k) : ιP L ≫ πP L = 0 := by
   exact coneι_comp_coneπ L.obj
 
 /-- Every object of `𝒫` is the kernel of a `Σ`-sequence `0 → L → I(L) → L[1] → 0` (p. 52). -/
+@[montpellier "137, 52"]
 lemma isSigma_cone (L : Perf k) : IsSigma (ιP L) (πP L) where
   injective m x y h := congr_arg Prod.fst h
   surjective m y := ⟨((0 : L.obj.X m), (show Lp L.obj m from y)), by
@@ -1237,6 +1256,7 @@ variable (k B) in
 /-- **Theorem (p. 50, a), first half).** `F ↦ F(ℂ^•)` is fully faithful from the `k`-linear
 `Σ`-left exact functors `𝒫 → ℬ` to the cochain complexes of `ℬ`, for any `k`-linear
 category `ℬ` — no kernels needed. -/
+@[montpellier "137, 50"]
 def ρFullyFaithful : (ρ k B).FullyFaithful := Functor.FullyFaithful.ofFullyFaithful _
 
 end Theorem
@@ -1816,6 +1836,7 @@ def σObj (L : Perf k) : B := kernel (kmap (coneRep L C) (coneRep (shiftP L) C))
 def σRep (L : Perf k) : Rep C L.obj (σObj k C L) := kerRep (coneRep L C) (coneRep (shiftP L) C)
 
 /-- The functor `σ(C^•) : 𝒫 → ℬ` of p. 50. -/
+@[montpellier "137, 50"]
 def σFun : Perf k ⥤ B where
   obj := σObj k C
   map {L M} g := (σRep k C L).map (σRep k C M) g.hom
@@ -1866,6 +1887,7 @@ def σLex : Lex k B := ⟨σFun k C, ⟨inferInstance, inferInstance, σ_sigmaLe
 def σIsoX (n : ℕ) : (σFun k C).obj (D k n) ≅ C.X n := Rep.iso (σRep k C (D k n)) (discRep k n C)
 
 /-- **Theorem (p. 50, a), second half).** `ρ(σ(C^•)) = σ(C^•)(ℂ^•) ≅ C^•`. -/
+@[montpellier "137, 50"]
 def σIso : (ρ k B).obj (σLex k C) ≅ C :=
   HomologicalComplex.Hom.isoOfComponents (fun n => σIsoX k C n) (by
     rintro i j (rfl : i + 1 = j)
@@ -1893,6 +1915,7 @@ variable (k B') in
 /-- **Theorem (p. 50, a)).** For `ℬ` `k`-linear with kernels and finite biproducts,
 `F ↦ F(ℂ^•)` is an equivalence from the `k`-linear `Σ`-left exact functors `𝒫 → ℬ` to the
 cochain complexes of `ℬ`. -/
+@[montpellier "137, 50"]
 def ρEquivalence : Lex k B' ≌ CochainComplex B' ℕ := (ρ k B').asEquivalence
 
 end Equivalence
@@ -1947,6 +1970,7 @@ variable [HasBinaryProducts C]
 noncomputable def pairMap (n : ℕ) (W X Y : C) (a : P.Hom n W (X ⨯ Y)) : P.Hom n W X × P.Hom n W Y :=
   (P.comp a (P.ι prod.fst) (one_mul n), P.comp a (P.ι prod.snd) (one_mul n))
 
+@[montpellier "137, 74–76"]
 lemma pairMap_ι {W X Y : C} (v : W ⟶ X) (w : W ⟶ Y) :
     P.pairMap 1 W X Y (P.ι (prod.lift v w)) = (P.ι v, P.ι w) := by
   simp [pairMap, ← P.ι_comp]
@@ -1959,6 +1983,7 @@ lemma pairMap_rep (R : P.Representation) {n : ℕ} {W X Y : C} (φ : R.obj n W �
   simp [pairMap, R.rep_comp]
 
 /-- Axiom a), degreewise: `𝐏ₙ(W, X × Y) ≃ 𝐏ₙ(W, X) × 𝐏ₙ(W, Y)`. -/
+@[montpellier "137, 74–76"]
 theorem pairMap_bijective (R : P.Representation) (n : ℕ) (W X Y : C) :
     Function.Bijective (P.pairMap n W X Y) := by
   let e : (R.obj n W ⟶ X ⨯ Y) ≃ (R.obj n W ⟶ X) × (R.obj n W ⟶ Y) :=
@@ -1982,6 +2007,7 @@ lemma pairEquiv_symm_rep (R : P.Representation) {n : ℕ} {W X Y : C} (φ : R.ob
 
 omit [HasBinaryProducts C] in
 /-- The final object of `C` is final in every degree. -/
+@[montpellier "137, 74–76"]
 theorem terminal_unique [HasTerminal C] (R : P.Representation) (n : ℕ) (W : C) :
     Nonempty (Unique (P.Hom n W (⊤_ C))) :=
   ⟨(R.rep n W _).symm.unique⟩
@@ -1991,6 +2017,7 @@ section Additive
 variable [Preadditive C]
 
 /-- The sum `f + g = m ∘ (f, g)`, with `m = pr₁ + pr₂ : X × X → X` of degree one (p. 74). -/
+@[montpellier "137, 74"]
 noncomputable def add (R : P.Representation) {n : ℕ} {W X : C} (a b : P.Hom n W X) : P.Hom n W X :=
   P.comp ((pairEquiv R n W X X).symm (a, b)) (P.ι (prod.fst + prod.snd)) (one_mul n)
 
@@ -2000,11 +2027,13 @@ lemma rep_add (R : P.Representation) {n : ℕ} {W X : C} (φ ψ : R.obj n W ⟶ 
 
 /-- The sum is the group law of `Hom(Γⁿ W, X)` carried by `φ ↦ φ ∘ γₙ`: an abelian group
 law on `𝐏ₙ(W, X)`. -/
+@[montpellier "137, 74–76"]
 theorem add_eq (R : P.Representation) {n : ℕ} {W X : C} (a b : P.Hom n W X) :
     add R a b = R.rep n W X ((R.rep n W X).symm a + (R.rep n W X).symm b) := by
   simp [rep_add]
 
 /-- `(f + g) ∘ h = f ∘ h + g ∘ h`, for `h` of any degree (p. 74). -/
+@[montpellier "137, 74"]
 theorem comp_add (R : P.Representation) {p q n : ℕ} {V W X : C} (h : P.Hom p V W)
     (a b : P.Hom q W X)
     (hn : q * p = n) : P.comp h (add R a b) hn = add R (P.comp h a hn) (P.comp h b hn) := by
@@ -2017,6 +2046,7 @@ theorem comp_add (R : P.Representation) {p q n : ℕ} {V W X : C} (h : P.Hom p V
   rw [add, add, ← hpair, P.assoc'' _ _ _ hn]
 
 /-- On degree one, the sum is the addition of `C` (axiom c)). -/
+@[montpellier "137, 74–76"]
 theorem ι_add (R : P.Representation) {W X : C} (f g : W ⟶ X) :
     add R (P.ι f) (P.ι g) = P.ι (f + g) := by
   rw [add, show (pairEquiv R 1 W X X).symm (P.ι f, P.ι g) = P.ι (prod.lift f g) from
@@ -2031,6 +2061,7 @@ end PolynomialCategory
 
 /-- In the polynomial category of a `⊗-pd`-category, the sum `m ∘ (f, g)` of p. 74 is
 the addition of `Hom(Γⁿ W, X)`. -/
+@[montpellier "137, 74"]
 theorem PDCategory.add_eq (G : PDCategory C) [HasBinaryProducts C] [Preadditive C] {n : ℕ}
     {W X : C} (a b : (G.Γ n).obj W ⟶ X) :
     PolynomialCategory.add G.representation (W := W) a b = a + b := by
@@ -2070,21 +2101,25 @@ variable {R M N M' : Type*} [CommRing R] [AddCommGroup M] [Module R M] [AddCommG
   [Module R N] [AddCommGroup M'] [Module R M']
 
 /-- Axiom d) in the example: `m ↦ φ(m^{[n]})` is homogeneous of degree `n`. -/
+@[montpellier "137, 79–84"]
 theorem dp_comp_smul (φ : DividedPowerAlgebra R M →ₗ[R] N) (n : ℕ) (r : R) (m : M) :
     φ (dp R n (r • m)) = r ^ n • φ (dp R n m) := by
   rw [dp_smul, map_smul]
 
 /-- Precomposing `m ↦ φ(m^{[n]})` with a degree-one map `f` gives `φ ∘ Γ(f)` on `γₙ`. -/
+@[montpellier "137, 79–84"]
 theorem dp_comp_map (φ : DividedPowerAlgebra R M' →ₗ[R] N) (f : M →ₗ[R] M') (n : ℕ) (m : M) :
     φ (dp R n (f m)) = (φ ∘ₗ (map R f).toLinearMap) (dp R n m) := by
   simp
 
 /-- Axiom e) in the example: `m ↦ (m^{[q]})^{[p]}` is homogeneous of degree `p q`. -/
+@[montpellier "137, 80"]
 theorem dp_dp_smul (p q : ℕ) (r : R) (m : M) :
     dp R p (dp R q (r • m)) = r ^ (p * q) • dp R p (dp R q m) := by
   rw [dp_smul, dp_smul, ← pow_mul, mul_comm]
 
 /-- `γ₁` is additive. -/
+@[montpellier "137, 79–84"]
 theorem dp_one_add (x y : M) : dp R 1 (x + y) = dp R 1 x + dp R 1 y :=
   (embed R M).map_add x y
 

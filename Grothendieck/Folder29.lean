@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 29, page 120: the determinant criterion on tame inertia
@@ -62,6 +63,7 @@ variable {C C' : Type*} [Fintype C] [Fintype C']
 
 /-- The map `ℤ_ℓ^C → ℤ_ℓ^{C'}` of an integer matrix with rows indexed by `C'` and columns
 by `C`. -/
+@[montpellier "29, 120"]
 noncomputable def inertiaMap (N : Matrix C' C ℤ) (ℓ : ℕ) [Fact ℓ.Prime] :
     (C → ℤ_[ℓ]) → (C' → ℤ_[ℓ]) :=
   (N.map (Int.cast : ℤ → ℤ_[ℓ])).mulVec
@@ -114,6 +116,7 @@ theorem bijective_submatrix_iff (N : Matrix C' C ℤ) (e : C' ≃ C) (ℓ : ℕ)
   exact (e.arrowCongr (Equiv.refl ℤ_[ℓ])).bijective
 
 /-- The criterion once `C'` and `C` are matched by `e`. -/
+@[montpellier "29, 120"]
 theorem criterion_of_equiv [DecidableEq C'] {p : ℕ} (hp : p = 1 ∨ p.Prime) (N : Matrix C' C ℤ)
     (e : C' ≃ C) :
     (∀ (ℓ : ℕ) [Fact ℓ.Prime], ℓ ≠ p → Function.Bijective (inertiaMap N ℓ)) ↔
@@ -129,6 +132,7 @@ theorem criterion_of_equiv [DecidableEq C'] {p : ℕ} (hp : p = 1 ∨ p.Prime) (
 /-- **The criterion of page 120.** The integer matrix `N` is bijective over `ℤ_ℓ` for every
 prime `ℓ ≠ p` iff `card C = card C'` and, the columns being matched with the rows by some
 bijection, `det N = ± p^k`. -/
+@[montpellier "29, 120"]
 theorem criterion [DecidableEq C'] {p : ℕ} (hp : p = 1 ∨ p.Prime) (N : Matrix C' C ℤ) :
     (∀ (ℓ : ℕ) [Fact ℓ.Prime], ℓ ≠ p → Function.Bijective (inertiaMap N ℓ)) ↔
       Fintype.card C = Fintype.card C' ∧ ∃ e : C' ≃ C, ∃ k : ℕ,
@@ -202,6 +206,7 @@ def Triv (E : MorphismProperty C) (n : ℕ) : MorphismProperty C := fun X Y f =>
 /-- Conditions a) to e) of page 212 on classes `deg n` of morphisms of degree `n`; additivity
 b) for finite sums is stated for the empty and the binary sums, d') with `ℕ`-indexed
 coproducts. -/
+@[montpellier "29, 212"]
 structure DegreeAxioms (E : MorphismProperty C) where
   deg : ℕ → MorphismProperty C
   baseChange {n : ℕ} {P X Y Y' : C} {fst : P ⟶ X} {snd : P ⟶ Y'} {f : X ⟶ Y} {g : Y' ⟶ Y} :
@@ -223,6 +228,7 @@ variable {E : MorphismProperty C}
 
 /-- The condition the page's argument uses and does not state: a morphism of two different
 degrees has an empty (initial) base. -/
+@[montpellier "29, 212, 214"]
 def DegreeAxioms.UniqueDegree (D : DegreeAxioms E) : Prop :=
   ∀ {m n : ℕ} {X Y : C} (f : X ⟶ Y), D.deg m f → D.deg n f → m ≠ n → Nonempty (IsInitial Y)
 
@@ -310,6 +316,7 @@ lemma cancel [HasPullbacks C] [FinitaryExtensive C] (D : DegreeAxioms E) (hu : D
 along a member of `E`: for `n > 0`, pull back along `f` itself; the diagonal splits
 `X ×_Y X = X ⊔ X'₁`, `X'₁ ⟶ X` has degree `n - 1`, and the trivialising morphism is the
 composite. -/
+@[montpellier "29, 214"]
 theorem deg_imp_triv [HasPullbacks C] [FinitaryExtensive C] [E.ContainsIdentities]
     [E.IsStableUnderComposition]
     (hmono : ∀ {A B : C} (m : A ⟶ B) [Mono m],
@@ -343,6 +350,7 @@ lemma deg_of_isTrivial (D : DegreeAxioms E) {n : ℕ} {P B : C} {p : P ⟶ B}
 
 /-- **The converse**, not on the page: a morphism trivialised into `n` sheets by a universal
 epimorphism has degree `n`, for any degree with unique degrees. -/
+@[montpellier "29, 212, 214"]
 theorem triv_imp_deg [HasPullbacks C] [FinitaryExtensive C] {E' : MorphismProperty C}
     (hE : ∀ {A B Y' Y : C} {a : A ⟶ Y'} {b : A ⟶ B} {g : Y' ⟶ Y} {k : B ⟶ Y},
       E g → IsPullback a b g k → Epi b)
@@ -376,6 +384,7 @@ theorem triv_imp_deg [HasPullbacks C] [FinitaryExtensive C] {E' : MorphismProper
 
 /-- **The Conclusion of page 214, repaired**: degree `n` iff trivialised into `n` sheets by a
 member of `E`. -/
+@[montpellier "29, 214"]
 theorem deg_iff_triv [HasPullbacks C] [FinitaryExtensive C] [E.ContainsIdentities]
     [E.IsStableUnderComposition]
     (hmono : ∀ {A B : C} (m : A ⟶ B) [Mono m],
@@ -387,6 +396,7 @@ theorem deg_iff_triv [HasPullbacks C] [FinitaryExtensive C] [E.ContainsIdentitie
   ⟨deg_imp_triv hmono D hu n f, triv_imp_deg hE D hu⟩
 
 /-- **Uniqueness**, with `UniqueDegree`: two such degrees coincide. -/
+@[montpellier "29, 214"]
 theorem unique [HasPullbacks C] [FinitaryExtensive C] [E.ContainsIdentities]
     [E.IsStableUnderComposition]
     (hmono : ∀ {A B : C} (m : A ⟶ B) [Mono m],
@@ -418,6 +428,7 @@ def DegreeAxioms.atMost (D : DegreeAxioms E) : DegreeAxioms E where
 
 /-- If `D` has unique degrees and some object is not initial, `D.atMost` is a different degree:
 the identity of that object has `D.atMost`-degree 1 and 2. -/
+@[montpellier "29, 212, 214"]
 theorem atMost_ne (D : DegreeAxioms E) (hu : D.UniqueDegree) (Y : C)
     (hY : IsEmpty (IsInitial Y)) : D.deg ≠ D.atMost.deg := by
   intro h
@@ -580,6 +591,7 @@ theorem not_isInitial_punit : IsEmpty (IsInitial (FintypeCat.of PUnit.{1})) :=
 /-- **The page's six conditions do not determine the degree**: in finite sets, with the
 surjections as descent morphisms, the fibre-cardinality degree and its `atMost` both satisfy
 them and differ. -/
+@[montpellier "29, 212, 214"]
 theorem degree_not_unique : ∃ D₁ D₂ : DegreeAxioms surj, D₁.deg ≠ D₂.deg :=
   ⟨standard, standard.atMost,
     atMost_ne standard standard_uniqueDegree _ not_isInitial_punit⟩
@@ -647,14 +659,17 @@ theorem surj_pullback_epi {A B Y' Y : FintypeCat.{0}} {a : A ⟶ Y'} {b : A ⟶ 
 
 /-- **The Conclusion of page 214 in finite sets**: with (u), a degree for the surjections is
 the fibre cardinality, and degree `n` means trivialised into `n` sheets by a surjection. -/
+@[montpellier "29, 214"]
 theorem deg_iff_triv (n : ℕ) {X Y : FintypeCat.{0}} (f : X ⟶ Y) : deg n f ↔ Triv surj n f :=
   Degree.deg_iff_triv mono_complement surj_pullback_epi standard standard_uniqueDegree n f
 
 /-- Uniqueness in finite sets: a degree for the surjections with (u) is the fibre cardinality. -/
+@[montpellier "29, 214"]
 theorem unique (D : DegreeAxioms surj) (hu : D.UniqueDegree) : D.deg = deg :=
   Degree.unique mono_complement surj_pullback_epi D standard hu standard_uniqueDegree
 
 /-- Under (0)–(2) the counterexample `standard.atMost` survives, and it fails (u). -/
+@[montpellier "29, 212, 214"]
 theorem not_uniqueDegree_atMost : ¬ standard.atMost.UniqueDegree := fun h =>
   atMost_ne standard standard_uniqueDegree _ not_isInitial_punit (unique _ h).symm
 

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.Groupes.Part02b
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic groups, Part 02 (c): diagonalizable groups, constant groups, Cartier duality
@@ -63,6 +64,7 @@ theorem eb_coord_apply (m : M) (u : AddMonoidAlgebra k M) :
 omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-28722 (7:58:42) [ex] In `Dist(D(M)) = Hom(k[M], k') ≃ k'^M`, the convolution
 product is the ordinary product of functions: `(u ⋆ v)(e^m) = u(e^m) v(e^m)`. -/
+@[buffalo "_lTf_L0yvrU-28722"]
 theorem convD_single (u v : AddMonoidAlgebra k M →ₗ[k] R) (m : M) :
     (toConv u * toConv v).ofConv (AddMonoidAlgebra.single m 1) =
       u (AddMonoidAlgebra.single m 1) * v (AddMonoidAlgebra.single m 1) := by
@@ -84,6 +86,7 @@ theorem distDEquiv_mul (u v : AddMonoidAlgebra k M →ₗ[k] R) :
 omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-28851 (8:00:51) [prop] The functions `p_m` are pairwise orthogonal idempotents of
 `k^M` … -/
+@[buffalo "_lTf_L0yvrU-28851"]
 theorem pm_idem [DecidableEq M] (m n : M) :
     (Pi.single m 1 : M → k) * Pi.single n 1 = if m = n then Pi.single m 1 else 0 := by
   ext x
@@ -97,6 +100,7 @@ theorem pm_idem [DecidableEq M] (m n : M) :
 
 omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-28851 (8:00:51) [prop] … with sum `1` in the product topology. -/
+@[buffalo "_lTf_L0yvrU-28851"]
 theorem pm_hasSum [DecidableEq M] [TopologicalSpace k] :
     HasSum (fun m : M ↦ (Pi.single m 1 : M → k)) 1 := by
   rw [Pi.hasSum]
@@ -132,6 +136,7 @@ noncomputable def proj (δ : V →ₗ[k] V ⊗[k] AddMonoidAlgebra k M) (m : M) 
 
 omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-28993 (8:03:13) [prop] The `p_m` act as pairwise orthogonal projectors … -/
+@[buffalo "_lTf_L0yvrU-28993"]
 theorem proj_proj (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (m n : M) (x : V) :
     proj δ m (proj δ n x) = if m = n then proj δ m x else 0 := by
   rw [proj, proj, act_act hδ, coord_conv]
@@ -149,6 +154,7 @@ theorem proj_eq_coeff (m : M) (x : V) :
 omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-28993 (8:03:13) [prop] … for every `x`, only finitely many `p_m x` are non-zero,
 and `x = ∑_m p_m x`. -/
+@[buffalo "_lTf_L0yvrU-28993"]
 theorem proj_finite (x : V) : Set.Finite {m : M | proj δ m x ≠ 0} := by
   refine (TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M))
       (δ x)).support.finite_toSet.subset
@@ -167,6 +173,7 @@ theorem sum_proj (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (x : V)
 omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-29057 (8:04:17) [thm] One direction: an action of `D(M)` gives a grading
 `V = ⊕ V_m` (`V_m` the image of `p_m`): every `x` is uniquely a finite sum of `x_m ∈ V_m`. -/
+@[buffalo "_lTf_L0yvrU-29057"]
 theorem grading (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (x : V) :
     ∃! y : M →₀ V, (∀ m, proj δ m (y m) = y m) ∧ (y.sum fun _ v ↦ v) = x := by
   refine ⟨TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M)) (δ x), ⟨fun m ↦ ?_, ?_⟩, ?_⟩
@@ -187,6 +194,7 @@ theorem grading (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (x : V) 
 omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-29140 (8:05:40) [prop] On `V_m`, `δ x = x ⊗ e^m`; hence a point `g` of `D(M)`
 (an algebra map `k[M] → k'`) acts by the scalar `χ_m(g) = g(e^m)` (`(g ⊗ id)(δ x) = x ⊗ g(e^m)`). -/
+@[buffalo "_lTf_L0yvrU-29140"]
 theorem delta_of_mem (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (m : M) (x : V) :
     δ (proj δ m x) = proj δ m x ⊗ₜ AddMonoidAlgebra.single m 1 := by
   rw [← (TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M))).symm_apply_apply
@@ -213,6 +221,7 @@ theorem point_acts_by_character (hδ : Part01.IsComodule k (AddMonoidAlgebra k M
 omit [DecidableEq M] in
 /-- _lTf_L0yvrU-29334 (8:08:54) [prop] The characters add: `χ_m χ_{m'} = χ_{m+m'}`
 (`e^m e^{m'} = e^{m+m'}`). -/
+@[buffalo "_lTf_L0yvrU-29334"]
 theorem character_mul (R : Type u) [CommRing R] [Algebra k R] (g : AddMonoidAlgebra k M →ₐ[k] R)
     (m m' : M) : g (AddMonoidAlgebra.single m 1) * g (AddMonoidAlgebra.single m' 1) =
       g (AddMonoidAlgebra.single (m + m') 1) := by
@@ -227,6 +236,7 @@ section Constant
 open CategoryTheory Limits AlgebraicGeometry
 
 /-- _lTf_L0yvrU-29527 (8:12:07) [def] The constant scheme `M_S = ∐_{m ∈ M} S`. -/
+@[buffalo "_lTf_L0yvrU-29527"]
 noncomputable abbrev constScheme (M : Type u) (S : Scheme.{u}) : Scheme.{u} := ∐ fun _ : M ↦ S
 
 /-- _lTf_L0yvrU-29590 (8:13:10) [prop] One half (Mathlib): for `M` finite and `S` affine, `M_S`
@@ -235,6 +245,7 @@ example (M : Type u) [Finite M] (S : Scheme.{u}) [IsAffine S] : IsAffine (constS
   inferInstance
 
 /-- _lTf_L0yvrU-29781 (8:16:21) [prop] Morphisms `M_{S'} → X` are the maps `M → Hom(S', X)`. -/
+@[buffalo "_lTf_L0yvrU-29781"]
 noncomputable def constHomEquiv (M : Type u) (S X : Scheme.{u}) :
     (constScheme M S ⟶ X) ≃ (M → (S ⟶ X)) where
   toFun φ m := Sigma.ι (fun _ : M ↦ S) m ≫ φ
@@ -246,6 +257,7 @@ variable {k} (M : Type u) [AddCommGroup M] (R : Type u) [CommRing R]
 
 /-- _lTf_L0yvrU-29981 (8:19:41) [prop] The pairing `D(M) × M → 𝔾_m` gives `M → D(D(M))`:
 `m ↦ (χ ↦ χ(m))`. -/
+@[buffalo "_lTf_L0yvrU-29981"]
 def toBidual : Multiplicative M →* (Part01.D M R →* Rˣ) where
   toFun m :=
     { toFun χ := χ m
@@ -288,6 +300,7 @@ omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-30047 (8:20:47) [thm] (affine `S = Spec R`) A homomorphism `D(M) → 𝔾_m`, i.e. a
 group-like element `u = ∑ u_m e^m` of `R[M]`, is a family of pairwise orthogonal idempotents
 `u_m` with `∑ u_m = 1`: a partition of `S` into open and closed pieces `S_m`. -/
+@[buffalo "_lTf_L0yvrU-30047"]
 theorem grouplike_partition {u : AddMonoidAlgebra k M} (hu : IsGroupLikeElem k u) :
     (∀ m, IsIdempotentElem (u.coeff m)) ∧ (∀ m n, m ≠ n → u.coeff m * u.coeff n = 0) ∧
       (u.coeff.sum fun _ c ↦ c) = 1 := by
@@ -307,6 +320,7 @@ omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-30047 (8:20:47) [prop] If `S = Spec R` is connected and non-empty (no idempotents
 but `0, 1`), every homomorphism `D(M) → 𝔾_m` comes from a unique `m ∈ M`: the group-like elements
 of `R[M]` are the `e^m`. -/
+@[buffalo "_lTf_L0yvrU-30047"]
 theorem grouplike_connected [Nontrivial k] (hk : ∀ e : k, IsIdempotentElem e → e = 0 ∨ e = 1)
     {u : AddMonoidAlgebra k M} (hu : IsGroupLikeElem k u) :
     ∃! m : M, u = AddMonoidAlgebra.single m 1 := by
@@ -336,6 +350,7 @@ theorem grouplike_connected [Nontrivial k] (hk : ∀ e : k, IsIdempotentElem e �
 
 /-- _lTf_L0yvrU-30490 (8:28:10) [thm] Over a domain (Mathlib `mapDomainBialgHomAddEquiv`),
 `D` is fully faithful: bialgebra maps `R[N] → R[M]` are the homomorphisms `N → M`. -/
+@[buffalo "_lTf_L0yvrU-30490"]
 noncomputable def D_fullyFaithful (R : Type u) [CommRing R] [IsDomain R] (N : Type u)
     [AddCommGroup N] :
     (N →+ M) ≃+ Additive (WithConv (AddMonoidAlgebra R N →ₐc[R] AddMonoidAlgebra R M)) :=
@@ -351,6 +366,7 @@ variable {k}
 
 /-- _lTf_L0yvrU-30944 (8:35:44) [prop] (affine base) A finite module is locally free of finite
 type (projective) iff it is flat and finitely presented. -/
+@[buffalo "_lTf_L0yvrU-30944"]
 theorem projective_iff_flat_fp (A : Type u) [AddCommGroup A] [Module k A] [Module.Finite k A] :
     Module.Projective k A ↔ Module.Flat k A ∧ Module.FinitePresentation k A := by
   refine ⟨fun _ ↦ ⟨inferInstance, Module.finitePresentation_of_projective k A⟩, ?_⟩
@@ -359,6 +375,7 @@ theorem projective_iff_flat_fp (A : Type u) [AddCommGroup A] [Module k A] [Modul
 
 /-- _lTf_L0yvrU-31206 (8:40:06) [prop] For a group `G`, a monoid homomorphism `G → (k', ×)` takes
 values in the units: it is a homomorphism `G → 𝔾_m(k')`. -/
+@[buffalo "_lTf_L0yvrU-31206"]
 def homToUnits {G R : Type*} [Group G] [Monoid R] (f : G →* R) : G →* Rˣ := f.toHomUnits
 
 theorem homToUnits_val {G R : Type*} [Group G] [Monoid R] (f : G →* R) (g : G) :
@@ -368,6 +385,7 @@ variable {A : Type u} [CommRing A] [Bialgebra k A]
 
 /-- _lTf_L0yvrU-31461 (8:44:21) [prop] A monoid homomorphism `G → (𝔸¹, ×)` is a bialgebra map
 `k[ℕ] → A` (`t ↦ u`); its section `u` satisfies `ε(u) = 1` and `π(u) = u ⊗ u`. -/
+@[buffalo "_lTf_L0yvrU-31461"]
 theorem section_grouplike (f : AddMonoidAlgebra k ℕ →ₐc[k] A) :
     IsGroupLikeElem k (f (AddMonoidAlgebra.single 1 1)) :=
   (AddMonoidAlgebra.isGroupLikeElem_single_one 1).map f
@@ -380,7 +398,8 @@ noncomputable def evAt (u : A) : WithConv (A →ₗ[k] k) →ₗ[k] k where
 
 /-- _lTf_L0yvrU-31598 (8:46:38) [prop] If `ε(u) = 1` and `π(u) = u ⊗ u`, `s ↦ s(u)` is an algebra
 morphism `H = A^∨ → k` (the product of `H` transposed from `π`) … -/
-@[simp] theorem evAt_apply (u : A) (s : WithConv (A →ₗ[k] k)) : evAt u s = s.ofConv u := rfl
+@[buffalo "_lTf_L0yvrU-31598", simp]
+theorem evAt_apply (u : A) (s : WithConv (A →ₗ[k] k)) : evAt u s = s.ofConv u := rfl
 
 theorem evAt_mul {u : A} (hu : IsGroupLikeElem k u) (s t : WithConv (A →ₗ[k] k)) :
     evAt u (s * t) = evAt u s * evAt u t := by
@@ -418,6 +437,7 @@ theorem grouplike_of_evAt [Module.Projective k A] {u : A}
 /-- _lTf_L0yvrU-31792 (8:49:52) [prop] For any (non-commutative) algebra `H`, the algebra maps
 `H → k'` to commutative algebras factor uniquely through `H^ab = H/[H, H]` (Mathlib
 `RingQuot.liftAlgHom`): `D(G) = Spec H^ab`. -/
+@[buffalo "_lTf_L0yvrU-31792"]
 noncomputable def abelianizationEquiv (H : Type u) [Ring H] [Algebra k H] (R : Type u) [CommRing R]
     [Algebra k R] :
     (H →ₐ[k] R) ≃ (RingQuot (fun x y : H ↦ ∃ a b, x = a * b ∧ y = b * a) →ₐ[k] R) :=
@@ -432,6 +452,7 @@ noncomputable def abelianizationEquiv (H : Type u) [Ring H] [Algebra k H] (R : T
 /-- _lTf_L0yvrU-31988 (8:53:08) [prop] The duality of locally free modules: `A ≃ A^{∨∨}` for `A`
 finitely generated projective (Mathlib `Module.evalEquiv`), the module-level biduality behind
 `D(D(G)) = G`. -/
+@[buffalo "_lTf_L0yvrU-31988"]
 noncomputable def biduality (P : Type u) [AddCommGroup P] [Module k P] [Module.Projective k P]
     [Module.Finite k P] : P ≃ₗ[k] Module.Dual k (Module.Dual k P) :=
   Module.evalEquiv k P
@@ -446,6 +467,7 @@ open Polynomial
 
 /-- _lTf_L0yvrU-32051 (8:54:11) [ex] `μ_n = D(ℤ/n)` on points: `φ ↦ φ(1)` maps `Hom(ℤ/n, R^×)`
 injectively into `μ_n(R)`… -/
+@[buffalo "_lTf_L0yvrU-32051"]
 theorem D_zmod_to_mu (n : ℕ) (R : Type*) [CommRing R] (φ : Multiplicative (ZMod n) →* Rˣ) :
     φ (Multiplicative.ofAdd 1) ∈ rootsOfUnity n R := by
   rw [mem_rootsOfUnity, ← map_pow, ← ofAdd_nsmul, nsmul_eq_mul, mul_one, ZMod.natCast_self,
@@ -476,6 +498,7 @@ theorem D_zmod_surjective (n : ℕ) (R : Type*) [CommRing R] (ζ : rootsOfUnity 
 /-- _lTf_L0yvrU-32051 (8:54:11) [ex] Over `Spec ℤ`, `μ_n` (`n > 1`) is not constant: for a prime
 `p ∣ n` its fibre `𝔽_p[t]/(tⁿ - 1)` is not reduced (`(t^{n/p} - 1)^p = 0`), while constant
 schemes have reduced fibres. -/
+@[buffalo "_lTf_L0yvrU-32051"]
 theorem mu_fibre_not_reduced (p : ℕ) [hp : Fact p.Prime] (n : ℕ) (hn : 0 < n) (hpn : p ∣ n) :
     ¬ IsReduced (AdjoinRoot (X ^ n - 1 : (ZMod p)[X])) := by
   intro hred

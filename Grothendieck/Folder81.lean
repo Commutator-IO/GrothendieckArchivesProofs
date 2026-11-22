@@ -10,6 +10,7 @@ public import Mathlib.Data.Finset.Image
 public import Mathlib.Data.Finset.Lattice.Fold
 public import Mathlib.Data.Fintype.Prod
 public import Mathlib.Order.Interval.Finset.Nat
+import Grothendieck.Attr
 
 /-!
 # Folder 81, pages 31–39 and 45–47: non-parallel decompositions and their ordered quartets
@@ -92,6 +93,7 @@ instance [DecidableEq C] (lt : C → C → Prop) [DecidableRel lt] : DecidableRe
 
 /-- Page 38, *quartette ordonné*: a fixed-point-free involution `σ` and a strict order `lt`
 such that a) `x, y` are comparable iff `σ x, y` are not, and b) `σ` reverses the order. -/
+@[montpellier "81, 38"]
 structure IsQuartette (σ : C → C) (lt : C → C → Prop) : Prop where
   invol : ∀ x, σ (σ x) = x
   ne_self : ∀ x, σ x ≠ x
@@ -122,6 +124,7 @@ theorem Le.trans' (htr : ∀ x y z, lt x y → lt y z → lt x z) {x y z : C}
   · exact Or.inr (htr _ _ _ h₁ h₂)
 
 /-- In an ordered quartet every interval `[x, z]` is a chain; only condition a) is used. -/
+@[montpellier "81, 38"]
 theorem interval_comp (h : IsQuartette σ lt) {x y y' z : C} (hxy : Le lt x y)
     (hxy' : Le lt x y') (hyz : Le lt y z) (hy'z : Le lt y' z) : Comp lt y y' := by
   by_contra hn
@@ -147,6 +150,7 @@ def tlt (x y : Fin 6) : Prop := x.val < 3 ∧ 3 ≤ y.val ∧ y.val ≠ x.val + 
 
 instance : DecidableRel tlt := fun _ _ => by unfold tlt; infer_instance
 
+@[montpellier "81, 39"]
 theorem tripod_isQuartette : IsQuartette tσ tlt where
   invol := by decide
   ne_self := by decide
@@ -156,8 +160,10 @@ theorem tripod_isQuartette : IsQuartette tσ tlt where
   rev := by decide
 
 /-- Page 39 fails: `c₁ < c₂'`, `c₁ < c₃'`, and `c₂'`, `c₃'` are incomparable. -/
+@[montpellier "81, 39"]
 theorem tripod_not_chain : tlt 0 4 ∧ tlt 0 5 ∧ ¬ Comp tlt 4 5 := by decide
 
+@[montpellier "81, 39"]
 theorem page39_false :
     ¬ ∀ x y z : Fin 6, Le tlt x y → Le tlt x z → Comp tlt y z := by
   intro h
@@ -170,6 +176,7 @@ def rlt (x y : Fin 4) : Prop := (x = 0 ∧ y = 2) ∨ (x = 1 ∧ y = 3)
 
 instance : DecidableRel rlt := fun _ _ => by unfold rlt; infer_instance
 
+@[montpellier "81, 38"]
 theorem rev_not_of_comp :
     (∀ x, rσ (rσ x) = x) ∧ (∀ x, rσ x ≠ x) ∧ (∀ x, ¬ rlt x x) ∧
     (∀ x y z, rlt x y → rlt y z → rlt x z) ∧
@@ -183,6 +190,7 @@ section Decomp
 variable {X : Type*}
 
 /-- Page 31, (1)–(3): two hemispheres covering `X`, non-empty and distinct. -/
+@[montpellier "81, 31"]
 structure Decomp (X : Type*) where
   hem : Bool → Set X
   cover : hem true ∪ hem false = Set.univ
@@ -195,6 +203,7 @@ def Same (P Q : Decomp X) : Prop :=
     (P.hem true = Q.hem false ∧ P.hem false = Q.hem true)
 
 /-- Page 32, (10): distinct, with one hemisphere of each disjoint from one of the other. -/
+@[montpellier "81, 32"]
 def NonParallel (P Q : Decomp X) : Prop :=
   ¬ Same P Q ∧ ∃ e f, P.hem e ∩ Q.hem f = ∅
 
@@ -222,6 +231,7 @@ theorem inter_self_ne {P Q : Decomp X} {e f : Bool} (h : P.hem e ∩ Q.hem f = �
   exact (P.nonempty e).ne_empty
 
 /-- Proposition of page 34: the disjoint pair of hemispheres is unique. -/
+@[montpellier "81, 34"]
 theorem disjoint_unique {P Q : Decomp X} (hPQ : NonParallel P Q) {e f e' f' : Bool}
     (h : P.hem e ∩ Q.hem f = ∅) (h' : P.hem e' ∩ Q.hem f' = ∅) : e' = e ∧ f' = f := by
   rcases Bool.eq_or_eq_not e' e with he | he <;>
@@ -253,6 +263,7 @@ def famLt (x y : A × Bool) : Prop :=
 
 /-- Pages 37 and 38: the relation (26) of a pairwise non-parallel family is a strict order,
 reversed by `σ`, and `x, y` are comparable iff `σ x, y` are not: an ordered quartet. -/
+@[montpellier "81, 37–38"]
 theorem isQuartette_family (hF : Pairwise fun a b => NonParallel (F a) (F b)) :
     IsQuartette famσ (famLt F) where
   invol x := by simp [famσ]
@@ -351,6 +362,7 @@ theorem chords_isQuartette :
 
 /-- The counterexample to page 39 inside the family: the cap side `c₁ = (0, true)` is below the
 large sides `c₂' = (1, false)` and `c₃' = (2, false)`, which are incomparable. -/
+@[montpellier "81, 39"]
 theorem chords_family_not_chain :
     famLt chordDecomp (0, true) (1, false) ∧ famLt chordDecomp (0, true) (2, false) ∧
       ¬ Comp (famLt chordDecomp) (1, false) (2, false) := by
@@ -373,6 +385,7 @@ instance : DecidablePred IsSegment := fun T =>
 def endpoints (T : Finset (Fin 6)) : Finset (Fin 6) := T.filter fun t => t - 1 ∉ T ∨ t + 1 ∉ T
 
 /-- Conditions (σ₁)–(σ₃) of pages 45 and 46, on a family of segments. -/
+@[montpellier "81, 45–46"]
 def Admissible (Sg : Finset (Finset (Fin 6))) : Prop :=
   (∀ A ∈ Sg, IsSegment A) ∧
   (∀ A ∈ Sg, ∀ B ∈ Sg, (A ∩ B).Nonempty → A ⊆ B ∨ B ⊆ A) ∧
@@ -399,6 +412,7 @@ def R₀ : Finset (Finset (Fin 6)) := {{0, 5}, {1, 4}, {2, 3}}
 
 /-- The NB of page 47: two distinct admissible families, both covering the hexagon (`Z = ∅`),
 with the same partition into cores. -/
+@[montpellier "81, 47"]
 theorem page47_cores :
     Admissible sigma₁ ∧ Admissible sigma₂ ∧ sigma₁ ≠ sigma₂ ∧ sigma₁.sup id = Finset.univ ∧
       sigma₂.sup id = Finset.univ ∧ sigma₁.image (core sigma₁) = R₀ ∧

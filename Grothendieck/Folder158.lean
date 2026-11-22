@@ -16,6 +16,7 @@ public import Mathlib.CategoryTheory.Filtered.Basic
 public import Mathlib.CategoryTheory.Endomorphism
 public import Mathlib.Data.Fintype.Pigeonhole
 public import Mathlib.SetTheory.Cardinal.Finite
+import Grothendieck.Attr
 
 /-!
 # Folder 158, Proposition 1 (§5.1)
@@ -166,6 +167,7 @@ universe u
 
 /-- **Pseudo-cofiltrant** (the reading's footnote, from manuscript p. 55):
 `∀ u, v`, `∃ u', v'` with `u u' = v v'` — any two principal right ideals meet. -/
+@[montpellier "158, 55"]
 def PseudoCofiltrant (M : Type u) [Monoid M] : Prop :=
   ∀ u v : M, ∃ u' v' : M, u * u' = v * v'
 
@@ -184,6 +186,7 @@ variable {M : Type u} [Monoid M]
 
 /-- **Step 1.** In a finite pseudo-cofiltering monoid, some `p` lies in every
 principal right ideal: for every `u` there is `v` with `p = u v`. -/
+@[montpellier "158, 44–46"]
 theorem etape1 [Finite M] (h : PseudoCofiltrant M) :
     ∃ p : M, ∀ u : M, ∃ v : M, p = u * v := by
   classical
@@ -203,6 +206,7 @@ theorem etape1 [Finite M] (h : PseudoCofiltrant M) :
 /-- **Proposition 1.** Let `M` be a finite pseudo-cofiltering monoid with
 trivial group completion. Then there is `p ∈ M` with `u p = p` for every
 `u ∈ M`; in particular `p² = p`, and `M` is cofiltering. -/
+@[montpellier "158, 44–46"]
 theorem proposition1 [Finite M] (hpc : PseudoCofiltrant M)
     (hG : GroupeEnveloppantTrivial M) :
     ∃ p : M, (∀ u : M, u * p = p) ∧ p * p = p ∧ Cofiltrant M := by
@@ -295,6 +299,7 @@ def noyau (M : Type u) [Monoid M] : Set M :=
 /-- **The gloss fails.** `{1, a, b}` satisfies the hypotheses of Proposition 1,
 yet two distinct elements `a ≠ b` both satisfy `u p = p` for all `u`, neither
 is a two-sided zero (`a b = b`), and the kernel is `{a, b}`, not a point. -/
+@[montpellier "158, 44–46"]
 theorem contre_noyau_non_ponctuel :
     PseudoCofiltrant Contre ∧ GroupeEnveloppantTrivial Contre ∧
       (∀ u : Contre, u * .a = .a) ∧ (∀ u : Contre, u * .b = .b) ∧
@@ -348,6 +353,7 @@ def Minimal (ψ : M) : Prop := ∀ u : M, ∃ t : M, u * t = ψ
 
 /-- Over a cofiltered monoid, the category of elements of a connected `M`-set is simply
 connected. -/
+@[montpellier "158, 21–41"]
 theorem simplyConnected_of_cofiltrant (hM : Cofiltrant M) (X : RSet M) (hX : X.Connected) :
     X.SimplyConnected := by
   intro G _ c c1 cmul
@@ -616,6 +622,7 @@ theorem out_rel (x : Quotient (psiSetoid ψ)) (m : M) :
 /-- **Pages 21 to 33, the degree.** If `ψ` is minimal and its powers are distinct, the
 category of elements of `M/R_ψ` is not simply connected: the relative degree is a cocycle
 with values in `ℤ`, and the endomorphism `ψ` of the class of `1 = ψ` has degree `1`. -/
+@[montpellier "158, 21–33"]
 theorem quotPsi_not_simplyConnected : ¬ (quotPsi ψ).SimplyConnected := by
   intro hS
   let c : (quotPsi ψ).carrier → M → Multiplicative (ULift.{u} ℤ) := fun x m =>
@@ -662,6 +669,7 @@ the folder's witness fails: `M/R_ψ` when the powers of `ψ` are distinct
 (`quotPsi_not_simplyConnected`), the point when some power `e` of `ψ` is idempotent, the
 image of `M` in the permutations of its minimal elements `eM` being then a non-trivial
 group (`cofiltrant_iff_rhoMin`). -/
+@[montpellier "158, 21–41"]
 theorem cofiltrant_of_simplyConnected {ψ : M} (hψ : Minimal ψ)
     (h : ∀ X : RSet M, X.Connected → X.SimplyConnected) : Cofiltrant M := by
   by_cases hinf : ∀ r s : ℕ, ψ ^ r = ψ ^ s → r = s
@@ -681,6 +689,7 @@ theorem cofiltrant_of_simplyConnected {ψ : M} (hψ : Minimal ψ)
 
 /-- **The equivalence.** For a monoid with a minimal element, `M` is cofiltered if and only
 if every connected right `M`-set has a simply connected category of elements. -/
+@[montpellier "158, 21–41"]
 theorem cofiltrant_iff_simplyConnected {ψ : M} (hψ : Minimal ψ) :
     Cofiltrant M ↔ ∀ X : RSet M, X.Connected → X.SimplyConnected :=
   ⟨simplyConnected_of_cofiltrant, cofiltrant_of_simplyConnected hψ⟩
@@ -742,6 +751,7 @@ theorem yo_connected (c : X) : (yo c).Connected := by
 end Psh
 
 /-- Hypothesis (H): every connected presheaf has a simply connected category of elements. -/
+@[montpellier "158, 50–53"]
 def HypH (X : Type w) [Category.{v} X] : Prop :=
   ∀ F : Psh X, F.Connected → F.SimplyConnected
 
@@ -765,6 +775,7 @@ have a common ancestor. Otherwise the subpresheaves `T₁`, `T₂` they generate
 the presheaf `F ⊔_{T₁ ⊔ T₂} F` (two copies of `F` glued along `T₁ ⊔ T₂`) is connected, and
 counting the arrows from `T₁` into the second copy is a `ℤ`-valued cocycle that is not a
 coboundary. -/
+@[montpellier "158, 50–53"]
 theorem common_ancestor (H : HypH X) (F : Psh X) (hF : F.Connected) {a b : X}
     (ξ : F.obj a) (η : F.obj b) :
     ∃ (w : X) (u : w ⟶ a) (u' : w ⟶ b), F.map u ξ = F.map u' η := by
@@ -939,12 +950,14 @@ theorem common_ancestor (H : HypH X) (F : Psh X) (hF : F.Connected) {a b : X}
 
 /-- **The step « (H) ⇒ pseudo-cofiltrant » of page 53**, for any category: (H) and `X`
 connected give cones over pairs of objects… -/
+@[montpellier "158, 53"]
 theorem cone_objs_of_H (H : HypH X) (hX : (Psh.terminal X).Connected) (x y : X) :
     ∃ (w : X) (_ : w ⟶ x), Nonempty (w ⟶ y) := by
   obtain ⟨w, u, u', -⟩ := common_ancestor H _ hX (a := x) (b := y) PUnit.unit PUnit.unit
   exact ⟨w, u, ⟨u'⟩⟩
 
 /-- … and (H) alone gives squares over cospans. -/
+@[montpellier "158, 53"]
 theorem square_of_H (H : HypH X) {x y c : X} (u : x ⟶ c) (v : y ⟶ c) :
     ∃ (w : X) (u' : w ⟶ x) (v' : w ⟶ y), u' ≫ u = v' ≫ v :=
   common_ancestor H (Psh.yo c) (Psh.yo_connected c) u v
@@ -998,6 +1011,7 @@ connected, and every connected presheaf on `X` has a simply connected category o
 then `X` is cofiltered. The equalising arrow is `p ≫ c` with `c : e ⟶ x`, `e` mapping to
 every object and `p` a minimal idempotent of `End e`: the local system
 `L(z) = Hom(e, z) p` on the least objects is constant by (H), which forces `p c f = p c g`. -/
+@[montpellier "158, 50–53"]
 theorem isCofiltered_of_H (H : HypH X) (hX : (Psh.terminal X).Connected) : IsCofiltered X := by
   classical
   have hne : Nonempty X := ⟨hX.1.some.1⟩
@@ -1098,6 +1112,7 @@ theorem isCofiltered_of_H (H : HypH X) (hX : (Psh.terminal X).Connected) : IsCof
 /-- **The statement as read fails without connectedness.** The discrete category on two
 objects is finite, every presheaf on it (connected or not) has a simply connected category
 of elements, and it is not cofiltered. -/
+@[montpellier "158, 50–53"]
 theorem discrete_counterexample :
     HypH (Discrete Bool) ∧ ¬ (Psh.terminal (Discrete Bool)).Connected ∧
       ¬ IsCofiltered (Discrete Bool) := by

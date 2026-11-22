@@ -9,6 +9,7 @@ public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.Colimits.CohomologyPullbackMap
 public import StacksFrontier.RingTheory.Catenary.Defs
 public import StacksFrontier.RingTheory.Nagata.Defs
+import Grothendieck.Attr
 
 /-!
 # Étale cohomology and Hodge theory: the open problems, stated as propositions
@@ -106,6 +107,7 @@ Status: open. The constant cannot be lowered to `2` (`X = Spec ℤ`, `p` odd: th
 Mathew, Prop. 4.5); globally, Clausen and Mathew give `cd_p(X) ≤ dim X + sup_x cd_p k(x)` for
 `X` qcqs of finite Krull dimension. A printed bound of this shape for every affine scheme of mixed
 characteristic, or a counterexample, would settle it. -/
+@[montpellier "31, 84"]
 def CdShiftThree (p : ℕ) [Fact p.Prime] : Prop :=
   ∀ (A : Type u) [CommRing A], ¬ IsUnit (p : A) →
     etaleCd p (Spec (CommRingCat.of A)) ≤
@@ -144,6 +146,7 @@ exception « some residue field orderable »; for `r` the residue characteristic
 it follows for `A` excellent henselian from Gabber and Orgogozo § 3. The finer exception (b),
 and the case of `r` the residue characteristic for `A` neither excellent nor henselian, were not
 found in the literature. -/
+@[montpellier "31, 22"]
 def LowerBoundExceptions : Prop :=
   ∀ (A : Type u) [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsLocalRing A]
     (r : ℕ) [Fact r.Prime] (d : ℕ), ringKrullDim A = d →
@@ -154,6 +157,7 @@ needed: only (a) remains.
 
 Status: open (nothing found); an example of a regular local domain where the inequality fails at
 `r = 2` would refute it. Regularity is Mathlib's `IsRegularLocalRing`. -/
+@[montpellier "31, 22"]
 def LowerBoundRegular : Prop :=
   ∀ (A : Type u) [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsLocalRing A]
     [IsRegularLocalRing A] (r : ℕ) [Fact r.Prime] (d : ℕ), ringKrullDim A = d →
@@ -168,6 +172,7 @@ replacing the whole of (b) by « `r = 2` and `k` orderable » (`IsFormallyReal k
 finiteness of `cd_2 k(√-1)`, which the page does not repeat. The other reading, which keeps that
 finiteness for `k`, is weaker as an exception and so gives a stronger statement; it is not the
 one written here. -/
+@[montpellier "31, 22"]
 def LowerBoundCatenaryJapanese : Prop :=
   ∀ (A : Type u) [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsLocalRing A]
     [IsUniversallyJapaneseRing A] (r : ℕ) [Fact r.Prime] (d : ℕ), Catenary.IsCatenaryRing A →

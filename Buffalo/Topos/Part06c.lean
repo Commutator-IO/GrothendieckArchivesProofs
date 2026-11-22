@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.Topos.Part06b
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 6c: morphisms of sites, classifying topoi, subtopoi (1973)
@@ -47,12 +48,14 @@ variable {C : Type u} [Category.{v} C] {D : Type*} [Category* D]
 
 /-- 4gynb9uTEE4-26508 (7:21:48) [def] `f : C → C'` is continuous if `F ↦ F ∘ f` sends sheaves on
 `C'` to sheaves on `C` (Mathlib `Functor.IsContinuous`). -/
+@[buffalo "4gynb9uTEE4-26508"]
 theorem isContinuous_def (F : C ⥤ D) (J : GrothendieckTopology C) (K : GrothendieckTopology D)
     [F.IsContinuous J K] (G : Sheaf K (Type w)) : Presieve.IsSheaf J (F.op ⋙ G.obj) :=
   Functor.op_comp_isSheaf_of_types F J K G
 
 /-- 4gynb9uTEE4-26704 (7:25:04) [prop] If `C` has finite limits and `f` commutes with them, `f` is
 continuous iff it sends covering families to covering families (Mathlib). -/
+@[buffalo "4gynb9uTEE4-26704"]
 theorem isContinuous_iff_coverPreserving [HasFiniteLimits C] (F : C ⥤ D) [PreservesFiniteLimits F]
     (J : GrothendieckTopology C) (K : GrothendieckTopology D) :
     F.IsContinuous J K ↔ CoverPreserving J K F := by
@@ -61,6 +64,7 @@ theorem isContinuous_iff_coverPreserving [HasFiniteLimits C] (F : C ⥤ D) [Pres
 
 /-- 4gynb9uTEE4-26704 (7:25:04) [ex] For `f : X' → X` continuous, `U ↦ f⁻¹(U)` is a continuous
 functor from the site of open sets of `X` to that of `X'` (Mathlib). -/
+@[buffalo "4gynb9uTEE4-26704"]
 theorem opens_map_isContinuous {X X' : TopCat.{u}} (f : X' ⟶ X) :
     (Opens.map f).IsContinuous (Opens.grothendieckTopology X) (Opens.grothendieckTopology X') :=
   inferInstance
@@ -68,6 +72,7 @@ theorem opens_map_isContinuous {X X' : TopCat.{u}} (f : X' ⟶ X) :
 /-- 4gynb9uTEE4-26832 (7:27:12) [prop] (partial: "only if") If `R` is a covering sieve of `X`,
 the inclusion `R → yX` becomes an isomorphism after sheafification (it is in `J.W`), i.e.
 `ε(X) = colim_{C/R} ε(Y)` (Mathlib). -/
+@[buffalo "4gynb9uTEE4-26832"]
 theorem covering_sieve_W [LocallySmall.{w} C] (J : GrothendieckTopology C) {X : C} (S : Sieve X)
     (hS : S ∈ J X) : J.W (Sieve.shrinkFunctor.{w} S).ι :=
   Sieve.W_shrinkFunctor_ι_of_mem (J := J) S hS
@@ -75,6 +80,7 @@ theorem covering_sieve_W [LocallySmall.{w} C] (J : GrothendieckTopology C) {X : 
 /-- 4gynb9uTEE4-27021 (7:30:21) [prop] (partial: "if") Between small sites, a continuous left
 exact functor `G : C → D` induces a morphism of topoi `Sh(D) → Sh(C)`, with left exact inverse
 image `G^s` and direct image `F ↦ F ∘ G`. -/
+@[buffalo "4gynb9uTEE4-27021"]
 def morphismOfSites {C D : Type u} [SmallCategory C] [SmallCategory D] [HasFiniteLimits C]
     (G : C ⥤ D) [PreservesFiniteLimits G] (J : GrothendieckTopology C)
     (K : GrothendieckTopology D) [Functor.IsContinuous.{u} G J K] :
@@ -89,12 +95,14 @@ def morphismOfSites {C D : Type u} [SmallCategory C] [SmallCategory D] [HasFinit
 
 /-- 4gynb9uTEE4-27085 (7:31:25) [def] A morphism of sites: a continuous functor whose induced
 inverse image is left exact (it then induces a morphism of topoi, `morphismOfSites`). -/
+@[buffalo "4gynb9uTEE4-27085"]
 def IsMorphismOfSites {C D : Type u} [SmallCategory C] [SmallCategory D] (G : C ⥤ D)
     (J : GrothendieckTopology C) (K : GrothendieckTopology D) : Prop :=
   ∃ _ : Functor.IsContinuous.{u} G J K, PreservesFiniteLimits (G.sheafPullback (Type u) J K)
 
 /-- 4gynb9uTEE4-27279 (7:34:39) [prop] `Ĉ = C̃` for the coarsest topology `⊥`: every presheaf is a
 sheaf (Mathlib) ... -/
+@[buffalo "4gynb9uTEE4-27279"]
 theorem isSheaf_bot (P : Cᵒᵖ ⥤ Type w) : Presieve.IsSheaf (⊥ : GrothendieckTopology C) P :=
   Presieve.isSheaf_bot
 
@@ -115,6 +123,7 @@ end Sites
 
 /-- ORG14LNb5gE-5 (0:00:05) [thm] (partial) A morphism of topoi `f : E → Ĉ` gives the left exact
 functor `X ↦ f^*(yX)` ... -/
+@[buffalo "ORG14LNb5gE-5"]
 theorem classifying_toLex {C : Type u} [SmallCategory C] {E : Type*} [Category* E]
     (f : TopMor E (Cᵒᵖ ⥤ Type u)) : PreservesFiniteLimits (yoneda ⋙ f.inv) :=
   yoneda_comp_inv_lex f
@@ -129,6 +138,7 @@ def classifying_ofLex {C D : Type u} [SmallCategory C] [SmallCategory D] [HasFin
 /-- ORG14LNb5gE-195 (0:03:15) [ex] (partial) Affine schemes are the opposite of commutative rings
 (Mathlib), so presheaves on affine schemes of finite type over `ℤ` are functors on finitely
 presented rings. -/
+@[buffalo "ORG14LNb5gE-195"]
 def affineSchemeEquiv : AlgebraicGeometry.AffineScheme.{u} ≌ CommRingCat.{u}ᵒᵖ :=
   AlgebraicGeometry.AffineScheme.equivCommRingCat
 
@@ -140,6 +150,7 @@ variable {E : Type*} [Category* E] {E' : Type*} [Category* E'] {F : Type*} [Cate
 
 /-- ORG14LNb5gE-801 (0:13:21) [def] A morphism of topoi `i : E' → E` is an embedding if `i_*` is
 fully faithful ... -/
+@[buffalo "ORG14LNb5gE-801"]
 def IsEmbedding (i : TopMor E' E) : Prop := i.dir.Full ∧ i.dir.Faithful
 
 /-- ... and then `i^*` is a localization functor (Mathlib). -/
@@ -150,6 +161,7 @@ theorem IsEmbedding.isLocalization {i : TopMor E' E} (h : IsEmbedding i) :
 
 /-- ORG14LNb5gE-930 (0:15:30) [prop] A full subcategory whose inclusion has a left exact left
 adjoint gives a subtopos ... -/
+@[buffalo "ORG14LNb5gE-930"]
 def ofReflective (ι : E' ⥤ E) [Reflective ι] [PreservesFiniteLimits (reflector ι)] :
     TopMor E' E where
   inv := reflector ι
@@ -170,6 +182,7 @@ theorem IsEmbedding.reflective {i : TopMor E' E} (h : IsEmbedding i) :
 
 /-- ORG14LNb5gE-997 (0:16:37) [prop] (partial) For a topology `J` on `C`, `Sh(C, J)` is a subtopos
 of `Ĉ` (sheafification is left exact). -/
+@[buffalo "ORG14LNb5gE-997"]
 def sheafSubtopos {C : Type u} [SmallCategory C] (J : GrothendieckTopology C) :
     TopMor (Sheaf J (Type u)) (Cᵒᵖ ⥤ Type u) where
   inv := presheafToSheaf J (Type u)
@@ -185,6 +198,7 @@ theorem sheafSubtopos_isEmbedding {C : Type u} [SmallCategory C] (J : Grothendie
 /-- ORG14LNb5gE-1059 (0:17:39) [prop] (partial) If `f : X → Y` is inducing (the topology of `X` is
 the inverse image of that of `Y`), every open set of `X` is `f⁻¹(V)`: `O(Y) → O(X)` is
 surjective. -/
+@[buffalo "ORG14LNb5gE-1059"]
 theorem opens_map_surjective_of_isInducing {X Y : TopCat.{u}} (f : X ⟶ Y)
     (hf : Topology.IsInducing f) (U : Opens X) : ∃ V : Opens Y, (Opens.map f).obj V = U := by
   obtain ⟨V, hV, e⟩ := hf.isOpen_iff.1 U.2
@@ -193,6 +207,7 @@ theorem opens_map_surjective_of_isInducing {X Y : TopCat.{u}} (f : X ⟶ Y)
 /-- ORG14LNb5gE-1124 (0:18:44) [prop] (partial) If the direct image of `f : F → E` factors (up to
 isomorphism) through the subtopos `i : E' → E`, then `f` factors through `E'`: there is
 `g : F → E'` with `g_* i_* ≅ f_*`. -/
+@[buffalo "ORG14LNb5gE-1124"]
 theorem factors_through_embedding {i : TopMor E' E} (hi : IsEmbedding i) (f : TopMor F E)
     (hf : ∀ X, i.dir.essImage (f.dir.obj X)) :
     ∃ g : TopMor F E', Nonempty (g.dir ⋙ i.dir ≅ f.dir) := by
@@ -212,6 +227,7 @@ theorem factors_through_embedding {i : TopMor E' E} (hi : IsEmbedding i) (f : To
 /-- ORG14LNb5gE-1189 (0:19:49) [prop] To a subtopos one associates the arrows made invertible by
 `i^*`: they are the arrows `Y → Z` such that `Hom(Z, X) → Hom(Y, X)` is bijective for every `X` in
 the subtopos (Mathlib, Bousfield localization) ... -/
+@[buffalo "ORG14LNb5gE-1189"]
 theorem inverted_eq_isLocal {i : TopMor E' E} (hi : IsEmbedding i) :
     (MorphismProperty.isomorphisms E').inverseImage i.inv =
       ObjectProperty.isLocal (· ∈ Set.range i.dir.obj) := by
@@ -221,6 +237,7 @@ theorem inverted_eq_isLocal {i : TopMor E' E} (hi : IsEmbedding i) :
 /-- ORG14LNb5gE-1320 (0:22:00) [thm] (partial: second half) Every subtopos is obtained by inverting
 a family of arrows: the objects local for the arrows inverted by `i^*` are exactly those of the
 subtopos. -/
+@[buffalo "ORG14LNb5gE-1320"]
 theorem subtopos_eq_local {i : TopMor E' E} (hi : IsEmbedding i) (X : E)
     (hX : ((MorphismProperty.isomorphisms E').inverseImage i.inv).isLocal X) :
     ∃ Y : E', Nonempty (i.dir.obj Y ≅ X) := by
@@ -237,6 +254,7 @@ theorem subtopos_eq_local {i : TopMor E' E} (hi : IsEmbedding i) (X : E)
 
 /-- ORG14LNb5gE-1382 (0:23:02) [prop] (partial) For topologies `J ≤ K` on `C`, every `K`-sheaf is a
 `J`-sheaf, so `Sh(C, K) ⊂ Sh(C, J)` (Mathlib). -/
+@[buffalo "ORG14LNb5gE-1382"]
 theorem isSheaf_of_le {C : Type u} [Category.{v} C] {J K : GrothendieckTopology C} (h : J ≤ K)
     (P : Cᵒᵖ ⥤ Type w) (hP : Presieve.IsSheaf K P) : Presieve.IsSheaf J P :=
   Presieve.isSheaf_of_le P h hP

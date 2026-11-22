@@ -12,6 +12,7 @@ public import StacksFrontier.AlgebraicGeometry.Modules.QuasicoherentPullbackSche
 public import StacksFrontier.AlgebraicGeometry.Cohomology.Coherent.NoetherianCoherent
 public import StacksFrontier.AlgebraicGeometry.Cohomology.LocallyNoetherian.PushforwardSupport
 public import StacksFrontier.AlgebraicGeometry.CoherenceCriteria.Affine
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 07 (a): coherent `𝒪_X`-modules on a scheme
@@ -76,6 +77,7 @@ variable {X : Scheme.{u}}
 /-- Oqhr-Gt66es-22510 (6:15:10) [def] (on a scheme) An `𝒪_X`-module `M` is coherent if it is of
 finite type and, for every open `U` and every finite `I`, the kernel of every morphism
 `𝒪_U^I → M|_U` is of finite type (Stacks tag 01BV, EGA 0 5.3.7). -/
+@[buffalo "Oqhr-Gt66es-22510"]
 theorem def_22510_scheme (M : X.Modules) :
     Stacks.SheafOfModules.IsCoherent M ↔ M.IsFiniteType ∧
       ∀ (U : X.Opens) (I : Type u) [Finite I]
@@ -87,6 +89,7 @@ theorem def_22510_scheme (M : X.Modules) :
 /-- Oqhr-Gt66es-22572 (6:16:12) [thm] (Serre, on a scheme) The coherent `𝒪_X`-modules form a weak
 Serre subcategory of `X.Modules`: they are stable under finite direct sums, kernels, cokernels,
 images and extensions (Stacks tag 01BY). -/
+@[buffalo "Oqhr-Gt66es-22572"]
 theorem thm_22572_scheme :
     (Stacks.SheafOfModules.coherentModules X.ringCatSheaf).IsWeakSerreClass ∧
     (∀ {J : Type u} [Finite J] (F : J → X.Modules),
@@ -109,6 +112,7 @@ theorem thm_22572_scheme :
 
 /-- Oqhr-Gt66es-22510 (6:15:10) [def] (complement, Stacks tag 01BZ) When `𝒪_X` is coherent, an
 `𝒪_X`-module is coherent if and only if it is of finite presentation. -/
+@[buffalo "Oqhr-Gt66es-22510"]
 theorem isCoherent_iff_isFinitePresentation_22510 (M : X.Modules)
     [Stacks.SheafOfModules.IsCoherent (SheafOfModules.unit X.ringCatSheaf)] :
     Stacks.SheafOfModules.IsCoherent M ↔ M.IsFinitePresentation :=
@@ -116,6 +120,7 @@ theorem isCoherent_iff_isFinitePresentation_22510 (M : X.Modules)
 
 /-- Oqhr-Gt66es-22510 (6:15:10) [def] (complement, Stacks tag 01XZ) On a locally noetherian scheme
 the structure sheaf `𝒪_X` is coherent. -/
+@[buffalo "Oqhr-Gt66es-22510"]
 theorem structureSheaf_isCoherent_22510 [IsLocallyNoetherian X] :
     Stacks.SheafOfModules.IsCoherent (SheafOfModules.unit X.ringCatSheaf) :=
   Stacks.AlgebraicGeometry.CoherenceCriteria.isCoherent'_of_isCoherent
@@ -124,6 +129,7 @@ theorem structureSheaf_isCoherent_22510 [IsLocallyNoetherian X] :
 /-- Oqhr-Gt66es-22510 (6:15:10) [def] (complement, Stacks tag 01XZ) On a locally noetherian scheme
 an `𝒪_X`-module is coherent if and only if it is quasi-coherent of finite type, if and only if it
 is of finite presentation. -/
+@[buffalo "Oqhr-Gt66es-22510"]
 theorem isCoherent_iff_of_isLocallyNoetherian_22510 [IsLocallyNoetherian X] (F : X.Modules) :
     (Stacks.SheafOfModules.IsCoherent F ↔ F.IsQuasicoherent ∧ F.IsFiniteType) ∧
     (Stacks.SheafOfModules.IsCoherent F ↔ F.IsFinitePresentation) := by
@@ -136,6 +142,7 @@ theorem isCoherent_iff_of_isLocallyNoetherian_22510 [IsLocallyNoetherian X] (F :
 /-- Oqhr-Gt66es-22510 (6:15:10) (on the open subscheme) Finite type restricts to an open
 subscheme: if `M` is of finite type, so is `M|_U = M.restrict U.ι` on the scheme `U` (Stacks 01B6,
 through `Scheme.Modules.restrictFunctorIsoPullback`). -/
+@[buffalo "Oqhr-Gt66es-22510"]
 theorem isFiniteType_restrict_22510 (M : X.Modules) [M.IsFiniteType] (U : X.Opens) :
     (M.restrict U.ι).IsFiniteType :=
   Stacks.SheafOfModules.isFiniteType_of_iso
@@ -144,6 +151,7 @@ theorem isFiniteType_restrict_22510 (M : X.Modules) [M.IsFiniteType] (U : X.Open
 /-- Oqhr-Gt66es-22510 (6:15:10) (on the open subscheme) On a locally noetherian scheme, a coherent
 module restricts to a coherent module on every open subscheme `U`, for `M|_U = M.restrict U.ι`
 on the scheme `U`. -/
+@[buffalo "Oqhr-Gt66es-22510"]
 theorem isCoherent_restrict_22510 [IsLocallyNoetherian X] (M : X.Modules)
     (hM : Stacks.SheafOfModules.IsCoherent M) (U : X.Opens) :
     Stacks.SheafOfModules.IsCoherent (M.restrict U.ι) := by
@@ -162,6 +170,7 @@ noncomputable def overRestrictIso (M : X.Modules) (U : X.Opens) :
 /-- Oqhr-Gt66es-22510 (6:15:10) (on the open subscheme) `M.over U` is of finite type if and only
 if `M|_U = M.restrict U.ι` is: the two readings of the restriction agree (AxiomMath/Stacks'
 transports along `overEquiv`, composed with `Scheme.Modules.overFunctorEquiv`). -/
+@[buffalo "Oqhr-Gt66es-22510"]
 theorem isFiniteType_over_iff_restrict (M : X.Modules) (U : X.Opens) :
     (M.over U).IsFiniteType ↔ (M.restrict U.ι).IsFiniteType := by
   constructor
@@ -226,6 +235,7 @@ theorem isFiniteType_kernel_iff (M : X.Modules) (U : X.Opens) (I : Type u)
 module `M.restrict U.ι` on the scheme `U`: `M` is coherent if and only if it is of finite type and,
 for every open `U` and every finite `I`, the kernel of every morphism `𝒪_U^I → M.restrict U.ι` is
 of finite type. -/
+@[buffalo "Oqhr-Gt66es-22510"]
 theorem def_22510_restrict (M : X.Modules) :
     Stacks.SheafOfModules.IsCoherent M ↔ M.IsFiniteType ∧
       ∀ (U : X.Opens) (I : Type u) [Finite I]

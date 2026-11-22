@@ -7,6 +7,7 @@ module
 
 public import Grothendieck.Folder136
 public import StacksFrontier.AlgebraicTopology.SimplicialObject.ChainHomotopy
+import Grothendieck.Attr
 
 /-!
 # Folder 136, page 226, Proposition 1: `Φ_* ≃ 0`, and `C^{p,q}_*` is contractible for `p ≥ 1`
@@ -143,6 +144,7 @@ variable (k : Type u) [CommRing k]
 
 /-- **The simplicial `k`-module `Φ_* : [n] ↦ k^{n+1}`** of functions on the vertices, with
 `θ^* f = f ∘ θ` (page 226, `𝔏_*`). -/
+@[montpellier "136, 226"]
 noncomputable def phiSimplicial : SimplicialObject (ModuleCat.{u} k) where
   obj n := ModuleCat.of k (Fin (n.unop.len + 1) → k)
   map θ := ModuleCat.ofHom (LinearMap.funLeft k k θ.unop.toOrderHom)
@@ -156,6 +158,7 @@ noncomputable def phiCutoff (n : ℕ) (i : Fin (n + 2)) :
 
 /-- **Proposition 1 (page 226), the homotopy.** The cut-offs satisfy the relations of
 Stacks 019L for a homotopy from the identity of `Φ_*` to `0`. -/
+@[montpellier "136, 226"]
 theorem phi_htpyRel :
     SimplicialObject.HtpyRel (𝟙 (phiSimplicial k)) 0 (phiCutoff k) where
   bdry₀ n := by
@@ -183,6 +186,7 @@ theorem phi_htpyRel :
 
 /-- **Proposition 1 (page 226): `Φ_*` is homotopic to `0`**, as a simplicial homotopy from the
 identity to the zero map. -/
+@[montpellier "136, 226"]
 noncomputable def phiHomotopy :
     SimplicialObject.Homotopy (𝟙 (phiSimplicial k)) 0 :=
   (phi_htpyRel k).toHomotopy
@@ -291,6 +295,7 @@ noncomputable def pdGradeMap (p q : ℕ) {m n : ℕ} (θ : Fin (n + 1) → Fin (
 
 variable (k) in
 /-- **The simplicial `k`-module `C^{p,q}_* = Γ^p Φ_* ⊗ Λ^q Ψ_*`** (pages 5–7). -/
+@[montpellier "136, 5–7"]
 noncomputable def pdGradeSimplicial (p q : ℕ) : SimplicialObject (ModuleCat.{u} k) where
   obj n := ModuleCat.of k (PDGrade k n.unop.len p q)
   map θ := ModuleCat.ofHom (pdGradeMap p q θ.unop.toOrderHom)
@@ -335,6 +340,7 @@ noncomputable def pdGradeCutoff (p q n : ℕ) (i : Fin (n + 2)) :
 variable (k) in
 /-- **Corollary 1.1 for `Γ^p`, `p ≥ 1`: the homotopy.** The components `Γ^p(cutoff i) ⊗ id`
 satisfy the relations of Stacks 019L for a homotopy from the identity of `C^{p,q}_*` to `0`. -/
+@[montpellier "136, 226"]
 theorem pdGrade_htpyRel {p : ℕ} (hp : p ≠ 0) (q : ℕ) :
     SimplicialObject.HtpyRel (𝟙 (pdGradeSimplicial k p q)) 0 (pdGradeCutoff k p q) where
   bdry₀ n := by
@@ -367,6 +373,7 @@ theorem pdGrade_htpyRel {p : ℕ} (hp : p ≠ 0) (q : ℕ) :
 variable (k) in
 /-- **`C^{p,q}_* = Γ^p Φ_* ⊗ Λ^q Ψ_*` is homotopic to `0` for `p ≥ 1`** (page 226,
 Corollary 1.1, as used on page 9). -/
+@[montpellier "136, 226"]
 noncomputable def pdGradeHomotopy {p : ℕ} (hp : p ≠ 0) (q : ℕ) :
     SimplicialObject.Homotopy (𝟙 (pdGradeSimplicial k p q)) 0 :=
   (pdGrade_htpyRel k hp q).toHomotopy
@@ -397,17 +404,20 @@ theorem exactAt_of_contraction {K : ChainComplex (ModuleCat.{u} k) ℕ} (h : Hom
   rwa [HomologicalComplex.homologyMap_id, HomologicalComplex.homologyMap_zero] at this
 
 /-- **`Φ_* ≃ 0` on chains**: the alternating face map complex of `Φ_*` is chain contractible. -/
+@[montpellier "136, 226"]
 noncomputable def phi_chainHomotopy :
     Homotopy (𝟙 ((alternatingFaceMapComplex (ModuleCat.{u} k)).obj (phiSimplicial k))) 0 :=
   chainContraction k (phiHomotopy k)
 
 /-- **`Φ_*` is acyclic.** -/
+@[montpellier "136, 226"]
 theorem phi_exactAt (n : ℕ) :
     ((alternatingFaceMapComplex (ModuleCat.{u} k)).obj (phiSimplicial k)).ExactAt n :=
   exactAt_of_contraction k (phi_chainHomotopy k) n
 
 /-- **`C^{p,q}_*`, `p ≥ 1`, on chains**: its alternating face map complex is chain
 contractible. -/
+@[montpellier "136, 226"]
 noncomputable def pdGrade_chainHomotopy {p : ℕ} (hp : p ≠ 0) (q : ℕ) :
     Homotopy (𝟙 ((alternatingFaceMapComplex (ModuleCat.{u} k)).obj
       (pdGradeSimplicial k p q))) 0 :=
@@ -415,6 +425,7 @@ noncomputable def pdGrade_chainHomotopy {p : ℕ} (hp : p ≠ 0) (q : ℕ) :
 
 /-- **`C^{p,q}_* = Γ^p Φ_* ⊗ Λ^q Ψ_*` is acyclic for `p ≥ 1`** (page 9, from Proposition 1 of
 page 226). -/
+@[montpellier "136, 9, 226"]
 theorem pdGrade_exactAt {p : ℕ} (hp : p ≠ 0) (q n : ℕ) :
     ((alternatingFaceMapComplex (ModuleCat.{u} k)).obj (pdGradeSimplicial k p q)).ExactAt n :=
   exactAt_of_contraction k (pdGrade_chainHomotopy k hp q) n

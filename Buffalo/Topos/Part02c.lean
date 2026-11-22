@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.Topos.Part02a
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 2c: sober spaces and fibre functors (18 and 25 May 1973)
@@ -45,9 +46,11 @@ variable {Z : Type u} [TopologicalSpace Z]
 
 /-- URU5jgTvjhU-28459 (7:54:19) [def] The entry's definition read literally: `Z` nonempty and not a
 union of two *distinct* closed subsets. -/
+@[buffalo "URU5jgTvjhU-28459"]
 def IsIrreducibleLiteral (Z : Type*) [TopologicalSpace Z] : Prop :=
   Nonempty Z ∧ ¬ ∃ A B : Set Z, IsClosed A ∧ IsClosed B ∧ A ≠ B ∧ A ∪ B = Set.univ
 
+@[buffalo "URU5jgTvjhU-28459"]
 /-- URU5jgTvjhU-28459 (7:54:19) [def] The literal reading is never satisfied (`Z = Z ∪ ∅`), though
 the point is irreducible: « distinct » must be « distinct from `Z` ». -/
 theorem isIrreducibleLiteral_false (Z : Type*) [TopologicalSpace Z] : ¬ IsIrreducibleLiteral Z := by
@@ -57,6 +60,7 @@ theorem isIrreducibleLiteral_false (Z : Type*) [TopologicalSpace Z] : ¬ IsIrred
 
 /-- URU5jgTvjhU-28459 (7:54:19) [def] The corrected definition: `Z` is irreducible iff it is
 nonempty and not the union of two closed subsets distinct from `Z`. -/
+@[buffalo "URU5jgTvjhU-28459"]
 theorem irreducibleSpace_iff_closed (Z : Type*) [TopologicalSpace Z] :
     IrreducibleSpace Z ↔ Nonempty Z ∧
       ¬ ∃ A B : Set Z, IsClosed A ∧ IsClosed B ∧ A ≠ Set.univ ∧ B ≠ Set.univ ∧
@@ -75,16 +79,19 @@ theorem irreducibleSpace_iff_closed (Z : Type*) [TopologicalSpace Z] :
       Set.univ_subset_iff.1 hAB⟩
 
 /-- URU5jgTvjhU-28524 (7:55:24) [prop] A separated space is irreducible iff it is a point. -/
+@[buffalo "URU5jgTvjhU-28524"]
 theorem t2_isIrreducible_iff [T2Space Z] {S : Set Z} : IsIrreducible S ↔ ∃ x, S = {x} :=
   isIrreducible_iff_singleton
 
 /-- URU5jgTvjhU-28524 (7:55:24) [prop] For the Zariski topology, `V(I)` (`I` radical) is
 irreducible iff `I` is prime. -/
+@[buffalo "URU5jgTvjhU-28524"]
 theorem zariski_isIrreducible_iff {R : Type*} [CommRing R] {I : Ideal R} (hI : I.IsRadical) :
     IsIrreducible (PrimeSpectrum.zeroLocus (I : Set R)) ↔ I.IsPrime :=
   PrimeSpectrum.isIrreducible_zeroLocus_iff_of_radical I hI
 
 /-- URU5jgTvjhU-28524 (7:55:24) [prop] The closure of an irreducible subset is irreducible. -/
+@[buffalo "URU5jgTvjhU-28524"]
 theorem closure_irreducible {S : Set Z} (h : IsIrreducible S) : IsIrreducible (closure S) :=
   h.closure
 
@@ -92,11 +99,13 @@ theorem closure_irreducible {S : Set Z} (h : IsIrreducible S) : IsIrreducible (c
 
 variable (Z) in
 /-- URU5jgTvjhU-28590 (7:56:30) [def] `X̃`, the set of irreducible closed subsets of `X`. -/
+@[buffalo "URU5jgTvjhU-28590"]
 def Sob : Type u := IrreducibleCloseds Z
 
 instance : SetLike (Sob Z) Z := inferInstanceAs (SetLike (IrreducibleCloseds Z) Z)
 
 /-- URU5jgTvjhU-28590 (7:56:30) [def] `i : X → X̃`, `x ↦ closure {x}`. -/
+@[buffalo "URU5jgTvjhU-28590"]
 def sobMap (x : Z) : Sob Z :=
   (⟨closure {x}, isIrreducible_singleton.closure, isClosed_closure⟩ : IrreducibleCloseds Z)
 
@@ -118,9 +127,11 @@ def Sob.mk (Y : Set Z) (h₁ : IsIrreducible Y) (h₂ : IsClosed Y) : Sob Z :=
 @[ext] theorem Sob.ext {Y Y' : Sob Z} (h : (Y : Set Z) = Y') : Y = Y' := SetLike.coe_injective h
 
 /-- URU5jgTvjhU-28654 (7:57:34) [prop] `Ũ = {Y ∈ X̃ | Y ∩ U ≠ ∅}`. -/
+@[buffalo "URU5jgTvjhU-28654"]
 def tilde (U : Set Z) : Set (Sob Z) := {Y | ((Y : Set Z) ∩ U).Nonempty}
 
 /-- URU5jgTvjhU-28654 (7:57:34) [prop] `U ↦ Ũ` respects unions. -/
+@[buffalo "URU5jgTvjhU-28654"]
 theorem tilde_sUnion (S : Set (Set Z)) : tilde (⋃₀ S) = ⋃ U ∈ S, tilde U := by
   ext Y
   simp only [tilde, Set.mem_ofPred_eq, Set.mem_iUnion, exists_prop]
@@ -132,6 +143,7 @@ theorem tilde_sUnion (S : Set (Set Z)) : tilde (⋃₀ S) = ⋃ U ∈ S, tilde U
 
 /-- URU5jgTvjhU-28654 (7:57:34) [prop] `U ↦ Ũ` respects finite intersections of open sets (since
 the `Y` are irreducible). -/
+@[buffalo "URU5jgTvjhU-28654"]
 theorem tilde_inter {U V : Set Z} (hU : IsOpen U) (hV : IsOpen V) :
     tilde (U ∩ V) = tilde U ∩ tilde V := by
   ext Y
@@ -146,6 +158,7 @@ theorem tilde_mono {U V : Set Z} (h : U ⊆ V) : tilde U ⊆ tilde V :=
   fun _ ⟨x, hY, hU⟩ => ⟨x, hY, h hU⟩
 
 /-- URU5jgTvjhU-28654 (7:57:34) [prop] The sets `Ũ`, `U` open, form a topology on `X̃`. -/
+@[buffalo "URU5jgTvjhU-28654"]
 instance : TopologicalSpace (Sob Z) where
   IsOpen 𝒰 := ∃ U : Set Z, IsOpen U ∧ 𝒰 = tilde U
   isOpen_univ := ⟨Set.univ, isOpen_univ, tilde_univ.symm⟩
@@ -173,11 +186,13 @@ theorem isOpen_sob_iff {𝒰 : Set (Sob Z)} : IsOpen 𝒰 ↔ ∃ U : Set Z, IsO
 theorem isOpen_tilde {U : Set Z} (hU : IsOpen U) : IsOpen (tilde U) := ⟨U, hU, rfl⟩
 
 /-- URU5jgTvjhU-28850 (8:00:50) [prop] `i⁻¹(Ũ) = U` for `U` open. -/
+@[buffalo "URU5jgTvjhU-28850"]
 theorem sobMap_preimage_tilde {U : Set Z} (hU : IsOpen U) : sobMap ⁻¹' tilde U = U := by
   ext x
   exact (isGenericPoint_closure.mem_open_set_iff hU).symm
 
 /-- URU5jgTvjhU-28850 (8:00:50) [prop] `i : X → X̃` is continuous. -/
+@[buffalo "URU5jgTvjhU-28850"]
 theorem continuous_sobMap : Continuous (sobMap : Z → Sob Z) := by
   rw [continuous_def]
   rintro _ ⟨U, hU, rfl⟩
@@ -199,6 +214,7 @@ theorem tilde_injective {U V : Set Z} (hU : IsOpen U) (hV : IsOpen V) (h : tilde
   rw [← sobMap_preimage_tilde hU, h, sobMap_preimage_tilde hV]
 
 /-- URU5jgTvjhU-28850 (8:00:50) [prop] `i` induces a lattice isomorphism `𝒪(X̃) ≃ 𝒪(X)`. -/
+@[buffalo "URU5jgTvjhU-28850"]
 def opensSobIso : Opens (Sob Z) ≃o Opens Z where
   toFun 𝒰 := ⟨sobMap ⁻¹' 𝒰, 𝒰.2.preimage continuous_sobMap⟩
   invFun U := ⟨tilde U, isOpen_tilde U.2⟩
@@ -254,6 +270,7 @@ theorem closure_sob_singleton (Y : Sob Z) :
     exact ⟨Y, ⟨x, hY' hx, hxU⟩, rfl⟩
 
 /-- URU5jgTvjhU-29036 (8:03:56) [prop] `i` is injective iff `X` is `T₀`. -/
+@[buffalo "URU5jgTvjhU-29036"]
 theorem sobMap_injective_iff : Function.Injective (sobMap : Z → Sob Z) ↔ T0Space Z := by
   rw [t0Space_iff_inseparable]
   refine ⟨fun h x y hxy => h (Sob.ext ?_), fun h x y hxy => h x y ?_⟩
@@ -262,6 +279,7 @@ theorem sobMap_injective_iff : Function.Injective (sobMap : Z → Sob Z) ↔ T0S
 
 /-- URU5jgTvjhU-29101 (8:05:01) [def] `i` is surjective iff every irreducible closed set has a
 generic point (Mathlib's `QuasiSober`). -/
+@[buffalo "URU5jgTvjhU-29101"]
 theorem sobMap_surjective_iff : Function.Surjective (sobMap : Z → Sob Z) ↔ QuasiSober Z := by
   constructor
   · intro h
@@ -273,6 +291,7 @@ theorem sobMap_surjective_iff : Function.Surjective (sobMap : Z → Sob Z) ↔ Q
     exact ⟨x, Sob.ext hx⟩
 
 /-- URU5jgTvjhU-28590 (7:56:30) [def] `i` is bijective if `X` is separated. -/
+@[buffalo "URU5jgTvjhU-28590"]
 theorem sobMap_bijective_of_t2 [T2Space Z] : Function.Bijective (sobMap : Z → Sob Z) := by
   refine ⟨sobMap_injective_iff.2 inferInstance, sobMap_surjective_iff.2 ?_⟩
   exact ⟨fun {S} hS _ => by
@@ -294,17 +313,20 @@ def sobHomeomorph (h : Function.Bijective (sobMap : Z → Sob Z)) : Z ≃ₜ Sob
       (Equiv.ofBijective _ h).symm_apply_apply x, ← Set.mem_preimage, sobMap_preimage_tilde hU]
 
 /-- URU5jgTvjhU-29036 (8:03:56) [prop] If `X` is separated, `i` is a homeomorphism. -/
+@[buffalo "URU5jgTvjhU-29036"]
 def sobHomeomorph_of_t2 [T2Space Z] : Z ≃ₜ Sob Z := sobHomeomorph sobMap_bijective_of_t2
 
 /-- URU5jgTvjhU-29234 (8:07:14) [def] `X` is sober (every irreducible closed set has exactly one
 generic point: Mathlib's `QuasiSober` and `T0Space`) iff `i : X → X̃` is bijective, hence a
 homeomorphism. -/
+@[buffalo "URU5jgTvjhU-29234"]
 theorem sober_iff_bijective :
     QuasiSober Z ∧ T0Space Z ↔ Function.Bijective (sobMap : Z → Sob Z) := by
   rw [Function.Bijective, sobMap_injective_iff, sobMap_surjective_iff, and_comm]
 
 /-- URU5jgTvjhU-29166 (8:06:06) [ex] The `K`-rational points of the affine line, with the Zariski
 (cofinite) topology, `K` infinite: the whole space is irreducible but has no generic point. -/
+@[buffalo "URU5jgTvjhU-29166"]
 theorem cofinite_no_generic_point (K : Type*) [Infinite K] :
     IsIrreducible (Set.univ : Set (CofiniteTopology K)) ∧
       ∀ x : CofiniteTopology K, ¬ IsGenericPoint x Set.univ := by
@@ -325,6 +347,7 @@ theorem cofinite_no_generic_point (K : Type*) [Infinite K] :
 /-! ## `X̃` is sober -/
 
 /-- URU5jgTvjhU-29622 (8:13:42) [thm] `X̃` is `T₀`. -/
+@[buffalo "URU5jgTvjhU-29622"]
 instance : T0Space (Sob Z) := by
   rw [t0Space_iff_inseparable]
   intro Y Y' h
@@ -336,6 +359,7 @@ instance : T0Space (Sob Z) := by
 
 /-- URU5jgTvjhU-29622 (8:13:42) [thm] `X̃` is quasi-sober: an irreducible closed set
 `{Y | Y ⊆ D}` of `X̃` has the generic point `D`. -/
+@[buffalo "URU5jgTvjhU-29622"]
 instance : QuasiSober (Sob Z) := by
   refine ⟨fun {𝒵} h𝒵 h𝒵c => ?_⟩
   obtain ⟨D, hD, rfl⟩ := isClosed_sob_iff.1 h𝒵c
@@ -367,6 +391,7 @@ instance : QuasiSober (Sob Z) := by
 theorem sob_sober : QuasiSober (Sob Z) ∧ T0Space (Sob Z) := ⟨inferInstance, inferInstance⟩
 
 /-- URU5jgTvjhU-30013 (8:20:13) [thm] `i : X → X̃` is a homeomorphism iff `X` is sober. -/
+@[buffalo "URU5jgTvjhU-30013"]
 theorem sobMap_homeomorph_iff :
     (∃ h : Z ≃ₜ Sob Z, ⇑h = sobMap) ↔ QuasiSober Z ∧ T0Space Z := by
   rw [sober_iff_bijective]
@@ -374,6 +399,7 @@ theorem sobMap_homeomorph_iff :
 
 /-- URU5jgTvjhU-30076 (8:21:16) [prop] If `X` is `T₁`, `i` is an embedding whose image is the set
 of closed points of `X̃`. -/
+@[buffalo "URU5jgTvjhU-30076"]
 theorem sobMap_t1 [T1Space Z] :
     IsEmbedding (sobMap : Z → Sob Z) ∧ Set.range (sobMap : Z → Sob Z) = {Y | IsClosed {Y}} := by
   refine ⟨⟨⟨?_⟩, sobMap_injective_iff.2 inferInstance⟩, ?_⟩
@@ -412,6 +438,7 @@ theorem sobMap_t1 [T1Space Z] :
 /-- URU5jgTvjhU-29622 (8:13:42) [thm] Universal property of `X̃`: for `W` sober, every continuous
 `f : X → W` extends uniquely along `i` to a continuous map `X̃ → W`, `Y ↦` generic point of
 `closure (f Y)`; that is, `Hom(X, W) ≃ Hom(X̃, W)`. -/
+@[buffalo "URU5jgTvjhU-29622"]
 theorem sob_universal {W : Type*} [TopologicalSpace W] [QuasiSober W] [T0Space W] (f : C(Z, W)) :
     ∃! g : C(Sob Z, W), ⇑g ∘ sobMap = f := by
   let F : Sob Z → W := fun Y => (Y.isIrreducible.image f f.continuous.continuousOn).genericPoint
@@ -466,6 +493,7 @@ open GrothendieckTopology
 /-- URU5jgTvjhU-29300 (8:08:20) [def] For `Y` irreducible closed, the point of the site `𝒪(X)`
 whose fibre over `U` is nonempty iff `U ∩ Y ≠ ∅`: the opens meeting `Y` form a cofiltered family
 because `Y` is irreducible. -/
+@[buffalo "URU5jgTvjhU-29300"]
 def irrPoint (Y : Sob Z) : Point.{u} (Opens.grothendieckTopology Z) where
   fiber.obj U := ULift.{u} (PLift ((Y : Set Z) ∩ U).Nonempty)
   fiber.map f := ↾fun h ↦ ⟨⟨h.down.down.mono (Set.inter_subset_inter_right _ (leOfHom f))⟩⟩
@@ -488,6 +516,7 @@ def irrPoint (Y : Sob Z) : Point.{u} (Opens.grothendieckTopology Z) where
 
 /-- URU5jgTvjhU-29300 (8:08:20) [def] The stalk `F_Y = colim_{U ∩ Y ≠ ∅} F(U)` commutes with finite
 limits and with colimits. -/
+@[buffalo "URU5jgTvjhU-29300"]
 theorem irrPoint_exact (Y : Sob Z) :
     Nonempty (PreservesFiniteLimits ((irrPoint Y).sheafFiber (A := Type u))) ∧
       Nonempty (PreservesColimits ((irrPoint Y).sheafFiber (A := Type u))) :=
@@ -513,6 +542,7 @@ theorem nonempty_irrPoint (Y : Sob Z) (U : Opens Z) :
 
 /-- URU5jgTvjhU-29427 (8:10:27) [prop] `F_{closure {x}} = F_x`: the point attached to `closure {x}`
 is the point `x`. -/
+@[buffalo "URU5jgTvjhU-29427"]
 def irrPoint_sobMap (x : Z) : irrPoint (sobMap x) ≅ Opens.pointGrothendieckTopology x :=
   pointIsoOfNonempty _ _ fun U => by
     rw [nonempty_irrPoint, coe_sobMap]
@@ -554,6 +584,7 @@ end PointProperties
 
 /-- URU5jgTvjhU-29490 (8:11:30) [thm] `Y ↦ (F ↦ F_Y)` is a bijection from `X̃` onto the
 isomorphism classes of fibre functors (points of the site `𝒪(X)`): injective ... -/
+@[buffalo "URU5jgTvjhU-29490"]
 theorem irrPoint_injective {Y Y' : Sob Z} (e : irrPoint Y ≅ irrPoint Y') : Y = Y' := by
   apply Sob.ext
   apply closed_eq_of_meets Y.isClosed Y'.isClosed
@@ -563,6 +594,7 @@ theorem irrPoint_injective {Y Y' : Sob Z} (e : irrPoint Y ≅ irrPoint Y') : Y =
 
 /-- URU5jgTvjhU-29490 (8:11:30) [thm] ... and surjective: every point `Φ` is `F ↦ F_Y` for `Y` the
 complement of the largest open set over which `Φ` is empty. -/
+@[buffalo "URU5jgTvjhU-29490"]
 theorem irrPoint_surjective (Φ : Point.{u} (Opens.grothendieckTopology Z)) :
     ∃ Y : Sob Z, Nonempty (irrPoint Y ≅ Φ) := by
   let P : Opens Z → Prop := fun U => Nonempty (Φ.fiber.obj U)
@@ -600,12 +632,14 @@ example (Φ : Point.{u} (Opens.grothendieckTopology Z)) : Subsingleton (Φ ⟶ �
 
 /-- URU5jgTvjhU-29816 (8:16:56) [def] The topology on the points of `Sh(X)` whose open sets are the
 `Ũ = {ε | ε(U) ≠ ∅}`, `U ⊂ e` (an open set). -/
+@[buffalo "URU5jgTvjhU-29816"]
 abbrev pointsTopology : TopologicalSpace (Point.{u} (Opens.grothendieckTopology Z)) :=
   TopologicalSpace.generateFrom
     {S | ∃ U : Opens Z, S = {Φ | Nonempty (Φ.fiber.obj U)}}
 
 /-- URU5jgTvjhU-29816 (8:16:56) [def] The sets `Ũ` are stable under finite intersections and unions,
 so they are exactly the open sets of this topology. -/
+@[buffalo "URU5jgTvjhU-29816"]
 theorem pointsTopology_basis (U V : Opens Z) {ι : Type*} (T : ι → Opens Z)
     (Φ : Point.{u} (Opens.grothendieckTopology Z)) :
     (Nonempty (Φ.fiber.obj (U ⊓ V)) ↔ Nonempty (Φ.fiber.obj U) ∧ Nonempty (Φ.fiber.obj V)) ∧
@@ -618,10 +652,12 @@ theorem pointsTopology_basis (U V : Opens Z) {ι : Type*} (T : ι → Opens Z)
 
 /-- URU5jgTvjhU-30280 (8:24:40) [prop] `(f^*F)_x ≃ F_{f(x)}`: the point `f(x)` corresponds to
 `ε_x ∘ f^*`. -/
+@[buffalo "URU5jgTvjhU-30280"]
 def pullback_stalk' {X Y : TopCat.{u}} (f : X ⟶ Y) (F : Y.Presheaf (Type u)) (x : X) :
     F.stalk (f x) ≅ ((TopCat.Presheaf.pullback (Type u) f).obj F).stalk x :=
   TopCat.Presheaf.stalkPullbackIso (Type u) f F x
 
+@[buffalo "URU5jgTvjhU-30471"]
 /-- URU5jgTvjhU-30471 (8:27:51) [thm] (case `X = pt`) If `Y` is sober, every point of the site
 `𝒪(Y)` is isomorphic to the point of a unique `y ∈ Y`. -/
 theorem sober_points [QuasiSober Z] [T0Space Z] (Φ : Point.{u} (Opens.grothendieckTopology Z)) :
@@ -635,6 +671,7 @@ theorem sober_points [QuasiSober Z] [T0Space Z] (Φ : Point.{u} (Opens.grothendi
 /-- URU5jgTvjhU-30793 (8:33:13) [def] Morphisms between the points `x, y` of `X` (morphisms of fibre
 functors) correspond to specialisations `x ⤳ y`; if `X` is `T₁` (e.g. separated) there is one only
 if `x = y`, and it is the identity. -/
+@[buffalo "URU5jgTvjhU-30793"]
 theorem point_hom_t1 [T1Space Z] (x y : Z) :
     (Nonempty (Opens.pointGrothendieckTopology x ⟶ Opens.pointGrothendieckTopology y) ↔ x = y) ∧
       Subsingleton (Opens.pointGrothendieckTopology x ⟶ Opens.pointGrothendieckTopology y) :=

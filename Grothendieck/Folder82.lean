@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 82, pages 77–78: the conic in characteristic 2 and Frobenius, split case
@@ -101,11 +102,13 @@ theorem coord_eq (x y z : R) :
   ext i j; fin_cases i <;> fin_cases j <;> simp [coord, tH]
 
 /-- `u² = (xy + z²) · 1`: `u` has square zero iff `xy + z² = 0`. -/
+@[montpellier "82, 77–78"]
 theorem coord_mul_self (x y z : R) :
     coord x y z * coord x y z = (x * y + z ^ 2) • (1 : Matrix (Fin 2) (Fin 2) R) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [coord] <;> ring
 
 /-- `g̃`, the traceless matrices, are the `coord x y z`. -/
+@[montpellier "82, 77–78"]
 theorem traceless_iff (u : Matrix (Fin 2) (Fin 2) R) :
     u.trace = 0 ↔ ∃ x y z, u = coord x y z := by
   refine ⟨fun h => ⟨u 0 1, u 1 0, u 0 0, ?_⟩, ?_⟩
@@ -115,15 +118,18 @@ theorem traceless_iff (u : Matrix (Fin 2) (Fin 2) R) :
     simp [coord, trace_fin_two]
 
 /-- In characteristic 2, `H̃ = 1`. -/
+@[montpellier "82, 77–78"]
 theorem tH_eq_one (h2 : (2 : R) = 0) : (tH : Matrix (Fin 2) (Fin 2) R) = 1 := by
   have : (-1 : R) = 1 := by linear_combination -h2
   ext i j; fin_cases i <;> fin_cases j <;> simp [tH, this]
 
 /-- (58): in characteristic 2, `1 ∈ g̃`. -/
+@[montpellier "82, 77–78"]
 theorem one_mem_traceless (h2 : (2 : R) = 0) : (1 : Matrix (Fin 2) (Fin 2) R).trace = 0 := by
   simp [h2]
 
 /-- (58): in characteristic 2, the kernel of `φ(u, v) = Tr(uv)` on `g̃` is `R · 1`. -/
+@[montpellier "82, 77–78"]
 theorem ker_phi (h2 : (2 : R) = 0) (x y z : R) :
     (∀ v : Matrix (Fin 2) (Fin 2) R, v.trace = 0 → (coord x y z * v).trace = 0) ↔
       ∃ c : R, coord x y z = c • 1 := by
@@ -140,10 +146,12 @@ theorem ker_phi (h2 : (2 : R) = 0) (x y z : R) :
     rw [hc, smul_mul_assoc, one_mul, trace_smul, hv, smul_zero]
 
 /-- The point `(s : t)`: `s²X̃ + t²Ỹ + stH̃` has square zero in characteristic 2. -/
+@[montpellier "82, 77–78"]
 theorem vst_mul_self (h2 : (2 : R) = 0) (s t : R) : vst s t * vst s t = 0 := by
   rw [vst, coord_mul_self, ← mul_pow, ← two_mul, h2, zero_mul, zero_smul]
 
 /-- `φ(u, s²X̃ + t²Ỹ + stH̃) = t²x + s²y` in characteristic 2. -/
+@[montpellier "82, 77–78"]
 theorem trace_mul_vst (h2 : (2 : R) = 0) (x y z s t : R) :
     (coord x y z * vst s t).trace = t ^ 2 * x + s ^ 2 * y := by
   simp only [vst, coord, trace_fin_two, mul_fin_two, of_apply, cons_val', cons_val_zero,
@@ -151,17 +159,20 @@ theorem trace_mul_vst (h2 : (2 : R) = 0) (x y z s t : R) :
   linear_combination (z * s * t) * h2
 
 /-- The orthogonal of the isotropic line of `(s : t)` is the hyperplane `t²x + s²y = 0`. -/
+@[montpellier "82, 77–78"]
 theorem orth_iff (h2 : (2 : R) = 0) (x y z s t : R) :
     (coord x y z * vst s t).trace = 0 ↔ t ^ 2 * x + s ^ 2 * y = 0 := by
   rw [trace_mul_vst h2]
 
 /-- It contains `1 = H̃`, so (59) factors through `P(g̃/𝒪_S)`. -/
+@[montpellier "82, 77–78"]
 theorem one_mem_orth (h2 : (2 : R) = 0) (s t : R) : ((1 : Matrix (Fin 2) (Fin 2) R) *
     vst s t).trace = 0 := by
   rw [← tH_eq_one h2]
   exact (trace_mul_vst h2 0 0 1 s t).trans (by ring)
 
 /-- It depends only on `(s² : t²)`: (60) is `(s : t) ↦ (s² : t²)`. -/
+@[montpellier "82, 77–78"]
 theorem orth_smul (h2 : (2 : R) = 0) {s t s' t' c : R} (hs : s' ^ 2 = c * s ^ 2)
     (ht : t' ^ 2 = c * t ^ 2) (x y z : R) :
     (coord x y z * vst s' t').trace = c * (coord x y z * vst s t).trace := by
@@ -171,6 +182,7 @@ theorem orth_smul (h2 : (2 : R) = 0) {s t s' t' c : R} (hs : s' ^ 2 = c * s ^ 2)
 /-- (60) is not a monomorphism: over `𝔽₂[ε]/(ε²)` the points `(1 : ε)` and `(1 : 0)` of
 `P¹` are distinct (no unit carries one pair to the other), and their isotropic lines have
 the same orthogonal hyperplane. -/
+@[montpellier "82, 77–78"]
 theorem not_mono :
     (¬ ∃ c : (DualNumber (ZMod 2))ˣ,
         (1 : DualNumber (ZMod 2)) = c * 1 ∧ DualNumber.eps = (c : DualNumber (ZMod 2)) * 0) ∧
@@ -227,6 +239,7 @@ theorem slMk_zero : slMk 0 0 0 = (0 : Sl2 R) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [coord]
 
 /-- In characteristic 2, `sl(2)` is the Heisenberg algebra: `[u, u'] = (xy' − yx') H̃`. -/
+@[montpellier "82, 26–27"]
 theorem lie_slMk (h2 : (2 : R) = 0) (x y z x' y' z' : R) :
     ⁅slMk x y z, slMk x' y' z'⁆ = slMk 0 0 (x * y' - y * x') := by
   apply Subtype.ext
@@ -239,6 +252,7 @@ theorem lie_slMk (h2 : (2 : R) = 0) (x y z x' y' z' : R) :
 
 /-- The centre of `sl(2)` in characteristic 2 is `R · H̃`, and every central element is a
 bracket: centre = derived algebra, `V = sl(2)/R·H̃` free of rank 2, `Λ²V ≅ R·H̃`. -/
+@[montpellier "82, 26–27"]
 theorem central_iff (h2 : (2 : R) = 0) (u : Sl2 R) :
     (∀ v : Sl2 R, ⁅u, v⁆ = 0) ↔ ∃ z : R, u = slMk 0 0 z := by
   refine ⟨fun h => ⟨u.val 0 0, ?_⟩, ?_⟩
@@ -254,6 +268,7 @@ theorem central_iff (h2 : (2 : R) = 0) (u : Sl2 R) :
     rw [slMk_eta v, lie_slMk h2, ← slMk_zero]
     simp
 
+@[montpellier "82, 26–27"]
 theorem slMk_H_eq_lie (h2 : (2 : R) = 0) (z : R) :
     slMk 0 0 z = ⁅(slMk 1 0 0 : Sl2 R), slMk 0 z 0⁆ := by
   rw [lie_slMk h2]; simp
@@ -281,6 +296,7 @@ theorem autFun_slMk (h2 : (2 : R) = 0) (g : Matrix (Fin 2) (Fin 2) R) (a b x y z
 
 /-- **Every Lie endomorphism of `sl(2)` is an `autFun`** (characteristic 2): it sends the
 centre `R · H̃` into itself, and `H̃ = [X̃, Ỹ]` to `det g · H̃`. -/
+@[montpellier "82, 26–27"]
 theorem lieHom_eq_autFun (h2 : (2 : R) = 0) (φ : Sl2 R →ₗ⁅R⁆ Sl2 R) :
     φ = autFun h2 !![(φ (slMk 1 0 0)).val 0 1, (φ (slMk 0 1 0)).val 0 1;
       (φ (slMk 1 0 0)).val 1 0, (φ (slMk 0 1 0)).val 1 0]
@@ -299,6 +315,7 @@ theorem lieHom_eq_autFun (h2 : (2 : R) = 0) (φ : Sl2 R →ₗ⁅R⁆ Sl2 R) :
   congr 1 <;> ring
 
 /-- `autFun` determines its parameters. -/
+@[montpellier "82, 26–27"]
 theorem autFun_inj (h2 : (2 : R) = 0) {g g' : Matrix (Fin 2) (Fin 2) R} {a b a' b' : R}
     (h : autFun h2 g a b = autFun h2 g' a' b') : g = g' ∧ a = a' ∧ b = b' := by
   have hX := congrArg (· (slMk 1 0 0)) h
@@ -310,6 +327,7 @@ theorem autFun_inj (h2 : (2 : R) = 0) {g g' : Matrix (Fin 2) (Fin 2) R} {a b a' 
   ext i j; fin_cases i <;> fin_cases j <;> simp [h1, h2', h4, h5]
 
 /-- The composition law of `GL(V) ⋉ Hom(V, det V)`. -/
+@[montpellier "82, 26–27"]
 theorem autFun_comp (h2 : (2 : R) = 0) (g g' : Matrix (Fin 2) (Fin 2) R) (a b a' b' : R) :
     (autFun h2 g a b).comp (autFun h2 g' a' b') = autFun h2 (g * g')
       (a * g' 0 0 + b * g' 1 0 + g.det * a') (a * g' 0 1 + b * g' 1 1 + g.det * b') := by
@@ -361,6 +379,7 @@ theorem bijective_autFun_iff (h2 : (2 : R) = 0) (g : Matrix (Fin 2) (Fin 2) R) (
 `autFun g a b` with `det g` a unit, the parameters being unique. So `Aut(sl(2))(R)` is
 `GL₂(R) ⋉ R²` (`autFun_comp`), the automorphisms of the split pair `(V, E)`, `E` an extension
 of `V` by `det V`: an affine group of dimension 6. -/
+@[montpellier "82, 26–27"]
 theorem bijective_iff (h2 : (2 : R) = 0) (φ : Sl2 R →ₗ⁅R⁆ Sl2 R) :
     Function.Bijective φ ↔ ∃ (g : Matrix (Fin 2) (Fin 2) R) (a b : R),
       IsUnit g.det ∧ φ = autFun h2 g a b := by
@@ -371,6 +390,7 @@ theorem bijective_iff (h2 : (2 : R) = 0) (φ : Sl2 R →ₗ⁅R⁆ Sl2 R) :
 
 /-- The automorphisms fixing `H̃`, i.e. acting trivially on `det V ≅ 𝒪`: those of a
 symplectic affine plane, `SL₂(R) ⋉ R²`, of dimension 5. -/
+@[montpellier "82, 26–27"]
 theorem bijective_fix_iff (h2 : (2 : R) = 0) (φ : Sl2 R →ₗ⁅R⁆ Sl2 R) :
     (Function.Bijective φ ∧ φ (slMk 0 0 1) = slMk 0 0 1) ↔
       ∃ (g : Matrix (Fin 2) (Fin 2) R) (a b : R), g.det = 1 ∧ φ = autFun h2 g a b := by
@@ -433,6 +453,7 @@ theorem der_eq_derFun (h2 : (2 : R) = 0) (D : LieDerivation R (Sl2 R) (Sl2 R)) :
 
 /-- **The Lie algebra of `Aut(sl(2))`**: in characteristic 2 the derivations of `sl(2)` form a
 free module of rank 6, `gl₂ × R²`. -/
+@[montpellier "82, 26–27"]
 def derEquiv (h2 : (2 : R) = 0) :
     LieDerivation R (Sl2 R) (Sl2 R) ≃ₗ[R] Matrix (Fin 2) (Fin 2) R × R × R where
   toFun := derParams
@@ -452,6 +473,7 @@ def derEquiv (h2 : (2 : R) = 0) :
     ext i j <;> try fin_cases i <;> fin_cases j
     all_goals simp [coord]
 
+@[montpellier "82, 26–27"]
 theorem finrank_der {K : Type*} [Field K] (h2 : (2 : K) = 0) :
     Module.finrank K (LieDerivation K (Sl2 K) (Sl2 K)) = 6 := by
   rw [(derEquiv h2).finrank_eq]
@@ -476,6 +498,7 @@ theorem mem_derFix_iff (h2 : (2 : R) = 0) (D : LieDerivation R (Sl2 R) (Sl2 R)) 
 
 /-- In characteristic 2 the derivations killing `H̃` form a free module of rank 5,
 `sl₂ × R²`. -/
+@[montpellier "82, 26–27"]
 def derFixEquiv (h2 : (2 : R) = 0) : derFix R ≃ₗ[R] (R × R × R) × R × R where
   toFun D := (((derParams D.1).1 0 0, (derParams D.1).1 0 1, (derParams D.1).1 1 0),
     (derParams D.1).2)
@@ -504,6 +527,7 @@ def derFixEquiv (h2 : (2 : R) = 0) : derFix R ≃ₗ[R] (R × R × R) × R × R 
     obtain ⟨⟨p, q, r⟩, a, b⟩ := p
     simp [derParams, derFun_slMk, coord]
 
+@[montpellier "82, 26–27"]
 theorem finrank_derFix {K : Type*} [Field K] (h2 : (2 : K) = 0) :
     Module.finrank K (derFix K) = 5 := by
   rw [(derFixEquiv h2).finrank_eq]

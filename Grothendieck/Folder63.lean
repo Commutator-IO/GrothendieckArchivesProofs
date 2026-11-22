@@ -9,6 +9,7 @@ public import Mathlib.RingTheory.AdjoinRoot
 public import Mathlib.Algebra.Polynomial.Div
 public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Tactic.FinCases
+import Grothendieck.Attr
 
 /-!
 # Folder 63, pages 97–99: the four components of `j = 0` at `p = 2` have distinct tangents
@@ -139,6 +140,7 @@ noncomputable def branch (i : Fin 4) : R[X] := X + 2 * C (α i)
 
 /-- **`t³ + 8 = (t + 2)(t + 2ζ)(t + 2ζ²)`**, so `c₄ = t(t³ + 8)` is the product of the four
 branches. -/
+@[montpellier "63, 97–99"]
 theorem factor : (X : R[X]) * (X ^ 3 + 8) = branch 0 * branch 1 * branch 2 * branch 3 := by
   have hC : (C ζ : R[X]) ^ 2 + C ζ + 1 = 0 := by
     simpa using congrArg C hζ
@@ -204,6 +206,7 @@ theorem unit_mod_two (i j : Fin 4) (hij : i ≠ j) :
 
 /-- **The four tangents are pairwise distinct**: for `i ≠ j`, `a · branch i + b · branch j ∈ P²`
 forces `a, b ∈ P`. -/
+@[montpellier "63, 97–99"]
 theorem tangents_distinct (i j : Fin 4) (hij : i ≠ j) (a b : R[X])
     (h : a * branch i + b * branch j ∈ P ^ 2) : a ∈ P ∧ b ∈ P :=
   indep (unit_mod_two i j hij) a b h
@@ -211,6 +214,7 @@ theorem tangents_distinct (i j : Fin 4) (hij : i ≠ j) (a b : R[X])
 /-- **The Hesse involution is a transvection on `P/P²`**: `σ(t) = (t + 2)/(t − 1)` satisfies
 `(t + 2) − (t − 1)(t + 2) ∈ P²`, i.e. `σ(t) ≡ t + 2` modulo `P²` once divided by the unit
 `t − 1`, and `σ(t) ∈ P`. -/
+@[montpellier "63, 97–99"]
 theorem involution_transvection :
     (X + 2 : R[X]) - (X - 1) * (X + 2) ∈ P ^ 2 ∧ (X + 2 : R[X]) ∈ P ∧ (X - 1 : R[X]) ∉ P := by
   refine ⟨?_, ?_, ?_⟩

@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianSchemeFirstCohomologyGenericPoint
+import Grothendieck.Attr
 
 /-!
 # Folder 100, pages 30–38: the curve criterion for algebraising formal abelian schemes, stated
@@ -143,6 +144,7 @@ end FormalAbelianScheme
 formal abelian scheme over `Spf R` (for the `𝔪`-adic topology) is algebraizable if and only if,
 for every prime `𝔭` of `R` with `R ⧸ 𝔭` of dimension one, its pull-back to the normalisation `B′`
 of `B = R ⧸ 𝔭` is algebraizable. -/
+@[montpellier "100, 30"]
 def CurveCriterion : Prop :=
   ∀ (R : Type u) [CommRing R] [IsNoetherianRing R] [IsLocalRing R]
     [IsAdicComplete (maximalIdeal R) R] (X : FormalAbelianScheme (maximalIdeal R)),

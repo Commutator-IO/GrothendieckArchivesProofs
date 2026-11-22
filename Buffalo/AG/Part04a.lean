@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part02
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 04 (a): 12–13 June 1973, stalks, localization, local rings
@@ -37,12 +38,14 @@ noncomputable section
 /-- thSz9ZHDK9o-5989 (1:39:49) [prop] The fibre of `M^~` at the point `x` associated to `𝔭` is
 `M_𝔭`: the map `M → (M^~)_x` is a localization of `M` at `A ∖ 𝔭`. (The stalk is by definition
 the colimit over the open neighbourhoods of `x`, among which the `D(f)`, `f ∉ 𝔭`, are cofinal.) -/
+@[buffalo "thSz9ZHDK9o-5989"]
 theorem prop_5989 {A : CommRingCat.{u}} (M : ModuleCat.{u} A)
     (x : AlgebraicGeometry.PrimeSpectrum.Top A) :
     IsLocalizedModule x.asIdeal.primeCompl (AlgebraicGeometry.tilde.toStalk M x).hom :=
   inferInstance
 
 /-- thSz9ZHDK9o-6117 (1:41:57) [prop] The fibre of `𝒪_X` at `x = 𝔭` is `A_𝔭`. -/
+@[buffalo "thSz9ZHDK9o-6117"]
 theorem prop_6117 (A : Type u) [CommRing A] (x : PrimeSpectrum A) :
     IsLocalization.AtPrime ((AlgebraicGeometry.Spec.structureSheaf A).presheaf.stalk x) x.asIdeal :=
   AlgebraicGeometry.StructureSheaf.IsLocalization.to_stalk A x
@@ -58,6 +61,7 @@ example {A : Type u} [CommRing A] (f : A) (M : Type u) [AddCommGroup M] [Module 
 
 /-- thSz9ZHDK9o-6246 (1:44:06) [prop] `M → M T⁻¹` is universal among the `A`-linear maps `M → N`
 such that multiplication by each `f ∈ T` is bijective on `N`. -/
+@[buffalo "thSz9ZHDK9o-6246"]
 theorem prop_6246 {A : Type u} [CommRing A] (T : Submonoid A) (M N : Type u) [AddCommGroup M]
     [Module A M] [AddCommGroup N] [Module A N] (g : M →ₗ[A] N)
     (hg : ∀ t : T, IsUnit (algebraMap A (Module.End A N) t)) :
@@ -71,6 +75,7 @@ example {A : Type u} [CommRing A] (N : Type u) [AddCommGroup N] [Module A N] (t 
 
 /-- thSz9ZHDK9o-6375 (1:46:15) [prop] `A → A T⁻¹` is universal among the homomorphisms `A → B`
 that make the elements of `T` invertible. -/
+@[buffalo "thSz9ZHDK9o-6375"]
 theorem prop_6375 {A B : Type u} [CommRing A] [CommRing B] (T : Submonoid A) (g : A →+* B)
     (hg : ∀ t : T, IsUnit (g t)) :
     ∃! l : Localization T →+* B, l.comp (algebraMap A (Localization T)) = g :=
@@ -78,12 +83,14 @@ theorem prop_6375 {A B : Type u} [CommRing A] [CommRing B] (T : Submonoid A) (g 
     IsLocalization.ringHom_ext T (hl.trans (IsLocalization.lift_comp hg).symm)⟩
 
 /-- thSz9ZHDK9o-6568 (1:49:28) [prop] `M T⁻¹ ≃ M ⊗_A A T⁻¹` (written `A T⁻¹ ⊗_A M`). -/
+@[buffalo "thSz9ZHDK9o-6568"]
 def prop_6568 {A : Type u} [CommRing A] (T : Submonoid A) (M : Type u) [AddCommGroup M]
     [Module A M] :
     Localization T ⊗[A] M ≃ₗ[Localization T] LocalizedModule T M :=
   (IsLocalizedModule.isBaseChange T (Localization T) (LocalizedModule.mkLinearMap T M)).equiv
 
 /-- thSz9ZHDK9o-6632 (1:50:32) [prop] `A_𝔭` is local, with residue field `κ(𝔭) = Frac(A/𝔭)`. -/
+@[buffalo "thSz9ZHDK9o-6632"]
 theorem prop_6632 {A : Type u} [CommRing A] (p : Ideal A) [p.IsPrime] :
     IsLocalRing (Localization.AtPrime p) ∧ IsFractionRing (A ⧸ p) p.ResidueField :=
   ⟨inferInstance, inferInstance⟩
@@ -92,6 +99,7 @@ theorem prop_6632 {A : Type u} [CommRing A] (p : Ideal A) [p.IsPrime] :
 
 /-- thSz9ZHDK9o-6702 (1:51:42) [def] A ring is local if it has a unique maximal ideal (mathlib's
 `IsLocalRing`); its residue field is `O/𝔪` (`IsLocalRing.ResidueField`). -/
+@[buffalo "thSz9ZHDK9o-6702"]
 theorem def_6702 (O : Type u) [CommRing O] : IsLocalRing O ↔ ∃! I : Ideal O, I.IsMaximal :=
   ⟨fun _ => ⟨maximalIdeal O, inferInstance, fun _ hI => IsLocalRing.eq_maximalIdeal hI⟩,
     IsLocalRing.of_unique_max_ideal⟩
@@ -101,6 +109,7 @@ example (O : Type u) [CommRing O] [IsLocalRing O] :
 
 /-- thSz9ZHDK9o-6764 (1:52:44) [prop] An element is invertible iff it belongs to no maximal
 ideal; in a local ring, `O^* = O ∖ 𝔪`. -/
+@[buffalo "thSz9ZHDK9o-6764"]
 theorem prop_6764 {O : Type u} [CommRing O] (a : O) :
     IsUnit a ↔ ∀ m : Ideal O, m.IsMaximal → a ∉ m := by
   constructor
@@ -118,6 +127,7 @@ theorem prop_6764_local {O : Type u} [CommRing O] [IsLocalRing O] (a : O) :
 
 /-- thSz9ZHDK9o-6963 (1:56:03) [prop] If `𝔪` is an ideal with `O^* = O ∖ 𝔪`, then `O` is local
 with maximal ideal `𝔪`. -/
+@[buffalo "thSz9ZHDK9o-6963"]
 theorem prop_6963 {O : Type u} [CommRing O] (m : Ideal O) (h : ∀ x, IsUnit x ↔ x ∉ m) :
     ∃ _ : IsLocalRing O, maximalIdeal O = m := by
   have : Nontrivial O := by
@@ -132,6 +142,7 @@ theorem prop_6963 {O : Type u} [CommRing O] (m : Ideal O) (h : ∀ x, IsUnit x �
 
 /-- thSz9ZHDK9o-7027 (1:57:07) [prop] A ring `O ≠ 0` is local iff for every `f`, `f` or `1 - f`
 is invertible. -/
+@[buffalo "thSz9ZHDK9o-7027"]
 theorem prop_7027 (O : Type u) [CommRing O] [Nontrivial O] :
     IsLocalRing O ↔ ∀ f : O, IsUnit f ∨ IsUnit (1 - f) :=
   ⟨fun _ => IsLocalRing.isUnit_or_isUnit_one_sub_self,
@@ -139,6 +150,7 @@ theorem prop_7027 (O : Type u) [CommRing O] [Nontrivial O] :
 
 /-- thSz9ZHDK9o-7093 (1:58:13) [prop] The maximal ideal of `A_𝔭` is `𝔭 A_𝔭`, the quotient
 `A_𝔭 / 𝔭 A_𝔭` is `κ(𝔭)` (the fraction field of `A/𝔭`), and `A_𝔭^* = A_𝔭 ∖ 𝔭 A_𝔭`. -/
+@[buffalo "thSz9ZHDK9o-7093"]
 theorem prop_7093 {A : Type u} [CommRing A] (p : Ideal A) [p.IsPrime] :
     p.map (algebraMap A (Localization.AtPrime p)) = maximalIdeal (Localization.AtPrime p) ∧
       IsFractionRing (A ⧸ p) p.ResidueField ∧
@@ -161,6 +173,7 @@ example (A : CommRingCat.{u}) : AlgebraicGeometry.LocallyRingedSpace.{u} :=
 /-- thSz9ZHDK9o-8093 (2:14:53) [cex] If `A` is an integral domain, `f ≠ 0` a non-unit and `I`
 infinite, `(A^I)_f → (A_f)^I` is not surjective: its image consists of the families with a
 common denominator `f^k`, and `(1/f^{n(i)})_i` with `n` unbounded has none. -/
+@[buffalo "thSz9ZHDK9o-8093"]
 theorem cex_8093 {A : Type u} [CommRing A] [IsDomain A] {f : A} (hf0 : f ≠ 0)
     (hf : ¬ IsUnit f) (I : Type*) [Infinite I] :
     ¬ ∀ y : I → Localization.Away f, ∃ (m : I → A) (k : ℕ),
@@ -195,6 +208,7 @@ theorem cex_8093 {A : Type u} [CommRing A] [IsDomain A] {f : A} (hf0 : f ≠ 0)
 basic open `D(f)` the sections of `(∏ M_i)^~` and of `∏ M_i^~` are `(∏ M_i)_f` and `∏ (M_i)_f`,
 and for `A = ℤ`, `f = 2`, `M_i = ℤ` (`i ∈ ℕ`) the canonical map between them is not
 surjective (`cex_8093`). -/
+@[buffalo "thSz9ZHDK9o-7837"]
 theorem cex_7837 :
     ¬ ∀ y : ℕ → Localization.Away (2 : ℤ), ∃ (m : ℕ → ℤ) (k : ℕ),
       ∀ i, y i = IsLocalization.mk' (Localization.Away (2 : ℤ)) (m i)
@@ -204,6 +218,7 @@ theorem cex_7837 :
 /-- thSz9ZHDK9o-8093 (2:14:53) [cex] For `M = A^{(I)}`, `I` infinite, `Hom_A(M, N)_f →
 Hom_{A_f}(M_f, N_f) = Hom_A(M, N_f)` is not surjective (here `N = A`, `A` a domain, `f ≠ 0` a
 non-unit): the sections over `D(f)` of `Hom(M, N)^~ → Hom(M^~, N^~)`. -/
+@[buffalo "thSz9ZHDK9o-8093"]
 theorem cex_8093_hom {A : Type u} [CommRing A] [IsDomain A] {f : A} (hf0 : f ≠ 0)
     (hf : ¬ IsUnit f) (I : Type*) [Infinite I] :
     ¬ ∀ g : (I →₀ A) →ₗ[A] Localization.Away f, ∃ (φ : (I →₀ A) →ₗ[A] A) (k : ℕ),
@@ -218,6 +233,7 @@ theorem cex_8093_hom {A : Type u} [CommRing A] [IsDomain A] {f : A} (hf0 : f ≠
 
 /-- thSz9ZHDK9o-8227 (2:17:07) [prop] For `O ≠ 0`: `O` is local iff the non-units form an ideal,
 iff `f + g = 1` implies `f` or `g` invertible. -/
+@[buffalo "thSz9ZHDK9o-8227"]
 theorem prop_8227 (O : Type u) [CommRing O] [Nontrivial O] :
     (IsLocalRing O ↔ ∃ I : Ideal O, (I : Set O) = nonunits O) ∧
       (IsLocalRing O ↔ ∀ f g : O, f + g = 1 → IsUnit f ∨ IsUnit g) := by
@@ -232,12 +248,14 @@ theorem prop_8227 (O : Type u) [CommRing O] [Nontrivial O] :
 /-- thSz9ZHDK9o-8624 (2:23:44) [prop] If `A` is local noetherian, `Â` is faithfully flat over
 `A`. (The descent of modules along `A → Â` is not formalised: mathlib has no category of
 modules with descent data relative to a ring homomorphism.) -/
+@[buffalo "thSz9ZHDK9o-8624"]
 theorem prop_8624 (A : Type u) [CommRing A] [IsLocalRing A] [IsNoetherianRing A] :
     Module.FaithfullyFlat A (AdicCompletion (maximalIdeal A) A) :=
   Module.FaithfullyFlat.of_flat_of_isLocalHom (A := A) (B := AdicCompletion (maximalIdeal A) A)
 
 /-- thSz9ZHDK9o-8624 (2:23:44) [prop] For `A → Â` faithfully flat, `M` is finitely generated iff
 `M ⊗_A Â` is; then (`A` noetherian) `M ⊗_A Â` is the completion of `M`. -/
+@[buffalo "thSz9ZHDK9o-8624"]
 theorem prop_8624_finite (A : Type u) [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     (M : Type u) [AddCommGroup M] [Module A M] :
     (Module.Finite A M ↔ Module.Finite (AdicCompletion (maximalIdeal A) A)

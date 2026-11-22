@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 5b: strict cogeneration, accessibility, representability (2 July 1973)
@@ -49,6 +50,7 @@ noncomputable section
 /-- 4gynb9uTEE4-258 (0:04:18) [prop] The localization `C → C[Σ⁻¹]` is bijective on objects
 (Mathlib's Gabriel–Zisman construction, `Localization.Construction.objEquiv`); in `Δ` the
 localization is computed in `Cat` (4gynb9uTEE4-11886). -/
+@[buffalo "4gynb9uTEE4-258"]
 theorem localization_surjective_obj {C : Type u} [Category.{v} C] (W : MorphismProperty C)
     (Y : W.Localization) : ∃ X : C, W.Q.obj X = Y := by
   obtain ⟨X, rfl⟩ := (Localization.Construction.objEquiv W).surjective Y
@@ -58,6 +60,7 @@ theorem localization_surjective_obj {C : Type u} [Category.{v} C] (W : MorphismP
 
 /-- 4gynb9uTEE4-386 (0:06:26) [def] `J ⊂ E` is strictly generating if every object of `E` is a
 colimit of a (small) diagram of objects of `J`. -/
+@[buffalo "4gynb9uTEE4-386"]
 def IsStrictlyGenerating {E : Type u} [Category.{v} E] (J : ObjectProperty E) : Prop :=
   ∀ X : E, ∃ (K : Type v) (_ : SmallCategory K) (F : K ⥤ E) (c : Cocone F),
     (∀ k, J (F.obj k)) ∧ Nonempty (IsColimit c) ∧ Nonempty (c.pt ≅ X)
@@ -123,6 +126,7 @@ in `P5`, `{a₁, a₂}` strictly cogenerates `{a₁, a₂, bot}` (where `bot` is
 which strictly cogenerates `P5`, but `{a₁, a₂}` does not strictly cogenerate `P5` (there the
 meet of `a₁, a₂` is `c`). The mechanism of 4gynb9uTEE4-13185: a limit in the intermediate
 category need not be one in the big category. -/
+@[buffalo "4gynb9uTEE4-648"]
 theorem not_transitive :
     IsStrictlyCogenerating {x : P5 | x = a₁ ∨ x = a₂} {x | x = a₁ ∨ x = a₂ ∨ x = bot} ∧
     IsStrictlyCogenerating {x : P5 | x = a₁ ∨ x = a₂ ∨ x = bot} Set.univ ∧
@@ -137,6 +141,7 @@ theorem not_transitive :
 coseparating set (as a small strictly cogenerating subcategory gives), every functor `R → Set`
 commuting with limits is corepresentable, so `T(Set) = Hom_Δ(R, Set) ≃ Rᵒᵖ` (special adjoint
 functor theorem, `isRightAdjoint_of_preservesLimits_of_isCoseparating`). -/
+@[buffalo "4gynb9uTEE4-1845"]
 theorem corepresentable_of_isCoseparating {R : Type u} [Category.{w} R] [HasLimitsOfSize.{w, w} R]
     [WellPowered.{w} R] {P : ObjectProperty R} [ObjectProperty.Small.{w} P]
     (hP : P.IsCoseparating) (F : R ⥤ Type w) [PreservesLimitsOfSize.{w, w} F] :
@@ -148,6 +153,7 @@ theorem corepresentable_of_isCoseparating {R : Type u} [Category.{w} R] [HasLimi
 
 /-- 4gynb9uTEE4-2233 (0:37:13) [ex] For groups, the universal object `ℤ` is a cogroup of `Gr`:
 the comultiplication `ℤ → ℤ * ℤ`, `x ↦ x₁ x₂`, induces on `Hom(ℤ, G) ≃ G` the multiplication. -/
+@[buffalo "4gynb9uTEE4-2233"]
 def comul : Multiplicative ℤ →* Monoid.Coprod (Multiplicative ℤ) (Multiplicative ℤ) :=
   zpowersHom _ (Monoid.Coprod.inl (Multiplicative.ofAdd 1) *
     Monoid.Coprod.inr (Multiplicative.ofAdd 1))
@@ -162,6 +168,7 @@ def homZ_equiv (G : Type*) [Group G] : G ≃ (Multiplicative ℤ →* G) := zpow
 
 /-- 4gynb9uTEE4-2681 (0:44:41) [def] The envelope of `C` under limits of type `D'`: the closure of
 `C` in `C̃` under these limits (Mathlib `ObjectProperty.limitsClosure`). -/
+@[buffalo "4gynb9uTEE4-2681"]
 abbrev envelopeUnder {E : Type u} [Category.{v} E] (P : ObjectProperty E) {α : Type w}
     (J : α → Type w) [∀ a, Category.{w} (J a)] : ObjectProperty E :=
   P.limitsClosure J
@@ -169,6 +176,7 @@ abbrev envelopeUnder {E : Type u} [Category.{v} E] (P : ObjectProperty E) {α : 
 /-- 4gynb9uTEE4-2746 (0:45:46) [ex, partial] On categories with finite products the theory of
 groups is represented by the f.g. free groups in `Grᵒᵖ`: `Hom(F_n, G) ≃ Gⁿ`, so `F_n` is the
 `n`-th power of `F_1` in `Grᵒᵖ`. -/
+@[buffalo "4gynb9uTEE4-2746"]
 def freeGroup_hom_equiv (n : ℕ) (G : Type*) [Group G] : (Fin n → G) ≃ (FreeGroup (Fin n) →* G) :=
   FreeGroup.lift
 
@@ -176,6 +184,7 @@ def freeGroup_hom_equiv (n : ℕ) (G : Type*) [Group G] : (Fin n → G) ≃ (Fre
 
 /-- 4gynb9uTEE4-3135 (0:52:15) [prop, partial] The cardinal identity: `(2^λ)^{π₀} = 2^λ` for
 `λ ≥ π₀ ≥ 1` with `λ` infinite. -/
+@[buffalo "4gynb9uTEE4-3135"]
 theorem two_pow_pow (lam π₀ : Cardinal.{u}) (hl : Cardinal.aleph0 ≤ lam) (h0 : π₀ ≠ 0)
     (h : π₀ ≤ lam) : ((2 : Cardinal.{u}) ^ lam) ^ π₀ = 2 ^ lam := by
   rw [← Cardinal.power_mul, Cardinal.mul_eq_left hl h h0]
@@ -183,6 +192,7 @@ theorem two_pow_pow (lam π₀ : Cardinal.{u}) (hl : Cardinal.aleph0 ≤ lam) (h
 /-- 4gynb9uTEE4-3263 (0:54:23) [prop] An accessible functor between accessible categories is
 `κ`-accessible and preserves `κ`-presentable objects for a suitable `κ` (the uniformization
 theorem, `IsCardinalAccessibleCategory.uniformization`). -/
+@[buffalo "4gynb9uTEE4-3263"]
 theorem accessible_uniformization {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
     [IsAccessibleCategory.{w} C] [IsAccessibleCategory.{w} D] (F : C ⥤ D)
     [Functor.IsAccessible.{w} F] :
@@ -193,6 +203,7 @@ theorem accessible_uniformization {C : Type u} [Category.{v} C] {D : Type u'} [C
 
 /-- 4gynb9uTEE4-3398 (0:56:38) [prop] For `i : C ↪ E` fully faithful and `E'` with the needed
 colimits, the restriction `i^*` has a left adjoint `i_!` (left Kan extension, `lanAdjunction`)... -/
+@[buffalo "4gynb9uTEE4-3398"]
 def lan_adjunction {C : Type u} [Category.{v} C] {E : Type u'} [Category.{v'} E]
     {H : Type*} [Category H] (i : C ⥤ E) [∀ F : C ⥤ H, i.HasPointwiseLeftKanExtension F] :
     i.lan ⊣ (Functor.whiskeringLeft C E H).obj i :=
@@ -207,6 +218,7 @@ def lan_fullyFaithful {C : Type u} [Category.{v} C] {E : Type u'} [Category.{v'}
 
 /-- 4gynb9uTEE4-3586 (0:59:46) [prop, partial] The case `π = ℵ₀`: if `C` has finite colimits,
 `Ind(C)` has all (small) colimits (Mathlib instance). -/
+@[buffalo "4gynb9uTEE4-3586"]
 theorem ind_hasColimits (C : Type u) [SmallCategory C] [HasFiniteColimits C] :
     HasColimits (Ind C) :=
   inferInstance
@@ -215,6 +227,7 @@ theorem ind_hasColimits (C : Type u) [SmallCategory C] [HasFiniteColimits C] :
 
 /-- 4gynb9uTEE4-4186 (1:09:46) [prop, partial] A representable presheaf sends colimits to
 limits. -/
+@[buffalo "4gynb9uTEE4-4186"]
 theorem representable_preservesLimits {E : Type u} [Category.{v} E] (X : E) :
     PreservesLimits (yoneda.obj X) :=
   inferInstance
@@ -223,6 +236,7 @@ theorem representable_preservesLimits {E : Type u} [Category.{v} E] (X : E) :
 hence locally presentable), a functor `F : E → Set` is corepresentable iff it commutes with
 limits and is accessible (general adjoint functor theorem with
 `SolutionSetCondition.of_isCardinalAccessible`; every object is presentable). -/
+@[buffalo "4gynb9uTEE4-4249"]
 theorem corepresentable_iff {E : Type u'} [Category.{u} E] [IsAccessibleCategory.{u} E]
     [HasLimitsOfSize.{u, u} E] (F : E ⥤ Type u) :
     F.IsCorepresentable ↔ PreservesLimitsOfSize.{u, u} F ∧ Functor.IsAccessible.{u} F := by
@@ -242,6 +256,7 @@ theorem corepresentable_iff {E : Type u'} [Category.{u} E] [IsAccessibleCategory
 
 /-- 4gynb9uTEE4-4454 (1:14:14) [prop, partial] Between complete accessible categories, a functor
 commuting with limits and accessible has a left adjoint (general adjoint functor theorem). -/
+@[buffalo "4gynb9uTEE4-4454"]
 theorem isRightAdjoint_of_accessible {C : Type u'} [Category.{u} C] {D : Type*} [Category.{u} D]
     [IsAccessibleCategory.{u} C] [IsAccessibleCategory.{u} D] [HasLimitsOfSize.{u, u} C]
     (F : C ⥤ D) [PreservesLimitsOfSize.{u, u} F] [Functor.IsAccessible.{u} F] :
@@ -258,6 +273,7 @@ theorem preservesLimits_of_isRightAdjoint {C : Type u'} [Category.{u} C] {D : Ty
 
 /-- 4gynb9uTEE4-5529 (1:32:09) [ex] In the coproduct `C ⊕ D` of two nonempty categories there is
 no initial object... -/
+@[buffalo "4gynb9uTEE4-5529"]
 theorem sum_no_initial {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v} D]
     (c : C) (d : D) (X : C ⊕ D) : IsInitial X → False := by
   intro h
@@ -275,10 +291,12 @@ theorem sum_no_cocone {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v} 
 
 /-- 4gynb9uTEE4-6306 (1:45:06) [prop, partial] Example of a free structure: the free group
 functor is left adjoint to the forgetful functor `Gr → Set` (`GrpCat.adj`). -/
+@[buffalo "4gynb9uTEE4-6306"]
 def freeGroup_adj : GrpCat.free ⊣ forget GrpCat.{u} := GrpCat.adj
 
 /-- 4gynb9uTEE4-6434 (1:47:14) [prop] If a fully faithful functor admits a left adjoint, this
 adjoint is a localization (`Adjunction.isLocalization'`, at the arrows it inverts). -/
+@[buffalo "4gynb9uTEE4-6434"]
 theorem leftAdjoint_isLocalization {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
     {F : C ⥤ D} {G : D ⥤ C} (adj : F ⊣ G) [G.Full] [G.Faithful] :
     F.IsLocalization ((MorphismProperty.isomorphisms D).inverseImage F) :=

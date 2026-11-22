@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic groups, Part 01 (b): the module functors `W(M)`, `V(M)`, endomorphisms
@@ -45,6 +46,7 @@ variable (M N : Type u) [AddCommGroup M] [Module k M] [AddCommGroup N] [Module k
 
 /-- _lTf_L0yvrU-2834 (0:47:14) [def] `W(M) : k' ↦ M ⊗_k k'`, a module over `𝒪` (written
 `k' ⊗ M`, an `A`-module). -/
+@[buffalo "_lTf_L0yvrU-2834"]
 abbrev W (A : Type u) [CommRing A] [Algebra k A] : Type u := A ⊗[k] M
 
 example (A : Type u) [CommRing A] [Algebra k A] : Module A (W k M A) := inferInstance
@@ -62,6 +64,7 @@ noncomputable def WF : CommAlgCat.{u} k ⥤ Type u where
     rw [← LinearMap.rTensor_comp_apply]
     rfl
 
+@[buffalo "_lTf_L0yvrU-2899"]
 /-- _lTf_L0yvrU-2899 (0:48:19) [prop] If `M ≃ kⁿ`, `W(M)` is the standard affine space:
 `A ⊗ M ≃ Aⁿ`. -/
 noncomputable def W_free (n : ℕ) (e : M ≃ₗ[k] (Fin n → k)) (A : Type u) [CommRing A] [Algebra k A] :
@@ -69,24 +72,28 @@ noncomputable def W_free (n : ℕ) (e : M ≃ₗ[k] (Fin n → k)) (A : Type u) 
   (e.baseChange k A M (Fin n → k)).trans (TensorProduct.piScalarRight k A A (Fin n))
 
 /-- _lTf_L0yvrU-4053 (1:07:33) [def] `V(M) : k' ↦ Hom_k(M, k')`, an `𝒪`-module. -/
+@[buffalo "_lTf_L0yvrU-4053"]
 abbrev V (A : Type u) [CommRing A] [Algebra k A] : Type u := M →ₗ[k] A
 
 example (A : Type u) [CommRing A] [Algebra k A] : Module A (V k M A) := inferInstance
 
 /-- _lTf_L0yvrU-4185 (1:09:45) [prop] `V(M)` is represented by the symmetric algebra `S_k(M)`
 (Mathlib `SymmetricAlgebra.lift`). -/
+@[buffalo "_lTf_L0yvrU-4185"]
 noncomputable def V_repr (A : Type u) [CommRing A] [Algebra k A] :
     (SymmetricAlgebra k M →ₐ[k] A) ≃ V k M A :=
   (SymmetricAlgebra.lift).symm
 
 /-- _lTf_L0yvrU-4185 (1:09:45) [prop] For `M` free (with basis indexed by `κ`), `S_k(M)` is the
 polynomial algebra (Mathlib `SymmetricAlgebra.equivMvPolynomial`). -/
+@[buffalo "_lTf_L0yvrU-4185"]
 noncomputable def symm_free {κ : Type u} (b : Module.Basis κ k M) :
     SymmetricAlgebra k M ≃ₐ[k] MvPolynomial κ k :=
   SymmetricAlgebra.equivMvPolynomial b
 
 /-- _lTf_L0yvrU-4324 (1:12:04) [prop] `M ↦ W(M)` is covariant: `W(g ∘ f) = W(g) ∘ W(f)` with
 `W(f) = A ⊗ f`, an `A`-linear map. -/
+@[buffalo "_lTf_L0yvrU-4324"]
 theorem W_comp {P : Type u} [AddCommGroup P] [Module k P] (A : Type u) [CommRing A] [Algebra k A]
     (f : M →ₗ[k] N) (g : N →ₗ[k] P) :
     (g ∘ₗ f).baseChange A = g.baseChange A ∘ₗ f.baseChange A :=
@@ -94,12 +101,14 @@ theorem W_comp {P : Type u} [AddCommGroup P] [Module k P] (A : Type u) [CommRing
 
 /-- _lTf_L0yvrU-4324 (1:12:04) [prop] `M ↦ V(M)` is contravariant: `V(f) = (- ∘ f)`, and
 `V(g ∘ f) = V(f) ∘ V(g)`. -/
+@[buffalo "_lTf_L0yvrU-4324"]
 theorem V_comp {P : Type u} [AddCommGroup P] [Module k P] (A : Type u) [CommRing A] [Algebra k A]
     (f : M →ₗ[k] N) (g : N →ₗ[k] P) :
     LinearMap.lcomp k A (g ∘ₗ f) = LinearMap.lcomp k A f ∘ₗ LinearMap.lcomp k A g := rfl
 
 /-- _lTf_L0yvrU-4641 (1:17:21) [def] The pairing `V(M) × W(M) → 𝒪`, `(f, a ⊗ m) ↦ a f(m)`,
 `A`-bilinear: `V(M)(A) → Hom_A(W(M)(A), A)` (Mathlib `LinearMap.liftBaseChangeEquiv`). -/
+@[buffalo "_lTf_L0yvrU-4641"]
 noncomputable def pairing (A : Type u) [CommRing A] [Algebra k A] :
     V k M A ≃ₗ[A] (W k M A →ₗ[A] A) :=
   LinearMap.liftBaseChangeEquiv A
@@ -110,12 +119,14 @@ theorem pairing_tmul (A : Type u) [CommRing A] [Algebra k A] (f : V k M A) (a : 
 
 /-- _lTf_L0yvrU-4831 (1:20:31) [thm] Biduality, first half, at each `A`: `V(M)(A)` is the
 `A`-dual of `W(M)(A)` through the pairing. -/
+@[buffalo "_lTf_L0yvrU-4831"]
 noncomputable def V_eq_dual_W (A : Type u) [CommRing A] [Algebra k A] :
     V k M A ≃ₗ[A] Module.Dual A (W k M A) :=
   pairing k M A
 
 /-- _lTf_L0yvrU-4960 (1:22:40) [prop] If `M` is finitely generated projective,
 `W(M) ≃ V(M^∨)`: `A ⊗ M ≃ Hom_k(M^∨, A)`. -/
+@[buffalo "_lTf_L0yvrU-4960"]
 noncomputable def W_eq_V_dual [Module.Finite k M] [Module.Projective k M]
     (A : Type u) [CommRing A] [Algebra k A] :
     W k M A ≃ₗ[k] V k (Module.Dual k M) A :=
@@ -124,6 +135,7 @@ noncomputable def W_eq_V_dual [Module.Finite k M] [Module.Projective k M]
     (dualTensorHomEquiv k (Module.Dual k M) A)
 
 /-- _lTf_L0yvrU-4960 (1:22:40) [prop] … hence `W(M)` is represented by `S_k(M^∨)`. -/
+@[buffalo "_lTf_L0yvrU-4960"]
 noncomputable def W_repr [Module.Finite k M] [Module.Projective k M]
     (A : Type u) [CommRing A] [Algebra k A] :
     (SymmetricAlgebra k (Module.Dual k M) →ₐ[k] A) ≃ W k M A :=
@@ -131,6 +143,7 @@ noncomputable def W_repr [Module.Finite k M] [Module.Projective k M]
 
 /-- _lTf_L0yvrU-2966 (0:49:26) [prop] If `M` is finitely generated projective, `W(M)` is
 representable (by `S_k(M^∨)`), naturally in `A`. -/
+@[buffalo "_lTf_L0yvrU-2966"]
 noncomputable def W_corep [Module.Finite k M] [Module.Projective k M] :
     (WF k M).CorepresentableBy (CommAlgCat.of k (SymmetricAlgebra k (Module.Dual k M))) where
   homEquiv {A} := (show (CommAlgCat.of k (SymmetricAlgebra k (Module.Dual k M)) ⟶ A) ≃
@@ -152,6 +165,7 @@ noncomputable def W_corep [Module.Finite k M] [Module.Projective k M] :
 
 /-- _lTf_L0yvrU-3290 (0:54:50) [prop] A representable functor takes injections of `k`-algebras to
 injections. -/
+@[buffalo "_lTf_L0yvrU-3290"]
 theorem corep_injective {R A B : Type u} [CommRing R] [Algebra k R] [CommRing A] [Algebra k A]
     [CommRing B] [Algebra k B] (f : A →ₐ[k] B) (hf : Function.Injective f) :
     Function.Injective (fun φ : R →ₐ[k] A ↦ f.comp φ) := fun _ _ h ↦
@@ -159,6 +173,7 @@ theorem corep_injective {R A B : Type u} [CommRing R] [Algebra k R] [CommRing A]
 
 /-- _lTf_L0yvrU-3352 (0:55:52) [prop] A representable functor commutes with products:
 `Hom(R, ∏ A_i) ≃ ∏ Hom(R, A_i)`. -/
+@[buffalo "_lTf_L0yvrU-3352"]
 def corep_pi {R : Type u} [CommRing R] [Algebra k R] {ι : Type u} (A : ι → Type u)
     [∀ i, CommRing (A i)] [∀ i, Algebra k (A i)] :
     (R →ₐ[k] ∀ i, A i) ≃ ∀ i, (R →ₐ[k] A i) where
@@ -179,6 +194,7 @@ abbrev modOp (P : Type u) [AddCommGroup P] [Module k P] : Module kᵐᵒᵖ P :=
 
 /-- _lTf_L0yvrU-3486 (0:58:06) [prop] `M` is flat iff `k' ↦ k' ⊗ M` takes injections of
 `k`-algebras to injections; the converse uses the square-zero extensions `k ⊕ I ⊂ k ⊕ k`. -/
+@[buffalo "_lTf_L0yvrU-3486"]
 theorem flat_iff_W_injective : Module.Flat k M ↔
     ∀ (A B : Type u) [CommRing A] [Algebra k A] [CommRing B] [Algebra k B] (f : A →ₐ[k] B),
       Function.Injective f → Function.Injective (LinearMap.rTensor M f.toLinearMap) := by
@@ -211,6 +227,7 @@ theorem flat_iff_W_injective : Module.Flat k M ↔
       LinearMap.rTensor_id_apply, LinearMap.rTensor_id_apply] at this
 
 /-- _lTf_L0yvrU-3486 (0:58:06) [prop] … hence `W(M)` representable implies `M` flat. -/
+@[buffalo "_lTf_L0yvrU-3486"]
 theorem flat_of_W_corep (h : (WF k M).IsCorepresentable) : Module.Flat k M := by
   obtain ⟨R, ⟨e⟩⟩ := h
   refine (flat_iff_W_injective k M).mpr fun A B _ _ _ _ f hf ↦ ?_
@@ -233,6 +250,7 @@ theorem flat_of_W_corep (h : (WF k M).IsCorepresentable) : Module.Flat k M := by
 /-- _lTf_L0yvrU-3734 (1:02:14) [prop] If `M ⊗ k^M → M^M` is onto (as it is when `W(M)` is
 representable, `W(M)` then commuting with products), `M` is finitely generated: the family
 `(m)_{m ∈ M}` falls into the span of finitely many elements. -/
+@[buffalo "_lTf_L0yvrU-3734"]
 theorem finite_of_tensor_pi_surjective
     (h : Function.Surjective (TensorProduct.piScalarRightHom k k M M)) : Module.Finite k M := by
   classical
@@ -247,6 +265,7 @@ theorem finite_of_tensor_pi_surjective
 
 /-- _lTf_L0yvrU-3734 (1:02:14) [prop] Over a noetherian ring, a finitely generated module is flat
 iff it is projective (Mathlib `Module.Flat.projective_of_finitePresentation`). -/
+@[buffalo "_lTf_L0yvrU-3734"]
 theorem flat_iff_projective_of_noetherian [IsNoetherianRing k] [Module.Finite k M] :
     Module.Flat k M ↔ Module.Projective k M := by
   have : Module.FinitePresentation k M := Module.finitePresentation_of_finite k M
@@ -254,12 +273,14 @@ theorem flat_iff_projective_of_noetherian [IsNoetherianRing k] [Module.Finite k 
 
 /-- _lTf_L0yvrU-3227 (0:53:47) [prop] The last step of the converse: flat and finitely presented
 implies finitely generated projective (Mathlib). -/
+@[buffalo "_lTf_L0yvrU-3227"]
 theorem projective_of_flat_fp [Module.Flat k M] [Module.FinitePresentation k M] :
     Module.Projective k M :=
   Module.Flat.projective_of_finitePresentation
 
 /-- _lTf_L0yvrU-4261 (1:11:01) [prop] `V(M) = Spec S_k(M)` is of finite type iff `M` is finitely
 generated. -/
+@[buffalo "_lTf_L0yvrU-4261"]
 theorem symm_finiteType_iff : Algebra.FiniteType k (SymmetricAlgebra k M) ↔ Module.Finite k M := by
   classical
   constructor
@@ -314,6 +335,7 @@ theorem symm_finiteType_iff : Algebra.FiniteType k (SymmetricAlgebra k M) ↔ Mo
 
 /-- _lTf_L0yvrU-4515 (1:15:15) [thm] A morphism of `𝒪`-modules `W(M) → W(N)`: `A`-linear maps
 `A ⊗ M → A ⊗ N`, natural in `A`. -/
+@[buffalo "_lTf_L0yvrU-4515"]
 structure WHom where
   /-- the component at `A` -/
   app : ∀ (A : Type u) [CommRing A] [Algebra k A], A ⊗[k] M →ₗ[A] A ⊗[k] N
@@ -332,6 +354,7 @@ noncomputable def W_map (g : M →ₗ[k] N) : WHom k M N where
     rw [LinearMap.lTensor_comp_rTensor, LinearMap.rTensor_comp_lTensor]
 
 /-- _lTf_L0yvrU-4515 (1:15:15) [thm] `W` is faithful: `g` is recovered from `W(g)` at `A = k`. -/
+@[buffalo "_lTf_L0yvrU-4515"]
 theorem W_faithful {g g' : M →ₗ[k] N} (h : (W_map k g).app k = (W_map k g').app k) : g = g' := by
   ext m
   have := congrArg (fun φ ↦ TensorProduct.lid k N (φ (1 ⊗ₜ m))) h
@@ -339,6 +362,7 @@ theorem W_faithful {g g' : M →ₗ[k] N} (h : (W_map k g).app k = (W_map k g').
 
 /-- _lTf_L0yvrU-4515 (1:15:15) [thm] `W` is full: every morphism of `𝒪`-modules `W(M) → W(N)` is
 `W(g)` for `g` its component at `k`. -/
+@[buffalo "_lTf_L0yvrU-4515"]
 theorem W_full (φ : WHom k M N) : ∃ g : M →ₗ[k] N, ∀ (A : Type u) [CommRing A] [Algebra k A],
     φ.app A = g.baseChange A := by
   refine ⟨(TensorProduct.lid k N).toLinearMap ∘ₗ (φ.app k).restrictScalars k ∘ₗ
@@ -367,16 +391,19 @@ variable (M N : Type u) [AddCommGroup M] [Module k M] [AddCommGroup N] [Module k
 /-- _lTf_L0yvrU-5101 (1:25:01) [prop] The value at `A` of `k' ↦ Hom_{k'}(M_{k'}, N_{k'})` is
 `Hom_k(M, A ⊗ N)`, the module of `𝒪`-linear maps `W(M) → W(N)` restricted to `A`-algebras
 (by `W_full` over the base `A`). -/
+@[buffalo "_lTf_L0yvrU-5101"]
 noncomputable def homW_eq : (A ⊗[k] M →ₗ[A] A ⊗[k] N) ≃ₗ[A] (M →ₗ[k] A ⊗[k] N) :=
   (LinearMap.liftBaseChangeEquiv A).symm
 
 /-- _lTf_L0yvrU-5166 (1:26:06) [ex] For `M = k` this functor is `W(N)`. -/
+@[buffalo "_lTf_L0yvrU-5166"]
 noncomputable def homW_k : (A ⊗[k] k →ₗ[A] A ⊗[k] N) ≃ₗ[A] A ⊗[k] N :=
   (LinearEquiv.congrLeft (A ⊗[k] N) A (AlgebraTensorModule.rid k A A)).trans
     (LinearMap.ringLmapEquivSelf A A (A ⊗[k] N))
 
 /-- _lTf_L0yvrU-5230 (1:27:10) [prop] If `N` is finitely generated projective,
 `Hom_A(A ⊗ M, A ⊗ N) ≃ V(M ⊗ N^∨)(A) = Hom_k(M ⊗ N^∨, A)`. -/
+@[buffalo "_lTf_L0yvrU-5230"]
 noncomputable def homW_eq_V [Module.Finite k N] [Module.Projective k N] :
     (A ⊗[k] M →ₗ[A] A ⊗[k] N) ≃ₗ[k] V k (M ⊗[k] Module.Dual k N) A :=
   ((homW_eq k M N A).restrictScalars k).trans
@@ -384,12 +411,14 @@ noncomputable def homW_eq_V [Module.Finite k N] [Module.Projective k N] :
       (TensorProduct.lift.equiv (RingHom.id k) M (Module.Dual k N) A))
 
 /-- _lTf_L0yvrU-5230 (1:27:10) [prop] … represented by `S_k(M ⊗ N^∨)`. -/
+@[buffalo "_lTf_L0yvrU-5230"]
 noncomputable def homW_repr [Module.Finite k N] [Module.Projective k N] :
     (SymmetricAlgebra k (M ⊗[k] Module.Dual k N) →ₐ[k] A) ≃ (A ⊗[k] M →ₗ[A] A ⊗[k] N) :=
   (V_repr k _ A).trans (homW_eq_V k M N A).toEquiv.symm
 
 /-- _lTf_L0yvrU-5556 (1:32:36) [prop] For `N` finitely generated projective, `End(N_A)` is an
 `A`-algebra (non-commutative in general), and `End(N)` is represented by `S_k(N ⊗ N^∨)`. -/
+@[buffalo "_lTf_L0yvrU-5556"]
 noncomputable def end_repr [Module.Finite k N] [Module.Projective k N] :
     (SymmetricAlgebra k (N ⊗[k] Module.Dual k N) →ₐ[k] A) ≃ Module.End A (A ⊗[k] N) :=
   homW_repr k N N A
@@ -398,6 +427,7 @@ example : Algebra A (Module.End A (A ⊗[k] N)) := inferInstance
 
 /-- _lTf_L0yvrU-5749 (1:35:49) [prop] The invertible elements of a monoid are the pairs `(x, y)`
 with `xy = 1` and `yx = 1` (the equalizer description, pointwise). -/
+@[buffalo "_lTf_L0yvrU-5749"]
 def unitsEquivPairs (R : Type*) [Monoid R] : Rˣ ≃ {p : R × R // p.1 * p.2 = 1 ∧ p.2 * p.1 = 1} where
   toFun u := ⟨(u, ↑u⁻¹), u.mul_inv, u.inv_mul⟩
   invFun p := ⟨p.1.1, p.1.2, p.2.1, p.2.2⟩
@@ -406,11 +436,13 @@ def unitsEquivPairs (R : Type*) [Monoid R] : Rˣ ≃ {p : R × R // p.1 * p.2 = 
 
 /-- _lTf_L0yvrU-5940 (1:39:00) [prop] `Aut(N)(A) = End(N_A)ˣ`: the units of the endomorphism
 algebra are the automorphisms (Mathlib `LinearMap.GeneralLinearGroup.generalLinearEquiv`). -/
+@[buffalo "_lTf_L0yvrU-5940"]
 noncomputable def aut_eq_units : (Module.End A (A ⊗[k] N))ˣ ≃* (A ⊗[k] N ≃ₗ[A] A ⊗[k] N) :=
   LinearMap.GeneralLinearGroup.generalLinearEquiv A (A ⊗[k] N)
 
 /-- _lTf_L0yvrU-6070 (1:41:10) [prop] An endomorphism of a finitely generated free module is
 invertible iff its determinant is (Mathlib `LinearMap.isUnit_iff_isUnit_det`). -/
+@[buffalo "_lTf_L0yvrU-6070"]
 theorem isUnit_iff_det (P : Type*) [AddCommGroup P] [Module A P] [Module.Finite A P]
     [Module.Free A P] (f : Module.End A P) : IsUnit f ↔ IsUnit (LinearMap.det f) :=
   LinearMap.isUnit_iff_isUnit_det f

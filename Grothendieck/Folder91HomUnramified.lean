@@ -8,6 +8,7 @@ module
 public import Mathlib.LinearAlgebra.Isomorphisms
 public import Mathlib.RingTheory.Ideal.Operations
 public import Mathlib.Tactic.LinearCombination
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -60,6 +61,7 @@ namespace Grothendieck.Folder91HomUnramified
 
 /-- Formal unramifiedness of composition with `φ` under the rigidity hypothesis of page 21:
 two first-order deformations of `u` with the same composite with `φ` coincide. -/
+@[montpellier "91, 21"]
 theorem eq_of_comp_eq_of_rigid {R B C' D' : Type*} [CommRing R] [CommRing B] [CommRing C']
     [CommRing D'] [Algebra R B] [Algebra R C'] [Algebra R D'] (I : Ideal C') (hI : I * I = ⊥)
     (ψ : C' →ₐ[R] D') (u u' : B →ₐ[R] C') (hmod : ∀ b, u b - u' b ∈ I)
@@ -84,6 +86,7 @@ theorem eq_of_comp_eq_of_rigid {R B C' D' : Type*} [CommRing R] [CommRing B] [Co
 
 /-- The cartesian square of page 19: `Hom(M_u, J)` is the fibre product of `Hom(M_v, J)` and
 `Hom(M_u, J_η)` over `Hom(M_v, J_η)` when `M_v → M_u` is onto and `J → J_η` is injective. -/
+@[montpellier "91, 19"]
 theorem exists_unique_lift_of_surjective {A Mu Mv J Jη : Type*} [CommRing A]
     [AddCommGroup Mu] [AddCommGroup Mv] [AddCommGroup J] [AddCommGroup Jη] [Module A Mu]
     [Module A Mv] [Module A J] [Module A Jη] (f : Mv →ₗ[A] Mu) (hf : Function.Surjective f)
@@ -116,6 +119,7 @@ as hypotheses. `δ : Hom(N, J)/Im → Ext¹(M_{u₀}, J)` carries `ξ'''` to `ξ
 to the obstruction `η''` of `v₀`, which vanishes since `v` exists; `η'` is the class given by
 the generic extensions, zero by hypothesis. The conclusion: the obstruction to extending `u₀`
 vanishes. -/
+@[montpellier "91, 19–20"]
 theorem obstruction_vanishes_of_admitted {Q E F : Type*} [AddCommGroup Q] [AddCommGroup E]
     [AddCommGroup F] (δ : Q →+ E) (ρ : E →+ F) (ξ''' η' : Q) (ξ'' : E) (η'' : F)
     (hξ : ξ'' = δ ξ''') (hη'' : η'' = 0) (hη' : η' = 0)

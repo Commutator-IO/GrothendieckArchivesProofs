@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.Topos.Part01a
+import Grothendieck.Attr
 
 /-!
 # Buffalo, topos theory, part 1e: colimits of sheaves and representability (4 April 1973)
@@ -65,6 +66,7 @@ include hι in
 /-- URU5jgTvjhU-6861 (1:54:21) [prop] (for any full subcategory, here `Sh(X) ⊂ PSh(X)`) A colimit of
 `K` exists iff `G ↦ Hom(P, G)` is (co)representable, `P` being the colimit taken in the ambient
 category. -/
+@[buffalo "URU5jgTvjhU-6861"]
 theorem hasColimit_iff_corepresentable :
     HasColimit K ↔ (ι ⋙ coyoneda.obj (op (colimit (K ⋙ ι)))).IsCorepresentable := by
   constructor
@@ -76,6 +78,7 @@ theorem hasColimit_iff_corepresentable :
 end Criterion
 
 /-- URU5jgTvjhU-6861 (1:54:21) [prop] The criterion for sheaves on a space. -/
+@[buffalo "URU5jgTvjhU-6861"]
 theorem sheaf_hasColimit_iff {X : TopCat.{u}} {J : Type u} [SmallCategory J]
     (K : J ⥤ Sheaf (Opens.grothendieckTopology X) (Type u)) :
     HasColimit K ↔ (sheafToPresheaf (Opens.grothendieckTopology X) (Type u) ⋙

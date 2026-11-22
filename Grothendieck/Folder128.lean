@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 128, pages 12–13: the equivalence ideals of a rank-2 algebra over a field
@@ -83,6 +84,7 @@ noncomputable abbrev p23 : A ⊗[k] A →ₐ[k] (A ⊗[k] A) ⊗[k] A :=
 
 /-- An equivalence ideal of `A ⊗[k] A` (folder 128, page 11 and the reading's definition):
 reflexive, symmetric and transitive. -/
+@[montpellier "128, 11"]
 structure IsEquivalenceIdeal (I : Ideal (A ⊗[k] A)) : Prop where
   /-- Reflexivity: `I ⊂ Δ = Ker(A ⊗ A → A)`. -/
   refl : I ≤ RingHom.ker (Algebra.TensorProduct.lmul' k : A ⊗[k] A →ₐ[k] A)
@@ -223,6 +225,7 @@ lemma nil_case (h2 : Module.finrank k A = 2) {I : Ideal (A ⊗[k] A)} (hI : IsEq
 /-- **Folder 128, Prop. 1 (i), field case** (Grothendieck, page 12; the reduction to rank `2`
 is page 13). For `A` a commutative algebra of rank `2` over a field `k`, an equivalence ideal
 of `A ⊗[k] A` is `0` or the diagonal ideal `Δ = Ker(A ⊗[k] A → A)`. -/
+@[montpellier "128, 12–13"]
 theorem eq_bot_or_eq_ker (h2 : Module.finrank k A = 2) {I : Ideal (A ⊗[k] A)}
     (hI : IsEquivalenceIdeal I) :
     I = ⊥ ∨ I = RingHom.ker (Algebra.TensorProduct.lmul' k : A ⊗[k] A →ₐ[k] A) := by
@@ -262,12 +265,14 @@ theorem eq_bot_or_eq_ker (h2 : Module.finrank k A = 2) {I : Ideal (A ⊗[k] A)}
   · rw [smul_mul_smul, hee, smul_smul, mul_assoc, inv_mul_cancel₀ hr, mul_one]
 
 /-- `0` is an equivalence ideal (the coarsest relation, the whole fibre product). -/
+@[montpellier "128, 12–13"]
 theorem isEquivalenceIdeal_bot : IsEquivalenceIdeal (⊥ : Ideal (A ⊗[k] A)) where
   refl := bot_le
   symm t ht := by rw [Ideal.mem_bot.1 ht, map_zero]; exact zero_mem _
   trans := by rw [Ideal.map_bot]; exact bot_le
 
 /-- `Δ` is an equivalence ideal (the finest relation, the diagonal). -/
+@[montpellier "128, 12–13"]
 theorem isEquivalenceIdeal_ker :
     IsEquivalenceIdeal (RingHom.ker (Algebra.TensorProduct.lmul' k : A ⊗[k] A →ₐ[k] A)) where
   refl := le_rfl
@@ -458,6 +463,7 @@ kernel of a `k`-point), and `J ⊂ Δ` an ideal of `A ⊗[k] A` such that
 * (`δ(x)` generates `Δ/J` in `(A ⊗ A)/J`) `Δ ⊂ (δ(x)) + J` for every `x ∉ k`.
 Then `dim_k A ≤ 2`, i.e. `A/k` has length `≤ 1`. Neither symmetry nor transitivity of `J` is
 used, and there is no case split radiciel / non radiciel. -/
+@[montpellier "128, 14–18"]
 theorem finrank_le_two [Module.Finite k A]
     (hres : ∀ m : Ideal A, m.IsMaximal → ∃ χ : A →ₐ[k] k, RingHom.ker χ = m)
     {J : Ideal (A ⊗[k] A)} (hJ : J ≤ diag k A)
@@ -504,6 +510,7 @@ theorem finrank_le_two [Module.Finite k A]
 
 /-- Prop. 2, last assertion: if `A/k` has length `1`, an exact equivalence ideal is `0`, so
 `(A ⊗ A)/J = A ⊗ A` (by `eq_bot_or_eq_ker`, `J = Δ` contradicting exactness). -/
+@[montpellier "128, 14–18"]
 theorem eq_bot_of_finrank_eq_two (h2 : finrank k A = 2) {J : Ideal (A ⊗[k] A)}
     (hJ : IsEquivalenceIdeal J)
     (hexact : ∀ x : A, delta k A x ∈ J → x ∈ Set.range (algebraMap k A)) : J = ⊥ := by
@@ -518,6 +525,7 @@ theorem eq_bot_of_finrank_eq_two (h2 : finrank k A = 2) {J : Ideal (A ⊗[k] A)}
 /-- **Folder 128, Prop. 2, field case, as stated** (pages 14–18): for an equivalence ideal `J`
 of `A ⊗[k] A` with `k → A ⇉ (A ⊗ A)/J` exact and `δ(x)` generating `Δ/J` for every `x ∉ k`,
 `A/k` has length `≤ 1`, and if it is `1` then `J = 0`. -/
+@[montpellier "128, 14–18"]
 theorem prop2 [Module.Finite k A]
     (hres : ∀ m : Ideal A, m.IsMaximal → ∃ χ : A →ₐ[k] k, RingHom.ker χ = m)
     {J : Ideal (A ⊗[k] A)} (hJ : IsEquivalenceIdeal J)
@@ -775,6 +783,7 @@ variable (R S : Type u) [CommRing R] [CommRing S] [Algebra R S]
 /-- A descent datum on an `S`-module `E` relative to `R → S` (Grothendieck, page 4), written as
 a comodule over the coring `S ⊗_R S`: an `S`-linear `ψ : E → S ⊗_R E` (`ψ(e) = φ(1 ⊗ e)` for
 the gluing isomorphism `φ`), with counit `Σ bᵢ eᵢ = e` and the cocycle condition. -/
+@[montpellier "128, 4"]
 structure DescentDatum (E : Type u) [AddCommGroup E] [Module S E] [Module R E]
     [IsScalarTower R S E] where
   /-- The coaction `e ↦ Σ bᵢ ⊗ eᵢ`. -/
@@ -831,6 +840,7 @@ def IsDescentFlat : Prop :=
 variable (R S) in
 /-- `Spec S → Spec R` is an effective descent morphism for flat modules: a descent morphism, and
 every descent datum on a flat `S`-module is effective. -/
+@[montpellier "128, 4–9"]
 def IsEffectiveDescentFlat : Prop :=
   IsDescentFlat R S ∧
     ∀ (E : Type u) [AddCommGroup E] [Module S E] [Module R E] [IsScalarTower R S E]
@@ -845,6 +855,7 @@ variable {A S : Type u} [CommRing A] [CommRing S] [Algebra A S]
 variable (S) in
 /-- `I` is an ideal of `A` mapped injectively onto an ideal of `S` (Grothendieck, page 1): `I`
 lies in the conductor, and `A → S`, `A/I → S/IS` is a Milnor square. -/
+@[montpellier "128, 1"]
 structure IsConductorIdeal (I : Ideal A) : Prop where
   inj : ∀ x ∈ I, algebraMap A S x = 0 → x = 0
   ideal : ∀ x ∈ I, ∀ b : S, ∃ y ∈ I, b * algebraMap A S x = algebraMap A S y
@@ -1336,6 +1347,7 @@ mapped isomorphically onto an ideal of `S`, and `E` a flat `S`-module with a des
 relative to `A → S` whose reduction modulo `I` (relative to `A/I → S/IS`) is effective. Then the
 datum is effective: the invariants `E^ψ` are flat over `A` and `S ⊗_A E^ψ → E` is bijective.
 Neither `A ≅ H⁰(S/A)` nor `H¹(S/A) = 0` is needed. -/
+@[montpellier "128, 4–7"]
 theorem isEffective_of_reduce (h : IsConductorIdeal S I) (hI : IsNilpotent I)
     [Module.Flat S E] (d : DescentDatum A S E) (h₀ : (d.reduce I).IsEffective) :
     d.IsEffective := by
@@ -1359,6 +1371,7 @@ lemma mk_quot_eq_zero {M : Type u} [AddCommGroup M] [Module A M] {m : M} :
 /-- **Folder 128, Cor. 1** (Grothendieck, page 7). Let `I` be a nilpotent ideal of `A` mapped
 isomorphically onto an ideal of `S` (`I` in the conductor). If `Spec S/IS → Spec A/I` is an
 effective descent morphism for flat modules, so is `Spec S → Spec A`. -/
+@[montpellier "128, 7"]
 theorem isEffectiveDescentFlat_of_quotient (h : IsConductorIdeal S I) (hI : IsNilpotent I)
     (h₀ : IsEffectiveDescentFlat (A ⧸ I) (S ⧸ I.map (algebraMap A S))) :
     IsEffectiveDescentFlat A S := by
@@ -1524,6 +1537,7 @@ lemma exists_det_ne_zero_residue (𝔫 : MaximalSpectrum C)
 finitely many maximal ideals, distinct maximal ideals of `C` lying over distinct (maximal) ideals
 of `B`, and at each `𝔫` either `B/(𝔫 ∩ B)` infinite or `B → C/𝔫` onto. Then for every
 `u ∈ M_n(C)` there is `v ∈ M_n(B)` with `u + v` invertible. -/
+@[montpellier "128, 23"]
 theorem exists_isUnit_add_map [Algebra.IsIntegral B C] [Finite (MaximalSpectrum C)]
     (hinj : ∀ 𝔫 𝔫' : MaximalSpectrum C,
       𝔫.asIdeal.comap (algebraMap B C) = 𝔫'.asIdeal.comap (algebraMap B C) → 𝔫 = 𝔫')
@@ -1569,6 +1583,7 @@ over `B` with finitely many maximal ideals, two distinct maximal ideals of `C` l
 distinct ideals of `B`, and every residue extension `k(𝔫)/k(𝔪)` purely inseparable (`C` finite
 and radicial over `B`). Then for every `u ∈ M_n(C)` there is `v ∈ M_n(B)` with `u + φ(v)`
 invertible. A finite residue field is perfect, so there the radicial extension is trivial. -/
+@[montpellier "128, 23"]
 theorem lemme2 [Algebra.IsIntegral B C] [Finite (MaximalSpectrum C)]
     (hinj : ∀ 𝔫 𝔫' : MaximalSpectrum C,
       𝔫.asIdeal.comap (algebraMap B C) = 𝔫'.asIdeal.comap (algebraMap B C) → 𝔫 = 𝔫')
@@ -1594,6 +1609,7 @@ theorem lemme2 [Algebra.IsIntegral B C] [Finite (MaximalSpectrum C)]
 
 /-- **Folder 128, N.B. of Lemme 1** (Grothendieck, page 19): under the hypotheses of `lemme2`,
 `C = C^* + B`, every `c ∈ C` is a unit up to an element of `B`. -/
+@[montpellier "128, 19"]
 theorem exists_isUnit_add [Algebra.IsIntegral B C] [Finite (MaximalSpectrum C)]
     (hinj : ∀ 𝔫 𝔫' : MaximalSpectrum C,
       𝔫.asIdeal.comap (algebraMap B C) = 𝔫'.asIdeal.comap (algebraMap B C) → 𝔫 = 𝔫')
@@ -1651,6 +1667,7 @@ lemma compatibleSMul (hB : ∀ b : B, algebraMap B S b ∈ H0 A S)
 unit `u` of `S`, `p₂(u) p₁(u)⁻¹ = 1 + p₁(u)⁻¹ (p₂(u) − p₁(u))` in `S ⊗_A S`, with
 `p₁(u) = u ⊗ 1` and `p₂(u) = 1 ⊗ u`: the class `∂_m(u)` is `u⁻¹ ∂_a(u)`, which is why the
 square of page 20 does not commute. -/
+@[montpellier "128, 20"]
 theorem coboundary_mul_eq (u : Sˣ) :
     ((1 : S) ⊗ₜ[A] (u : S)) * ((↑u⁻¹ : S) ⊗ₜ[A] (1 : S)) =
       1 + ((↑u⁻¹ : S) ⊗ₜ[A] (1 : S)) * ((1 : S) ⊗ₜ[A] (u : S) - (u : S) ⊗ₜ[A] (1 : S)) := by
@@ -1659,6 +1676,7 @@ theorem coboundary_mul_eq (u : Sˣ) :
   abel
 
 /-- `S ⊗_B E ≃ S ⊗_A E` when `B` maps into `H⁰(S/A)` (folder 128, pages 26–27). -/
+@[montpellier "128, 26–27"]
 noncomputable def tensorEquiv (hB : ∀ b : B, algebraMap B S b ∈ H0 A S)
     (E : Type*) [AddCommGroup E] [Module A E] [Module B E] [Module S E] [IsScalarTower A S E]
     [IsScalarTower B S E] [IsScalarTower A B E] : S ⊗[B] E ≃ₗ[S] S ⊗[A] E :=
@@ -1673,6 +1691,7 @@ noncomputable def tensorEquiv (hB : ∀ b : B, algebraMap B S b ∈ H0 A S)
 /-- **Folder 128, pages 26–27** (the page's bracket, justified by the edition). If `A → B → S`
 and `B` maps into `H⁰(S/A)`, the canonical map `S ⊗_A E → S ⊗_B E` is bijective for every
 `S`-module `E`: descent data relative to `S/A` and to `S/B` are the same. -/
+@[montpellier "128, 26–27"]
 theorem bijective_mapOfCompatibleSMul (hB : ∀ b : B, algebraMap B S b ∈ H0 A S)
     (E : Type*) [AddCommGroup E] [Module A E] [Module B E] [Module S E] [IsScalarTower A S E]
     [IsScalarTower B S E] [IsScalarTower A B E] :
@@ -1680,6 +1699,7 @@ theorem bijective_mapOfCompatibleSMul (hB : ∀ b : B, algebraMap B S b ∈ H0 A
   (tensorEquiv hB E).symm.bijective
 
 /-- With `B` mapping into `H⁰(S/A)`, `H⁰(S/B) = H⁰(S/A)`. -/
+@[montpellier "128, 26–27"]
 theorem mem_H0_iff (hB : ∀ b : B, algebraMap B S b ∈ H0 A S) (s : S) :
     s ∈ H0 B S ↔ s ∈ H0 A S := by
   change s ⊗ₜ[B] (1 : S) = 1 ⊗ₜ s ↔ s ⊗ₜ[A] (1 : S) = 1 ⊗ₜ s
@@ -1895,6 +1915,7 @@ lemma mul_mem_smul (χ : B →ₐ[A] A ⧸ 𝔪) (u : B ⊗[A] B) {t : B ⊗[A] 
 
 /-- `𝔪B ⊂ A`: an `x ∈ 𝔪B` outside `A` would have `δ(x) ∈ 𝔫 Δ` at every point, so `Δ ⊂ J` by
 Nakayama, and exactness would put `x` in `A`. -/
+@[montpellier "128, 14–18"]
 theorem map_le_range [Module.Finite A B] [IsNoetherianRing A]
     (hres : ∀ n : Ideal B, n.IsMaximal → ∃ χ : B →ₐ[A] A ⧸ 𝔪, RingHom.ker χ = n)
     {J : Ideal (B ⊗[A] B)}
@@ -2031,6 +2052,7 @@ lemma exists_sub_smul_mem [𝔪.IsMaximal]
 * (`δ(x)` generates `Δ/J`) `Δ ⊂ (δ(x)) + J` for every `x ∉ A`.
 Then `𝔪B ⊂ A` (so `𝔪B = 𝔪` when `A → B` is injective) and `B/A` has length `≤ 1`.
 Neither symmetry nor transitivity of `J` is used. -/
+@[montpellier "128, 14–18"]
 theorem colength_le_one [𝔪.IsMaximal] [Module.Finite A B] [IsNoetherianRing A]
     (hres : ∀ n : Ideal B, n.IsMaximal → ∃ χ : B →ₐ[A] A ⧸ 𝔪, RingHom.ker χ = n)
     {J : Ideal (B ⊗[A] B)} (hJ : J ≤ diag A B)
@@ -2242,6 +2264,7 @@ hypotheses of `colength_le_one`, if `J` is moreover an equivalence ideal and `B/
 `Θ : B ⊗_A B → B₀ ⊗_k B₀` is injective on `Δ` (Prop. 3 of N° 1), `Θ(J)` is an equivalence ideal
 (Cor. 2), `dim_k B₀ = 2`, and `eq_bot_or_eq_ker` leaves `Θ(J) = 0` or `Θ(J) = Δ₀`; the second
 would put `δ(z)` in `J` for some `z ∉ A`. -/
+@[montpellier "128, 14–18"]
 theorem eq_bot_of_length_eq_one [Module.Finite A B] [IsNoetherianRing A]
     (hres : ∀ n : Ideal B, n.IsMaximal → ∃ χ : B →ₐ[A] A ⧸ 𝔪, RingHom.ker χ = n)
     {J : Ideal (B ⊗[A] B)} (hJ : IsEquivIdeal J)
@@ -2283,6 +2306,7 @@ particular local artinian) with maximal ideal `𝔪` and residue field `k = A/�
 `A'`) a finite `A`-algebra with trivial residue extensions, and `J` an equivalence ideal of
 `B ⊗_A B` such that `A → B ⇉ (B ⊗_A B)/J` is exact and `δ(x)` generates `Δ/J` for every
 `x ∉ A`: `𝔪B ⊂ A`, `B/A` has length `≤ 1`, and if the length is `1` then `J = 0`. -/
+@[montpellier "128, 14–18"]
 theorem prop2 [IsLocalRing A] [IsNoetherianRing A] [Module.Finite A B]
     (hres : ∀ n : Ideal B, n.IsMaximal →
       ∃ χ : B →ₐ[A] A ⧸ IsLocalRing.maximalIdeal A, RingHom.ker χ = n)
@@ -2334,6 +2358,7 @@ attribute [local instance] Ideal.Quotient.field
 exactly `0` and `Δ`. The page's reduction: `𝔪B ⊂ A`, `Θ` is injective on `Δ` (Prop. 3 of N° 1),
 `Θ(J)` is an equivalence ideal of `B₀ ⊗_k B₀` with `dim_k B₀ = 2` (Cor. 2), and
 `eq_bot_or_eq_ker` is the case `A = k`. -/
+@[montpellier "128, 12–13"]
 theorem prop1_i (e : (B ⧸ LinearMap.range (Algebra.linearMap A B)) ≃ₗ[A] A ⧸ 𝔪)
     {J : Ideal (B ⊗[A] B)} : IsEquivIdeal J ↔ J = ⊥ ∨ J = diag A B := by
   refine ⟨fun hJ => ?_, by rintro (rfl | rfl); exacts [isEquivIdeal_bot, isEquivIdeal_diag]⟩
@@ -2477,6 +2502,7 @@ theorem isEffectiveDescentFlat_of_faithfullyFlat [Module.FaithfullyFlat R S] :
 /-- **Folder 128, the example of Cor. 1** (Grothendieck, page 7). Let `I` be a nilpotent ideal of
 `A` mapped isomorphically onto an ideal of `S`. If `S/IS` is faithfully flat over `A/I`, then
 `Spec S → Spec A` is an effective descent morphism for flat modules. -/
+@[montpellier "128, 7"]
 theorem isEffectiveDescentFlat_of_quotient_faithfullyFlat {A S : Type u} [CommRing A]
     [CommRing S] [Algebra A S] {I : Ideal A} (h : IsConductorIdeal S I) (hI : IsNilpotent I)
     [Module.FaithfullyFlat (A ⧸ I) (S ⧸ I.map (algebraMap A S))] : IsEffectiveDescentFlat A S :=

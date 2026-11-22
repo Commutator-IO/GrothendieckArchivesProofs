@@ -8,6 +8,7 @@ module
 public import Grothendieck.Folder19
 public import Mathlib.CategoryTheory.Sites.Limits
 public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
+import Grothendieck.Attr
 
 /-!
 # Folder 19, after théorème 1.12: descent along a surjective morphism of topoi
@@ -78,6 +79,7 @@ theorem conditionC_inverseImage (φ : MorphismOfTopoi E F) [HasEqualizers F] :
 /-- **The remark after théorème 1.12.** For a morphism of topoi `φ : E → F` whose target has
 equalizers and whose inverse image `φ*` is conservative, `F` is equivalent, by the comparison
 functor, to the category of coalgebras of the comonad `φ* φ_*` on `E`. -/
+@[montpellier "19, 4"]
 theorem MorphismOfTopoi.comparison_isEquivalence (φ : MorphismOfTopoi E F) [HasEqualizers F]
     [φ.inverseImage.ReflectsIsomorphisms] :
     (Comonad.comparison φ.adj).IsEquivalence :=
@@ -86,6 +88,7 @@ theorem MorphismOfTopoi.comparison_isEquivalence (φ : MorphismOfTopoi E F) [Has
 /-- **The same for a morphism of sites** (Stacks 00XC): for `u : C ⥤ D` a morphism of sites
 `(D, K) → (C, J)` whose pullback `u_s : Sh(C) ⥤ Sh(D)` is conservative, `Sh(C)` is equivalent to
 the category of coalgebras of the comonad `u_s u^s` on `Sh(D)`. -/
+@[montpellier "19, 4"]
 theorem IsMorphismOfSites.comparison_isEquivalence {C D : Type u} [SmallCategory C]
     [SmallCategory D] {J : GrothendieckTopology C} {K : GrothendieckTopology D} {u : C ⥤ D}
     (h : u.IsMorphismOfSites J K) [h.morphismOfTopoi.inverseImage.ReflectsIsomorphisms] :

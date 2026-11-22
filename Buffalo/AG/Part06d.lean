@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 06 (d): 26 June 1973, from 4:39:50
@@ -114,6 +115,7 @@ theorem diffElt_pow : diffElt k p x ^ p = 0 := by
 /-- Oqhr-Gt66es-17048 (4:44:08) [cex] For `k' = k[t]/(tᵖ - x)`, `k' ⊗_k k'` is not reduced (it is
 `k'[t]/(t - α)ᵖ`; the presentation is not formalised): `α ⊗ 1 - 1 ⊗ α` is a nonzero nilpotent.
 (The hypothesis `x ∉ kᵖ` makes `k'` a field; it is not needed for non-reducedness.) -/
+@[buffalo "Oqhr-Gt66es-17048"]
 theorem not_isReduced_tensor :
     ¬ IsReduced (AdjoinRoot (rootPoly k p x) ⊗[k] AdjoinRoot (rootPoly k p x)) := fun h =>
   diffElt_ne_zero k p x (h.eq_zero _ ⟨p, diffElt_pow k p x⟩)
@@ -160,6 +162,7 @@ end Root
 `k' ⊗_k k'` is reduced for every finite purely inseparable extension `k'/k`. Proved: this
 equivalence of the first and last conditions (⇒ even for every finite extension; ⇐ with
 `k' = k[t]/(tᵖ - x)`, `x ∉ kᵖ`); the conditions on arbitrary reduced algebras are not formalised. -/
+@[buffalo "Oqhr-Gt66es-16790"]
 theorem prop_16790 (p : ℕ) [hp : Fact p.Prime] [CharP k p] :
     (PerfectField k → ∀ (K : Type u) [Field K] [Algebra k K] [FiniteDimensional k K],
       IsReduced (K ⊗[k] K)) ∧
@@ -176,6 +179,7 @@ theorem prop_16790 (p : ℕ) [hp : Fact p.Prime] [CharP k p] :
 
 /-- Oqhr-Gt66es-17116 (4:45:16) [prop] If `k` is perfect and `K, L` are extensions of `k`,
 `K ⊗_k L` is reduced. Proved for `K` finite over `k` (`L` arbitrary). -/
+@[buffalo "Oqhr-Gt66es-17116"]
 theorem prop_17116 [PerfectField k] (K L : Type u) [Field K] [Field L] [Algebra k K]
     [Algebra k L] [FiniteDimensional k K] : IsReduced (L ⊗[k] K) :=
   isReduced_tensor_of_isSeparable k K L
@@ -184,6 +188,7 @@ theorem prop_17116 [PerfectField k] (K L : Type u) [Field K] [Field L] [Algebra 
 reducedness are equivalent. Mathlib's definition (`Algebra.IsGeometricallyReduced`: `k̄ ⊗_k A`
 reduced) gives `A` reduced and `K ⊗_k A` reduced for every algebraic extension `K`; the other
 implications are not formalised. -/
+@[buffalo "Oqhr-Gt66es-17370"]
 theorem prop_17370 (A : Type u) [CommRing A] [Algebra k A] [Algebra.IsGeometricallyReduced k A] :
     IsReduced A ∧ ∀ (K : Type u) [Field K] [Algebra k K] [Algebra.IsAlgebraic k K],
       IsReduced (K ⊗[k] A) :=
@@ -198,6 +203,7 @@ example : @GeometricallyReduced = geometrically AlgebraicGeometry.IsReduced :=
 every algebra only if `k` is perfect. Proved: both statements (the second with `k' = k[t]/(tᵖ - x)`,
 a field, reduced and not geometrically reduced); that the converse holds when `k` is perfect is
 not formalised. -/
+@[buffalo "Oqhr-Gt66es-17899"]
 theorem prop_17899 (p : ℕ) [Fact p.Prime] [CharP k p] :
     (∀ (A : Type u) [CommRing A] [Algebra k A] [Algebra.IsGeometricallyReduced k A],
       IsReduced A) ∧
@@ -211,6 +217,7 @@ theorem prop_17899 (p : ℕ) [Fact p.Prime] [CharP k p] :
 
 /-- Oqhr-Gt66es-17970 (4:59:30) [prop] For every extension `k'/k`, `X` is separable over `k` iff
 `X_{k'}` is over `k'`. Proved: the direction ⇒ (stability under base change); ⇐ not formalised. -/
+@[buffalo "Oqhr-Gt66es-17970"]
 theorem prop_17970 {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of k)) [GeometricallyReduced f]
     (k' : Type u) [Field k'] (φ : Spec (CommRingCat.of k') ⟶ Spec (CommRingCat.of k)) :
     GeometricallyReduced (pullback.snd f φ) :=
@@ -228,6 +235,7 @@ variable (k : Type u) [Field k]
 purely inseparable (mathlib: `isSepClosed_iff_isPurelyInseparable_algebraicClosure`,
 `Algebra.IsAlgebraic.isPurelyInseparable_of_isSepClosed`); in characteristic zero every field is
 perfect and separably closed is equivalent to algebraically closed. -/
+@[buffalo "Oqhr-Gt66es-18099"]
 theorem prop_18099 :
     (IsSepClosed k ↔ IsPurelyInseparable k (AlgebraicClosure k)) ∧
     (∀ (K : Type u) [Field K] [Algebra k K] [Algebra.IsAlgebraic k K] [IsSepClosed k],
@@ -241,6 +249,7 @@ theorem prop_18099 :
 integral domain for every finite Galois extension `k'`. Proved: the key step of (4) ⇒ (1): if
 `k' ⊗_k k'` is a domain for a finite extension `k'`, then `k' = k` (a finite-dimensional domain is a
 field, so `k' ⊗_k k' → k'` is injective and `[k' : k]² ≤ [k' : k]`). -/
+@[buffalo "Oqhr-Gt66es-18295"]
 theorem prop_18295 (K : Type u) [Field K] [Algebra k K] [FiniteDimensional k K]
     [IsDomain (K ⊗[k] K)] : Module.finrank k K = 1 := by
   have : IsArtinianRing (K ⊗[k] K) := IsArtinianRing.of_finite k (K ⊗[k] K)
@@ -257,6 +266,7 @@ theorem prop_18295 (K : Type u) [Field K] [Algebra k K] [FiniteDimensional k K]
 /-- Oqhr-Gt66es-18552 (5:09:12) [prop] Geometric irreducibility. Mathlib's definition
 (`GeometricallyIrreducible`: every base change to a field is irreducible) gives: `X_{k'}` is
 irreducible for every extension `k'`; the other equivalences are not formalised. -/
+@[buffalo "Oqhr-Gt66es-18552"]
 theorem prop_18552 {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of k)) [GeometricallyIrreducible f]
     (k' : Type u) [Field k'] (φ : Spec (CommRingCat.of k') ⟶ Spec (CommRingCat.of k)) :
     IrreducibleSpace ↥(pullback f φ) := by
@@ -267,12 +277,14 @@ theorem prop_18552 {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of k)) [Geometr
 /-- Oqhr-Gt66es-19341 (5:22:21) [prop] A geometrically irreducible `k`-scheme is irreducible
 (mathlib: `GeometricallyIrreducible.irreducibleSpace_of_subsingleton`); the converse for every `X`
 iff `k` separably closed is not formalised. -/
+@[buffalo "Oqhr-Gt66es-19341"]
 theorem prop_19341 {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of k)) [GeometricallyIrreducible f] :
     IrreducibleSpace X :=
   GeometricallyIrreducible.irreducibleSpace_of_subsingleton f
 
 /-- Oqhr-Gt66es-19407 (5:23:27) [prop] For every extension `k'/k`, `X` is geometrically irreducible
 over `k` iff `X_{k'}` is over `k'`. Proved: ⇒ (stability under base change). -/
+@[buffalo "Oqhr-Gt66es-19407"]
 theorem prop_19407 {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of k)) [GeometricallyIrreducible f]
     (k' : Type u) [Field k'] (φ : Spec (CommRingCat.of k') ⟶ Spec (CommRingCat.of k)) :
     GeometricallyIrreducible (pullback.snd f φ) :=

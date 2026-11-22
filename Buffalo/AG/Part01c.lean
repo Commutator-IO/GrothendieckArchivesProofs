@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Buffalo.AG.Part01b
+import Grothendieck.Attr
 
 /-!
 # Buffalo, algebraic geometry, part 01 (c): 4 June 1973
@@ -46,6 +47,7 @@ variable (k : Type u) [CommRing k] {I : Type u}
 
 /-- 51wmmpHand0-11436 (3:10:36) [prop] Projective limits of representable functors are
 representable: `𝒞` has all projective limits and `coyoneda` preserves them. -/
+@[buffalo "51wmmpHand0-11436"]
 theorem prop_11436 {J : Type u} [SmallCategory J] (F : J ⥤ (CommAlgCat.{u} k)ᵒᵖ) :
     (Limits.limit (F ⋙ coyoneda)).IsCorepresentable :=
   Functor.IsCorepresentable.mk' (X := (Limits.limit F).unop) (preservesLimitIso coyoneda F)
@@ -58,6 +60,7 @@ def VProd (A B : Type u) [CommRing A] [Algebra k A] [CommRing B] [Algebra k B] :
 
 /-- 51wmmpHand0-11633 (3:13:53) [prop] For `X = V_A` and `Y = V_B`, `X × Y` is represented by
 `A ⊗_k B`. -/
+@[buffalo "51wmmpHand0-11633"]
 def prop_11633 (A B : Type u) [CommRing A] [Algebra k A] [CommRing B] [Algebra k B] :
     (VProd k A B).CorepresentableBy (CommAlgCat.of k (TensorProduct k A B)) where
   homEquiv {k'} :=
@@ -71,6 +74,7 @@ def prop_11633 (A B : Type u) [CommRing A] [Algebra k A] [CommRing B] [Algebra k
 
 /-- 51wmmpHand0-11778 (3:16:18) [prop] The final object of `𝒞` is `V_k = Spec k`: `k` is the
 initial `k`-algebra, and `V_k(k')` is a point. -/
+@[buffalo "51wmmpHand0-11778"]
 theorem prop_11778 (k' : Type*) [CommRing k'] [Algebra k k'] :
     Nonempty (Limits.IsTerminal (Opposite.op (CommAlgCat.of k k))) ∧
       Nonempty (Unique (k →ₐ[k] k')) :=
@@ -78,6 +82,7 @@ theorem prop_11778 (k' : Type*) [CommRing k'] [Algebra k k'] :
 
 /-- 51wmmpHand0-11778 (3:16:18) [prop] To have all projective limits, products and fibre products
 suffice. -/
+@[buffalo "51wmmpHand0-11778"]
 theorem prop_11778_limits {C : Type u} [Category.{u} C] [Limits.HasProducts.{u} C]
     [Limits.HasPullbacks C] : Limits.HasLimits C := by
   have : Limits.HasFiniteProducts C := Limits.hasFiniteProducts_of_hasProducts C
@@ -87,18 +92,21 @@ theorem prop_11778_limits {C : Type u} [Category.{u} C] [Limits.HasProducts.{u} 
 /-- 51wmmpHand0-12039 (3:20:39) [prop] For `S = V_A`, `𝒞/S` is the opposite of the category of
 `A`-algebras; here for `k = ℤ`, i.e. over the category of rings (mathlib:
 `Over.opEquivOpUnder`, `commAlgCatEquivUnder`). -/
+@[buffalo "51wmmpHand0-12039"]
 def prop_12039 (A : CommRingCat.{u}) : Over (Opposite.op A) ≌ (CommAlgCat.{u} A)ᵒᵖ :=
   (Over.opEquivOpUnder A).trans (commAlgCatEquivUnder A).symm.op
 
 /-- 51wmmpHand0-12165 (3:22:45) [prop] The fibre product `X ×_S Y` is represented by `B ⊗_A C`:
 `B ⊗_A C` is the pushout of `B ← A → C` (here in rings; mathlib:
 `CommRingCat.pushoutCoconeIsColimit`). -/
+@[buffalo "51wmmpHand0-12165"]
 def prop_12165 (A B C : Type u) [CommRing A] [CommRing B] [CommRing C] [Algebra A B]
     [Algebra A C] : Limits.IsColimit (CommRingCat.pushoutCocone A B C) :=
   CommRingCat.pushoutCoconeIsColimit A B C
 
 /-- 51wmmpHand0-12293 (3:24:53) [prop] `X × Y` is the fibre product over the final object
 (mathlib: `prodIsoPullback`). -/
+@[buffalo "51wmmpHand0-12293"]
 def prop_12293 {C : Type*} [Category C] [Limits.HasTerminal C] [Limits.HasPullbacks C] (X Y : C)
     [Limits.HasBinaryProduct X Y] :
     X ⨯ Y ≅ Limits.pullback (Limits.terminal.from X) (Limits.terminal.from Y) :=
@@ -106,12 +114,14 @@ def prop_12293 {C : Type*} [Category C] [Limits.HasTerminal C] [Limits.HasPullba
 
 /-- 51wmmpHand0-12487 (3:28:07) [prop] Base change along `S' → S` is right adjoint to
 composition `𝒞/S' → 𝒞/S` (mathlib: `Over.mapPullbackAdj`). -/
+@[buffalo "51wmmpHand0-12487"]
 def prop_12487 {C : Type*} [Category C] [Limits.HasPullbacks C] {S' S : C} (f : S' ⟶ S) :
     Over.map f ⊣ Over.pullback f :=
   Over.mapPullbackAdj f
 
 /-- 51wmmpHand0-12811 (3:33:31) [prop] `Hom_{S'}(Z', X') ≃ Hom_S(Z', X)`: `X'` is the restriction
 of `X` along `𝒞/S' → 𝒞/S`. -/
+@[buffalo "51wmmpHand0-12811"]
 def prop_12811 {C : Type*} [Category C] [Limits.HasPullbacks C] {S' S : C} (f : S' ⟶ S)
     (Z' : Over S') (X : Over S) : ((Over.map f).obj Z' ⟶ X) ≃ (Z' ⟶ (Over.pullback f).obj X) :=
   (Over.mapPullbackAdj f).homEquiv Z' X
@@ -119,6 +129,7 @@ def prop_12811 {C : Type*} [Category C] [Limits.HasPullbacks C] {S' S : C} (f : 
 /-- 51wmmpHand0-12939 (3:35:39) [prop] and 51wmmpHand0-13009 (3:36:49) [prop] For `X = V_B`, the
 base change along `A → A'` is represented by `A' ⊗_A B`: its `A'`-points are the `A`-points of
 `X` (mathlib: `AlgHom.liftEquiv`). -/
+@[buffalo "51wmmpHand0-12939"]
 def prop_12939 (A A' B C : Type u) [CommRing A] [CommRing A'] [CommRing B] [CommRing C]
     [Algebra A A'] [Algebra A B] [Algebra A C] [Algebra A' C] [IsScalarTower A A' C] :
     (B →ₐ[A] C) ≃ (TensorProduct A A' B →ₐ[A'] C) :=
@@ -128,6 +139,7 @@ def prop_12939 (A A' B C : Type u) [CommRing A] [CommRing A'] [CommRing B] [Comm
 
 /-- 51wmmpHand0-13203 (3:40:03) [def] The kernel of a pair `u, v : X → Y`, the subfunctor
 `K(Z) = {x : u(x) = v(x)}` (representable: `prop_13847`). -/
+@[buffalo "51wmmpHand0-13203"]
 def eqKer {X Y : CommAlgCat.{u} k ⥤ Type u} (u v : X ⟶ Y) : Subfunctor X where
   obj Z := {x | u.app Z x = v.app Z x}
   map {Z Z'} f x (hx : u.app Z x = v.app Z x) := by
@@ -136,6 +148,7 @@ def eqKer {X Y : CommAlgCat.{u} k ⥤ Type u} (u v : X ⟶ Y) : Subfunctor X whe
 
 /-- 51wmmpHand0-13331 (3:42:11) [prop] The kernel of `(u, v)` is the fibre product of
 `(u, v) : X → Y × Y` and the diagonal (pointwise, as limits of functors are). -/
+@[buffalo "51wmmpHand0-13331"]
 def prop_13331 {X Y : Type*} (u v : X → Y) :
     {x // u x = v x} ≃ {p : X × Y // (u p.1, v p.1) = (p.2, p.2)} where
   toFun x := ⟨(x.1, u x.1), by rw [x.2]⟩
@@ -153,6 +166,7 @@ open TensorProduct in
 /-- 51wmmpHand0-13584 (3:46:24) [prop] The diagonal of `V_B` corresponds to the multiplication
 `B ⊗_k B → B`, which is surjective with kernel generated by the `x ⊗ 1 - 1 ⊗ x` (mathlib:
 `KaehlerDifferential.span_range_eq_ideal`). -/
+@[buffalo "51wmmpHand0-13584"]
 theorem prop_13584 (B : Type u) [CommRing B] [Algebra k B] :
     Function.Surjective (Algebra.TensorProduct.lmul' k : B ⊗[k] B →ₐ[k] B) ∧
       Ideal.span (Set.range fun s : B => (1 : B) ⊗ₜ[k] s - s ⊗ₜ[k] (1 : B)) =
@@ -161,6 +175,7 @@ theorem prop_13584 (B : Type u) [CommRing B] [Algebra k B] :
 
 /-- 51wmmpHand0-13847 (3:50:47) [prop] If `u, v : B → A` correspond to `X ⇉ Y`, the kernel of
 `(u, v)` is represented by `A/I`, `I` generated by the `u(x) - v(x)`. -/
+@[buffalo "51wmmpHand0-13847"]
 def prop_13847 {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     (u v : B →ₐ[k] A) (k' : Type*) [CommRing k'] [Algebra k k'] :
     (A ⧸ Ideal.span (Set.range fun x => u x - v x) →ₐ[k] k') ≃
@@ -183,6 +198,7 @@ def prop_13847 {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k
 
 /-- 51wmmpHand0-13983 (3:53:03) [disc] `k(T)` is finitely generated as a field but not as a
 `k`-algebra (by Zariski's lemma it would be finite over `k`, but `T` is transcendental). -/
+@[buffalo "51wmmpHand0-13983"]
 theorem disc_13983 (K : Type u) [Field K] : ¬ Algebra.FiniteType K (RatFunc K) := fun _ => by
   have : Module.Finite K (RatFunc K) := finite_of_finite_type_of_isJacobsonRing K (RatFunc K)
   exact RatFunc.transcendental_X
@@ -190,12 +206,14 @@ theorem disc_13983 (K : Type u) [Field K] : ¬ Algebra.FiniteType K (RatFunc K) 
 
 /-- 51wmmpHand0-14373 (3:59:33) [prop] Filtered projective limits in `𝒞` are filtered inductive
 limits of `k`-algebras, computed on the underlying sets (`prop_11182`). -/
+@[buffalo "51wmmpHand0-14373"]
 theorem prop_14373 : Limits.PreservesFilteredColimits (forget (CommAlgCat.{u} k)) :=
   inferInstance
 
 /-- 51wmmpHand0-14500 (4:01:40) [prop] Every `k`-algebra is the filtered union of its finitely
 generated subalgebras (dually, every affine space is a filtered projective limit of affine spaces
 of finite type). -/
+@[buffalo "51wmmpHand0-14500"]
 theorem prop_14500 (A : Type u) [CommRing A] [Algebra k A] :
     DirectedOn (· ≤ ·) {S : Subalgebra k A | S.FG} ∧ ∀ a : A, ∃ S : Subalgebra k A, S.FG ∧ a ∈ S :=
   ⟨fun _ hS _ hT => ⟨_, hS.sup hT, le_sup_left, le_sup_right⟩,
@@ -204,6 +222,7 @@ theorem prop_14500 (A : Type u) [CommRing A] [Algebra k A] :
 /-- 51wmmpHand0-14628 (4:03:48) [prop] A `k`-algebra is finitely generated iff it is a quotient
 of a polynomial ring in finitely many variables (mathlib:
 `Algebra.FiniteType.iff_quotient_mvPolynomial''`). -/
+@[buffalo "51wmmpHand0-14628"]
 theorem prop_14628 (A : Type u) [CommRing A] [Algebra k A] :
     Algebra.FiniteType k A ↔
       ∃ (n : ℕ) (f : MvPolynomial (Fin n) k →ₐ[k] A), Function.Surjective f :=
@@ -219,6 +238,7 @@ example (A : Type u) [CommRing A] [Algebra k A] :
 /-- 51wmmpHand0-14761 (4:06:01) [prop] If `A` is finitely presented, every presentation of `A` as
 a quotient of a polynomial ring in finitely many variables has a finitely generated ideal
 (mathlib: `Algebra.FinitePresentation.ker_fg_of_mvPolynomial`). -/
+@[buffalo "51wmmpHand0-14761"]
 theorem prop_14761 (A : Type u) [CommRing A] [Algebra k A] [Algebra.FinitePresentation k A]
     {n : ℕ} (f : MvPolynomial (Fin n) k →ₐ[k] A) (hf : Function.Surjective f) :
     (RingHom.ker f.toRingHom).FG :=
@@ -226,6 +246,7 @@ theorem prop_14761 (A : Type u) [CommRing A] [Algebra k A] [Algebra.FinitePresen
 
 /-- 51wmmpHand0-14825 (4:07:05) [thm] Hilbert's basis theorem: every ideal of `K[T_1..T_n]` is
 finitely generated (mathlib: `MvPolynomial.isNoetherianRing`). -/
+@[buffalo "51wmmpHand0-14825"]
 theorem thm_14825 (K : Type u) [Field K] (n : ℕ) (J : Ideal (MvPolynomial (Fin n) K)) : J.FG :=
   IsNoetherian.noetherian J
 
@@ -239,6 +260,7 @@ example (R : Type u) [CommRing R] :
 
 /-- 51wmmpHand0-14955 (4:09:15) [prop] If `k` is noetherian, so are `k[T]` and `k[T_1..T_n]`
 (mathlib: `Polynomial.isNoetherianRing`, `MvPolynomial.isNoetherianRing`). -/
+@[buffalo "51wmmpHand0-14955"]
 theorem prop_14955 [IsNoetherianRing k] (n : ℕ) :
     IsNoetherianRing (Polynomial k) ∧ IsNoetherianRing (MvPolynomial (Fin n) k) :=
   ⟨inferInstance, inferInstance⟩
@@ -246,6 +268,7 @@ theorem prop_14955 [IsNoetherianRing k] (n : ℕ) :
 /-- 51wmmpHand0-15019 (4:10:19) [prop] Over a noetherian `k`, every finitely generated algebra
 is finitely presented, and every closed subspace of `E^n` is defined by finitely many equations
 (mathlib: `Algebra.FinitePresentation.of_finiteType`). -/
+@[buffalo "51wmmpHand0-15019"]
 theorem prop_15019 [IsNoetherianRing k] (A : Type u) [CommRing A] [Algebra k A] {σ : Type u}
     [Finite σ] :
     (Algebra.FiniteType k A ↔ Algebra.FinitePresentation k A) ∧
@@ -261,6 +284,7 @@ theorem prop_15019 [IsNoetherianRing k] (A : Type u) [CommRing A] [Algebra k A] 
 
 /-- 51wmmpHand0-15218 (4:13:38) [prop] A section of `X` over the final object `V_k` amounts to a
 point `x ∈ X(k)` (Yoneda). -/
+@[buffalo "51wmmpHand0-15218"]
 def prop_15218 (X : CommAlgCat.{u} k ⥤ Type u) : (V k k ⟶ X) ≃ X.obj (CommAlgCat.of k k) :=
   homEquivOfCorep k (V.corepresentableBy k k)
 
@@ -291,6 +315,7 @@ theorem kills_iff {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebr
 /-- 51wmmpHand0-15479 (4:17:59) [prop] If `G = V_A`, `H = V_B` (`φ : B → A`) and `B⁺` is the
 augmentation ideal of `B` (`ε : B → k`, the unit section), the kernel of `G → H`, the functor
 `Z ↦ {g : g ∘ φ = ε}`, is represented by `A/B⁺A`. -/
+@[buffalo "51wmmpHand0-15479"]
 def prop_15479 {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     (φ : B →ₐ[k] A) (ε : B →ₐ[k] k) (k' : Type*) [CommRing k'] [Algebra k k'] :
     (A ⧸ (RingHom.ker ε).map φ →ₐ[k] k') ≃
@@ -304,12 +329,14 @@ def prop_15479 {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k
 
 /-- 51wmmpHand0-15555 (4:19:15) [prop] `A ⊗_B (B/J) ≃ A/JA` (mathlib:
 `Algebra.TensorProduct.quotIdealMapEquivTensorQuot`). -/
+@[buffalo "51wmmpHand0-15555"]
 def prop_15555 (A B : Type u) [CommRing A] [CommRing B] [Algebra B A] (J : Ideal B) :
     (A ⧸ J.map (algebraMap B A)) ≃ₐ[A] TensorProduct B A (B ⧸ J) :=
   Algebra.TensorProduct.quotIdealMapEquivTensorQuot A J
 
 /-- 51wmmpHand0-15944 (4:25:44) [prop] An intersection of closed subspaces is closed:
 `⋂ V_{S_i} = V_{⋃ S_i}` (in particular for finitely many stabilizers). -/
+@[buffalo "51wmmpHand0-15944"]
 theorem prop_15944 {ι : Type*} (S : ι → Set (MvPolynomial I k)) :
     ⨅ i, VS k (S i) = VS k (⋃ i, S i) := by
   refine Subfunctor.ext (_root_.funext fun k' => Set.ext fun x => ?_)
@@ -319,6 +346,7 @@ theorem prop_15944 {ι : Type*} (S : ι → Set (MvPolynomial I k)) :
 
 /-- 51wmmpHand0-16010 (4:26:50) [prop] The intersection of the stabilizers `G_{x_i}` is the
 stabilizer of the point `(x_i)` of `∏ X_i` (pointwise, for each `G(Z)`). -/
+@[buffalo "51wmmpHand0-16010"]
 theorem prop_16010 {G ι : Type*} [Group G] {X : ι → Type*} [∀ i, MulAction G (X i)]
     (x : ∀ i, X i) : MulAction.stabilizer G x = ⨅ i, MulAction.stabilizer G (x i) := by
   ext g
@@ -332,15 +360,18 @@ example : Limits.HasWidePullbacks.{u} (CommAlgCat.{u} k)ᵒᵖ := inferInstance
 
 /-- 51wmmpHand0-16465 (4:34:25) [prop] `𝒞` has all inductive limits, since `k`-algebras have all
 projective limits. -/
+@[buffalo "51wmmpHand0-16465"]
 theorem prop_16465 : Limits.HasColimits (CommAlgCat.{u} k)ᵒᵖ := inferInstance
 
 /-- 51wmmpHand0-16527 (4:35:27) [prop] Projective limits of `k`-algebras are computed on the
 underlying sets. -/
+@[buffalo "51wmmpHand0-16527"]
 theorem prop_16527 : Limits.PreservesLimits (forget (CommAlgCat.{u} k)) :=
   Limits.preservesLimits_of_natIso (forgetIsoUnder k).symm
 
 /-- 51wmmpHand0-16658 (4:37:38) [def] A pair `R ⇉ X` is an equivalence relation if `R → X × X` is
 a monomorphism and each `R(Z)` is the graph of an equivalence relation on `X(Z)`. -/
+@[buffalo "51wmmpHand0-16658"]
 def IsEquivRel {X R : CommAlgCat.{u} k ⥤ Type u} (p₁ p₂ : R ⟶ X) : Prop :=
   (∀ Z, Function.Injective fun r : R.obj Z => (p₁.app Z r, p₂.app Z r)) ∧
     ∀ Z, Equivalence fun x y : X.obj Z => ∃ r, p₁.app Z r = x ∧ p₂.app Z r = y
@@ -348,6 +379,7 @@ def IsEquivRel {X R : CommAlgCat.{u} k ⥤ Type u} (p₁ p₂ : R ⟶ X) : Prop 
 /-- 51wmmpHand0-16789 (4:39:49) [prop] The cokernel of `X ⇉ Y` in `𝒞`, corresponding to
 `u, v : B → A`, is represented by the subalgebra `{x ∈ B : u(x) = v(x)}`: morphisms into it are
 the `w : C → B` with `u ∘ w = v ∘ w`. -/
+@[buffalo "51wmmpHand0-16789"]
 def prop_16789 {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     (u v : B →ₐ[k] A) (C : Type*) [CommRing C] [Algebra k C] :
     (C →ₐ[k] AlgHom.equalizer u v) ≃ {w : C →ₐ[k] B // u.comp w = v.comp w} where
@@ -360,6 +392,7 @@ def prop_16789 {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k
 (4:46:51) [ex] For a subgroup `H` of `G` (pointwise, in each `G(Z)`), `(h, g) ↦ (g, hg)` is
 injective, its image is the relation `g' g⁻¹ ∈ H`, an equivalence relation whose classes are the
 `Hg`. -/
+@[buffalo "51wmmpHand0-16981"]
 theorem ex_16981 {G : Type*} [Group G] (H : Subgroup G) :
     Function.Injective (fun p : H × G => (p.2, (p.1 : G) * p.2)) ∧
       (∀ g g' : G, (∃ p : H × G, (p.2, (p.1 : G) * p.2) = (g, g')) ↔ g' * g⁻¹ ∈ H) ∧
@@ -383,6 +416,7 @@ theorem ex_16981 {G : Type*} [Group G] (H : Subgroup G) :
 
 /-- 51wmmpHand0-17406 (4:50:06) [def] The standard Borel subgroup: invertible upper triangular
 matrices (the diagonal coefficients are then invertible). -/
+@[buffalo "51wmmpHand0-17406"]
 def borel (m : ℕ) (k' : Type*) [CommRing k'] : Set (GL (Fin m) k') :=
   {M | ∀ i j, j < i → (M : Matrix (Fin m) (Fin m) k') i j = 0}
 
@@ -407,6 +441,7 @@ theorem aeval_detP {k' : Type*} [CommRing k'] [Algebra k k'] (M : Matrix n n k')
 
 /-- 51wmmpHand0-17469 (4:51:09) [prop] `GL_n` is represented by `k[T_ij][1/det]`: `u ↦ (u(T_ij))`
 is a bijection from `Hom_k(k[T_ij][1/det], k')` onto the matrices with invertible determinant. -/
+@[buffalo "51wmmpHand0-17469"]
 theorem prop_17469 (k' : Type u) [CommRing k'] [Algebra k k'] :
     Function.Injective (fun u : OGL k n →ₐ[k] k' =>
         (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j)))  :

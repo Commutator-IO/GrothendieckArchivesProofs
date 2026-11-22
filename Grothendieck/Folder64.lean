@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 /-!
 # Folder 64, pages 48–51: the octahedral configuration in characteristic 5
@@ -95,6 +96,7 @@ lemma quad_sum (hi : i ^ 2 = -1) (h2 : (2 : K) ≠ 0) : ∑ z ∈ quad i, z = 1 
 
 /-- Page 48: an automorphism fixing `∞` and `−1` is `z ↦ a z + (a − 1)`; if it maps
 `{0, 1, i, −i}` into itself, then `5 (a − 1) = 0`. -/
+@[montpellier "64, 48"]
 theorem fixer_five (hi : i ^ 2 = -1) (h2 : (2 : K) ≠ 0) (a : K)
     (h : ∀ z ∈ quad i, a * z + (a - 1) ∈ quad i) : (5 : K) * (a - 1) = 0 := by
   obtain ⟨h0, h1, hm, h11⟩ := quad_facts hi h2
@@ -112,11 +114,13 @@ theorem fixer_five (hi : i ^ 2 = -1) (h2 : (2 : K) ≠ 0) (a : K)
   linear_combination hsum
 
 /-- With `5` invertible as well, the fixer of `∞` and `−1` in `Aut(ℙ¹, Δ)` is trivial. -/
+@[montpellier "64, 48"]
 theorem fixer_trivial (hi : i ^ 2 = -1) (h2 : (2 : K) ≠ 0) (h5 : (5 : K) ≠ 0) (a : K)
     (h : ∀ z ∈ quad i, a * z + (a - 1) ∈ quad i) : a = 1 := by
   simpa [h5, sub_eq_zero] using fixer_five hi h2 a h
 
 /-- In characteristic `5`, `z ↦ 2z + 1` (`a = 2`) maps `{0, 1, i, −i}` into itself. -/
+@[montpellier "64, 48"]
 theorem fixer_nontrivial_char5 (hi : i ^ 2 = -1) (h5 : (5 : K) = 0) :
     ∀ z ∈ quad i, 2 * z + (2 - 1) ∈ quad i := by
   have hi2 : (i - 2) * (i + 2) = 0 := by linear_combination hi - h5
@@ -152,6 +156,7 @@ def octa : List (Option (ZMod 5)) := [none, some 0, some 1, some (-1), some 2, s
 
 theorem two_sq : (2 : ZMod 5) ^ 2 = -1 := by decide
 
+@[montpellier "64, 48–51"]
 theorem octahedral_eq_univ : octa.toFinset = Finset.univ := by decide
 
 /-- The bijections of `ℙ¹(𝔽₅)` induced by invertible matrices, recorded by their values on
@@ -159,10 +164,13 @@ theorem octahedral_eq_univ : octa.toFinset = Finset.univ := by decide
 def pgl : Finset (List (Option (ZMod 5))) :=
   (Finset.univ.filter fun q : Mat5 => det5 q ≠ 0).image fun q => octa.map (mob q)
 
+@[montpellier "64, 48–51"]
 theorem perm_octa : ∀ q : Mat5, det5 q ≠ 0 → (octa.map (mob q)).Nodup := by decide +kernel
 
+@[montpellier "64, 48–51"]
 theorem card_pgl : pgl.card = 120 := by decide +kernel
 
+@[montpellier "64, 48–51"]
 theorem card_fixer :
     (pgl.filter fun l => l[0]? = some (none : Option (ZMod 5)) ∧
         l[3]? = some (some (-1 : ZMod 5))) =
