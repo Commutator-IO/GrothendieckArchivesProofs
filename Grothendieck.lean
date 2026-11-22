@@ -20,6 +20,7 @@ public import Grothendieck.Folder121
 public import Grothendieck.Folder125
 public import Grothendieck.Folder126NilpotentQuotient
 public import Grothendieck.Folder126RadicialEtale
+public import Grothendieck.Folder126RadicialEtaleGlobal
 public import Grothendieck.Folder128
 public import Grothendieck.Folder13
 public import Grothendieck.Folder133
