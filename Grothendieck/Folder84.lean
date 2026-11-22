@@ -574,7 +574,7 @@ noncomputable def movesHom {b c b' c' : R} (ε : Rˣ) (t : R)
   AdjoinRoot.liftAlgHom _ (Algebra.ofId R _)
     (algebraMap R _ (ε : R) * AdjoinRoot.root _ + algebraMap R _ t) (by
       have r := root_sq b c
-      show (qpoly b' c').eval₂ (algebraMap R (QAlg b c)) _ = 0
+      change (qpoly b' c').eval₂ (algebraMap R (QAlg b c)) _ = 0
       rw [qpoly_eval₂, hb, hc]
       simp only [map_add, map_sub, map_mul, map_pow, map_ofNat]
       linear_combination (algebraMap R (QAlg b c) (ε : R)) ^ 2 * r)
@@ -807,7 +807,9 @@ theorem chiSplitting_eq {π : M × L →ₗ[R] L} {ϖ : M →ₗ[R] M × L}
       have := LinearMap.congr_fun h.retr ξ
       simp only [LinearMap.coe_comp, Function.comp_apply, LinearMap.smul_apply,
         LinearMap.id_apply, LinearMap.inr_apply] at this
-      simp [piOf]
+      simp only [LinearMap.coe_comp, LinearMap.coe_inr, Function.comp_apply, piOf,
+          LinearMap.coe_add, LinearMap.coe_inl, LinearMap.coe_fst, LinearMap.coe_smul,
+          LinearMap.coe_snd, Pi.add_apply, Pi.smul_apply]
       rw [show ((0 : M), (0 : L)) = 0 from rfl, map_zero, zero_add, this]
   · ext η
     · simpa [varpiOf] using LinearMap.congr_fun h.sect η
@@ -858,7 +860,10 @@ theorem iso_iff (b b' : M →ₗ[R] L) :
       rw [hp, map_add, map_add, h2']
       refine Prod.ext ?_ ?_
       · simp [transv, h1']
-      · simp [transv, hw]
+      · simp only [Prod.snd_add, transv, hw, LinearMap.add_apply, LinearMap.id_coe, id_eq,
+            LinearMap.coe_comp, LinearMap.coe_inr, LinearMap.coe_snd, LinearMap.coe_inl,
+            LinearMap.coe_fst, Function.comp_apply, Prod.mk_add_mk, add_zero, zero_add,
+            add_right_inj, left_eq_add]
         rw [show ((0 : M), (0 : L)) = 0 from rfl, map_zero]; rfl
     refine ⟨w, ?_⟩
     have e := h3.symm.trans (by rw [hf, piOf_comp_transv])
@@ -1393,7 +1398,7 @@ structure ChiExt (χ : R) where
 lemma smul_tensorHom' {A B C D : ModuleCat.{u} R} (r : R) (f : A ⟶ B) (g : C ⟶ D) :
     (r • f) ⊗ₘ g = r • (f ⊗ₘ g) :=
   ModuleCat.MonoidalCategory.tensor_ext fun x y => by
-    simp [ModuleCat.MonoidalCategory.tensorHom_tmul]; rw [TensorProduct.smul_tmul']
+    simp only [ModuleCat.MonoidalCategory.tensorHom_tmul, ModuleCat.hom_smul, LinearMap.smul_apply]; rw [TensorProduct.smul_tmul']
 
 /-- Scalars pass through `⊗ₘ` in `ModuleCat` (right factor). -/
 lemma tensorHom_smul' {A B C D : ModuleCat.{u} R} (r : R) (f : A ⟶ B) (g : C ⟶ D) :

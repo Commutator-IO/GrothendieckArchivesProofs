@@ -139,7 +139,7 @@ theorem etale_injective_iff_comap_surjective [Algebra.Etale K A] [Algebra.Etale 
       rintro p ⟨-, hp⟩
       obtain ⟨q, hq⟩ := hs ⟨p, hp⟩
       have : a ∈ (PrimeSpectrum.comap f.toRingHom q).asIdeal := by
-        show f a ∈ q.asIdeal; rw [ha]; exact q.asIdeal.zero_mem
+        change f a ∈ q.asIdeal; rw [ha]; exact q.asIdeal.zero_mem
       rwa [hq] at this
     exact (mem_nilradical.mp hnil).eq_zero
 

@@ -133,7 +133,7 @@ theorem condition1 (P : ObjectProperty E) :
     have hg' : g ≫ adj.unit.app Y = e.inv := hg
     refine ⟨e.hom ≫ g, ?_, ?_⟩
     · apply bY.1
-      show (adj.unit.app Y ≫ e.hom ≫ g) ≫ adj.unit.app Y = 𝟙 Y ≫ adj.unit.app Y
+      change (adj.unit.app Y ≫ e.hom ≫ g) ≫ adj.unit.app Y = 𝟙 Y ≫ adj.unit.app Y
       rw [Category.assoc, Category.assoc, hg', e.hom_inv_id]
       simp
     · rw [Category.assoc, hg', e.hom_inv_id]
@@ -286,7 +286,7 @@ instance : (E0 adj).IsClosedUnderIsomorphisms where
   of_iso {Y Y'} e h := by
     have : IsIso (adj.unit.app Y) := h
     have hη : adj.unit.app Y' = e.inv ≫ adj.unit.app Y ≫ v.map (u.map e.hom) := by simp
-    show IsIso (adj.unit.app Y')
+    change IsIso (adj.unit.app Y')
     rw [hη]
     infer_instance
 
@@ -294,7 +294,7 @@ instance : (F0 adj).IsClosedUnderIsomorphisms where
   of_iso {P P'} e h := by
     have : IsIso (adj.counit.app P) := h
     have hε : adj.counit.app P' = u.map (v.map e.inv) ≫ adj.counit.app P ≫ e.hom := by simp
-    show IsIso (adj.counit.app P')
+    change IsIso (adj.counit.app P')
     rw [hε]
     infer_instance
 
@@ -638,7 +638,7 @@ theorem local_mem_essImage {ξ : E} (hξ : (Sigma' (α' := α')).isLocal ξ) : �
   -- … and `r` is also a section, because `α α' ξ` is local for `η`.
   have hrη : r ≫ η = 𝟙 _ := by
     apply (ObjectProperty.isLocal_adj_unit_app adj' ξ _ ⟨α'.obj ξ, rfl⟩).1
-    show η ≫ r ≫ η = η ≫ 𝟙 _
+    change η ≫ r ≫ η = η ≫ 𝟙 _
     rw [← Category.assoc, hr']
     simp
   exact ⟨α'.obj ξ, ⟨{ hom := r, inv := η, hom_inv_id := hrη, inv_hom_id := hr' }⟩⟩

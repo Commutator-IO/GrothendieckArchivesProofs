@@ -582,8 +582,8 @@ theorem intervals_axioms [DenselyOrdered α] (hd : LocDirDown α) (hu : LocDirUp
       have h2 : J.1.2 ∈ Icc a b := hJ ⟨J.2.le, le_rfl⟩
       have h1 : J.1.1 ∈ Icc a b := hJ ⟨le_rfl, J.2.le⟩
       rcases intervals_mem_bd.1 hzJ with e | e
-      · right; show Icc J.1.1 J.1.2 ⊆ _; rw [← e]; exact Icc_subset_Icc le_rfl h2.2
-      · left; show Icc J.1.1 J.1.2 ⊆ _; rw [← e]; exact Icc_subset_Icc h1.1 le_rfl
+      · right; change Icc J.1.1 J.1.2 ⊆ _; rw [← e]; exact Icc_subset_Icc le_rfl h2.2
+      · left; change Icc J.1.1 J.1.2 ⊆ _; rw [← e]; exact Icc_subset_Icc h1.1 le_rfl
     have hI : Icc a z ∩ Icc z b = {z} := Icc_inter_Icc_eq_singleton haz.le hzb.le
     rcases pair_eq_pair_iff.1 hxy with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
     · rw [intervals_car_of_bd hJx.2 haz,
@@ -602,7 +602,7 @@ theorem intervals_axioms [DenselyOrdered α] (hd : LocDirDown α) (hu : LocDirUp
         Or.inl rfl⟩
     · refine ⟨b, ⟨hab.le, le_rfl⟩, hab.ne', c, ⟨le_rfl, hcd.le⟩, hcd.ne, ⟨(_, b), hab⟩,
         ⟨(c, _), hcd⟩, ⟨subset_rfl, rfl⟩, ⟨subset_rfl, pair_comm _ _⟩, Or.inr ?_⟩
-      show Icc _ b ∩ Icc c _ = _
+      change Icc _ b ∩ Icc c _ = _
       rw [inter_comm]; exact Icc_inter_Icc_eq_singleton hcd.le hab.le
     · refine ⟨a, ⟨le_rfl, hab.le⟩, hab.ne, d, ⟨hcd.le, le_rfl⟩, hcd.ne', ⟨(a, _), hab⟩,
         ⟨(_, d), hcd⟩, ⟨subset_rfl, pair_comm _ _⟩, ⟨subset_rfl, rfl⟩, Or.inr ?_⟩

@@ -320,7 +320,7 @@ theorem horseshoe (hB : CondB C₀) {A' A A'' : ModuleCat.{v} R}
         rw [hz2, map_zero, add_zero] at h1
         have h2 : g' z.1.1 = 0 := h.inj (by rw [h1, map_zero])
         refine ⟨⟨z.1.1, mem_ker.2 h2⟩, Subtype.ext ?_⟩
-        show (z.1.1, (0 : P)) = z.1
+        change (z.1.1, (0 : P)) = z.1
         rw [← hz2]
       · rintro ⟨x, rfl⟩
         rfl

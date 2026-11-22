@@ -590,7 +590,7 @@ theorem cocycle_zero {n : ℕ} {f : ℕ → (σ → ℕ) → Finset σ → k} (h
     · have : f a 0 ∅ = 0 := by
         by_contra hne
         have := (hf a 0 ∅ hne).1
-        simp at this; exact ha this
+        simp only [Pi.zero_apply, sum_const_zero, add_zero, card_empty] at this; exact ha this
       simp [this, ha]
   · simp only [hβI, ↓reduceIte]
     rw [ite_eq_right (by tauto), mul_zero]
@@ -923,6 +923,7 @@ theorem pdFF_zero : pdFF k b 0 = 1 := by
   rw [AlgHom.comp_apply, MvPolynomial.aeval_zero, Algebra.algebraMap_self, RingHom.id_apply] at h
   exact h
 
+set_option linter.unusedDecidableInType false in
 theorem pdF_mul_pdFF (i : σ) (n : ℕ) {a : σ →₀ ℕ} (ha : a i = 0) :
     pdF k (n, b i) * pdFF k b a = pdFF k b (Finsupp.single i n + a) := by
   apply ofConv_injective; ext c
@@ -935,6 +936,7 @@ theorem pdF_mul_pdFF (i : σ) (n : ℕ) {a : σ →₀ ℕ} (ha : a i = 0) :
     pdTheta_coeff k i n ha]
   rfl
 
+set_option linter.unusedDecidableInType false in
 theorem pdRep_prod (a : σ →₀ ℕ) :
     pdRep k (a.prod fun i n => DividedPowerAlgebra.dp k n (b i)) = pdFF k b a := by
   induction a using Finsupp.induction with
@@ -951,6 +953,8 @@ omit [DecidableEq σ] in
 theorem pdCoordEv_test (γ : σ →₀ ℕ) : pdCoordEv k b (pdTest k b γ) = MvPolynomial.monomial γ 1 := by
   simp [pdTest, Finsupp.prod, MvPolynomial.prod_X_pow_eq_monomial]
 
+set_option linter.unusedDecidableInType false in
+set_option linter.unusedFintypeInType false in
 /-- **The basis theorem for `Γ` of a free module of finite rank**: if `(bᵢ)` is a basis of
 `M`, the products `∏ᵢ bᵢ^{(aᵢ)}`, `a ∈ ℕ^{(σ)}`, are a basis of `Γ_k(M)`, over any commutative
 ring `k`. -/

@@ -280,15 +280,15 @@ theorem exists_quad_of_mu_one (m : Fin 4 → k) (hrel : m 0 + m 2 = m 1 + m 3) (
   · rw [closed_iff]; rfl
   · funext i
     fin_cases i
-    · show wedge _ _ = _
+    · change wedge _ _ = _
       simp [wedge, u0, u1, u2]
       field_simp
       first | linear_combination hrel | linear_combination -hrel
-    · show wedge _ _ = _
+    · change wedge _ _ = _
       simp [wedge, u0, u1]
-    · show wedge _ _ = _
+    · change wedge _ _ = _
       simp [wedge, u1, u2]
-    · show wedge _ _ = _
+    · change wedge _ _ = _
       simp [wedge, u0, u1, u2]
       field_simp
       ring
@@ -447,7 +447,7 @@ theorem frameMap_range : LinearMap.range (frameMap (k := k)) = plane := by
   ext m
   constructor
   · rintro ⟨c, rfl⟩
-    show _ = _
+    change _ = _
     simp [frameMap]; ring
   · intro hm
     change m 0 + m 2 = m 1 + m 3 at hm
@@ -558,7 +558,7 @@ theorem exists_smul_of_wedge {a c : Fin 2 → k} (ha : a ≠ 0) (h : wedge a c =
     rw [h0, zero_mul, zero_sub, neg_eq_zero] at h
     refine ⟨c 1 / a 1, funext fun j => ?_⟩
     fin_cases j
-    · simp [h0]; exact (mul_eq_zero.1 h).resolve_left h1
+    · simp only [Fin.zero_eta, Fin.isValue, Pi.smul_apply, h0, smul_eq_mul, mul_zero]; exact (mul_eq_zero.1 h).resolve_left h1
     · simp; field_simp
   · refine ⟨c 0 / a 0, funext fun j => ?_⟩
     fin_cases j

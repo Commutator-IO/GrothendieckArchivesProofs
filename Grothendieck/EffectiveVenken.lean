@@ -952,7 +952,7 @@ theorem invSpan_le : (invSpan K : Set (B K)) ⊆ invariants K := by
   have : invSpan K ≤ Submodule.comap (diag K) ((venkenRel K).restrictScalars K) := by
     rw [invSpan, Submodule.span_le]
     rintro _ ⟨q, hq, rfl⟩
-    show diag K (interp1 K q.2) ∈ venkenRel K
+    change diag K (interp1 K q.2) ∈ venkenRel K
     rw [← interp_diagList]
     exact mem_venkenRel_of_check K (inv_check q hq)
   exact this

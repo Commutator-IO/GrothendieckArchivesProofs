@@ -504,6 +504,7 @@ theorem two_mul_sum_powersetCard_two (f : ℕ → ℝ) (n : ℕ) :
       obtain ⟨t', _, rfl⟩ := mem_image.mp ht'
       exact hn ((mem_powersetCard.mp ht).1 (mem_insert_self _ _))
 
+set_option linter.unusedDecidableInType false in
 /-- The weight lemma for `σ²`. Let `s ≥ 0` and `θ ≥ 0` with `s_k ≥ θ` on a finite set `G` and
 `s_k ≤ θ` off `G`. Let `(α_{kl})` be symmetric with entries in `[0,1]` and zero diagonal, and
 `p_k ∈ [0,1]` with `∑ p_k ≤ |G|` and row sums `∑_l α_{kl} ≤ (|G| - 1) p_k`. Then
@@ -719,6 +720,7 @@ theorem sum_lam_le {κ : Type*} [Fintype κ] (g : κ → H)
         simp only [wt, hc]
         ring
 
+set_option linter.unusedDecidableInType false in
 /-- The weight lemma applied to `α_{kl} = Λ_{kl} / 2` and `p_k = wt g h S k`. -/
 theorem sum_lam_mul_le {κ : Type*} [Fintype κ] [DecidableEq κ] (g : κ → H)
     (hg : ∀ k l, k ≠ l → ⟪g k, g l⟫_𝕜 = 0) (hg1 : ∀ k, ‖g k‖ ≤ 1) (G : Finset κ)
@@ -1145,6 +1147,7 @@ theorem norm_det_sq_le {m : Type*} [Fintype m] [DecidableEq m] {P Q X : Matrix m
   rw [hX, ← hdS, mul_comm (det P)]
   exact mul_le_mul_of_nonneg_right hle hP.det_nonneg
 
+set_option linter.unusedDecidableInType false in
 /-- `|H| = [[|A|, 0], [0, |A*|]]` for `H = [[0, A*], [A, 0]]`. -/
 theorem abs_block (A : Matrix n n ℂ) :
     CFC.abs (fromBlocks 0 Aᴴ A 0) = fromBlocks (CFC.abs A) 0 0 (CFC.abs Aᴴ) := by
@@ -1165,6 +1168,7 @@ theorem abs_block (A : Matrix n n ℂ) :
   rw [CFC.abs_mul_abs, CFC.abs_mul_abs]
   simp [star_eq_conjTranspose]
 
+set_option linter.unusedDecidableInType false in
 /-- `[[|A|, A*], [A, |A*|]] ≥ 0`: it is `|H| + H`, `H = [[0, A*], [A, 0]]`. -/
 theorem block_posSemidef (A : Matrix n n ℂ) :
     (fromBlocks (CFC.abs A) Aᴴ A (CFC.abs Aᴴ)).PosSemidef := by
@@ -1670,6 +1674,7 @@ theorem eigenvalues₀_le_of_conj_diagonal (s : ℕ → ℝ) (hs : Antitone s) (
   rw [hlam]
   exact le_of_mul_le_mul_right (hlow.trans hup) (by positivity)
 
+set_option linter.unusedDecidableInType false in
 /-- Reindexing a sum of products over the `p`-subsets along an equivalence. -/
 theorem sum_powersetCard_prod_equiv {α β R : Type*} [Fintype α] [Fintype β] [DecidableEq β]
     [CommSemiring R] (σ : α ≃ β) (f : β → R) (p : ℕ) :

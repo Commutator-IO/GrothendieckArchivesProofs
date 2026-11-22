@@ -427,6 +427,7 @@ theorem mul_smul_sum_cosets {c : Γ → Aˣ} (hc : IsCocycle c) (Λ : Subgroup �
     rfl
   simp only [e, hq, hf _ l hl]
 
+set_option linter.unusedFintypeInType false in
 open scoped Classical in
 /-- **The Sylow form, at the level of rings.** For a surjective equivariant `π : A → B` with
 `1 + Ker π ⊂ Aˣ`, a subgroup `Λ` of index invertible in `A` and `A^Λ → B` onto (the margin of
@@ -479,6 +480,7 @@ theorem isUnit_index (Λ : Subgroup Γ) (hp : ¬ ringChar (ResidueField O) ∣ �
     exact fun h => hp ((ringChar.spec _ _).1 h)
   simpa using this.map (algebraMap O A)
 
+set_option linter.unusedFintypeInType false in
 /-- **Pages 90–92, the Sylow form** (forme reconstituée par l'édition): `A` finite over `𝒪`,
 `π : A → B` onto with kernel in `𝔪A`, `Λ` of index prime to `p` and `A^Λ → B` onto. The kernel
 of `H¹(Γ, A*) → H¹(Γ, B*) × H¹(Λ, A*)` is trivial. -/
@@ -492,6 +494,7 @@ theorem ker_trivial_restrict [Module.Finite O A] (Λ : Subgroup Γ)
   isCoboundary_of_restrict π hπ hequiv (fun x hx => isUnit_one_add_of_mem_smul_top (hker x hx))
     Λ (isUnit_index Λ hp) hlift hc hΛ hπc
 
+set_option linter.unusedFintypeInType false in
 /-- The statement of page 90 with `Λ` a Sylow `p`-subgroup, `p` the residue characteristic. -/
 theorem ker_trivial_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Prime]
     (Λ : Sylow (ringChar (ResidueField O)) Γ) (π : A →+* B) (hπ : Function.Surjective π)
@@ -619,6 +622,7 @@ theorem isCocycle_one_eq {Γ A : Type*} [Group Γ] [Ring A] [MulSemiringAction �
     {c : Γ → Aˣ} (hc : IsCocycle c) : c 1 = 1 := by
   simpa using (Units.ext (by simpa using hc 1 1) : c 1 = c 1 * c 1)
 
+set_option linter.unusedFintypeInType false in
 /-- The fixed field `k^Γ` is infinite when `k` is (`[k : k^Γ] ≤ |Γ|`). -/
 theorem infinite_fixedPoints [Infinite k] :
     (FixedPoints.subfield Γ k : Set k).Infinite := by
@@ -825,6 +829,7 @@ theorem isCohomologous_of_restrict_inertia [Module.Finite O A] [Infinite (Residu
   rw [hu, hval, mul_inv_rev, Units.val_mul, Units.val_mul, smul_mul']
   simp only [mul_assoc]
 
+set_option linter.unusedFintypeInType false in
 /-- **The case `Γ_i = {e}` (page 88): `H¹(Γ, A*) = 1`.** If `Γ` acts faithfully on the infinite
 residue field `k`, any two cocycles `Γ → A*` are cohomologous. No dévissage along `𝔪ⁿ` and no
 Artin–Rees: an element of trace one in `𝒪` lifts the field case in one average. -/
@@ -915,6 +920,7 @@ theorem mul_smul_sum_cosets_twist {c c' : Γ → Aˣ} (hc : IsCocycle c) (hc' : 
   simp only [e, hq]
   exact congrArg (· * (c g : A)) (hf _ l hl)
 
+set_option linter.unusedFintypeInType false in
 open scoped Classical in
 /-- **Injectivity in the Sylow form, at the level of rings.** For a surjective equivariant
 `π : A → B` with `1 + Ker π ⊂ Aˣ`, a subgroup `Λ` of index invertible in `A`, and two cocycles
@@ -995,6 +1001,7 @@ section SylowInjectiveLocal
 variable {O A : Type*} [CommRing O] [Ring A] [Algebra O A] [IsLocalRing O]
   {Γ B : Type*} [Group Γ] [Fintype Γ] [MulSemiringAction Γ A] [Ring B] [MulSemiringAction Γ B]
 
+set_option linter.unusedFintypeInType false in
 /-- **Page 90, injectivity in the Sylow form** (forme reconstituée par l'édition): `A` finite
 over `𝒪`, not necessarily commutative, `π : A → B` onto with kernel in `𝔪A`, `Λ` of index prime
 to `p`. Two cocycles cohomologous modulo `𝔪A` and on `Λ` are cohomologous, provided `B` lifts to
@@ -1011,6 +1018,7 @@ theorem injective_restrict [Module.Finite O A] (Λ : Subgroup Γ)
   isCohomologous_of_restrict π hπ hequiv (fun x hx => isUnit_one_add_of_mem_smul_top (hker x hx))
     Λ (isUnit_index Λ hp) hc hc' hlift hΛ hπc
 
+set_option linter.unusedFintypeInType false in
 /-- `injective_restrict` with `Λ` a Sylow `p`-subgroup, `p` the residue characteristic. -/
 theorem injective_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Prime]
     (Λ : Sylow (ringChar (ResidueField O)) Γ) (π : A →+* B) (hπ : Function.Surjective π)
@@ -1023,6 +1031,7 @@ theorem injective_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Pr
     ∃ u : Aˣ, ∀ g, (c g : A) = ↑u⁻¹ * c' g * g • (u : A) :=
   injective_restrict (Λ : Subgroup Γ) Λ.not_dvd_index π hπ hequiv hker hc hc' hlift hΛ hπc
 
+set_option linter.unusedFintypeInType false in
 /-- The Sylow form with the margin's untwisted hypothesis `A^Λ → B` onto, when `c'` is a
 coboundary on `Λ` (with `c' = 1`: `ker_trivial_sylow`). -/
 theorem injective_sylow_of_isCoboundary [Module.Finite O A]
@@ -1046,6 +1055,7 @@ section SylowInjectiveComm
 variable {O A : Type*} [CommRing O] [CommRing A] [Algebra O A] [IsLocalRing O]
   {Γ B : Type*} [Group Γ] [Fintype Γ] [MulSemiringAction Γ A] [Ring B] [MulSemiringAction Γ B]
 
+set_option linter.unusedFintypeInType false in
 /-- **Page 90 for `A` commutative: `H¹(Γ, A*) → H¹(Γ, B*) × H¹(Λ, A*)` is injective** under the
 margin's hypothesis `A^Λ → B` onto, `Λ` a Sylow `p`-subgroup. -/
 theorem injective_sylow_comm [Module.Finite O A] [Fact (ringChar (ResidueField O)).Prime]
@@ -1089,6 +1099,7 @@ section SemiLocal
 
 variable {O A : Type*} [CommRing O] [Ring A] [Algebra O A] [Module.Finite O A]
 
+set_option linter.unusedFintypeInType false in
 /-- Nakayama over a semi-local ring: an `O`-linear endomorphism of a finite `O`-module that is
 surjective modulo `I j` for a finite family of ideals, each maximal ideal containing one of them,
 is surjective. -/
@@ -1115,6 +1126,7 @@ theorem surjective_of_forall {ι : Type*} [Fintype ι] (I : ι → Ideal O)
   exact Submodule.le_of_le_smul_of_le_jacobson_bot Module.Finite.fg_top hP (key univ)
     Submodule.mem_top
 
+set_option linter.unusedFintypeInType false in
 /-- An element invertible modulo each `I j`, on both sides, is a unit. -/
 theorem isUnit_of_forall {ι : Type*} [Fintype ι] (I : ι → Ideal O)
     (hI : ∀ 𝔫 : Ideal O, 𝔫.IsMaximal → ∃ j, I j ≤ 𝔫) {x : A}
@@ -1249,6 +1261,7 @@ theorem exists_trace_one_mod (𝔪 : Ideal O) (D : Subgroup Γ) [Fintype D] {k :
   simp only [map_sub, map_sum, smul_mul', map_mul, hρD, hs, map_one, smul_inv'', hg, ← sum_mul,
     mul_inv_cancel₀ hμ, sub_self]
 
+set_option linter.unusedFintypeInType false in
 /-- **Pages 84–89, semi-local base, tame inertia, infinite residue field: `H¹(Γ, A*) →
 H¹(Γ_i, (A/𝔪A)*)` is injective.** With `𝔪`, `Γ_d = D` and `A` as in
 `isCohomologous_of_semilocal`, `ρ : 𝒪 → k` the residue map of `𝔪` (onto a field `k`, infinite,

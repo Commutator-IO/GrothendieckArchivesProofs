@@ -461,7 +461,7 @@ theorem prop_4970 {A : Type u} [CommRing A] [Algebra k A] (a : I → A) :
     apply CommAlgCat.hom_ext
     apply h k'
     funext i
-    show embFun k a k' u.hom i = embFun k a k' v.hom i
+    change embFun k a k' u.hom i = embFun k a k' v.hom i
     have := congrArg (fun w : CommAlgCat.of k (MvPolynomial I k) ⟶ k' => w (X i)) huv
     simpa [embFun] using this
   · intro h k' u v huv
@@ -517,7 +517,8 @@ theorem prop_5417 (k' : Type*) [CommRing k'] [Algebra k k'] :
   · have h' : u.toRingHom.comp (algebraMap (Polynomial k) k[T;T⁻¹]) =
         v.toRingHom.comp (algebraMap (Polynomial k) k[T;T⁻¹]) := by
       ext p
-      · simp [algebraMap_eq_toLaurent]
+      · simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_comp, RingHom.coe_coe, Function.comp_apply,
+            algebraMap_eq_toLaurent, Polynomial.toLaurent_C]
         rw [LaurentPolynomial.C_eq_algebraMap, AlgHom.commutes, AlgHom.commutes]
       · simpa [algebraMap_eq_toLaurent] using huv
     have := IsLocalization.ringHom_ext (Submonoid.powers (Polynomial.X : (Polynomial k))) h'

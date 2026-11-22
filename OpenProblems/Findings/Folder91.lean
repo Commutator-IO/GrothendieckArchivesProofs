@@ -78,6 +78,8 @@ def IsFiniteEtaleOver (R : Over S) : Prop :=
 def IsRepresentedFiniteEtale (F : (Over S)ᵒᵖ ⥤ Type u) : Prop :=
   ∃ R : Over S, IsFiniteEtaleOver R ∧ Nonempty (yoneda.obj R ≅ F)
 
+set_option synthInstance.maxHeartbeats 80000 in
+-- `maxSynthPendingDepth = 3` makes the `HasLimit` search for the pullback slower.
 /-- A morphism `a : F ⟶ F'` of functors on `S`-schemes is represented by finite étale morphisms:
 for every `S`-scheme `S'` and `y ∈ F'(S')`, the fibre product `F ×_{F'} S'` is represented by a
 finite étale `S'`-scheme. -/

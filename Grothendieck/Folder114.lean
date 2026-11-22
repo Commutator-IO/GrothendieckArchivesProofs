@@ -418,7 +418,7 @@ lemma invariant_eq {Y Y' : Tranche (produitRep (SingleObj.star G2) (SingleObj.st
     (g : Y ⟶ Y') : invariant Y = invariant Y' := by
   unfold invariant
   rw [elt_left_eq g]
-  show (toG (elt Y').1 * toG g.left)⁻¹ * (toG (elt Y').2 * toG g.left) = _
+  change (toG (elt Y').1 * toG g.left)⁻¹ * (toG (elt Y').2 * toG g.left) = _
   rw [mul_comm (toG (elt Y').1), mul_comm (toG (elt Y').2), mul_inv_rev, mul_assoc,
     inv_mul_cancel_left]
 

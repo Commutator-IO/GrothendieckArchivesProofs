@@ -111,7 +111,7 @@ theorem tate (hπ : Transcendental ℚ (Real.pi : ℂ)) (n : ℤ) :
     constructor
     · rintro ⟨α, hα, hq⟩
       by_contra hq0
-      have hα0 : α ≠ 0 := by rintro rfl; simp at hq; exact hq0 hq
+      have hα0 : α ≠ 0 := by rintro rfl; simp only [mul_zero, Rat.cast_eq_zero] at hq; exact hq0 hq
       have h2 : IsAlgebraic ℚ ((2 * Real.pi * I) ^ n) := by
         have : (2 * Real.pi * I) ^ n = (q : ℂ) * α⁻¹ := by
           rw [hq]; field_simp

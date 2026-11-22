@@ -714,7 +714,7 @@ theorem psi_zero (ω : T.Ω (E 0)) : T'.zero (psi T T' 0 ω) = T.zero ω :=
   congrFun (eq_of_inj_of_eq (Q := ℤˣ) (by rw [Nat.card_eq_fintype_card]; rfl)
     (T'.zero.injective.comp (psi_injective _)) T.zero.injective (x₀ := T.ref 0)
     (by
-      show T'.zero (psi T T' 0 (T.ref 0)) = T.zero (T.ref 0)
+      change T'.zero (psi T T' 0 (T.ref 0)) = T.zero (T.ref 0)
       rw [psi_ref, Theory.ref_zero, Theory.ref_zero]
       simp)) ω
 

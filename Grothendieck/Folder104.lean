@@ -189,6 +189,8 @@ end Modeles
 
 section Reedy
 
+universe u v
+
 variable {M : Type u} [Category.{v} M]
   (hend : ∀ {X : M} (f : X ⟶ X), f = 𝟙 X)
 

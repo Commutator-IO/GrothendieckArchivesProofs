@@ -231,7 +231,9 @@ theorem sq_add_sub_of_pow_five (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det
   have e10 := congrFun (congrFun e 1) 0
   have e00 := congrFun (congrFun e 0) 0
   have e11 := congrFun (congrFun e 1) 1
-  simp at e01 e10 e00 e11
+  simp only [Fin.isValue, Matrix.smul_apply, ne_eq, zero_ne_one, not_false_eq_true, one_apply_ne,
+      smul_eq_mul, mul_zero, neg_mul, neg_smul, Matrix.add_apply, Matrix.neg_apply, neg_zero,
+      add_zero, one_ne_zero, one_apply_eq, mul_one] at e01 e10 e00 e11
   have h1 : x = 0 := eq_zero_of_nps hns (by linear_combination -e01) (by linear_combination -e10)
     (by linear_combination e11 - e00)
   rw [hx, coeff_eq g hg] at h1
@@ -426,7 +428,9 @@ theorem isScalar_smul_add_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScal
   constructor
   · intro h
     obtain ⟨h1, h2, h3⟩ := (isScalar_iff _).1 h
-    simp at h1 h2 h3
+    simp only [Fin.isValue, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, ne_eq, zero_ne_one,
+        not_false_eq_true, one_apply_ne, mul_zero, add_zero, one_ne_zero, one_apply_eq, mul_one,
+        add_left_inj] at h1 h2 h3
     exact eq_zero_of_nps hg h1 h2 (by linear_combination h3)
   · rintro rfl; exact ⟨y, by simp⟩
 

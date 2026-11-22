@@ -116,7 +116,7 @@ theorem exists_mul_eq_zero_of_ker [IsNoetherianRing A] :
     induction hy using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨c, hc⟩ := Finset.dvd_prod_of_mem (fun x => (s x : A)) hx
-      show (∏ x ∈ t, (s x : A)) * x = 0
+      change (∏ x ∈ t, (s x : A)) * x = 0
       rw [hc, mul_comm (s x : A) c, mul_assoc, hs x hx, mul_zero]
     | zero => exact mul_zero f
     | add a b _ _ ha hb => rw [mul_add, ha, hb, add_zero]
@@ -274,13 +274,13 @@ theorem corollaire1 [IsNoetherianRing A] :
       obtain ⟨⟨a, ⟨s, hs⟩⟩, e⟩ :=
         IsLocalization.surj (x.1 : PrimeSpectrum A).asIdeal.primeCompl (ξ x.1)
       refine ⟨⟨_, lemme1 hξ a s⟩, ⟨hs, e⟩, CategoryTheory.homOfLE le_top, a, s, fun y => ⟨y.2.1, ?_⟩⟩
-      show ξ y.1 = Localization.mk a ⟨s, y.2.1⟩
+      change ξ y.1 = Localization.mk a ⟨s, y.2.1⟩
       rw [Localization.mk_eq_mk', IsLocalization.eq_mk'_iff_mul_eq]
       exact y.2.2⟩
     refine ⟨a, Subtype.ext (funext fun P => ?_)⟩
     have h := congrArg (fun t => t.1 ⟨P, trivial⟩) ha
     simp only at h
-    show algebraMap A _ a = ξ P
+    change algebraMap A _ a = ξ P
     rw [← h, toOpenₗ_eq_const, ← Localization.mk_one_eq_algebraMap]
     rfl
 
@@ -355,7 +355,7 @@ theorem proposition [NoetherianSpace X] [QuasiSober X] (hH : ConditionH F) :
     obtain ⟨g, hg, -⟩ := F.existsUnique_gluing' V ⊤ (fun _ => homOfLE le_top)
       (fun z _ => Opens.mem_iSup.2 ⟨z, hxU z, hs z⟩) sf hcompat
     refine ⟨g, Subtype.ext (funext fun x => ?_)⟩
-    show F.presheaf.germ ⊤ x trivial g = ξ x
+    change F.presheaf.germ ⊤ x trivial g = ξ x
     rw [← hgerm x x ⟨hxU x, hs x⟩, ← hg x, TopCat.Presheaf.germ_res_apply]
 
 end Sheaves

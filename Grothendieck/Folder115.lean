@@ -172,7 +172,15 @@ noncomputable def isoOfRestrict {D : Type u} [SmallCategory D] {ℰ : Type v} [C
 /-- `𝒪 ∘ y ≅ (a ↦ Hom_A(a, -))`, naturally in `a`. -/
 def isbellO_restrict : yoneda ⋙ (isbellO : (Aᵒᵖ ⥤ Type u) ⥤ _) ≅ coyoneda.rightOp :=
   NatIso.ofComponents (fun a => (isbellO_yoneda a).op.symm) fun f => by
-    apply Quiver.Hom.unop_inj; ext; simp [isbellO_yoneda, yonedaEquiv]; ext; simp
+    apply Quiver.Hom.unop_inj; ext; simp only [Functor.comp_obj, Functor.rightOp_obj,
+                                        Functor.flip_obj_obj, yoneda_obj_obj, Functor.comp_map,
+                                        Functor.rightOp_map, isbellO_yoneda, yonedaEquiv, op_unop,
+                                        Functor.flip_obj_map, Functor.flip_map_app, yoneda_obj_map,
+                                        Quiver.Hom.unop_op, TypeCat.hom_ofHom, TypeCat.Fun.coe_mk,
+                                        Iso.symm_hom, Iso.op_inv, unop_comp, NatTrans.comp_app,
+                                        NatIso.ofComponents_inv_app, TypeCat.Fun.toFun_apply,
+                                        comp_apply, Equiv.toIso_inv_hom_apply, Equiv.symm_mk,
+                                        Equiv.coe_fn_mk]; ext; simp
 
 /-- `𝒪` is the left Kan extension along `y` of `a ↦ Hom_A(a, -)`. -/
 instance isbellO_isLeftKanExtension :

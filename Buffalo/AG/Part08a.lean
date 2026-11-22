@@ -238,7 +238,7 @@ theorem prop_131 [QuasiSober X] [QuasiSober Y] [T0Space Y] {f : X → Y} (hf : C
       rw [specializes_iff_mem_closure, hy]; exact hC.1.genericPoint.2
     obtain ⟨x', hx', hfx'⟩ := hg h1
     have hx'Y : x' ∈ f ⁻¹' Y' := by
-      show f x' ∈ Y'
+      change f x' ∈ Y'
       rw [hfx']; exact hy.le (subset_closure (Set.mem_singleton _))
     have hsp : (⟨x', hx'Y⟩ : f ⁻¹' Y') ⤳ hC.1.genericPoint := by
       rwa [subtype_specializes_iff]

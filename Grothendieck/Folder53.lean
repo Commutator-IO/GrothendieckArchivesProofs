@@ -342,7 +342,11 @@ theorem ker_toLines : RingHom.ker toLines = Ideal.span {sumSq ℝ} := by
       intro t
       have := congrArg (Polynomial.eval (t : ℂ)) hrf
       rw [eval_toLines, hreq] at this
-      simp [Complex.ext_iff] at this
+      simp only [Polynomial.eval₂_add, Polynomial.eval₂_mul, Polynomial.eval₂_C, RingHom.coe_comp,
+          coe_algebraMap, Polynomial.coe_evalRingHom, Function.comp_apply, Polynomial.eval₂_X,
+          Polynomial.eval_zero, Complex.ext_iff, add_re, mul_re, ofReal_re, I_re, zero_mul, I_im,
+          ofReal_im, mul_zero, sub_self, mul_im, one_mul, zero_add, zero_re, add_im, add_zero,
+          zero_im, mul_eq_zero] at this
       exact ⟨this.1, mul_eq_zero.2 this.2.symm⟩
     have h0 : r.coeff 0 = 0 := Polynomial.funext fun t => by simpa using (hev t).1
     have h1 : Polynomial.X * r.coeff 1 = 0 := Polynomial.funext fun t => by simpa using (hev t).2

@@ -836,6 +836,7 @@ theorem proj_incl (i₀ : σ) (f : K⟦X⟧) : proj i₀ (incl i₀ f) = f := by
   simp only
   exact PowerSeries.X_subst f
 
+set_option linter.unusedDecidableInType false in
 /-- **Page 23's Proposition in `n ≥ 1` variables**: for a field `K` over `R` with `Ω_{K/R}`
 infinite-dimensional, no derivation `K⟦t₁, …, tₙ⟧ → K⟦t₁, …, tₙ⟧ ⊗_K Ω_{K/R}` induces
 `d_{K/R}` on `K`. Restricting along `t ↦ t_{i₀}` and projecting along `t_i ↦ 0`, `i ≠ i₀`,
@@ -875,6 +876,7 @@ section SeveralVariablesSmooth
 variable {R K : Type*} [CommRing R] [Field K] [Algebra R K] {σ : Type*} [Finite σ]
   [DecidableEq σ]
 
+set_option linter.unusedDecidableInType false in
 /-- **Page 23's Proposition in `n ≥ 1` variables, formal smoothness**: for a field `K` over `R`
 with `Ω_{K/R}` infinite-dimensional, `K⟦t₁, …, tₙ⟧` with the discrete topology is not formally
 smooth over `K`. As for `n = 1`: a formally smooth `S` would give, by Jacobi–Zariski, a retraction
@@ -947,7 +949,10 @@ theorem partialD_one_kPrimeOf (c : FracF p (Fin 2)) (hc : c ∈ kPrimeOf p K) :
         dx (algebraMap _ K (var p (0 : Fin 2))) • (Algebra.linearMap _ K).compDer (partialD p 0) :=
     derivation_ext p fun i => by fin_cases i <;> simp [partialD_var]
   have h := congrArg (· c) h
-  simp [← hw, _root_.frobenius_def, der_pow_char' p, hy, hdx] at h
+  simp only [Derivation.compAlgebraMap_apply, ← hw, _root_.frobenius_def, der_pow_char' p,
+      Fin.isValue, hy, hdx, smul_eq_mul, mul_one, one_smul, _root_.add_apply, Derivation.coe_smul,
+      Derivation.coe_comp, coe_comp, coe_restrictScalars, Derivation.coeFn_coe, Pi.smul_apply,
+      Function.comp_apply, Algebra.linearMap_apply] at h
   by_contra hne
   refine hy' (-(partialD p 0 c) / partialD p 1 c) ?_
   rw [map_div₀, map_neg, neg_div, eq_comm, eq_neg_iff_add_eq_zero, add_div' _ _ _ hne,

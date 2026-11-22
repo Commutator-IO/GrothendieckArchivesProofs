@@ -258,6 +258,7 @@ noncomputable def fiberEquiv (z : X) :
     · simp [h]
   right_inv g := funext fun y => Subtype.ext (by simp [y.2])
 
+set_option linter.unusedDecidableInType false in
 /-- `ν · 2^(ν−1)` edges: the sign vectors with exactly one zero. -/
 theorem card_substable :
     Nat.card {w : X → SignType // ∃! z, w z = 0} =

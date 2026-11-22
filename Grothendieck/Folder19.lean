@@ -523,7 +523,7 @@ def binaryFanOfFanLeft {F : WalkingPair → C} {P : C} (p : ∀ j, P ⟶ F j)
       Fan.IsLimit.fac h _ .right)
     (fun {T} a b (m : T ⟶ P) (ha : m ≫ p .left ≫ e.hom = a) (hb : m ≫ p .right = b) => by
       refine Fan.IsLimit.hom_ext h _ _ fun j => ?_
-      show m ≫ p j = Fan.IsLimit.lift h (famPair (a ≫ e.inv) b) ≫ p j
+      change m ≫ p j = Fan.IsLimit.lift h (famPair (a ≫ e.inv) b) ≫ p j
       have h1 : Fan.IsLimit.lift h (famPair (a ≫ e.inv) b) ≫ p j = famPair (a ≫ e.inv) b j :=
         Fan.IsLimit.fac h _ j
       rw [h1]
@@ -545,7 +545,7 @@ def binaryFanOfFanRight {F : WalkingPair → C} {P : C} (p : ∀ j, P ⟶ F j)
       rw [reassoc_of% h1]; simp)
     (fun {T} a b (m : T ⟶ P) (ha : m ≫ p .left = a) (hb : m ≫ p .right ≫ e.hom = b) => by
       refine Fan.IsLimit.hom_ext h _ _ fun j => ?_
-      show m ≫ p j = Fan.IsLimit.lift h (famPair a (b ≫ e.inv)) ≫ p j
+      change m ≫ p j = Fan.IsLimit.lift h (famPair a (b ≫ e.inv)) ≫ p j
       have h1 : Fan.IsLimit.lift h (famPair a (b ≫ e.inv)) ≫ p j = famPair a (b ≫ e.inv) j :=
         Fan.IsLimit.fac h _ j
       rw [h1]
@@ -1216,6 +1216,7 @@ variable {I : Type w'} {A : Type u₁'} [Category.{v'} A] {B : I → Type u₂'}
   [∀ i, Category.{v'} (B i)]
 variable (f : ∀ i, A ⥤ B i) (g : ∀ i, B i ⥤ A) (adj : ∀ i, f i ⊣ g i)
 
+set_option linter.unusedDecidableInType false in
 /-- **The essential image of `g_i`.** If `g_i` is fully faithful and `f = (f_j)` is
 conservative, `Y` lies in the essential image of `g_i` iff `f_j(η_i,Y)` is invertible for
 every `j ≠ i`. -/

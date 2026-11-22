@@ -110,10 +110,10 @@ theorem telescope_injective (y : A) : Function.Injective (telescope H y) := by
   ext i
   induction i with
   | zero =>
-    show h 0 = 0
+    change h 0 = 0
     rw [key, Finsupp.mapDomain_of_notMem_range _ _ (by simp), smul_zero]
   | succ i ih =>
-    show h (i + 1) = 0
+    change h (i + 1) = 0
     rw [key, Finsupp.mapDomain_apply_of_injective Nat.succ_injective, show h i = 0 from ih,
       smul_zero]
 

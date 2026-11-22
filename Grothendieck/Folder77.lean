@@ -1190,7 +1190,7 @@ theorem quadAlg_away (d s : R) :
   let g := AdjoinRoot.map (algebraMap R Rs) _ _
     (show (X ^ 2 - C (algebraMap R Rs d)) ∣ (X ^ 2 - C d : R[X]).map (algebraMap R Rs) by simp)
   have hg : ∀ r : R, g (algebraMap R B r) = AdjoinRoot.of _ (algebraMap R Rs r) := fun r => by
-    show g (AdjoinRoot.of _ r) = _
+    change g (AdjoinRoot.of _ r) = _
     simp [g, AdjoinRoot.map]
   have hgu : IsUnit (g (algebraMap R B s)) :=
     hg s ▸ (IsLocalization.Away.algebraMap_isUnit s).map _
@@ -1210,16 +1210,16 @@ theorem quadAlg_away (d s : R) :
     IsLocalization.ringHom_ext (Submonoid.powers s) (RingHom.ext fun r => by simp [hi, hψ, hg])
   refine ⟨RingEquiv.ofRingHom ψ φ ?_ ?_⟩
   · refine Ideal.Quotient.ringHom_ext (Polynomial.ringHom_ext (fun a => ?_) ?_)
-    · show ψ (φ (AdjoinRoot.of _ a)) = AdjoinRoot.of _ a
+    · change ψ (φ (AdjoinRoot.of _ a)) = AdjoinRoot.of _ a
       rw [AdjoinRoot.lift_of]
       exact RingHom.congr_fun key a
-    · show ψ (φ (AdjoinRoot.root _)) = AdjoinRoot.root _
+    · change ψ (φ (AdjoinRoot.root _)) = AdjoinRoot.root _
       simp [φ, hψ, g, AdjoinRoot.map]
   · refine IsLocalization.ringHom_ext (Submonoid.powers (algebraMap R B s))
       (Ideal.Quotient.ringHom_ext (Polynomial.ringHom_ext (fun a => ?_) ?_))
-    · show φ (ψ (algebraMap B Bs (algebraMap R B a))) = algebraMap B Bs (algebraMap R B a)
+    · change φ (ψ (algebraMap B Bs (algebraMap R B a))) = algebraMap B Bs (algebraMap R B a)
       rw [hψ, hg, AdjoinRoot.lift_of, hi]
-    · show φ (ψ (algebraMap B Bs (AdjoinRoot.root _))) = algebraMap B Bs (AdjoinRoot.root _)
+    · change φ (ψ (algebraMap B Bs (AdjoinRoot.root _))) = algebraMap B Bs (AdjoinRoot.root _)
       simp [hψ, g, AdjoinRoot.map, φ]
 
 /-- `3` is not of the form `b² − 4c` in `ℤ`: `b² − 4c ≡ 0` or `1 (mod 4)`. -/
@@ -1261,7 +1261,7 @@ theorem extension_across_two_counterexample :
       Nonempty (Localization.Away (algebraMap Z3 B3 2) ≃+* C6) ∧
       ¬ ∃ b c : ℤ, b ^ 2 - 4 * c = 3 :=
   ⟨by decide, inferInstance, inferInstance, finrank_quadAlg _, (quadAlg_away (3 : Z3) (2 : Z3)).map fun e =>
-      e.trans (AdjoinRoot.algEquivOfEq (R := Z6) _ _ (by simp; exact map_ofNat _ _)).toRingEquiv,
+      e.trans (AdjoinRoot.algEquivOfEq (R := Z6) _ _ (by simp only [sub_right_inj, Polynomial.C_inj]; exact map_ofNat _ _)).toRingEquiv,
     fun ⟨b, c, h⟩ => sq_sub_four_mul_ne_three b c h⟩
 
 end ExtensionAcrossTwoExample

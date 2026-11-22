@@ -329,7 +329,7 @@ theorem exists_mem_maximalIdeal_forall_notMem (f : ℕ → Ideal R) (hf : ∀ j,
   refine ⟨L, ?_, fun j hj => ?_⟩
   · simpa [a, N, s, seq] using hLk 0
   · apply (s (j + 1)).2 j (Nat.lt_succ_self j)
-    show a (j + 1) ∈ f j ⊔ maximalIdeal R ^ N (j + 1)
+    change a (j + 1) ∈ f j ⊔ maximalIdeal R ^ N (j + 1)
     rw [← sub_sub_cancel L (a (j + 1))]
     exact sub_mem (Ideal.mem_sup_left hj) (Ideal.mem_sup_right (hLk _))
 

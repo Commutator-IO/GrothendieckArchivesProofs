@@ -240,7 +240,8 @@ theorem prop_20796 (k : Type u) [Field k]
   have hT : Subsingleton T := by
     rcases hc with h | h
     · have := congrArg (fun x => (e x).1) h; simp at this
-    · have := congrArg (fun x => (e x).2) h; simp at this
+    · have := congrArg (fun x => (e x).2) h; simp only [AlgEquiv.apply_symm_apply, map_one,
+                                                 Prod.snd_one] at this
       exact subsingleton_of_zero_eq_one this
   have hinj : Function.Injective ((RingHom.fst L T).comp e.toRingEquiv.toRingHom) := by
     intro x y hxy

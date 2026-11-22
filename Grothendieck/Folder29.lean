@@ -454,7 +454,7 @@ lemma card_baseChange {P X Y Y' : FintypeCat.{0}} {fst : P ⟶ X} {snd : P ⟶ Y
     {g : Y' ⟶ Y} (sq : IsPullback fst snd f g) (y' : Y') :
     Nat.card {p : P // snd p = y'} = Nat.card {x : X // f x = g y'} := by
   have := (Types.isPullback_iff _ _ _ _).1 (sq.map (forget FintypeCat))
-  simp at this
+  simp only [TypeCat.hom_ofHom, TypeCat.Fun.coe_mk, and_imp] at this
   obtain ⟨-, hinj, hex⟩ := this
   have hw : ∀ p, f (fst p) = g (snd p) := fun p => by
     simpa using ConcreteCategory.congr_hom sq.w p
@@ -473,7 +473,8 @@ lemma card_add {X₁ X₂ X Y : FintypeCat.{0}} {i₁ : X₁ ⟶ X} {i₂ : X₂
       Nat.card {a : X₁ // (i₁ ≫ f) a = y} + Nat.card {b : X₂ // (i₂ ≫ f) b = y} := by
   have := (Types.binaryCofan_isColimit_iff _).1
     ⟨(isColimitMapCoconeBinaryCofanEquiv (forget _) i₁ i₂) (isColimitOfPreserves (forget _) hc)⟩
-  simp at this
+  simp only [ConcreteCategory.forget_map_eq_ofHom, BinaryCofan.mk_pt, BinaryCofan.mk_inl,
+      TypeCat.hom_ofHom, TypeCat.Fun.coe_mk, BinaryCofan.mk_inr] at this
   obtain ⟨h₁, h₂, hcompl⟩ := this
   rw [← Nat.card_sum]
   refine (Nat.card_congr (Equiv.ofBijective
@@ -638,7 +639,7 @@ instance : surj.IsStableUnderComposition := ⟨fun _ _ hf hg => hg.comp hf⟩
 theorem surj_pullback_epi {A B Y' Y : FintypeCat.{0}} {a : A ⟶ Y'} {b : A ⟶ B} {g : Y' ⟶ Y}
     {k : B ⟶ Y} (hg : surj g) (sq : IsPullback a b g k) : Epi b := by
   have := (Types.isPullback_iff _ _ _ _).1 (sq.map (forget FintypeCat))
-  simp at this
+  simp only [TypeCat.hom_ofHom, TypeCat.Fun.coe_mk, and_imp] at this
   refine (forget _).epi_of_epi_map ((epi_iff_surjective _).2 fun β => ?_)
   obtain ⟨y', hy'⟩ := hg (k β)
   obtain ⟨p, -, hp⟩ := this.2.2 y' β hy'

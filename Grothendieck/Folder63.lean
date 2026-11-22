@@ -112,8 +112,8 @@ def J₂ : Ideal R[X] where
 theorem P_le : P ≤ J₁ := by
   rw [P, Ideal.span_le]
   rintro x (rfl | rfl)
-  · show (2 : R) ∣ (C 2 : R[X]).coeff 0; simp
-  · show (2 : R) ∣ (X : R[X]).coeff 0; simp
+  · change (2 : R) ∣ (C 2 : R[X]).coeff 0; simp
+  · change (2 : R) ∣ (X : R[X]).coeff 0; simp
 
 theorem mem_P {h : R[X]} : h ∈ P ↔ (2 : R) ∣ h.coeff 0 := by
   refine ⟨fun hh => P_le hh, fun ⟨c, hc⟩ => ?_⟩

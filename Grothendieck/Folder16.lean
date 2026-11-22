@@ -484,7 +484,7 @@ theorem ι_mul_ι_anticomm {M : Type*} [AddCommGroup M] [Module R M] (x y : M) :
 /-- A product of two vectors commutes with every vector up to two sign changes. -/
 theorem commute_paire_ι {M : Type*} [AddCommGroup M] [Module R M] (x y z : M) :
     Commute (ι R x * ι R y) (ι R z) := by
-  show ι R x * ι R y * ι R z = ι R z * (ι R x * ι R y)
+  change ι R x * ι R y * ι R z = ι R z * (ι R x * ι R y)
   rw [mul_assoc, ι_mul_ι_anticomm y z, mul_neg, ← mul_assoc, ι_mul_ι_anticomm x z, neg_mul,
     neg_neg, mul_assoc]
 
@@ -802,7 +802,11 @@ def chi (x y z t : V) : k := D.φ x y * D.φ z t + D.Q (D.ψ x y) (D.ψ z t)
 whether or not the multiplication is associative. -/
 theorem chi_eq (x y z t : V) :
     D.mul (D.mul (D.mul (deg1 x) (deg1 y)) (deg1 z)) (deg1 t) = deg4 (D.chi x y z t) := by
-  simp [mul, deg1, deg4, act, chi]
+  simp only [mul, deg1, mul_zero, zero_smul, add_zero, zero_add, smul_zero, act, map_zero,
+      LinearMap.zero_comp, LinearMap.zero_apply, sub_self, zero_mul, LinearMap.comp_zero, smul_add,
+      LinearMap.add_apply, LinearMap.smul_apply, LinearMap.BilinForm.flip_apply, smul_eq_mul,
+      LinearMap.coe_comp, Function.comp_apply, LinearMap.flip_apply, zero_sub, neg_add_rev, deg4,
+      chi, Prod.mk.injEq, true_and]
   rw [D.φ_anti t z, D.ψ_anti t z, D.Q_symm]
   simp only [map_neg]
   ring
@@ -982,7 +986,8 @@ theorem reformulation_spec [FiniteDimensional k V] :
       refine Subtype.ext (h w fun v => ?_)
       have hv : v - Q' ξ' v • ξ' ∈ LinearMap.ker (Q' ξ') := by simp [hξ]
       have := hw ⟨_, hv⟩
-      simp [D, reformulation] at this
+      simp only [reformulation, LinearMap.BilinForm.restrict_apply, LinearMap.domRestrict_apply,
+          map_sub, map_smul, smul_eq_mul, D] at this
       rwa [hQ' (w : W') ξ', hw', mul_zero, sub_zero] at this
 
 end Reformulation
@@ -1385,8 +1390,8 @@ theorem reciproque_trois_un_fausse [Nontrivial R] :
     interval_cases i
     · simp only [πc, wc, Lc]; mat
     · simp [πc, wc]
-  · exact fun a => by show πc R a 0 1 = 0; unfold πc; split_ifs <;> simp
-  · exact fun j _ β _ => by show pc R j β 0 1 = 0; unfold pc; split_ifs <;> simp
+  · exact fun a => by change πc R a 0 1 = 0; unfold πc; split_ifs <;> simp
+  · exact fun j _ β _ => by change pc R j β 0 1 = 0; unfold pc; split_ifs <;> simp
   · rintro ⟨w, hw, h⟩
     have h01 : w 0 1 = 0 := hw
     have := congrFun (congrFun h 0) 0

@@ -416,7 +416,9 @@ theorem diag_not_central {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [Co
       Matrix.transvection i j 1 * Matrix.diagonal (Function.update 1 i c) := by
   intro h
   have := congrFun (congrFun h i) j
-  simp [Matrix.transvection, Matrix.diagonal_mul, Matrix.mul_diagonal, hij, Ne.symm hij] at this
+  simp only [Matrix.transvection, Matrix.diagonal_mul, Function.update_self, Matrix.add_apply,
+      ne_eq, hij, not_false_eq_true, Matrix.one_apply_ne, Matrix.single_apply_same, zero_add,
+      mul_one, Matrix.mul_diagonal, Ne.symm hij, Function.update_of_ne, Pi.one_apply] at this
   exact hc this
 
 /-! ## Centers and central morphisms -/

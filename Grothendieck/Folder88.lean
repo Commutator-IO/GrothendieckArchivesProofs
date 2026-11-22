@@ -220,6 +220,7 @@ theorem orderOf_indep (r r' : R) (i j : I) :
   obtain ⟨w, rfl⟩ := E.transitif r r'
   rw [E.equivariant, E.equivariant, conj_mul, ← MulAut.conj_apply, MulEquiv.orderOf_eq]
 
+set_option linter.unusedDecidableInType false in
 /-- Every ordered pair `i ≠ j` is `(u(ℓ-1), u(ℓ))` for some `u ∈ Rep'(I)`. -/
 theorem existe_rep [DecidableEq I] (e : Rep' n I) (i j : I) (hij : i ≠ j) :
     ∃ u : Rep' n I, u (avantDernier n) = i ∧ u (dernier n) = j := by

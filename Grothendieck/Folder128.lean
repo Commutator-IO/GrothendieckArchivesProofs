@@ -694,7 +694,7 @@ lemma rTensor_injective_of_smul_le (h0 : Module.Flat (A ⧸ I) ((A ⧸ I) ⊗[A]
   let L : Submodule A (F →₀ A) := (LinearMap.range u).comap p
   have hIL : I • (⊤ : Submodule A (F →₀ A)) ≤ L :=
     Submodule.smul_le.2 fun c hc g _ => by
-      show p (c • g) ∈ LinearMap.range u
+      change p (c • g) ∈ LinearMap.range u
       rw [map_smul]; exact hIu (Submodule.smul_mem_smul hc trivial)
   let e := LinearEquiv.ofInjective u hu
   let q : L →ₗ[A] K := e.symm.toLinearMap ∘ₗ p.restrict (p := L) (q := LinearMap.range u) fun (x : F →₀ A) (h : x ∈ L) => h
@@ -708,7 +708,7 @@ lemma rTensor_injective_of_smul_le (h0 : Module.Flat (A ⧸ I) ((A ⧸ I) ⊗[A]
     refine ⟨⟨g, ⟨k, hg.symm⟩⟩, hu ?_⟩
     rw [← LinearMap.comp_apply, huq]; exact hg
   have hker : LinearMap.ker p ≤ L := fun g hg => by
-    show p g ∈ LinearMap.range u
+    change p g ∈ LinearMap.range u
     simp [LinearMap.mem_ker.1 hg]
   let ι := Submodule.inclusion hker
   have hqι : q ∘ₗ ι = 0 := by
@@ -914,7 +914,7 @@ lemma mem_smul_of_red_eq_zero (g : N →ₗ[A] M₀)
     Module.compHom _ (algebraMap (A ⧸ I) (S ⧸ I.map (algebraMap A S)))
   have : IsScalarTower (A ⧸ I) (S ⧸ I.map (algebraMap A S)) (S ⊗[A] N ⧸ P) :=
     ⟨fun a b q => by
-      show (a • b) • q = algebraMap _ (S ⧸ I.map (algebraMap A S)) a • b • q
+      change (a • b) • q = algebraMap _ (S ⧸ I.map (algebraMap A S)) a • b • q
       rw [Algebra.smul_def, mul_smul]⟩
   have hfx : ∀ (x : A) (q : S ⊗[A] N ⧸ P),
       (Ideal.Quotient.mk (I.map (algebraMap A S)) (algebraMap A S x)) • q = x • q := by
@@ -925,7 +925,7 @@ lemma mem_smul_of_red_eq_zero (g : N →ₗ[A] M₀)
   have : IsScalarTower A (A ⧸ I) (S ⊗[A] N ⧸ P) :=
     ⟨fun x a q => by
       obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective a
-      show algebraMap _ (S ⧸ I.map (algebraMap A S)) (x • Ideal.Quotient.mk I a) • q =
+      change algebraMap _ (S ⧸ I.map (algebraMap A S)) (x • Ideal.Quotient.mk I a) • q =
         x • algebraMap _ (S ⧸ I.map (algebraMap A S)) (Ideal.Quotient.mk I a) • q
       rw [Algebra.smul_def, map_mul, mul_smul]
       exact hfx x _⟩
@@ -956,7 +956,7 @@ lemma mem_smul_of_red_eq_zero (g : N →ₗ[A] M₀)
     induction t using TensorProduct.inductionOn with
     | tmul b n =>
       rw [red_tmul, LinearMap.liftBaseChange_tmul]
-      show (Ideal.Quotient.mk _ b) • h₂ (g n) = _
+      change (Ideal.Quotient.mk _ b) • h₂ (g n) = _
       rw [h₂g]
       simp only [h₁, LinearMap.coe_comp, Function.comp_apply, TensorProduct.mk_apply,
         LinearMap.coe_restrictScalars, Submodule.mkQ_apply]
@@ -1308,7 +1308,10 @@ theorem flat_and_bijective_of_reduce (h : IsConductorIdeal S I) (hI : IsNilpoten
     have hΦ : Φ = (ι ∘ₗ (TensorProduct.lid A N).toLinearMap) ∘ₗ I.subtype.rTensor N := by
       refine TensorProduct.ext' fun x n => ?_
       simp only [Φ, αe, α, j]
-      simp [algebraMap_smul]
+      simp only [LinearMap.coe_comp, LinearMap.coe_restrictScalars, LinearEquiv.coe_coe,
+          Function.comp_apply, LinearMap.rTensor_tmul, LinearMap.coe_mk, AddHom.coe_mk,
+          AlgebraTensorModule.cancelBaseChange_symm_tmul, LinearMap.lTensor_tmul,
+          Submodule.subtype_apply, lid_tmul, algebraMap_smul, map_smul]
       exact congr_arg _ (LinearMap.liftBaseChange_one_tmul _ _ _)
     have hΦinj : Function.Injective Φ := by
       have h1 : Function.Injective (j.rTensor N) :=

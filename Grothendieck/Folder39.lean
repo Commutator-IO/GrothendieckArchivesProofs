@@ -120,7 +120,7 @@ theorem preparation_adique (I : Ideal A) [IsAdicComplete I A] (F : A⟦X⟧) (N 
     have hdeg := hdiv.degree_lt
     rw [hord] at hdeg
     refine ⟨(H.div G, H.mod G), ⟨hdeg, ?_⟩, ?_⟩
-    · show G = H.div G * F + ↑(H.mod G)
+    · change G = H.div G * F + ↑(H.mod G)
       rw [mul_comm]
       exact hdiv.eq_mul_add
     rintro ⟨q, r⟩ ⟨hr, hG⟩

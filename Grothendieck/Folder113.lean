@@ -97,7 +97,7 @@ instance : (opKaroubi P).IsEquivalence where
   full := ⟨fun {Q₁ Q₂} g => by
     refine ⟨⟨(g.unop.f : Q₂.X.unop ⟶ Q₁.X.unop).op, ?_⟩, rfl⟩
     apply Quiver.Hom.unop_inj
-    show (Q₂.p.unop ≫ (g.unop.f : Q₂.X.unop ⟶ Q₁.X.unop)) ≫ Q₁.p.unop = g.unop.f
+    change (Q₂.p.unop ≫ (g.unop.f : Q₂.X.unop ⟶ Q₁.X.unop)) ≫ Q₁.p.unop = g.unop.f
     exact (Category.assoc _ _ _).trans g.unop.comm⟩
   essSurj := ⟨fun Q => ⟨⟨op Q.unop.X, Q.unop.p.op, by rw [← op_comp, Q.unop.idem]⟩,
     ⟨Iso.refl _⟩⟩⟩

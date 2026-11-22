@@ -173,7 +173,7 @@ def commHom (z : zbar N N') : G →* ↥(N ⊓ N') where
 
 theorem le_ker_commHom (z : zbar N N') : N ⊔ N' ≤ (commHom hN' z).ker := by
   refine sup_le (fun n hn => ?_) (fun n hn => ?_) <;> rw [MonoidHom.mem_ker] <;>
-    apply Subtype.ext <;> show ⁅n, (z : G)⁆ = 1 <;> rw [commutatorElement_eq_one_iff_mul_comm]
+    apply Subtype.ext <;> change ⁅n, (z : G)⁆ = 1 <;> rw [commutatorElement_eq_one_iff_mul_comm]
   · exact (mem_zbar.mp z.2).2 n hn
   · exact (mem_center_iff.mp (hN' hn) z).symm
 
@@ -187,7 +187,7 @@ theorem phi_mk (z : zbar N N') (g : G) :
 theorem phi_eq_of_rel {z w : zbar N N'} (h : z⁻¹ * w ∈ N'.subgroupOf (zbar N N')) :
     phi hN' z = phi hN' w := by
   refine QuotientGroup.monoidHom_ext _ (MonoidHom.ext fun g => Subtype.ext ?_)
-  show ⁅g, (z : G)⁆ = ⁅g, (w : G)⁆
+  change ⁅g, (z : G)⁆ = ⁅g, (w : G)⁆
   have hc : (z : G)⁻¹ * w ∈ center G := hN' (by simpa [mem_subgroupOf] using h)
   rw [show (w : G) = z * ((z : G)⁻¹ * w) by group, comm_mul_central hc]
 
@@ -206,7 +206,7 @@ theorem Psi_mul (a b : Zfrak N N') (x : G ⧸ (N ⊔ N')) :
   induction b using QuotientGroup.induction_on with | H w => ?_
   induction x using QuotientGroup.induction_on with | H g => ?_
   apply Subtype.ext
-  show ⁅g, ((z * w : zbar N N') : G)⁆ = ⁅g, (z : G)⁆ * ⁅g, (w : G)⁆
+  change ⁅g, ((z * w : zbar N N') : G)⁆ = ⁅g, (z : G)⁆ * ⁅g, (w : G)⁆
   rw [coe_mul]
   have hw := comm_mem_center hN' w.2 g
   calc ⁅g, (z : G) * w⁆ = g * z * g⁻¹ * (⁅g, (w : G)⁆ * (z : G)⁻¹) := by
@@ -225,7 +225,7 @@ theorem injective_Psi_iff : Function.Injective (Psi (N := N) hN') ↔ N' = cente
     have : Psi hN' ((⟨c, hcz⟩ : zbar N N') : Zfrak N N') =
         Psi hN' ((1 : zbar N N') : Zfrak N N') := by
       refine QuotientGroup.monoidHom_ext _ (MonoidHom.ext fun g => Subtype.ext ?_)
-      show ⁅g, c⁆ = ⁅g, ((1 : zbar N N') : G)⁆
+      change ⁅g, c⁆ = ⁅g, ((1 : zbar N N') : G)⁆
       rw [commutatorElement_eq_one_iff_mul_comm.mpr (mem_center_iff.mp hc g)]
       simp
     simpa [mem_subgroupOf] using QuotientGroup.eq.mp (hinj this)

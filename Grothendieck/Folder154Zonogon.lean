@@ -615,7 +615,7 @@ theorem ncard_extremePoints_sum_segment {ν : ℕ} (hν : 0 < ν) (p q : Fin ν 
     have e : cross ((1 / 2 : ℝ) • (q i - p i)) ((1 / 2 : ℝ) • (q j - p j)) =
         (1 / 4) * cross (q i - p i) (q j - p j) := by
       simp only [cross, Prod.smul_fst, Prod.smul_snd, smul_eq_mul]; ring
-    show cross _ _ ≠ 0
+    change cross _ _ ≠ 0
     rw [e]
     exact mul_ne_zero (by norm_num) this
   rw [sum_segment_eq, extremePoints_zono _ _ hv, (vert_injOn _ _).ncard_image,

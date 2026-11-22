@@ -146,6 +146,7 @@ theorem not_lattice_of_disjoint (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L) 
   generalize v e = a; generalize w f = b; generalize W e = c; generalize W f = d
   cases a <;> cases b <;> cases c <;> cases d <;> decide
 
+set_option linter.unusedFintypeInType false in
 /-- If no nonzero face of `X` is a face of `-Y`, the closed cells `±X` and `±Y` meet in nothing
 or in the closed cell of the composite of all their common faces. -/
 theorem pcl_inter_of [Fintype E] (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L)
@@ -189,6 +190,7 @@ theorem pcl_inter_of [Fintype E] (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L)
     · have h' := conf_neg_iff.1 h
       exact ⟨hZ, hZ0, Or.inr ⟨hN _ hZ, neg_ne_zero' hZ0, h'.trans hM.2.2.1, h'.trans hM.2.2.2⟩⟩
 
+set_option linter.unusedFintypeInType false in
 /-- **The lattice criterion for covectors.** For a symmetric set of sign vectors closed under
 composition, the closed cells of `ℝP²` meet pairwise in nothing or a single closed cell iff no two
 nonzero covectors have disjoint supports. -/
@@ -283,6 +285,7 @@ theorem closure_cell [Finite ι] {X : ι → SignType} (hX : X ∈ cov ℓ) :
       · rw [hp] at h' ⊢; simpa using h'
       · rw [sign_pos hp, sign_eq_one_iff] at h' ⊢; linarith [mul_pos ht hp]
 
+set_option linter.unusedFintypeInType false in
 /-- **The lattice criterion for lines.** The arrangement is latticial iff no two points carry
 every line between them. -/
 theorem lattice_iff_not_twoPencil [Fintype ι] : Lattice (cov ℓ) ↔ ¬ TwoPencil ℓ := by
@@ -306,6 +309,7 @@ def Bigonal {R : Type*} [CommRing R] (ℓ : ι → Fin 3 → R) (i : ι) : Prop 
 def NoCommonVertex {R : Type*} [CommRing R] (ℓ : ι → Fin 3 → R) : Prop :=
   ∀ i j, i ≠ j → ∃ m, tp (ℓ i) (ℓ j) (ℓ m) ≠ 0
 
+set_option linter.unusedFintypeInType false in
 /-- **Condition a) is necessary**: a bigonal line breaks the lattice property. -/
 theorem not_lattice_of_bigonal [Fintype ι] (hnd : NoCommonVertex ℓ) {i : ι} (h : Bigonal ℓ i) :
     ¬ Lattice (cov ℓ) := by

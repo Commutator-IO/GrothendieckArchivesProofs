@@ -68,13 +68,19 @@ def effEpiOfDenseAt {X : E} (hX : ι.DenseAt X) :
   desc e h := hX.desc (compatCocone ι e h)
   fac e h g := by
     have := hX.fac (compatCocone ι e h) g
-    simp at this
+    simp only [Functor.comp_obj, CostructuredArrow.proj_obj, Functor.LeftExtension.coconeAt_pt,
+        Functor.LeftExtension.mk_right, Functor.id_obj, Functor.LeftExtension.coconeAt_ι_app,
+        Functor.whiskeringLeft_obj_obj, Functor.const_obj_obj, Functor.LeftExtension.mk_hom,
+        Functor.rightUnitor_inv_app, Functor.id_map, Category.id_comp, compatCocone_ι_app] at this
     exact this
   uniq e h m hm := by
     apply hX.hom_ext
     intro g
     have := hX.fac (compatCocone ι e h) g
-    simp at this ⊢
+    simp only [Functor.comp_obj, CostructuredArrow.proj_obj, Functor.LeftExtension.coconeAt_pt,
+        Functor.LeftExtension.mk_right, Functor.id_obj, Functor.LeftExtension.coconeAt_ι_app,
+        Functor.whiskeringLeft_obj_obj, Functor.const_obj_obj, Functor.LeftExtension.mk_hom,
+        Functor.rightUnitor_inv_app, Functor.id_map, Category.id_comp, compatCocone_ι_app] at this ⊢
     exact (hm g).trans this.symm
 
 /-- ORG14LNb5gE-2891 (0:48:11) [prop], direction (b) ⇒ (b′), pointwise: if `X` is the colimit of
@@ -256,7 +262,8 @@ theorem kfun_not_hom : ¬ ∃ φ : F2 →* Multiplicative ℤ, ∀ g, φ g = kfu
   rintro ⟨φ, hφ⟩
   have h1 := hφ (FreeGroup.of false * FreeGroup.of true)
   rw [map_mul, hφ, hφ] at h1
-  simp [kfun, ea, eb] at h1
+  simp only [kfun, eb, cond_eq_ite, FreeGroup.lift_apply_of, Bool.false_eq_true, ↓reduceIte, ea,
+      ite_self, mul_one, map_mul, one_mul, left_eq_ite_iff, _root_.not_imp_self] at h1
   exact absurd (congrArg Multiplicative.toAdd h1) (by simp)
 
 /-- `zpowersHom x` sends the generator to `x`. -/

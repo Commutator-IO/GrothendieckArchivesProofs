@@ -277,7 +277,7 @@ theorem symm_finiteType_iff : Algebra.FiniteType k (SymmetricAlgebra k M) ↔ Mo
           simp only [Set.mem_ofPred_eq, TrivSqZeroExt.snd_add] at *
           exact add_mem ha hb
         algebraMap_mem' := fun r ↦ by
-          show (TrivSqZeroExt.inl (algebraMap k k r) : TrivSqZeroExt k M).snd ∈
+          change (TrivSqZeroExt.inl (algebraMap k k r) : TrivSqZeroExt k M).snd ∈
             Submodule.span k T
           rw [TrivSqZeroExt.snd_inl]
           exact Submodule.zero_mem _ }

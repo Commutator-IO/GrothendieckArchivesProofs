@@ -484,6 +484,7 @@ theorem confine {l : L} (Z : X.M.Vtx → Prop)
 
 variable [Fintype D]
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 /-- The four flags of a line at a vertex. -/
 theorem at_four {d x1 x2 x3 x4 : D} (hn : [x1, x2, x3, x4].Nodup)
@@ -497,6 +498,7 @@ theorem at_four {d x1 x2 x3 x4 : D} (hn : [x1, x2, x3, x4].Nodup)
   have := Finset.eq_of_subset_of_card_le hsub (by rw [h4, List.toFinset_card_of_nodup hn]; rfl)
   rw [← List.mem_toFinset, this]; simp [hf, hl]
 
+set_option linter.unusedFintypeInType false in
 /-- No loop: the two ends of an edge are distinct vertices. -/
 theorem noLoop (hbf : BigonFree X.On) (d : D) : X.M.vtx (X.M.a0 d) ≠ X.M.vtx d := by
   intro h
@@ -509,6 +511,7 @@ theorem noLoop (hbf : BigonFree X.On) (d : D) : X.M.vtx (X.M.a0 d) ≠ X.M.vtx d
   simp only [List.mem_cons, List.not_mem_nil, or_false] at this
   rcases this with rfl | rfl | rfl | rfl <;> simp [h, X.M.a0_a0, X.M.a0_a2]
 
+set_option linter.unusedFintypeInType false in
 /-- No multiple edge: two edges with the same ends are equal. -/
 theorem noMulti (hbf : BigonFree X.On) {x y : D} (hv : X.M.vtx x = X.M.vtx y)
     (hw : X.M.vtx (X.M.a0 x) = X.M.vtx (X.M.a0 y)) : X.M.edge x = X.M.edge y := by
@@ -560,6 +563,7 @@ theorem a1_ne_a2 (d : D) : X.M.a1 d ≠ X.M.a2 d := by
     · simp only [a1_eq_iff, ← h, X.M.a1_a1]; tauto
     · simp only [a2_eq_iff, X.M.a2_a2]; tauto
 
+set_option linter.unusedFintypeInType false in
 theorem edge_a1_ne (hbf : BigonFree X.On) (d : D) : X.M.edge (X.M.a1 d) ≠ X.M.edge d := by
   intro h
   rcases edge_eq.1 h with h | h | h | h
@@ -595,6 +599,7 @@ theorem face_six (hbf : BigonFree X.On) (d : D) :
       rcases hx with rfl | rfl | rfl | rfl | rfl | rfl | h <;> simp_all
   exact (List.toFinset_card_of_nodup hn).symm.trans_le (Finset.card_le_card hsub)
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 /-- **Melchior's inequality** gives a simple crossing: from `χ = 1`, `4E = 4 Σ ν(v)` and
 `6F ≤ 4E`, `Σ (3 − ν(v)) ≥ 3`, so some vertex is on exactly two lines. -/
@@ -650,6 +655,7 @@ theorem melchior (hbf : BigonFree X.On) :
     fun c hc => ?_⟩
   simpa [hab'] using (hν _ _).1 hc
 
+set_option linter.unusedFintypeInType false in
 /-- **The page's boxed statement** (pages 20, 24): every bigon-free combinatorial arrangement of
 pseudolines in the real projective plane is `II_4` or contains `II_5`, `II′_{3,2}` or
 `III_6`. -/

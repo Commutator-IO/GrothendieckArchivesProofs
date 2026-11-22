@@ -135,7 +135,7 @@ theorem inv_mul_adjSwap_le {n : ℕ} (σ : Perm (Fin n)) (k : ℕ) (hk : k + 1 <
       rw [Finset.mem_erase] at hx'
       obtain ⟨hne, hxS⟩ := hx'
       have hxS' : x.1 < x.2 ∧ (σ * s) x.2 < (σ * s) x.1 := (Finset.mem_filter.1 hxS).2
-      show (s x.1, s x.2) ∈ T
+      change (s x.1, s x.2) ∈ T
       refine Finset.mem_filter.2 ⟨Finset.mem_univ _, adjSwap_lt k hk x.1 x.2 hxS'.1 ?_, hxS'.2⟩
       rintro ⟨h1, h2⟩
       exact hne (Prod.ext (Fin.ext h1) (Fin.ext h2))
@@ -143,7 +143,7 @@ theorem inv_mul_adjSwap_le {n : ℕ} (σ : Perm (Fin n)) (k : ℕ) (hk : k + 1 <
       simp only [Prod.mk.injEq] at hxy
       exact Prod.ext (s.injective hxy.1) (s.injective hxy.2)
   have h2 : S.card - 1 ≤ (S.erase e).card := Finset.pred_card_le_card_erase
-  show S.card ≤ T.card + 1
+  change S.card ≤ T.card + 1
   omega
 
 lemma inv_mul_sig_le (σ : Perm (Fin 7)) (i : ℕ) : inv (σ * sig i) ≤ inv σ + 1 := by

@@ -367,11 +367,11 @@ lemma iSup_span (D : Set (Opens X × Opens Y)) :
       mono := fun h hU hV =>
         (inf_le_inf (OrderHomClass.mono f hU) (OrderHomClass.mono g hV)).trans h
       sSup_left := fun s V h => by
-        show f (sSup s) ⊓ g V ≤ _
+        change f (sSup s) ⊓ g V ≤ _
         rw [map_sSup, sSup_image, iSup₂_inf_eq]
         exact iSup₂_le h
       sSup_right := fun U s h => by
-        show f U ⊓ g (sSup s) ≤ _
+        change f U ⊓ g (sSup s) ≤ _
         rw [map_sSup, sSup_image, inf_iSup₂_eq]
         exact iSup₂_le h }
   exact iSup₂_le fun p hp =>
@@ -381,7 +381,7 @@ lemma iSup_span (D : Set (Opens X × Opens Y)) :
 def lift : FrameHom (CIdeal X Y) L where
   toFun S := ⨆ p ∈ S.carrier, f p.1 ⊓ g p.2
   map_inf' S T := by
-    show ⨆ p ∈ (S ⊓ T).carrier, _ = (⨆ p ∈ S.carrier, _) ⊓ ⨆ p ∈ T.carrier, _
+    change ⨆ p ∈ (S ⊓ T).carrier, _ = (⨆ p ∈ S.carrier, _) ⊓ ⨆ p ∈ T.carrier, _
     rw [carrier_inf]
     refine le_antisymm (iSup₂_le fun p hp => le_inf (le_iSup₂_of_le p hp.1 le_rfl)
       (le_iSup₂_of_le p hp.2 le_rfl)) ?_
@@ -690,10 +690,10 @@ theorem existsUnique_opens_prod (hc : Covers X Y) {L : Type*} [Order.Frame L]
   have he (S : CIdeal X Y) : e' (toOpens S) = S := e.symm_apply_apply S
   refine ⟨(lift f g).comp e', ⟨FrameHom.ext fun U => ?_, FrameHom.ext fun V => ?_⟩,
     fun h ⟨h₁, h₂⟩ => FrameHom.ext fun W => ?_⟩
-  · show lift f g (e' (Opens.comap _ U)) = f U
+  · change lift f g (e' (Opens.comap _ U)) = f U
     rw [← toOpens_comp_inl, FrameHom.comp_apply, he]
     exact DFunLike.congr_fun (lift_comp_inl f g) U
-  · show lift f g (e' (Opens.comap _ V)) = g V
+  · change lift f g (e' (Opens.comap _ V)) = g V
     rw [← toOpens_comp_inr, FrameHom.comp_apply, he]
     exact DFunLike.congr_fun (lift_comp_inr f g) V
   · have hl : h.comp toOpens = lift f g := lift_unique f g _
@@ -997,7 +997,7 @@ lemma iSup_span (D : Set (Box X)) :
       mono := fun h hvu =>
         (iInf_mono fun i => OrderHomClass.mono (f i) (Box.le_def.1 hvu i)).trans h
       sSup_mem := fun u i s h => by
-        show ⨅ j, f j ((u.replace i (sSup s)).1 j) ≤ _
+        change ⨅ j, f j ((u.replace i (sSup s)).1 j) ≤ _
         rw [iInf_replace, map_sSup, sSup_image, iSup₂_inf_eq]
         exact iSup₂_le fun W hW => by
           have := h W hW
@@ -1010,7 +1010,7 @@ lemma iSup_span (D : Set (Box X)) :
 def lift : FrameHom (PIdeal X) L where
   toFun S := ⨆ u ∈ S.carrier, ⨅ i, f i (u.1 i)
   map_inf' S T := by
-    show ⨆ u ∈ (S ⊓ T).carrier, _ = (⨆ u ∈ S.carrier, _) ⊓ ⨆ u ∈ T.carrier, _
+    change ⨆ u ∈ (S ⊓ T).carrier, _ = (⨆ u ∈ S.carrier, _) ⊓ ⨆ u ∈ T.carrier, _
     rw [carrier_inf]
     refine le_antisymm (iSup₂_le fun u hu => le_inf (le_iSup₂_of_le u hu.1 le_rfl)
       (le_iSup₂_of_le u hu.2 le_rfl)) ?_
@@ -1120,7 +1120,7 @@ theorem piToOpens_injective_of_piCovers (hc : PiCovers X) :
     Function.Injective (piToOpens : PIdeal X → Opens (∀ i, X i)) := by
   have key (S : PIdeal X) : S = piRect (piToOpens S : Set (∀ i, X i)) := PIdeal.ext <| by
     refine subset_antisymm (fun u hu => ?_) fun u hu => hc S u ?_
-    · show u.toSet ⊆ _
+    · change u.toSet ⊆ _
       rw [coe_piToOpens]
       exact subset_biUnion_of_mem (u := fun v : Box X => v.toSet) hu
     · rw [← coe_piToOpens]; exact hu
@@ -1146,7 +1146,7 @@ theorem existsUnique_opens_pi (hc : PiCovers X) {L : Type*} [Order.Frame L]
       map_sSup' := map_sSup e.symm }
   have he (S : PIdeal X) : e' (piToOpens S) = S := e.symm_apply_apply S
   refine ⟨(lift f).comp e', fun i => FrameHom.ext fun U => ?_, fun h hh => FrameHom.ext fun W => ?_⟩
-  · show lift f (e' (Opens.comap _ U)) = f i U
+  · change lift f (e' (Opens.comap _ U)) = f i U
     rw [← piToOpens_comp_inj, FrameHom.comp_apply, he]
     exact DFunLike.congr_fun (lift_comp_inj f i) U
   · have hl : h.comp piToOpens = lift f := lift_unique f _ fun i => by

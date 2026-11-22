@@ -379,9 +379,9 @@ lemma arrow_comp_left {s s' : Span W cof x y} (t : Span W cof y z) (h : Arrow s 
   have := hasPushout (W := W) (cof := cof) t.f s'.i t.hf
   refine ⟨pushout.desc (pushout.inl _ _) (u ≫ pushout.inr _ _) ?_, ?_, ?_⟩
   · rw [← Category.assoc, h2]; exact pushout.condition
-  · show (s.f ≫ pushout.inr _ _) ≫ _ = s'.f ≫ pushout.inr _ _
+  · change (s.f ≫ pushout.inr _ _) ≫ _ = s'.f ≫ pushout.inr _ _
     rw [Category.assoc, pushout.inr_desc, ← Category.assoc, h1]
-  · show (t.i ≫ pushout.inl _ _) ≫ _ = t.i ≫ pushout.inl _ _
+  · change (t.i ≫ pushout.inl _ _) ≫ _ = t.i ≫ pushout.inl _ _
     rw [Category.assoc, pushout.inl_desc]
 
 omit [HasInitial C] in
@@ -392,9 +392,9 @@ lemma arrow_comp_right (s : Span W cof x y) {t t' : Span W cof y z} (h : Arrow t
   have := hasPushout (W := W) (cof := cof) t'.f s.i t'.hf
   refine ⟨pushout.desc (v ≫ pushout.inl _ _) (pushout.inr _ _) ?_, ?_, ?_⟩
   · rw [← Category.assoc, h1]; exact pushout.condition
-  · show (s.f ≫ pushout.inr _ _) ≫ _ = s.f ≫ pushout.inr _ _
+  · change (s.f ≫ pushout.inr _ _) ≫ _ = s.f ≫ pushout.inr _ _
     rw [Category.assoc, pushout.inr_desc]
-  · show (t.i ≫ pushout.inl _ _) ≫ _ = t'.i ≫ pushout.inl _ _
+  · change (t.i ≫ pushout.inl _ _) ≫ _ = t'.i ≫ pushout.inl _ _
     rw [Category.assoc, pushout.inl_desc, ← Category.assoc, h2]
 
 /-- The unit `1_x = (1_x, 1_x)`. -/
@@ -423,13 +423,13 @@ lemma arrow_assoc (s : Span W cof x y) (t : Span W cof y z) (r : Span W cof z w)
     rw [← Category.assoc]; exact pushout.condition
   have hB : r.f ≫ (pushout.inl r.f t.i ≫ pushout.inl (t.comp r).f s.i) =
       (s.comp t).i ≫ pushout.desc _ _ hA := by
-    show _ = (t.i ≫ pushout.inl t.f s.i) ≫ _
+    change _ = (t.i ≫ pushout.inl t.f s.i) ≫ _
     rw [Category.assoc, pushout.inl_desc, ← Category.assoc, pushout.condition,
       Category.assoc]
   refine ⟨pushout.desc _ (pushout.desc _ _ hA) hB, ?_, ?_⟩
-  · show ((s.f ≫ pushout.inr _ _) ≫ pushout.inr _ _) ≫ _ = s.f ≫ pushout.inr _ _
+  · change ((s.f ≫ pushout.inr _ _) ≫ pushout.inr _ _) ≫ _ = s.f ≫ pushout.inr _ _
     simp only [Category.assoc, pushout.inr_desc]
-  · show (r.i ≫ pushout.inl _ _) ≫ _ = (r.i ≫ pushout.inl _ _) ≫ pushout.inl _ _
+  · change (r.i ≫ pushout.inl _ _) ≫ _ = (r.i ≫ pushout.inl _ _) ≫ pushout.inl _ _
     simp only [Category.assoc, pushout.inl_desc]
 
 /-- The diagram `(g, 1) : x → x' ← x'` of a cofibration `g`. -/
@@ -449,7 +449,7 @@ lemma arrow_decomp (s : Span W cof x y) :
   have hlr : pushout.inl (𝟙 s.pt) (𝟙 s.pt) = pushout.inr _ _ := by
     simpa using (pushout.condition (f := 𝟙 s.pt) (g := 𝟙 s.pt))
   refine ⟨pushout.inr _ _, rfl, ?_⟩
-  show _ = s.i ≫ pushout.inl _ _
+  change _ = s.i ≫ pushout.inl _ _
   rw [hlr]
 
 omit [HasInitial C] in
@@ -460,9 +460,9 @@ lemma arrow_cof_back {x y : C} (g : x ⟶ y) (hg : cof g) (hgW : W g) :
   have hlr : pushout.inl (𝟙 y) (𝟙 y) = pushout.inr _ _ := by
     simpa using (pushout.condition (f := 𝟙 y) (g := 𝟙 y))
   refine ⟨g ≫ pushout.inl _ _, ?_, ?_⟩
-  · show 𝟙 x ≫ g ≫ _ = g ≫ pushout.inr _ _
+  · change 𝟙 x ≫ g ≫ _ = g ≫ pushout.inr _ _
     rw [Category.id_comp, hlr]
-  · show 𝟙 x ≫ g ≫ _ = g ≫ pushout.inl _ _
+  · change 𝟙 x ≫ g ≫ _ = g ≫ pushout.inl _ _
     rw [Category.id_comp]
 
 end Span
@@ -588,9 +588,9 @@ theorem arrow_brown {x z : C} {F : x ⟶ z} (B : Brown (W := W) (cof := cof) F)
   refine ⟨⟨R, s.f ≫ pushout.inr B.c h ≫ κ, s.i ≫ pushout.inr B.c h ≫ κ,
     cof_comp (W := W) _ _ s.hf (cof_comp (W := W) _ _ (pushout_cof (W := W) hQ B.hc) hκ), hr⟩,
     ⟨pushout.inr B.c h ≫ κ, rfl, rfl⟩, ⟨pushout.inl B.c h ≫ κ, ?_, ?_⟩⟩
-  · show (B.ιx ≫ B.c) ≫ _ = _
+  · change (B.ιx ≫ B.c) ≫ _ = _
     rw [Category.assoc, pushout.condition_assoc, B.hS.inr_desc_assoc]
-  · show (B.ιz ≫ B.c) ≫ _ = _
+  · change (B.ιz ≫ B.c) ≫ _ = _
     rw [Category.assoc, pushout.condition_assoc, B.hS.inl_desc_assoc]
 
 lemma mk_eq_brown {x z : C} {F : x ⟶ z} (B : Brown (W := W) (cof := cof) F)
@@ -619,20 +619,20 @@ noncomputable def phi (hcof : ∀ x : C, Cofibrant cof x) : C ⥤ Rect W cof whe
   map_comp {x y z} f g := by
     let Bf := Classical.choice (brown_nonempty (W := W) hcof f)
     let Bg := Classical.choice (brown_nonempty (W := W) hcof g)
-    show phiMap hcof (f ≫ g) = Quot.mk _ (Bf.span.comp Bg.span)
+    change phiMap hcof (f ≫ g) = Quot.mk _ (Bf.span.comp Bg.span)
     have := hasPushout (W := W) (cof := cof) Bg.span.f Bf.span.i Bg.span.hf
     have hcond : Bg.span.f ≫ Bg.α = Bf.span.i ≫ Bf.α ≫ g := by
-      show (Bg.ιx ≫ Bg.c) ≫ _ = (Bf.ιz ≫ Bf.c) ≫ _
+      change (Bg.ιx ≫ Bg.c) ≫ _ = (Bf.ιz ≫ Bf.c) ≫ _
       rw [Category.assoc, Bg.hx, Category.assoc, ← Category.assoc Bf.c, ← Category.assoc,
         Bf.hz, Category.id_comp]
     refine phiMap_eq hcof _ (pushout.desc Bg.α (Bf.α ≫ g) hcond) ?_ ?_
-    · show (Bg.span.i ≫ pushout.inl _ _) ≫ _ = _
+    · change (Bg.span.i ≫ pushout.inl _ _) ≫ _ = _
       rw [Category.assoc, pushout.inl_desc]
-      show (Bg.ιz ≫ Bg.c) ≫ _ = _
+      change (Bg.ιz ≫ Bg.c) ≫ _ = _
       rw [Category.assoc, Bg.hz]
-    · show (Bf.span.f ≫ pushout.inr _ _) ≫ _ = _
+    · change (Bf.span.f ≫ pushout.inr _ _) ≫ _ = _
       rw [Category.assoc, pushout.inr_desc]
-      show (Bf.ιx ≫ Bf.c) ≫ _ = _
+      change (Bf.ιx ≫ Bf.c) ≫ _ = _
       have := Bf.hx
       simp only [Category.assoc] at this ⊢
       rw [reassoc_of% this]
@@ -681,7 +681,7 @@ noncomputable def qFunctor : Rect W cof ⥤ W.Localization where
   obj X := W.Q.obj X.as
   map φ := qbar φ
   map_id X := by
-    show frac (idSpan X.as) = _
+    change frac (idSpan X.as) = _
     exact (frac_of_retraction _ (𝟙 X.as) (𝟙 X.as) (Category.comp_id _)
       (Category.comp_id _)).trans (W.Q.map_id _)
   map_comp {X Y Z} φ ψ := by
@@ -689,12 +689,12 @@ noncomputable def qFunctor : Rect W cof ⥤ W.Localization where
     | mk s =>
     induction ψ using Quot.ind with
     | mk t =>
-    show frac (s.comp t) = frac s ≫ frac t
+    change frac (s.comp t) = frac s ≫ frac t
     have := hasPushout (W := W) (cof := cof) t.f s.i t.hf
     unfold frac
     have := W.Q_inverts _ (s.comp t).hi
     rw [← cancel_mono (W.Q.map (s.comp t).i), Category.assoc, wInv_hom, Category.comp_id]
-    show W.Q.map (s.f ≫ pushout.inr t.f s.i) = _ ≫ W.Q.map (t.i ≫ pushout.inl t.f s.i)
+    change W.Q.map (s.f ≫ pushout.inr t.f s.i) = _ ≫ W.Q.map (t.i ≫ pushout.inl t.f s.i)
     simp only [Category.assoc, Functor.map_comp, wInv_hom_assoc]
     rw [← W.Q.map_comp t.f, pushout.condition (f := t.f) (g := s.i), W.Q.map_comp,
       wInv_hom_assoc]
@@ -769,9 +769,9 @@ theorem qFunctor_iso (hcof : ∀ x : C, Cofibrant cof x) :
     intro x y F
     erw [eqToHom_refl, eqToHom_refl, Category.id_comp, Category.comp_id]
     let B := Classical.choice (brown_nonempty (W := W) hcof F)
-    show frac B.span = _
-    exact frac_of_retraction _ B.α F (by show (B.ιz ≫ B.c) ≫ B.α = 𝟙 _; rw [Category.assoc, B.hz])
-      (by show (B.ιx ≫ B.c) ≫ B.α = F; rw [Category.assoc, B.hx])
+    change frac B.span = _
+    exact frac_of_retraction _ B.α F (by change (B.ιz ≫ B.c) ≫ B.α = 𝟙 _; rw [Category.assoc, B.hz])
+      (by change (B.ιx ≫ B.c) ≫ B.α = F; rw [Category.assoc, B.hx])
 
 /-- **`q'` is full**: every arrow of `W⁻¹𝒞(x, y)` is a fraction `[i]⁻¹[f]` with
 `f ∈ cof`, `i ∈ W`. -/

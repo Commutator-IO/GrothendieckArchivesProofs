@@ -124,7 +124,8 @@ lemma lam_mul_gen (a : P k) (i l : ℕ) :
     simp [eps, MvPolynomial.constantCoeff, Polynomial.constantCoeff_apply]
   · rw [coeff_mul_C, MvPolynomial.coeff_mul_X' (σ := ℕ), ite_eq_right_iff]
     intro h
-    simp at h
+    simp only [ne_eq, one_ne_zero, not_false_eq_true, Finsupp.support_single,
+        Finset.mem_singleton] at h
     exact absurd h h2
   · exact absurd (h2 ▸ le_refl l) h1
   · simp
@@ -329,7 +330,7 @@ universe u
 
 /-- A category is a Grothendieck topos if it is equivalent to the category of sheaves of
 sets on a small site. -/
-def IsGrothendieckTopos (E : Type (u+1)) [Category.{u} E] : Prop :=
+def IsGrothendieckTopos (E : Type (u + 1)) [Category.{u} E] : Prop :=
   ∃ (D : Type u) (_ : SmallCategory D) (J : GrothendieckTopology D),
     Nonempty (E ≌ Sheaf J (Type u))
 
@@ -1103,6 +1104,8 @@ theorem not_problem8 : ¬ problem8.{u} := fun h =>
 end Grothendieck.Folder37.P8
 
 namespace Grothendieck.Folder37
+
+universe u
 
 /-- **Problem 8 is false.** For the small category `P8.CatY` of finitely generated presheaves on
 `P8.Dob`, condition (ii) holds while `Ind` of it is not a Grothendieck topos. -/

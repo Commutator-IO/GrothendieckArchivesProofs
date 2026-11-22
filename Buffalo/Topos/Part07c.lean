@@ -41,12 +41,12 @@ def collapseSeq (n : ℕ) (hn : 0 < n) : ℕ ⥤ Type where
   obj _ := Fin n
   map {i j} _ := ↾(fun x => if i = j then x else ⟨0, hn⟩)
   map_id i := ConcreteCategory.hom_ext _ _ fun x => by
-    show (if i = i then x else ⟨0, hn⟩) = x
+    change (if i = i then x else ⟨0, hn⟩) = x
     simp
   map_comp {i j k} f g := ConcreteCategory.hom_ext _ _ fun x => by
     have hij := leOfHom f
     have hjk := leOfHom g
-    show (if i = k then x else ⟨0, hn⟩) =
+    change (if i = k then x else ⟨0, hn⟩) =
       (if j = k then (if i = j then x else ⟨0, hn⟩) else ⟨0, hn⟩)
     split_ifs <;> first | rfl | omega
 
@@ -61,7 +61,7 @@ def collapseIsColimit (n : ℕ) (hn : 0 < n) : IsColimit (collapseCocone n hn) :
     (fun _ => ⟨0, ⟨0, hn⟩, rfl⟩)
     (fun i j xi xj _ => ⟨max i j + 1, homOfLE (by omega), homOfLE (by omega), by
       change Fin n at xi xj
-      show (if i = max i j + 1 then xi else (⟨0, hn⟩ : Fin n)) =
+      change (if i = max i j + 1 then xi else (⟨0, hn⟩ : Fin n)) =
         (if j = max i j + 1 then xj else (⟨0, hn⟩ : Fin n))
       split_ifs <;> first | rfl | omega⟩)
 

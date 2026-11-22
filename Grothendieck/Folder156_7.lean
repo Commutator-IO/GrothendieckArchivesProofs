@@ -171,11 +171,11 @@ def supportsIso : {A : Set M // IsSupp r A} ≃o Set P where
         exact hX hpX
       · obtain ⟨X, hX⟩ := h2 p
         exact mem_img.2 ⟨X, by simp [hX, hp], by simp [hX]⟩
-    show supp r _ = _
+    change supp r _ = _
     rw [supp_eq h1 h2, hT]⟩
   left_inv A := by
     apply Subtype.ext
-    show {X | f X ⊆ img f A.1} = A.1
+    change {X | f X ⊆ img f A.1} = A.1
     rw [← supp_eq h1 h2]
     exact A.2
   right_inv T := by
@@ -186,13 +186,13 @@ def supportsIso : {A : Set M // IsSupp r A} ≃o Set P where
     · obtain ⟨X, hX⟩ := h2 p
       exact mem_img.2 ⟨X, by simp [hX, hp], by simp [hX]⟩
   map_rel_iff' {A B} := by
-    show img f A.1 ⊆ img f B.1 ↔ A.1 ⊆ B.1
+    change img f A.1 ⊆ img f B.1 ↔ A.1 ⊆ B.1
     rw [← subset_supp_iff h1 h2, B.2]
 
 /-- Page 80, (iii): the isomorphism carries the cosupport to the complement. -/
 theorem supportsIso_cosupp (A : {A : Set M // IsSupp r A}) :
     supportsIso h1 h2 ⟨cosupp r A.1, by
-      show cosupp r (supp r A.1) = cosupp r A.1
+      change cosupp r (supp r A.1) = cosupp r A.1
       rw [A.2]⟩ = (supportsIso h1 h2 A)ᶜ :=
   img_cosupp h1 h2 A.1
 

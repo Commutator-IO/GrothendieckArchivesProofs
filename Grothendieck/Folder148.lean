@@ -237,7 +237,7 @@ theorem convex_gluings (P Q : Marking r) (c : ℤ) : Convex ℝ (gluings P Q c) 
     have h2 := hG1 hxy
     rcases ha.lt_or_eq with ha | ha
     · nlinarith [mul_le_mul_of_nonneg_left h2.le hb]
-    · subst ha; simp at hab; subst hab; simpa using h2
+    · subst ha; simp only [zero_add] at hab; subst hab; simpa using h2
   · simp only [ContinuousMap.coe_add, ContinuousMap.coe_smul, Pi.add_apply, Pi.smul_apply,
       smul_eq_mul, hF2, hG2]
     linear_combination -hab
@@ -372,7 +372,7 @@ theorem abs_lt_of_near_int {D : ℝ → ℝ} (hD : Continuous D) {a : ℝ} (ha :
       have h1 : (1 : ℝ) ≤ |(round (D y) : ℝ)| := by exact_mod_cast Int.one_le_abs h0
       have := abs_sub_abs_le_abs_sub (round (D y) : ℝ) (D y)
       rw [abs_sub_comm] at this
-      show 1 - ε < |D y|; linarith [h y]
+      change 1 - ε < |D y|; linarith [h y]
   exact isPreconnected_univ.subset_left_of_subset_union hu hv hdis hcov
     ⟨a, trivial, by simpa [ha] using h a⟩ (mem_univ x)
 
@@ -463,7 +463,7 @@ theorem lift_add_one {f : C(UnitAddCircle, UnitAddCircle)} (hf : Function.Inject
     have hk0 : 0 ≤ k := by exact_mod_cast (show (0 : ℝ) ≤ k by linarith)
     have hk1 : k ≤ 1 := by exact_mod_cast (show (k : ℝ) ≤ 1 by linarith)
     interval_cases k
-    · simp at hk; subst hk; linarith
+    · simp only [sub_zero, Int.cast_zero] at hk; subst hk; linarith
     · simp at hk; rw [show t = 1 by linarith] at ht; linarith
   · rw [hm2] at hm; push_cast at hm; linarith
 
