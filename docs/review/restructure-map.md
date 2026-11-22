@@ -11,11 +11,13 @@ Old path → new path of every moved file. Declaration names are unchanged.
 | `Grothendieck/Folder1.lean` | `Grothendieck/LinearAlgebra/Folder1.lean` |
 | `Grothendieck/Folder10.lean` | `Grothendieck/RepresentationTheory/Folder10.lean` |
 | `Grothendieck/Folder100.lean` | `Grothendieck/RingTheory/Folder100.lean` |
+| `Grothendieck/Folder100Baire.lean` | `Grothendieck/RingTheory/Folder100Baire.lean` |
 | `Grothendieck/Folder100Cohen.lean` | `Grothendieck/RingTheory/Folder100Cohen.lean` |
 | `Grothendieck/Folder101.lean` | `Grothendieck/AlgebraicGeometry/Folder101.lean` |
 | `Grothendieck/Folder101DimTwo.lean` | `Grothendieck/AlgebraicGeometry/Folder101DimTwo.lean` |
 | `Grothendieck/Folder101Ext.lean` | `Grothendieck/AlgebraicGeometry/Folder101Ext.lean` |
 | `Grothendieck/Folder101LocalCohomology.lean` | `Grothendieck/AlgebraicGeometry/Folder101LocalCohomology.lean` |
+| `Grothendieck/Folder101Sheaf.lean` | `Grothendieck/AlgebraicGeometry/Folder101Sheaf.lean` |
 | `Grothendieck/Folder104.lean` | `Grothendieck/CategoryTheory/Folder104.lean` |
 | `Grothendieck/Folder106.lean` | `Grothendieck/CategoryTheory/Folder106.lean` |
 | `Grothendieck/Folder107.lean` | `Grothendieck/CategoryTheory/Folder107.lean` |
@@ -29,6 +31,7 @@ Old path → new path of every moved file. Declaration names are unchanged.
 | `Grothendieck/Folder120.lean` | `Grothendieck/Topology/Folder120.lean` |
 | `Grothendieck/Folder121.lean` | `Grothendieck/Topology/Folder121.lean` |
 | `Grothendieck/Folder123Kostant.lean` | `Grothendieck/RepresentationTheory/Folder123Kostant.lean` |
+| `Grothendieck/Folder123KostantClassical.lean` | `Grothendieck/RepresentationTheory/Folder123KostantClassical.lean` |
 | `Grothendieck/Folder123KostantOpposite.lean` | `Grothendieck/RepresentationTheory/Folder123KostantOpposite.lean` |
 | `Grothendieck/Folder125.lean` | `Grothendieck/AlgebraicGeometry/Folder125.lean` |
 | `Grothendieck/Folder126Descent.lean` | `Grothendieck/AlgebraicGeometry/Folder126Descent.lean` |
@@ -36,6 +39,7 @@ Old path → new path of every moved file. Declaration names are unchanged.
 | `Grothendieck/Folder126Existence.lean` | `Grothendieck/AlgebraicGeometry/Folder126Existence.lean` |
 | `Grothendieck/Folder126GeometricPoints.lean` | `Grothendieck/AlgebraicGeometry/Folder126GeometricPoints.lean` |
 | `Grothendieck/Folder126Glue.lean` | `Grothendieck/AlgebraicGeometry/Folder126Glue.lean` |
+| `Grothendieck/Folder126NilpotentDescent.lean` | `Grothendieck/AlgebraicGeometry/Folder126NilpotentDescent.lean` |
 | `Grothendieck/Folder126NilpotentQuotient.lean` | `Grothendieck/AlgebraicGeometry/Folder126NilpotentQuotient.lean` |
 | `Grothendieck/Folder126RadicialEtale.lean` | `Grothendieck/AlgebraicGeometry/Folder126RadicialEtale.lean` |
 | `Grothendieck/Folder126RadicialEtaleGlobal.lean` | `Grothendieck/AlgebraicGeometry/Folder126RadicialEtaleGlobal.lean` |
@@ -88,6 +92,7 @@ Old path → new path of every moved file. Declaration names are unchanged.
 | `Grothendieck/Folder22.lean` | `Grothendieck/RingTheory/Folder22.lean` |
 | `Grothendieck/Folder22Adic.lean` | `Grothendieck/RingTheory/Folder22Adic.lean` |
 | `Grothendieck/Folder22CohenAlgebras.lean` | `Grothendieck/RingTheory/Folder22CohenAlgebras.lean` |
+| `Grothendieck/Folder22Uniqueness.lean` | `Grothendieck/RingTheory/Folder22Uniqueness.lean` |
 | `Grothendieck/Folder23Normalisation.lean` | `Grothendieck/RingTheory/Folder23Normalisation.lean` |
 | `Grothendieck/Folder29.lean` | `Grothendieck/AlgebraicGeometry/Folder29.lean` |
 | `Grothendieck/Folder29TameInertia.lean` | `Grothendieck/AlgebraicGeometry/Folder29TameInertia.lean` |

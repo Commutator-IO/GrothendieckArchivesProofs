@@ -6,6 +6,7 @@ public import Grothendieck.AlgebraicGeometry.Folder101
 public import Grothendieck.AlgebraicGeometry.Folder101DimTwo
 public import Grothendieck.AlgebraicGeometry.Folder101Ext
 public import Grothendieck.AlgebraicGeometry.Folder101LocalCohomology
+public import Grothendieck.AlgebraicGeometry.Folder101Sheaf
 public import Grothendieck.AlgebraicGeometry.Folder11
 public import Grothendieck.AlgebraicGeometry.Folder11GradedPoincare
 public import Grothendieck.AlgebraicGeometry.Folder125
@@ -14,6 +15,7 @@ public import Grothendieck.AlgebraicGeometry.Folder126EtaleSplitting
 public import Grothendieck.AlgebraicGeometry.Folder126Existence
 public import Grothendieck.AlgebraicGeometry.Folder126GeometricPoints
 public import Grothendieck.AlgebraicGeometry.Folder126Glue
+public import Grothendieck.AlgebraicGeometry.Folder126NilpotentDescent
 public import Grothendieck.AlgebraicGeometry.Folder126NilpotentQuotient
 public import Grothendieck.AlgebraicGeometry.Folder126RadicialEtale
 public import Grothendieck.AlgebraicGeometry.Folder126RadicialEtaleGlobal
@@ -125,9 +127,11 @@ public import Grothendieck.Order.Folder156_8
 public import Grothendieck.Order.Folder156_9
 public import Grothendieck.RepresentationTheory.Folder10
 public import Grothendieck.RepresentationTheory.Folder123Kostant
+public import Grothendieck.RepresentationTheory.Folder123KostantClassical
 public import Grothendieck.RepresentationTheory.Folder123KostantOpposite
 public import Grothendieck.RepresentationTheory.Folder44
 public import Grothendieck.RingTheory.Folder100
+public import Grothendieck.RingTheory.Folder100Baire
 public import Grothendieck.RingTheory.Folder100Cohen
 public import Grothendieck.RingTheory.Folder136
 public import Grothendieck.RingTheory.Folder136Prop1
@@ -139,6 +143,7 @@ public import Grothendieck.RingTheory.Folder21
 public import Grothendieck.RingTheory.Folder22
 public import Grothendieck.RingTheory.Folder22Adic
 public import Grothendieck.RingTheory.Folder22CohenAlgebras
+public import Grothendieck.RingTheory.Folder22Uniqueness
 public import Grothendieck.RingTheory.Folder23Normalisation
 public import Grothendieck.RingTheory.Folder39
 public import Grothendieck.RingTheory.Folder43

@@ -72,9 +72,15 @@ def main(dry: bool) -> None:
         if t is None:
             sys.exit(f"no topic for {f}: add its cote to TOPIC")
         moves[f"Grothendieck.{f.stem}"] = f"Grothendieck.{t}.{f.stem}"
-    if not moves:
-        print("nothing to move")
-        return
+    # Moves of earlier runs, from the table, so that imports of files moved then are rewritten
+    # in files added since.
+    mp = Path("docs/review/restructure-map.md")
+    earlier = {}
+    if mp.exists():
+        for l in mp.read_text(encoding="utf-8").split("\n"):
+            m = re.match(r"^\| `([^`]+)\.lean` \| `([^`]+)\.lean` \|$", l)
+            if m:
+                earlier[m.group(1).replace("/", ".")] = m.group(2).replace("/", ".")
     for old, new in moves.items():
         src = Path(*old.split(".")).with_suffix(".lean")
         dst = Path(*new.split(".")).with_suffix(".lean")
@@ -83,6 +89,11 @@ def main(dry: bool) -> None:
             dst.parent.mkdir(parents=True, exist_ok=True)
             subprocess.run(["git", "mv", str(src), str(dst)], check=True)
     if dry:
+        return
+    moved_now = dict(moves)
+    moves = {**earlier, **moves}
+    if not moves:
+        print("nothing to move")
         return
     imp = re.compile(r"^(\s*(?:public\s+)?(?:meta\s+)?import\s+)(\S+)", re.M)
     paths = {"/".join(o.split(".")) + ".lean": "/".join(n.split(".")) + ".lean"
@@ -113,7 +124,6 @@ def main(dry: bool) -> None:
             lines[i] = l
         rootf.write_text("\n".join(lines), encoding="utf-8")
     # The table, cumulative over runs.
-    mp = Path("docs/review/restructure-map.md")
     rows = {}
     if mp.exists():
         for l in mp.read_text(encoding="utf-8").split("\n"):
@@ -127,7 +137,7 @@ def main(dry: bool) -> None:
            "| Old path | New path |", "|---|---|"]
     out += [f"| `{o}` | `{n}` |" for o, n in sorted(rows.items())]
     mp.write_text("\n".join(out) + "\n", encoding="utf-8")
-    print(f"moved {len(moves)} files; table in {mp}")
+    print(f"moved {len(moved_now)} files now, {len(moves)} in all; table in {mp}")
 
 
 if __name__ == "__main__":

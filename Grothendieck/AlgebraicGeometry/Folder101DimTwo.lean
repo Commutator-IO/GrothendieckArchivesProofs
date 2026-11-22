@@ -36,8 +36,9 @@ form `aᵢ = nᵢ - y nᵢ₊₁` (i.e. `lim¹` of `⋯ →y N →y N` vanishes,
   This is the finding's sketch: `A_x` « is not complete in the `y`-direction », the
   height-one localisation `A_(y)` (with `x ∉ (y)`) not being complete, whereas a Matlis dual is.
 
-**Not formalised.** The sheaf side: `O_X`-modules on `Spec A`, extension by zero `j_!O_U` (Stacks
-03DI), `Ext⁰(X; j_!O_U, O_X) = A_f`, the computation of `H^i_x(j_!O_U)` (cohomology with supports),
+**Not formalised.** Part of the sheaf side: `j_!O_U`, `Ext⁰(X; j_!O_U, O_X) = A_f` and the
+reduction of `H^i_x(j_!O_U)` to the cohomology of the punctured spectrum are in
+`Grothendieck/AlgebraicGeometry/Folder101Sheaf.lean`; the computation of `H¹(X ∖ {x}, j_!O_U)`,
 the exact sequence `0 → A → ∏ O_{x_i} → H²_x(F) → E(k) → 0` and the map `φ` itself; hence also the
 page's injectivity of `φ` (only « injective ⇒ not surjective » is proved, for every injective map).
 The identification of `TelescopeSurj` with `Ext¹_A(A_y, -) = 0` for mathlib's `Ext`; the general
