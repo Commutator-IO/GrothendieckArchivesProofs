@@ -352,7 +352,8 @@ theorem ker_toLines : RingHom.ker toLines = Ideal.span {sumSq ℝ} := by
     have h1 : Polynomial.X * r.coeff 1 = 0 := Polynomial.funext fun t => by simpa using (hev t).2
     have h1' : r.coeff 1 = 0 := (mul_eq_zero.1 h1).resolve_left Polynomial.X_ne_zero
     rw [Ideal.mem_span_singleton]
-    exact (Polynomial.modByMonic_eq_zero_iff_dvd (monic_sumSq ℝ)).1 (by rw [← hr, hreq, h0, h1']; simp)
+    exact (Polynomial.modByMonic_eq_zero_iff_dvd (monic_sumSq ℝ)).1
+      (by rw [← hr, hreq, h0, h1']; simp)
   · rw [Ideal.span_le, Set.singleton_subset_iff]
     exact toLines_sumSq
 

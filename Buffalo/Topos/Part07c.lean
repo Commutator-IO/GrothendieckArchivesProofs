@@ -206,17 +206,20 @@ end Components
 /-! ## Faithful actions, topoi without points -/
 
 /-- The action of `Perm Bool × Perm Bool` on `Bool` through the first factor. -/
-instance : MulAction (Equiv.Perm Bool × Equiv.Perm Bool) Bool := MulAction.compHom Bool (MonoidHom.fst _ _)
+instance : MulAction (Equiv.Perm Bool × Equiv.Perm Bool) Bool :=
+  MulAction.compHom Bool (MonoidHom.fst _ _)
 
 /-- A faithful action: only `1` acts trivially. -/
-def IsFaithfulAction (G X : Type*) [Group G] [MulAction G X] : Prop := ∀ g : G, (∀ x : X, g • x = x) → g = 1
+def IsFaithfulAction (G X : Type*) [Group G] [MulAction G X] : Prop :=
+  ∀ g : G, (∀ x : X, g • x = x) → g = 1
 
 /-- ORG14LNb5gE-15944 (4:25:44) [cex] Faithfulness of a `G`-action is not stable under inverse
 image. On the discrete two-point space (sheaves = pairs of sets), `G = 𝔖₂ × 𝔖₂` acting on
 `(Bool, Bool)` factorwise acts faithfully, but its stalk at the first point (the inverse image by
 that point) is `Bool` with the action through the first factor, which is not faithful. -/
 theorem faithful_not_stable :
-    (∀ g : Equiv.Perm Bool × Equiv.Perm Bool, (∀ x : Bool, g.1 x = x) → (∀ y : Bool, g.2 y = y) → g = 1) ∧
+    (∀ g : Equiv.Perm Bool × Equiv.Perm Bool, (∀ x : Bool, g.1 x = x) → (∀ y : Bool, g.2 y = y) →
+      g = 1) ∧
       ¬ IsFaithfulAction (Equiv.Perm Bool × Equiv.Perm Bool) Bool := by
   refine ⟨fun g h1 h2 => Prod.ext (Equiv.ext h1) (Equiv.ext h2), fun h => ?_⟩
   have := h (1, Equiv.swap true false) (fun x => rfl)
@@ -254,7 +257,8 @@ theorem completelyPrime_atom {B : Type u} [CompleteBooleanAlgebra B] (F : Set B)
     rwa [inf_compl_eq_bot, le_bot_iff] at this
 
 /-- In particular an atomless complete Boolean algebra has no completely prime filter. -/
-theorem atomless_no_point {B : Type u} [CompleteBooleanAlgebra B] (hB : ∀ a : B, ¬ IsAtom a) (F : Set B)
+theorem atomless_no_point {B : Type u} [CompleteBooleanAlgebra B] (hB : ∀ a : B, ¬ IsAtom a)
+    (F : Set B)
     (hinf : ∀ a b, a ∈ F → b ∈ F → a ⊓ b ∈ F) (htop : ⊤ ∈ F) (hbot : ⊥ ∉ F)
     (hprime : ∀ s : Set B, sSup s ∈ F → ∃ b ∈ s, b ∈ F) : False := by
   obtain ⟨a, ha, -⟩ := completelyPrime_atom F hinf htop hbot hprime

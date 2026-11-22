@@ -98,7 +98,8 @@ theorem quot_isComodule {k A M M'' : Type u} [CommRing k] [AddCommGroup A] [Modu
     obtain ⟨x, rfl⟩ := hq y
     simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply, LinearMap.id_apply, hh]
     have nat : ∀ z : M ⊗[k] A, TensorProduct.rid k M'' ((Coalgebra.counit (R := k) (A := A)).lTensor
-        M'' (q.rTensor A z)) = q (TensorProduct.rid k M ((Coalgebra.counit (R := k)).lTensor M z)) := by
+        M'' (q.rTensor A z)) =
+        q (TensorProduct.rid k M ((Coalgebra.counit (R := k)).lTensor M z)) := by
       intro z
       induction z using TensorProduct.inductionOn with
       | tmul a b => simp

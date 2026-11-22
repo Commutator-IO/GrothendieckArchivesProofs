@@ -325,7 +325,8 @@ theorem toPlus_properties (P : Cᵒᵖ ⥤ Type u) :
       (CoverSeparated J P → Presheaf.IsSheaf J (J.plusObj P)) ∧
       J.sheafify P = J.plusObj (J.plusObj P) := by
   have sep_iff : CoverSeparated J P ↔ ∀ X, Function.Injective ((J.toPlus P).app (op X)) := by
-    refine ⟨fun h X => GrothendieckTopology.Plus.inj_of_sep P (fun X S x y hxy => h X S x y hxy) X, fun h X S x y hxy => ?_⟩
+    refine ⟨fun h X => GrothendieckTopology.Plus.inj_of_sep P (fun X S x y hxy => h X S x y hxy) X,
+        fun h X S x y hxy => ?_⟩
     apply h X
     apply GrothendieckTopology.Plus.sep P S
     intro I

@@ -1631,7 +1631,8 @@ theorem exists_condB'_iff [IsLocalRing k] :
         | 0 => h0
         | j + 1 => hc j (by omega)
     obtain ⟨z, hz⟩ := Matrix.mulVec_surjective_iff_isUnit.2 hN y
-    exact ⟨∑ i, z i • av a s0 i, funext fun j => by simp [← hz, Matrix.mulVec, dotProduct, N, mul_comm]⟩
+    exact ⟨∑ i, z i • av a s0 i, funext fun j => by simp [← hz, Matrix.mulVec,
+      dotProduct, N, mul_comm]⟩
   · rintro ⟨⟨v, hv⟩, ha', hb, hc⟩
     set φ := (bas hv).coord 0
     have hφ : ∀ i ≤ n, φ (a i) = 0 := fun i hi => by

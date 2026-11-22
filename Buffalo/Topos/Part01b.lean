@@ -181,7 +181,8 @@ theorem sheaf_image {F G : Sheaf (Opens.grothendieckTopology X) (Type u)} (f : F
 
 /-- URU5jgTvjhU-11157 (3:05:57) [prop] In `Sh(X)`, a monomorphism that is an epimorphism is an
 isomorphism (the category is balanced). -/
-theorem sheaf_isIso_of_mono_of_epi {F G : Sheaf (Opens.grothendieckTopology X) (Type u)} (f : F ⟶ G) [Mono f] [Epi f] :
+theorem sheaf_isIso_of_mono_of_epi {F G : Sheaf (Opens.grothendieckTopology X) (Type u)}
+    (f : F ⟶ G) [Mono f] [Epi f] :
     IsIso f :=
   isIso_of_mono_of_epi f
 

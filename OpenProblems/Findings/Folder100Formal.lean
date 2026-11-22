@@ -19,8 +19,9 @@ Nothing here is proved; a `def … : Prop` asserts nothing.
 ## Implementation notes
 
 **Formal abelian schemes.** AxiomMath/Stacks has abelian schemes
-(`AlgebraicGeometry.IsAbelianScheme`) but no formal schemes of this kind, so a formal abelian scheme over `Spf R` (for the adic
-topology of an ideal `I`) is written as what it is by definition: a compatible system of abelian
+(`AlgebraicGeometry.IsAbelianScheme`) but no formal schemes of this kind, so a formal abelian
+scheme over `Spf R` (for the adic topology of an ideal `I`) is written as what it is by
+definition: a compatible system of abelian
 schemes `Aₙ` over `Spec (R ⧸ I^(n+1))` with isomorphisms of group schemes
 `A_{n+1} ×_{R/I^(n+2)} R/I^(n+1) ≅ Aₙ` (`FormalAbelianScheme`). It is *algebraizable*
 (`FormalAbelianScheme.IsAlgebraizable`) when there is an abelian scheme `G` over `Spec R` and

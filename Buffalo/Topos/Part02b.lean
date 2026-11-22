@@ -373,7 +373,8 @@ def subterminalEquivOpens :
       exact Subsingleton.elim (α := U ⟶ ⊤) _ _
     · intro ha
       exact le_sSup ⟨a, ha⟩
-  right_inv W := le_antisymm (sSup_le fun _ hV => by obtain ⟨_, h⟩ := hV; exact h) (le_sSup (show W ∈ _ from ⟨homOfLE le_top, (le_rfl : W ≤ W)⟩))
+  right_inv W := le_antisymm (sSup_le fun _ hV => by obtain ⟨_, h⟩ := hV; exact h)
+    (le_sSup (show W ∈ _ from ⟨homOfLE le_top, (le_rfl : W ≤ W)⟩))
 
 /-- URU5jgTvjhU-25977 (7:12:57) [prop] `X` is connected iff `e` is not the sum of two disjoint
 non-initial subobjects, i.e. `X` is not the union of two disjoint nonempty open sets. -/
@@ -492,7 +493,8 @@ abbrev sheafHConst (M : AddCommGrpCat.{u}) (n : ℕ) : Type _ :=
 /-- URU5jgTvjhU-26392 (7:19:52) [prop] `X` is connected iff `ℤ → H⁰(X, ℤ)` (the locally constant
 maps `X → ℤ`) is surjective. -/
 theorem preconnected_iff_const_surjective (Z : Type*) [TopologicalSpace Z] :
-    PreconnectedSpace Z ↔ Function.Surjective (LocallyConstant.const Z : ℤ → LocallyConstant Z ℤ) := by
+    PreconnectedSpace Z ↔
+      Function.Surjective (LocallyConstant.const Z : ℤ → LocallyConstant Z ℤ) := by
   classical
   constructor
   · intro _ f

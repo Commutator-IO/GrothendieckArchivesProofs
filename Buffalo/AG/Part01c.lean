@@ -409,9 +409,11 @@ theorem aeval_detP {k' : Type*} [CommRing k'] [Algebra k k'] (M : Matrix n n k')
 is a bijection from `Hom_k(k[T_ij][1/det], k')` onto the matrices with invertible determinant. -/
 theorem prop_17469 (k' : Type u) [CommRing k'] [Algebra k k'] :
     Function.Injective (fun u : OGL k n →ₐ[k] k' =>
-        (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j)))  : Matrix n n k')) ∧
+        (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j)))  :
+          Matrix n n k')) ∧
       Set.range (fun u : OGL k n →ₐ[k] k' =>
-        (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j))) : Matrix n n k')) =
+        (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j))) :
+          Matrix n n k')) =
         {M | IsUnit M.det} := by
   let ι : MvPolynomial (n × n) k →ₐ[k] OGL k n := IsScalarTower.toAlgHom k _ _
   refine ⟨fun u v huv => ?_, ?_⟩

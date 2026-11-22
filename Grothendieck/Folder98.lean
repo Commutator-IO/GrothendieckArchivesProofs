@@ -214,7 +214,8 @@ theorem hasDeg_quotPow {u : X → Y} {r : ℕ} (hu : HasDeg u r) {n : ℕ}
   rw [← Nat.card_coe_set_eq, Nat.card_congr (Equiv.ofBijective g hg).symm]
 
 
-/-! ### The canonical sections `Con_{X/Y} : Y → Sym^r_Y(X)` (written « Con » on the page): (i ter)–(iv ter) -/
+/-! ### The canonical sections `Con_{X/Y} : Y → Sym^r_Y(X)` (written « Con » on the page):
+(i ter)–(iv ter) -/
 
 /-- `Sym^r_Y(X) = (X^r_Y)/𝔖_r`: a point `y` and a multiset of `r` points of `u⁻¹(y)`. -/
 def SymY (u : X → Y) (r : ℕ) :=
@@ -574,7 +575,8 @@ theorem Phi.symComp_bijective (hfree : ∀ (g : Γ) (x : X), g • x = x → g =
     obtain ⟨e'', n, hn⟩ := p'
     have h2 : m.map (Phi.mk Γ x) = n.map (Phi.mk Γ y) := congrArg (fun s => s.2.1) hab
     obtain ⟨g, hgx, hge⟩ := Phi.mk_eq_mk.1 (congrArg Sigma.fst hab)
-    refine Phi.mk_eq_mk.2 ⟨g, hgx, SymY.ext hge (Multiset.map_injective (Phi.mk_injective hfree x) ?_)⟩
+    refine Phi.mk_eq_mk.2 ⟨g, hgx,
+        SymY.ext hge (Multiset.map_injective (Phi.mk_injective hfree x) ?_)⟩
     change g • y = x at hgx
     change (n.map (g • ·)).map _ = _
     rw [h2, ← hgx]

@@ -837,7 +837,8 @@ theorem indecomposable_is_string [CharZero K] [FiniteDimensional K V] [Nontrivia
     omega
   obtain ⟨k, hk, hk1⟩ : ∃ k, X ^ (k + 1) = 0 ∧ X ^ k ≠ 0 := by
     have hm : Nat.find hN ≠ 0 := fun h => one_ne_zero (h ▸ Nat.find_spec hN : X ^ 0 = 0)
-    exact ⟨Nat.find hN - 1, by rw [Nat.sub_add_cancel (Nat.pos_of_ne_zero hm)]; exact Nat.find_spec hN,
+    exact ⟨Nat.find hN - 1,
+      by rw [Nat.sub_add_cancel (Nat.pos_of_ne_zero hm)]; exact Nat.find_spec hN,
       Nat.find_min hN (by omega)⟩
   obtain ⟨j, hj⟩ : ∃ j, (X ^ k) (b j) ≠ 0 := by
     by_contra! h

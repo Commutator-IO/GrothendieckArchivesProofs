@@ -8,7 +8,8 @@ module
 public import Mathlib
 
 /-!
-# Buffalo, topos theory, part 5a: adding arrows, combining theories, additive categories (late June 1973)
+# Buffalo, topos theory, part 5a: adding arrows, combining theories, additive categories
+(late June 1973)
 
 Entries of `docs/buffalo-topos/index.tex` lines 679–712 (video `PqCQM3Pcl6Q`, 9:02:23–10:12:40):
 rule 3 (adding arrows) and rule 4 (combining theories), the limits of the faithfulness criterion

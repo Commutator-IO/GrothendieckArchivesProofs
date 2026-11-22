@@ -286,7 +286,8 @@ theorem dmk_conj {c : G} (hc : c ∈ N) (x : G) :
   exact commutator_mem_commutator (mem_top x) (inv_mem hc)
 
 /-- `𝒟` is commutative. -/
-theorem dmk_comm {a b : G} (ha : a ∈ N) (hb : b ∈ N) : dmk a ha * dmk b hb = dmk b hb * dmk a ha := by
+theorem dmk_comm {a b : G} (ha : a ∈ N) (hb : b ∈ N) :
+    dmk a ha * dmk b hb = dmk b hb * dmk a ha := by
   rw [← dmk_mul, ← dmk_mul, dmk_eq_iff]
   rw [show (a * b)⁻¹ * (b * a) = ⁅b⁻¹, a⁻¹⁆ by simp only [commutatorElement_def]; group]
   exact commutator_mem_commutator (mem_top _) (inv_mem ha)

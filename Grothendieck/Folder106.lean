@@ -445,7 +445,8 @@ omit [HasInitial C] in
 /-- `(f, i) = (1, i) ∘ (f, 1)`, as page 15 writes it. -/
 lemma arrow_decomp (s : Span W cof x y) :
     Arrow s ((cofSpan (W := W) s.f s.hf).comp (backSpan (cof := cof) s.i s.hi)) := by
-  have := hasPushout (W := W) (cof := cof) (𝟙 s.pt) (𝟙 s.pt) (iso_cof (W := W) (cof := cof) (Iso.refl s.pt))
+  have := hasPushout (W := W) (cof := cof) (𝟙 s.pt) (𝟙 s.pt)
+      (iso_cof (W := W) (cof := cof) (Iso.refl s.pt))
   have hlr : pushout.inl (𝟙 s.pt) (𝟙 s.pt) = pushout.inr _ _ := by
     simpa using (pushout.condition (f := 𝟙 s.pt) (g := 𝟙 s.pt))
   refine ⟨pushout.inr _ _, rfl, ?_⟩
@@ -561,7 +562,8 @@ lemma brown_nonempty (hcof : ∀ x : C, Cofibrant cof x) {x z : C} (F : x ⟶ z)
     by rw [hcα, hP.inl_desc], by rw [hcα, hP.inr_desc]⟩⟩
 
 /-- The diagram `(c ι_x, c ι_z) : x → z̄ ← z` of a Brown factorisation. -/
-@[reducible] def Brown.span {x z : C} {F : x ⟶ z} (B : Brown (W := W) (cof := cof) F) : Span W cof x z :=
+@[reducible] def Brown.span {x z : C} {F : x ⟶ z} (B : Brown (W := W) (cof := cof) F) :
+    Span W cof x z :=
   ⟨B.pt, B.ιx ≫ B.c, B.ιz ≫ B.c, cof_comp (W := W) _ _ B.hιx B.hc,
     W_of_comp_right (cof := cof) _ B.α B.hα
       (by rw [Category.assoc, B.hz]; exact W_id (cof := cof) z)⟩

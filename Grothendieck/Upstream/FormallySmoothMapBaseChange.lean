@@ -36,7 +36,8 @@ tag 04B2's companion, assumes `A → B` formally smooth instead.)
 The first fundamental sequence `0 → T ⊗[S] Ω[S⁄R] → Ω[T⁄R] → Ω[T⁄S] → 0` is split exact
 when `H¹(L_{T⁄S}) = 0` and `Ω[T⁄S]` is projective, e.g. when `T` is a formally smooth `S`-algebra
 ([Matsumura, Theorem 25.1][matsumura1987]). -/
-lemma KaehlerDifferential.exists_retraction_mapBaseChange_of_projective [Subsingleton (Algebra.H1Cotangent S T)]
+lemma KaehlerDifferential.exists_retraction_mapBaseChange_of_projective
+    [Subsingleton (Algebra.H1Cotangent S T)]
     [Module.Projective T Ω[T⁄S]] :
     ∃ l : Ω[T⁄R] →ₗ[T] T ⊗[S] Ω[S⁄R], l ∘ₗ mapBaseChange R S T = LinearMap.id :=
   ((exact_mapBaseChange_map R S T).split_tfae (mapBaseChange_injective R S T)

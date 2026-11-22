@@ -129,7 +129,8 @@ def refl : Fin 4 → (ℤ × ℤ) ≃+ (ℤ × ℤ)
 
 /-- Axiom c): for each root `a` there is an automorphism `S` of `ℤ²` with
 `S a = -a` and `S Δ ⊆ Δ` (so `S Δ = Δ`, `Δ` being finite). -/
-theorem symmetries : ∀ a ∈ roots, ∃ S : (ℤ × ℤ) ≃+ (ℤ × ℤ), S a = -a ∧ ∀ x ∈ roots, S x ∈ roots := by
+theorem symmetries : ∀ a ∈ roots, ∃ S : (ℤ × ℤ) ≃+ (ℤ × ℤ),
+    S a = -a ∧ ∀ x ∈ roots, S x ∈ roots := by
   intro a ha
   simp only [roots, Finset.mem_insert, Finset.mem_singleton] at ha
   rcases ha with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl

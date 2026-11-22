@@ -433,7 +433,8 @@ theorem good_reflect (i : Fin n) : T.Good n (Matrix.diagonal (Function.update 1 
   by_cases hj : j = Fin.last m
   · subst hj
     simp
-  · rw [Function.update_of_ne hj, Equiv.swap_apply_self, Function.update_of_ne, Pi.one_apply, one_mul]
+  · rw [Function.update_of_ne hj, Equiv.swap_apply_self, Function.update_of_ne, Pi.one_apply,
+      one_mul]
     intro h
     exact hj ((Equiv.swap_apply_eq_iff).1 h |>.trans (Equiv.swap_apply_left _ _))
 

@@ -976,7 +976,8 @@ include hy hy' hdx in
 /-- `K ⊗_k Ω_{k/k'} → Ω_{K/k'}` is not injective: `dy − y' dx` is a nonzero element of its
 kernel. -/
 theorem not_injective_of :
-    ¬ Function.Injective (KaehlerDifferential.mapBaseChange (kPrimeOf p K) (FracF p (Fin 2)) K) := by
+    ¬ Function.Injective
+      (KaehlerDifferential.mapBaseChange (kPrimeOf p K) (FracF p (Fin 2)) K) := by
   intro hinj
   let ω : K ⊗[FracF p (Fin 2)] Ω[FracF p (Fin 2)⁄kPrimeOf p K] :=
     (1 : K) ⊗ₜ KaehlerDifferential.D _ _ (var p (1 : Fin 2)) -
@@ -1159,8 +1160,10 @@ theorem partialD_x : partialD p (none : Option (Fin p))
 `K = 𝔽_p(x, b₀, …, b_{p−1})`, `a_i = b_iᵖ`, `y = Σ a_i xⁱ`, `k = 𝔽_p(x, y)` and
 `k' = k ∩ Kᵖ`, the map `Ω_{k/k'} ⊗_k K → Ω_K` is not injective. -/
 theorem contre_exemple_general :
-    ¬ Function.Injective ((omegaEquiv p (KG p)).symm.toLinearMap.restrictScalars (FracF p (Fin 2)) ∘ₗ
-      (KaehlerDifferential.mapBaseChange (kPrimeOf p (KG p)) (FracF p (Fin 2)) (KG p)).restrictScalars
+    ¬ Function.Injective
+      ((omegaEquiv p (KG p)).symm.toLinearMap.restrictScalars (FracF p (Fin 2)) ∘ₗ
+      (KaehlerDifferential.mapBaseChange (kPrimeOf p (KG p)) (FracF p (Fin 2))
+        (KG p)).restrictScalars
         _) :=
   not_injective_to_omega p _ (der_yG p) (y'G_not_mem p) _ (partialD_x p)
 

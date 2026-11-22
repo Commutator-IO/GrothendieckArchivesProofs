@@ -184,7 +184,8 @@ theorem counit_unique {C : Type*} [AddCommGroup C] [Module k C] (π : C →ₗ[k
 
 /-- _lTf_L0yvrU-10053 (2:47:33) [prop] The law is commutative iff `τ ∘ π = π`: if the
 comultiplication is cocommutative, the group of points is commutative (Mathlib instance) … -/
-noncomputable example {C : Type u} [CommRing C] [Bialgebra k C] [Coalgebra.IsCocomm k C] (R : Type u)
+noncomputable example {C : Type u} [CommRing C] [Bialgebra k C] [Coalgebra.IsCocomm k C]
+    (R : Type u)
     [CommRing R] [Algebra k R] : CommMonoid (WithConv (C →ₐ[k] R)) := inferInstance
 
 /-- _lTf_L0yvrU-10053 (2:47:33) [prop] … and conversely: commutativity of the law on the points
@@ -249,7 +250,8 @@ noncomputable example (A : Type u) [AddCommGroup A] [Module k A] [Coalgebra k A]
 
 /-- _lTf_L0yvrU-19072 (5:17:52) [prop] One direction: a coalgebra structure on `A` makes
 `V(A)(k') = Hom_k(A, k')` an algebra over `k'`, for every `k'` (convolution). -/
-noncomputable example (A : Type u) [AddCommGroup A] [Module k A] [Coalgebra k A] (R : Type u) [CommRing R]
+noncomputable example (A : Type u) [AddCommGroup A] [Module k A] [Coalgebra k A] (R : Type u)
+    [CommRing R]
     [Algebra k R] : Algebra R (WithConv (A →ₗ[k] R)) := inferInstance
 
 /-- _lTf_L0yvrU-11735 (3:15:35) [ex] The comultiplication `t ↦ t ⊗ 1 + 1 ⊗ t` of `k[t]` gives

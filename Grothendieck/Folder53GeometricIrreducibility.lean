@@ -142,7 +142,8 @@ theorem isIrreducible_preimage_range [GeometricallyIrreducible (g ≫ f)] :
   have hZ' : IrreducibleSpace ↥(pullback g (pullback.fst f gS)) :=
     (pullbackRightPullbackFstIso f gS g).schemeIsoToHomeo.irreducibleSpace_iff.mpr hZ
   rw [← Scheme.Pullback.range_snd, ← Set.image_univ]
-  exact (IrreducibleSpace.isIrreducible_univ _).image _ (pullback.snd g (pullback.fst f gS)).continuous.continuousOn
+  exact (IrreducibleSpace.isIrreducible_univ _).image _
+      (pullback.snd g (pullback.fst f gS)).continuous.continuousOn
 
 /-- **Folder 53, page 9, over the separable closure.** Let `X` be an irreducible `k`-scheme and
 `g : Z → X` a morphism over `k` with `Z` geometrically irreducible. If some point `s` of

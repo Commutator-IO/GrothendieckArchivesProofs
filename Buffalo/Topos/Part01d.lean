@@ -135,7 +135,8 @@ theorem grp_isSheaf_iff (F : X.Presheaf GrpCat.{u}) :
 
 /-- URU5jgTvjhU-19532 (5:25:32) [prop] The stalks of a presheaf of rings are rings, and the
 underlying set of the stalk is the stalk of the underlying presheaf of sets (the forgetful functor
-commutes with filtered colimits). (For groups Mathlib has no colimits in `GrpCat` at this revision.) -/
+commutes with filtered colimits). (For groups Mathlib has no colimits in `GrpCat` at this
+revision.) -/
 def ring_stalk (F : X.Presheaf CommRingCat.{u}) (x : X) :
     (forget CommRingCat.{u}).obj (F.stalk x) ≅
       TopCat.Presheaf.stalk (F ⋙ forget CommRingCat.{u}) x :=

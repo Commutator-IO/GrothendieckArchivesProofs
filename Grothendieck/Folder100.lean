@@ -442,7 +442,8 @@ theorem exists_coheight_le_one (I : ℕ → Ideal R) (n : ℕ) :
 
 omit [IsAdicComplete (maximalIdeal R) R] in
 lemma coheight_lt_top (x : PrimeSpectrum R) : Order.coheight x < ⊤ := by
-  exact WithBot.coe_lt_coe.1 (((Order.coheight_le_krullDim x).trans_lt ringKrullDim_lt_top).trans_le (by simp))
+  exact WithBot.coe_lt_coe.1 (((Order.coheight_le_krullDim x).trans_lt ringKrullDim_lt_top).trans_le
+    (by simp))
 
 /-- **Proposition of page 36**, in the form corrected by the edition. In the spectrum of a
 complete noetherian local ring, countably many closed subsets whose union contains every point
@@ -550,7 +551,8 @@ theorem topologicalKrullDim_closure_singleton {A : Type*} [CommRing A] (x : Prim
   have hs := Ideal.Quotient.mk_surjective (I := x.asIdeal)
   let e : PrimeSpectrum (A ⧸ x.asIdeal) ≃ₜ closure ({x} : Set (PrimeSpectrum A)) :=
     (isClosedEmbedding_comap_of_surjective _ _ hs).isEmbedding.toHomeomorph.trans
-      (Homeomorph.setCongr (by rw [range_comap_of_surjective _ _ hs, Ideal.mk_ker, PrimeSpectrum.closure_singleton]))
+      (Homeomorph.setCongr (by rw [range_comap_of_surjective _ _ hs, Ideal.mk_ker,
+        PrimeSpectrum.closure_singleton]))
   rw [← IsHomeomorph.topologicalKrullDim_eq _ e.isHomeomorph,
     topologicalKrullDim_eq_ringKrullDim, ringKrullDim_quotient, Order.coheight_eq_krullDim_Ici]
   rfl

@@ -138,7 +138,8 @@ itself, an epimorphism `R → R` being bijective (`𝐏(𝒪_S) = S`). -/
 theorem ex_33086 {A : Type u} [CommRing A] [Nontrivial A] :
     (∀ q : PUnit.{u + 1} →ₗ[A] A, ¬ Function.Surjective q) ∧
       ∀ q : A →ₗ[A] A, Function.Surjective q → Function.Bijective q := by
-  refine ⟨fun q hq => ?_, fun q hq => ⟨OrzechProperty.injective_of_surjective_endomorphism q hq, hq⟩⟩
+  refine ⟨fun q hq => ?_,
+    fun q hq => ⟨OrzechProperty.injective_of_surjective_endomorphism q hq, hq⟩⟩
   obtain ⟨x, hx⟩ := hq 1
   rw [Subsingleton.elim x 0, map_zero] at hx
   exact zero_ne_one hx
@@ -247,7 +248,8 @@ theorem rem_36210 (R A B : Type u) [CommRing R] [CommRing A] [CommRing B] [Algeb
     [Algebra R B] :
     IsPushout (CommRingCat.ofHom (algebraMap R A)) (CommRingCat.ofHom (algebraMap R B))
       (CommRingCat.ofHom (Algebra.TensorProduct.includeLeftRingHom (R := R) (A := A) (B := B)))
-      (CommRingCat.ofHom (Algebra.TensorProduct.includeRight (R := R) (A := A) (B := B)).toRingHom) :=
+      (CommRingCat.ofHom
+        (Algebra.TensorProduct.includeRight (R := R) (A := A) (B := B)).toRingHom) :=
   CommRingCat.isPushout_tensorProduct R A B
 
 /-- thSz9ZHDK9o-36274 (10:04:34) [prop] (affine base) `M ↦ M~` commutes with inductive limits

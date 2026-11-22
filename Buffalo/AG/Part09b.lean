@@ -228,7 +228,8 @@ example : Scheme.fppfPrecoverage.{u} ≤ Scheme.fpqcPrecoverage ∧
 
 /-- 3ULFIl_2Wis-23499 (6:31:39) [def] The étale topology: jointly surjective families of étale
 morphisms (mathlib's `Scheme.etaleTopology`), finer than the Zariski topology. -/
-example : Scheme.zariskiTopology.{u} ≤ Scheme.etaleTopology := Scheme.zariskiTopology_le_etaleTopology
+example : Scheme.zariskiTopology.{u} ≤ Scheme.etaleTopology :=
+  Scheme.zariskiTopology_le_etaleTopology
 
 end Schemes
 
@@ -242,7 +243,8 @@ variable {C : Type u} [Category.{v} C]
 sheaves (the canonical topology) has as covering sieves the universally strictly epimorphic ones:
 those all of whose pullbacks are effective epimorphic. -/
 theorem prop_23180 {X : C} (S : Sieve X) :
-    S ∈ Sheaf.canonicalTopology C X ↔ ∀ ⦃Y : C⦄ (f : Y ⟶ X), (S.pullback f).EffectiveEpimorphic := by
+    S ∈ Sheaf.canonicalTopology C X ↔
+      ∀ ⦃Y : C⦄ (f : Y ⟶ X), (S.pullback f).EffectiveEpimorphic := by
   constructor
   · intro hS Y f
     rw [Sieve.EffectiveEpimorphic.iff_forall_isSheafFor_yoneda]

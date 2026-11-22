@@ -221,7 +221,8 @@ theorem mem_gaps_iff : x ∈ gaps D m ↔ x ∉ D ∧ m < x ∧ x < t ∧ ∀ y 
   classical
   constructor
   · rintro ⟨a, b, ⟨ha, hb, -, hc⟩, hma, hax, hxb⟩
-    refine ⟨fun hx => hc x hx ⟨hax, hxb⟩, hma.trans_lt hax, hxb.trans_le (htop b hb), fun y hy => ?_⟩
+    refine ⟨fun hx => hc x hx ⟨hax, hxb⟩, hma.trans_lt hax, hxb.trans_le (htop b hb),
+      fun y hy => ?_⟩
     obtain hya | hay := hD.total hy ha
     · exact .inr (hya.trans hax.le)
     obtain hyb | hby := hD.total hy hb
@@ -259,10 +260,12 @@ theorem above_iff : Above D m t e ↔ IsChain (· ≤ ·) (e : Set I) ∧ D ⊆ 
         (by rintro rfl; exact hx.2 hm)
     · rintro rfl; exact hx.2 ht
   all_goals by_contra! h
-  · have := ((mem_gaps_iff hD hm ht htop).1 (hg (Finset.mem_coe.2 (Finset.mem_sdiff.2 ⟨hx, h⟩)))).2.1
+  · have := ((mem_gaps_iff hD hm ht htop).1
+      (hg (Finset.mem_coe.2 (Finset.mem_sdiff.2 ⟨hx, h⟩)))).2.1
     exact this.not_ge hxm
   · exact h (if hxD : x ∈ D then htop x hxD else
-      ((mem_gaps_iff hD hm ht htop).1 (hg (Finset.mem_coe.2 (Finset.mem_sdiff.2 ⟨hx, hxD⟩)))).2.2.1.le)
+      ((mem_gaps_iff hD hm ht htop).1
+        (hg (Finset.mem_coe.2 (Finset.mem_sdiff.2 ⟨hx, hxD⟩)))).2.2.1.le)
 
 include hm ht htop in
 /-- `e ↦ e \ D` identifies the flags above `D` with the flags of the ordinal sum. -/

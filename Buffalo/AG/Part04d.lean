@@ -264,7 +264,8 @@ theorem prop_25011 {A L ι : Type u} [CommRing A] [IsLocalRing A] [AddCommGroup 
     ∃ i, IsUnit (e (x i)) := by
   by_contra h
   push Not at h
-  have hle : Submodule.span A (Set.range x) ≤ Submodule.comap e.toLinearMap (IsLocalRing.maximalIdeal A) := by
+  have hle : Submodule.span A (Set.range x) ≤
+      Submodule.comap e.toLinearMap (IsLocalRing.maximalIdeal A) := by
     rw [Submodule.span_le]
     rintro _ ⟨i, rfl⟩
     exact h i

@@ -163,7 +163,8 @@ theorem prop_10708 {X Y : LocallyRingedSpace.{u}} (φ : X.toPresheafedSpace ⟶ 
     refine (X.toRingedSpace.mem_basicOpen _ x hxU).2 ?_
     rw [← key]
     exact hu.map _
-  refine ⟨incl, ⟨fun hloc U f => le_antisymm (incl U f) fun x hx => ?_, fun H x => ⟨fun a ha => ?_⟩⟩⟩
+  refine ⟨incl, ⟨fun hloc U f => le_antisymm (incl U f) fun x hx => ?_,
+    fun H x => ⟨fun a ha => ?_⟩⟩⟩
   · obtain ⟨hxU, hu⟩ := hx
     refine ⟨hxU, ?_⟩
     have hxU' : φ.base x ∈ U := hxU

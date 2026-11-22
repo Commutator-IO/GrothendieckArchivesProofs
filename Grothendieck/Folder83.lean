@@ -321,7 +321,8 @@ theorem deltaPB_eq : halfDisc3 1 c c' b b' (b * b' - t) = -Q b c b' c' t := by
 
 /-- Page 91, (13): the discriminant of `Q` in `t` is `δδ'`. -/
 theorem disc_Q :
-    (b * b') ^ 2 - 4 * (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c') = (b ^ 2 - 4 * c) * (b' ^ 2 - 4 * c') := by
+    (b * b') ^ 2 - 4 * (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c') =
+      (b ^ 2 - 4 * c) * (b' ^ 2 - 4 * c') := by
   ring
 
 /-- Pages 140–141: `Q` is invariant under the involution `t ↦ bb' − t` of the line. -/
@@ -385,7 +386,8 @@ noncomputable def Qpoly (b c b' c' : k) : k[X] := qp (b * b') (b ^ 2 * c' + b' ^
 
 /-- `S̃ = Spec k[t]/(Q)` is a quadratic cover: `k[t]/(Q)` is free of rank `2`. -/
 theorem Stilde_rank [Nontrivial k] (b c b' c' : k) :
-    (AdjoinRoot.powerBasis' (qp_monic (b * b') (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c'))).dim = 2 := by
+    (AdjoinRoot.powerBasis' (qp_monic (b * b') (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c'))).dim =
+      2 := by
   rw [AdjoinRoot.powerBasis'_dim, qp_natDegree]
 
 /-- Pages 138 and 143, the identity behind `Q(u * v) = 0`: with
@@ -711,7 +713,8 @@ lemma sandwich_det_sq :
 /-- The sign of the swap of `Fin 4 × Fin 4` is a unit of `k`. -/
 lemma isUnit_sign_prodComm :
     IsUnit ((Equiv.Perm.sign (Equiv.prodComm (Fin 4) (Fin 4)) : ℤ) : k) := by
-  simpa using (Units.isUnit (Equiv.Perm.sign (Equiv.prodComm (Fin 4) (Fin 4)))).map (Int.castRingHom k)
+  simpa using
+    (Units.isUnit (Equiv.Perm.sign (Equiv.prodComm (Fin 4) (Fin 4)))).map (Int.castRingHom k)
 
 /-- `det` of the sandwich matrix is a unit iff `Q` is: its square is `±Q¹⁶`. -/
 theorem isUnit_sandwichMatrix_iff :

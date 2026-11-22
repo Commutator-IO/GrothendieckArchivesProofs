@@ -421,7 +421,8 @@ variable {k : Type*} [CommRing k]
 
 /-- **Page 95.** For `α = −2`: `s_{2m} = (−m, m)` and `s_{2m+1} = (1 + m, −m)`. -/
 theorem strip_vertex (m : ℤ) :
-    s (-2 : k) (2 * m) = (-(m : k), (m : k)) ∧ s (-2 : k) (2 * m + 1) = (1 + (m : k), -(m : k)) := by
+    s (-2 : k) (2 * m) = (-(m : k), (m : k)) ∧
+      s (-2 : k) (2 * m + 1) = (1 + (m : k), -(m : k)) := by
   have step : ∀ n, s (-2 : k) (n + 1) = u (-2) (s (-2) n) := fun n => zpow_succ_apply _ _ _
   induction m using Int.induction_on with
   | zero => simp [s, u_apply]

@@ -71,6 +71,7 @@ theorem board_2728 : IsEmpty (Algebra (ZMod 2) (ZMod 4)) := by
 artinian: a discrete valuation ring (two points) is noetherian but not artinian. -/
 theorem board_2857 (R : Type*) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] :
     IsNoetherianRing R ∧ ¬ IsArtinianRing R :=
-  ⟨inferInstance, fun _ => IsDiscreteValuationRing.not_isField R (IsArtinianRing.isField_of_isDomain R)⟩
+  ⟨inferInstance, fun _ =>
+    IsDiscreteValuationRing.not_isField R (IsArtinianRing.isField_of_isDomain R)⟩
 
 end Buffalo.AG.Part05

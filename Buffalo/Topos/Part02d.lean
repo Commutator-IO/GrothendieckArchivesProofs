@@ -63,7 +63,8 @@ theorem iso_of_iso_on_opens {E : Type*} [Category.{u} E]
   let k : uliftYoneda.{u} ⋙ a ≅ J.yoneda :=
     Functor.isoWhiskerRight uliftYonedaIsoYoneda a ≪≫
       Functor.isoWhiskerRight (GrothendieckTopology.yonedaCompSheafToPresheaf J).symm a ≪≫
-      Functor.associator _ _ _ ≪≫ Functor.isoWhiskerLeft J.yoneda (asIso (sheafificationAdjunction J (Type u)).counit) ≪≫
+      Functor.associator _ _ _ ≪≫
+      Functor.isoWhiskerLeft J.yoneda (asIso (sheafificationAdjunction J (Type u)).counit) ≪≫
       J.yoneda.rightUnitor
   let e₂ : uliftYoneda.{u} ⋙ a ⋙ L₁ ≅ uliftYoneda.{u} ⋙ a ⋙ L₂ :=
     Functor.isoWhiskerRight k L₁ ≪≫ e ≪≫ (Functor.isoWhiskerRight k L₂).symm
@@ -183,7 +184,8 @@ end Defs
 /-- URU5jgTvjhU-31066 (8:37:46) [def] `Sh(X)` is a topos in the first sense. -/
 theorem sheaf_isToposFirstForm :
     IsToposFirstForm (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
-  ⟨inferInstance, inferInstance, ⟨Opens X, opensSheaf, fun _ _ f g h => opensSheaf_separating f g h⟩⟩
+  ⟨inferInstance, inferInstance,
+    ⟨Opens X, opensSheaf, fun _ _ f g h => opensSheaf_separating f g h⟩⟩
 
 /-! ## Cohomology in a topos -/
 

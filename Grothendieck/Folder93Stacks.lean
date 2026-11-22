@@ -104,7 +104,8 @@ theorem partialD_prod_eq_zero (j : Fin n) (a : Fin n → ℕ) (s : Finset (Fin n
     have hlj : ¬ l = j := by
       rintro rfl
       exact hs (Finset.mem_insert_self _ _)
-    rw [Finset.prod_insert hl, Derivation.leibniz, Derivation.leibniz_pow, partialD_t_of_ne b hb hlj, ih (fun h => hs (Finset.mem_insert_of_mem h))]
+    rw [Finset.prod_insert hl, Derivation.leibniz, Derivation.leibniz_pow,
+      partialD_t_of_ne b hb hlj, ih (fun h => hs (Finset.mem_insert_of_mem h))]
     simp
 
 include hb in

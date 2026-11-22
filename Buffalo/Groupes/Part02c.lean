@@ -150,7 +150,8 @@ omit [AddCommGroup M] in
 /-- _lTf_L0yvrU-28993 (8:03:13) [prop] … for every `x`, only finitely many `p_m x` are non-zero,
 and `x = ∑_m p_m x`. -/
 theorem proj_finite (x : V) : Set.Finite {m : M | proj δ m x ≠ 0} := by
-  refine (TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M)) (δ x)).support.finite_toSet.subset
+  refine (TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M))
+      (δ x)).support.finite_toSet.subset
     fun m hm ↦ ?_
   rw [Set.mem_ofPred_eq, proj_eq_coeff] at hm
   simpa using hm
@@ -206,7 +207,8 @@ theorem point_acts_by_character (hδ : Part01.IsComodule k (AddMonoidAlgebra k M
       IsUnit (g (AddMonoidAlgebra.single m 1)) := by
   refine ⟨by rw [delta_of_mem hδ]; rfl, ?_⟩
   refine ⟨⟨_, g (AddMonoidAlgebra.single (-m) 1), ?_, ?_⟩, rfl⟩ <;>
-    rw [← map_mul, AddMonoidAlgebra.single_mul_single, mul_one] <;> simp [← AddMonoidAlgebra.one_def]
+    rw [← map_mul, AddMonoidAlgebra.single_mul_single, mul_one] <;>
+      simp [← AddMonoidAlgebra.one_def]
 
 omit [DecidableEq M] in
 /-- _lTf_L0yvrU-29334 (8:08:54) [prop] The characters add: `χ_m χ_{m'} = χ_{m+m'}`
@@ -335,7 +337,8 @@ theorem grouplike_connected [Nontrivial k] (hk : ∀ e : k, IsIdempotentElem e �
 /-- _lTf_L0yvrU-30490 (8:28:10) [thm] Over a domain (Mathlib `mapDomainBialgHomAddEquiv`),
 `D` is fully faithful: bialgebra maps `R[N] → R[M]` are the homomorphisms `N → M`. -/
 noncomputable def D_fullyFaithful (R : Type u) [CommRing R] [IsDomain R] (N : Type u)
-    [AddCommGroup N] : (N →+ M) ≃+ Additive (WithConv (AddMonoidAlgebra R N →ₐc[R] AddMonoidAlgebra R M)) :=
+    [AddCommGroup N] :
+    (N →+ M) ≃+ Additive (WithConv (AddMonoidAlgebra R N →ₐc[R] AddMonoidAlgebra R M)) :=
   AddMonoidAlgebra.mapDomainBialgHomAddEquiv
 
 end GroupLike

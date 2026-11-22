@@ -309,7 +309,8 @@ theorem card_gen_substable (hD : A.IsPosition σD) :
 
 end Arrangement
 
-/-! ## Problem 17 of `docs/problems/article.tex`: an added pseudoline and its crossing order (statement only)
+/-! ## Problem 17 of `docs/problems/article.tex`: an added pseudoline and its crossing order
+(statement only)
 
 Page 18 asserts, « il ne devrait pas être difficile de montrer », that the position of an
 added pseudoline is determined by the antipody-compatible cyclic order in which its double
@@ -317,10 +318,10 @@ cover meets the pseudolines of `Σ`. In oriented-matroid terms (rank 3, Folkman�
 the added pseudoline is a single-element extension, and its cyclic crossing order is the
 rank-2 contraction at the new element.
 
-The statement is here as a `Prop`, proved (`problem17_holds`) from alternation alone: the triples through the new element are read off the
-contraction, the others off `Σ`. What the page asks needs, in addition, the dictionary from
-pseudolines to chirotopes (the topological representation theorem) and from the cyclic order
-to the contraction, which Mathlib does not have. -/
+The statement is here as a `Prop`, proved (`problem17_holds`) from alternation alone: the triples
+through the new element are read off the contraction, the others off `Σ`. What the page asks needs,
+in addition, the dictionary from pseudolines to chirotopes (the topological representation theorem)
+and from the cyclic order to the contraction, which Mathlib does not have. -/
 
 section Problem17
 

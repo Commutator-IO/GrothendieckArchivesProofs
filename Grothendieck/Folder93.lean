@@ -1724,7 +1724,8 @@ lemma of_injective : Function.Injective (AdjoinRoot.of (P p n α)) := by
   exact C_eq_zero.1 <| eq_zero_of_P_dvd p n α ha fun m hm => by
     rw [coeff_C, ite_eq_right_iff.2 fun h => absurd h (by have := q_pos p n; omega)]
 
-instance charP_B [Fact p.Prime] [CharP A p] : CharP (B p n α) p := charP_of_injective_ringHom (of_injective p n α) p
+instance charP_B [Fact p.Prime] [CharP A p] : CharP (B p n α) p :=
+  charP_of_injective_ringHom (of_injective p n α) p
 
 /-- The Taylor map `f ↦ f(β + Y)`, `β` the class of `T` in `B`. -/
 noncomputable def θ : A[X] →ₐ[A] (B p n α)[X] := aeval (X + C (AdjoinRoot.root (P p n α)))
@@ -1795,7 +1796,8 @@ theorem descent [Fact p.Prime] [CharP A p] (x : A[X])
   have hk : ∀ k, 0 < k → k < p ^ n → r.coeff k = 0 := by
     intro k hk0 hkq
     have h1 := X_pow_dvd_iff.1 h' k hkq
-    rw [coeff_sub, coeff_C, ite_eq_right_iff.2 fun h => absurd h (by omega), sub_zero, θ_coeff, AdjoinRoot.mk_eq_zero] at h1
+    rw [coeff_sub, coeff_C, ite_eq_right_iff.2 fun h => absurd h (by omega), sub_zero, θ_coeff,
+      AdjoinRoot.mk_eq_zero] at h1
     have h2 := eq_zero_of_P_dvd p n α h1 fun m hm => by
       rw [hasseDeriv_coeff, hr _ (by omega), mul_zero]
     simpa [hasseDeriv_coeff] using congrArg (coeff · 0) h2

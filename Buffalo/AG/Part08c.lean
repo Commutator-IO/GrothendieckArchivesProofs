@@ -205,7 +205,8 @@ theorem cex_10967 (k : Type u) [Field k] :
     let m : PrimeSpectrum (Polynomial k) :=
       ⟨Ideal.span {Polynomial.X},
         (Ideal.span_singleton_prime Polynomial.X_ne_zero).2 Polynomial.prime_X⟩
-    let ι : ({x | x ≠ m} : Set (PrimeSpectrum (Polynomial k))) ⊕ Unit → PrimeSpectrum (Polynomial k) :=
+    let ι : ({x | x ≠ m} : Set (PrimeSpectrum (Polynomial k))) ⊕ Unit →
+        PrimeSpectrum (Polynomial k) :=
       Sum.elim Subtype.val (fun _ => m)
     Continuous ι ∧ Function.Bijective ι ∧ ¬ IsEmbedding ι := by
   intro m ι

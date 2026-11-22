@@ -502,7 +502,8 @@ theorem ex_5353 [Nontrivial k] :
     have := IsLocalization.ringHom_ext (Submonoid.powers (Polynomial.X : (Polynomial k))) h'
     exact AlgHom.ext fun x => DFunLike.congr_fun this x
   · obtain ⟨p, hp⟩ := h (T (-1))
-    have h1 : Polynomial.toLaurent (Polynomial.X * p) = Polynomial.toLaurent (1 : (Polynomial k)) := by
+    have h1 : Polynomial.toLaurent (Polynomial.X * p) =
+        Polynomial.toLaurent (1 : (Polynomial k)) := by
       rw [map_mul, hp, Polynomial.toLaurent_X, ← T_add, map_one]
       norm_num
     exact Polynomial.not_isUnit_X (isUnit_iff_exists_inv.2 ⟨p, Polynomial.toLaurent_injective h1⟩)
@@ -531,7 +532,8 @@ theorem prop_5417 (k' : Type*) [CommRing k'] [Algebra k k'] :
       let g : (Polynomial k) →+* k' := (Polynomial.aeval t).toRingHom
       have hg : IsUnit (g Polynomial.X) := by simpa [g] using ht
       let l : k[T;T⁻¹] →+* k' := IsLocalization.Away.lift (Polynomial.X : (Polynomial k)) hg
-      have hl : ∀ p : (Polynomial k), l (Polynomial.toLaurent p) = Polynomial.aeval t p := fun p => by
+      have hl : ∀ p : (Polynomial k),
+          l (Polynomial.toLaurent p) = Polynomial.aeval t p := fun p => by
         rw [← algebraMap_eq_toLaurent]
         exact IsLocalization.lift_eq _ p
       refine ⟨{ l with commutes' := fun c => ?_ }, ?_⟩
@@ -545,7 +547,8 @@ theorem prop_5417 (k' : Type*) [CommRing k'] [Algebra k k'] :
 open LaurentPolynomial in
 /-- 51wmmpHand0-5552 (1:32:32) [cex] The monomorphism `V_{k[T,T⁻¹]} → E^1`, `u ↦ u(T)`, is an
 isomorphism onto no closed subspace `V_J` of `E^1` (`k ≠ 0`). -/
-theorem cex_5552 [Nontrivial k] : ¬ ∃ J : Ideal (Polynomial k), ∀ (k' : Type u) [CommRing k'] [Algebra k k']
+theorem cex_5552 [Nontrivial k] : ¬ ∃ J : Ideal (Polynomial k),
+    ∀ (k' : Type u) [CommRing k'] [Algebra k k']
     (t : k'), (∃ u : k[T;T⁻¹] →ₐ[k] k', u (T 1) = t) ↔ ∀ f ∈ J, Polynomial.aeval t f = 0 := by
   rintro ⟨J, hJ⟩
   have h0 : ∀ f ∈ J, f = 0 := by

@@ -213,9 +213,9 @@ def presheafMor : TopMor (Cᵒᵖ ⥤ Type u) (C'ᵒᵖ ⥤ Type u) where
   adj := φ.op.ranAdjunction (Type u)
   lex := inferInstance
 
-/-- PqCQM3Pcl6Q-4092 (1:08:12) [prop] If `u^*` has a left exact left adjoint `u_!`, then `u_!` is the
-inverse image of a morphism of topoi in the opposite direction, of which `u^*` is the direct
-image. -/
+/-- PqCQM3Pcl6Q-4092 (1:08:12) [prop] If `u^*` has a left exact left adjoint `u_!`, then `u_!` is
+the inverse image of a morphism of topoi in the opposite direction, of which `u^*` is the
+direct image. -/
 def presheafMorOp [PreservesFiniteLimits (φ.op.lan : (Cᵒᵖ ⥤ Type u) ⥤ _)] :
     TopMor (C'ᵒᵖ ⥤ Type u) (Cᵒᵖ ⥤ Type u) where
   inv := φ.op.lan
@@ -241,7 +241,8 @@ def restrMapEquiv (φ ψ : C ⥤ C') : (φ ⟶ ψ) ≃ (restr ψ ⟶ restr φ) w
     { app c := (η.app (yoneda.obj (ψ.obj c))).app (op c) (𝟙 (ψ.obj c))
       naturality c d k := by
         have h1 := NatTrans.naturality_apply (η.app (yoneda.obj (ψ.obj d))) k.op (𝟙 (ψ.obj d))
-        have h2 := congrArg (fun t => t.app (op c) (𝟙 (ψ.obj c))) (η.naturality (yoneda.map (ψ.map k)))
+        have h2 :=
+          congrArg (fun t => t.app (op c) (𝟙 (ψ.obj c))) (η.naturality (yoneda.map (ψ.map k)))
         simp [restr] at h1 h2
         exact h1.symm.trans h2 }
   left_inv α := by
@@ -326,7 +327,8 @@ def pointBot_eval (X : C) :
   pointBotPresheafFiberIso X (Type u)
 
 theorem presheaf_enoughPoints :
-    (pointsBot.{u} C).IsConservativeFamilyOfPoints ∧ HasEnoughPoints.{u} (⊥ : GrothendieckTopology C) :=
+    (pointsBot.{u} C).IsConservativeFamilyOfPoints ∧
+      HasEnoughPoints.{u} (⊥ : GrothendieckTopology C) :=
   ⟨isConservative_pointsBot C, inferInstance⟩
 
 /-- PqCQM3Pcl6Q-9189 (2:33:09) [prop], one direction: the fibre functor of a point coming from `C`
@@ -401,7 +403,8 @@ theorem representable_preservesLimits (X : Sheaf J (Type u)) :
 /-- PqCQM3Pcl6Q-6357 (1:45:57) [prop] / PqCQM3Pcl6Q-6421 (1:47:01) The localization functor
 `j^* : E → E/X'`, `Y ↦ Y × X'`, has the left adjoint `j_!` forgetting the map to `X'`, hence
 commutes with limits. -/
-def localization_adj (X' : Sheaf J (Type u)) : Over.forget X' ⊣ Over.star X' := Over.forgetAdjStar X'
+def localization_adj (X' : Sheaf J (Type u)) : Over.forget X' ⊣ Over.star X' :=
+  Over.forgetAdjStar X'
 
 theorem localization_preservesLimits (X' : Sheaf J (Type u)) : PreservesLimits (Over.star X') :=
   (Over.forgetAdjStar X').rightAdjoint_preservesLimits

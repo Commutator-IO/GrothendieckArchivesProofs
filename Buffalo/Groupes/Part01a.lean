@@ -90,7 +90,8 @@ noncomputable def affineSpacesEquiv :
     (CommAlgCat.{u} k)ᵒᵖ ≌ (coyoneda (C := CommAlgCat.{u} k)).EssImageSubcategory :=
   (coyoneda (C := CommAlgCat.{u} k)).toEssImage.asEquivalence
 
-/-- _lTf_L0yvrU-393 (0:06:33) [prop] The space represented by `A` has `X(k') = Hom_{k-alg}(A, k')`. -/
+/-- _lTf_L0yvrU-393 (0:06:33) [prop] The space represented by `A` has
+`X(k') = Hom_{k-alg}(A, k')`. -/
 def pointsEquiv (A B : CommAlgCat.{u} k) : (coyoneda.obj (op A)).obj B ≃ (A →ₐ[k] B) where
   toFun f := f.hom
   invFun f := CommAlgCat.ofHom f
@@ -213,7 +214,8 @@ theorem GL2_not_comm (A : Type u) [CommRing A] [Nontrivial A] :
   · ext i j; fin_cases i <;> fin_cases j <;> simp
   · ext i j; fin_cases i <;> fin_cases j <;> simp
   · intro h
-    have := congrArg (fun g : Matrix.GeneralLinearGroup (Fin 2) A ↦ (g : Matrix (Fin 2) (Fin 2) A) 0 0) h
+    have := congrArg (fun g : Matrix.GeneralLinearGroup (Fin 2) A ↦
+      (g : Matrix (Fin 2) (Fin 2) A) 0 0) h
     simp [Matrix.mul_apply, Fin.sum_univ_two] at this
 
 /-! ## Basic examples -/
@@ -250,8 +252,8 @@ def orthogonalGroup {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [CommRin
     rw [Units.val_mul, ← Matrix.mulVec_mulVec, this, h2]
   inv_mem' {g} hg := by
     ext x
-    have := congrArg (fun Q' : QuadraticForm A (n → A) ↦ Q' (Matrix.mulVec ((g⁻¹ : Matrix.GeneralLinearGroup n A) :
-      Matrix n n A) x)) hg
+    have := congrArg (fun Q' : QuadraticForm A (n → A) ↦
+      Q' (Matrix.mulVec ((g⁻¹ : Matrix.GeneralLinearGroup n A) : Matrix n n A) x)) hg
     simp only [QuadraticMap.comp_apply, Matrix.toLin'_apply, Matrix.mulVec_mulVec] at this ⊢
     rw [← this, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_mulVec]
 
@@ -384,7 +386,8 @@ noncomputable def adjoinRootHomEquiv (f : Polynomial k) (A : Type u) [CommRing A
 `k[x,y]/(xy - 1)`, and it is `𝔾_m`: its points are the units (whence `k[x,y]/(xy-1) ≃ k[x,x⁻¹]`
 by Yoneda, both representing `𝔾_m`). -/
 noncomputable def xyHomEquiv (A : Type u) [CommRing A] [Algebra k A] :
-    (MvPolynomial (Fin 2) k ⧸ Ideal.span {(MvPolynomial.X 0 * MvPolynomial.X 1 - 1 : MvPolynomial (Fin 2) k)} →ₐ[k] A) ≃
+    (MvPolynomial (Fin 2) k ⧸
+        Ideal.span {(MvPolynomial.X 0 * MvPolynomial.X 1 - 1 : MvPolynomial (Fin 2) k)} →ₐ[k] A) ≃
       {x : Fin 2 → A // x 0 * x 1 = 1} :=
   (quotHomEquiv k _ A).trans
     ((mvHomEquiv k (Fin 2) A).subtypeEquiv fun φ ↦ by

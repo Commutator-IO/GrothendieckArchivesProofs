@@ -212,7 +212,8 @@ theorem prop_5361 (f : X ⟶ Y) :
     IsImmersion f ↔ IsEmbedding f ∧ IsLocallyClosed (Set.range f) ∧
       ∀ x, Function.Surjective (f.stalkMap x) :=
   ⟨fun h => ⟨h.isEmbedding, h.isLocallyClosed_range, h.stalkMap_surjective⟩,
-    fun ⟨h₁, h₂, h₃⟩ => { stalkMap_surjective := h₃, isEmbedding := h₁, isLocallyClosed_range := h₂ }⟩
+    fun ⟨h₁, h₂, h₃⟩ =>
+      { stalkMap_surjective := h₃, isEmbedding := h₁, isLocallyClosed_range := h₂ }⟩
 
 /-- Oqhr-Gt66es-5426 (1:30:26) [prop] Equivalently, `f(X)` has an open neighbourhood `V` such that
 `f⁻¹(V) → V` is a closed immersion (here `V` is the coborder, `f⁻¹(V) = X`); conversely such a

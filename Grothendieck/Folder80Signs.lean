@@ -318,7 +318,8 @@ theorem locallyEquivalent_of_sameSeparation (hI : Incidence on) (hbf : BigonFree
   let c : L → L → P := fun i j => if h : i ≠ j then Classical.choose (hI.meet i j h)
     else Classical.choice ⟨Classical.choose (hbf i)⟩
   have c_on : ∀ {i j}, i ≠ j → on (c i j) i ∧ on (c i j) j := fun {i j} h => by
-    simp only [c, ne_eq, h, not_false_eq_true, ↓reduceDIte]; exact Classical.choose_spec (hI.meet i j h)
+    simp only [c, ne_eq, h, not_false_eq_true,
+        ↓reduceDIte]; exact Classical.choose_spec (hI.meet i j h)
   have c_eq : ∀ {i j : L} {p : P}, i ≠ j → on p i → on p j → c i j = p :=
     fun h hi hj => hI.unique h (c_on h).1 (c_on h).2 hi hj
   have basis_iff : ∀ {i j l : L}, i ≠ j → i ≠ l → (Basis on i j l ↔ c i j ≠ c i l) := by

@@ -301,7 +301,8 @@ generalizing; flat morphisms contain the isomorphisms and are stable under compo
 change (mathlib: `Flat.generalizingMap`, `Flat.isStableUnderBaseChange`, `IsMultiplicative`). -/
 theorem prop_38767 (f : X ⟶ Y) [Flat f] :
     GeneralizingMap f ∧ (∀ (Y' : Scheme.{u}) (g : Y' ⟶ Y), GeneralizingMap (pullback.snd f g)) ∧
-      MorphismProperty.IsMultiplicative @Flat.{u} ∧ MorphismProperty.IsStableUnderBaseChange @Flat.{u} :=
+      MorphismProperty.IsMultiplicative @Flat.{u} ∧
+      MorphismProperty.IsStableUnderBaseChange @Flat.{u} :=
   ⟨Flat.generalizingMap f, fun _ g => Flat.generalizingMap (pullback.snd f g), inferInstance,
     inferInstance⟩
 
@@ -560,7 +561,8 @@ theorem surjective_descendsAlong :
     rw [← Scheme.Hom.comp_apply, ← pullback.condition, Scheme.Hom.comp_apply]⟩
 
 instance quasiCompact_respectsIso : MorphismProperty.RespectsIso @QuasiCompact.{u} :=
-  MorphismProperty.respectsIso_of_isStableUnderComposition (fun _ _ f (_ : IsIso f) => inferInstance)
+  MorphismProperty.respectsIso_of_isStableUnderComposition
+    (fun _ _ f (_ : IsIso f) => inferInstance)
 
 /-- Quasi-compactness descends along surjective quasi-compact morphisms. -/
 theorem quasiCompact_descendsAlong :

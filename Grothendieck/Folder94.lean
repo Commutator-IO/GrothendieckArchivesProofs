@@ -497,7 +497,8 @@ theorem dvd_of_isUnit_away {D : Type*} [CommRing D] [IsDomain D] {g h : D} (hg :
 /-- `F(A_g)` is not finitely generated over `A_g` for any `g ≠ 0`. -/
 theorem not_finite_tele_away {a : ℕ → k} (ha : Injective a) {g : k[X][X]} (hg : g ≠ 0) :
     ¬ Module.Finite (Localization.Away g)
-      (Tele (fun j => algebraMap k[X][X] (Localization.Away g) (hx (a j))) (Localization.Away g)) := by
+      (Tele (fun j => algebraMap k[X][X] (Localization.Away g) (hx (a j)))
+        (Localization.Away g)) := by
   intro hfin
   have : IsDomain (Localization.Away g) :=
     IsLocalization.isDomain_localization (powers_le_nonZeroDivisors_of_noZeroDivisors hg)

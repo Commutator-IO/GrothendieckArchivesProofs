@@ -558,7 +558,8 @@ theorem exists_smul_of_wedge {a c : Fin 2 → k} (ha : a ≠ 0) (h : wedge a c =
     rw [h0, zero_mul, zero_sub, neg_eq_zero] at h
     refine ⟨c 1 / a 1, funext fun j => ?_⟩
     fin_cases j
-    · simp only [Fin.zero_eta, Fin.isValue, Pi.smul_apply, h0, smul_eq_mul, mul_zero]; exact (mul_eq_zero.1 h).resolve_left h1
+    · simp only [Fin.zero_eta, Fin.isValue, Pi.smul_apply, h0, smul_eq_mul,
+        mul_zero]; exact (mul_eq_zero.1 h).resolve_left h1
     · simp; field_simp
   · refine ⟨c 0 / a 0, funext fun j => ?_⟩
     fin_cases j
@@ -613,7 +614,8 @@ theorem symProd_proportional_iff {a b c d : Fin 2 → k} (ha : a ≠ 0) (hb : b 
       exact ⟨α * β, by rw [symProd_smul_left, symProd_smul_right, smul_smul, mul_comm]⟩
     · obtain ⟨α, rfl⟩ := exists_smul_of_wedge ha h1
       obtain ⟨β, rfl⟩ := exists_smul_of_wedge hb h2
-      exact ⟨α * β, by rw [symProd_smul_left, symProd_smul_right, smul_smul, symProd_comm b a, mul_comm]⟩
+      exact ⟨α * β, by
+        rw [symProd_smul_left, symProd_smul_right, smul_smul, symProd_comm b a, mul_comm]⟩
 
 end SymSquare
 

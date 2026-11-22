@@ -148,8 +148,8 @@ theorem isPreirreducible_of_cover {T : Type*} [TopologicalSpace T] {ι : Type*} 
 
 /-- Oqhr-Gt66es-6355 (1:45:55) [prop] If `X` is covered by nonempty open sets `X_i`, `X` is
 integral iff the `X_i` are integral and pairwise meet. Proved for the underlying spaces
-(irreducibility; reducedness is local by 6161), for a nonempty family: `X` is irreducible iff the `X_i` are irreducible
-and pairwise meet. -/
+(irreducibility; reducedness is local by 6161), for a nonempty family: `X` is irreducible iff the
+`X_i` are irreducible and pairwise meet. -/
 theorem prop_6355 {T : Type*} [TopologicalSpace T] {ι : Type*} [Nonempty ι] (U : ι → Set T)
     (hU : ∀ i, IsOpen (U i)) (hcov : ⋃ i, U i = Set.univ) (hne : ∀ i, (U i).Nonempty) :
     IrreducibleSpace T ↔ (∀ i, IsIrreducible (U i)) ∧ ∀ i j, (U i ∩ U j).Nonempty := by
@@ -201,7 +201,8 @@ theorem prop_6697 (A : Type u) [CommRing A] [IsDomain A] :
       ∀ (p : Ideal A) [p.IsPrime], IsIntegrallyClosed (Localization.AtPrime p) := by
   constructor
   · intro _ p _
-    exact isIntegrallyClosed_of_isLocalization (Localization.AtPrime p) p.primeCompl p.primeCompl_le_nonZeroDivisors
+    exact isIntegrallyClosed_of_isLocalization (Localization.AtPrime p) p.primeCompl
+      p.primeCompl_le_nonZeroDivisors
   · intro h
     exact IsIntegrallyClosed.of_localization_maximal fun p _ _ => h p
 
@@ -244,7 +245,8 @@ theorem prop_7023 {A B : Type*} [CommRing A] [CommRing B] [Algebra A B] (s : Fin
     induction hb using Algebra.adjoin_induction with
     | mem g hg =>
       refine ⟨num g * ∏ h ∈ s.erase g, den h, 1, ?_⟩
-      rw [pow_one, ← Finset.mul_prod_erase s den hg, map_mul, map_mul, mul_comm (algebraMap A B (den g)),
+      rw [pow_one, ← Finset.mul_prod_erase s den hg, map_mul, map_mul,
+        mul_comm (algebraMap A B (den g)),
         mul_assoc, hnd, mul_comm]
     | algebraMap a => exact ⟨a, 0, by simp⟩
     | add x y _ _ hx hy =>
@@ -293,7 +295,8 @@ theorem ex_7280 (h2 : (2 : k) ≠ 0) :
   · simp [nodeParam]
   · simp [nodeParam]; ring
   · rintro ⟨P, hP⟩
-    have key : ∀ Q : MvPolynomial (Fin 2) k, (nodeParam k Q).eval 1 = (nodeParam k Q).eval (-1) := by
+    have key : ∀ Q : MvPolynomial (Fin 2) k,
+        (nodeParam k Q).eval 1 = (nodeParam k Q).eval (-1) := by
       intro Q
       induction Q using MvPolynomial.induction_on with
       | C a => simp [nodeParam]

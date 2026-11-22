@@ -163,7 +163,8 @@ theorem isNoetherianRing_of_tilde {A P : Type*} [CommRing A] [PartialOrder P] (C
     (htilde_mem : ∀ I : Ideal A, I.FG → C (tilde I))
     (hΓ : ∀ I : Ideal A, I.FG → Γ (tilde I) = I) :
     IsNoetherianRing A := by
-  refine isNoetherian_iff_fg_wellFounded.2 (wellFoundedGT_iff_monotone_chain_condition.2 fun a => ?_)
+  refine isNoetherian_iff_fg_wellFounded.2
+    (wellFoundedGT_iff_monotone_chain_condition.2 fun a => ?_)
   obtain ⟨k₀, hk₀⟩ := hB (fun k => tilde (a k).1)
     (fun i j hij => htilde_mono _ _ (a i).2 (a j).2 (a.mono hij)) (fun k => htilde_mem _ (a k).2)
   exact ⟨k₀, fun m hm => Subtype.ext <| by rw [← hΓ _ (a k₀).2, ← hΓ _ (a m).2, hk₀ m hm]⟩

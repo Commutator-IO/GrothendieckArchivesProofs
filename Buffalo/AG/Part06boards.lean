@@ -68,7 +68,8 @@ theorem board_11246 : Function.Injective (algebraMap ℤ ℚ) ∧
 /-- Board `Oqhr-Gt66es-8803`, t = 11441: for `A` local with residue field `k`, the map
 `𝔪 ⊗_A k → A ⊗_A k` induced by the injection `𝔪 ↪ A` is zero. -/
 theorem board_11441 (A : Type u) [CommRing A] [IsLocalRing A] :
-    LinearMap.rTensor (A ⧸ IsLocalRing.maximalIdeal A) (IsLocalRing.maximalIdeal A).subtype = 0 := by
+    LinearMap.rTensor (A ⧸ IsLocalRing.maximalIdeal A)
+      (IsLocalRing.maximalIdeal A).subtype = 0 := by
   apply TensorProduct.ext'
   intro x c
   obtain ⟨c, rfl⟩ := Ideal.Quotient.mk_surjective c

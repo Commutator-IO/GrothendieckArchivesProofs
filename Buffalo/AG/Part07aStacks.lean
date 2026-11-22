@@ -166,7 +166,8 @@ theorem isFiniteType_over_iff_restrict (M : X.Modules) (U : X.Opens) :
     (M.over U).IsFiniteType ↔ (M.restrict U.ι).IsFiniteType := by
   constructor
   · intro h
-    have := Stacks.AlgebraicGeometry.CoherentPushforward.isFiniteType_overEquiv_functor U (M.over U) h
+    have :=
+      Stacks.AlgebraicGeometry.CoherentPushforward.isFiniteType_overEquiv_functor U (M.over U) h
     exact Stacks.SheafOfModules.isFiniteType_of_iso (overRestrictIso M U)
   · intro h
     have : ((Scheme.Modules.overEquiv U).functor.obj (M.over U)).IsFiniteType :=

@@ -273,7 +273,8 @@ theorem corollaire1 [IsNoetherianRing A] :
       have : (x.1 : PrimeSpectrum A).asIdeal.IsPrime := (x.1 : PrimeSpectrum A).isPrime
       obtain ⟨⟨a, ⟨s, hs⟩⟩, e⟩ :=
         IsLocalization.surj (x.1 : PrimeSpectrum A).asIdeal.primeCompl (ξ x.1)
-      refine ⟨⟨_, lemme1 hξ a s⟩, ⟨hs, e⟩, CategoryTheory.homOfLE le_top, a, s, fun y => ⟨y.2.1, ?_⟩⟩
+      refine ⟨⟨_, lemme1 hξ a s⟩, ⟨hs, e⟩, CategoryTheory.homOfLE le_top, a, s,
+          fun y => ⟨y.2.1, ?_⟩⟩
       change ξ y.1 = Localization.mk a ⟨s, y.2.1⟩
       rw [Localization.mk_eq_mk', IsLocalization.eq_mk'_iff_mul_eq]
       exact y.2.2⟩
@@ -668,7 +669,8 @@ theorem toReseau_surjective [IsLocallyNoetherian X] [LocallyOfFiniteType sY] [Is
     intro x y
     have : IsLocallyNoetherian (pullback (𝒰.f x) (𝒰.f y)) :=
       isLocallyNoetherian_of_isOpenImmersion (pullback.fst _ _ ≫ 𝒰.f x)
-    exact eq_of_fromSpecStalk_comp fun p => (Φ.matches_comp (pullback.fst _ _) rfl p (hmatch x _)).trans
+    exact eq_of_fromSpecStalk_comp fun p =>
+      (Φ.matches_comp (pullback.fst _ _) rfl p (hmatch x _)).trans
       (Φ.matches_comp (pullback.snd _ _) pullback.condition.symm p (hmatch y _)).symm
   let F := 𝒰.glueMorphisms g hglue
   have hF : ∀ x, 𝒰.f x ≫ F = g x := 𝒰.ι_glueMorphisms g hglue

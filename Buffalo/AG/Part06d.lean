@@ -132,7 +132,8 @@ theorem pow_mem_range (y : AdjoinRoot (rootPoly k p x)) :
     charP_of_injective_algebraMap (algebraMap k _).injective p
   obtain ⟨f, rfl⟩ := AdjoinRoot.mk_surjective y
   induction f using Polynomial.induction_on with
-  | C a => exact RingHom.mem_range.2 ⟨a ^ p, by rw [map_pow, AdjoinRoot.mk_C, AdjoinRoot.algebraMap_eq]⟩
+  | C a => exact RingHom.mem_range.2 ⟨a ^ p, by rw [map_pow, AdjoinRoot.mk_C,
+      AdjoinRoot.algebraMap_eq]⟩
   | add f g hf hg =>
     rw [map_add, add_pow_char]
     exact Subring.add_mem _ hf hg

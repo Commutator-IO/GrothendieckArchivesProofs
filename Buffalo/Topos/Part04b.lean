@@ -147,7 +147,8 @@ limit and the empty colimit, a `D`-functor from the one-point category to `C` is
 initial and terminal, and `Set` has none. So `Set` satisfies vacuously every exactness property
 `(I, Σ)` whose `I` is a 2-sum having the point as a summand, without satisfying the other
 summand's. -/
-theorem no_initial_terminal_set : ¬ ∃ X : Type u, Nonempty (IsInitial X) ∧ Nonempty (IsTerminal X) := by
+theorem no_initial_terminal_set :
+    ¬ ∃ X : Type u, Nonempty (IsInitial X) ∧ Nonempty (IsTerminal X) := by
   rintro ⟨X, ⟨hi⟩, ⟨ht⟩⟩
   have x : X := ht.from PUnit.{u + 1} PUnit.unit
   exact (hi.to PEmpty.{u + 1} x).elim

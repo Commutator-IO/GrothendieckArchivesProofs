@@ -141,7 +141,8 @@ theorem continuous_interp : Continuous P.interp := by
     locallyFinite_Icc_of_tendsto tendsto_intCast_atTop_atTop
       (tendsto_atBot_add_const_right _ 1 (tendsto_intCast_atBot_iff.2 tendsto_id))
   refine hlf.continuous ?_ (fun _ => isClosed_Icc) fun n => ?_
-  · refine eq_univ_of_forall fun y => mem_iUnion.2 ⟨⌊y⌋, Int.floor_le y, (Int.lt_floor_add_one y).le⟩
+  · refine eq_univ_of_forall fun y => mem_iUnion.2 ⟨⌊y⌋, Int.floor_le y,
+      (Int.lt_floor_add_one y).le⟩
   · exact (ContinuousOn.congr (by fun_prop) (P.interp_eqOn n))
 
 theorem strictMono_interp : StrictMono P.interp := by

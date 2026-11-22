@@ -206,8 +206,8 @@ theorem prop_13639 (f : X ⟶ Y) (g : Z ⟶ Y) [Mono f] [IsImmersion g] :
 theorem prop_13704 (f : X ⟶ Y) (g : Y ⟶ Z) [IsSeparated (f ≫ g)] : IsSeparated f :=
   IsSeparated.of_comp f g
 
-/-- Oqhr-Gt66es-13770 (3:49:30) [def] A scheme is separated if it is separated over `Spec ℤ` (mathlib:
-`Scheme.IsSeparated`, i.e. `X → ⊤_ Scheme` separated); an affine scheme is separated. -/
+/-- Oqhr-Gt66es-13770 (3:49:30) [def] A scheme is separated if it is separated over `Spec ℤ`
+(mathlib: `Scheme.IsSeparated`, i.e. `X → ⊤_ Scheme` separated); an affine scheme is separated. -/
 example (X : Scheme.{u}) [IsAffine X] : X.IsSeparated ∧ IsSeparated (terminal.from X) :=
   ⟨inferInstance, inferInstance⟩
 
@@ -300,7 +300,8 @@ theorem def_15031 (f : X ⟶ S) :
 
 /-- Oqhr-Gt66es-15094 (4:11:34) [prop] If `S` is quasi-separated, an `S`-scheme is quasi-separated
 iff it is so over `S`. -/
-theorem prop_15094 [QuasiSeparatedSpace S] (f : X ⟶ S) : QuasiSeparatedSpace X ↔ QuasiSeparated f := by
+theorem prop_15094 [QuasiSeparatedSpace S] (f : X ⟶ S) :
+    QuasiSeparatedSpace X ↔ QuasiSeparated f := by
   refine ⟨(def_15031 f).2, fun _ => ?_⟩
   have : QuasiSeparated (terminal.from S) := (quasiSeparatedSpace_iff_quasiSeparated S).1 ‹_›
   rw [quasiSeparatedSpace_iff_quasiSeparated,
@@ -457,8 +458,8 @@ theorem prop_16267 (f : X ⟶ Y) (g : Y ⟶ Z) [QuasiSeparated g] (h : IsCoheren
   obtain ⟨_, _⟩ := h
   exact ⟨QuasiCompact.of_comp f g, QuasiSeparated.of_comp f g⟩
 
-/-- Oqhr-Gt66es-16329 (4:32:09) [rem] Nothing can be concluded about `g` from `g ∘ f` coherent alone:
-for `f` from the empty scheme, `g ∘ f` is always coherent. -/
+/-- Oqhr-Gt66es-16329 (4:32:09) [rem] Nothing can be concluded about `g` from `g ∘ f` coherent
+alone: for `f` from the empty scheme, `g ∘ f` is always coherent. -/
 theorem rem_16329 [IsEmpty X] (h : X ⟶ Z) : IsCoherentHom h :=
   ⟨⟨fun U _ _ => by simp [Set.eq_empty_of_isEmpty]⟩, inferInstance⟩
 

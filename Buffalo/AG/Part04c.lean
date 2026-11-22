@@ -231,7 +231,8 @@ theorem prop_17324 {σ : Type u} (g : σ → Scheme.{u}) {i j : σ} (hij : i ≠
       (Nonempty (S' ⟶ ∅) ↔ IsEmpty S') ∧ Subsingleton (S' ⟶ ∅) ∧
       ∃! _t : F.obj.obj (op (∅ : Scheme.{u})), True := by
   refine ⟨isEmpty_pullback_sigmaι_of_ne g hij, ⟨fun ⟨f⟩ => ⟨fun x => isEmptyElim (f.base x)⟩,
-    fun _ => ⟨isInitialOfIsEmpty.to _⟩⟩, ⟨fun f g' => ?_⟩, unique_obj_empty ((isSheaf_iff_isSheaf_of_type _ _).1 F.property) _⟩
+    fun _ => ⟨isInitialOfIsEmpty.to _⟩⟩, ⟨fun f g' => ?_⟩,
+    unique_obj_empty ((isSheaf_iff_isSheaf_of_type _ _).1 F.property) _⟩
   have : IsEmpty S' := ⟨fun x => isEmptyElim (f.base x)⟩
   exact isInitialOfIsEmpty.hom_ext f g'
 

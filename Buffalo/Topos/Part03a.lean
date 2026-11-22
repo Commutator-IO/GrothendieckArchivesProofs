@@ -190,7 +190,8 @@ theorem classifying_not_spatial [Nontrivial G] (X : TopCat.{u}) :
 /-- URU5jgTvjhU-34201 (9:30:01) [ex] The forgetful functor `B_G → Set` is a fibre functor (it
 commutes with finite limits and all colimits)... -/
 theorem forget_isFibreFunctor :
-    PreservesFiniteLimits (Action.forget (Type u) G) ∧ PreservesColimits (Action.forget (Type u) G) :=
+    PreservesFiniteLimits (Action.forget (Type u) G) ∧
+      PreservesColimits (Action.forget (Type u) G) :=
   ⟨inferInstance, inferInstance⟩
 
 /-- URU5jgTvjhU-37075 (10:17:55) [prop] `Γ(X) = Hom(1, X)` is the set of `G`-invariant elements

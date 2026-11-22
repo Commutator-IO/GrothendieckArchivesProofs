@@ -47,9 +47,9 @@ theorem lan_lex_iff_flat {C C' : Type u} [SmallCategory C] [SmallCategory C'] [H
   rw [flat_iff_lan_flat]
   exact ⟨fun _ => preservesFiniteLimits_of_flat _, fun _ => flat_of_preservesFiniteLimits _⟩
 
-/-- Board `PqCQM3Pcl6Q-2947`, t = 4960 (corrected): `Γ = f_*` is a right adjoint, so it commutes with
-all products in every topos `Sh(C, J)`; it is the inverse image `I ↦ ∐_I e` whose commutation with
-products characterizes local connectedness. -/
+/-- Board `PqCQM3Pcl6Q-2947`, t = 4960 (corrected): `Γ = f_*` is a right adjoint, so it commutes
+with all products in every topos `Sh(C, J)`; it is the inverse image `I ↦ ∐_I e` whose commutation
+with products characterizes local connectedness. -/
 theorem global_sections_preservesLimits {C : Type u} [SmallCategory C]
     (J : GrothendieckTopology C) {T : C} (hT : IsTerminal T) :
     PreservesLimits ((sheafSections J (Type u)).obj (op T)) :=

@@ -47,7 +47,8 @@ theorem prop_23907_iff (A L : Type u) [CommRing A] [AddCommGroup L] [Module A L]
       Module.Finite A L ∧ Projective A L ∧ ∀ (p : Ideal A) [p.IsPrime],
         Nonempty (LocalizedModule p.primeCompl L ≃ₗ[Localization.AtPrime p]
           Localization.AtPrime p) := by
-  have h := (Module.finite_projective_rankAtStalk_one_tfae_invertible_exists_tensor_inverse.{u, u, u}
+  have h :=
+    (Module.finite_projective_rankAtStalk_one_tfae_invertible_exists_tensor_inverse.{u, u, u}
     A L).1
   constructor
   · intro hL

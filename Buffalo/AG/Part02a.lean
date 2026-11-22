@@ -699,7 +699,8 @@ theorem prop_21173 {ι : Type*} [Fintype ι] [DecidableEq ι] (A : ι → Type*)
         map_zero' := by rw [Pi.single_zero, map_zero]
         map_add' := fun a b => by rw [Pi.single_add, map_add]
         commutes' := fun c => by
-          have : Pi.single i (algebraMap k (A i) c) = algebraMap k (∀ j, A j) c * Pi.single i 1 := by
+          have : Pi.single i (algebraMap k (A i) c) =
+              algebraMap k (∀ j, A j) c * Pi.single i 1 := by
             ext j
             by_cases hj : j = i
             · subst hj; simp

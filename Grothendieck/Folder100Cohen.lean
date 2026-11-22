@@ -324,7 +324,8 @@ theorem exists_coheight_eq_one_of_cohen (R : Type u) [CommRing R] [IsNoetherianR
   choose a ha ha0 using fun i => Submodule.exists_mem_ne_zero_of_ne_bot (hJ i)
   obtain ⟨P, hP, hPdim, hPS⟩ := exists_prime_of_cohen Λ hΛ d hd (Set.range a)
     (Set.countable_range a) (by rintro ⟨i, hi⟩; exact ha0 i hi)
-  obtain ⟨Q, hQ, hQP⟩ := Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := R) P (fun x hx => by
+  obtain ⟨Q, hQ, hQP⟩ :=
+    Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := R) P (fun x hx => by
     rw [RingHom.mem_ker] at hx
     rw [hfinj (hx.trans (map_zero f).symm)]
     exact P.zero_mem)

@@ -264,7 +264,8 @@ theorem prop_26376 {X : Type*} [TopologicalSpace X] [CompactSpace X] (Z : Set X)
 /-- 51wmmpHand0-26508 (7:21:48) [prop] A nonempty subset equal to the closure of each of its
 points is a minimal irreducible closed set, and conversely. -/
 theorem prop_26508 {X : Type*} [TopologicalSpace X] (S : Set X) :
-    (S.Nonempty ∧ ∀ x ∈ S, closure {x} = S) ↔ Minimal (fun s => IsIrreducible s ∧ IsClosed s) S := by
+    (S.Nonempty ∧ ∀ x ∈ S, closure {x} = S) ↔
+      Minimal (fun s => IsIrreducible s ∧ IsClosed s) S := by
   constructor
   · rintro ⟨⟨x, hx⟩, h⟩
     refine ⟨⟨h x hx ▸ isIrreducible_singleton.closure, h x hx ▸ isClosed_closure⟩,
@@ -522,7 +523,8 @@ theorem prop_28339 {X : Type*} [TopologicalSpace X] (X₀ : Set X) :
       · rintro ⟨⟨hyU, -⟩, hy0⟩
         exact ⟨hyU, hy0⟩
     have := congrArg (fun V : Opens X => x ∈ (V : Set X)) (h heq)
-    simp only [Opens.coe_inf, Opens.coe_mk, Set.mem_inter_iff, Set.mem_compl_iff, eq_iff_iff] at this
+    simp only [Opens.coe_inf, Opens.coe_mk, Set.mem_inter_iff, Set.mem_compl_iff,
+        eq_iff_iff] at this
     exact (this.1 hx.1).2 hx.2
   · intro h U V hUV
     by_contra hne

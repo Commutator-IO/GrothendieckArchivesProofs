@@ -1260,8 +1260,10 @@ theorem extension_across_two_counterexample :
     ¬ (2 : ℤ) ∣ 3 ∧ Module.Finite Z3 B3 ∧ Module.Free Z3 B3 ∧ Module.finrank Z3 B3 = 2 ∧
       Nonempty (Localization.Away (algebraMap Z3 B3 2) ≃+* C6) ∧
       ¬ ∃ b c : ℤ, b ^ 2 - 4 * c = 3 :=
-  ⟨by decide, inferInstance, inferInstance, finrank_quadAlg _, (quadAlg_away (3 : Z3) (2 : Z3)).map fun e =>
-      e.trans (AdjoinRoot.algEquivOfEq (R := Z6) _ _ (by simp only [sub_right_inj, Polynomial.C_inj]; exact map_ofNat _ _)).toRingEquiv,
+  ⟨by decide, inferInstance, inferInstance, finrank_quadAlg _,
+    (quadAlg_away (3 : Z3) (2 : Z3)).map fun e =>
+      e.trans (AdjoinRoot.algEquivOfEq (R := Z6) _ _
+        (by simp only [sub_right_inj, Polynomial.C_inj]; exact map_ofNat _ _)).toRingEquiv,
     fun ⟨b, c, h⟩ => sq_sub_four_mul_ne_three b c h⟩
 
 end ExtensionAcrossTwoExample

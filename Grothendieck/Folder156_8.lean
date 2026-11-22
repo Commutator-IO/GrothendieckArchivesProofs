@@ -425,7 +425,8 @@ def leB : Can → Can → Bool
 
 instance : LE Can := ⟨fun x y => leB x y = true⟩
 
-instance : DecidableRel (α := Can) (· ≤ ·) := fun x y => inferInstanceAs (Decidable (leB x y = true))
+instance : DecidableRel (α := Can) (· ≤ ·) := fun x y =>
+  inferInstanceAs (Decidable (leB x y = true))
 
 instance : PartialOrder Can where
   le_refl := by decide

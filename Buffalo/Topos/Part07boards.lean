@@ -27,8 +27,8 @@ open CategoryTheory Limits GrothendieckTopology
 
 namespace Buffalo.Topos.Part07
 
-/-- Board ORG14LNb5gE-20167 (5:37:50) Representables are sheaves iff the topology is coarser than the
-canonical topology. -/
+/-- Board ORG14LNb5gE-20167 (5:37:50) Representables are sheaves iff the topology is coarser than
+the canonical topology. -/
 theorem subcanonical_iff_le_canonical {C : Type u} [Category.{v} C] (J : GrothendieckTopology C) :
     J.Subcanonical ↔ J ≤ Sheaf.canonicalTopology C :=
   ⟨fun _ => J.le_canonical, fun h => Subcanonical.of_le h⟩

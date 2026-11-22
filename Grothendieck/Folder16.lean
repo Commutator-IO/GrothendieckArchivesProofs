@@ -820,7 +820,8 @@ theorem chi_alt (h : D.IdentiteQuadrilineaire) (x y z t : V) :
   have h2 := h x y t x
   have h3 := h x y z x
   have h4 := h x y y z
-  simp only [D.φ_alt, D.ψ_alt, map_zero, LinearMap.zero_apply, zero_mul, mul_zero, add_zero] at h1 h2 h3 h4
+  simp only [D.φ_alt, D.ψ_alt, map_zero, LinearMap.zero_apply, zero_mul, mul_zero,
+    add_zero] at h1 h2 h3 h4
   refine ⟨by simp [chi, D.φ_alt, D.ψ_alt], ?_, by simp [chi, D.φ_alt, D.ψ_alt], ?_, ?_, ?_⟩
   · simp only [chi]; rw [D.φ_anti t y, D.ψ_anti t y]; simp only [map_neg]; linear_combination -h1
   · simpa only [chi] using h2

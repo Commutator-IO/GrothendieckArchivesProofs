@@ -158,7 +158,8 @@ case, chosen because Mathlib has strict colimits of small categories and no 2-co
 
 Status: false, by the note's own example, which is a strict pushout of small categories along
 accessible functors and so refutes this special case too: the free category on `a : u → v`,
-`b : v → w`, `h : u → w`, mapped to the chain `0 < 1 < 2` and to the free monoid on `t` (`a, b, h ↦ t`),
+`b : v → w`, `h : u → w`, mapped to the chain `0 < 1 < 2` and to the free monoid on `t`
+(`a, b, h ↦ t`),
 has as pushout the one-object category with endomorphisms `{1, t}`, `t = t²`, in which the
 idempotent `t` does not split. Directed colimits along accessible full embeddings are accessible
 (Paré and Rosický 2013). -/
