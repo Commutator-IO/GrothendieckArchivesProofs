@@ -138,6 +138,21 @@ jobs:
           name: statement-definitions
           path: statement-definitions.md
 
+      # Issue #39, step 1b: the theorems of this repository whose statement Mathlib or the
+      # imported Stacks modules already have, or that follow from a library theorem applied to
+      # some of their hypotheses. Kept as an artifact of the run (copy in docs/review/).
+      - name: Find what this repository re-proves
+        run: |
+          lake env lean --run scripts/FindDuplicates.lean GrothendieckArchivesProofs \
+            duplicates.md Grothendieck Buffalo OpenProblems
+          cat duplicates.md
+
+      - name: Upload the duplicates
+        uses: actions/upload-artifact@v4
+        with:
+          name: duplicates
+          path: duplicates.md
+
       # Issue #31, question 3: each statement of Challenge/ (Mathlib alone, unproved) is proved
       # with exactly that statement by Solution/, through the libraries above, using only the
       # three axioms (comparator.json). lake comparator sandboxes the build with bubblewrap.
