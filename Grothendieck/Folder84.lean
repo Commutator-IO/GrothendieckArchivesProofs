@@ -220,8 +220,10 @@ lemma sigmaTensor_apply (b₁ b₂ : R) (v : Fin 2 × Fin 2 → R) :
     sigmaTensor b₁ b₂ v (1, 1) = v (1, 1) := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     first
-      | (simp [sigmaTensor, sigmaE, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]; done)
-      | (simp [sigmaTensor, sigmaE, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]; ring)
+      | (simp [sigmaTensor, sigmaE, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+          Fin.sum_univ_two]; done)
+      | (simp [sigmaTensor, sigmaE, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+          Fin.sum_univ_two]; ring)
 
 /-- Page 83: `E₁ ⊗ E₂ → E₁ * E₂` kills `Im(σ₁ ⊗ σ₂ − id)`. -/
 theorem range_le_ker (b₁ b₂ : R) :
@@ -332,8 +334,10 @@ lemma sigmaATensor_apply (b₁ b₂ : R) (v : Fin 2 × Fin 2 → R) :
     sigmaATensor b₁ b₂ v (1, 1) = v (1, 1) := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     first
-      | (simp [sigmaATensor, sigmaA, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]; done)
-      | (simp [sigmaATensor, sigmaA, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]; ring)
+      | (simp [sigmaATensor, sigmaA, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+          Fin.sum_univ_two]; done)
+      | (simp [sigmaATensor, sigmaA, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+          Fin.sum_univ_two]; ring)
 
 /-- `A → (A₁ ⊗ A₂)^{σ₁⊗σ₂}` is an isomorphism: `i` is injective and its image is
 the submodule of invariants of `σ₁ ⊗ σ₂`. -/
@@ -394,7 +398,8 @@ theorem invariants_of_span_eq_top {b₁ b₂ : R} (h : Ideal.span {2, b₁, b₂
     · intro v hv
       obtain ⟨e0, e1, e2⟩ := (mem_invariants_iff v).1 hv
       refine ⟨![v (0, 0), v (1, 1) * g₀ + v (0, 1) * g₁ + v (1, 0) * g₂], ?_⟩
-      obtain ⟨a0, a1, a2, a3⟩ := iMap_apply b₁ b₂ ![v (0, 0), v (1, 1) * g₀ + v (0, 1) * g₁ + v (1, 0) * g₂]
+      obtain ⟨a0, a1, a2, a3⟩ :=
+        iMap_apply b₁ b₂ ![v (0, 0), v (1, 1) * g₀ + v (0, 1) * g₁ + v (1, 0) * g₂]
       simp only [Matrix.cons_val_zero, Matrix.cons_val_one] at a0 a1 a2 a3
       have key : b₁ * v (1, 0) = b₂ * v (0, 1) := by
         linear_combination -e0 - b₂ * e1
@@ -1398,7 +1403,8 @@ structure ChiExt (χ : R) where
 lemma smul_tensorHom' {A B C D : ModuleCat.{u} R} (r : R) (f : A ⟶ B) (g : C ⟶ D) :
     (r • f) ⊗ₘ g = r • (f ⊗ₘ g) :=
   ModuleCat.MonoidalCategory.tensor_ext fun x y => by
-    simp only [ModuleCat.MonoidalCategory.tensorHom_tmul, ModuleCat.hom_smul, LinearMap.smul_apply]; rw [TensorProduct.smul_tmul']
+    simp only [ModuleCat.MonoidalCategory.tensorHom_tmul, ModuleCat.hom_smul,
+      LinearMap.smul_apply]; rw [TensorProduct.smul_tmul']
 
 /-- Scalars pass through `⊗ₘ` in `ModuleCat` (right factor). -/
 lemma tensorHom_smul' {A B C D : ModuleCat.{u} R} (r : R) (f : A ⟶ B) (g : C ⟶ D) :
@@ -2304,7 +2310,8 @@ theorem eCoord_range (l ζ : R) :
   · rintro ⟨s, rfl⟩
     refine ⟨l • (qbasis b c).coord 0 + s • (qbasis b c).coord 1, ?_⟩
     rw [eCoord_eq]
-    simp only [LinearMap.add_apply, LinearMap.smul_apply, ← qbasis_zero, ← qbasis_one, Module.Basis.coord_apply,
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, ← qbasis_zero, ← qbasis_one,
+      Module.Basis.coord_apply,
       Module.Basis.repr_self, smul_eq_mul]
     ext <;> simp; ring
 

@@ -772,7 +772,8 @@ theorem sigma_ne_scal (hR : Exceptional R) (h2 : (2 : R) ≠ 0) (c : Rˣ) (v : V
   | H x y h =>
     rw [sigma_vtx, scal_vtx, Ne, vtx_eq_iff]
     rintro (e | e) <;> apply h2 <;>
-      simpa [det2_add_right, det2_smul_right, det2_neg_right, det2_self, h] using congrArg (det2 x) e
+      simpa [det2_add_right, det2_smul_right, det2_neg_right,
+          det2_self, h] using congrArg (det2 x) e
 
 /-- The ring computation of pages 93 to 95: a unimodular `(p, q)` whose class
 is fixed by every `(1, t; 0, 1)` modulo `± 1`. -/
@@ -1073,7 +1074,8 @@ theorem semilocal_dist_three [Finite (MaximalSpectrum R)] (e : Rˣ) {x y : Fin 2
 /-- A local ring is semi-local. -/
 theorem finite_maximalSpectrum_of_local [IsLocalRing R] : Finite (MaximalSpectrum R) := by
   have : Subsingleton (MaximalSpectrum R) := ⟨fun a b => MaximalSpectrum.ext
-    ((IsLocalRing.eq_maximalIdeal a.isMaximal).trans (IsLocalRing.eq_maximalIdeal b.isMaximal).symm)⟩
+    ((IsLocalRing.eq_maximalIdeal a.isMaximal).trans
+      (IsLocalRing.eq_maximalIdeal b.isMaximal).symm)⟩
   exact Finite.of_subsingleton
 
 /-- The case of a local ring (in particular a field). -/
@@ -1680,7 +1682,8 @@ automorphism `g` of `A` commutes with `λ`, the star twist `ν` that `A_λ`
 induces at `s` is the one it induces at `g s`. -/
 theorem toSix_at_smul (hn : 2 < n) (hpol : ∀ s, IsPolygon n (onStar A A s))
     {l g : Equiv.Perm S} (hg : ∀ a b, A (g a) (g b) ↔ A a b) (hgl : g * l = l * g)
-    {ν : (ZMod n)ˣ} {s : S} (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
+    {ν : (ZMod n)ˣ} {s : S}
+    (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
     onStar A (twistGraph A l) (g s) = (twist ν (⟨_, hpol (g s)⟩ : Pol n _)).1 := by
   obtain ⟨φ, hφ⟩ := hpol s
   have hA : onStar A A (g s) = cyc (φ.trans (starEquiv hg s)) 1 := by
@@ -1707,7 +1710,8 @@ theorem toSix_of_transitive (hn : 2 < n) (hpol : ∀ s, IsPolygon n (onStar A A 
     {l : Equiv.Perm S}
     (htr : ∀ s s' : S, ∃ g : Equiv.Perm S, (∀ a b, A (g a) (g b) ↔ A a b) ∧ g * l = l * g ∧
       g s = s')
-    {ν : (ZMod n)ˣ} {s : S} (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
+    {ν : (ZMod n)ˣ} {s : S}
+    (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
     ToSix A hpol l ν := fun s' => by
   obtain ⟨g, hg, hgl, rfl⟩ := htr s s'
   exact toSix_at_smul hn hpol hg hgl h
@@ -2029,8 +2033,10 @@ theorem homothety_dist_le_two (hσ : σ * σ ∈ U₀) (hl : ∀ (h : H) x, l (h
     (hconn : ∀ a b, Relation.ReflTransGen (IsArc (U₀ := U₀) (σ := σ)) a b) {x : H ⧸ U₀}
     (hx : l x = x ∨ IsArc (U₀ := U₀) (σ := σ) x (l x) ∨
       ∃ t, IsArc (U₀ := U₀) (σ := σ) x t ∧ IsArc (U₀ := U₀) (σ := σ) t (l x)) :
-    n = 4 ∧ (∃ e : H ⧸ U₀ ≃ Fin 3 × Bool, ∀ a b, IsArc (U₀ := U₀) (σ := σ) a b ↔ (e a).1 ≠ (e b).1) ∧
-      ∀ y, l y ≠ y ∧ star (IsArc (U₀ := U₀) (σ := σ)) (l y) = star (IsArc (U₀ := U₀) (σ := σ)) y := by
+    n = 4 ∧ (∃ e : H ⧸ U₀ ≃ Fin 3 × Bool,
+        ∀ a b, IsArc (U₀ := U₀) (σ := σ) a b ↔ (e a).1 ≠ (e b).1) ∧
+      ∀ y, l y ≠ y ∧
+        star (IsArc (U₀ := U₀) (σ := σ)) (l y) = star (IsArc (U₀ := U₀) (σ := σ)) y := by
   have fixed : ∀ y, l y ≠ y := fun y e => hl1 (homothety_fixed hl e)
   -- the star of `x` has two distinct vertices, so `λ x` is not a neighbour of `x`
   have hadj : ¬ IsArc (U₀ := U₀) (σ := σ) x (l x) := by
@@ -2209,7 +2215,8 @@ theorem octahedron_toSix (e : (ZMod 4)ˣ) :
   have tri : ∀ u t, Adj (ZMod 4) e u t → ∃ w, Adj (ZMod 4) e w u ∧ Adj (ZMod 4) e w t :=
     fun _ _ h => triangulated_of_pol (fun _ _ => adj_symm_model (e : ZMod 4))
       (isPolygon_adj (by norm_num) e) h
-  refine ⟨toSix_one_of_star_eq (by norm_num) _ (l := sigmaPerm exceptional_zmod_four) hs, toSix_one_of_star_eq (by norm_num) _ h1,
+  refine ⟨toSix_one_of_star_eq (by norm_num) _ (l := sigmaPerm exceptional_zmod_four) hs,
+    toSix_one_of_star_eq (by norm_num) _ h1,
     by rw [twistGraph_eq_self hs]; exact tri, by rw [twistGraph_eq_self h1]; exact tri, ?_⟩
   intro h
   apply sigma_ne_scal exceptional_zmod_four (by decide) 1 (vtx det2_e)

@@ -585,7 +585,8 @@ theorem sum_inertia_eq_zero (a : Γ → k) (h : ∀ μ : k, ∑ s, a s * s • �
 theorem exists_sum_smul_ne_zero (hN : ((inertia Γ k).card : k) ≠ 0) :
     ∃ μ : k, ∑ s : Γ, s • μ ≠ 0 := by
   by_contra! h
-  simpa using hN <| by simpa using sum_inertia_eq_zero (fun _ => (1 : k)) fun μ => by simpa using h μ
+  simpa using hN <| by
+    simpa using sum_inertia_eq_zero (fun _ => (1 : k)) fun μ => by simpa using h μ
 
 variable {B : Type*} [Ring B] [Algebra k B] [MulSemiringAction Γ B]
 
@@ -668,13 +669,15 @@ theorem isCohomologous_of_eqOn_inertia [Infinite k] [FiniteDimensional k B]
   let b := Module.finBasis k B
   let M : Fin n → Matrix (Fin (Module.finrank k B)) (Fin (Module.finrank k B)) k :=
     fun i => LinearMap.toMatrix b b (LinearMap.mulLeft k (e i : B))
-  let P : MvPolynomial (Fin n) k := (∑ i, (MvPolynomial.X i : MvPolynomial (Fin n) k) • (M i).map MvPolynomial.C).det
+  let P : MvPolynomial (Fin n) k :=
+    (∑ i, (MvPolynomial.X i : MvPolynomial (Fin n) k) • (M i).map MvPolynomial.C).det
   have heval : ∀ x : Fin n → k,
       MvPolynomial.eval x P = LinearMap.det (LinearMap.mulLeft k (∑ i, x i • (e i : B))) := by
     intro x
     rw [← LinearMap.det_toMatrix b, RingHom.map_det]
     congr 1
-    have : LinearMap.mulLeft k (∑ i, x i • (e i : B)) = ∑ i, x i • LinearMap.mulLeft k (e i : B) := by
+    have : LinearMap.mulLeft k (∑ i, x i • (e i : B)) =
+        ∑ i, x i • LinearMap.mulLeft k (e i : B) := by
       ext; simp [sum_mul]
     rw [this, map_sum]
     ext p q
@@ -845,7 +848,8 @@ theorem isCohomologous_of_faithful [Module.Finite O A] [Infinite (ResidueField O
   have h1 : inertia Γ (ResidueField O) = {1} := by
     ext g
     simp only [mem_inertia, mem_singleton]
-    exact ⟨fun h => FaithfulSMul.eq_of_smul_eq_smul fun μ => by rw [h, one_smul], by rintro rfl μ; exact one_smul _ μ⟩
+    exact ⟨fun h => FaithfulSMul.eq_of_smul_eq_smul fun μ => by rw [h, one_smul],
+      by rintro rfl μ; exact one_smul _ μ⟩
   refine isCohomologous_of_restrict_inertia hO hB (by simp [h1]) π hπ hequiv hker hc hc'
     ⟨1, fun n hn => ?_⟩
   rw [h1, mem_singleton] at hn
@@ -1146,7 +1150,8 @@ variable {Γ : Type*} [Group Γ] [MulSemiringAction Γ O] [MulSemiringAction Γ 
 
 omit [Module.Finite O A] in
 /-- `σ⁻¹(I A) ⊂ σ⁻¹(I) A`, with `σ⁻¹(I) = {a | σ(a) ∈ I}`. -/
-theorem inv_smul_mem_smul_top (hO : ∀ (g : Γ) (a : O), g • algebraMap O A a = algebraMap O A (g • a))
+theorem inv_smul_mem_smul_top
+    (hO : ∀ (g : Γ) (a : O), g • algebraMap O A a = algebraMap O A (g • a))
     {I : Ideal O} {x : A} (hx : x ∈ I • (⊤ : Submodule O A)) (g : Γ) :
     g⁻¹ • x ∈ I.comap (MulSemiringAction.toRingHom Γ O g) • (⊤ : Submodule O A) := by
   refine Submodule.smul_induction_on hx (fun a ha b _ => ?_) fun x y hx hy => ?_
@@ -1173,7 +1178,8 @@ theorem isCohomologous_of_semilocal
   refine isCohomologous_of_isUnit_sum hc hc' (algebraMap O A L * w) ?_
   set u := ∑ s, (c' s : A) * s • (algebraMap O A L * w) * ↑(c s)⁻¹
   have hu : u - w ∈ 𝔪 • (⊤ : Submodule O A) := by
-    have : u - w = ∑ s, (s • L) • ((c' s : A) * s • w * ↑(c s)⁻¹ - w) + (∑ s : Γ, s • L - 1) • w := by
+    have : u - w = ∑ s, (s • L) • ((c' s : A) * s • w * ↑(c s)⁻¹ - w) +
+        (∑ s : Γ, s • L - 1) • w := by
       have ht : ∀ s : Γ, (c' s : A) * s • (algebraMap O A L * w) * ↑(c s)⁻¹ =
           (s • L) • ((c' s : A) * s • w * ↑(c s)⁻¹) := fun s => by
         rw [smul_mul', hO]; simp only [Algebra.smul_def, mul_assoc, Algebra.left_comm]
@@ -1235,7 +1241,8 @@ theorem exists_trace_one_semilocal (𝔪 : Ideal O) [𝔪.IsMaximal] (D : Subgro
     simpa [smul_sub] using 𝔪.neg_mem this
   refine ⟨(1 - m) * l, fun σ hσ => by rw [smul_mul']; exact 𝔪.mul_mem_right _ (he' σ hσ), ?_⟩
   have h1 : ∑ δ : D, (δ : Γ) • l = ∑ σ, if σ ∈ D then σ • l else 0 := by
-    rw [← Finset.sum_filter]; exact (Finset.sum_subtype (p := (· ∈ D)) _ (fun _ => by simp) fun σ => σ • l).symm
+    rw [← Finset.sum_filter]; exact (Finset.sum_subtype (p := (· ∈ D)) _ (fun _ => by simp)
+      fun σ => σ • l).symm
   rw [show ∑ σ : Γ, σ • ((1 - m) * l) - 1 = ∑ σ, (σ • ((1 - m) * l) -
       if σ ∈ D then σ • l else 0) + (∑ δ : D, (δ : Γ) • l - 1) by rw [h1, sum_sub_distrib]; ring]
   refine add_mem (sum_mem fun σ _ => ?_) hl
@@ -1299,9 +1306,11 @@ theorem isCohomologous_of_restrict_inertia_semilocal
   obtain ⟨w', hw'⟩ := hπ ↑(v₀ * v)⁻¹
   refine isCohomologous_of_semilocal hO 𝔪 htrans D hL₁ hL₂ hc hc' (w := w) (w' := w')
     (hker _ (by rw [map_sub, map_mul, hw, hw', Units.mul_inv, map_one, sub_self]))
-    (hker _ (by rw [map_sub, map_mul, hw, hw', Units.inv_mul, map_one, sub_self])) fun δ hδ => hker _ ?_
+    (hker _ (by rw [map_sub, map_mul, hw, hw', Units.inv_mul, map_one, sub_self]))
+    fun δ hδ => hker _ ?_
   have := hv ⟨δ, hδ⟩
-  simp only [Units.coe_map, MonoidHom.coe_ofClass, Units.val_mul, MulSemiringAction.toRingHom_apply] at this
+  simp only [Units.coe_map, MonoidHom.coe_ofClass, Units.val_mul,
+    MulSemiringAction.toRingHom_apply] at this
   rw [map_sub, map_mul, map_mul, hequiv ⟨δ, hδ⟩, hw, sub_eq_zero, this]
   simp only [Units.val_mul, smul_mul', mul_assoc, Units.mul_inv_cancel_left]
 

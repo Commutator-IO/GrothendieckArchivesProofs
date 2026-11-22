@@ -1954,24 +1954,29 @@ lemma pairMap_ι {W X Y : C} (v : W ⟶ X) (w : W ⟶ Y) :
 variable {P}
 
 lemma pairMap_rep (R : P.Representation) {n : ℕ} {W X Y : C} (φ : R.obj n W ⟶ X ⨯ Y) :
-    P.pairMap n W X Y (R.rep n W _ φ) = (R.rep n W X (φ ≫ prod.fst), R.rep n W Y (φ ≫ prod.snd)) := by
+    P.pairMap n W X Y (R.rep n W _ φ) =
+      (R.rep n W X (φ ≫ prod.fst), R.rep n W Y (φ ≫ prod.snd)) := by
   simp [pairMap, R.rep_comp]
 
 /-- Axiom a), degreewise: `𝐏ₙ(W, X × Y) ≃ 𝐏ₙ(W, X) × 𝐏ₙ(W, Y)`. -/
-theorem pairMap_bijective (R : P.Representation) (n : ℕ) (W X Y : C) : Function.Bijective (P.pairMap n W X Y) := by
+theorem pairMap_bijective (R : P.Representation) (n : ℕ) (W X Y : C) :
+    Function.Bijective (P.pairMap n W X Y) := by
   let e : (R.obj n W ⟶ X ⨯ Y) ≃ (R.obj n W ⟶ X) × (R.obj n W ⟶ Y) :=
     ⟨fun φ => (φ ≫ prod.fst, φ ≫ prod.snd), fun p => prod.lift p.1 p.2,
       fun φ => by ext <;> simp, fun p => by simp⟩
-  convert (e.trans ((R.rep n W X).prodCongr (R.rep n W Y))).bijective.comp (R.rep n W _).symm.bijective
+  convert (e.trans ((R.rep n W X).prodCongr (R.rep n W Y))).bijective.comp
+    (R.rep n W _).symm.bijective
   ext1 a
   obtain ⟨φ, rfl⟩ := (R.rep n W _).surjective a
   simp [e, pairMap_rep R]
 
 /-- The pairing `(f, g) ↦ (f, g) : W → X × Y` in degree `n`. -/
-noncomputable def pairEquiv (R : P.Representation) (n : ℕ) (W X Y : C) : P.Hom n W (X ⨯ Y) ≃ P.Hom n W X × P.Hom n W Y :=
+noncomputable def pairEquiv (R : P.Representation) (n : ℕ) (W X Y : C) :
+    P.Hom n W (X ⨯ Y) ≃ P.Hom n W X × P.Hom n W Y :=
   Equiv.ofBijective _ (pairMap_bijective R n W X Y)
 
-lemma pairEquiv_symm_rep (R : P.Representation) {n : ℕ} {W X Y : C} (φ : R.obj n W ⟶ X) (ψ : R.obj n W ⟶ Y) :
+lemma pairEquiv_symm_rep (R : P.Representation) {n : ℕ} {W X Y : C} (φ : R.obj n W ⟶ X)
+    (ψ : R.obj n W ⟶ Y) :
     (pairEquiv R n W X Y).symm (R.rep n W X φ, R.rep n W Y ψ) = R.rep n W _ (prod.lift φ ψ) :=
   (Equiv.symm_apply_eq _).2 (by simp [pairEquiv, pairMap_rep R])
 
@@ -2000,7 +2005,8 @@ theorem add_eq (R : P.Representation) {n : ℕ} {W X : C} (a b : P.Hom n W X) :
   simp [rep_add]
 
 /-- `(f + g) ∘ h = f ∘ h + g ∘ h`, for `h` of any degree (p. 74). -/
-theorem comp_add (R : P.Representation) {p q n : ℕ} {V W X : C} (h : P.Hom p V W) (a b : P.Hom q W X)
+theorem comp_add (R : P.Representation) {p q n : ℕ} {V W X : C} (h : P.Hom p V W)
+    (a b : P.Hom q W X)
     (hn : q * p = n) : P.comp h (add R a b) hn = add R (P.comp h a hn) (P.comp h b hn) := by
   have hpair : P.comp h ((pairEquiv R q W X X).symm (a, b)) hn =
       (pairEquiv R n V X X).symm (P.comp h a hn, P.comp h b hn) := by
@@ -2011,7 +2017,8 @@ theorem comp_add (R : P.Representation) {p q n : ℕ} {V W X : C} (h : P.Hom p V
   rw [add, add, ← hpair, P.assoc'' _ _ _ hn]
 
 /-- On degree one, the sum is the addition of `C` (axiom c)). -/
-theorem ι_add (R : P.Representation) {W X : C} (f g : W ⟶ X) : add R (P.ι f) (P.ι g) = P.ι (f + g) := by
+theorem ι_add (R : P.Representation) {W X : C} (f g : W ⟶ X) :
+    add R (P.ι f) (P.ι g) = P.ι (f + g) := by
   rw [add, show (pairEquiv R 1 W X X).symm (P.ι f, P.ι g) = P.ι (prod.lift f g) from
     (Equiv.symm_apply_eq _).2 (by simp [pairEquiv, P.pairMap_ι]), ← P.ι_comp]
   simp

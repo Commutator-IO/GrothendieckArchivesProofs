@@ -409,7 +409,8 @@ theorem pdH_pdD_add (f : ℕ → (σ → ℕ) → Finset σ → k) (a : ℕ) (β
   rw [hP, sub_zero, pdH_of_least hjS hmin]
   -- `pdH f` on the faces `(β + e_i, I ∖ i)`, `i ∈ I`
   have hface : ∀ i ∈ I, pdH f a (β + Pi.single i 1) (I.erase i)
-      = if j ∈ I.erase i then 0 else f a (β + Pi.single i 1 - Pi.single j 1) (insert j (I.erase i)) := by
+      = if j ∈ I.erase i then 0
+        else f a (β + Pi.single i 1 - Pi.single j 1) (insert j (I.erase i)) := by
     intro i hi
     rw [← pdSupp_add_erase (β := β) hi] at hjS hmin
     exact pdH_of_least hjS hmin
@@ -449,7 +450,8 @@ theorem pdH_pdD_add (f : ℕ → (σ → ℕ) → Finset σ → k) (a : ℕ) (β
       erase_insert_of_ne (hlt i hi).ne, add_sub_comm_single β (hlt i hi).ne']
     have hs : kSign (insert j I) i = -(kSign I i : k) := by
       unfold kSign
-      rw [filter_insert, ite_eq_left (hlt i hi), card_insert_of_notMem (fun h => hjI (mem_filter.1 h).1)]
+      rw [filter_insert, ite_eq_left (hlt i hi),
+          card_insert_of_notMem (fun h => hjI (mem_filter.1 h).1)]
       ring
     rw [hs]; ring
 
@@ -670,9 +672,11 @@ theorem pd_row_cohomology (n : ℕ) :
         ∃ g, IsBideg n q g ∧ pdD g = f) ∧
     (∀ f : ℕ → (σ → ℕ) → Finset σ → k, IsBideg n 0 f → pdD f = 0 →
         ∃! c : k, f = c • tPow n) ∧
-    (IsBideg n 0 (tPow n : ℕ → (σ → ℕ) → Finset σ → k) ∧ pdD (tPow n : ℕ → (σ → ℕ) → Finset σ → k) = 0) ∧
+    (IsBideg n 0 (tPow n : ℕ → (σ → ℕ) → Finset σ → k) ∧
+      pdD (tPow n : ℕ → (σ → ℕ) → Finset σ → k) = 0) ∧
     (∀ q (f : ℕ → (σ → ℕ) → Finset σ → k), n < q → IsBideg n q f → f = 0) ∧
-    (∀ j, tMul j (tPow n : ℕ → (σ → ℕ) → Finset σ → k) = ((n + j).choose j : k) • tPow (n + j)) := by
+    (∀ j, tMul j (tPow n : ℕ → (σ → ℕ) → Finset σ → k) =
+      ((n + j).choose j : k) • tPow (n + j)) := by
   refine ⟨fun q f hf hd => ⟨_, exact_of_pos hf hd⟩, fun f hf hd => ⟨_, cocycle_zero hf hd, ?_⟩,
     ⟨tPow_isBideg n, pdD_tPow n⟩, fun q f h hf => hf.eq_zero_of_gt h, fun j => tMul_tPow j n⟩
   intro c hc
@@ -757,7 +761,8 @@ theorem coeff_aeval_C_mul_X (r : k) (n : ℕ) (q : k[X]) :
 
 theorem pdF_smul (n : ℕ) (r : k) (m : M) : pdF k (n, r • m) = r ^ n • pdF k (n, m) := by
   have : pdEv k (r • m) = (aeval (C r * X)).comp (pdEv k m) :=
-    SymmetricAlgebra.algHom_ext (by ext; simp [smul_eq_C_mul, mul_assoc, coeff_C_mul, mul_left_comm])
+    SymmetricAlgebra.algHom_ext (by ext; simp [smul_eq_C_mul, mul_assoc, coeff_C_mul,
+      mul_left_comm])
   apply ofConv_injective; ext c
   simp [pdF, this, coeff_aeval_C_mul_X]
 
@@ -929,7 +934,8 @@ theorem pdF_mul_pdFF (i : σ) (n : ℕ) {a : σ →₀ ℕ} (ha : a i = 0) :
   apply ofConv_injective; ext c
   have : TensorProduct.map (pdF k (n, b i)).ofConv (pdFF k b a).ofConv (comul c) =
       TensorProduct.map (lcoeff k n) (MvPolynomial.lcoeff k a)
-        (Algebra.TensorProduct.map (pdEv k (b i)) (pdCoordEv k b) (Bialgebra.comulAlgHom k Cd c)) := by
+        (Algebra.TensorProduct.map (pdEv k (b i)) (pdCoordEv k b)
+          (Bialgebra.comulAlgHom k Cd c)) := by
     rw [pdF, pdFF, ofConv_toConv, ofConv_toConv, TensorProduct.map_comp]
     rfl
   rw [LinearMap.convMul_apply, this, ← AlgHom.comp_apply, pdEv_comul_EV, AlgHom.comp_apply,
@@ -947,7 +953,8 @@ theorem pdRep_prod (a : σ →₀ ℕ) :
       pdF_mul_pdFF k b i n (Finsupp.notMem_support_iff.1 hi)]
 
 /-- The monomial `∏ⱼ (b^∨ⱼ)^{γⱼ}` of `Sym M^∨`. -/
-noncomputable def pdTest (γ : σ →₀ ℕ) : Cd := γ.prod fun j e => SymmetricAlgebra.ι k _ (b.coord j) ^ e
+noncomputable def pdTest (γ : σ →₀ ℕ) : Cd :=
+    γ.prod fun j e => SymmetricAlgebra.ι k _ (b.coord j) ^ e
 
 omit [DecidableEq σ] in
 theorem pdCoordEv_test (γ : σ →₀ ℕ) : pdCoordEv k b (pdTest k b γ) = MvPolynomial.monomial γ 1 := by
@@ -1074,7 +1081,8 @@ theorem pdModelMap_comp (q : ℕ) {n l : ℕ} (θ : Fin (n + 1) → Fin (m + 1))
 variable (k) in
 /-- **The simplicial `k`-module `C^{•,q}_* = Γ^•Φ_* ⊗ Λ^qΨ_*`** (pages 5–7), with
 `Φ_* : [n] ↦ k^{n+1}` and `Ψ_* = Φ_*/k_*`. -/
-noncomputable def pdSimplicial (q : ℕ) : CategoryTheory.Functor SimplexCategoryᵒᵖ (ModuleCat k) where
+noncomputable def pdSimplicial (q : ℕ) :
+    CategoryTheory.Functor SimplexCategoryᵒᵖ (ModuleCat k) where
   obj n := ModuleCat.of k (PDModel k n.unop.len q)
   map θ := ModuleCat.ofHom (pdModelMap q θ.unop.toOrderHom)
   map_id _ := ModuleCat.hom_ext (pdModelMap_id q)

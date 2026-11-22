@@ -1017,9 +1017,11 @@ theorem extend {A B : SFun k} (hB : Special B) (g : B.obj 0 →ₐ[k] A.obj 0) :
       simp only [SFun.kun, Algebra.TensorProduct.productMap_apply_tmul, map_one, one_mul] at this
       simp [this, SFun.kun]
     · ext x
-      have h1 : B.pull (SFun.pt (Fin.castSucc j)) = (B.pull Fin.castSucc).comp (B.pull (SFun.pt j)) :=
+      have h1 : B.pull (SFun.pt (Fin.castSucc j)) =
+          (B.pull Fin.castSucc).comp (B.pull (SFun.pt j)) :=
         B.pull_comp _ _
-      have h2 : A.pull (SFun.pt (Fin.castSucc j)) = (A.pull Fin.castSucc).comp (A.pull (SFun.pt j)) :=
+      have h2 : A.pull (SFun.pt (Fin.castSucc j)) =
+          (A.pull Fin.castSucc).comp (A.pull (SFun.pt j)) :=
         A.pull_comp _ _
       have := he (B.pull (SFun.pt j) x ⊗ₜ 1)
       simp only [SFun.kun, Algebra.TensorProduct.productMap_apply_tmul, map_one, mul_one] at this
@@ -1063,7 +1065,8 @@ variable (k P) in
 /-- `P^{⊗ I}` for `I = Fin (n + 1)`. -/
 abbrev Pow (n : ℕ) := ⨂[k] _ : Fin (n + 1), P
 
-instance subsingleton_fin_zero_add_one : Subsingleton (Fin (0 + 1)) := inferInstanceAs (Subsingleton (Fin 1))
+instance subsingleton_fin_zero_add_one : Subsingleton (Fin (0 + 1)) :=
+    inferInstanceAs (Subsingleton (Fin 1))
 
 /-- The factor at `i`: `a ↦ 1 ⊗ ⋯ ⊗ a ⊗ ⋯ ⊗ 1`. -/
 noncomputable def single {n : ℕ} (i : Fin (n + 1)) : P →ₐ[k] Pow k P n :=
@@ -1089,7 +1092,8 @@ theorem powPull_single {m n : ℕ} (α : Fin (m + 1) → Fin (n + 1)) (i : Fin (
     Finset.prod_eq_single i (fun l _ hl => by rw [Pi.mulSingle_eq_of_ne hl, map_one])
       (by simp), Pi.mulSingle_eq_same]
 
-theorem powPull_id (n : ℕ) : powPull (k := k) (P := P) (id : Fin (n + 1) → Fin (n + 1)) = AlgHom.id k _ :=
+theorem powPull_id (n : ℕ) :
+    powPull (k := k) (P := P) (id : Fin (n + 1) → Fin (n + 1)) = AlgHom.id k _ :=
   algHom_ext fun i => powPull_single _ i
 
 theorem powPull_comp {l m n : ℕ} (α : Fin (l + 1) → Fin (m + 1)) (β : Fin (m + 1) → Fin (n + 1)) :
@@ -1122,7 +1126,8 @@ noncomputable def kunT (n : ℕ) : Pow k P n ⊗[k] Pow k P 0 →ₐ[k] Pow k P 
     (powPull (m := 0) fun _ => Fin.last (n + 1))
 
 theorem kunT_tprod (n : ℕ) (x : Fin (n + 1) → P) (y : Fin (0 + 1) → P) :
-    kunT (k := k) (P := P) n (tprod k x ⊗ₜ tprod k y) = tprod k (Fin.snoc x (y 0) : Fin (n + 2) → P) := by
+    kunT (k := k) (P := P) n (tprod k x ⊗ₜ tprod k y) =
+      tprod k (Fin.snoc x (y 0) : Fin (n + 2) → P) := by
   rw [kunT, Algebra.TensorProduct.productMap_apply_tmul, powPull_tprod, powPull_tprod,
     ← prod_single, Fin.prod_univ_castSucc (n := n + 1)]
   simp [Fin.snoc_castSucc, Fin.snoc_last]
@@ -1147,8 +1152,10 @@ theorem kunT_gauge (n : ℕ) (z : Pow k P n ⊗[k] Pow k P 0) :
     simp [kunT_tprod, tgauge_tmul, powGauge_tprod, Fin.prod_univ_castSucc]
   exact LinearMap.congr_fun this z
 
-theorem single_zero_bijective : Function.Bijective (single (k := k) (P := P) (0 : Fin (0 + 1))) := by
-  have hl : ∀ a : P, subsingletonEquiv (R := k) (s := fun _ => P) 0 (single (k := k) (n := 0) 0 a) = a := fun a => by
+theorem single_zero_bijective :
+    Function.Bijective (single (k := k) (P := P) (0 : Fin (0 + 1))) := by
+  have hl : ∀ a : P, subsingletonEquiv (R := k) (s := fun _ => P) 0
+      (single (k := k) (n := 0) 0 a) = a := fun a => by
     simp [single]
   refine ⟨fun a b hab => by rw [← hl a, ← hl b, hab], fun z =>
     ⟨subsingletonEquiv (R := k) (s := fun _ => P) 0 z,

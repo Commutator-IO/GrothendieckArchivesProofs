@@ -316,7 +316,8 @@ theorem rel_le_ker : rel W p ν ≤ RingHom.ker (psi0 W p ν K) := by
 
 /-- `ψ : A^{(ν)} → K[X]/(X^{p^{ν+1}})`. -/
 noncomputable def psi : Aν W p ν →ₐ[W] Bν p ν K :=
-  Ideal.Quotient.liftₐ (rel W p ν) (psi0 W p ν K) fun _ ha => RingHom.mem_ker.mp (rel_le_ker W p ν K ha)
+  Ideal.Quotient.liftₐ (rel W p ν) (psi0 W p ν K) fun _ ha =>
+    RingHom.mem_ker.mp (rel_le_ker W p ν K ha)
 
 theorem psi_Lam (i : Fin (ν + 1)) :
     psi W p ν K (Lam W p ν i) =
@@ -376,7 +377,8 @@ theorem algebraMap_Bν (k : K) :
 
 theorem psi_mono (a : Fin (ν + 1) → Fin p) :
     psi W p ν K (mono W p ν a) =
-      algebraMap K (Bν p ν K) (∏ i : Fin (ν + 1), cf p K (i : ℕ) ^ (a i : ℕ)) * xb p ν K ^ deg p a := by
+      algebraMap K (Bν p ν K) (∏ i : Fin (ν + 1), cf p K (i : ℕ) ^ (a i : ℕ)) *
+        xb p ν K ^ deg p a := by
   simp only [mono, map_prod, map_pow, psi_Lam, mul_pow, Finset.prod_mul_distrib, ← pow_mul,
     Finset.prod_pow_eq_pow_sum, deg]
   congr 2
@@ -393,7 +395,8 @@ theorem psi_injective (hinj : Function.Injective (algebraMap W K)) (hp : 0 < p) 
   intro x hx
   have hx' : x ∈ boxSpan W p ν := by rw [boxSpan_eq_top W p ν hp]; trivial
   obtain ⟨w, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun W).mp hx'
-  set P : Polynomial K := ∑ a, Polynomial.C (algebraMap W K (w a) * ∏ i : Fin (ν + 1), cf p K (i : ℕ) ^ (a i : ℕ)) *
+  set P : Polynomial K := ∑ a, Polynomial.C (algebraMap W K (w a) *
+      ∏ i : Fin (ν + 1), cf p K (i : ℕ) ^ (a i : ℕ)) *
     Polynomial.X ^ deg p a with hP
   have hmk : Ideal.Quotient.mk _ P = psi W p ν K (∑ a, w a • mono W p ν a) := by
     simp only [hP, map_sum, map_mul, map_smul, psi_mono, map_pow]
@@ -670,7 +673,8 @@ theorem dpWν_p (i : Fin (ν + 1)) :
 
 /-- **The divided powers of `W^{(ν)}` are `ν`-nilpotent**: `γ_n(y) = 0` on `J` for
 `n ≥ p^{ν+1}`. -/
-theorem dpWν_eq_zero {n : ℕ} (hn : p ^ (ν + 1) ≤ n) {y : Wν W p ν} (hy : y ∈ (Ibar W p ν).map (Ideal.Quotient.mk (Kp W p ν))) :
+theorem dpWν_eq_zero {n : ℕ} (hn : p ^ (ν + 1) ≤ n) {y : Wν W p ν}
+    (hy : y ∈ (Ibar W p ν).map (Ideal.Quotient.mk (Kp W p ν))) :
     (dpWν W p ν hW).dpow n y = 0 := by
   obtain ⟨x, hx, rfl⟩ := (Ideal.mem_map_iff_of_surjective _ Ideal.Quotient.mk_surjective).mp hy
   rw [dpWν, DividedPowers.Quotient.dpow_apply _ _ hx, dpIbar_eq_zero W p ν hW hn hx, map_zero]
@@ -697,7 +701,8 @@ variable {T : Type*} [CommRing T] [Algebra W T] {I : Ideal T} (hI : DividedPower
 omit [IsDomain W] [CharZero W] [Fact p.Prime] in
 include hpI hnil in
 theorem rel_le_ker_lift :
-    rel W p ν ≤ RingHom.ker (aeval (R := W) fun i : Fin (ν + 1) => hI.dpow (p ^ (i : ℕ)) (p : T)) := by
+    rel W p ν ≤
+      RingHom.ker (aeval (R := W) fun i : Fin (ν + 1) => hI.dpow (p ^ (i : ℕ)) (p : T)) := by
   rw [rel, Ideal.span_le]
   rintro _ (⟨i, rfl⟩ | rfl)
   · simp only [SetLike.mem_coe, RingHom.mem_ker, map_sub, map_mul, map_pow, map_natCast,
@@ -945,7 +950,8 @@ noncomputable def ord (c : ℕ) (a : Fin (ν + 1) → Fin p) : ℕ :=
 
 variable {p ν} {c : ℕ}
 
-theorem ord_le {a : Fin (ν + 1) → Fin p} {i : Fin (ν + 1)} (hi : (a i : ℕ) ≠ 0) : ord p ν c a ≤ i := by
+theorem ord_le {a : Fin (ν + 1) → Fin p} {i : Fin (ν + 1)} (hi : (a i : ℕ) ≠ 0) :
+    ord p ν c a ≤ i := by
   have h : ∃ k, ∃ j : Fin (ν + 1), (j : ℕ) = k ∧ (a j : ℕ) ≠ 0 := ⟨i, i, rfl, hi⟩
   classical
   simp only [ord, h, ↓reduceDIte]
@@ -1136,8 +1142,10 @@ theorem Θ_mul_tmono_mem (hlam : ∀ i, lam i ^ p = q p i * lam (i + 1)) {m : �
     refine Submodule.sub_mem _ ?_ ?_
     · have e : -algebraMap W (Aν W p ν) (lam ν ^ p) *
           tmono W p ν lam (Function.update a (Fin.last ν) ⟨0, hp⟩) =
-          -(u ^ p • ((p : W) ^ (p * m) • tmono W p ν lam (Function.update a (Fin.last ν) ⟨0, hp⟩))) := by
-        rw [Algebra.smul_def (R := W) (A := Aν W p ν), Algebra.smul_def (R := W) (A := Aν W p ν), hm]
+          -(u ^ p • ((p : W) ^ (p * m) •
+            tmono W p ν lam (Function.update a (Fin.last ν) ⟨0, hp⟩))) := by
+        rw [Algebra.smul_def (R := W) (A := Aν W p ν), Algebra.smul_def (R := W) (A := Aν W p ν),
+          hm]
         simp only [map_mul, map_pow, map_natCast]
         ring
       rw [e, smul_neg, smul_comm ((p : W) ^ _) (u ^ p), smul_smul ((p : W) ^ _) ((p : W) ^ (p * m)),
@@ -1370,7 +1378,8 @@ theorem p_pow_eq_zero_iff [IsDomain W] [CharZero W] (hW : ∀ n : ℕ, ¬ p ∣ 
       exact dvd_zero _
 
 include hlam hm in
-/-- The coordinates in the basis `Θ^a`: `(w_a) ↦ Σ_a w_a Θ^a`, an isomorphism `W^{box} ≃ A^{(ν)}`. -/
+/-- The coordinates in the basis `Θ^a`: `(w_a) ↦ Σ_a w_a Θ^a`, an isomorphism
+`W^{box} ≃ A^{(ν)}`. -/
 noncomputable def tmonoEquiv [IsDomain W] [CharZero W] :
     ((Fin (ν + 1) → Fin p) → W) ≃ₗ[W] Aν W p ν :=
   LinearEquiv.ofBijective (Fintype.linearCombination W (tmono W p ν lam))
