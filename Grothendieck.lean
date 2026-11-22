@@ -177,6 +177,7 @@ public import Grothendieck.Folder94GenericFlatness
 public import Grothendieck.Folder128FlatBaseChange
 public import Grothendieck.Folder101Ext
 public import Grothendieck.Folder101LocalCohomology
+public import Grothendieck.Folder101Sheaf
 public import Grothendieck.Folder53GeometricIrreducibility
 public import Grothendieck.Folder19Topoi
 public import Grothendieck.Folder113Linear
