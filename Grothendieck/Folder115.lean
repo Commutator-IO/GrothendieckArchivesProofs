@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -49,16 +50,19 @@ universe u
 variable {A : Type u} [SmallCategory A] {C : Type u} [SmallCategory C]
 
 /-- The left transform `ˢK(L)(c) = Hom(L, K(-, c))` of a kernel `K`, contravariant in `L`. -/
+@[montpellier "115, 3–5"]
 abbrev kernelS (K : Aᵒᵖ ⥤ C ⥤ Type u) : (Aᵒᵖ ⥤ Type u)ᵒᵖ ⥤ C ⥤ Type u :=
   (K.flip ⋙ yoneda).flip
 
 /-- The right transform `ᵈK(M)(a) = Hom(M, K(a, -))` of a kernel `K`, contravariant in
 `M`. -/
+@[montpellier "115, 3–5"]
 abbrev kernelD (K : Aᵒᵖ ⥤ C ⥤ Type u) : (C ⥤ Type u)ᵒᵖ ⥤ Aᵒᵖ ⥤ Type u :=
   (K ⋙ yoneda).flip
 
 /-- The two transforms are mutually right adjoint: a map `M ⟶ ˢK(L)` and a map
 `L ⟶ ᵈK(M)` are the same family `L(a) × M(c) → K(a, c)`. -/
+@[montpellier "115, 3–5"]
 def kernelEquiv (K : Aᵒᵖ ⥤ C ⥤ Type u) (L : Aᵒᵖ ⥤ Type u) (M : C ⥤ Type u) :
     (M ⟶ (kernelS K).obj (op L)) ≃ (L ⟶ (kernelD K).obj (op M)) where
   toFun β :=
@@ -82,6 +86,7 @@ def kernelEquiv (K : Aᵒᵖ ⥤ C ⥤ Type u) (L : Aᵒᵖ ⥤ Type u) (M : C �
 
 /-- **The dual adjunction of pages 3–5**, for every kernel: `ˢK` (seen as a functor into
 the opposite category) is left adjoint to `ᵈK`. -/
+@[montpellier "115, 3–5"]
 def kernelAdj (K : Aᵒᵖ ⥤ C ⥤ Type u) : (kernelS K).rightOp ⊣ kernelD K :=
   Adjunction.mkOfHomEquiv
     { homEquiv := fun L M => (opEquiv _ _).trans (kernelEquiv K L M.unop)
@@ -89,12 +94,15 @@ def kernelAdj (K : Aᵒᵖ ⥤ C ⥤ Type u) : (kernelS K).rightOp ⊣ kernelD K
       homEquiv_naturality_right := by intros; rfl }
 
 /-- `𝒪 : Â → (A^∨)^op`, the kernel transform at `K = Hom_A`. -/
+@[montpellier "115, 7"]
 abbrev isbellO : (Aᵒᵖ ⥤ Type u) ⥤ (A ⥤ Type u)ᵒᵖ := (kernelS (coyoneda (C := A))).rightOp
 
 /-- `Spec : (A^∨)^op → Â`, the kernel transform at `K = Hom_A`. -/
+@[montpellier "115, 7"]
 abbrev isbellSpec : (A ⥤ Type u)ᵒᵖ ⥤ Aᵒᵖ ⥤ Type u := kernelD (coyoneda (C := A))
 
 /-- **Isbell duality (page 7)**: `𝒪 ⊣ Spec`, as the kernel adjunction for the hom. -/
+@[montpellier "115, 7"]
 def isbell : (isbellO : (Aᵒᵖ ⥤ Type u) ⥤ _) ⊣ isbellSpec := kernelAdj coyoneda
 
 /-- `𝒪(Φ)(a) = Hom(Φ, y a)`, as in the reading. -/
@@ -106,17 +114,20 @@ theorem isbellSpec_obj_obj (Ψ : A ⥤ Type u) (a : A) :
     (isbellSpec.obj (op Ψ)).obj (op a) = (Ψ ⟶ coyoneda.obj (op a)) := rfl
 
 /-- On representables, `𝒪(y a) ≅ Hom_A(a, -)`. -/
+@[montpellier "115, 7"]
 def isbellO_yoneda (a : A) : (isbellO.obj (yoneda.obj a)).unop ≅ coyoneda.obj (op a) :=
   NatIso.ofComponents (fun _ => Equiv.toIso yonedaEquiv) (fun _ =>
     ConcreteCategory.hom_ext _ _ fun _ => rfl)
 
 /-- On corepresentables, `Spec(Hom_A(a, -)) ≅ y a`. -/
+@[montpellier "115, 7"]
 def isbellSpec_coyoneda (a : A) : isbellSpec.obj (op (coyoneda.obj (op a))) ≅ yoneda.obj a :=
   NatIso.ofComponents (fun _ => Equiv.toIso coyonedaEquiv) (fun _ =>
     ConcreteCategory.hom_ext _ _ fun _ => rfl)
 
 /-- `𝒪` sends colimits of presheaves to colimits of `(A^∨)^op`, i.e. limits of
 copresheaves; dually `Spec` preserves limits. -/
+@[montpellier "115, 7"]
 theorem isbellO_preservesColimits :
     PreservesColimitsOfSize.{u, u} (isbellO : (Aᵒᵖ ⥤ Type u) ⥤ _) :=
   isbell.leftAdjoint_preservesColimits
@@ -155,6 +166,7 @@ def isbellO_restrict : yoneda ⋙ (isbellO : (Aᵒᵖ ⥤ Type u) ⥤ _) ≅ coy
     apply Quiver.Hom.unop_inj; ext; simp [isbellO_yoneda, yonedaEquiv]; ext; simp
 
 /-- `𝒪` is the left Kan extension along `y` of `a ↦ Hom_A(a, -)`. -/
+@[montpellier "115, 3–7"]
 instance isbellO_isLeftKanExtension :
     (isbellO : (Aᵒᵖ ⥤ Type u) ⥤ _).IsLeftKanExtension
       (isbellO_restrict.symm ≪≫
@@ -164,6 +176,7 @@ instance isbellO_isLeftKanExtension :
 
 /-- **Characterisation of `𝒪`**: any colimit-preserving `L : Â → (A^∨)^op` with
 `L(y a) ≅ Hom_A(a, -)` naturally is `𝒪`. -/
+@[montpellier "115, 3–7"]
 noncomputable def isbellO_unique (L : (Aᵒᵖ ⥤ Type u) ⥤ (A ⥤ Type u)ᵒᵖ)
     [PreservesColimitsOfSize.{u, u} L] (e : yoneda ⋙ L ≅ coyoneda.rightOp) : L ≅ isbellO :=
   have := isbellO_preservesColimits (A := A)
@@ -182,6 +195,7 @@ def isbellSpec_restrict : coyoneda.rightOp ⋙ (isbellSpec : (A ⥤ Type u)ᵒ�
 
 /-- **Characterisation of `Spec`**: any limit-preserving `G : (A^∨)^op → Â` with
 `G(Hom_A(a, -)) ≅ y a` naturally is `Spec`. -/
+@[montpellier "115, 3–7"]
 noncomputable def isbellSpec_unique (G : (A ⥤ Type u)ᵒᵖ ⥤ Aᵒᵖ ⥤ Type u)
     [PreservesLimitsOfSize.{u, u} G] (e : coyoneda.rightOp ⋙ G ≅ yoneda) : G ≅ isbellSpec :=
   have := preservesColimitsOfSize_rightOp G

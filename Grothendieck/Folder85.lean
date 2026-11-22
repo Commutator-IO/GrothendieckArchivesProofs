@@ -11,6 +11,7 @@ public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Tactic.FinCases
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -137,6 +138,7 @@ variable {R : Type*} [CommRing R]
 
 /-- The invariant `A` of pages 23 and 27 for `PGL₂`: `(Tr g)² / det g − 2`,
 for a lift `g ∈ GL₂(R)`. -/
+@[montpellier "85, 23, 27"]
 noncomputable def invA (g : Matrix (Fin 2) (Fin 2) R) : R :=
   g.trace ^ 2 * Ring.inverse g.det - 2
 
@@ -172,6 +174,7 @@ theorem invA_smul (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det) {μ : R} (h
     + Ring.inverse g.det * h1)
 
 /-- Cayley–Hamilton iterated: `g⁵ = x₅ g + y₅` with `x₅ = t⁴ − 3dt² + d²`. -/
+@[montpellier "85, 10, 27, 30, 40"]
 theorem pow_five_eq (g : Matrix (Fin 2) (Fin 2) R) :
     g ^ 5 = (g.trace ^ 4 - 3 * g.det * g.trace ^ 2 + g.det ^ 2) • g
       + (-(g.det) * (g.trace ^ 3 - 2 * g.det * g.trace)) • (1 : Matrix (Fin 2) (Fin 2) R) := by
@@ -180,6 +183,7 @@ theorem pow_five_eq (g : Matrix (Fin 2) (Fin 2) R) :
     simp [pow_succ, Matrix.mul_apply, Fin.sum_univ_two, trace_fin_two, det_fin_two] <;> ring
 
 /-- `x₅ = d² (A² + A − 1)`. -/
+@[montpellier "85, 10, 27, 30, 40"]
 theorem coeff_eq (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det) :
     g.trace ^ 4 - 3 * g.det * g.trace ^ 2 + g.det ^ 2
       = g.det ^ 2 * (invA g ^ 2 + invA g - 1) := by
@@ -191,6 +195,7 @@ theorem coeff_eq (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det) :
 /-- **Pages 10, 30, 40.** If `g ∈ GL₂(R)` is nowhere scalar and `g⁵` is scalar
 (the image of `g` in `PGL₂` has order 5 on every fibre), then `A(g)` is a root
 of `T² + T − 1`. Over any commutative ring. -/
+@[montpellier "85, 10, 30, 40"]
 theorem sq_add_sub_of_pow_five (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det)
     (hns : NullePartScalaire g)
     {c : R} (h5 : g ^ 5 = c • (1 : Matrix (Fin 2) (Fin 2) R)) :
@@ -210,6 +215,7 @@ theorem sq_add_sub_of_pow_five (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det
 
 /-- The converse: if `A(g)² + A(g) − 1 = 0`, then `g⁵` is scalar. No
 hypothesis on `g` besides `det g` a unit. -/
+@[montpellier "85, 10, 27, 30, 40"]
 theorem pow_five_of_sq_add_sub (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det)
     (hA : invA g ^ 2 + invA g - 1 = 0) :
     g ^ 5 = (-(g.det) * (g.trace ^ 3 - 2 * g.det * g.trace)) •
@@ -218,6 +224,7 @@ theorem pow_five_of_sq_add_sub (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det
   simp
 
 /-- `A(g²) = A(g)² − 2` (the polynomial `S₂`). -/
+@[montpellier "85, 10, 27, 30, 40"]
 theorem invA_sq (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det) :
     invA (g ^ 2) = invA g ^ 2 - 2 := by
   have ht : (g ^ 2).trace = g.trace ^ 2 - 2 * g.det := by
@@ -229,6 +236,7 @@ theorem invA_sq (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det) :
     + 4 * (g.det * Ring.inverse g.det + 1)) * h
 
 /-- **Corollary of page 40.** For a root, `A(g²) = −1 − A(g)`, the other root. -/
+@[montpellier "85, 40"]
 theorem invA_sq_of_root (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det)
     (hA : invA g ^ 2 + invA g - 1 = 0) :
     invA (g ^ 2) = -1 - invA g := by
@@ -303,6 +311,7 @@ end Model
 /-- The model over `ℤ[ζ₅] = ℤ[X]/(X⁴ + X³ + X² + X + 1)`: a rotation `p` of order 5
 on every fibre, `s` of order 2, `sp` of order 3, with `A(p)` a root of
 `T² + T − 1`. -/
+@[montpellier "85, 10, 27, 30, 40"]
 theorem exists_model_adjoinRoot :
     let f : Polynomial ℤ := Polynomial.X ^ 4 + Polynomial.X ^ 3 + Polynomial.X ^ 2
       + Polynomial.X + 1
@@ -450,6 +459,7 @@ def powCoeff (t d : R) : ℕ → R
   | 1 => 1
   | (n + 2) => t * powCoeff t d (n + 1) - d * powCoeff t d n
 
+@[montpellier "85, 6–7, 29–31"]
 theorem pow_succ_eq (g : Matrix (Fin 2) (Fin 2) R) (n : ℕ) :
     g ^ (n + 1) = powCoeff g.trace g.det (n + 1) • g
       - (g.det * powCoeff g.trace g.det n) • (1 : Matrix (Fin 2) (Fin 2) R) := by
@@ -535,6 +545,7 @@ theorem isScalar_pow_even_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScal
   exact (ht.mul (hd.pow k)).mul_right_eq_zero
 
 /-- **Order 3** (page 30): `g³` scalar iff `A(g) = −1`. -/
+@[montpellier "85, 30"]
 theorem isScalar_pow_three_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScalaire g)
     (hd : IsUnit g.det) : IsScalar (g ^ 3) ↔ invA g = -1 := by
   rw [show 3 = 2 * 1 + 1 from rfl, isScalar_pow_odd_iff hg hd, chebP_three]
@@ -542,6 +553,7 @@ theorem isScalar_pow_three_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartSca
 
 /-- **Order 4, exactly, on every fibre** (pages 6–7, 30): `g⁴` scalar and `g²` nowhere scalar
 iff `A(g) = 0` and `2` is invertible. -/
+@[montpellier "85, 6–7, 30"]
 theorem order_four_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScalaire g)
     (hd : IsUnit g.det) :
     (IsScalar (g ^ 4) ∧ NullePartScalaire (g ^ 2)) ↔ (invA g = 0 ∧ IsUnit (2 : R)) := by
@@ -565,6 +577,7 @@ theorem order_four_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScalaire g)
 
 /-- **Order 6, exactly, on every fibre**: `g⁶` scalar, `g²` and `g³` nowhere scalar
 iff `A(g) = 1` and `6` is invertible. -/
+@[montpellier "85, 6–7, 29–31"]
 theorem order_six_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScalaire g)
     (hd : IsUnit g.det) :
     (IsScalar (g ^ 6) ∧ NullePartScalaire (g ^ 2) ∧ NullePartScalaire (g ^ 3)) ↔
@@ -610,6 +623,7 @@ variable {τ₀ τ₁ τ₂ : Matrix (Fin 2) (Fin 2) R}
 def discr (a₀ a₁ : R) : R := (a₀ + 2) * (a₁ + 2) * (a₀ + a₁)
 
 /-- Condition (*) of page 4, at a point: `ρ₀² ≠ 1`, `ρ₁² ≠ 1`, `ρ₀ρ₁ ≠ ρ₁ρ₀` in `PGL₂`. -/
+@[montpellier "85, 4"]
 def Star (τ₀ τ₁ τ₂ : Matrix (Fin 2) (Fin 2) R) : Prop :=
   ¬ IsScalar ((τ₀ * τ₁) ^ 2) ∧ ¬ IsScalar ((τ₁ * τ₂) ^ 2) ∧
     ¬ ∃ μ : R, τ₀ * τ₁ * (τ₁ * τ₂) = μ • (τ₁ * τ₂ * (τ₀ * τ₁))
@@ -627,6 +641,7 @@ theorem trace_triple_sq (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ�
   linear_combination (-(2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 0)^2 - 2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 1)*(τ₁ 1 0) + 2*(τ₀ 0 0)*(τ₂ 0 1)*(τ₁ 0 0)*(τ₁ 1 0) + 2*(τ₀ 0 0)*(τ₂ 1 0)*(τ₁ 0 0)*(τ₁ 0 1) + 2*(τ₀ 0 1)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 1 0) + (τ₀ 0 1)*(τ₂ 0 1)*(τ₁ 1 0)^2 - (τ₀ 0 1)*(τ₂ 1 0)*(τ₁ 0 0)^2 + 2*(τ₀ 1 0)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 0 1) - (τ₀ 1 0)*(τ₂ 0 1)*(τ₁ 0 0)^2 + (τ₀ 1 0)*(τ₂ 1 0)*(τ₁ 0 1)^2)) * h02
 
 /-- `ρ₀ρ₁ − ρ₁ρ₀ = −Tr(τ₀τ₁τ₂) τ₁` for traceless `τᵢ`. -/
+@[montpellier "85, 4–10, 29–31"]
 theorem commutator_eq (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ₂.trace = 0) :
     τ₀ * τ₁ * (τ₁ * τ₂) - τ₁ * τ₂ * (τ₀ * τ₁) = (-(τ₀ * τ₁ * τ₂).trace) • τ₁ := by
   have e0 := trace_zero_entry h0
@@ -641,6 +656,7 @@ theorem invA_mul_add_two (A B : Matrix (Fin 2) (Fin 2) R) :
   unfold invA; rw [det_mul, Ring.mul_inverse_rev]; ring
 
 /-- `α₀ + α₁ = −Tr(τ₀τ₁τ₂)² / (d₀ d₁ d₂)`. -/
+@[montpellier "85, 4–10, 29–31"]
 theorem invA_add_invA (u0 : IsUnit τ₀.det) (u1 : IsUnit τ₁.det) (u2 : IsUnit τ₂.det)
     (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ₂.trace = 0) (h02 : (τ₀ * τ₂).trace = 0) :
     invA (τ₀ * τ₁) + invA (τ₁ * τ₂) = -((τ₀ * τ₁ * τ₂).trace ^ 2 *
@@ -786,6 +802,7 @@ theorem trace_map_mul {S : Type*} [CommRing S] (f : R →+* S) (A B : Matrix (Fi
 `(τ₀τ₂)²` scalar (a homomorphism `G₂ → PGL₂(R)`), satisfying (*) at every point of
 `Spec R`. Then the `τᵢ` and `τ₀τ₂` are traceless and
 `(α₀ + 2)(α₁ + 2)(α₀ + α₁)` is a unit, `α₀ = A(τ₀τ₁)`, `α₁ = A(τ₁τ₂)`. -/
+@[montpellier "85, 4"]
 theorem discr_isUnit_of_star (u0 : IsUnit τ₀.det) (u1 : IsUnit τ₁.det) (u2 : IsUnit τ₂.det)
     (s0 : IsScalar (τ₀ * τ₀)) (s1 : IsScalar (τ₁ * τ₁)) (s2 : IsScalar (τ₂ * τ₂))
     (s02 : IsScalar (τ₀ * τ₂ * (τ₀ * τ₂)))
@@ -831,6 +848,7 @@ theorem discr_isUnit_of_star (u0 : IsUnit τ₀.det) (u1 : IsUnit τ₁.det) (u2
 
 /-- **Converse, over any ring.** Traceless `τᵢ` with `Tr(τ₀τ₂) = 0` and
 `(α₀ + 2)(α₁ + 2)(α₀ + α₁)` a unit satisfy (*) at every point. -/
+@[montpellier "85, 4–10, 29–31"]
 theorem star_of_discr_isUnit (u0 : IsUnit τ₀.det) (u1 : IsUnit τ₁.det) (u2 : IsUnit τ₂.det)
     (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ₂.trace = 0) (h02 : (τ₀ * τ₂).trace = 0)
     (hU : IsUnit (discr (invA (τ₀ * τ₁)) (invA (τ₁ * τ₂)))) (m : Ideal R) (hm : m.IsMaximal) :
@@ -875,6 +893,7 @@ theorem commutant_eq {X g : Matrix (Fin 2) (Fin 2) R} (hX : NullePartScalaire X)
 /-- **Theorem of page 4, part 2), rigidity, over any ring.** Under the hypotheses of the
 converse, an element `g ∈ GL₂(R)` normalising each `τᵢ` up to a scalar is scalar: the
 centraliser of the image of `G₂` in `PGL₂(R)` is trivial. -/
+@[montpellier "85, 4"]
 theorem rigid (u0 : IsUnit τ₀.det) (u1 : IsUnit τ₁.det) (u2 : IsUnit τ₂.det)
     (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ₂.trace = 0) (h02 : (τ₀ * τ₂).trace = 0)
     (hU : IsUnit (discr (invA (τ₀ * τ₁)) (invA (τ₁ * τ₂))))
@@ -962,6 +981,7 @@ a unit, and `ℓ` a root of `T² − α₀ T + 1`; put `b = α₁ + 2`. Then
 `ρ₀ = !![ℓ, 1; 0, 1]`, `ρ₁ = !![0, 1; −b, b]` lie in `GL₂(R)`, are traceless with
 `Tr(τ₀τ₂) = 0` (so `τᵢ²` and `(τ₀τ₂)²` are scalar), have invariants
 `A(τ₀τ₁) = α₀`, `A(τ₁τ₂) = α₁`, and satisfy (*) at every point. -/
+@[montpellier "85, 4"]
 theorem normalForm {a₀ a₁ : R} (hℓ : ℓ ^ 2 - a₀ * ℓ + 1 = 0) (hb : b = a₁ + 2)
     (hU : IsUnit (discr a₀ a₁)) :
     IsUnit (tau0N ℓ b).det ∧ IsUnit (tau1N ℓ b).det ∧ IsUnit (tau2N ℓ b).det ∧
@@ -999,6 +1019,7 @@ theorem normalForm {a₀ a₁ : R} (hℓ : ℓ ^ 2 - a₀ * ℓ + 1 = 0) (hb : b
 
 /-- The normal form over `R[ℓ] = R[T]/(T² − α₀T + 1)`, for any `α₀, α₁ ∈ R` with
 `(α₀ + 2)(α₁ + 2)(α₀ + α₁)` a unit. -/
+@[montpellier "85, 4"]
 theorem exists_normalForm_adjoinRoot {a₀ a₁ : R} (hU : IsUnit (discr a₀ a₁)) :
     let f : Polynomial R := Polynomial.X ^ 2 - Polynomial.C a₀ * Polynomial.X + 1
     let ℓ := AdjoinRoot.root f
@@ -1128,6 +1149,7 @@ theorem conj_pair {X Y : Matrix (Fin 2) (Fin 2) K} {ℓ b : K} (hb : b ≠ 0)
 be traceless with `Tr(τ₀τ₂) = 0` and `(α₀ + 2)(α₁ + 2)(α₀ + α₁) ≠ 0`, and let `ℓ ∈ K` be a
 root of `T² − α₀T + 1`. Then some `g ∈ GL₂(K)` conjugates the triple, up to scalars, to the
 normal form with parameters `ℓ` and `b = α₁ + 2`. -/
+@[montpellier "85, 4"]
 theorem conj_normalForm {τ₀ τ₁ τ₂ : Matrix (Fin 2) (Fin 2) K}
     (d0 : τ₀.det ≠ 0) (d1 : τ₁.det ≠ 0) (d2 : τ₂.det ≠ 0)
     (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ₂.trace = 0) (h02 : (τ₀ * τ₂).trace = 0)
@@ -1262,6 +1284,7 @@ theorem conj_trans {A A' N g g' : Matrix (Fin 2) (Fin 2) K} {c c' : K} (hg' : g'
 
 /-- **Page 4, part 2), over a field containing a root of `T² − α₀T + 1`.** Two triples with
 the same invariants `(α₀, α₁)` are conjugate in `PGL₂(K)`. -/
+@[montpellier "85, 4"]
 theorem conj_of_same_invariants {τ₀ τ₁ τ₂ σ₀ σ₁ σ₂ : Matrix (Fin 2) (Fin 2) K}
     (d0 : τ₀.det ≠ 0) (d1 : τ₁.det ≠ 0) (d2 : τ₂.det ≠ 0)
     (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ₂.trace = 0) (h02 : (τ₀ * τ₂).trace = 0)
@@ -1298,6 +1321,7 @@ variable {K : Type*} [Field K]
 
 /-- A homomorphism `𝔻_∞ = ⟨τ₀, τ₁ | τ₀², τ₁²⟩ → PGL₂(K)` with `u² ≠ 1`, `u = φ(τ₀τ₁)`,
 given by lifts `t₀, t₁ ∈ GL₂(K)`. -/
+@[montpellier "85, 16–20"]
 def DRep (t₀ t₁ : Matrix (Fin 2) (Fin 2) K) : Prop :=
   t₀.det ≠ 0 ∧ t₁.det ≠ 0 ∧ IsScalar (t₀ * t₀) ∧ IsScalar (t₁ * t₁) ∧
     ¬ IsScalar (t₀ * t₁ * (t₀ * t₁))
@@ -1375,6 +1399,7 @@ theorem exists_cyclic {u : Matrix (Fin 2) (Fin 2) K} (hu : ¬ IsScalar u) :
 
 /-- **Normal form of a representation of `𝔻_∞`.** In the basis `(v, uv)`, `u = t₀t₁` is the
 companion matrix of `T² − τT + d` and `t₀` is `invD τ d p r`. -/
+@[montpellier "85, 16–20"]
 theorem exists_normal {t₀ t₁ : Matrix (Fin 2) (Fin 2) K} (h : DRep t₀ t₁) :
     ∃ g : Matrix (Fin 2) (Fin 2) K, g.det ≠ 0 ∧ ∃ p r : K,
       t₀ * g = g * invD (t₀ * t₁).trace (t₀ * t₁).det p r ∧
@@ -1435,6 +1460,7 @@ theorem comm_zD (τ d a b : K) : compD τ d * zD τ d a b = zD τ d a b * compD 
 
 /-- **Hilbert 90 for `K[C]`.** If `N(p, r) = e² N(p', r')`, the two normal forms of `t₀` are
 conjugate by an element of `K[C]^×`, the torus of `u`. -/
+@[montpellier "85, 16–20"]
 theorem hilbert90 {τ d p r p' r' e : K} (hτ : τ ≠ 0) (hB : normD τ d p' r' ≠ 0)
     (hrel : normD τ d p r = e ^ 2 * normD τ d p' r') (he : e ≠ 0) :
     ∃ z : Matrix (Fin 2) (Fin 2) K, z.det ≠ 0 ∧ ∃ c : K,
@@ -1539,6 +1565,7 @@ theorem conj_t1 {t₀ t₁ s₀ s₁ Γ : Matrix (Fin 2) (Fin 2) K} (h0 : t₀.d
 /-- **Classification of the representations of `𝔻_∞` in `PGL₂(K)` with `u² ≠ 1`, over a
 field.** Two of them are conjugate if and only if they have the same invariant `α = A(u)` and
 `det t₀` in the same square class. -/
+@[montpellier "85, 16–20"]
 theorem dinfty_conj_iff {t₀ t₁ s₀ s₁ : Matrix (Fin 2) (Fin 2) K} (ht : DRep t₀ t₁)
     (hs : DRep s₀ s₁) :
     PConj t₀ t₁ s₀ s₁ ↔ invA (t₀ * t₁) = invA (s₀ * s₁) ∧ ∃ e : K, t₀.det = e ^ 2 * s₀.det := by
@@ -1613,6 +1640,7 @@ theorem dinfty_conj_iff {t₀ t₁ s₀ s₁ : Matrix (Fin 2) (Fin 2) K} (ht : D
     exact ⟨_, hΓ, _, _, K0, conj_t1 dt0 ha K0 Ku⟩
 
 /-- `det [t₀, t₁] = det u · (2 − α)`: the commutator is invertible iff `ρ = 2 − α ≠ 0`. -/
+@[montpellier "85, 19"]
 theorem det_commD {t₀ t₁ : Matrix (Fin 2) (Fin 2) K} (h0 : t₀.trace = 0) (h1 : t₁.trace = 0)
     (hd : (t₀ * t₁).det ≠ 0) :
     (t₀ * t₁ - t₁ * t₀).det = (t₀ * t₁).det * (2 - invA (t₀ * t₁)) := by
@@ -1644,6 +1672,7 @@ theorem eq_zero_of_t0 {t₀ t₁ : Matrix (Fin 2) (Fin 2) K} (h : DRep t₀ t₁
 /-- **Page 19: the automorphisms of a representation.** For `2 ≠ 0` in `K`, an element of
 `GL₂(K)` normalises `t₀` and `t₁` up to scalars if and only if it is scalar or a multiple of
 the commutator `t₀t₁ − t₁t₀` (the point of order 2 of the torus of `u`). -/
+@[montpellier "85, 19"]
 theorem centralizer_iff {t₀ t₁ : Matrix (Fin 2) (Fin 2) K} (h : DRep t₀ t₁) (h2 : (2 : K) ≠ 0)
     {g : Matrix (Fin 2) (Fin 2) K} (hg : g.det ≠ 0) :
     (∃ c₀ c₁ : K, g * t₀ = c₀ • (t₀ * g) ∧ g * t₁ = c₁ • (t₁ * g)) ↔
@@ -1705,6 +1734,7 @@ theorem centralizer_iff {t₀ t₁ : Matrix (Fin 2) (Fin 2) K} (h : DRep t₀ t�
         linear_combination (norm := module)
 
 /-- The commutator is not scalar when `2 ≠ 0`: the two classes `1`, `[t₀, t₁]` are distinct. -/
+@[montpellier "85, 19"]
 theorem commD_not_isScalar {t₀ t₁ : Matrix (Fin 2) (Fin 2) K} (h : DRep t₀ t₁) (h2 : (2 : K) ≠ 0) :
     ¬ IsScalar (t₀ * t₁ - t₁ * t₀) := by
   obtain ⟨h0, h1, -, hu⟩ := h.facts
@@ -1718,6 +1748,7 @@ theorem commD_not_isScalar {t₀ t₁ : Matrix (Fin 2) (Fin 2) K} (h : DRep t₀
 
 /-- **Which classes occur.** A representation with invariant `α` and `−det t₀ = δ` exists in
 `PGL₂(K)` if and only if `α + 2 ≠ 0`, `δ ≠ 0` and `δ` is a value of `p² + (α+2)pr + (α+2)r²`. -/
+@[montpellier "85, 16–20"]
 theorem exists_dinfty_iff (α δ : K) :
     (∃ t₀ t₁ : Matrix (Fin 2) (Fin 2) K, DRep t₀ t₁ ∧ invA (t₀ * t₁) = α ∧ -t₀.det = δ) ↔
       α + 2 ≠ 0 ∧ δ ≠ 0 ∧ ∃ p r : K, δ = normD (α + 2) (α + 2) p r := by
@@ -1769,6 +1800,7 @@ theorem exists_dinfty_iff (α δ : K) :
 /-- **The page-17 equivalence fails as read, over `ℚ`.** Two representations with the same
 invariant `α = −6` (so `ρ = 8` invertible and `𝒰_ρ ≅ 𝔾_m`) that are not conjugate in
 `PGL₂(ℚ)`: `det t₀ = −1` and `det s₀ = 1` are in different square classes. -/
+@[montpellier "85, 17"]
 theorem dinfty_not_conj_rat :
     DRep !![(1 : ℚ), 0; 0, -1] !![1, 1; -2, -1] ∧ DRep !![(0 : ℚ), 1; -1, 0] !![1, 0; 2, -1] ∧
     invA (!![(1 : ℚ), 0; 0, -1] * !![1, 1; -2, -1]) = -6 ∧
@@ -1799,6 +1831,7 @@ theorem dinfty_not_conj_rat :
 
 /-- « `u² ≠ 1` everywhere, that is `α + 2` invertible » is not an equivalence: `t₁ = t₀` has
 `u = 1`, `α = 2`, `α + 2 = 4 ≠ 0`. -/
+@[montpellier "85, 16–20"]
 theorem dinfty_add_two_not_iff :
     invA (!![(1 : ℚ), 0; 0, -1] * !![1, 0; 0, -1]) = 2 ∧
       ¬ DRep !![(1 : ℚ), 0; 0, -1] !![1, 0; 0, -1] := by

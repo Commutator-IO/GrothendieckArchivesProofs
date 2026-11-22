@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -76,6 +77,7 @@ lemma commute_of_closure {A B : Set G} (h : ∀ a ∈ A, ∀ b ∈ B, Commute a 
 /-- The product decomposition of page 28: if `K ∪ K'` splits at `i ∉ K ∪ K'`,
 the part below `i` lying in `K'` and the part above `i` in `K`, then
 `G_{K ∪ K'} ⊆ G_{K'} · G_K`. -/
+@[montpellier "76, 28"]
 theorem mem_mul_of_split (σ : Fin (n + 1) → G)
     (hσ : ∀ i j : Fin (n + 1), (i : ℕ) + 2 ≤ j → Commute (σ i) (σ j))
     {K K' : Set (Fin (n + 1))} (i : Fin (n + 1)) (hi : i ∉ K ∪ K')
@@ -157,6 +159,7 @@ lemma res_res {H H' H'' : Set (Fin (n + 1))} (h : H ⊆ H') (h' : H' ⊆ H'') (d
 of types `H` and `H'` with the same restriction to `H ∩ H'` are the
 restrictions of one flag of type `H ∪ H'`: `D(H ∪ H') → D(H) ×_{D(H ∩ H')} D(H')`
 is surjective. -/
+@[montpellier "76, 27–28"]
 theorem flag_lemma (hσ : ∀ i j : Fin (n + 1), (i : ℕ) + 2 ≤ j → Commute (σ i) (σ j))
     {H H' : Set (Fin (n + 1))} (i : Fin (n + 1)) (hiH : i ∈ H) (hmax : ∀ j ∈ H, j ≤ i)
     (hiH' : i ∈ H') (hinit : ∀ j ∈ H', ∀ k ∈ H ∩ H', j ≤ k → j ∈ H)
@@ -193,6 +196,7 @@ def Prec {i j : Fin (n + 1)} (x : D σ X {i}) (y : D σ X {j}) : Prop :=
     res (σ := σ) (X := X) hi d = x ∧ res (σ := σ) (X := X) hj d = y
 
 /-- A common majorant can always be taken in `D({i, j})`. -/
+@[montpellier "76, 26–28"]
 lemma prec_iff_pair {i j : Fin (n + 1)} (x : D σ X {i}) (y : D σ X {j}) :
     Prec x y ↔ i < j ∧ ∃ d : D σ X {i, j},
       res (by simp) d = x ∧ res (by simp) d = y := by
@@ -204,16 +208,19 @@ lemma prec_iff_pair {i j : Fin (n + 1)} (x : D σ X {i}) (y : D σ X {j}) :
 
 /-- (c): for `d ∈ D(H)` and `i < j` in `H`, the vertices of `d` of types `i`
 and `j` satisfy `≺`. -/
+@[montpellier "76, 26–28"]
 lemma prec_of_mem {H : Set (Fin (n + 1))} (d : D σ X H) {i j : Fin (n + 1)}
     (hi : i ∈ H) (hj : j ∈ H) (hij : i < j) :
     Prec (res (Set.singleton_subset_iff.mpr hi) d) (res (Set.singleton_subset_iff.mpr hj) d) :=
   ⟨hij, H, _, _, d, rfl, rfl⟩
 
+@[montpellier "76, 26–28"]
 lemma not_prec_self {i : Fin (n + 1)} (x y : D σ X {i}) : ¬ Prec x y :=
   fun h => lt_irrefl _ h.1
 
 /-- **Transitivity of `≺`** (page 27, by the Lemme with `H = {i, j}`,
 `H' = {j, k}`), for every `G`-set `X` and no involution condition. -/
+@[montpellier "76, 27"]
 theorem prec_trans (hσ : ∀ i j : Fin (n + 1), (i : ℕ) + 2 ≤ j → Commute (σ i) (σ j))
     {i j k : Fin (n + 1)} {x : D σ X {i}} {y : D σ X {j}} {w : D σ X {k}}
     (hxy : Prec x y) (hyw : Prec y w) : Prec x w := by
@@ -301,6 +308,7 @@ def V (d : P) : Set P := {x | IsMin x ∧ x ≤ d}
 variable (P) in
 /-- Condition (a) of page 20, in vertex form: each `I_d` is finite and non-empty, and
 `e ↦ I_e` is an order isomorphism from `{e ≤ d}` onto the non-empty subsets of `I_d`. -/
+@[montpellier "76, 20"]
 structure IsFlagGeom : Prop where
   finite : ∀ d : P, (V d).Finite
   nonempty : ∀ d : P, (V d).Nonempty
@@ -422,6 +430,7 @@ theorem ofVertex_edge {o : P → P → P → Prop} (ho : IsCompatible o)
 /-- **The Proposition of pages 23–24**, on a poset satisfying (a): orders on `D₀` satisfying (b)
 and (c) correspond bijectively to compatible total orders on the simplices whose edge relation is
 transitive (2°), by `r ↦ (r restricted to each I_d)` and `o ↦ ≺`. -/
+@[montpellier "76, 23–24"]
 noncomputable def vertexOrderEquiv :
     {r : P → P → Prop // IsVertexOrder r} ≃
       {o : P → P → P → Prop // IsCompatible o ∧ ∀ x y z, edge o x y → edge o y z → edge o x z}
@@ -553,6 +562,7 @@ theorem vert_face {e d : Σ m, D.X m} {u : Fin (e.1 + 1) ↪o Fin (d.1 + 1)} (hu
   simp only [vert, hu, map_pt]
 
 /-- Condition (1) gives (a) of page 20. -/
+@[montpellier "76, 20"]
 theorem isFlagGeom : IsFlagGeom (Σ m, D.X m) where
   finite d := by rw [D.V_eq']; exact Set.finite_range _
   nonempty d := by rw [D.V_eq']; exact Set.range_nonempty _
@@ -600,6 +610,7 @@ theorem isFlagGeom : IsFlagGeom (Σ m, D.X m) where
       exact ⟨i, by rw [D.vert_face (u := f) rfl, hi]⟩
 
 /-- The simplex orders of `D` are compatible (pages 17–18). -/
+@[montpellier "76, 17–18"]
 theorem isCompatible_ord : IsCompatible D.ord where
   support d a b h := by
     obtain ⟨i, j, -, rfl, rfl⟩ := h
@@ -640,6 +651,7 @@ theorem isCompatible_ord : IsCompatible D.ord where
 
 
 /-- The edge relation of the simplex orders is the relation `≺` of page 22. -/
+@[montpellier "76, 22"]
 theorem edge_ord_iff (a b : Σ m, D.X m) :
     edge D.ord a b ↔ ∃ z : D.X 1, a = ⟨0, D.map (pt 0) z⟩ ∧ b = ⟨0, D.map (pt 1) z⟩ := by
   constructor
@@ -688,6 +700,7 @@ theorem prec_iff (x y : D.X 0) : D.Prec x y ↔ edge D.ord ⟨0, x⟩ ⟨0, y⟩
   exact ⟨fun ⟨z, h1, h2⟩ => ⟨z, h1.symm, h2.symm⟩, fun ⟨z, h1, h2⟩ => ⟨z, h1.symm, h2.symm⟩⟩
 
 /-- `x ≺ x` is impossible, by (1) (page 22). -/
+@[montpellier "76, 22"]
 theorem not_prec_self (x : D.X 0) : ¬ D.Prec x x := by
   rw [prec_iff]
   rintro ⟨_, _, h, _⟩
@@ -710,6 +723,7 @@ theorem trans_iff : (∀ x y w : D.X 0, D.Prec x y → D.Prec y w → D.Prec x w
 satisfying (1), the poset `D_*` satisfies (a), and the transitivity (2°) of `≺` holds iff the
 orders of the simplices all come from one order on `D₀` satisfying (b) and (c); that order is then
 `≺`. -/
+@[montpellier "76, 22–24"]
 theorem trans_iff_vertexOrder :
     (∀ x y w : D.X 0, D.Prec x y → D.Prec y w → D.Prec x w) ↔
       ∃ r, IsVertexOrder r ∧ ofVertex r = D.ord := by
@@ -722,6 +736,7 @@ theorem trans_iff_vertexOrder :
     rw [← hro, edge_ofVertex D.isFlagGeom hr]
     exact hr.trans
 
+@[montpellier "76, 22–24"]
 theorem vertexOrder_unique {r : (Σ m, D.X m) → (Σ m, D.X m) → Prop} (hr : IsVertexOrder r)
     (hro : ofVertex r = D.ord) : r = edge D.ord := by
   rw [← hro, edge_ofVertex D.isFlagGeom hr]
@@ -732,6 +747,7 @@ def HornFill : Prop :=
     ∃ u : D.X 2, D.map Fin.castSuccOrderEmb u = z ∧ D.map (Fin.succOrderEmb 2) u = z'
 
 /-- (2 bis) implies (2°) (page 22). -/
+@[montpellier "76, 22"]
 theorem trans_of_hornFill (h : D.HornFill) (x y w : D.X 0) (hxy : D.Prec x y)
     (hyw : D.Prec y w) : D.Prec x w := by
   obtain ⟨z, rfl, rfl⟩ := hxy
@@ -752,6 +768,7 @@ def triangleBoundary : NonSingular where
   map_comp _ _ _ := rfl
   cond1 x _ _ h := RelEmbedding.ext fun i => x.1.injective (congrArg (fun g => g.1 i) h)
 
+@[montpellier "76, 20–24"]
 theorem triangleBoundary_trans (x y w : triangleBoundary.X 0) (hxy : triangleBoundary.Prec x y)
     (hyw : triangleBoundary.Prec y w) : triangleBoundary.Prec x w := by
   obtain ⟨z, rfl, rfl⟩ := hxy
@@ -772,6 +789,7 @@ theorem triangleBoundary_trans (x y w : triangleBoundary.X 0) (hxy : triangleBou
   · apply Subtype.ext; apply RelEmbedding.ext; intro i
     rw [Fin.fin_one_eq_zero i]; rfl
 
+@[montpellier "76, 20–24"]
 theorem triangleBoundary_not_hornFill : ¬ triangleBoundary.HornFill := by
   intro h
   let e : Fin 2 ↪o Fin 3 := Fin.castSuccOrderEmb
@@ -856,6 +874,7 @@ lemma map_univ_orderEmbOfFin {m : ℕ} (H : Typ n m) :
 variable (σ X) in
 /-- **The semi-simplicial set of flags** (page 27): `D_m = ∐_{card H = m + 1} X / N_H`, with
 `u^*` the restriction to the image of `u` in the type. It satisfies (1). -/
+@[montpellier "76, 27"]
 def flagSS : NonSingular where
   X := Simp σ X
   map u x := ⟨faceType u x.1, res (faceType_sub u x.1) x.2⟩
@@ -872,6 +891,7 @@ def flagSS : NonSingular where
 
 /-- The poset of simplices of `flagSS` is `D_* = ∐_H D(H)`, with `d ≤ d'` iff `H ⊆ H'` and `d` is
 the restriction of `d'`. -/
+@[montpellier "76, 27"]
 theorem flagSS_le_iff {k m : ℕ} {H : Typ n k} {H' : Typ n m} (a : D σ X H.1) (b : D σ X H'.1) :
     (⟨k, ⟨H, a⟩⟩ : Σ m, (flagSS σ X).X m) ≤ ⟨m, ⟨H', b⟩⟩ ↔
       ∃ h : (H.1 : Set (Fin (n + 1))) ⊆ H'.1, a = res h b := by
@@ -894,6 +914,7 @@ theorem flagSS_le_iff {k m : ℕ} {H : Typ n k} {H' : Typ n m} (a : D σ X H.1) 
     exact ⟨u, (simp_eq_iff _ _).2 ⟨hH.symm, fun _ => by dsimp only; exact (res_res _ _ _).symm⟩⟩
 
 /-- **Condition (a)** of page 20 for `D_* = ∐_H D(H)`. -/
+@[montpellier "76, 27"]
 theorem flagSS_isFlagGeom : IsFlagGeom (Σ m, (flagSS σ X).X m) := (flagSS σ X).isFlagGeom
 
 lemma faceType_pt {m : ℕ} (i : Fin (m + 1)) (H : Typ n m) :
@@ -903,6 +924,7 @@ lemma faceType_pt {m : ℕ} (i : Fin (m + 1)) (H : Typ n m) :
   exact ⟨fun ⟨_, h⟩ => h.symm, fun h => ⟨0, h.symm⟩⟩
 
 /-- The edge relation of `flagSS` on `D₀` is the relation `≺` of page 27. -/
+@[montpellier "76, 27"]
 theorem flagSS_prec_iff {i j : Fin (n + 1)} (hi : ({i} : Finset _).card = 0 + 1)
     (hj : ({j} : Finset _).card = 0 + 1) (a : D σ X ({i} : Finset _))
     (b : D σ X ({j} : Finset _)) :
@@ -934,6 +956,7 @@ theorem flagSS_prec_iff {i j : Fin (n + 1)} (hi : ({i} : Finset _).card = 0 + 1)
     · exact res_eq_res (by simp [faceType_pt, hP.2]) hd₂ _ _
 
 /-- **Transitivity** of the edge relation of `flagSS`, for every `G`-set `X`. -/
+@[montpellier "76, 27"]
 theorem flagSS_prec_trans (hσ : ∀ i j : Fin (n + 1), (i : ℕ) + 2 ≤ j → Commute (σ i) (σ j))
     (x y w : (flagSS σ X).X 0) (hxy : (flagSS σ X).Prec x y) (hyw : (flagSS σ X).Prec y w) :
     (flagSS σ X).Prec x w := by
@@ -948,6 +971,7 @@ theorem flagSS_prec_trans (hσ : ∀ i j : Fin (n + 1), (i : ℕ) + 2 ≤ j → 
 
 /-- **The « hence » of page 27**: for every `G`-set `X`, the orders of the simplices of the
 semi-simplicial set of flags all come from one order on `D₀` satisfying (b) and (c). -/
+@[montpellier "76, 27"]
 theorem flagSS_vertexOrder (hσ : ∀ i j : Fin (n + 1), (i : ℕ) + 2 ≤ j → Commute (σ i) (σ j)) :
     ∃ r, IsVertexOrder r ∧ ofVertex r = (flagSS σ X).ord :=
   (flagSS σ X).trans_iff_vertexOrder.1 (flagSS_prec_trans hσ)

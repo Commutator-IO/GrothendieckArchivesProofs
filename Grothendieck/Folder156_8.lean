@@ -5,6 +5,7 @@ public import Mathlib.Data.Fintype.Sum
 public import Mathlib.Data.Fintype.Prod
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.Data.Finset.Card
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -69,6 +70,7 @@ def IntLe (le ref : M → M → Prop) (X Y : M) : Prop :=
 
 /-- Mag 1 – Mag 4 of page 7, for an incidence `le`, a refinement `ref` and an interior
 disjointness `dis`. -/
+@[montpellier "156-8, 7"]
 structure IsMagasin (le ref dis : M → M → Prop) : Prop where
   le_refl : ∀ X, le X X
   le_trans : ∀ X Y Z, le X Y → le Y Z → le X Z
@@ -90,10 +92,12 @@ def Compat (le dis : M → M → Prop) (X Y : M) : Prop :=
 
 variable {le ref dis : M → M → Prop}
 
+@[montpellier "156-8, 7, 9–10"]
 theorem intLe_refl (h : IsMagasin le ref dis) (X : M) : IntLe le ref X X :=
   ⟨h.ref_refl X, fun _ hZ hXZ => h.ref_antisymm _ _ (h.le_ref _ _ hZ) hXZ⟩
 
 /-- The least element of Mag 2 is a face `Y' ≤ Y` with `X ≪̊ Y'`. -/
+@[montpellier "156-8, 7, 9–10"]
 theorem exists_intLe (h : IsMagasin le ref dis) {X Y : M} (hXY : ref X Y) :
     ∃ Y', le Y' Y ∧ IntLe le ref X Y' := by
   obtain ⟨Z, hZY, hXZ, hmin⟩ := h.mag2 X Y hXY
@@ -101,15 +105,18 @@ theorem exists_intLe (h : IsMagasin le ref dis) {X Y : M} (hXY : ref X Y) :
     h.le_antisymm _ _ hWZ (hmin W (h.le_trans _ _ _ hWZ hZY) hXW)⟩
 
 /-- Proposition `1₀` a), reflexivity. -/
+@[montpellier "156-8, 7, 9–10"]
 theorem compat_refl (X : M) : Compat le dis X X :=
   fun _ _ h1 h2 _ _ => (h2 h1).elim
 
 /-- Proposition `1₀` a), symmetry. -/
+@[montpellier "156-8, 7, 9–10"]
 theorem compat_symm (h : IsMagasin le ref dis) {X Y : M} (hXY : Compat le dis X Y) :
     Compat le dis Y X :=
   fun Y' X' h1 h2 h3 h4 => h.dis_symm _ _ (hXY X' Y' h3 h4 h1 h2)
 
 /-- Proposition `1₀` b): compatibility passes to faces. -/
+@[montpellier "156-8, 7, 9–10"]
 theorem compat_mono (h : IsMagasin le ref dis) {X Y X' Y' : M} (hX : le X' X) (hY : le Y' Y)
     (hXY : Compat le dis X Y) : Compat le dis X' Y' := by
   intro X'' Y'' h1 h2 h3 h4
@@ -122,6 +129,7 @@ theorem compat_mono (h : IsMagasin le ref dis) {X Y X' Y' : M} (hX : le X' X) (h
 
 /-- **Proposition 2** (margin of page 9), in the direction that holds: two distinct compatible
 elements are interiorly disjoint. -/
+@[montpellier "156-8, 9"]
 theorem dis_of_compat (h : IsMagasin le ref dis) {X Y : M} (hne : X ≠ Y)
     (hXY : Compat le dis X Y) : dis X Y := by
   by_cases h1 : le X Y
@@ -131,6 +139,7 @@ theorem dis_of_compat (h : IsMagasin le ref dis) {X Y : M} (hne : X ≠ Y)
   exact hXY X Y (h.le_refl X) h1 (h.le_refl Y) h2
 
 /-- **Corollary 1** (page 9): if `X ≶ Y`, `Z ≪̊ X` and `Z ≪ Y`, then `X ≤ Y` (so `X ≪ Y`). -/
+@[montpellier "156-8, 9"]
 theorem le_of_compat_of_intLe (h : IsMagasin le ref dis) {X Y Z : M}
     (hXY : Compat le dis X Y) (hZX : IntLe le ref Z X) (hZY : ref Z Y) : le X Y := by
   obtain ⟨Y', hY'Y, hZY'⟩ := exists_intLe h hZY
@@ -146,6 +155,7 @@ theorem ref_iff_of_compat_of_intLe (h : IsMagasin le ref dis) {X Y Z : M}
     fun hX => h.ref_trans _ _ _ hZX.1 hX⟩
 
 /-- **Corollary 2** (page 9). -/
+@[montpellier "156-8, 9"]
 theorem eq_of_compat_of_intLe (h : IsMagasin le ref dis) {X Y Z : M}
     (hZX : IntLe le ref Z X) (hZY : IntLe le ref Z Y) (hXY : Compat le dis X Y) : X = Y :=
   h.le_antisymm _ _ (le_of_compat_of_intLe h hXY hZX hZY.1)
@@ -153,11 +163,13 @@ theorem eq_of_compat_of_intLe (h : IsMagasin le ref dis) {X Y Z : M}
 
 /-- **Corollary 3** (page 10), read with `≪`: between compatible elements, refinement and
 incidence coincide. -/
+@[montpellier "156-8, 10"]
 theorem ref_iff_le_of_compat (h : IsMagasin le ref dis) {X Y : M} (hXY : Compat le dis X Y) :
     ref X Y ↔ le X Y :=
   ⟨le_of_compat_of_intLe h hXY (intLe_refl h X), h.le_ref X Y⟩
 
 /-- **Proposition 3** (page 10): `≪̊` is transitive. -/
+@[montpellier "156-8, 10"]
 theorem intLe_trans (h : IsMagasin le ref dis) {X Y Z : M} (hXY : IntLe le ref X Y)
     (hYZ : IntLe le ref Y Z) : IntLe le ref X Z := by
   obtain ⟨Z', hZ'Z, hXZ'⟩ := exists_intLe h (h.ref_trans _ _ _ hXY.1 hYZ.1)
@@ -168,6 +180,7 @@ theorem intLe_trans (h : IsMagasin le ref dis) {X Y Z : M} (hXY : IntLe le ref X
   exact (h.dis_irrefl X (h.mag3 X Y X X h2 (intLe_refl h X) hXY)).elim
 
 /-- The NB of page 10: `X ≪ Y ≪ Z` and `X ≪̊ Z` give `Y ≪̊ Z`. -/
+@[montpellier "156-8, 10"]
 theorem intLe_of_ref_of_ref (h : IsMagasin le ref dis) {X Y Z : M} (hXY : ref X Y)
     (hYZ : ref Y Z) (hXZ : IntLe le ref X Z) : IntLe le ref Y Z :=
   ⟨hYZ, fun W hWZ hYW => hXZ.2 W hWZ (h.ref_trans _ _ _ hXY hYW)⟩
@@ -205,15 +218,18 @@ instance : DecidableRel tsLe := fun _ _ => inferInstanceAs (Decidable (_ ∨ _))
 instance : DecidableRel tsRef := fun _ _ => inferInstanceAs (Decidable (_ ∨ _))
 instance : DecidableRel tsDis := fun _ _ => inferInstanceAs (Decidable (_ ∧ _))
 
+@[montpellier "156-8, 9"]
 theorem twoSegments_isMagasin : IsMagasin tsLe tsRef tsDis := by
   constructor <;> decide
 
 /-- **The margin's converse of Proposition 2 fails**: `X ≠ Y` and `X |∘| Y`, but `X` and `Y`
 are not compatible. -/
+@[montpellier "156-8, 9"]
 theorem twoSegments_not_compat : (4 : TwoSegments) ≠ 5 ∧ tsDis 4 5 ∧ ¬ Compat tsLe tsDis 4 5 := by
   decide
 
 /-- **Corollary 3 as transcribed fails**: `p ≶ X` and `p ≤ X`, but not `p ≪̊ X`. -/
+@[montpellier "156-8, 10"]
 theorem twoSegments_cor3_as_transcribed :
     Compat tsLe tsDis 0 4 ∧ tsLe 0 4 ∧ ¬ IntLe tsLe tsRef 0 4 := by
   decide
@@ -240,11 +256,13 @@ instance : DecidableRel ssLe := fun _ _ => inferInstanceAs (Decidable (_ ∨ _))
 instance : DecidableRel ssRef := fun _ _ => inferInstanceAs (Decidable (_ ∨ _))
 instance : DecidableRel ssDis := fun _ _ => inferInstanceAs (Decidable (_ ∧ _))
 
+@[montpellier "156-8, 10"]
 theorem subSegment_isMagasin : IsMagasin ssLe ssRef ssDis := by
   constructor <;> decide
 
 /-- **The NB of page 10**: with `X = 2`, `X ≪ Y ≪ Z` and `X ≪̊ Z`, hence `Y ≪̊ Z`, but not
 `X ≪̊ Y`. -/
+@[montpellier "156-8, 10"]
 theorem subSegment_nb :
     ssRef 2 4 ∧ ssRef 4 5 ∧ IntLe ssLe ssRef 2 5 ∧ IntLe ssLe ssRef 4 5 ∧
       ¬ IntLe ssLe ssRef 2 4 := by
@@ -268,6 +286,7 @@ abbrev pt (x : L) : Cell L := Sum.inl x
 abbrev iv (a b : L) (h : a < b) : Cell L := Sum.inr ⟨(a, b), h⟩
 
 /-- Interior disjointness, page 89. -/
+@[montpellier "156-8, 89"]
 def dis : Cell L → Cell L → Prop
   | .inl x, .inl y => x < y ∨ y < x
   | .inl x, .inr s => x ≤ s.1.1 ∨ s.1.2 ≤ x
@@ -282,9 +301,11 @@ theorem dis_irrefl (X : Cell L) : ¬ dis X X := by
   exact fun h => lt_irrefl _ (lt_of_lt_of_le hab h)
 
 /-- `cosupp° Φ`: the elements interiorly disjoint from every element of `Φ`. -/
+@[montpellier "156-8, 89–91"]
 def cosupp (Φ : Set (Cell L)) : Set (Cell L) := {X | ∀ Y ∈ Φ, dis Y X}
 
 /-- `supp° Φ = cosupp° (cosupp° Φ)`. -/
+@[montpellier "156-8, 89–91"]
 def supp (Φ : Set (Cell L)) : Set (Cell L) := cosupp (cosupp Φ)
 
 theorem subset_supp (Φ : Set (Cell L)) : Φ ⊆ supp Φ :=
@@ -297,6 +318,7 @@ theorem not_mem_cosupp_of_mem_supp {Φ : Set (Cell L)} {X : Cell L} (hX : X ∈ 
 
 /-- **Hypothesis H** (page 99): a) either `L` has a least element or every element strictly
 majorises another; b) the dual statement. -/
+@[montpellier "156-8, 99"]
 def HypH (L : Type*) [PartialOrder L] : Prop :=
   ((∃ m : L, ∀ x, m ≤ x) ∨ ∀ x : L, ∃ y, y < x) ∧ ((∃ m : L, ∀ x, x ≤ m) ∨ ∀ x : L, ∃ y, x < y)
 
@@ -316,6 +338,7 @@ theorem HypH.exists_gt (H : HypH L) {a : L} (ha : ¬ ∀ x, x ≤ a) : ∃ y, a 
 
 /-- **Lemma 1 for a point, Corollary 1** (pages 99–101): under Hypothesis H, the interior
 support of a point is the point itself. -/
+@[montpellier "156-8, 99–101"]
 theorem supp_pt (H : HypH L) (a : L) : supp {pt a} = {pt a} := by
   refine Set.Subset.antisymm (fun X hX => ?_) (subset_supp _)
   have hn : ¬ dis (pt a) X := fun h => not_mem_cosupp_of_mem_supp hX (by simpa [cosupp] using h)
@@ -430,16 +453,20 @@ abbrev Sab : Cell Can := iv Can.a Can.b a_lt_b
 abbrev Scb : Cell Can := iv Can.c Can.b c_lt_b
 
 /-- `cosupp° {P_a} = {P_b, S_{a,b}}`; the page adds `S_{c,b}`. -/
+@[montpellier "156-8, 102"]
 theorem can_cosupp_pa : cosuppF ({Pa} : Finset (Cell Can)) = {Pb, Sab} := by decide
 
 /-- **`supp° {P_a} = {P_a}`**, not `{P_a, P_b}` as on the page. -/
+@[montpellier "156-8, 102"]
 theorem can_supp_pa : suppF ({Pa} : Finset (Cell Can)) = {Pa} := by decide
 
 /-- First line of page 102: `cosupp° {P_b} = 𝓜 ∖ {P_b}`. -/
+@[montpellier "156-8, 102"]
 theorem can_cosupp_pb : cosuppF ({Pb} : Finset (Cell Can)) = Finset.univ \ {Pb} := by decide
 
 /-- **The interval case of Lemma 1 fails**: `cosupp° (S̃_{a,b}) = ∅` and `supp° (S̃_{a,b}) = 𝓜`,
 while `Omb (S_{a,b}) = S̃_{a,b} = {P_a, P_b, S_{a,b}}` and `𝓜` has five elements. -/
+@[montpellier "156-8, 102"]
 theorem can_supp_segment :
     cosuppF ({Pa, Pb, Sab} : Finset (Cell Can)) = ∅ ∧
       suppF ({Pa, Pb, Sab} : Finset (Cell Can)) = Finset.univ ∧
@@ -448,6 +475,7 @@ theorem can_supp_segment :
   decide
 
 /-- The ordered set of page 102 violates Hypothesis H. -/
+@[montpellier "156-8, 102"]
 theorem can_not_hypH : ¬ HypH Can := by
   unfold HypH
   decide
@@ -482,6 +510,7 @@ end Anti
 
 /-- Without Hypothesis H, Corollary 1 can fail: in a two-element antichain,
 `supp° {P_a} = {P_a, P_c}`. -/
+@[montpellier "156-8, 99–101"]
 theorem anti_supp_pa :
     suppF ({pt Anti.a} : Finset (Cell Anti)) = {pt Anti.a, pt Anti.c} ∧ ¬ HypH Anti := by
   unfold HypH

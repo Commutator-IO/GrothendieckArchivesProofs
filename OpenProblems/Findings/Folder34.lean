@@ -4,6 +4,7 @@ public import StacksFrontier.AlgebraicGeometry.FundamentalGroup.SpecializationMa
 public import StacksFrontier.AlgebraicGeometry.MoreMorphisms.LocalCompleteIntersection.Defs
 public import StacksFrontier.AlgebraicGeometry.Variety.CompleteLocal.StrictlyHenselian
 public import StacksFrontier.Topology.Algebra.Group.PrimeToPQuotient
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -67,6 +68,7 @@ connected fibres. Let `s̄` lie over the closed point and `η̄` over the generi
 geometric closed fibre is a local complete intersection whose non-smooth locus has codimension
 `≥ 2`, then every specialisation map `π₁(X_η̄) → π₁(X_s̄)` induces an isomorphism of the maximal
 prime-to-`p` quotients. -/
+@[montpellier "34, 153–155"]
 def LciLocalOneAsphericity : Prop :=
   ∀ (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     [StrictlyHenselianLocalRing R] (p : ℕ), p.Prime → ringChar (ResidueField R) = p →

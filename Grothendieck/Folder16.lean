@@ -11,6 +11,7 @@ public import Mathlib.LinearAlgebra.Dual.Lemmas
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.LinearCombination
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -131,6 +132,7 @@ degree `2n`, `μ = n - i`; mathlib's `H = ⁅Λ, L⁆` is minus the reading's
 `Λ L x = (n-i) x` et non `x` » — and more generally `Λ` acts on `L^{k+1} x` by
 the integer `(k+1)(μ-k)`, while the commutator restores the degree:
 `⁅H, L^k x⁆ = (μ - 2k) L^k x`. -/
+@[montpellier "16, 9"]
 theorem sl2_normalisation {x : M} {μ : R} (P : t.HasPrimitiveVectorWith x μ) (k : ℕ) :
     ⁅Λ, ⁅L, x⁆⁆ = μ • x ∧
       ⁅Λ, (toEnd R 𝔤 M L ^ (k + 1)) x⁆ = ((k + 1) * (μ - k)) • (toEnd R 𝔤 M L ^ k) x ∧
@@ -144,6 +146,7 @@ primitive class `x` of the bottom of a chain, then `(μ - 1) x = 0`; over a
 domain acting without torsion, `μ = 1`. For the unit of the exterior algebra,
 primitive of degree `0`, `μ = n`: the two normalisations agree only for
 `n = 1`. -/
+@[montpellier "16, 16"]
 theorem identification_seulement_si [IsDomain R] [Module.IsTorsionFree R M] {x : M} {μ : R}
     (P : t.HasPrimitiveVectorWith x μ) (h : ⁅Λ, ⁅L, x⁆⁆ = x) : μ = 1 := by
   have h1 := (sl2_normalisation t P 0).1
@@ -162,6 +165,7 @@ two-sided pseudo-inverse, `LΛ = 1 - ∑_{0 ≤ i ≤ n} π_{i,0}` and
 `ΛL = 1 - ∑_{n ≤ i ≤ 2n} π_{i,0}`, the commutator is
 `[L, Λ] = ∑_{i ≥ n} π_{i,0} - ∑_{i ≤ n} π_{i,0}`: it only sees the ends of the
 chains, and does not restore the grading. -/
+@[montpellier "16, 16"]
 theorem commutateur_pseudo_inverse (n : ℕ) (Lf Λf : E) (π : ℕ → E)
     (h₁ : Lf * Λf = 1 - ∑ i ∈ Finset.range (n + 1), π i)
     (h₂ : Λf * Lf = 1 - ∑ i ∈ Finset.Icc n (2 * n), π i) :
@@ -198,6 +202,7 @@ noncomputable def Λ₀ (x : ExteriorAlgebra R (M₀ R n)) : ExteriorAlgebra R (
 
 /-- **Page 16 (the reading's footnote).** « Sur l'unité, qui est primitive de
 degré `0`, `Λ₀ L₀ (1) = ⟨ξ₀*, ξ₀⟩ = n`. » -/
+@[montpellier "16, 16"]
 theorem lambda0_L0_un : Λ₀ R n (L₀ R n 1) = (n : ExteriorAlgebra R (M₀ R n)) := by
   simp only [L₀, mul_one, xi₀, Λ₀, map_sum]
   have key : ∀ k j : Fin n,
@@ -219,6 +224,7 @@ theorem lambda0_L0_un : Λ₀ R n (L₀ R n 1) = (n : ExteriorAlgebra R (M₀ R 
 /-- **Page 16.** « `Λ₀ L₀ (1) = n`, alors que `(6.15)` exige `1` … l'identification
 ne vaut donc que pour `n = 1` »: in characteristic zero, the contraction `Λ₀`
 satisfies `Λ₀ L₀ (1) = 1` only if `n = 1`. -/
+@[montpellier "16, 16"]
 theorem lambda0_L0_un_ne_un [CharZero R] (hn : n ≠ 1) :
     Λ₀ R n (L₀ R n 1) ≠ 1 := by
   rw [lambda0_L0_un]
@@ -241,6 +247,7 @@ variable {K V W : Type*} [Field K] [AddCommGroup V] [Module K V] [FiniteDimensio
 `F`-scalars (the algebraic ones), whose characteristic polynomials have coefficients in `F`
 (the hypothesis `D(X)` of the letter). Then the inverse of an invertible `w ∈ 𝒜` is in `𝒜`:
 Cayley–Hamilton writes `w⁻¹` as `-σ_b(w)⁻¹ ∑ ± σ_j(w) w^{j}`, with coefficients in `F`. -/
+@[montpellier "16, 47"]
 theorem inverse_mem_of_charpoly (F : Subfield K) (𝒜 : Subring (Module.End K V))
     (hsmul : ∀ c ∈ F, ∀ g ∈ 𝒜, c • g ∈ 𝒜)
     (hD : ∀ g ∈ 𝒜, ∀ j, g.charpoly.coeff j ∈ F)
@@ -274,6 +281,7 @@ degrees, stable under composition): if `u : W → V` is *some* algebraic isomorp
 (induced by `L^{n-i}`) is an algebraic isomorphism, then `v⁻¹` is algebraic. The proof is the
 letter's: `w = u ∘ v` is an algebraic automorphism of `V`, `w⁻¹` is algebraic by
 Cayley–Hamilton, and `v⁻¹ = w⁻¹ ∘ u`. -/
+@[montpellier "16, 47–48"]
 theorem inverse_Lefschetz_algebrique (F : Subfield K) (𝒜V : Subring (Module.End K V))
     (𝒜WV : Set (W →ₗ[K] V)) (𝒜VW : Set (V →ₗ[K] W))
     (hsmul : ∀ c ∈ F, ∀ g ∈ 𝒜V, c • g ∈ 𝒜V)
@@ -368,6 +376,7 @@ grading. If for each `i ≤ n` there are `vᵢ ∈ ℰ` of degree `2n - 2i` and 
 Descending induction: `φᵢ = ∑_{a ≥ i} π_a` and `ψ_{2n-i} = ∑_{a ≤ 2n-i} π_a` are in `ℰ`,
 `v'ᵢ = ψ vᵢ φ = π_{2n-i} vᵢ πᵢ`, `w'ᵢ = φ wᵢ ψ = πᵢ wᵢ π_{2n-i}`, and
 `w'ᵢ v'ᵢ = πᵢ`, `v'ᵢ w'ᵢ = π_{2n-i}`. No module is used, and `ℰ` is only a ring. -/
+@[montpellier "16, 6–7"]
 theorem projecteurs_mem (ℰ : Subring E) (G : Graduation π n) (v w : ℕ → E)
     (hvE : ∀ i ≤ n, v i ∈ ℰ) (hwE : ∀ i ≤ n, w i ∈ ℰ)
     (hv : ∀ i ≤ n, Homogene π (2 * ((n : ℤ) - i)) (v i))
@@ -435,6 +444,7 @@ theorem projecteurs_mem (ℰ : Subring E) (G : Graduation π n) (v w : ℕ → E
 /-- **Page 8 (no. 6, `(6.3)ᵢ`).** The case `vᵢ = L^{n-i}`, `L ∈ ℰ` of degree `2`: one-sided
 inverses `wᵢ ∈ ℰ` of `L^{n-i}` (on `πᵢ` and on `π_{2n-i}`) put all the grading projectors
 in `ℰ`. -/
+@[montpellier "16, 8"]
 theorem projecteurs_mem_lefschetz (ℰ : Subring E) (G : Graduation π n) {L : E} (hLE : L ∈ ℰ)
     (hL : Homogene π 2 L) (w : ℕ → E) (hwE : ∀ i ≤ n, w i ∈ ℰ)
     (hw : ∀ i ≤ n, Homogene π (-(2 * ((n : ℤ) - i))) (w i))
@@ -500,6 +510,7 @@ noncomputable def vol : ⋀[R]^(n * 2) (M₀ R n) :=
 
 /-- **Page 13, over `ℤ`.** For `n ≥ 2`, the top class of `Λ M₀` is not of the form
 `ξ₀ⁿ ∧ y`, whatever `y`: `L₀ⁿ` does not reach `Λ^{2n} M₀` over `ℤ`. -/
+@[montpellier "16, 13"]
 theorem not_exists_xi₀_pow_mul_eq_vol (hn : 2 ≤ n) :
     ¬ ∃ y : ExteriorAlgebra ℤ (M₀ ℤ n),
       xi₀ ℤ n ^ n * y = ((vol (R := ℤ) (n := n) : ⋀[ℤ]^(n * 2) (M₀ ℤ n)) :
@@ -532,6 +543,7 @@ theorem not_exists_xi₀_pow_mul_eq_vol (hn : 2 ≤ n) :
 `w` (in particular `w = Λ₀ⁿ`, which the Remarque of page 12 requires to satisfy
 `(L₀ⁿ Λ₀ⁿ - 1) π_{2n} = 0`), `L₀ⁿ (w (vol)) ≠ vol`: `(6.3)₀` fails in the exterior model
 over `ℤ`, because `ξ₀ⁿ = n! · vol`. -/
+@[montpellier "16, 13"]
 theorem L₀_pow_ne_vol (hn : 2 ≤ n)
     (w : ExteriorAlgebra ℤ (M₀ ℤ n) → ExteriorAlgebra ℤ (M₀ ℤ n)) :
     (L₀ ℤ n)^[n] (w (vol (R := ℤ) (n := n))) ≠ (vol (R := ℤ) (n := n)) := by
@@ -546,6 +558,7 @@ variable {E : Type*} [Ring E]
 
 /-- **Pages 14–15, « unique quand il existe » (the algebraic step).** A pseudo-inverse `Λ` of
 `L` with `ΛLΛ = Λ` is determined by the two idempotents `ΛL` and `LΛ`. -/
+@[montpellier "16, 14–15"]
 theorem pseudo_inverse_unique {L Λ Λ' : E} (h : Λ * L * Λ = Λ) (h' : Λ' * L * Λ' = Λ')
     (hl : Λ * L = Λ' * L) (hr : L * Λ = L * Λ') : Λ = Λ' :=
   calc Λ = Λ * L * Λ := h.symm
@@ -559,6 +572,7 @@ section AlgebresHodge
 
 /-- **Page 24, the three data.** An alternating form `φ` on `V`, an alternating bilinear map
 `ψ : V × V → W` (i.e. `Λ²V → W`), a symmetric bilinear form `Q` on `W`. -/
+@[montpellier "16, 24"]
 structure DonneesHodge (k V W : Type*) [CommRing k] [AddCommGroup V] [Module k V]
     [AddCommGroup W] [Module k W] where
   /-- the alternating form `φ` on `V` -/
@@ -573,6 +587,7 @@ structure DonneesHodge (k V W : Type*) [CommRing k] [AddCommGroup V] [Module k V
 
 /-- The graded space `H⁰ ⊕ H¹ ⊕ H² ⊕ H³ ⊕ H⁴ = k ⊕ V ⊕ (kξ ⊕ W) ⊕ V̌ ⊕ kξ²`; an element is
 `(a₀, a₁, (c, w), a₃, a₄)`, with `c` the coefficient of `ξ` and `a₄` that of `ξ²`. -/
+@[montpellier "16, 24–28"]
 abbrev AlgHodge (k V W : Type*) [CommRing k] [AddCommGroup V] [Module k V]
     [AddCommGroup W] [Module k W] :=
   k × V × (k × W) × Module.Dual k V × k
@@ -626,6 +641,7 @@ theorem act_apply (x : V) (c : k) (w : W) (t : V) :
 /-- **Page 24, the multiplication.** `x y = φ(x,y) ξ + ψ(x,y)` on `H¹ × H¹`, `x h` as in `act`,
 `x y' = ⟨x, y'⟩ ξ²` on `H¹ × H³`, `ξ² = ξ²`, `ξ w = 0`, `w w' = Q(w,w') ξ²`, extended by
 graded anticommutativity and `H⁰ = k`. -/
+@[montpellier "16, 24"]
 def mul (a b : AlgHodge k V W) : AlgHodge k V W :=
   (a.1 * b.1,
    a.1 • b.2.1 + b.1 • a.2.1,
@@ -637,6 +653,7 @@ def mul (a b : AlgHodge k V W) : AlgHodge k V W :=
      b.2.2.2.1 a.2.1 - a.2.2.2.1 b.2.1)
 
 /-- **Page 24, the products of the reading.** -/
+@[montpellier "16, 24"]
 theorem produits (x y : V) (w w' : W) (u : Module.Dual k V) :
     D.mul (deg1 x) (deg1 y) = deg2 (D.φ x y) (D.ψ x y) ∧
       D.mul (deg1 x) xi = deg3 (D.φ.flip x) ∧
@@ -651,6 +668,7 @@ theorem produits (x y : V) (w w' : W) (u : Module.Dual k V) :
 /-- **Page 24, « les produits restants sont alors forcés ».** The product `H¹ × H² → H³` is
 the only one compatible with associativity and the pairing `H¹ × H³ → H⁴`: a `u ∈ V̌` satisfies
 `t u = (t x) h` for every `t ∈ V` if and only if `u = x h`. -/
+@[montpellier "16, 24"]
 theorem produit_force (x : V) (c : k) (w : W) (u : Module.Dual k V) :
     (∀ t, D.mul (deg1 t) (deg3 u) = D.mul (D.mul (deg1 t) (deg1 x)) (deg2 c w)) ↔
       u = (D.mul (deg1 x) (deg2 c w)).2.2.2.1 := by
@@ -665,15 +683,18 @@ theorem produit_force (x : V) (c : k) (w : W) (u : Module.Dual k V) :
     simp [mul, deg1, deg2, deg3, act, mul_comm]
 
 /-- **Page 24, « on obtient ainsi une loi … unifère ».** -/
+@[montpellier "16, 24"]
 theorem one_mul (a : AlgHodge k V W) : D.mul (deg0 1) a = a := by
   obtain ⟨a0, a1, ⟨ac, aw⟩, a3, a4⟩ := a
   simp [mul, deg0, act]
 
+@[montpellier "16, 24–28"]
 theorem mul_one (a : AlgHodge k V W) : D.mul a (deg0 1) = a := by
   obtain ⟨a0, a1, ⟨ac, aw⟩, a3, a4⟩ := a
   simp [mul, deg0, act]
 
 /-- The multiplication is `k`-bilinear. -/
+@[montpellier "16, 24–28"]
 def mulₗ : AlgHodge k V W →ₗ[k] AlgHodge k V W →ₗ[k] AlgHodge k V W :=
   LinearMap.mk₂ k D.mul
     (fun a a' b => by
@@ -710,6 +731,7 @@ def Pair (a : AlgHodge k V W) : Prop := a.2.1 = 0 ∧ a.2.2.2.1 = 0
 def Impair (a : AlgHodge k V W) : Prop := a.1 = 0 ∧ a.2.2.1 = 0 ∧ a.2.2.2.2 = 0
 
 /-- **Page 24, anticommutativity (1): even elements are central.** -/
+@[montpellier "16, 24"]
 theorem mul_comm_of_pair {a : AlgHodge k V W} (ha : Pair a) (b : AlgHodge k V W) :
     D.mul a b = D.mul b a := by
   obtain ⟨a0, a1, ⟨ac, aw⟩, a3, a4⟩ := a
@@ -721,6 +743,7 @@ theorem mul_comm_of_pair {a : AlgHodge k V W} (ha : Pair a) (b : AlgHodge k V W)
   · simp [D.Q_symm aw bw]; ring
 
 /-- **Page 24, anticommutativity (2): odd elements anticommute.** -/
+@[montpellier "16, 24"]
 theorem mul_anticomm_of_impair {a b : AlgHodge k V W} (ha : Impair a) (hb : Impair b) :
     D.mul a b = -D.mul b a := by
   obtain ⟨a0, a1, ⟨ac, aw⟩, a3, a4⟩ := a
@@ -735,6 +758,7 @@ theorem mul_anticomm_of_impair {a b : AlgHodge k V W} (ha : Impair a) (hb : Impa
   · simp
 
 /-- **Page 24, anticommutativity (3): odd elements square to zero.** -/
+@[montpellier "16, 24"]
 theorem mul_self_of_impair {a : AlgHodge k V W} (ha : Impair a) : D.mul a a = 0 := by
   obtain ⟨a0, a1, ⟨ac, aw⟩, a3, a4⟩ := a
   obtain ⟨(rfl : a0 = 0), (h2 : (ac, aw) = 0), (rfl : a4 = 0)⟩ := ha
@@ -750,6 +774,7 @@ def IdentiteQuadrilineaire : Prop :=
 multiplication is associative if and only if
 `φ(x,y)φ(t,z) + Q(ψ(x,y), ψ(t,z)) = φ(t,x)φ(y,z) + Q(ψ(t,x), ψ(y,z))`. Only the triple
 `H¹ × H¹ × H¹` is not automatic; the others hold by the definition of `act`. -/
+@[montpellier "16, 24"]
 theorem assoc_iff :
     (∀ a b c : AlgHodge k V W, D.mul (D.mul a b) c = D.mul a (D.mul b c)) ↔
       D.IdentiteQuadrilineaire := by
@@ -776,6 +801,7 @@ def chi (x y z t : V) : k := D.φ x y * D.φ z t + D.Q (D.ψ x y) (D.ψ z t)
 
 /-- **Page 26, `x y z t = χ(x,y,z,t) ξ²`**, with the product taken from the left; this holds
 whether or not the multiplication is associative. -/
+@[montpellier "16, 26"]
 theorem chi_eq (x y z t : V) :
     D.mul (D.mul (D.mul (deg1 x) (deg1 y)) (deg1 z)) (deg1 t) = deg4 (D.chi x y z t) := by
   simp [mul, deg1, deg4, act, chi]
@@ -785,6 +811,7 @@ theorem chi_eq (x y z t : V) :
 
 /-- **Page 26, the quadrilinear form `χ` is alternating** as soon as the multiplication is
 associative: it vanishes whenever two of its arguments coincide. -/
+@[montpellier "16, 26"]
 theorem chi_alt (h : D.IdentiteQuadrilineaire) (x y z t : V) :
     D.chi x x z t = 0 ∧ D.chi x y y t = 0 ∧ D.chi x y z z = 0 ∧ D.chi x y x t = 0 ∧
       D.chi x y z x = 0 ∧ D.chi x y z y = 0 := by
@@ -801,6 +828,7 @@ theorem chi_alt (h : D.IdentiteQuadrilineaire) (x y z t : V) :
 
 /-- **Pages 24–26, associativity ⇔ `χ` alternating.** The quadrilinear identity is equivalent
 to `χ(x,y,y,t) = 0`: the vanishing in the two other adjacent positions is automatic. -/
+@[montpellier "16, 24–26"]
 theorem identite_iff_chi : D.IdentiteQuadrilineaire ↔ ∀ x y t : V, D.chi x y y t = 0 := by
   refine ⟨fun h x y t => (D.chi_alt h x y y t).2.1, fun g x y z t => ?_⟩
   have pol : ∀ x y z t : V, D.chi x y z t = -D.chi x z y t := by
@@ -851,6 +879,7 @@ def Poincare : Prop :=
 /-- **Page 24, « condition de Lefschetz ⇔ `φ` non dégénérée ».** `ξ² : H⁰ → H⁴` is always an
 isomorphism, and `ξ : H¹ → H³`, `x ↦ φ(·, x)`, is one iff `φ` is non-degenerate (`V` of finite
 dimension). -/
+@[montpellier "16, 24"]
 theorem lefschetz_iff [FiniteDimensional k V] : D.Lefschetz ↔ D.φ.Nondegenerate := by
   have e1 : (fun c : k => (D.mul (D.mul xi xi) (deg0 c)).2.2.2.2) = id := by
     funext c; simp [mul, xi, deg2, deg0]
@@ -871,6 +900,7 @@ theorem lefschetz_iff [FiniteDimensional k V] : D.Lefschetz ↔ D.φ.Nondegenera
 /-- **Page 24, « condition de Poincaré ⇔ `Q` non dégénérée ».** The pairings `H⁰ × H⁴` and
 `H¹ × H³` are always perfect, and `H² × H² → H⁴`, `(cξ + w, c'ξ + w') ↦ cc' + Q(w,w')`, is
 non-degenerate iff `Q` is. No finiteness is needed. -/
+@[montpellier "16, 24"]
 theorem poincare_iff : D.Poincare ↔ D.Q.Nondegenerate := by
   rw [nondegenerate_iff_of_symm _ D.Q_symm]
   have p0 : ∀ c d : k, (D.mul (deg0 c) (deg4 d)).2.2.2.2 = c * d := fun c d => by
@@ -896,6 +926,7 @@ end DonneesHodge
 /-- **Page 26, the reformulation `(V, χ, (W̃, Q̃, α), ξ)`.** From a symmetric form `Q̃` on
 `W̃`, an alternating `α : Λ²V → W̃` and `ξ ∈ W̃` with `Q̃(ξ,ξ) = 1`, the data of page 24 are
 recovered with `W = ξ^⊥`, `φ(x,y) = Q̃(α(x∧y), ξ)`, `ψ = α - φ ξ` and `Q = Q̃|_W`. -/
+@[montpellier "16, 26"]
 def reformulation {W' : Type*} [AddCommGroup W'] [Module k W']
     (Q' : LinearMap.BilinForm k W') (hQ' : ∀ u v, Q' u v = Q' v u)
     (α : V →ₗ[k] V →ₗ[k] W') (hα : ∀ x, α x x = 0) (ξ' : W') (hξ : Q' ξ' ξ' = 1) :
@@ -921,6 +952,7 @@ variable {W' : Type*} [AddCommGroup W'] [Module k W']
 `Q̃(α(x∧y), α(z∧t))` — so associativity reads `Q̃(α(x∧y), α(y∧t)) = 0`, the compatibility of
 `α` with `χ'` — and the two non-degeneracy conditions become « `Q̃` non dégénérée » and
 « `φ` non dégénérée ». -/
+@[montpellier "16, 26"]
 theorem reformulation_spec [FiniteDimensional k V] :
     let D := reformulation Q' hQ' α hα ξ' hξ
     (∀ x y, D.φ x y = Q' (α x y) ξ') ∧
@@ -994,6 +1026,7 @@ orthogonal idempotents `p j β` of sum `1`, `p j β` living in degree `j + 2β`,
 the block `(j, β)` to `(j, β + 1)` and killing the top `(j, n - j)` of each chain, and the
 image of `p j β` contained in `L^β` times the image of `p j 0` (`L^β P^j`, not merely a
 complement). -/
+@[montpellier "16, 8–12"]
 structure DecompositionPrimitive (π : ℤ → E) (n : ℕ) (L : E) (p : ℕ → ℕ → E) : Prop where
   idem : ∀ j ≤ n, ∀ β ≤ n - j, p j β * p j β = p j β
   orth : ∀ j ≤ n, ∀ β ≤ n - j, ∀ k ≤ n, ∀ γ ≤ n - k, (j, β) ≠ (k, γ) → p j β * p k γ = 0
@@ -1008,6 +1041,7 @@ structure DecompositionPrimitive (π : ℤ → E) (n : ℕ) (L : E) (p : ℕ →
 
 /-- The pseudo-inverse of pages 11–12, block by block:
 `Λ = ∑_j ∑_{β < n-j} L^β wⱼ L^{n-j-β-1} p_{j,β+1}`, and `Λ` kills the bottoms `p j 0`. -/
+@[montpellier "16, 11–12"]
 def pseudoInverse (n : ℕ) (L : E) (w : ℕ → E) (p : ℕ → ℕ → E) : E :=
   ∑ j ∈ Finset.range (n + 1), ∑ β ∈ Finset.range (n - j),
     L ^ β * w j * L ^ (n - j - (β + 1)) * p j (β + 1)
@@ -1063,6 +1097,7 @@ theorem inverse_bloc {w : ℕ → E} (h₁ : ∀ i ≤ n, w i * L ^ (n - i) * π
 /-- **Page 11, formula (6.9).** Below the middle (`j + 2β ≤ n`), with `α = β`, `i = j + 2β`:
 `π_{i,α} = L^α w_{i-2α} L^{n-i+α} πᵢ (1 - ∑_{α' > α} π_{i,α'})`; the sum is written over all
 blocks with a smaller primitive degree, `πᵢ` keeping those of degree `i`. -/
+@[montpellier "16, 11"]
 theorem formule_bas {w : ℕ → E} (h₁ : ∀ i ≤ n, w i * L ^ (n - i) * π i = π i)
     {j β : ℕ} (hj : j ≤ n) (hjβ : j + 2 * β ≤ n) :
     p j β = L ^ β * w j * L ^ (n - j - β) * π ((j : ℤ) + 2 * β) *
@@ -1099,6 +1134,7 @@ theorem formule_bas {w : ℕ → E} (h₁ : ∀ i ≤ n, w i * L ^ (n - i) * π 
 
 /-- **Page 11, formula (6.10).** Above the middle (`n ≤ j + 2β`), with `i = 2n - j - 2β`:
 `π_{2n-i,α} = L^{n-i} π_{i,α} wᵢ π_{2n-i}`. -/
+@[montpellier "16, 11"]
 theorem formule_haut {w : ℕ → E}
     (h₂ : ∀ i ≤ n, L ^ (n - i) * w i * π (2 * n - i) = π (2 * n - i))
     {j β : ℕ} (hj : j ≤ n) (hβ : β ≤ n - j) (hn : n ≤ j + 2 * β) :
@@ -1119,6 +1155,7 @@ theorem formule_haut {w : ℕ → E}
 and the one-sided inverses `wᵢ` of `L^{n-i}` of `(6.3)` lie in `ℰ`, every projector of the
 primitive decomposition lies in `ℰ`. Induction on the primitive degree `j` (the folder's
 descending induction on `α`), through `formule_bas` and `formule_haut`. -/
+@[montpellier "16, 10–11"]
 theorem projecteurs_primitifs_mem (ℰ : Subring E) (G : Graduation π n) (hLE : L ∈ ℰ)
     (hL : Homogene π 2 L) {w : ℕ → E} (hwE : ∀ i ≤ n, w i ∈ ℰ)
     (hw : ∀ i ≤ n, Homogene π (-(2 * ((n : ℤ) - i))) (w i))
@@ -1146,6 +1183,7 @@ theorem projecteurs_primitifs_mem (ℰ : Subring E) (G : Graduation π n) (hLE :
         (hwE _ (by omega))) (hπ _)
 
 /-- **Page 9, `(6.7)`, first relation.** `LΛ = 1 - ∑_{0 ≤ i ≤ n} π_{i,0}`. -/
+@[montpellier "16, 9"]
 theorem mul_pseudoInverse {w : ℕ → E} (h₁ : ∀ i ≤ n, w i * L ^ (n - i) * π i = π i) :
     L * pseudoInverse n L w p = 1 - ∑ j ∈ Finset.range (n + 1), p j 0 := by
   rw [eq_sub_iff_add_eq, ← D.sum]
@@ -1163,6 +1201,7 @@ theorem mul_pseudoInverse {w : ℕ → E} (h₁ : ∀ i ≤ n, w i * L ^ (n - i)
 
 /-- **Page 9, `(6.7)`, second relation.** `ΛL = 1 - ∑_{n ≤ i ≤ 2n} π_{i,0}`, the tops of the
 chains. -/
+@[montpellier "16, 9"]
 theorem pseudoInverse_mul {w : ℕ → E} (h₁ : ∀ i ≤ n, w i * L ^ (n - i) * π i = π i) :
     pseudoInverse n L w p * L = 1 - ∑ j ∈ Finset.range (n + 1), p j (n - j) := by
   rw [eq_sub_iff_add_eq, ← D.sum]
@@ -1197,6 +1236,7 @@ end DecompositionPrimitive
 `wᵢ` of `L^{n-i}` (`(6.3)ᵢ`), and let `p` be the primitive decomposition, read in `E`. Then the
 grading projectors, every primitive projector and the pseudo-inverse `Λ` lie in `ℰ`; `Λ` has
 degree `-2` and satisfies `(6.7)`. -/
+@[montpellier "16, 4–12"]
 theorem critere_lefschetz (ℰ : Subring E) (G : Graduation π n) {L : E} (hLE : L ∈ ℰ)
     (hL : Homogene π 2 L) {w : ℕ → E} (hwE : ∀ i ≤ n, w i ∈ ℰ)
     (hw : ∀ i ≤ n, Homogene π (-(2 * ((n : ℤ) - i))) (w i))
@@ -1251,6 +1291,7 @@ theorem DecompositionPrimitive.proj_eq_sum (D : DecompositionPrimitive π n L p)
 
 /-- **Page 9, (3) ⇒ (1), the projectors.** If every primitive projector `p_{j,β}` lies in the
 subring `ℰ`, so does every grading projector `π_a`. -/
+@[montpellier "16, 9"]
 theorem projecteurs_mem_of_primitifs (ℰ : Subring E) (D : DecompositionPrimitive π n L p)
     (hp : ∀ j ≤ n, ∀ β ≤ n - j, p j β ∈ ℰ) (a : ℤ) : π a ∈ ℰ := by
   rw [D.proj_eq_sum a]
@@ -1338,6 +1379,7 @@ theorem decomposition_c : DecompositionPrimitive (πc R) 1 (Lc R) (pc R) where
 grading projector and every primitive projector lie in the subring `ℰ` of lower-triangular
 matrices; yet no `w ∈ ℰ` satisfies `w L π₀ = π₀` (`(6.3)₀` fails in `ℰ`) and no `Λ ∈ ℰ`
 satisfies the first relation of `(6.7)`. -/
+@[montpellier "16, 9"]
 theorem reciproque_trois_un_fausse [Nontrivial R] :
     ∃ (π : ℤ → Matrix (Fin 2) (Fin 2) R) (L : Matrix (Fin 2) (Fin 2) R)
       (p : ℕ → ℕ → Matrix (Fin 2) (Fin 2) R) (ℰ : Subring (Matrix (Fin 2) (Fin 2) R)),
@@ -1406,6 +1448,7 @@ variable {k H₂ H₄ G₂ G₄ : Type*} [Field k]
 
 /-- Page 49, even dimension (the edition's reconstruction): `A''⁰(X) + A⁰(Y) + A'⁰(X)` puts the
 algebraic classes of `H^{2m+2}(X)` in `L² = φ_* L_Y φ^*` of those of `H^{2m-2}(X)`. -/
+@[montpellier "16, 49"]
 theorem split_even (res : H₂ →ₗ[k] G₂) (hres : Function.Surjective res)
     (LY : G₂ ≃ₗ[k] G₄) (gys : G₄ →ₗ[k] H₄)
     (aH₂ : Submodule k H₂) (aH₄ : Submodule k H₄) (aG₂ : Submodule k G₂) (aG₄ : Submodule k G₄)
@@ -1422,6 +1465,7 @@ theorem split_even (res : H₂ →ₗ[k] G₂) (hres : Function.Surjective res)
 /-- Page 49, odd dimension: with `L = φ_* φ^*` invertible, `A''⁰`, `A'⁰` and the stability of
 the algebraic classes under `p = φ^* L⁻¹ φ_*` give `A⁰(X)` (surjectivity on algebraic
 classes). The factorisation `L = φ_* φ^*` is not even needed: the argument only inverts `L`. -/
+@[montpellier "16, 49"]
 theorem split_odd (res : H₂ →ₗ[k] G₂) (gys : G₂ →ₗ[k] H₄) (L : H₂ ≃ₗ[k] H₄)
     (aH₂ : Submodule k H₂) (aH₄ : Submodule k H₄) (aG : Submodule k G₂)
     (hA'' : aH₄ ≤ aG.map gys) (hp : ∀ y ∈ aG, res (L.symm (gys y)) ∈ aG)
@@ -1433,6 +1477,7 @@ theorem split_odd (res : H₂ →ₗ[k] G₂) (gys : G₂ →ₗ[k] H₄) (L : H
 
 /-- The odd case is circular: if `φ^*` and `φ_*` keep algebraic classes and `L⁻¹` does
 (`A⁰(X)`), the projection `p = φ^* L⁻¹ φ_*` keeps them. -/
+@[montpellier "16, 49"]
 theorem split_odd_circular (res : H₂ →ₗ[k] G₂) (gys : G₂ →ₗ[k] H₄) (L : H₂ ≃ₗ[k] H₄)
     (aH₂ : Submodule k H₂) (aH₄ : Submodule k H₄) (aG : Submodule k G₂)
     (hres : ∀ x ∈ aH₂, res x ∈ aG) (hgys : ∀ y ∈ aG, gys y ∈ aH₄)

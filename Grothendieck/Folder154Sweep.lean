@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -153,11 +154,13 @@ theorem inv_mul_prod_le (σ : Perm (Fin 7)) (w : List ℕ) :
     have := inv_mul_sig_le σ i
     omega
 
+@[montpellier "154, 142, 144, 145"]
 theorem inv_run_le_length (w : List ℕ) : inv (run w) ≤ w.length := by
   have := inv_mul_prod_le 1 w
   simpa [run, inv_one] using this
 
 /-- A word with as many letters as its permutation has inversions is reduced. -/
+@[montpellier "154, 142, 144, 145"]
 theorem isReduced_of_inv_eq {w : List ℕ} (h : inv (run w) = w.length) : IsReduced w :=
   fun w' hw' => h ▸ hw' ▸ inv_run_le_length w'
 
@@ -173,13 +176,17 @@ def word142 : List ℕ := [4, 6, 5, 4, 3, 2, 3, 4, 3, 5, 4, 6, 1]
 
 /-- Each crossing of the redraw is an adjacent transposition: the word crosses exactly the
 redraw's pairs, in the redraw's order. -/
+@[montpellier "154, 142"]
 theorem pairs_word142 : pairs word142 1 = crossings142 := by decide
 
 /-- The strands arrive in the order `G A E D C F B`. -/
+@[montpellier "154, 142"]
 theorem run_word142 : row (run word142) = [G, A, E, D, C, F, B] := by decide
 
+@[montpellier "154, 142"]
 theorem inv_run_word142 : inv (run word142) = 13 := by decide
 
+@[montpellier "154, 142"]
 theorem isReduced_word142 : IsReduced word142 :=
   isReduced_of_inv_eq (by rw [inv_run_word142]; rfl)
 
@@ -189,6 +196,7 @@ def uncrossed142 : List (Sym2 (Fin 7)) :=
 
 /-- Each crossed pair is crossed once, and a pair of distinct strands is crossed if and only if it
 is not one of the 8 pairs `A/B, A/C, A/D, A/E, A/F, C/F, D/F, E/F`. -/
+@[montpellier "154, 142"]
 theorem uncrossed142_spec :
     crossings142.Nodup ∧ crossings142.length = 13 ∧ uncrossed142.length = 8 ∧
       ∀ a b : Fin 7, a < b → (s(a, b) ∈ crossings142 ↔ s(a, b) ∉ uncrossed142) := by
@@ -212,6 +220,7 @@ def table144 : List (List (Fin 7)) :=
 /-- The rows of page 144 are states of the sweep of page 142, after `0, 2, 3, 4, 5, 6, 7, 8, 10`
 and `13` of its crossings: the table is the same sweep, the crossings `D/E, F/G`, then `C/E, B/D`,
 then `C/D, B/F, G/A` being made at once. -/
+@[montpellier "154, 142, 144"]
 theorem table144_eq_states :
     table144 = [0, 2, 3, 4, 5, 6, 7, 8, 10, 13].map (fun k => row (stateAfter word142 k)) := by
   decide
@@ -224,15 +233,18 @@ def word145_8 : List ℕ := [3, 4, 5, 2, 6, 1, 5, 3]
 /-- The first nine terms, the ninth `σ₆` being read as uncertain. -/
 def word145_9 : List ℕ := word145_8 ++ [6]
 
+@[montpellier "154, 145"]
 theorem isReduced_word145_8 : IsReduced word145_8 :=
   isReduced_of_inv_eq (by decide)
 
 /-- With the ninth term, `C` and `F` cross a second time (third and ninth crossings). -/
+@[montpellier "154, 145"]
 theorem word145_9_crosses_CF_twice :
     (pairs word145_9 1)[2]? = some s(C, F) ∧ (pairs word145_9 1)[8]? = some s(F, C) := by
   decide
 
 /-- The nine terms are not reduced: seven letters give the same permutation. -/
+@[montpellier "154, 145"]
 theorem not_isReduced_word145_9 : ¬ IsReduced word145_9 := fun h => by
   have := h [3, 2, 1, 4, 3, 6, 5] (by decide)
   simp [word145_9, word145_8] at this

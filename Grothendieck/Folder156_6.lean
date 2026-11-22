@@ -4,6 +4,7 @@ public import Mathlib.Order.UpperLower.CompleteLattice
 public import Mathlib.Order.UpperLower.Principal
 public import Mathlib.Data.Set.Finite.Basic
 public import Mathlib.Data.Set.Finite.Lattice
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -80,16 +81,19 @@ def pull (φ : I → I') (hφ : Monotone φ) (A : LowerSet I') : LowerSet I :=
     x ∈ pull φ hφ A ↔ φ x ∈ A := Iff.rfl
 
 /-- `φ⁻¹` commutes with arbitrary unions of closed parts. -/
+@[montpellier "156-6, 49"]
 theorem pull_iSup₂ (φ : I → I') (hφ : Monotone φ) (S : Set (LowerSet I')) :
     pull φ hφ (sSup S) = ⨆ A ∈ S, pull φ hφ A := by
   ext x; simp
 
 /-- `φ⁻¹` commutes with arbitrary intersections of closed parts. -/
+@[montpellier "156-6, 49"]
 theorem pull_iInf₂ (φ : I → I') (hφ : Monotone φ) (S : Set (LowerSet I')) :
     pull φ hφ (sInf S) = ⨅ A ∈ S, pull φ hφ A := by
   ext x; simp
 
 /-- Page 49, injectivity: for `I'` ordered, `φ` is determined by `φ⁻¹`. -/
+@[montpellier "156-6, 49"]
 theorem pull_injective {I' : Type*} [PartialOrder I'] {φ ψ : I → I'} (hφ : Monotone φ)
     (hψ : Monotone ψ) (h : pull φ hφ = pull ψ hψ) : φ = ψ := by
   funext x
@@ -101,6 +105,7 @@ theorem pull_injective {I' : Type*} [PartialOrder I'] {φ ψ : I → I'} (hφ : 
 
 /-- Page 49, the image: a map of closed parts commuting with arbitrary unions and intersections
 is `φ⁻¹` for an increasing `φ`. -/
+@[montpellier "156-6, 49"]
 theorem exists_pull (g : LowerSet I' → LowerSet I)
     (hsup : ∀ S : Set (LowerSet I'), g (sSup S) = ⨆ A ∈ S, g A)
     (hinf : ∀ S : Set (LowerSet I'), g (sInf S) = ⨅ A ∈ S, g A) :
@@ -161,6 +166,7 @@ instance : Preorder Indisc where
 
 /-- For preordered sets the Lemma's injectivity fails: the identity and the exchange of the two
 points have the same `φ⁻¹`. -/
+@[montpellier "156-6, 49"]
 theorem not_pull_injective_preorder :
     ∃ (φ ψ : Indisc → Indisc) (hφ : Monotone φ) (hψ : Monotone ψ),
       φ ≠ ψ ∧ pull φ hφ = pull ψ hψ := by
@@ -223,6 +229,7 @@ theorem topOnly_bot : topOnly ⊥ = ⊥ := topOnly_eq_bot (by
   rw [← h] at this; exact LowerSet.notMem_bot this)
 
 /-- `topOnly` is not a `φ⁻¹`: arbitrary unions cannot be weakened to finite ones. -/
+@[montpellier "156-6, 49"]
 theorem topOnly_ne_pull (φ : Unit → ℕ) (hφ : Monotone φ) : topOnly ≠ pull φ hφ := by
   intro h
   have h1 : pull φ hφ (LowerSet.Iic (φ ())) = ⊤ := by
@@ -244,6 +251,7 @@ def IsClosedFamily (K : Set (Set I)) : Prop := ∀ s ∈ K, ∀ t ⊆ s, t ∈ K
 def IsSpecious (K : Set (Set I)) : Prop := ∀ S ⊆ K, ⋃₀ S ∈ K
 
 /-- Page 40: a closed family is spécieuse iff it is `𝔓(I')` for a part `I'` of `I`. -/
+@[montpellier "156-6, 40"]
 theorem specious_iff {K : Set (Set I)} (hK : IsClosedFamily K) :
     IsSpecious K ↔ ∃ J : Set I, K = 𝒫 J := by
   constructor
@@ -272,6 +280,7 @@ theorem finset_mem_of_union {K : Set (Set I)} (hK : IsClosedFamily K) (hne : K.N
     exact fun z hz => hT (Finset.mem_coe.2 (Finset.mem_insert_of_mem hz))
 
 /-- Page 40, for `I` finite: stability under the union of two simplices suffices. -/
+@[montpellier "156-6, 40"]
 theorem specious_of_union [Finite I] {K : Set (Set I)} (hK : IsClosedFamily K)
     (hne : K.Nonempty) (hu : ∀ s ∈ K, ∀ t ∈ K, s ∪ t ∈ K) : IsSpecious K := by
   have hJ : (⋃₀ K) ∈ K := by
@@ -284,6 +293,7 @@ theorem specious_of_union [Finite I] {K : Set (Set I)} (hK : IsClosedFamily K)
 
 /-- For `I = ℕ`, the finite parts form a closed family, nonempty and stable under binary unions,
 which is not spécieuse. -/
+@[montpellier "156-6, 40"]
 theorem finite_parts_not_specious :
     IsClosedFamily {s : Set ℕ | s.Finite} ∧ ({s : Set ℕ | s.Finite}).Nonempty ∧
       (∀ s ∈ {s : Set ℕ | s.Finite}, ∀ t ∈ {s : Set ℕ | s.Finite},
@@ -309,12 +319,14 @@ def omb (Y : M) : Set M := {x | IsMin x ∧ x ≤ Y}
 
 /-- At 8 (page 45) in a trivial atelier: every `X` has a lieu `x ∈ omb X` in no `omb Y`,
 `Y < X`. -/
+@[montpellier "156-6, 45"]
 def At8 : Prop := ∀ X : M, ∃ x ∈ omb M X, ∀ Y, Y < X → x ∉ omb M Y
 
 /-- The « successeur » reading: `x` minimal below `X` with nothing strictly between. -/
 def At8Cover : Prop := ∀ X : M, ∃ x ∈ omb M X, ∀ Y, x < Y → ¬ Y < X
 
 /-- At 8 holds in a trivial atelier iff every multistrate is minimal. -/
+@[montpellier "156-6, 44, 49–50"]
 theorem at8_iff : At8 M ↔ ∀ X : M, IsMin X := by
   constructor
   · intro h X
@@ -326,6 +338,7 @@ theorem at8_iff : At8 M ↔ ∀ X : M, IsMin X := by
     exact ⟨X, ⟨h X, le_rfl⟩, fun Y hY _ => (h X).not_lt hY⟩
 
 /-- At 8 holds in a trivial atelier iff the order of `𝓜` is equality: `𝓜` is discrete. -/
+@[montpellier "156-6, 44, 49–50"]
 theorem at8_iff_discrete : At8 M ↔ ∀ X Y : M, X ≤ Y → X = Y := by
   rw [at8_iff]
   constructor
@@ -334,6 +347,7 @@ theorem at8_iff_discrete : At8 M ↔ ∀ X Y : M, X ≤ Y → X = Y := by
 
 /-- The « successeur » reading is strictly weaker: the chain `false < true` satisfies it and
 not At 8. -/
+@[montpellier "156-6, 44, 49–50"]
 theorem at8Cover_not_at8 : At8Cover Bool ∧ ¬ At8 Bool := by
   refine ⟨?_, ?_⟩
   · intro X

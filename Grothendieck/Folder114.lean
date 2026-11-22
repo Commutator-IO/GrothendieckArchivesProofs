@@ -7,6 +7,7 @@ public import Mathlib.CategoryTheory.PUnit
 public import Mathlib.CategoryTheory.Yoneda
 public import Mathlib.CategoryTheory.SingleObj
 public import Mathlib.Data.ZMod.Defs
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -112,6 +113,7 @@ abbrev ClasseDeFoncteurs : Type (u + 1) :=
 two-out-of-three `comp_mem`, `of_comp_left`, `of_comp_right`, and `retract`),
 LB (`final`: `A → e ∈ W` when `A` has a final object) and LC (`theoremeA`: for
 `v : A → B` over `w : B → C`, if every `A/c → B/c` is in `W`, then `v` is). -/
+@[montpellier "114, 3"]
 structure LocalisateurFondamental (W : ClasseDeFoncteurs.{u}) : Prop where
   id_mem : ∀ (A : Type u) [Category.{u} A], W (𝟭 A)
   comp_mem : ∀ {A B C : Type u} [Category.{u} A] [Category.{u} B] [Category.{u} C]
@@ -127,6 +129,7 @@ structure LocalisateurFondamental (W : ClasseDeFoncteurs.{u}) : Prop where
     (v : A ⥤ B) (w : B ⥤ C), (∀ c : C, W (CostructuredArrow.pre v w c)) → W v
 
 /-- `W₀`: the functors inducing a bijection on connected components. -/
+@[montpellier "114, 3"]
 def W₀ : ClasseDeFoncteurs.{u} := fun _ _ _ _ F => Bijective F.mapConnectedComponents
 
 section
@@ -152,6 +155,7 @@ lemma bijective_star (A : Type u) [Category.{u} A] [IsConnected A] :
     fun y => Quotient.inductionOn y fun _ =>
       ⟨Quotient.mk _ (Classical.arbitrary A), Quotient.sound (Zigzag.of_hom (eqToHom (by ext)))⟩⟩
 
+@[montpellier "114, 3"]
 theorem W₀_localisateurFondamental : LocalisateurFondamental W₀.{u} where
   id_mem A _ := (mapCC_id (J := A) ▸ bijective_id :)
   comp_mem F G hF hG := (mapCC_comp F G ▸ hG.comp hF :)
@@ -208,10 +212,12 @@ theorem W₀_localisateurFondamental : LocalisateurFondamental W₀.{u} where
 /-! ### Asphericity, and `W₀` -/
 
 /-- A small category `A` is `W`-aspheric when `A → e` is in `W`. -/
+@[montpellier "114, 3"]
 def Aspherique (W : ClasseDeFoncteurs.{u}) (A : Type u) [Category.{u} A] : Prop :=
   W (Functor.star.{u} A)
 
 /-- `W₀`-aspheric and `0`-connected are the same word. -/
+@[montpellier "114, 3"]
 theorem aspherique_W₀_iff (A : Type u) [Category.{u} A] :
     Aspherique W₀ A ↔ IsConnected A := by
   constructor
@@ -256,6 +262,7 @@ def elt {A : Type u} [Category.{u} A] {a b : A} (Y : Tranche (produitRep a b)) :
 
 /-- `A` is *totally `W`-aspheric*: `W`-aspheric, and `a × b` is `W`-aspheric
 in `Â` (i.e. `A_{/a×b}` is `W`-aspheric) for all `a, b`. -/
+@[montpellier "114, 3"]
 def TotalementAspherique (W : ClasseDeFoncteurs.{u}) (A : Type u) [Category.{u} A] : Prop :=
   Aspherique W A ∧ ∀ a b : A, Aspherique W (Tranche (produitRep a b))
 
@@ -267,6 +274,7 @@ def ConditionIII (A : Type u) [Category.{u} A] : Prop :=
 /-- « il reste à voir que la dernière condition est exactement (iii) » :
 totally `W₀`-aspheric is condition (iii) — including « (iii) implies that `A`
 is `0`-connected ». -/
+@[montpellier "114, 3"]
 theorem totalementAspherique_W₀_iff (A : Type u) [Category.{u} A] :
     TotalementAspherique W₀ A ↔ ConditionIII A := by
   simp only [TotalementAspherique, ConditionIII, aspherique_W₀_iff]
@@ -280,11 +288,13 @@ theorem totalementAspherique_W₀_iff (A : Type u) [Category.{u} A] :
 /-! ### The minimal fundamental localiser -/
 
 /-- The intersection of all fundamental localisers. -/
+@[montpellier "114, 3"]
 def Wmin : ClasseDeFoncteurs.{u} := fun _ _ _ _ F =>
   ∀ W : ClasseDeFoncteurs.{u}, LocalisateurFondamental W → W F
 
 /-- The intersection of all fundamental localisers is one: the minimal
 fundamental localiser exists. -/
+@[montpellier "114, 3"]
 theorem Wmin_localisateurFondamental : LocalisateurFondamental Wmin.{u} where
   id_mem A _ _ hW := hW.id_mem A
   comp_mem F G hF hG W hW := hW.comp_mem F G (hF W hW) (hG W hW)
@@ -302,6 +312,7 @@ def Inclus (W W' : ClasseDeFoncteurs.{u}) : Prop :=
 
 /-- `W_∞ ⊆ W`: the minimal localiser is contained in every fundamental
 localiser. -/
+@[montpellier "114, 3"]
 theorem Wmin_inclus {W : ClasseDeFoncteurs.{u}} (hW : LocalisateurFondamental W) :
     Inclus Wmin W := fun _ _ _ _ _ hF => hF W hW
 
@@ -313,6 +324,7 @@ theorem totalementAspherique_mono {W W' : ClasseDeFoncteurs.{u}} (h : Inclus W W
 
 /-- **Proposition 4, (i) ⇒ (ii)**, with `W_∞` the minimal fundamental
 localiser. -/
+@[montpellier "114, 3"]
 theorem proposition4_i_ii {W : ClasseDeFoncteurs.{u}} (hW : LocalisateurFondamental W)
     {A : Type u} [Category.{u} A] (h : TotalementAspherique Wmin A) :
     TotalementAspherique W A :=
@@ -320,6 +332,7 @@ theorem proposition4_i_ii {W : ClasseDeFoncteurs.{u}} (hW : LocalisateurFondamen
 
 /-- The argument of Proposition 4 for (ii) ⇒ (iii), with the inclusion
 `W ⊆ W₀` it needs made a hypothesis. -/
+@[montpellier "114, 3"]
 theorem proposition4_ii_iii {W : ClasseDeFoncteurs.{u}} (hW : Inclus W W₀)
     (A : Type u) [Category.{u} A] (h : TotalementAspherique W A) : ConditionIII A :=
   (totalementAspherique_W₀_iff A).1 (totalementAspherique_mono hW h)
@@ -339,6 +352,7 @@ theorem Wtrivial_localisateurFondamental : LocalisateurFondamental Wtrivial.{u} 
 /-- `W₋₁`: the functors `A → B` with `A` empty iff `B` empty. -/
 def Wmoins1 : ClasseDeFoncteurs.{u} := fun A B _ _ _ => (Nonempty A ↔ Nonempty B)
 
+@[montpellier "114, 3"]
 theorem Wmoins1_localisateurFondamental : LocalisateurFondamental Wmoins1.{u} where
   id_mem _ _ := Iff.rfl
   comp_mem _ _ h₁ h₂ := h₁.trans h₂
@@ -361,11 +375,13 @@ theorem star_deuxPoints_not_W₀ : ¬ W₀ (Functor.star.{u} (Discrete (ULift.{u
 
 /-- **Finding: `W₀` is not the coarsest fundamental localiser.** `W₋₁` is a
 fundamental localiser that is not contained in `W₀`. -/
+@[montpellier "114, 3"]
 theorem Wmoins1_not_inclus_W₀ : ¬ Inclus Wmoins1.{u} W₀.{u} := fun h =>
   star_deuxPoints_not_W₀ (h _ (show Nonempty _ ↔ Nonempty _ from
     ⟨fun _ => ⟨⟨⟨⟩⟩⟩, fun _ => ⟨⟨⟨true⟩⟩⟩⟩))
 
 /-- … nor is the trivial one. -/
+@[montpellier "114, 3"]
 theorem Wtrivial_not_inclus_W₀ : ¬ Inclus Wtrivial.{u} W₀.{u} := fun h =>
   star_deuxPoints_not_W₀ (h _ trivial)
 
@@ -424,6 +440,7 @@ lemma invariant_span (p q : SingleObj.star G2 ⟶ SingleObj.star G2) :
 /-- **Finding: Proposition 4, (ii) ⇒ (iii), fails for the fundamental localiser
 `W₋₁`.** `B(ℤ/2)` is totally `W₋₁`-aspheric, but `∗ × ∗` is not
 `0`-connected. -/
+@[montpellier "114, 3"]
 theorem contreExemple_proposition4 :
     TotalementAspherique Wmoins1.{0} BG2 ∧ ¬ ConditionIII BG2 := by
   refine ⟨⟨⟨fun _ => ⟨⟨⟨⟩⟩⟩, fun _ => ⟨SingleObj.star G2⟩⟩,
@@ -439,6 +456,7 @@ theorem contreExemple_proposition4 :
 /-- **Finding: Proposition 4, (ii) ⇒ (i), fails for `W = W₋₁`.** `B(ℤ/2)` is
 totally `W₋₁`-aspheric but not totally `W_∞`-aspheric: `W_∞ ⊆ W₀`, and
 (iii) fails. -/
+@[montpellier "114, 3"]
 theorem contreExemple_proposition4_i_ii :
     TotalementAspherique Wmoins1.{0} BG2 ∧ ¬ TotalementAspherique Wmin.{0} BG2 :=
   ⟨contreExemple_proposition4.1, fun h => contreExemple_proposition4.2

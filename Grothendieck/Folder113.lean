@@ -5,6 +5,7 @@ public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
 public import Mathlib.CategoryTheory.Preadditive.Opposite
 public import Mathlib.Algebra.Category.ModuleCat.Abelian
 public import Grothendieck.Upstream.KaroubiAdditiveFunctors
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -61,6 +62,7 @@ variable (P : Type u) [Category.{v} P]
 /-- **Free completion under retracts** (in mathlib). Restriction along
 `P → Kar P` is an equivalence `Fun(Kar P, D) ≌ Fun(P, D)` for `D` idempotent
 complete. -/
+@[montpellier "113, 3"]
 theorem enveloppe_libre (D : Type u') [Category.{v'} D] [IsIdempotentComplete D] :
     ((Functor.whiskeringLeft P (Karoubi P) D).obj (toKaroubi P)).IsEquivalence :=
   inferInstance
@@ -126,6 +128,7 @@ def restrictionAdditive : ((Karoubi P)ᵒᵖ ⥤+ D) ⥤ (Pᵒᵖ ⥤+ D) :=
 /-- **Morita invariance**, `(Kar P)^k ≃ P^k` in its additive form: restriction
 along `P° → (Kar P)°` is an equivalence from additive functors `(Kar P)° → D`
 to additive functors `P° → D`, for `D` preadditive and idempotent complete. -/
+@[montpellier "113, 3"]
 instance morita [IsIdempotentComplete D] : (restrictionAdditive P D).IsEquivalence := by
   let W := (Functor.whiskeringLeft Pᵒᵖ (Karoubi P)ᵒᵖ D).obj (toKaroubi P).op
   have hW : W.FullyFaithful := Functor.FullyFaithful.ofFullyFaithful W
@@ -143,6 +146,7 @@ instance morita [IsIdempotentComplete D] : (restrictionAdditive P D).IsEquivalen
   exact { }
 
 /-- The case of modules: `(Kar P)^k ≃ P^k` with values in `k`-modules. -/
+@[montpellier "113, 3"]
 theorem morita_module (k : Type u') [CommRing k] :
     (restrictionAdditive P (ModuleCat.{u'} k)).IsEquivalence :=
   inferInstance

@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import OpenProblems.AbelianVarieties
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -158,6 +159,7 @@ theorem opposite (hc : ∀ i, c i ≠ 0) (W : Submodule ℂ (Fin (m + 1) → ℂ
 
 /-- **p:kostant in type `A_{n-1}`** (folder 123, pp. 21–22): for `G = PGL_n(ℂ)`, the upper
 triangular Borel and any Borel containing the centraliser of a cyclic element are opposite. -/
+@[montpellier "123, 21–22"]
 theorem kostantOppositeTypeA (n : ℕ) : KostantOppositeTypeA n := by
   intro c hc V _ hdim hstab k v hv h0
   cases n with

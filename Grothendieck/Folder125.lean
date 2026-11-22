@@ -2,6 +2,7 @@ module
 
 public import Mathlib.Algebra.Module.FinitePresentation
 public import Mathlib.LinearAlgebra.Dual.Lemmas
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -92,6 +93,7 @@ variable {L G C : ℕ → Type*} [∀ p, AddCommGroup (L p)] [∀ p, AddCommGrou
 /-- **Premier étage ⇔ deuxième étage.** In a long exact sequence
 `⋯ → L p → G p → C p → L (p+1) → ⋯`, the terms `C p` vanish for all `p ⩾ m` if and
 only if `L p → G p` is bijective for `p > m` and surjective for `p = m`. -/
+@[montpellier "125, feuillet 2"]
 theorem etage1_iff_etage2
     (exG : ∀ p, Function.Exact (a p) (b p))
     (exC : ∀ p, Function.Exact (b p) (δ p))
@@ -136,6 +138,7 @@ variable {k : Type*} [Field k] {L G : ℕ → Type*} [∀ p, AddCommGroup (L p)]
 /-- **Deuxième étage ⇔ troisième étage.** For `m ⩽ r`: `a p` is bijective for
 `m < p ⩽ r` and surjective for `p = m` if and only if its transpose, which sits in
 degree `q = r - p`, is bijective for `q < r - m` and injective for `q = r - m`. -/
+@[montpellier "125, feuillet 2"]
 theorem etage2_iff_etage3 {m r : ℕ} (hmr : m ≤ r) :
     ((∀ p, m < p → p ≤ r → Function.Bijective (a p)) ∧ Function.Surjective (a m)) ↔
       ((∀ q, q < r - m → Function.Bijective (a (r - q)).dualMap) ∧
@@ -175,6 +178,7 @@ theorem lemme_III18_general {M B : Type*} [AddCommGroup M] [Module R M]
 /-- **Feuillet 3 (III-18), affine form.** `R` Noetherian, `B` of finite type,
 `u : Rⁿ → B` an isomorphism on the germs at `𝔭`: then `u` is an isomorphism over
 a neighbourhood `D(f)` of `𝔭`. -/
+@[montpellier "125, feuillet 3"]
 theorem lemme_III18 [IsNoetherianRing R] {B : Type*} [AddCommGroup B] [Module R B]
     [Module.Finite R B] {n : ℕ} (u : (Fin n → R) →ₗ[R] B) (p : Ideal R) [p.IsPrime]
     (hu : Function.Bijective (LocalizedModule.map p.primeCompl u)) :

@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -190,10 +191,12 @@ variable {r : ℕ}
 /-- The gluings of `a` (marking `P`) to `a'` (marking `Q`) realising the anti-isomorphism
 `k ↦ c - k` of `ℤ/r`-torsors: lifts `F` of orientation-reversing homeomorphisms of the circle
 (`F` continuous, strictly antitone, `F (x + 1) = F x - 1`), normalised by `F (p k) = q (c - k)`. -/
+@[montpellier "148, 55–58"]
 def gluings (P Q : Marking r) (c : ℤ) : Set C(ℝ, ℝ) :=
   {F | StrictAnti F ∧ (∀ x, F (x + 1) = F x - 1) ∧ ∀ k, F (P.pt k) = Q.pt (c - k)}
 
 /-- The space of gluings is non-empty: `F = interp_Q ∘ (c - ·) ∘ interp_P⁻¹`. -/
+@[montpellier "148, 55–58"]
 theorem gluings_nonempty (P Q : Marking r) (c : ℤ) : (gluings P Q c).Nonempty := by
   refine ⟨⟨fun x => Q.interp (c - P.interpHomeomorph.symm x), by
     exact Q.continuous_interp.comp (continuous_const.sub P.interpHomeomorph.symm.continuous)⟩,
@@ -210,6 +213,7 @@ theorem gluings_nonempty (P Q : Marking r) (c : ℤ) : (gluings P Q c).Nonempty 
     simp [Marking.interpHomeomorph_symm_pt, ← Q.interp_intCast]
 
 /-- The space of gluings is convex in `C(ℝ, ℝ)`. -/
+@[montpellier "148, 55–58"]
 theorem convex_gluings (P Q : Marking r) (c : ℤ) : Convex ℝ (gluings P Q c) := by
   intro F ⟨hF1, hF2, hF3⟩ G ⟨hG1, hG2, hG3⟩ a b ha hb hab
   refine ⟨fun x y hxy => ?_, fun x => ?_, fun k => ?_⟩
@@ -250,6 +254,7 @@ theorem surjective_of_mem_gluings {P Q : Marking r} {c : ℤ} {F : C(ℝ, ℝ)}
   exact ⟨y, hy⟩
 
 /-- Each gluing is a homeomorphism of `ℝ` (an orientation-reversing one). -/
+@[montpellier "148, 55–58"]
 noncomputable def toHomeomorph {P Q : Marking r} {c : ℤ} (F : C(ℝ, ℝ)) (hF : F ∈ gluings P Q c) :
     ℝ ≃ₜ ℝ :=
   (StrictMono.orderIsoOfSurjective (fun x => -F x) (fun _ _ h => neg_lt_neg (hF.1 h))
@@ -264,6 +269,7 @@ noncomputable def toHomeomorph {P Q : Marking r} {c : ℤ} (F : C(ℝ, ℝ)) (hF
 /-- A strictly antitone map sending the marked points of `a` onto those of `a'` induces an
 anti-isomorphism `k ↦ c - k` of the labels: the spaces `gluings P Q c` exhaust the gluings
 respecting the markings. -/
+@[montpellier "148, 55–58"]
 theorem exists_antiIso (P Q : Marking r) (F : ℝ → ℝ) (hF : StrictAnti F)
     (hmaps : ∀ k, ∃ j, F (P.pt k) = Q.pt j) (honto : ∀ j, ∃ k, F (P.pt k) = Q.pt j) :
     ∃ c : ℤ, ∀ k, F (P.pt k) = Q.pt (c - k) := by
@@ -295,10 +301,12 @@ theorem exists_antiIso (P Q : Marking r) (F : ℝ → ℝ) (hF : StrictAnti F)
 /-- **Uniqueness of gluing (pages 55–58).** The orientation-reversing homeomorphisms between two
 circles with `r` marked points realising a given anti-isomorphism of `ℤ/r`-torsors form a
 non-empty contractible space. -/
+@[montpellier "148, 55–58"]
 theorem contractibleSpace_gluings (P Q : Marking r) (c : ℤ) : ContractibleSpace (gluings P Q c) :=
   (convex_gluings P Q c).contractibleSpace (gluings_nonempty P Q c)
 
 /-- Two gluings realising the same anti-isomorphism are isotopic through such gluings. -/
+@[montpellier "148, 55–58"]
 theorem isPathConnected_gluings (P Q : Marking r) (c : ℤ) : IsPathConnected (gluings P Q c) := by
   have := contractibleSpace_gluings P Q c
   exact isPathConnected_iff_pathConnectedSpace.2 inferInstance
@@ -383,6 +391,7 @@ variable {r : ℕ}
 markings through the anti-isomorphism `k ↦ c - k`: bijective continuous maps (homeomorphisms,
 the circle being compact) admitting a strictly antitone continuous lift, sending the marked
 point `p k` to `q (c - k)`. -/
+@[montpellier "148, 49, 55–58"]
 def circleGluings (P Q : Marking r) (c : ℤ) : Set C(UnitAddCircle, UnitAddCircle) :=
   {f | Function.Bijective f ∧ (∃ F : ℝ → ℝ, Continuous F ∧ StrictAnti F ∧ ∀ x : ℝ, f x = F x) ∧
     ∀ k, f (P.pt k) = Q.pt (c - k)}
@@ -510,6 +519,7 @@ theorem abs_sub_lt_of_dist_lt {P Q : Marking r} {c : ℤ} (F G : gluings P Q c) 
 /-- **The normalised lifts are the homeomorphisms of the circle.** Descending to `AddCircle 1`
 is a homeomorphism from the space of normalised lifts onto the space of orientation-reversing
 homeomorphisms of the circle respecting the markings (compact-open topologies). -/
+@[montpellier "148, 49, 55–58"]
 noncomputable def gluingsHomeomorph (P Q : Marking r) (c : ℤ) :
     gluings P Q c ≃ₜ circleGluings P Q c where
   toEquiv := Equiv.ofBijective _ ⟨toCircle_injective P Q c, toCircle_surjective P Q c⟩
@@ -538,6 +548,7 @@ noncomputable def gluingsHomeomorph (P Q : Marking r) (c : ℤ) :
 /-- **Uniqueness of gluing on the circle (pages 55–58).** The orientation-reversing
 homeomorphisms of `AddCircle 1` between two circles with `r` marked points realising a given
 anti-isomorphism of `ℤ/r`-torsors form a non-empty contractible space. -/
+@[montpellier "148, 55–58"]
 theorem contractibleSpace_circleGluings (P Q : Marking r) (c : ℤ) :
     ContractibleSpace (circleGluings P Q c) :=
   have := contractibleSpace_gluings P Q c
@@ -579,6 +590,7 @@ theorem apply_zero_of_mem₀ {g : C(UnitAddCircle, UnitAddCircle)} (hg : g ∈ c
 
 /-- An orientation-reversing homeomorphism of the circle is the image of `0` together with an
 orientation-reversing homeomorphism fixing `0`. -/
+@[montpellier "148, 49, 55–58"]
 noncomputable def circleReversingHomeomorph :
     circleReversing ≃ₜ UnitAddCircle × circleReversing₀ where
   toFun f := (f.1 0, ⟨_, sub_const_mem f.2⟩)
@@ -591,6 +603,7 @@ noncomputable def circleReversingHomeomorph :
 
 /-- **The case `r = 0` (page 49).** Without marked points the orientation-reversing
 homeomorphisms of the circle have the homotopy type of the circle. -/
+@[montpellier "148, 49"]
 noncomputable def circleReversingHomotopyEquiv : circleReversing ≃ₕ UnitAddCircle :=
   have := contractibleSpace_circleGluings (Marking.std 1 one_pos) (Marking.std 1 one_pos) 0
   circleReversingHomeomorph.toHomotopyEquiv.trans <|
@@ -601,6 +614,7 @@ noncomputable def circleReversingHomotopyEquiv : circleReversing ≃ₕ UnitAddC
 /-- Hence the ambiguity of gluing along unmarked circles: the fundamental group of the space of
 gluings is `ℤ` (the reading identifies its generator, the full rotation of one side, with the
 Dehn twist along the glued circle). -/
+@[montpellier "148, 49, 55–58"]
 noncomputable def circleReversing_fundamentalGroup (f : circleReversing) :
     FundamentalGroup circleReversing f ≃* Multiplicative ℤ :=
   MulEquiv.trans (M := FundamentalGroup circleReversing f)

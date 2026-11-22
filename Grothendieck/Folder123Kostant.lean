@@ -3,6 +3,7 @@ module
 public import Mathlib.Data.Nat.Totient
 public import Mathlib.Data.Nat.Factorial.Basic
 public import Mathlib.Tactic.NormNum
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -36,18 +37,25 @@ def dataG2 : ℕ × ℕ × ℕ := (12, 6, 1)
 abbrev integral (d : ℕ × ℕ × ℕ) : Prop := d.1 ^ 2 % (d.2.1 * d.2.2 * Nat.totient d.2.1) = 0
 
 /-- The announced number of classes. -/
+@[montpellier "123, n.p."]
 def number (d : ℕ × ℕ × ℕ) : ℕ := d.1 ^ 2 / (d.2.1 * d.2.2 * Nat.totient d.2.1)
 
 /-- The hand checks of the reading: `A₁`, `A₂`, `B₂`, `G₂` give 1, 2, 4, 12. -/
+@[montpellier "123, n.p."]
 theorem small_cases :
     number (dataA 1) = 1 ∧ number (dataA 2) = 2 ∧ number (dataB 2) = 4 ∧ number dataG2 = 12 := by
   decide
 
+@[montpellier "123, n.p."]
 theorem integral_A : ∀ n ∈ Finset.Icc 1 8, integral (dataA n) := by decide
+@[montpellier "123, n.p."]
 theorem integral_B : ∀ n ∈ Finset.Icc 2 8, integral (dataB n) := by decide
+@[montpellier "123, n.p."]
 theorem integral_C : ∀ n ∈ Finset.Icc 3 8, integral (dataC n) := by decide
+@[montpellier "123, n.p."]
 theorem integral_D : ∀ n ∈ Finset.Icc 4 8, integral (dataD n) := by decide
 
+@[montpellier "123, n.p."]
 theorem integral_exceptional :
     integral dataE6 ∧ integral dataE7 ∧ integral dataE8 ∧ integral dataF4 ∧ integral dataG2 := by
   decide
