@@ -1,25 +1,27 @@
-name: Kernel check
+name: Kernel replay
 
 # Issue #31, question 4 of « …and the proof is checked in Lean »: does the code exploit a bug in
-# Lean's kernel? `lake check --paranoid` (Lean v4.35.0) builds the default targets inside a
-# `bwrap` sandbox, exports the whole environment (Mathlib, Stacks, the copied files and this
-# repository), and replays it through Lean's kernel and every external checker bundled with the
-# toolchain: `leanchecker-paranoid`, `lean4lean`, `nanoda`, `con-leche` and `con-ron`. It fails
-# if any of them rejects a declaration, or if any axiom other than propext, Classical.choice and
-# Quot.sound is used. A soundness bug would have to be shared by all six kernels to go unnoticed.
+# Lean's kernel, or get a declaration past it? `scripts/ReplayOwn.lean` replays every constant of
+# this repository's own libraries (Grothendieck, Buffalo, OpenProblems, Mordell, MMP and the root)
+# through Lean's kernel, on top of an environment that holds only their dependencies (Lean,
+# Mathlib, Stacks), which are trusted as built. It catches a declaration that entered the
+# environment without the kernel checking it (an unchecked `addDecl` in a metaprogram, an `unsafe`
+# trick, a corrupted `.olean`). The axiom check of every build (#32) already rules out any axiom
+# beyond propext, Classical.choice and Quot.sound.
 #
-# The export and the six replays of the whole closure take hours, so this runs weekly and by
-# hand, not on every push. It runs on the self-hosted runner of issue #34 and starts from the
-# `.lake` that main's builds keep there, as `build.yml` does. That runner takes one job at a
-# time, so a pull request that changes this file runs it only when the `kernel-check` label is
-# added (remove and add it again to rerun), never on every push. By hand, `runs_on` can still send
-# it to a GitHub-hosted runner, which starts from a cold build and is unlikely to fit in 6 h.
+# This is not the full `lake check --paranoid` (the whole closure replayed by six kernels,
+# external checkers included): the external checkers take an export of the whole closure, cannot
+# trust the dependencies, and would take hours here; see #34. The replay uses Lean's own kernel.
+#
+# It runs weekly, by hand, and on a pull request that changes this file or the script when the
+# `kernel-check` label is added (remove and add it again to rerun). It runs on the self-hosted
+# runner of #34, from the `.lake` that main's builds keep there.
 
 on:
   workflow_dispatch:
     inputs:
       runs_on:
-        description: 'Runner labels, as JSON (e.g. "ubuntu-latest")'
+        description: 'Runner labels, as JSON'
         required: false
         default: '["self-hosted","linux","x64","lean"]'
   schedule:
@@ -29,6 +31,7 @@ on:
     types: [labeled]
     paths:
       - .github/workflows/kernel-check.yml
+      - scripts/ReplayOwn.lean
 
 permissions:
   contents: read
@@ -76,40 +79,11 @@ jobs:
       group: kernel-check-${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: true
     runs-on: ${{ fromJSON(inputs.runs_on || '["self-hosted","linux","x64","lean"]') }}
-    timeout-minutes: 360
+    timeout-minutes: 90
     env:
       LEAN_CI_STORE: ${{ vars.LEAN_CI_STORE || '/var/lib/lean-ci/store' }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Free disk space
-        if: runner.environment == 'github-hosted'
-        run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
-          df -h /
-
-      - name: Add swap
-        if: runner.environment == 'github-hosted'
-        run: |
-          sudo swapoff -a || true
-          sudo fallocate -l 12G /swapfile-build
-          sudo chmod 600 /swapfile-build
-          sudo mkswap /swapfile-build
-          sudo swapon /swapfile-build
-
-      # The sandbox of `lake check`. Ubuntu 24.04 restricts unprivileged user namespaces through
-      # AppArmor, which bwrap needs; lift that restriction on the (throwaway) hosted runner. On the
-      # self-hosted runner, bubblewrap and that setting belong to its image (Commutator-IO/ai-infra,
-      # stacks/lean-ci); the last line fails early, with bwrap's own message, if either is missing.
-      - name: Check bubblewrap
-        run: |
-          if [ "${{ runner.environment }}" = "github-hosted" ]; then
-            if ! command -v bwrap >/dev/null; then
-              sudo apt-get update -q && sudo apt-get install -y -q bubblewrap
-            fi
-            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
-          fi
-          bwrap --ro-bind / / --dev /dev --proc /proc --unshare-user --unshare-net true
 
       - name: Install elan
         run: |
@@ -119,7 +93,7 @@ jobs:
           fi
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
-      # Start from main's build, so that the sandboxed build only replays it: the store entry for
+      # Start from main's build, so that the build step only replays it: the store entry for
       # these pins, else the most recent one. Only on the self-hosted runner.
       - name: Restore .lake from the machine
         if: runner.environment == 'self-hosted'
@@ -141,10 +115,16 @@ jobs:
       - name: Fetch the Mathlib cache
         run: lake exe cache get
 
-      - name: Check with every kernel
+      # The repository's own modules are built here (main's are already in the store).
+      - name: Build
+        run: lake build --log-level=warning
+
+      - name: Replay the repository's constants through the kernel
         run: |
           set -o pipefail
-          lake check --paranoid 2>&1 | tee kernel-check.log
+          lake env lean --run scripts/ReplayOwn.lean GrothendieckArchivesProofs \
+            GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP \
+            2>&1 | tee kernel-check.log
 
       - name: Upload the log
         if: always()
