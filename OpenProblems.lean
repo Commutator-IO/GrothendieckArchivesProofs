@@ -7,6 +7,7 @@ public import OpenProblems.EtaleCohomology
 public import OpenProblems.AlgebraicCycles
 public import OpenProblems.AbelianVarieties
 public import OpenProblems.TopoiStacks
+public import OpenProblems.TopoiStacksNoncoh
 public import OpenProblems.ModuliGalois
 public import OpenProblems.Pseudolines
 public import OpenProblems.EtaleTopos

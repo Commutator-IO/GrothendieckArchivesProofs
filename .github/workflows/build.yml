@@ -122,7 +122,7 @@ jobs:
       - name: Check axioms
         run: >-
           lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs
-          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP
+          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP LeanPool
 
       # Issue #31, question 1: the definitions outside Mathlib that the statements are written
       # with, the list a human review has to cover. Kept as an artifact of the run.
@@ -130,7 +130,7 @@ jobs:
         run: >-
           lake env lean --run scripts/StatementDefs.lean GrothendieckArchivesProofs
           statement-definitions.md GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems
-          Mordell MMP
+          Mordell MMP LeanPool
 
       - name: Upload the list
         uses: actions/upload-artifact@v4

@@ -1,0 +1,140 @@
+name: Kernel replay
+
+# Issue #31, question 4 of « …and the proof is checked in Lean »: does the code exploit a bug in
+# Lean's kernel, or get a declaration past it? `scripts/ReplayOwn.lean` replays every constant of
+# this repository's own libraries (Grothendieck, Buffalo, OpenProblems, Mordell, MMP and the root)
+# through Lean's kernel, on top of an environment that holds only their dependencies (Lean,
+# Mathlib, Stacks), which are trusted as built. It catches a declaration that entered the
+# environment without the kernel checking it (an unchecked `addDecl` in a metaprogram, an `unsafe`
+# trick, a corrupted `.olean`). The axiom check of every build (#32) already rules out any axiom
+# beyond propext, Classical.choice and Quot.sound.
+#
+# This is not the full `lake check --paranoid` (the whole closure replayed by six kernels,
+# external checkers included): the external checkers take an export of the whole closure, cannot
+# trust the dependencies, and would take hours here; see #34. The replay uses Lean's own kernel.
+#
+# It runs weekly, by hand, and on a pull request that changes this file or the script when the
+# `kernel-check` label is added (remove and add it again to rerun). It runs on the self-hosted
+# runner of #34, from the `.lake` that main's builds keep there.
+
+on:
+  workflow_dispatch:
+    inputs:
+      runs_on:
+        description: 'Runner labels, as JSON'
+        required: false
+        default: '["self-hosted","linux","x64","lean"]'
+  schedule:
+    # Sundays, 02:41 UTC.
+    - cron: '41 2 * * 0'
+  pull_request:
+    types: [labeled]
+    paths:
+      - .github/workflows/kernel-check.yml
+      - scripts/ReplayOwn.lean
+
+permissions:
+  contents: read
+
+jobs:
+  # As in build.yml: the runner VM is deallocated when idle, and only main and pull_request events
+  # may start it through OIDC. Skipped when the job is sent to a GitHub-hosted runner.
+  start-runner:
+    if: >-
+      !contains(inputs.runs_on || '', 'ubuntu') &&
+      (github.event_name != 'pull_request' ||
+       (github.event.label.name == 'kernel-check' &&
+        github.event.pull_request.head.repo.full_name == github.repository))
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - name: Start the runner VM
+        env:
+          RG: ${{ vars.LEAN_CI_RESOURCE_GROUP }}
+          VM: ${{ vars.LEAN_CI_VM }}
+        run: |
+          state=$(az vm get-instance-view -g "$RG" -n "$VM" \
+            --query "instanceView.statuses[?starts_with(code,'PowerState')].code | [0]" -o tsv)
+          echo "Power state: $state"
+          if [ "$state" != "PowerState/running" ]; then
+            az vm start -g "$RG" -n "$VM"
+            echo "Started; the runner reconnects to GitHub within a minute or two."
+          fi
+
+  kernel-check:
+    needs: start-runner
+    if: >-
+      ${{ !cancelled() && needs.start-runner.result != 'failure' &&
+      (github.event_name != 'pull_request' || github.event.label.name == 'kernel-check') }}
+    # One run per branch; at job level, so that adding another label cancels nothing.
+    concurrency:
+      group: kernel-check-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    runs-on: ${{ fromJSON(inputs.runs_on || '["self-hosted","linux","x64","lean"]') }}
+    timeout-minutes: 90
+    env:
+      LEAN_CI_STORE: ${{ vars.LEAN_CI_STORE || '/var/lib/lean-ci/store' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          if [ ! -x "$HOME/.elan/bin/lake" ]; then
+            curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      # Start from main's build, so that the build step only replays it: the store entry for
+      # these pins, else the most recent one. Only on the self-hosted runner.
+      - name: Restore .lake from the machine
+        if: runner.environment == 'self-hosted'
+        env:
+          PINS: ${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}
+        run: |
+          source_dir="$LEAN_CI_STORE/$PINS"
+          if [ ! -d "$source_dir" ]; then
+            source_dir=$(ls -1td "$LEAN_CI_STORE"/*/ 2>/dev/null | head -n 1 || true)
+          fi
+          rm -rf .lake
+          if [ -n "$source_dir" ] && [ -d "$source_dir" ]; then
+            echo "Restoring .lake from $source_dir"
+            cp -a --reflink=auto "${source_dir%/}" .lake
+          else
+            echo "No stored .lake: cold build"
+          fi
+
+      - name: Fetch the Mathlib cache
+        run: lake exe cache get
+
+      # The repository's own modules are built here (main's are already in the store).
+      - name: Build
+        run: lake build --log-level=warning
+
+      - name: Replay the repository's constants through the kernel
+        run: |
+          set -o pipefail
+          lake env lean --run scripts/ReplayOwn.lean GrothendieckArchivesProofs \
+            GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP \
+            2>&1 | tee kernel-check.log
+
+      - name: Upload the log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kernel-check-log
+          path: kernel-check.log
+          if-no-files-found: ignore
+
+      # Each job works on its own copy of the store entry; drop it.
+      - name: Remove the working .lake
+        if: always() && runner.environment == 'self-hosted'
+        run: rm -rf .lake
