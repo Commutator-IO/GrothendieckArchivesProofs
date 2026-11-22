@@ -15,7 +15,8 @@ The letter to Kostant of 22 October 1969 (folder 123, pp. 21–22) asks whether,
 `T, T'` in apposition and Borel subgroups `B ⊇ T`, `B' ⊇ T'`, the Borels `B` and `B'` are always in
 general position. Problem p:kostant of the note on the open problems (`docs/problems/article.tex`)
 states it for `PGL_n(ℂ)` as `OpenProblems.AbelianVarieties.KostantOppositeTypeA`; this file proves
-that proposition for every `n` (`kostantOppositeTypeA`). The other types stay open.
+that proposition for every `n` (`kostantOppositeTypeA`). The classical types `B`, `C`, `D` are in
+`Grothendieck/Folder123KostantClassical.lean`; the exceptional types stay open.
 
 ## Main results
 

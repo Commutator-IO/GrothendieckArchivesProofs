@@ -37,9 +37,13 @@ In `exists_avoid`, countability of the bad set replaces Baire: each `fᵢ` exclu
 
 ## Not formalised
 
-The case of several variables, where the bad set of one `f` is no longer finite and Baire is
-needed; the reduction of a complete local domain to a finite extension of `V⟦T₁, …, Tₙ⟧` (Cohen)
-and the lifting of points along it; the Proposition of page 36.
+The case of several variables, where the bad set of one `f` is no longer
+finite and Baire is needed, is `Grothendieck/Folder100Baire.lean` (the parametrisation of the
+`V`-homomorphisms `V⟦T₁, …, Tₙ⟧ → V` by `𝔪ⁿ`, zero sets closed with empty interior, Baire,
+`Folder100Baire.exists_avoid`, and the lifting of points along a finite extension of
+`V⟦T₁, …, Tₙ⟧`); the reduction of a complete local domain to such an extension (Cohen) is in
+`Grothendieck/Folder100Cohen.lean`; the Proposition of page 36 is proved below by another
+route.
 
 ## References
 

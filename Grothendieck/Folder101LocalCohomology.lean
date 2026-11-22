@@ -35,8 +35,12 @@ generating family of `𝔪` (tag 0A6R at a module).
 ## Not formalised
 
 The identification of `H⁰_x(M)` and `H¹_x(M)` with the kernel and cokernel of
-`M → M_ϖ = K ⊗_A M` (the cohomology of the two-term Čech complex is not unfolded here), and
-local cohomology of `O_X`-modules that are not quasi-coherent, which the page also treats.
+`M → M_ϖ = K ⊗_A M` (the cohomology of the two-term Čech complex is not unfolded here; for every
+`O_X`-module, `H¹_x` is the cokernel of `Γ(X, -) → Γ(X ∖ {x}, -)` by
+`Grothendieck.Folder101Sheaf.nonempty_iso_cokernel`, but `Γ(X ∖ {x}, M̃) = M_ϖ` is not
+connected). The
+vanishing in degrees `≥ 2` for `O_X`-modules that are not quasi-coherent, which the page also
+treats, is `Grothendieck.Folder101Sheaf.isZero_localCohomology_of_two_le`.
 
 ## References
 

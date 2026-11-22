@@ -44,6 +44,15 @@ Integral, universally injective and surjective is the same as universal homeomor
 The full equivalence of étale sites (Stacks 04DZ, `Stacks.Etale.etalePullback_isEquivalence`) is
 not needed here: full faithfulness, which is what the universal property uses, suffices.
 
+**Existence.** The factorisation itself exists over any `Y`
+(`Grothendieck.Folder126Glue.exists_radicial_etale_factorisation_of_hasGeomDegree`): by étale
+descent from the splitting over étale neighbourhoods over a quasi-compact quasi-separated base
+(`Grothendieck.Folder126Existence`), then by relative gluing over the affine opens, the
+transitions coming from the uniqueness proved here; the noetherian hypothesis is not needed.
+The full equivalence of étale sites
+(Stacks 04DZ, `Stacks.Etale.etalePullback_isEquivalence`) is not needed here: full faithfulness,
+which is what the universal property uses, suffices.
+
 ## Not formalised
 
 Existence of the factorisation over a locally noetherian `Y` (pages 17–22): the local splitting

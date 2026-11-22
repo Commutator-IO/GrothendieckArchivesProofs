@@ -74,9 +74,9 @@ finitely generated subextension separably generated); it gives formal smoothness
   with a given special fibre, and the five equivalent forms), the identification of Cohen algebra
   with « complet et formellement lisse » in 3.9 and 3.11, and the descent of 3.11.
 * The uniqueness halves of 3.10 and 3.12 (a formally smooth lift of `B_0` is unique up to
-  isomorphism), and the equivalence 1) ⇔ 2) of 3.12 (formally smooth ⇔ flat with `K/k` separable
-  when `𝔪_B = 𝔪_A B`), which needs the special fibre identified with `K` and geometric regularity
-  of a field extension identified with separability.
+  isomorphism) and the equivalence 1) ⇔ 2) of 3.12 (formally smooth ⇔ flat with `K/k` separable
+  when `𝔪_B = 𝔪_A B`) are not here: they are proved in `Grothendieck/Folder22Uniqueness.lean`
+  (`corollaire3_10_uniqueness`, `corollaire3_12_uniqueness`, `corollaire3_12`).
 * In 3.10, `A` is assumed complete; the page allows any noetherian local `A` (its `B` lives over
   `Â`).
 * Questions 3) and 4) of pages 19–20 (openness of the formally smooth and flat loci). Question 2)

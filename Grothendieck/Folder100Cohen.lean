@@ -6,6 +6,7 @@ Authors: Michel Hua
 module
 
 public import Grothendieck.Folder100
+public import Grothendieck.Folder100Baire
 public import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem
 public import StacksFrontier.RingTheory.NoetherNormalization.Basic
 
@@ -17,7 +18,8 @@ Corollary of page 38 (finding `100-baire-dimension-one-points` of `src/content/f
 in `S = Spec R`, `R` a complete noetherian local domain, countably many nowhere-dense closed
 subsets miss some point of dimension one. `Grothendieck/Folder100.lean` proves it, and the
 Proposition of page 36, by countable prime avoidance, and the page's own route only for
-`Θ = V⟦T⟧`. This file follows the page's route in every dimension.
+`Θ = V⟦T⟧`; `Grothendieck/Folder100Baire.lean` does Baire on `𝔪ⁿ` for `Θ = V⟦T₁, …, Tₙ⟧`. This
+file follows the page's route in every dimension, through Cohen's structure theorem.
 
 ## Main results
 
@@ -28,7 +30,9 @@ Proposition of page 36, by countable prime avoidance, and the page's own route o
   `Zᵢ`.
 * `Good.exists_prime`, `good_mvPowerSeries`: the step on `Θ = V⟦T₁, …, Tₙ⟧`, `V` a complete
   discrete valuation ring: countably many nonzero `fᵢ ∈ Θ` lie outside the kernel `P` of some
-  surjection `Θ → V`, a point of `Spec Θ` with `Θ ⧸ P ≃ V`, of dimension one.
+  surjection `Θ → V`, a point of `Spec Θ` with `Θ ⧸ P ≃ V`, of dimension one. The surjection
+  is the `V`-linear evaluation at a point of `𝔪ⁿ` given by Baire
+  (`Folder100Baire.exists_eval_ne_zero`).
 
 ## Implementation notes
 
@@ -37,23 +41,17 @@ The page's argument. By Cohen's structure theorem (Stacks 032D,
 finite over a subring `A = Λ⟦T₁, …, T_d⟧`, `Λ` a field or a Cohen ring; when `Λ` is a field,
 `A ≃ V⟦T₁, …, T_{d-1}⟧` with `V = Λ⟦T₀⟧` (`mvPowerSeriesEquiv`), as the reading's footnote says.
 A proper closed `Zᵢ` lies in `V(gᵢ)`, `gᵢ ≠ 0`, and `gᵢ` has a nonzero multiple `aᵢ ∈ A`
-(`R` is integral over `A`). The `V`-points of `Θ` are found one variable at a time
-(`good_powerSeries`): for `a ∈ 𝔪_V`, `B⟦T⟧ ⧸ (T − a) ≃ B` (`exists_evalHom`, `T − a` being
-distinguished), and a nonzero `f ∈ B⟦T⟧` lies in `(T − a)` for finitely many `a` only
-(`finite_bad_of_separated`: a `V`-linear coefficient functional `B → V` sends `f` to a nonzero
-`g ∈ V⟦T⟧` with `g ∈ (T − a)`, and `Folder100.finite_bad` applies to `g`); as `𝔪_V` is
-uncountable (`Folder100.uncountable`), some `a` avoids all the `fᵢ` (`exists_avoid_separated`).
-This choice, variable after variable, replaces Baire on the complete metric space `𝔪ⁿ`. Finally
-a prime `Q` of `R` over the point `P` of `A` (lying over) is outside every `Zᵢ`, since
-`aᵢ ∉ P`, and `dim R ⧸ Q = dim A ⧸ P = 1`, `R ⧸ Q` being integral over `A ⧸ P`
+(`R` is integral over `A`). The `V`-point of `Θ` is the evaluation at a point `a ∈ 𝔪ⁿ` where no
+`aᵢ` vanishes, which Baire's theorem on the complete metric space `𝔪ⁿ` provides
+(`good_mvPowerSeries`, from `Folder100Baire.exists_eval_ne_zero`: the zero set of a nonzero
+series is closed with empty interior). Finally a prime `Q` of `R` over the point `P` of `A`
+(lying over) is outside every `Zᵢ`, since `aᵢ ∉ P`, and `dim R ⧸ Q = dim A ⧸ P = 1`, `R ⧸ Q`
+being integral over `A ⧸ P`
 (`ringKrullDim_eq_of_injective_isIntegral`, Stacks).
 
 ## Not formalised
 
-Baire's theorem itself: the zero set of a nonzero series is not shown to be nowhere dense in
-`𝔪ⁿ`, and no `V`-homomorphism `Θ → V` is parametrised by its values in `𝔪ⁿ`; the countable
-choice above, one variable at a time, does the work. The surjections `Θ → V` are ring maps, not
-shown to be `V`-linear. The Proposition of page 36 is not deduced from the Corollary here (it is
+The Proposition of page 36 is not deduced from the Corollary here (it is
 proved in `Folder100.lean` by another route), nor is the application to the algebraisation of
 formal abelian schemes.
 
@@ -70,105 +68,9 @@ formal abelian schemes.
 namespace Grothendieck.Folder100Cohen
 
 open IsLocalRing
-open scoped Polynomial PowerSeries
+open scoped PowerSeries
 
 universe u
-
-/-! ### The bad constants of one series -/
-
-section Constants
-
-variable {V : Type*} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
-  [IsAdicComplete (maximalIdeal V) V]
-
-/-- `ι : V → B` such that the nonzero elements of `B` are seen by `V`-linear functionals. -/
-def Separated {B : Type*} [CommRing B] (ι : V →+* B) : Prop :=
-  ∀ b : B, b ≠ 0 → ∃ l : B →+ V, (∀ v x, l (ι v * x) = v * l x) ∧ l b ≠ 0
-
-/-- The constants `c ∈ 𝔪_V` such that `f ∈ (T − c)`. -/
-def bad {B : Type*} [CommRing B] (ι : V →+* B) (f : B⟦X⟧) : Set V :=
-  {c | c ∈ maximalIdeal V ∧ f ∈ Ideal.span {PowerSeries.X - PowerSeries.C (ι c)}}
-
-omit [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] in
-/-- A `V`-linear functional `l : B → V`, applied coefficientwise, maps `(T − c)` into `(T − c)`. -/
-lemma mk_mem_span {B : Type*} [CommRing B] (ι : V →+* B) (l : B →+ V)
-    (hl : ∀ v x, l (ι v * x) = v * l x) {c : V} {f : B⟦X⟧}
-    (hf : f ∈ Ideal.span {PowerSeries.X - PowerSeries.C (ι c)}) :
-    PowerSeries.mk (fun n => l (PowerSeries.coeff n f)) ∈
-      Ideal.span {PowerSeries.X - PowerSeries.C c} := by
-  obtain ⟨h, rfl⟩ := Ideal.mem_span_singleton'.1 hf
-  have hl' : ∀ x, l (x * ι c) = l x * c := fun x => by rw [mul_comm x, hl, mul_comm]
-  refine Ideal.mem_span_singleton'.2 ⟨PowerSeries.mk fun n => l (PowerSeries.coeff n h), ?_⟩
-  refine PowerSeries.ext fun n => ?_
-  rcases n with _ | n <;>
-    simp [PowerSeries.coeff_mk, mul_sub, PowerSeries.coeff_mul_C, PowerSeries.coeff_zero_mul_X,
-      PowerSeries.coeff_succ_mul_X, hl']
-
-/-- A nonzero `f ∈ B⟦T⟧` lies in `(T − c)` for finitely many `c ∈ 𝔪_V` only. -/
-theorem finite_bad_of_separated {B : Type*} [CommRing B] (ι : V →+* B) (hsep : Separated ι)
-    {f : B⟦X⟧} (hf : f ≠ 0) : (bad ι f).Finite := by
-  obtain ⟨n, hn⟩ : ∃ n, PowerSeries.coeff n f ≠ 0 := by
-    by_contra! h
-    exact hf (PowerSeries.ext fun n => by simpa using h n)
-  obtain ⟨l, hl, hln⟩ := hsep _ hn
-  have hg : PowerSeries.mk (fun n => l (PowerSeries.coeff n f)) ≠ 0 := fun h0 =>
-    hln (by simpa using congrArg (PowerSeries.coeff n) h0)
-  exact (Grothendieck.Folder100.finite_bad hg).subset fun c ⟨hc, hm⟩ =>
-    ⟨hc, mk_mem_span ι l hl hm⟩
-
-/-- Countably many nonzero `fᵢ ∈ B⟦T⟧` leave a constant `c ∈ 𝔪_V` with every `fᵢ ∉ (T − c)`. -/
-theorem exists_avoid_separated {B : Type*} [CommRing B] (ι : V →+* B) (hsep : Separated ι)
-    (S : Set B⟦X⟧) (hS : S.Countable) (h0 : (0 : B⟦X⟧) ∉ S) :
-    ∃ c ∈ maximalIdeal V, ∀ f ∈ S, f ∉ Ideal.span {PowerSeries.X - PowerSeries.C (ι c)} := by
-  by_contra! h
-  obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible V
-  have hc : (⋃ f ∈ S, bad ι f).Countable :=
-    hS.biUnion fun f hf => (finite_bad_of_separated ι hsep fun h' => h0 (h' ▸ hf)).countable
-  have hϖm : ϖ ∈ maximalIdeal V := hϖ.not_isUnit
-  have : Countable V := by
-    have := hc.to_subtype
-    refine Function.Injective.countable (f := fun x : V => (⟨ϖ * x, ?_⟩ : ↥(⋃ f ∈ S, bad ι f))) ?_
-    · obtain ⟨f, hf, hm⟩ := h (ϖ * x) (Ideal.mul_mem_right x _ hϖm)
-      exact Set.mem_biUnion hf (show ϖ * x ∈ bad ι f from ⟨Ideal.mul_mem_right x _ hϖm, hm⟩)
-    · intro x y hxy
-      exact mul_left_cancel₀ hϖ.ne_zero (congrArg Subtype.val hxy)
-  have hu : Uncountable V := Grothendieck.Folder100.uncountable (V := V)
-  exact not_countable this
-
-end Constants
-
-/-! ### `B⟦T⟧ ⧸ (T − b) ≃ B` -/
-
-section Eval
-
-variable {B : Type*} [CommRing B] [IsLocalRing B] [IsAdicComplete (maximalIdeal B) B]
-
-omit [IsAdicComplete (maximalIdeal B) B] in
-/-- `T − b`, for `b ∈ 𝔪_B`, is distinguished. -/
-lemma isDistinguishedAt_X_sub_C {b : B} (hb : b ∈ maximalIdeal B) :
-    (Polynomial.X - Polynomial.C b).IsDistinguishedAt (maximalIdeal B) where
-  mem {n} hn := by
-    rw [Polynomial.natDegree_X_sub_C, Nat.lt_one_iff] at hn
-    subst hn
-    simpa using hb
-  monic := Polynomial.monic_X_sub_C b
-
-/-- For `b ∈ 𝔪_B`, a surjection `B⟦T⟧ → B` with kernel `(T − b)`. -/
-theorem exists_evalHom {b : B} (hb : b ∈ maximalIdeal B) :
-    ∃ ψ : B⟦X⟧ →+* B, Function.Surjective ψ ∧
-      ∀ f, ψ f = 0 ↔ f ∈ Ideal.span {PowerSeries.X - PowerSeries.C b} := by
-  let e : (B⟦X⟧ ⧸ Ideal.span {PowerSeries.X - PowerSeries.C b}) ≃ₐ[B] B :=
-    (Ideal.quotientEquivAlgOfEq B (by rw [Grothendieck.Folder100.coe_X_sub_C])).trans
-      ((isDistinguishedAt_X_sub_C hb).algEquivQuotient.symm.trans
-        (Polynomial.quotientSpanXSubCAlgEquiv b))
-  refine ⟨e.toRingHom.comp (Ideal.Quotient.mk _), fun y => ?_, fun f => ?_⟩
-  · obtain ⟨q, rfl⟩ := e.surjective y
-    obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective q
-    exact ⟨f, rfl⟩
-  · change e (Ideal.Quotient.mk _ f) = 0 ↔ _
-    rw [map_eq_zero_iff _ e.injective, Ideal.Quotient.eq_zero_iff_mem]
-
-end Eval
 
 /-! ### `V`-points avoiding countably many series -/
 
@@ -179,10 +81,6 @@ def Good (V B : Type*) [CommRing V] [CommRing B] : Prop :=
   ∀ S : Set B, S.Countable → (0 : B) ∉ S → ∃ φ : B →+* V, Function.Surjective φ ∧ ∀ s ∈ S, φ s ≠ 0
 
 variable {V : Type*} [CommRing V]
-
-lemma good_self : Good V V := fun _ _ h0 =>
-  ⟨RingHom.id V, Function.surjective_id, fun s hs h =>
-    h0 (by rw [RingHom.id_apply] at h; rwa [h] at hs)⟩
 
 lemma Good.of_ringEquiv {B B' : Type*} [CommRing B] [CommRing B'] (e : B ≃+* B')
     (h : Good V B) : Good V B' := by
@@ -195,20 +93,6 @@ lemma Good.of_ringEquiv {B B' : Type*} [CommRing B] [CommRing B'] (e : B ≃+* B
   obtain ⟨x, rfl⟩ := hφ y
   exact ⟨e x, by simp⟩
 
-/-- The step of the page, one variable at a time. -/
-theorem good_powerSeries [IsDomain V] [IsDiscreteValuationRing V]
-    [IsAdicComplete (maximalIdeal V) V] {B : Type*} [CommRing B] [IsLocalRing B]
-    [IsAdicComplete (maximalIdeal B) B] (ι : V →+* B)
-    (hι : ∀ c ∈ maximalIdeal V, ι c ∈ maximalIdeal B) (hsep : Separated ι) (h : Good V B) :
-    Good V B⟦X⟧ := by
-  intro S hS h0
-  obtain ⟨c, hc, hcS⟩ := exists_avoid_separated ι hsep S hS h0
-  obtain ⟨ψ, hψ, hψ0⟩ := exists_evalHom (hι c hc)
-  obtain ⟨φ, hφ, hφS⟩ := h (ψ '' S) (hS.image ψ) (by
-    rintro ⟨s, hs, hs0⟩
-    exact hcS s hs ((hψ0 s).1 hs0))
-  refine ⟨φ.comp ψ, by rw [RingHom.coe_comp]; exact hφ.comp hψ, fun s hs => hφS _ ⟨s, hs, rfl⟩⟩
-
 /-- The kernel of the surjection is a point with `B ⧸ P ≃ V`, of dimension one. -/
 theorem Good.exists_prime [IsDomain V] [IsDiscreteValuationRing V] {B : Type*} [CommRing B]
     (h : Good V B) (S : Set B) (hS : S.Countable) (h0 : (0 : B) ∉ S) :
@@ -220,31 +104,16 @@ theorem Good.exists_prime [IsDomain V] [IsDiscreteValuationRing V] {B : Type*} [
 
 variable [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V]
 
-omit [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] in
-lemma separated_C (n : ℕ) : Separated (MvPowerSeries.C : V →+* MvPowerSeries (Fin n) V) := by
-  intro b hb
-  obtain ⟨α, hα⟩ : ∃ α, MvPowerSeries.coeff α b ≠ 0 := by
-    by_contra! h
-    exact hb (MvPowerSeries.ext fun α => by simpa using h α)
-  exact ⟨(MvPowerSeries.coeff α).toAddMonoidHom, fun v x => by simp [MvPowerSeries.coeff_C_mul],
-    by simpa using hα⟩
-
-omit [IsAdicComplete (maximalIdeal V) V] in
-lemma C_mem_maximalIdeal (n : ℕ) {c : V} (hc : c ∈ maximalIdeal V) :
-    (MvPowerSeries.C c : MvPowerSeries (Fin n) V) ∈ maximalIdeal (MvPowerSeries (Fin n) V) :=
-  (mem_maximalIdeal _).2 (mem_nonunits_iff.2 fun hu => mem_nonunits_iff.1
-    ((mem_maximalIdeal _).1 hc) (by simpa using hu.map (MvPowerSeries.constantCoeff)))
-
-/-- **The page's step on `Θ = V⟦T₁, …, Tₙ⟧`**: countably many nonzero series stay nonzero under
-some surjection `Θ → V`, chosen one variable at a time. -/
-theorem good_mvPowerSeries : ∀ n : ℕ, Good V (MvPowerSeries (Fin n) V)
-  | 0 => Good.of_ringEquiv (MvPowerSeries.isEmptyEquiv (Fin 0) V).toRingEquiv.symm good_self
-  | n + 1 => by
-    have : IsAdicComplete (maximalIdeal (MvPowerSeries (Fin n) V)) (MvPowerSeries (Fin n) V) :=
-      Stacks.CompleteLocalRing.RegularSubring.isAdicComplete_maximalIdeal_mvPowerSeries V n
-    exact Good.of_ringEquiv (MvPowerSeries.finSuccEquiv V n).toRingEquiv.symm
-      (good_powerSeries MvPowerSeries.C (fun _ hc => C_mem_maximalIdeal n hc) (separated_C n)
-        (good_mvPowerSeries n))
+/-- **The page's step on `Θ = V⟦T₁, …, Tₙ⟧`, by Baire on `𝔪ⁿ`**: countably many nonzero series
+stay nonzero under the evaluation `Θ → V` at some `a ∈ 𝔪ⁿ`
+(`Folder100Baire.exists_eval_ne_zero`). -/
+theorem good_mvPowerSeries (n : ℕ) : Good V (MvPowerSeries (Fin n) V) := by
+  intro S hS h0
+  have := hS.to_subtype
+  obtain ⟨a, ha, h⟩ := Folder100Baire.exists_eval_ne_zero
+    (fun s : S => (s : MvPowerSeries (Fin n) V)) fun s hs => h0 (hs ▸ s.2)
+  exact ⟨(Folder100Baire.eval ha).toRingHom, Folder100Baire.eval_surjective ha,
+    fun s hs => h ⟨s, hs⟩⟩
 
 end Good
 

@@ -65,15 +65,12 @@ fibre is its `finiteAlgHomCharsEquiv`.
 
 ## Not formalised
 
-* Existence of the global factorisation over a locally noetherian `Y`: the base change to the
-  strict henselisations, and the construction of `X^ét` by descent of étale covers (SGA 1 IX §4,
-  the draft's Stacks 02L5), are not done; Mathlib has no finite étale part `π₀(X/Y)` of a finite
-  morphism.
-* The global universal property of page 23 (every `Y`-morphism from `X` to an étale `Y`-scheme
-  factors uniquely through `X^ét`, over any `Y`) and the uniqueness of the factorisation up to
-  unique isomorphism are proved in `Grothendieck.Folder126RadicialEtaleGlobal`, from the
-  topological invariance of the étale site (Stacks 0BTY); only the existence of `X^ét` over a
-  general `Y` is missing.
+* The global statement is proved elsewhere, not from this local core: the universal property
+  of page 23 and the uniqueness of the factorisation over any `Y` in
+  `Grothendieck.Folder126RadicialEtaleGlobal` (Stacks 0BTY), and the existence of `X^ét` over a
+  quasi-compact quasi-separated `Y` in `Grothendieck.Folder126Existence`, by étale descent from
+  étale neighbourhoods (Stacks 02LO, 02W8) instead of strict henselisations, then over any `Y`
+  in `Grothendieck.Folder126Glue` by relative gluing over the affine opens (Stacks 01LH).
 * Universal openness enters only through the openness of `Spec A → Spec R` after base change;
   the page's remark that « `d` constant » may be dropped for connected `Y` is false (the
   reading's counterexample `y² = t` over `k[t]`) and is not stated.

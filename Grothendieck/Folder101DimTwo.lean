@@ -44,14 +44,14 @@ The invariant is the property `TelescopeSurj y N`: every sequence `(aᵢ)` of `N
 
 ## Not formalised
 
-The sheaf side: `O_X`-modules on `Spec A`, extension by zero `j_!O_U` (Stacks 03DI),
-`Ext⁰(X; j_!O_U, O_X) = A_f`, the computation of `H^i_x(j_!O_U)` (cohomology with supports), the
-exact sequence `0 → A → ∏ O_{x_i} → H²_x(F) → E(k) → 0` and the map `φ` itself; hence also the
-page's injectivity of `φ` (only « injective ⇒ not surjective » is proved, for every injective
-map). The identification of `TelescopeSurj` with `Ext¹_A(A_y, -) = 0` for mathlib's `Ext`; the
-general claim for every complete regular local ring of dimension 2 and every `f`; the
-identification of `k⟦x⟧⟦y⟧` with the two-variable `MvPowerSeries`; the page's topological-dual
-repair (page 15).
+Part of the sheaf side: `j_!O_U`, `Ext⁰(X; j_!O_U, O_X) = A_f` and the
+reduction of `H^i_x(j_!O_U)` to the cohomology of the punctured spectrum are in
+`Grothendieck/Folder101Sheaf.lean`; the computation of `H¹(X ∖ {x}, j_!O_U)`,
+the exact sequence `0 → A → ∏ O_{x_i} → H²_x(F) → E(k) → 0` and the map `φ` itself; hence also the
+page's injectivity of `φ` (only « injective ⇒ not surjective » is proved, for every injective map).
+The identification of `TelescopeSurj` with `Ext¹_A(A_y, -) = 0` for mathlib's `Ext`; the general
+claim for every complete regular local ring of dimension 2 and every `f`; the identification of
+`k⟦x⟧⟦y⟧` with the two-variable `MvPowerSeries`; the page's topological-dual repair (page 15).
 
 ## References
 

@@ -74,6 +74,15 @@ topoi; the affine statement used here is the module-level 063Y.
   concrete tensor products `B ⊗ B ⊗ M` is not available, and nothing here constructs `A'` from
   `B'` and `C'`. Here `A'` and `φ` are given.
 
+* Here `A'` and `φ` are given and the descent of `𝒥_X` is the hypothesis that `I ⊗_{A'} B → J`
+  is bijective. `Folder126NilpotentDescent` removes that hypothesis in the affine case: it
+  constructs `A' = Ker(B' ⇉ C')`, proves `0 → 𝒥_Y → 𝒪_Y → 𝒪_{Y₀} → 0` exact (lifting an
+  invariant function and correcting the lift with the degree-one exactness of the concrete
+  Amitsur complex, Stacks 023M, available in the vendored files as
+  `Module.Descent.exact_amitsur_degree_one`), and derives the bijectivity by descent
+  (Stacks 023N). The vanishing `Ȟ⁰(X₀/Y₀, ℋ¹(𝒥_Y)) = 0` of Remark 2 (page 3) for fpqc
+  quasi-separated covers of a non-affine `Y₀` remains open, with the other points listed there.
+
 ## References
 
 * A. Grothendieck, folder 126, pp. 3–7 (finding `126-nilpotent-deformation-quotient`)
