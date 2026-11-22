@@ -126,16 +126,8 @@ theorem isIso_toUnit_iff (X : Type u) :
 
 /-- ORG14LNb5gE-9888 (2:44:48) [ex], the point of `Φ₀`: a set is initial iff it is empty. -/
 @[buffalo "ORG14LNb5gE-9888"]
-theorem isInitial_iff_isEmpty (X : Type u) : Nonempty (IsInitial X) ↔ IsEmpty X := by
-  constructor
-  · rintro ⟨h⟩
-    refine ⟨fun x => ?_⟩
-    have := h.hom_ext (↾(fun _ => ULift.up true) : X ⟶ ULift.{u} Bool) (↾(fun _ => ULift.up false))
-    have := congrArg (fun f => (f x).down) this
-    simp at this
-  · intro h
-    exact ⟨IsInitial.ofUniqueHom (fun Y => ↾(fun x => isEmptyElim x))
-      (fun Y f => by ext x; exact isEmptyElim x)⟩
+theorem isInitial_iff_isEmpty (X : Type u) : Nonempty (IsInitial X) ↔ IsEmpty X :=
+  CategoryTheory.Limits.Types.initial_iff_empty X
 
 /-- ORG14LNb5gE-10727 (2:58:47) [prop] Every `T₀` space embeds in a product of copies of the
 Sierpiński space `Prop` (Mathlib `productOfMemOpens_isEmbedding`). -/
