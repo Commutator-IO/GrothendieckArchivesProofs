@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 import Grothendieck.Attr
+import Buffalo.AG.Part05a
 
 /-!
 # Buffalo, topos theory, part 4a: coverings, `f_!` and `f^!`, sites and sheaves on a site
@@ -188,12 +189,8 @@ trivial: `g ↦ g • x` is a `G`-equivariant bijection `G ≃ X`. -/
 @[buffalo "PqCQM3Pcl6Q-15387"]
 theorem torsor_trivial_of_point {G X : Type*} [Group G] [MulAction G X]
     [MulAction.IsPretransitive G X] (hfree : ∀ (g : G) (x : X), g • x = x → g = 1) (x : X) :
-    Function.Bijective (fun g : G => g • x) := by
-  refine ⟨fun g g' h => ?_, fun y => MulAction.exists_smul_eq G x y⟩
-  have : (g'⁻¹ * g) • x = x := by
-    simp only [mul_smul]
-    exact inv_smul_eq_iff.2 h
-  simpa [inv_mul_eq_one, eq_comm] using hfree _ x this
+    Function.Bijective (fun g : G => g • x) :=
+  AG.Part05.def_31032 hfree x
 
 /-! ## Sites, pretopologies and local properties -/
 

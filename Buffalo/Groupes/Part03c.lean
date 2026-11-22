@@ -7,6 +7,7 @@ module
 
 public import Buffalo.Groupes.Part01
 import Grothendieck.Attr
+import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.Multiplication
 
 /-!
 # Buffalo, algebraic groups, Part 03 (c): group schemes over a field, height one, tori
@@ -115,11 +116,8 @@ theorem isSeparated_over_field {K : Type u} [Field K] (G : Over (Spec (.of K))) 
 composition law `G × G → G` is open. -/
 @[buffalo "3ULFIl_2Wis-14253"]
 theorem mul_isOpenMap {K : Type u} [Field K] (G : Over (Spec (.of K))) [GrpObj G]
-    [LocallyOfFiniteType G.hom] : IsOpenMap μ[G].left := by
-  have : UniversallyOpen G.hom := UniversallyOpen.of_flat G.hom
-  rw [mul_eq_shear_fst, Over.comp_left]
-  exact (pullback.fst G.hom G.hom).isOpenMap.comp
-    (Scheme.Hom.homeomorph ((Over.forget _).mapIso (shear G)).hom).isOpenMap
+    [LocallyOfFiniteType G.hom] : IsOpenMap μ[G].left :=
+  isOpenMap_mul G
 
 /-- 3ULFIl_2Wis-14392 (3:59:52) [prop] If `(g, x) ↦ (g x, x)` is an isomorphism `G × X ≅ X × X`
 (with `X` locally of finite type over the field), the action `G × X → X` is open and flat. -/

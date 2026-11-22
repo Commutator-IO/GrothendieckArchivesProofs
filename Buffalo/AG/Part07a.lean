@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 import Grothendieck.Attr
+import StacksCore.RingTheory.Spectrum.Prime.Topology
 
 /-!
 # Buffalo, algebraic geometry, part 07 (a): 26 June 1973, from 5:24:53
@@ -91,36 +92,8 @@ theorem prop_19691 (k : Type u) [Field k] :
 
 /-- `Spec R` is connected iff `0` and `1` are the only idempotents of `R`. -/
 theorem preconnectedSpace_iff_idempotent (R : Type*) [CommRing R] :
-    PreconnectedSpace (PrimeSpectrum R) ↔ ∀ e : R, IsIdempotentElem e → e = 0 ∨ e = 1 := by
-  constructor
-  · intro _ e he
-    have hc := isClopen_basicOpen_of_mul_add e (1 - e) (by rw [mul_sub, mul_one, he.eq, sub_self])
-      (by ring)
-    rcases _root_.isClopen_iff.1 hc with h | h
-    · left
-      obtain ⟨n, hn⟩ := (PrimeSpectrum.basicOpen_eq_bot_iff e).1 (SetLike.coe_injective h)
-      rw [← he.pow_succ_eq n, pow_succ, hn, zero_mul]
-    · right
-      have h1 : IsNilpotent (1 - e) := by
-        refine (PrimeSpectrum.basicOpen_eq_bot_iff _).1
-          (SetLike.coe_injective (Set.eq_empty_of_forall_notMem ?_))
-        intro p hp
-        have hpe : p ∈ (basicOpen e : Set _) := h ▸ Set.mem_univ p
-        have h0 : e * (1 - e) ∈ p.asIdeal := by
-          rw [mul_sub, mul_one, he.eq, sub_self]; exact p.asIdeal.zero_mem
-        rcases p.isPrime.mem_or_mem h0 with h' | h'
-        · exact hpe h'
-        · exact hp h'
-      have he' : IsIdempotentElem (1 - e) := he.one_sub
-      obtain ⟨n, hn⟩ := h1
-      have : 1 - e = 0 := by rw [← he'.pow_succ_eq n, pow_succ, hn, zero_mul]
-      exact (sub_eq_zero.1 this).symm
-  · intro H
-    refine preconnectedSpace_iff_clopen.2 fun s hs => ?_
-    obtain ⟨e, he, rfl⟩ := exists_idempotent_basicOpen_eq_of_isClopen hs
-    rcases H e he with rfl | rfl
-    · left; simp
-    · right; simp
+    PreconnectedSpace (PrimeSpectrum R) ↔ ∀ e : R, IsIdempotentElem e → e = 0 ∨ e = 1 :=
+  PrimeSpectrum.preconnectedSpace_iff_isIdempotentElem
 
 section Geometric
 

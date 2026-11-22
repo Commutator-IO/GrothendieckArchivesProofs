@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 import Grothendieck.Attr
+import StacksCore.RingTheory.Spectrum.Prime.Topology
 
 /-!
 # Buffalo, algebraic geometry, part 05 (c): 25 June 1973, to 0:57:01
@@ -84,15 +85,8 @@ def IsLocalScheme (X : Scheme.{u}) : Prop :=
 `Spec A` has a unique closed point. -/
 @[buffalo "Oqhr-Gt66es-388"]
 theorem prop_388 (A : Type u) [CommRing A] [Nontrivial A] :
-    IsLocalRing A ↔ ∃! x : PrimeSpectrum A, IsClosed ({x} : Set (PrimeSpectrum A)) := by
-  simp only [isClosed_singleton_iff_isMaximal]
-  constructor
-  · intro _
-    refine ⟨⟨IsLocalRing.maximalIdeal A, inferInstance⟩, inferInstance, fun y hy => ?_⟩
-    exact PrimeSpectrum.ext (IsLocalRing.eq_maximalIdeal hy)
-  · rintro ⟨x, hx, hu⟩
-    refine IsLocalRing.of_unique_max_ideal ⟨x.asIdeal, hx, fun I hI => ?_⟩
-    exact congrArg PrimeSpectrum.asIdeal (hu ⟨I, hI.isPrime⟩ hI)
+    IsLocalRing A ↔ ∃! x : PrimeSpectrum A, IsClosed ({x} : Set (PrimeSpectrum A)) :=
+  isLocalRing_iff_existsUnique_isClosed_singleton
 
 /-- Oqhr-Gt66es-388 (0:06:28) [prop] (the reduction to the affine case) In a quasi-compact
 scheme with a unique closed point `x`, every point specializes to `x`, so every open set containing

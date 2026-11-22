@@ -7,6 +7,7 @@ module
 
 public import Buffalo.Groupes.Part01a
 import Grothendieck.Attr
+import Grothendieck.AlgebraicGeometry.Folder93
 
 /-!
 # Buffalo, algebraic groups, Part 01 (c): `μ_n`, `SL_n`, `PGL_n`, `α_{p^i}` and Frobenius
@@ -291,10 +292,8 @@ theorem eval_X_map_C (g : k[X]) : (g.map C).eval (X : k[X]) = g := by
 
 /-- The cast of an integer prime to `p` is a unit in an algebra of characteristic `p`. -/
 theorem isUnit_natCast_of_not_dvd (p : ℕ) [Fact p.Prime] [CharP k p] (c : ℕ) (hc : ¬ p ∣ c) :
-    IsUnit (c : k) := by
-  have h : IsUnit (c : ZMod p) := by
-    rw [isUnit_iff_ne_zero, Ne, ZMod.natCast_eq_zero_iff]; exact hc
-  simpa using h.map (ZMod.castHom (dvd_refl p) k)
+    IsUnit (c : k) :=
+  Grothendieck.Folder93.natCast_isUnit p hc
 
 /-- _lTf_L0yvrU-7417 (2:03:37) [thm] In characteristic `p` (over any `𝔽_p`-algebra `k`), the
 additive polynomials `f(X+Y) = f(X) + f(Y)` — the endomorphisms of `𝔾_a` — are exactly the

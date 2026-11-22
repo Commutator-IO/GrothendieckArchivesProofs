@@ -7,6 +7,7 @@ module
 
 public import Buffalo.Groupes.Part01
 import Grothendieck.Attr
+import StacksFrontier.RingTheory.Noetherian.Endomorphism
 
 /-!
 # Buffalo, algebraic groups, Part 02 (a): subcomodules, finiteness, embeddings
@@ -560,24 +561,8 @@ affine scheme into itself (a surjective ring endomorphism of a noetherian ring) 
 isomorphism. -/
 @[buffalo "_lTf_L0yvrU-24998"]
 theorem injective_of_surjective_endo {R : Type*} [CommRing R] [IsNoetherianRing R] (f : R →+* R)
-    (hf : Function.Surjective f) : Function.Injective f := by
-  let K : ℕ →o Ideal R := ⟨fun n ↦ RingHom.ker (f ^ n), fun m n hmn x hx ↦ by
-    rw [RingHom.mem_ker] at hx ⊢
-    obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le hmn
-    rw [RingHom.coe_pow] at hx ⊢
-    rw [add_comm, Function.iterate_add_apply, hx]
-    exact iterate_map_zero f d⟩
-  obtain ⟨n, hn⟩ := (monotone_stabilizes_iff_noetherian.mpr inferInstance) K
-  rw [injective_iff_map_eq_zero]
-  intro x hx
-  have hsurj : Function.Surjective (f ^ n) := by
-    rw [RingHom.coe_pow]; exact hf.iterate n
-  obtain ⟨y, rfl⟩ := hsurj x
-  have hy : y ∈ K (n + 1) := by
-    change (f ^ (n + 1)) y = 0
-    rw [RingHom.coe_pow, Function.iterate_succ_apply', ← RingHom.coe_pow, hx]
-  rw [← hn (n + 1) (Nat.le_succ n)] at hy
-  exact hy
+    (hf : Function.Surjective f) : Function.Injective f :=
+  surjective_endomorphism_noetherian_injective R f hf
 
 /-- _lTf_L0yvrU-24998 (6:56:38) [prop] The finite step of the arithmetic proof: on a finite set
 (the points over a finite field), an injective self-map is bijective. -/

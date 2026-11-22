@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 import Grothendieck.Attr
+import StacksFrontier.RingTheory.Flat.DirectLimit
 
 /-!
 # Buffalo, algebraic geometry, part 08 (a): 6 July 1973 (from 10:19:03) and 9 July 1973, tape 1
@@ -386,23 +387,8 @@ with the equational criterion `Module.Flat.iff_forall_isTrivialRelation`). -/
 theorem prop_520 {ι : Type*} [Preorder ι] [IsDirectedOrder ι] [Nonempty ι] [DecidableEq ι]
     {G : ι → Type*} [∀ i, AddCommGroup (G i)] [∀ i, Module A (G i)]
     (f : ∀ i j, i ≤ j → G i →ₗ[A] G j) [DirectedSystem G (f · · ·)]
-    [∀ i, Module.Flat A (G i)] : Module.Flat A (Module.DirectLimit G f) := by
-  refine Module.Flat.of_forall_isTrivialRelation fun {l c x} hx => ?_
-  choose i y hy using fun k => Module.DirectLimit.exists_of (x k)
-  obtain ⟨j, hj⟩ := Finset.exists_le (Finset.univ.image i)
-  have hij : ∀ k, i k ≤ j := fun k => hj _ (Finset.mem_image_of_mem _ (Finset.mem_univ k))
-  have hz : ∀ k, Module.DirectLimit.of A ι G f j (f _ _ (hij k) (y k)) = x k := fun k => by
-    rw [Module.DirectLimit.of_f, hy]
-  have hsum : Module.DirectLimit.of A ι G f j (∑ k, c k • f _ _ (hij k) (y k)) = 0 := by
-    simp only [map_sum, map_smul, hz, hx]
-  obtain ⟨j', hjj', h0⟩ := Module.DirectLimit.of.zero_exact hsum
-  have h' : ∑ k, c k • f j j' hjj' (f _ _ (hij k) (y k)) = 0 := by
-    simpa only [map_sum, map_smul] using h0
-  obtain ⟨n, a, w, hw1, hw2⟩ := Module.Flat.isTrivialRelation_of_sum_smul_eq_zero h'
-  refine ⟨n, a, fun m => Module.DirectLimit.of A ι G f j' (w m), fun k => ?_, hw2⟩
-  rw [← hz k, ← Module.DirectLimit.of_f (hij := hjj'), show f j j' hjj' (f _ _ (hij k) (y k)) =
-    ∑ m, a k m • w m from hw1 k, map_sum]
-  simp only [map_smul]
+    [∀ i, Module.Flat A (G i)] : Module.Flat A (Module.DirectLimit G f) :=
+  directLimit_flat f fun _ ↦ inferInstance
 
 /-- Over a Dedekind ring, an algebra is flat iff no nonzero scalar kills a nonzero element. -/
 theorem flat_iff_smul_eq_zero [IsDedekindDomain A] {B : Type v} [CommRing B]

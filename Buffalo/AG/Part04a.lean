@@ -7,6 +7,7 @@ module
 
 public import Buffalo.AG.Part02
 import Grothendieck.Attr
+import Grothendieck.Geometry.Folder85
 
 /-!
 # Buffalo, algebraic geometry, part 04 (a): 12–13 June 1973, stalks, localization, local rings
@@ -111,15 +112,8 @@ example (O : Type u) [CommRing O] [IsLocalRing O] :
 ideal; in a local ring, `O^* = O ∖ 𝔪`. -/
 @[buffalo "thSz9ZHDK9o-6764"]
 theorem prop_6764 {O : Type u} [CommRing O] (a : O) :
-    IsUnit a ↔ ∀ m : Ideal O, m.IsMaximal → a ∉ m := by
-  constructor
-  · intro ha m hm ham
-    exact hm.ne_top (Ideal.eq_top_of_isUnit_mem _ ham ha)
-  · intro h
-    by_contra ha
-    have : Ideal.span {a} ≠ ⊤ := by rwa [Ne, Ideal.span_singleton_eq_top]
-    obtain ⟨m, hm, hle⟩ := Ideal.exists_le_maximal _ this
-    exact h m hm (hle (Ideal.mem_span_singleton_self a))
+    IsUnit a ↔ ∀ m : Ideal O, m.IsMaximal → a ∉ m :=
+  Grothendieck.Folder85.isUnit_iff_maximal a
 
 theorem prop_6764_local {O : Type u} [CommRing O] [IsLocalRing O] (a : O) :
     IsUnit a ↔ a ∉ maximalIdeal O :=

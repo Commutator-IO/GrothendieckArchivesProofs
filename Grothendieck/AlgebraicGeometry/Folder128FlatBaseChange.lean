@@ -72,9 +72,8 @@ variable {A S B : Type u} [CommRing A] [CommRing S] [Algebra A S] [CommRing B] [
 
 /-- A nilpotent ideal stays nilpotent after extension. -/
 lemma isNilpotent_map {I : Ideal A} (hI : IsNilpotent I) :
-    IsNilpotent (I.map (algebraMap A B)) := by
-  obtain ⟨n, hn⟩ := hI
-  exact ⟨n, by rw [← Ideal.map_pow, hn, Ideal.zero_eq_bot, Ideal.map_bot]; rfl⟩
+    IsNilpotent (I.map (algebraMap A B)) :=
+  Folder128.Descent.isNilpotent_map hI
 
 /-- For `B` flat over `A`, an ideal `I` of `A` mapped injectively onto an ideal of `S` gives the
 ideal `IB` of `B` mapped injectively onto an ideal of `B ⊗_A S`. -/

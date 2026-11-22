@@ -7,6 +7,7 @@ module
 
 public import Buffalo.Topos.Part01
 import Grothendieck.Attr
+import Buffalo.Topos.Part02c
 
 /-!
 # Buffalo, topos theory, part 3a: points, fibre functors, classifying topoi (11 May and 30 May 1973)
@@ -265,14 +266,8 @@ theorem fiber_top (Φ : Point.{u} (Opens.grothendieckTopology X)) : Nonempty (Φ
   ⟨(Φ.uniqueFiberObj ⊤ isTerminalTop).default⟩
 
 theorem fiber_inf (Φ : Point.{u} (Opens.grothendieckTopology X)) {U V : Opens X} :
-    Nonempty (Φ.fiber.obj U) → Nonempty (Φ.fiber.obj V) → Nonempty (Φ.fiber.obj (U ⊓ V)) := by
-  rintro ⟨a⟩ ⟨b⟩
-  let A : Φ.fiber.Elements := Φ.fiber.elementsMk U a
-  let B : Φ.fiber.Elements := Φ.fiber.elementsMk V b
-  let W := IsCofiltered.min A B
-  have h1 : W.1 ≤ U := leOfHom (IsCofiltered.minToLeft A B).1
-  have h2 : W.1 ≤ V := leOfHom (IsCofiltered.minToRight A B).1
-  exact fiber_mono Φ (le_inf h1 h2) ⟨W.2⟩
+    Nonempty (Φ.fiber.obj U) → Nonempty (Φ.fiber.obj V) → Nonempty (Φ.fiber.obj (U ⊓ V)) :=
+  Part02.point_inf Φ
 
 /-- A point of the site of `X` is completely prime: if its fibre over `U` is non-empty and `U` is
 covered by a family `𝒱` of opens, then its fibre over some member of `𝒱` is non-empty. -/

@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 import Grothendieck.Attr
+import StacksFrontier.RingTheory.Noetherian.Endomorphism
 
 /-!
 # Buffalo, algebraic geometry, part 06 (b): 25 June 1973, from 1:37:21
@@ -505,24 +506,8 @@ an isomorphism. Proved: the noetherian case (the kernels of the iterates stabili
 case by passage to the limit is not formalised. -/
 @[buffalo "Oqhr-Gt66es-9207"]
 theorem prop_9207 {A : Type u} [CommRing A] [IsNoetherianRing A] (φ : A →+* A)
-    (hφ : Function.Surjective φ) : Function.Bijective φ := by
-  refine ⟨?_, hφ⟩
-  let I : ℕ →o Ideal A := ⟨fun n => RingHom.ker (φ ^ n), fun m n hmn a ha => by
-    simp only [RingHom.mem_ker, RingHom.coe_pow] at ha ⊢
-    obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le hmn
-    rw [add_comm, Function.iterate_add_apply, ha, Function.iterate_fixed (map_zero φ)]⟩
-  obtain ⟨n, hn⟩ := monotone_stabilizes_iff_noetherian.2 (inferInstance : IsNoetherian A A) I
-  rw [injective_iff_map_eq_zero]
-  intro a ha
-  have hsurj : Function.Surjective (φ ^ n) := by
-    rw [RingHom.coe_pow]; exact hφ.iterate n
-  obtain ⟨b, rfl⟩ := hsurj a
-  have hb : b ∈ I (n + 1) := by
-    change (φ ^ (n + 1)) b = 0
-    rw [RingHom.coe_pow, Function.iterate_succ_apply', ← RingHom.coe_pow]
-    exact ha
-  rw [← hn (n + 1) (Nat.le_succ n)] at hb
-  exact hb
+    (hφ : Function.Surjective φ) : Function.Bijective φ :=
+  surjective_endomorphism_noetherian_bijective A φ hφ
 
 end Endomorphisms
 

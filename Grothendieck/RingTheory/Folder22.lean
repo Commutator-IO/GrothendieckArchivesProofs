@@ -21,6 +21,7 @@ public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.LinearAlgebra.TensorProduct.Pi
 public import Mathlib.Algebra.FiveLemma
 import Grothendieck.Attr
+import StacksFrontier.RingTheory.Flat.Prod
 
 /-!
 # Folder 22, Lemme 3.3, Corollaires 3.4, 3.5, and the obstruction of pp. 22, 24
@@ -298,24 +299,8 @@ section Corollaire35
 
 /-- A product of two flat modules is flat (not in mathlib as such). -/
 theorem flat_prod (M N : Type*) [AddCommGroup M] [Module A M] [AddCommGroup N] [Module A N]
-    [Module.Flat A M] [Module.Flat A N] : Module.Flat A (M × N) := by
-  rw [Module.Flat.iff_rTensor_injective']
-  intro I
-  have hsq : (TensorProduct.prodRight A A A M N).toLinearMap ∘ₗ I.subtype.rTensor (M × N) =
-      (I.subtype.rTensor M).prodMap (I.subtype.rTensor N) ∘ₗ
-        (TensorProduct.prodRight A A I M N).toLinearMap :=
-    TensorProduct.ext' fun x m => by simp
-  have h1 : Function.Injective ((I.subtype.rTensor M).prodMap (I.subtype.rTensor N)) :=
-    fun x y hxy => Prod.ext
-      (Module.Flat.rTensor_preserves_injective_linearMap _ I.injective_subtype
-        (congrArg Prod.fst hxy))
-      (Module.Flat.rTensor_preserves_injective_linearMap _ I.injective_subtype
-        (congrArg Prod.snd hxy))
-  have hinj : Function.Injective ((I.subtype.rTensor M).prodMap (I.subtype.rTensor N) ∘ₗ
-      (TensorProduct.prodRight A A I M N).toLinearMap) :=
-    h1.comp (TensorProduct.prodRight A A I M N).injective
-  rw [← hsq, LinearMap.coe_comp] at hinj
-  exact hinj.of_comp
+    [Module.Flat A M] [Module.Flat A N] : Module.Flat A (M × N) :=
+  Module.Flat.prod
 
 variable (P : ℕ → Type*) [∀ n, AddCommGroup (P n)] [∀ n, Module A (P n)]
   (π : ∀ n, P (n + 1) →ₗ[A] P n)

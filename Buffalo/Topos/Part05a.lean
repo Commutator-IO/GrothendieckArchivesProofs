@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 import Grothendieck.Attr
+import Buffalo.Topos.Part04b
 
 /-!
 # Buffalo, topos theory, part 5a: adding arrows, combining theories, additivity
@@ -230,32 +231,8 @@ end Semiadditive
 /-- The same exactness property in sets: a monoid is a group iff its shear map
 `(x, y) ↦ (x, x y)` is bijective. -/
 theorem monoid_shear_bijective_iff (M : Type u) [Monoid M] :
-    Function.Bijective (fun p : M × M => (p.1, p.1 * p.2)) ↔ ∀ x : M, IsUnit x := by
-  constructor
-  · intro h x
-    obtain ⟨⟨a, b⟩, hab⟩ := h.2 (x, 1)
-    simp only [Prod.mk.injEq] at hab
-    obtain ⟨rfl, hb⟩ := hab
-    obtain ⟨⟨c, d⟩, hcd⟩ := h.2 (b, 1)
-    simp only [Prod.mk.injEq] at hcd
-    obtain ⟨rfl, hd⟩ := hcd
-    -- `a b = 1` and `b d = 1`, so `a = d` and `b` is the inverse of `a`.
-    have had : a = d := by
-      calc a = a * (c * d) := by rw [hd, mul_one]
-        _ = (a * c) * d := (mul_assoc _ _ _).symm
-        _ = d := by rw [hb, one_mul]
-    subst had
-    exact ⟨⟨a, c, hb, hd⟩, rfl⟩
-  · intro h
-    refine ⟨fun p q hpq => ?_, fun q => ?_⟩
-    · simp only [Prod.mk.injEq] at hpq
-      obtain ⟨h₁, h₂⟩ := hpq
-      rw [h₁] at h₂
-      exact Prod.ext h₁ ((h q.1).mul_left_cancel h₂)
-    · obtain ⟨u, hu⟩ := h q.1
-      refine ⟨(q.1, ↑u⁻¹ * q.2), ?_⟩
-      refine Prod.ext rfl ?_
-      simp [← hu, ← mul_assoc]
+    Function.Bijective (fun p : M × M => (p.1, p.1 * p.2)) ↔ ∀ x : M, IsUnit x :=
+  Part04.monoid_isGroup_iff_shear M
 
 end
 

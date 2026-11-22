@@ -12,6 +12,7 @@ public import Mathlib.RingTheory.AdicCompletion.Completeness
 public import Mathlib.RingTheory.Henselian
 public import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
 import Grothendieck.Attr
+import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem.PowerSeriesRing
 
 /-!
 # Folder 39, the formal preparation theorem (pages 18–19): the adic and discrete cases
@@ -228,31 +229,8 @@ theorem finSuccEquiv_symm_C {n : ℕ} (c : MvPowerSeries (Fin n) k) :
 /-- For finitely many variables, a series without constant term lies in the ideal of the
 variables. -/
 theorem mem_span_X {n : ℕ} (f : MvPowerSeries (Fin n) k) (hf : constantCoeff f = 0) :
-    f ∈ Ideal.span (Set.range X) := by
-  induction n with
-  | zero =>
-    have : f = C (constantCoeff f) := by
-      ext e; rw [Subsingleton.elim e 0]; simp
-    rw [this, hf, map_zero]; exact zero_mem _
-  | succ n ih =>
-    set g := finSuccEquiv k n f
-    have hf' : f = rename (Fin.succEmb n) (PowerSeries.constantCoeff g) +
-        X 0 * (finSuccEquiv k n).symm (PowerSeries.mk fun p => PowerSeries.coeff (p + 1) g) := by
-      apply (finSuccEquiv k n).injective
-      rw [map_add, map_mul, finSuccEquiv_X_zero, AlgEquiv.apply_symm_apply,
-        finSuccEquiv_rename_succ, add_comm (PowerSeries.C _)]
-      exact PowerSeries.eq_X_mul_shift_add_const g
-    rw [hf']
-    refine add_mem ?_ (Ideal.mul_mem_right _ _ (Ideal.subset_span ⟨0, rfl⟩))
-    have h0 : constantCoeff (PowerSeries.constantCoeff g) = 0 := by
-      rw [← coeff_zero_eq_constantCoeff_apply, ← PowerSeries.coeff_zero_eq_constantCoeff_apply,
-        coeff_coeff_finSuccEquiv]
-      simpa using hf
-    have := Ideal.mem_map_of_mem (rename (R := k) (Fin.succEmb n)) (ih _ h0)
-    rw [Ideal.map_span] at this
-    refine Ideal.span_mono ?_ this
-    rintro _ ⟨_, ⟨i, rfl⟩, rfl⟩
-    exact ⟨_, (rename_X _ i).symm⟩
+    f ∈ Ideal.span (Set.range X) :=
+  Stacks.CompleteLocalRing.RegularSubring.mem_span_range_X n f hf
 
 /-- One variable over an `I`-adically complete ring: a series whose constant term is in `I` and
 whose linear coefficient is a unit is a unit times `X - r`, `r ∈ I`. -/
