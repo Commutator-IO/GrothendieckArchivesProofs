@@ -127,6 +127,7 @@ public import Grothendieck.Folder94
 public import Grothendieck.Folder94Koszul
 public import Grothendieck.Folder98
 public import Grothendieck.Folder123Kostant
+public import Grothendieck.Folder123KostantOpposite
 public import Grothendieck.Folder147
 public import Grothendieck.IhesSGA6_1_4
 public import Grothendieck.IhesSGA6_1_5
