@@ -369,26 +369,11 @@ end Lift
 section Separable
 
 /-- Formal smoothness for the discrete (`⊥`-adic) topology is mathlib's `Algebra.FormallySmooth`
-(square-zero lifting for all algebras). -/
+(square-zero lifting for all algebras); Stacks has it as `RingHom.formallySmoothNAdic_bot_iff`. -/
 theorem formallySmoothNAdic_bot_iff (R : Type u) (C : Type v) [CommRing R] [CommRing C]
     [Algebra R C] :
-    RingHom.FormallySmoothNAdic.{max u v} (algebraMap R C) ⊥ ↔ Algebra.FormallySmooth R C := by
-  constructor
-  · intro h
-    refine Algebra.FormallySmooth.of_comp_surjective fun T _ _ I hI g => ?_
-    obtain ⟨γ, hγ, hγa⟩ := h T I hI (algebraMap R T) g.toRingHom
-      (RingHom.ext fun r => g.commutes r) ⟨1, le_rfl, by simp⟩
-    refine ⟨{ γ with commutes' := fun r => DFunLike.congr_fun hγa r }, ?_⟩
-    ext x
-    exact DFunLike.congr_fun hγ x
-  · intro _ T _ J hJ f ψ hψ _
-    let : Algebra R T := f.toAlgebra
-    let ψ' : C →ₐ[R] T ⧸ J :=
-      { ψ with commutes' := fun r ↦ RingHom.congr_fun hψ r }
-    obtain ⟨g, hg⟩ := Algebra.FormallySmooth.exists_lift J ⟨2, hJ⟩ ψ'
-    refine ⟨g.toRingHom, congrArg AlgHom.toRingHom hg, ?_⟩
-    ext r
-    exact g.commutes r
+    RingHom.FormallySmoothNAdic.{max u v} (algebraMap R C) ⊥ ↔ Algebra.FormallySmooth R C :=
+  RingHom.formallySmoothNAdic_bot_iff
 
 /-- When `𝔪_B = 𝔪_A B`, the special fibre `k ⊗_A B` is the residue field of `B`, as a
 `k`-algebra. -/
