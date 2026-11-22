@@ -2,6 +2,7 @@ module
 
 public import Grothendieck.Folder101Ext
 public import StacksFrontier.RingTheory.LocalCohomology.CechModel
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -59,6 +60,7 @@ noncomputable abbrev localCohomology (M : ModuleCat.{u} A) (i : ℤ) : ModuleCat
 
 /-- For a uniformizer `ϖ`, `H^i_x(M)` is the cohomology of the extended Čech complex
 `M → M_ϖ`. -/
+@[montpellier "101, 10"]
 noncomputable def localCohomologyIsoCech {ϖ : A} (hϖ : Irreducible ϖ) (M : ModuleCat.{u} A)
     (i : ℤ) :
     localCohomology A M i ≅
@@ -68,6 +70,7 @@ noncomputable def localCohomologyIsoCech {ϖ : A} (hϖ : Irreducible ϖ) (M : Mo
 
 /-- **Local cohomology at the closed point of `Spec A` vanishes outside degrees `0` and `1`**,
 for every `A`-module. -/
+@[montpellier "101, 10"]
 theorem isZero_localCohomology (M : ModuleCat.{u} A) {i : ℤ} (h0 : i ≠ 0) (h1 : i ≠ 1) :
     IsZero (localCohomology A M i) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible A

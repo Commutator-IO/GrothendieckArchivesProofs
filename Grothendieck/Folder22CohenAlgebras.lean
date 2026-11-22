@@ -1,6 +1,8 @@
 module
 
 public import StacksFrontier.RingTheory.GeometricallyRegular.FormalSmoothness
+import Grothendieck.Attr
+import StacksCore.Tactic.EgaSgaAttribute
 
 @[expose] public section
 
@@ -130,6 +132,7 @@ private theorem geometricallyRegular_iff_of_charZero
 field and `C` a noetherian local `k`-algebra. Then `C` is formally smooth over `k` for its
 `𝔪`-adic topology if and only if it is geometrically (« universellement ») regular over `k`.
 No hypothesis on the residue field, and no characteristic assumption. Stacks 07EL. -/
+@[montpellier "22, 18", ega "0 22.5.8"]
 theorem question1 (k : Type u) (C : Type v) [Field k] [CommRing C] [Algebra k C]
     [IsNoetherianRing C] [IsLocalRing C] :
     RingHom.FormallySmoothNAdic.{max u v} (algebraMap k C) (maximalIdeal C) ↔
@@ -159,6 +162,7 @@ variable {A : Type u} {B : Type v} [CommRing A] [IsNoetherianRing A] [IsLocalRin
 `f : A → B` of noetherian local rings is formally smooth for the `𝔪_B`-adic topology if and only
 if `B` is flat over `A` and the special fibre `B_0 = k ⊗_A B` is geometrically regular over the
 residue field `k` of `A`. Stacks 07NQ, (3) ⇔ (1). -/
+@[montpellier "22, 12–17", ega "0 19.7.1"]
 theorem corollaire3_13 (f : A →+* B) [IsLocalHom f] :
     letI : Algebra A B := f.toAlgebra
     let k := ResidueField A
@@ -171,6 +175,7 @@ theorem corollaire3_13 (f : A →+* B) [IsLocalHom f] :
 /-- **Corollaire 3.9**, 1) ⇔ 2), with « algèbre de Cohen » read as « formally smooth » and
 without the radicial hypothesis: `f` is formally smooth if and only if `B` is flat over `A` and
 `B_0 = k ⊗_A B` is formally smooth over `k` for its `𝔪`-adic topology. Stacks 07NQ, (3) ⇔ (2). -/
+@[montpellier "22, 12–17"]
 theorem corollaire3_9 (f : A →+* B) [IsLocalHom f] :
     letI : Algebra A B := f.toAlgebra
     let k := ResidueField A
@@ -189,6 +194,7 @@ complete noetherian local `k`-algebra formally smooth over `k` for its `𝔪`-ad
 there are a complete noetherian local ring `B` and a local homomorphism `A → B`, formally smooth
 for the `𝔪_B`-adic topology and flat, with special fibre `k ⊗_A B ≃ B_0` as `k`-algebras.
 Stacks 07NR (existence) and 07NP (flatness). -/
+@[montpellier "22, 12–17", ega "0 19.7.2"]
 theorem corollaire3_10 {A : Type u} {B₀ : Type v}
     [CommRing A] [IsNoetherianRing A] [IsLocalRing A] [IsAdicComplete (maximalIdeal A) A]
     [CommRing B₀] [IsNoetherianRing B₀] [IsLocalRing B₀] [IsAdicComplete (maximalIdeal B₀) B₀]
@@ -225,6 +231,7 @@ extension of `k`. There are a complete noetherian local ring `B` and a local hom
 `A → B`, formally smooth and flat, whose special fibre `k ⊗_A B` is `K` as a `k`-algebra (whence
 `𝔪_A B = 𝔪_B` and residue field `K`, not restated). This is the case `B_0 = K` of 3.10, the one
 the proof of 3.10 takes from EGA 0_III 10.3.1. -/
+@[montpellier "22, 12–17"]
 theorem corollaire3_12_existence {A : Type u} {K : Type v}
     [CommRing A] [IsNoetherianRing A] [IsLocalRing A] [IsAdicComplete (maximalIdeal A) A]
     [Field K] [Algebra (ResidueField A) K] [Algebra.IsSeparableExtension (ResidueField A) K] :
