@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04b
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (c): 18 June 1973, schemes as Zariski sheaves
@@ -13,8 +16,18 @@ morphisms into an affine scheme and the adjunction `Γ ⊣ Spec`, schemes as she
 Zariski topology and the comparison with affine schemes, sums of schemes, epimorphisms of
 Zariski sheaves, open immersions of sheaves and the representability criterion.
 
+## Implementation notes
+
 All statements are over `k = ℤ` (all schemes, all rings) unless said otherwise.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 18 June 1973, video `thSz9ZHDK9o`,
+  4:04:17–5:58:36 (`docs/buffalo-ag/index.tex`, lines 552–611)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite IsLocalRing TopologicalSpace AlgebraicGeometry
 
@@ -233,7 +246,8 @@ theorem prop_17324 {σ : Type u} (g : σ → Scheme.{u}) {i j : σ} (hij : i ≠
       (Nonempty (S' ⟶ ∅) ↔ IsEmpty S') ∧ Subsingleton (S' ⟶ ∅) ∧
       ∃! _t : F.obj.obj (op (∅ : Scheme.{u})), True := by
   refine ⟨isEmpty_pullback_sigmaι_of_ne g hij, ⟨fun ⟨f⟩ => ⟨fun x => isEmptyElim (f.base x)⟩,
-    fun _ => ⟨isInitialOfIsEmpty.to _⟩⟩, ⟨fun f g' => ?_⟩, unique_obj_empty ((isSheaf_iff_isSheaf_of_type _ _).1 F.property) _⟩
+    fun _ => ⟨isInitialOfIsEmpty.to _⟩⟩, ⟨fun f g' => ?_⟩,
+    unique_obj_empty ((isSheaf_iff_isSheaf_of_type _ _).1 F.property) _⟩
   have : IsEmpty S' := ⟨fun x => isEmptyElim (f.base x)⟩
   exact isInitialOfIsEmpty.hom_ext f g'
 
@@ -432,6 +446,9 @@ theorem prop_21454 (X : Scheme.{u}) (i : X.affineCover.I₀) :
     IsOpenImmersion.presheaf (yoneda.map (X.affineCover.f i)) :=
   MorphismProperty.relative_map inferInstance
 
+-- The instance `HasLimit (cospan fj fi)` times out under the library-wide
+-- `maxSynthPendingDepth = 3`; Lean's default depth finds it at once.
+set_option maxSynthPendingDepth 1 in
 /-- thSz9ZHDK9o-21516 (5:58:36) [prop] If `F_j → F` is an open immersion, so is its base change
 `F_i ∩ F_j → F_i` by `F_i → F` (`prop_20162`). -/
 @[buffalo "thSz9ZHDK9o-21516"]

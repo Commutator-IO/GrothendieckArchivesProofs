@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.Excellent.Basic
@@ -8,8 +13,6 @@ public import StacksFrontier.RingTheory.Nagata.MonogenicN1
 public import StacksFrontier.RingTheory.Nagata.Universes
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 23, pages 86 to 88: finiteness of the normalisation of a quotient of a regular ring
 
@@ -19,17 +22,14 @@ fractions is finite over `A` if and only if
 * a) the primes `𝔭` of `A` with `A_𝔭` of dimension `1` and not regular are finite in number, and
 * b) for each of them, the normalisation of `A_𝔭` is finite over `A_𝔭`.
 
-Here « of dimension `1` » is `𝔭.height = 1` (`dim A_𝔭 = ht 𝔭`), « the normalisation is finite »
-is Stacks' `IsN1` (tag 032F), and « regular » is Mathlib's `IsRegularLocalRing`. Conditions a)
-and b) together are `NormalisationCriterion A`.
+The necessity is proved for every Noetherian domain, and the equivalence for domains of finite
+type over a Nagata ring; the sufficiency for an arbitrary regular ring is not.
 
-**What is proved.**
+## Main results
+
 * `normalisationCriterion_of_isN1`: the necessity, for every Noetherian domain (the hypothesis
   « quotient of a regular ring » is not needed). The page calls it evident: the non-normal locus
-  is closed. The proof here makes that concrete: if the integral closure `A'` is finite, a common
-  denominator `d ≠ 0` of its generators satisfies `d A' ⊆ A`; every `A_𝔮` with `d ∉ 𝔮` is
-  normal, hence regular when `ht 𝔮 = 1`; so the primes of a) are minimal over `(d)`, of which
-  there are finitely many, and `A_𝔮'` lies in `d⁻¹ A_𝔮` for every `𝔮`, which gives b).
+  is closed.
 * `isRegularLocalRing_atPrime_of_isIntegrallyClosed`: in height one, normal implies regular
   (a one-dimensional Noetherian normal local domain is a discrete valuation ring).
 * `isN1_iff_normalisationCriterion_of_isNagataRing`, `…_of_isExcellent`, `…_quotient`: the
@@ -42,7 +42,21 @@ and b) together are `NormalisationCriterion A`.
 * `isN1_of_finiteType_field`, `isN1_quotient_of_isPrecomplete`: the two cases of a domain of
   finite type over a field and of a quotient of a complete Noetherian local ring.
 
-**Not formalised.** The sufficiency for a quotient of an arbitrary regular ring, which need not
+## Implementation notes
+
+Here « of dimension `1` » is `𝔭.height = 1` (`dim A_𝔭 = ht 𝔭`), « the normalisation is finite »
+is Stacks' `IsN1` (tag 032F), and « regular » is Mathlib's `IsRegularLocalRing`. Conditions a)
+and b) together are `NormalisationCriterion A`.
+
+The proof of `normalisationCriterion_of_isN1` makes the page's « evident » concrete: if the
+integral closure `A'` is finite, a common denominator `d ≠ 0` of its generators satisfies
+`d A' ⊆ A`; every `A_𝔮` with `d ∉ 𝔮` is normal, hence regular when `ht 𝔮 = 1`; so the primes of
+a) are minimal over `(d)`, of which there are finitely many, and `A_𝔮'` lies in `d⁻¹ A_𝔮` for
+every `𝔮`, which gives b).
+
+## Not formalised
+
+The sufficiency for a quotient of an arbitrary regular ring, which need not
 be excellent (nor of finite dimension). This is the content of leaves 87 and 86: an intermediate
 `B`, finite over `A` and normal at the primes of a); the extension `C = i_* i^* B̃` across a
 closed set of codimension `≥ 2`, coherent because `B̃` is `(S₂)` and the `(S₂)` locus of a
@@ -52,7 +66,16 @@ declarations it would rest on (the `(S₂)` canonical module 0AWE, dualizing com
 finite dimension and so a localisation first) do not yet give the `S₂`-ification `Hom(ω, ω)` as
 a finite extension, nor the coherence of `i_*` across codimension two. Nor is the lemma of leaf
 86 on `(S_k)` along finite morphisms formalised.
+
+## References
+
+* A. Grothendieck, folder 23, leaves 86–88 (finding
+  `23-finite-normalisation-quotient-of-regular`)
+* Stacks Project, tags 032F, 07QV, 07QW, 0334, 0345, 0AWE
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder23Normalisation
 
@@ -155,7 +178,7 @@ theorem normalisationCriterion_of_isN1 (A : Type*) [CommRing A] [IsDomain A]
       by_contra hdq
       exact hnreg (hreg q hq hdq)
     have : q.asIdeal.FiniteHeight := ⟨Or.inr (by simp [hq])⟩
-    show q.asIdeal ∈ (Ideal.span {d}).minimalPrimes
+    change q.asIdeal ∈ (Ideal.span {d}).minimalPrimes
     refine Ideal.mem_minimalPrimes_of_height_le
       ((Ideal.span_singleton_le_iff_mem _).mpr hdq) ?_
     rw [hq]

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 29, page 120: the determinant criterion on tame inertia
@@ -20,9 +23,10 @@ isomorphism iff `card C = card C'` and the ordinary integer `det N` is `± p^r`,
 characteristic exponent of the residue fields.
 
 This is the criterion of finding `29-inertia-matrix-determinant` of
-`src/content/findings.ts`. That the map on inertia is `N` (the Kummer computation of the
-page) is not formalised: mathlib has no tame inertia of regular schemes. What is proved is
-the criterion itself, for any integer matrix, `ℤ_ℓ(1)` being free of rank one over `ℤ_ℓ`.
+`src/content/findings.ts`. What is proved is the criterion itself, for any integer matrix,
+`ℤ_ℓ(1)` being free of rank one over `ℤ_ℓ`.
+
+## Main results
 
 * `inertiaMap N ℓ`: the map `ℤ_ℓ^C → ℤ_ℓ^{C'}` of an integer matrix `N` (rows `C'`,
   columns `C`).
@@ -36,7 +40,20 @@ the criterion itself, for any integer matrix, `ℤ_ℓ(1)` being free of rank on
   changes the determinant only by a sign.
 * `criterion` (the page's criterion): `N` is bijective over `ℤ_ℓ` for every prime `ℓ ≠ p`
   iff `card C = card C'` and the determinant is `± p^k`.
+
+## Not formalised
+
+That the map on inertia is `N` (the Kummer computation of the page) is not formalised:
+mathlib has no tame inertia of regular schemes.
+
+## References
+
+* A. Grothendieck, folder 29, page 120 (reading `transcripts/29/29.modern.tex`; finding
+  `29-inertia-matrix-determinant`)
 -/
+
+@[expose] public section
+
 
 open Matrix
 
@@ -448,7 +465,7 @@ lemma card_baseChange {P X Y Y' : FintypeCat.{0}} {fst : P ⟶ X} {snd : P ⟶ Y
     {g : Y' ⟶ Y} (sq : IsPullback fst snd f g) (y' : Y') :
     Nat.card {p : P // snd p = y'} = Nat.card {x : X // f x = g y'} := by
   have := (Types.isPullback_iff _ _ _ _).1 (sq.map (forget FintypeCat))
-  simp at this
+  simp only [TypeCat.hom_ofHom, TypeCat.Fun.coe_mk, and_imp] at this
   obtain ⟨-, hinj, hex⟩ := this
   have hw : ∀ p, f (fst p) = g (snd p) := fun p => by
     simpa using ConcreteCategory.congr_hom sq.w p
@@ -467,7 +484,8 @@ lemma card_add {X₁ X₂ X Y : FintypeCat.{0}} {i₁ : X₁ ⟶ X} {i₂ : X₂
       Nat.card {a : X₁ // (i₁ ≫ f) a = y} + Nat.card {b : X₂ // (i₂ ≫ f) b = y} := by
   have := (Types.binaryCofan_isColimit_iff _).1
     ⟨(isColimitMapCoconeBinaryCofanEquiv (forget _) i₁ i₂) (isColimitOfPreserves (forget _) hc)⟩
-  simp at this
+  simp only [ConcreteCategory.forget_map_eq_ofHom, BinaryCofan.mk_pt, BinaryCofan.mk_inl,
+      TypeCat.hom_ofHom, TypeCat.Fun.coe_mk, BinaryCofan.mk_inr] at this
   obtain ⟨h₁, h₂, hcompl⟩ := this
   rw [← Nat.card_sum]
   refine (Nat.card_congr (Equiv.ofBijective
@@ -633,7 +651,7 @@ instance : surj.IsStableUnderComposition := ⟨fun _ _ hf hg => hg.comp hf⟩
 theorem surj_pullback_epi {A B Y' Y : FintypeCat.{0}} {a : A ⟶ Y'} {b : A ⟶ B} {g : Y' ⟶ Y}
     {k : B ⟶ Y} (hg : surj g) (sq : IsPullback a b g k) : Epi b := by
   have := (Types.isPullback_iff _ _ _ _).1 (sq.map (forget FintypeCat))
-  simp at this
+  simp only [TypeCat.hom_ofHom, TypeCat.Fun.coe_mk, and_imp] at this
   refine (forget _).epi_of_epi_map ((epi_iff_surjective _).2 fun β => ?_)
   obtain ⟨y', hy'⟩ := hg (k β)
   obtain ⟨p, -, hp⟩ := this.2.2 y' β hy'

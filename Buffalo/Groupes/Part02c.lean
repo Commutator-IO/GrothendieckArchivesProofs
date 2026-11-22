@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part02b
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (c): diagonalizable groups, constant groups, Cartier duality
@@ -11,10 +14,20 @@ import Grothendieck.Attr
 Entries `_lTf_L0yvrU-28722` to `_lTf_L0yvrU-32249` of `docs/buffalo-groupes/index.tex` (20 June
 1973). Statuses in `docs/buffalo-groupes/lean/Part02.json`.
 
+## Implementation notes
+
 `D(M) = Spec k[M]` (Mathlib `AddMonoidAlgebra k M`, with its bialgebra structure
 `e^m ↦ e^m ⊗ e^m`); a representation of `D(M)` on `V` is a comodule `δ : V → V ⊗ k[M]`
 (`Part01.IsComodule`); its projectors are `p_m • x = (id ⊗ coord_m)(δ x)` (`proj`).
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 28722–32249 (20
+  June 1973)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part02
 
@@ -143,7 +156,8 @@ omit [AddCommGroup M] in
 and `x = ∑_m p_m x`. -/
 @[buffalo "_lTf_L0yvrU-28993"]
 theorem proj_finite (x : V) : Set.Finite {m : M | proj δ m x ≠ 0} := by
-  refine (TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M)) (δ x)).support.finite_toSet.subset
+  refine (TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M))
+      (δ x)).support.finite_toSet.subset
     fun m hm ↦ ?_
   rw [Set.mem_ofPred_eq, proj_eq_coeff] at hm
   simpa using hm
@@ -201,7 +215,8 @@ theorem point_acts_by_character (hδ : Part01.IsComodule k (AddMonoidAlgebra k M
       IsUnit (g (AddMonoidAlgebra.single m 1)) := by
   refine ⟨by rw [delta_of_mem hδ]; rfl, ?_⟩
   refine ⟨⟨_, g (AddMonoidAlgebra.single (-m) 1), ?_, ?_⟩, rfl⟩ <;>
-    rw [← map_mul, AddMonoidAlgebra.single_mul_single, mul_one] <;> simp [← AddMonoidAlgebra.one_def]
+    rw [← map_mul, AddMonoidAlgebra.single_mul_single, mul_one] <;>
+      simp [← AddMonoidAlgebra.one_def]
 
 omit [DecidableEq M] in
 /-- _lTf_L0yvrU-29334 (8:08:54) [prop] The characters add: `χ_m χ_{m'} = χ_{m+m'}`
@@ -337,7 +352,8 @@ theorem grouplike_connected [Nontrivial k] (hk : ∀ e : k, IsIdempotentElem e �
 `D` is fully faithful: bialgebra maps `R[N] → R[M]` are the homomorphisms `N → M`. -/
 @[buffalo "_lTf_L0yvrU-30490"]
 noncomputable def D_fullyFaithful (R : Type u) [CommRing R] [IsDomain R] (N : Type u)
-    [AddCommGroup N] : (N →+ M) ≃+ Additive (WithConv (AddMonoidAlgebra R N →ₐc[R] AddMonoidAlgebra R M)) :=
+    [AddCommGroup N] :
+    (N →+ M) ≃+ Additive (WithConv (AddMonoidAlgebra R N →ₐc[R] AddMonoidAlgebra R M)) :=
   AddMonoidAlgebra.mapDomainBialgHomAddEquiv
 
 end GroupLike

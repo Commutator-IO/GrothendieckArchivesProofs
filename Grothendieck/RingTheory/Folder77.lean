@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 77, pages 65–71 and 87: the universal discriminant mod 2 and mod 4
@@ -25,46 +28,63 @@ These are findings `77-odd-rank-half-discriminant` and
 Proving them says only that the claims hold as stated; whether they stand in the
 literature is a separate question.
 
-What is formalised.
+**Folder 77, pages 117–125: the canonical symmetry of a biregular affine quadric.** The
+reading (§ 1'' and § 2) attaches to `(T, q, a)`, `q(a) = 1`, `π = φ(a, ·)`, the map
+`σ = id - π ⊗ a` and states (marginal Proposition, p. 123) that it is the only reflection
+fixing the hyperplane at infinity and preserving the quadric; it is a symmetry of centre
+`a/2` if `2` is invertible and a transvection in characteristic `2` (finding
+`77-biregular-affine-quadric-symmetry`). This part is formalised over any commutative ring.
 
-* Odd rank, every odd `n` (`two_dvd_det_polar`): the variables are indexed by
-  `Sym2 (Fin n)`, `s(i, i)` for `Yᵢ` and `s(i, j)` for `Yᵢⱼ`. The proof does not
-  follow the graph expansion of the page: modulo `2` the polar matrix agrees with
-  the skew-symmetric matrix `K` (`Yᵢⱼ` above the diagonal, `-Yᵢⱼ` below, `0` on
-  it), and `det K = 0` over `ℤ[Y]` in odd size since `det Kᵀ = det (-K) = -det K`
-  and `ℤ[Y]` has no `2`-torsion. The quotient `halfDisc n` is unique, and its
-  value at the coefficients of a form over any commutative ring halves the
+## Main results
+
+### Pages 65–71 and 87: the universal discriminant
+
+* Odd rank, every odd `n` (`two_dvd_det_polar`): `2` divides `Δ`. The quotient `halfDisc n`
+  is unique, and its value at the coefficients of a form over any commutative ring halves the
   determinant there (`det_polarOf_eq`).
 * Even rank, ranks `2` and `4` (`disc_rank_two`, `disc_rank_four`): the identity
   `(-1)ⁿ Δ = B² - 4C` over any commutative ring, with `C` written out. In rank 2
   it is `-Δ = b² - 4ac`. The sign `-(-1)ⁿ` fails in both ranks
   (`not_dvd_rank_two`, `not_dvd_rank_four`).
 * Even rank, every `n` (`four_dvd_disc_sub_hafnian_sq`, `disc_even_rank`): `4` divides
-  `(-1)ⁿ Δ - B²` in `ℤ[Y]`, `B` the hafnian (`hafnian`). No Pfaffian is used. With `U`
-  the upper half of the polar matrix, `P = U + Uᵀ` and the skew matrix is
-  `K = U - Uᵀ = P - 2Uᵀ`; the first-order term of `det (P - t Uᵀ)`, computed in the
-  fraction field, gives `det K ≡ (1 - 2n) det P (mod 4)` (`det_skew_eq_first_order`).
-  Next `det K = r²` in `ℤ[Y]` (`det_skew_eq_sq`): over a field of characteristic `≠ 2` an
-  antisymmetric matrix of even size has a square determinant (Schur complement on a
-  `2 × 2` block), and `ℤ[Y]` is integrally closed. Modulo `2`, the determinant of a
-  symmetric matrix with zero diagonal is the square of its matching sum
-  (`det_eq_hafSum_sq`), so `r ≡ B (mod 2)` and `det K ≡ B² (mod 4)`. Finally
-  `(-1)ⁿ ≡ 1 - 2n (mod 4)`.
+  `(-1)ⁿ Δ - B²` in `ℤ[Y]`, `B` the hafnian (`hafnian`).
 
-# Folder 77, pages 117–125: the canonical symmetry of a biregular affine quadric
+### Pages 117–125: the canonical symmetry
 
-The reading (§ 1'' and § 2) attaches to `(T, q, a)`, `q(a) = 1`, `π = φ(a, ·)`, the map
-`σ = id - π ⊗ a` and states (marginal Proposition, p. 123) that it is the only reflection
-fixing the hyperplane at infinity and preserving the quadric; it is a symmetry of centre
-`a/2` if `2` is invertible and a transvection in characteristic `2` (finding
-`77-biregular-affine-quadric-symmetry`). Formalised over any commutative ring:
 `piForm_self` (`π(a) = 2`), `canSym_isometry`, `canSym_canSym` (`σ² = id`),
 `eq_of_isometry_fix` (with `φ` nondegenerate and `π` onto, a linear isometry fixing `ker π`
 pointwise is `x ↦ x - e π(x) a` with `e` idempotent; conversely `isometry_of_idem`),
 `eq_id_or_canSym` (no nontrivial idempotent: `id` or `σ`), `canSym_center` (`2`
 invertible), `canSym_char_two` (`2 = 0`), and `det_polar_one` (the example `M₂`, `det`, `1`
 of p. 124, where `π` is the trace).
+
+## Implementation notes
+
+**Odd rank.** The variables are indexed by `Sym2 (Fin n)`, `s(i, i)` for `Yᵢ` and `s(i, j)`
+for `Yᵢⱼ`. The proof does not follow the graph expansion of the page: modulo `2` the polar
+matrix agrees with the skew-symmetric matrix `K` (`Yᵢⱼ` above the diagonal, `-Yᵢⱼ` below, `0`
+on it), and `det K = 0` over `ℤ[Y]` in odd size since `det Kᵀ = det (-K) = -det K` and `ℤ[Y]`
+has no `2`-torsion.
+
+**Even rank, every `n`.** No Pfaffian is used. With `U` the upper half of the polar matrix,
+`P = U + Uᵀ` and the skew matrix is `K = U - Uᵀ = P - 2Uᵀ`; the first-order term of
+`det (P - t Uᵀ)`, computed in the fraction field, gives `det K ≡ (1 - 2n) det P (mod 4)`
+(`det_skew_eq_first_order`). Next `det K = r²` in `ℤ[Y]` (`det_skew_eq_sq`): over a field of
+characteristic `≠ 2` an antisymmetric matrix of even size has a square determinant (Schur
+complement on a `2 × 2` block), and `ℤ[Y]` is integrally closed. Modulo `2`, the determinant
+of a symmetric matrix with zero diagonal is the square of its matching sum
+(`det_eq_hafSum_sq`), so `r ≡ B (mod 2)` and `det K ≡ B² (mod 4)`. Finally
+`(-1)ⁿ ≡ 1 - 2n (mod 4)`.
+
+## References
+
+* A. Grothendieck, folder 77, pp. 64–87 (findings `77-odd-rank-half-discriminant`,
+  `77-universal-even-rank-discriminant-mod-4`) and pp. 117–125 (finding
+  `77-biregular-affine-quadric-symmetry`); modernised reading `transcripts/77/77.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder77
 
@@ -1196,7 +1216,7 @@ theorem quadAlg_away (d s : R) :
   let g := AdjoinRoot.map (algebraMap R Rs) _ _
     (show (X ^ 2 - C (algebraMap R Rs d)) ∣ (X ^ 2 - C d : R[X]).map (algebraMap R Rs) by simp)
   have hg : ∀ r : R, g (algebraMap R B r) = AdjoinRoot.of _ (algebraMap R Rs r) := fun r => by
-    show g (AdjoinRoot.of _ r) = _
+    change g (AdjoinRoot.of _ r) = _
     simp [g, AdjoinRoot.map]
   have hgu : IsUnit (g (algebraMap R B s)) :=
     hg s ▸ (IsLocalization.Away.algebraMap_isUnit s).map _
@@ -1216,16 +1236,16 @@ theorem quadAlg_away (d s : R) :
     IsLocalization.ringHom_ext (Submonoid.powers s) (RingHom.ext fun r => by simp [hi, hψ, hg])
   refine ⟨RingEquiv.ofRingHom ψ φ ?_ ?_⟩
   · refine Ideal.Quotient.ringHom_ext (Polynomial.ringHom_ext (fun a => ?_) ?_)
-    · show ψ (φ (AdjoinRoot.of _ a)) = AdjoinRoot.of _ a
+    · change ψ (φ (AdjoinRoot.of _ a)) = AdjoinRoot.of _ a
       rw [AdjoinRoot.lift_of]
       exact RingHom.congr_fun key a
-    · show ψ (φ (AdjoinRoot.root _)) = AdjoinRoot.root _
+    · change ψ (φ (AdjoinRoot.root _)) = AdjoinRoot.root _
       simp [φ, hψ, g, AdjoinRoot.map]
   · refine IsLocalization.ringHom_ext (Submonoid.powers (algebraMap R B s))
       (Ideal.Quotient.ringHom_ext (Polynomial.ringHom_ext (fun a => ?_) ?_))
-    · show φ (ψ (algebraMap B Bs (algebraMap R B a))) = algebraMap B Bs (algebraMap R B a)
+    · change φ (ψ (algebraMap B Bs (algebraMap R B a))) = algebraMap B Bs (algebraMap R B a)
       rw [hψ, hg, AdjoinRoot.lift_of, hi]
-    · show φ (ψ (algebraMap B Bs (AdjoinRoot.root _))) = algebraMap B Bs (AdjoinRoot.root _)
+    · change φ (ψ (algebraMap B Bs (AdjoinRoot.root _))) = algebraMap B Bs (AdjoinRoot.root _)
       simp [hψ, g, AdjoinRoot.map, φ]
 
 /-- `3` is not of the form `b² − 4c` in `ℤ`: `b² − 4c ≡ 0` or `1 (mod 4)`. -/
@@ -1267,8 +1287,10 @@ theorem extension_across_two_counterexample :
     ¬ (2 : ℤ) ∣ 3 ∧ Module.Finite Z3 B3 ∧ Module.Free Z3 B3 ∧ Module.finrank Z3 B3 = 2 ∧
       Nonempty (Localization.Away (algebraMap Z3 B3 2) ≃+* C6) ∧
       ¬ ∃ b c : ℤ, b ^ 2 - 4 * c = 3 :=
-  ⟨by decide, inferInstance, inferInstance, finrank_quadAlg _, (quadAlg_away (3 : Z3) (2 : Z3)).map fun e =>
-      e.trans (AdjoinRoot.algEquivOfEq (R := Z6) _ _ (by simp; exact map_ofNat _ _)).toRingEquiv,
+  ⟨by decide, inferInstance, inferInstance, finrank_quadAlg _,
+    (quadAlg_away (3 : Z3) (2 : Z3)).map fun e =>
+      e.trans (AdjoinRoot.algEquivOfEq (R := Z6) _ _
+        (by simp only [sub_right_inj, Polynomial.C_inj]; exact map_ofNat _ _)).toRingEquiv,
     fun ⟨b, c, h⟩ => sq_sub_four_mul_ne_three b c h⟩
 
 end ExtensionAcrossTwoExample

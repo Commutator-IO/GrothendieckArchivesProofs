@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 73 (« Polygones », [from 1976]): ear areas of plane polygons
@@ -16,10 +19,9 @@ The modernised reading `transcripts/73/73.modern.tex` studies the map sending a 
 (pages 23–28, at the end of the file). Proving them says only that the claims hold as
 stated; whether they stand in the literature is a separate question.
 
-The plane is `k²` (`Fin 2 → k`) with the volume form `a ∧ b = a₀b₁ - a₁b₀`; an affine map
-acts on sides through its linear part, a `2 × 2` matrix.
+## Main results
 
-## Pages 5–6: closed quadrilaterals form a projective plane
+### Pages 5–6: closed quadrilaterals form a projective plane
 
 * `mu_relation`: `μ₀ + μ₂ = μ₁ + μ₃` for a closed quadrilateral, over any commutative ring,
   from `wedge_diag`: `u₀ ∧ u₂ = μ₀ - μ₁ = μ₃ - μ₂` and `u₁ ∧ u₃ = μ₁ - μ₂ = μ₀ - μ₃`. The
@@ -41,15 +43,12 @@ acts on sides through its linear part, a `2 × 2` matrix.
   the `i`-th basis vector going to `(-1)ⁱ p_i` — the plane is `P(k^A / k·(1,1,1,1))`. The
   sign is needed: `e_i ↦ p_i` has kernel `k·(1,-1,1,-1)`.
 
-Proved over a field (the identities over any commutative ring); the page's `P²_ℤ`, the
-statement over `Spec ℤ` as an isomorphism of schemes, is not formalised.
+These are proved over a field (the identities over any commutative ring).
 
-## Pages 15, 18, 28: the zero-multiplier criterion
+### Pages 15, 18, 28: the zero-multiplier criterion
 
 For `u : ZMod n → k²` with all `u_i ≠ 0`, the multipliers are the `λ` with
-`λ_i u_{i-1} - λ_{i+1}(u_i + u_{i+1}) + λ_{i+2} u_{i+2} = 0` for all `i` (`IsMult`). The
-juxtaposition `u·v` of the page is read in `Sym² V`, here `k³` through
-`a·b ↦ (a₀b₀, a₀b₁ + a₁b₀, a₁b₁)` (`symProd`).
+`λ_i u_{i-1} - λ_{i+1}(u_i + u_{i+1}) + λ_{i+2} u_{i+2} = 0` for all `i` (`IsMult`).
 
 * `zero_multiplier_criterion`: a multiplier with `λ₀ = 0`, `λ₁ = 1` exists if and only if
   `Σ u_i = 0` and, for `2 ≤ i ≤ n - 1`, either `s_i = s_0` (`u_{0i} = 0`) or the pair of
@@ -60,7 +59,28 @@ juxtaposition `u·v` of the page is read in `Sym² V`, here `k³` through
   which justifies the normalisation `λ₁ = 1`.
 * `symProd_proportional_iff`: for nonzero vectors of a plane, `c·d ∈ k·(a·b)` if and only if
   `{[a], [b]} = {[c], [d]}` — the factorisation fact the « pair of directions » rests on.
+
+## Implementation notes
+
+The plane is `k²` (`Fin 2 → k`) with the volume form `a ∧ b = a₀b₁ - a₁b₀`; an affine map
+acts on sides through its linear part, a `2 × 2` matrix.
+
+The juxtaposition `u·v` of the page is read in `Sym² V`, here `k³` through
+`a·b ↦ (a₀b₀, a₀b₁ + a₁b₀, a₁b₁)` (`symProd`).
+
+## Not formalised
+
+The page's `P²_ℤ`, the statement over `Spec ℤ` as an isomorphism of schemes.
+
+## References
+
+* A. Grothendieck, folder 73 (« Polygones », [from 1976]), pp. 5–6, 15, 18, 23–28 (findings
+  `73-quadrilateral-projective-frame`, `73-zero-multiplier-criterion`,
+  `73-ear-area-multiplier-classification`); modernised reading `transcripts/73/73.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Folder73
 
@@ -264,15 +284,15 @@ theorem exists_quad_of_mu_one (m : Fin 4 → k) (hrel : m 0 + m 2 = m 1 + m 3) (
   · rw [closed_iff]; rfl
   · funext i
     fin_cases i
-    · show wedge _ _ = _
+    · change wedge _ _ = _
       simp [wedge, u0, u1, u2]
       field_simp
       first | linear_combination hrel | linear_combination -hrel
-    · show wedge _ _ = _
+    · change wedge _ _ = _
       simp [wedge, u0, u1]
-    · show wedge _ _ = _
+    · change wedge _ _ = _
       simp [wedge, u1, u2]
-    · show wedge _ _ = _
+    · change wedge _ _ = _
       simp [wedge, u0, u1, u2]
       field_simp
       ring
@@ -285,7 +305,9 @@ theorem exists_quad_of_mu (m : Fin 4 → k) (hrel : m 0 + m 2 = m 1 + m 3) (hm :
   obtain ⟨i, hi⟩ : ∃ i, m i ≠ 0 := Function.ne_iff.mp hm
   have hA : ∀ i : Fin 4, 1 + (i - 1) = i := by decide
   have hrot : ∀ r : Fin 4, m (0 + r) + m (2 + r) = m (1 + r) + m (3 + r) := fun r => by
-    fin_cases r <;> simp <;> first | linear_combination hrel | linear_combination -hrel
+    fin_cases r <;> simp only [Fin.isValue, Fin.zero_eta, add_zero, Fin.mk_one, zero_add,
+        Fin.reduceAdd,
+        Fin.reduceFinMk] <;> first | linear_combination hrel | linear_combination -hrel
   set r : Fin 4 := i - 1
   have h1 : m (1 + r) ≠ 0 := by rw [show (1 : Fin 4) + r = i by simp only [r]; exact hA i]; exact hi
   obtain ⟨u, hu, hmu⟩ := exists_quad_of_mu_one (fun j => m (j + r)) (hrot r) h1
@@ -354,7 +376,9 @@ theorem mu_eq_smul_framePt (u : Fin 4 → Fin 2 → k) (hu : Closed u) (i : Fin 
     simp [wedge]
   funext j
   fin_cases i <;> fin_cases j <;>
-    simp [framePt, mu_zero, mu_one, mu_two, mu_three] at h ⊢ <;>
+    simp only [Fin.zero_eta, Fin.isValue, mu_zero, zero_add, mu_two, framePt, cons_val_zero,
+        Pi.smul_apply, smul_eq_mul, mul_zero, Fin.mk_one, mu_one, cons_val_one, Fin.reduceFinMk,
+        cons_val, mul_one, mu_three, Fin.reduceAdd] at h ⊢ <;>
     simp only [h, z, mu_zero, mu_one, mu_two, mu_three] at hrel ⊢ <;>
     first | linear_combination hrel | linear_combination -hrel
 
@@ -436,12 +460,14 @@ theorem frameMap_range : LinearMap.range (frameMap (k := k)) = plane := by
   ext m
   constructor
   · rintro ⟨c, rfl⟩
-    show _ = _
+    change _ = _
     simp [frameMap]; ring
   · intro hm
     change m 0 + m 2 = m 1 + m 3 at hm
     refine ⟨![m 2, m 2 - m 3, m 2 - m 3 + m 0, m 2 - m 3 + m 0 - m 1], funext fun j => ?_⟩
-    fin_cases j <;> simp [frameMap] <;> first | ring1 | linear_combination hm
+    fin_cases j <;> simp only [frameMap, Fin.isValue, Fin.zero_eta, LinearMap.coe_mk, AddHom.coe_mk,
+        cons_val_one, cons_val_zero, neg_sub, cons_val, sub_sub_cancel, Fin.mk_one, Fin.reduceFinMk,
+        sub_eq_self] <;> first | ring1 | linear_combination hm
 
 /-- Page 6, the plane is canonically `P(k^A / k·(1,1,1,1))`: a linear isomorphism
 `k⁴ / k·(1,1,1,1) ≃ plane` sending the class of the edge `i` to `(-1)ⁱ p_i`, whose line
@@ -548,7 +574,8 @@ theorem exists_smul_of_wedge {a c : Fin 2 → k} (ha : a ≠ 0) (h : wedge a c =
     rw [h0, zero_mul, zero_sub, neg_eq_zero] at h
     refine ⟨c 1 / a 1, funext fun j => ?_⟩
     fin_cases j
-    · simp [h0]; exact (mul_eq_zero.1 h).resolve_left h1
+    · simp only [Fin.zero_eta, Fin.isValue, Pi.smul_apply, h0, smul_eq_mul,
+        mul_zero]; exact (mul_eq_zero.1 h).resolve_left h1
     · simp; field_simp
   · refine ⟨c 0 / a 0, funext fun j => ?_⟩
     fin_cases j
@@ -604,7 +631,8 @@ theorem symProd_proportional_iff {a b c d : Fin 2 → k} (ha : a ≠ 0) (hb : b 
       exact ⟨α * β, by rw [symProd_smul_left, symProd_smul_right, smul_smul, mul_comm]⟩
     · obtain ⟨α, rfl⟩ := exists_smul_of_wedge ha h1
       obtain ⟨β, rfl⟩ := exists_smul_of_wedge hb h2
-      exact ⟨α * β, by rw [symProd_smul_left, symProd_smul_right, smul_smul, symProd_comm b a, mul_comm]⟩
+      exact ⟨α * β, by
+        rw [symProd_smul_left, symProd_smul_right, smul_smul, symProd_comm b a, mul_comm]⟩
 
 end SymSquare
 
@@ -1518,7 +1546,10 @@ theorem nonagon_multSpace {b₁ b₂ b₃ y₄ y₆ y₈ : k} (h₁ : b₁ ≠ 0
     rw [Ne, mult_eq_zero_iff u hu l h0 h1 hl m hm1]
     intro h
     have e0 := congrFun h 0
-    interval_cases m <;> simp [partialSum, Finset.sum_range_succ, u, nonagon] at e0
+    interval_cases m <;> simp only [partialSum, Finset.range_one, nonagon, Fin.isValue,
+        Finset.sum_apply, Finset.sum_singleton, Nat.cast_zero, cons_val, cons_val_zero,
+        Pi.zero_apply, one_ne_zero, u, Finset.sum_range_succ, Nat.cast_one, add_zero,
+        Nat.cast_ofNat, add_sub_cancel] at e0
     all_goals ((try ring_nf at e0); simp [h₁, h₂, h₃] at e0)
   · obtain ⟨c, hc⟩ := (finrank_eq_one_iff_of_nonzero' _
       (fun h => hl0 (congrArg Subtype.val h) : (⟨l, hl⟩ : multSpace u) ≠ 0)).1 hf ⟨l', hl'⟩

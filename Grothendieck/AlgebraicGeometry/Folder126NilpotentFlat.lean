@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder126NilpotentDescent
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 5 to 7: flatness of `X → Y` for a nilpotent `𝒥_X`
@@ -56,6 +59,8 @@ and the climb follow the proofs of `Module.Descent.exists_grMap_sub_grMap_eq` an
 * In `flat_and_bijective_of_isNilpotent` the map `φ` and its bijectivity modulo `𝒥_Y` are
   hypotheses (identifying `(A' ⧸ 𝒥_Y) ⊗ φ` with `R₀ ≅ X₀ ×_{Y₀} X₀` is not done).
 -/
+
+@[expose] public section
 
 namespace Grothendieck.Folder126NilpotentFlat
 
@@ -568,6 +573,8 @@ theorem flat_levelMap_one [Module.FaithfullyFlat A B] (hnil : IsNilpotent (RingH
   exact RingHom.flat_algebraMap_iff.mpr inferInstance
 
 set_option maxHeartbeats 2000000 in
+-- The induction step elaborates through the algebra structures of several quotient rings
+-- (`B' ⧸ J^k`, `C' ⧸ J^k C'`) and exceeds the default limit.
 /-- **The induction step** (pages 5 to 7, the reduction of a nilpotent `𝒥_X` to `𝒥_X² = 0`):
 if `B'/J^k` is flat over `A'/(J^k ∩ A')`, so is `B'/J^(k+1)` over `A'/(J^(k+1) ∩ A')`. This is
 the square-zero criterion `Ideal.bijective_fibreTensorSMulHomToKer_iff` (Stacks 063Y) for the

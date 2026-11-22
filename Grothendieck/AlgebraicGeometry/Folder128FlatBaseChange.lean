@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder128
 public import StacksFrontier.AlgebraicGeometry.Descent.Modules.EffectiveDescent
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 128, pages 7–9: Cor. 2 and 3 in the affine case, and why « flat » cannot be dropped
@@ -14,7 +17,10 @@ proves Cor. 1 and its example: for `I` a nilpotent ideal of `A` mapped injective
 `S` (`IsConductorIdeal`), if `S/IS` is faithfully flat over `A/I` then `Spec S → Spec A` is an
 effective descent morphism for flat modules
 (`Descent.isEffectiveDescentFlat_of_quotient_faithfullyFlat`). That is Cor. 2 for an affine
-prescheme `X = Spec A`. This file proves the affine statements only, and adds:
+prescheme `X = Spec A`. This file proves the affine statements only, and adds Cor. 3 in the
+affine case and the proof that the restriction to flat modules is needed.
+
+## Main results
 
 * **Cor. 3, affine case** (`cor3_affine`): under the same hypotheses, for every *flat* ring map
   `A → B`, `Spec (B ⊗_A S) → Spec B` is again an effective descent morphism for flat modules.
@@ -29,16 +35,30 @@ prescheme `X = Spec A`. This file proves the affine statements only, and adds:
   hold, so `Spec S → Spec A` is an effective descent morphism for flat modules; but it is not
   one for all modules in the sense of AxiomMath/Stacks: base extension from `A`-modules to
   descent data is not an equivalence (`ModuleCat.IsEffectiveDescentMorphismForModules`, Stacks
-  tag 08WY). The proof uses Stacks tag 08XA, vendored under `lean/Stacks/`
-  (`ModuleCat.isEffectiveDescentMorphismForModules_iff_universallyInjective`: effective descent
-  for all modules is universal injectivity). Here `A → S` is not universally injective: for
-  `Q = A/(u − v)`, `u = (ε, 0)`, `v = (0, ε)`, the element `u ⊗ 1` is nonzero in `A ⊗_A Q`, but
-  in `S ⊗_A Q` it is `(1, 0) ⊗ ū = (1, 0) ⊗ v̄ = 0` (`not_injective_rTensor`). The same `A`, `S`
-  and `Q` are the reading's counterexample to Cor. 3 for a non-flat `Y = Spec A/(u − v)`.
+  tag 08WY).
 
-Not formalised: Cor. 2 and 3 for non-affine preschemes (gluing the affine statements along an
-open cover, which needs quasi-coherent descent data on schemes), which stay out of reach here.
+## Implementation notes
+
+The proof of the second item uses Stacks tag 08XA, vendored under `lean/Stacks/`
+(`ModuleCat.isEffectiveDescentMorphismForModules_iff_universallyInjective`: effective descent
+for all modules is universal injectivity). Here `A → S` is not universally injective: for
+`Q = A/(u − v)`, `u = (ε, 0)`, `v = (0, ε)`, the element `u ⊗ 1` is nonzero in `A ⊗_A Q`, but
+in `S ⊗_A Q` it is `(1, 0) ⊗ ū = (1, 0) ⊗ v̄ = 0` (`not_injective_rTensor`). The same `A`, `S`
+and `Q` are the reading's counterexample to Cor. 3 for a non-flat `Y = Spec A/(u − v)`.
+
+## Not formalised
+
+Cor. 2 and 3 for non-affine preschemes (gluing the affine statements along an open cover, which
+needs quasi-coherent descent data on schemes), which stay out of reach here.
+
+## References
+
+* A. Grothendieck, cote 128, pp. 7–9 (finding `128-nilpotent-conductor-flat-descent`)
+* Stacks Project, tags 08WY, 08XA
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder128FlatBaseChange
 
@@ -304,7 +324,9 @@ lemma exU_not_mem : exU k ∉ Ideal.span {exU k - exV k} := by
   have e1 := congrArg (fun z : ExA k => (pr₁ (ι z)).snd) ha
   have e2 := congrArg (fun z : ExA k => (pr₂ (ι z)).snd) ha
   simp only [ι, map_mul, map_sub, exU, exV] at e1 e2
-  simp at e1 e2
+  simp only [DualNumber.inr_eq_smul_eps, one_smul, ι_mkA, pr₁_mkS, sub_zero, snd_mul,
+      DualNumber.snd_eps, smul_eq_mul, mul_one, DualNumber.fst_eps, MulOpposite.op_zero, zero_smul,
+      add_zero, pr₂_mkS, zero_sub, mul_neg, snd_neg, snd_zero, neg_eq_zero] at e1 e2
   rw [hfst, e2] at e1
   exact zero_ne_one e1
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part06d
@@ -5,14 +10,14 @@ public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProd
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedBaseChange
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Buffalo, algebraic geometry, part 06 (d): perfect fields and geometric reducedness, completed
 
 Entries of `docs/buffalo-ag/index.tex` lines 893–899 that `Part06d.lean` proves only in part,
 completed here with the vendored AxiomMath/Stacks files on geometrically reduced algebras and
-schemes (Apache-2.0, see `lean/Stacks/NOTICE.md`):
+schemes (Apache-2.0, see `lean/Stacks/NOTICE.md`).
+
+## Main results
 
 * `Oqhr-Gt66es-16790`: `prop_16790_tfae` — the four characterisations of perfect fields, using
   `PerfectField.isReduced_tensorProduct` (Stacks tag 00I4) and the counterexample of `Part06d`.
@@ -26,7 +31,16 @@ schemes (Apache-2.0, see `lean/Stacks/NOTICE.md`):
   reduced scheme is separable (tags 00I4, 020I).
 * `Oqhr-Gt66es-17970`: `prop_17970_iff` — `X` is separable over `k` iff `X_{k'}` is over `k'`
   (tag 0384).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), video `Oqhr-Gt66es`
+  (`docs/buffalo-ag/index.tex`, lines 893–899)
+* Stacks Project, tags 00I4, 030V, 034N, 020I, 0384
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry TensorProduct
 

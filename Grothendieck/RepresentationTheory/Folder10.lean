@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 10, pages 191–197: the indecomposables of `𝔾_a ⋊ 𝔾_m`
@@ -18,10 +21,14 @@ strings `e_{n,k}` (`n ∈ ℤ`, `k ≥ 1`): `k[Z]/Z^k`, `X` the multiplication b
 being that `ξ^n` has leading term `e_{0,n+1}`. This is the reachable part of finding
 `10-split-ring-ga-rtimes-gm` of `src/content/findings.ts`.
 
-What is formalised. A representation is read as the reading reads it, through its Lie
-algebra: a vector space with two endomorphisms `X`, `Y`; maps of representations are linear
-maps commuting with both (`IsoRep`). The string `e_{n,k}` is `Fin k → K` with
-`X zⱼ = zⱼ₊₁` (`sX`) and `Y zⱼ = (n + p j) zⱼ` (`sY`).
+## Main definitions
+
+A representation is read as the reading reads it, through its Lie algebra: a vector space with
+two endomorphisms `X`, `Y`; maps of representations are linear maps commuting with both
+(`IsoRep`). The string `e_{n,k}` is `Fin k → K` with `X zⱼ = zⱼ₊₁` (`sX`) and
+`Y zⱼ = (n + p j) zⱼ` (`sY`).
+
+## Main results
 
 * `sY_sX`: `[Y, X] = p X` on every string.
 * `string_end_scalar`, `string_indecomposable`: in characteristic `0` with `p ≥ 1`, an
@@ -33,10 +40,20 @@ maps commuting with both (`IsoRep`). The string `e_{n,k}` is `Fin k → K` with
   is invertible in `K`; no hypothesis on `p`. This is the step that makes `ξ^n` triangular
   with leading coefficient `1` (`α = 0` on page 197).
 
-Not formalised: that every indecomposable is a string (Lemmes 1 and 2), and the ring
-`R(G) = Λ[ξ]` itself, which needs that classification and the Krull–Schmidt theorem,
-neither in mathlib; the algebraic-group packaging.
+## Not formalised
+
+That every indecomposable is a string (Lemmes 1 and 2), and the ring `R(G) = Λ[ξ]` itself,
+which needs that classification and the Krull–Schmidt theorem, neither in mathlib; the
+algebraic-group packaging.
+
+## References
+
+* A. Grothendieck, cote 10, pp. 191–197, « III. Le produit semi-direct » (finding
+  `10-split-ring-ga-rtimes-gm`); modernised reading `transcripts/10/10.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder10
 
@@ -831,7 +848,8 @@ theorem indecomposable_is_string [CharZero K] [FiniteDimensional K V] [Nontrivia
     omega
   obtain ⟨k, hk, hk1⟩ : ∃ k, X ^ (k + 1) = 0 ∧ X ^ k ≠ 0 := by
     have hm : Nat.find hN ≠ 0 := fun h => one_ne_zero (h ▸ Nat.find_spec hN : X ^ 0 = 0)
-    exact ⟨Nat.find hN - 1, by rw [Nat.sub_add_cancel (Nat.pos_of_ne_zero hm)]; exact Nat.find_spec hN,
+    exact ⟨Nat.find hN - 1,
+      by rw [Nat.sub_add_cancel (Nat.pos_of_ne_zero hm)]; exact Nat.find_spec hN,
       Nat.find_min hN (by omega)⟩
   obtain ⟨j, hj⟩ : ∃ j, (X ^ k) (b j) ≠ 0 := by
     by_contra! h

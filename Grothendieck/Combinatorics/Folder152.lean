@@ -1,27 +1,22 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.GroupTheory.Perm.Cycle.Basic
 public import Mathlib.Logic.Relation
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 152, the dictionary of pages 7 and 9 (partial)
 
 **This file is partial.** Issue #26 names, for this folder, the
 correspondence between embeddings of a graph in an oriented surface and
-rotation systems (the reading's Proposition of page 4). mathlib has no
-topological surfaces, no embeddings of CW-complexes and no classification of
-surfaces, so that Proposition is out of reach without building the theory;
-it is not formalised. Nor is the boxed *Critère* of page 9 (a circularised
-graph is a non-trivial tree iff its contour is one polygon whose gluing
-involution is non-crossing): its proof in the reading goes through Euler's
-formula and the genus of the glued surface, i.e. the theory of genus for
-combinatorial maps, which mathlib also lacks.
-
-What is formalised is the combinatorial half the reading states in closed
-form, `transcripts/152/152.modern.tex`, pages 7 and 9:
+rotation systems (the reading's Proposition of page 4); it is not formalised
+(see below). What is formalised is the combinatorial half the reading states
+in closed form, `transcripts/152/152.modern.tex`, pages 7 and 9:
 
 > en identifiant `A(C)` à `Ā` par `rd`,
 > `σ_C = σ_Γ`, `ρ_C = ρ_Γ σ_Γ`, `ρ_Γ = ρ_C σ_C`,
@@ -36,6 +31,16 @@ form, `transcripts/152/152.modern.tex`, pages 7 and 9:
 
 and, from the proof of the *Critère*: « `Γ` est connexe puisque `ρ_C` n'a
 qu'un cycle ».
+
+## Main results
+
+* `dictionnaire`: the equivalence, on objects, with the reading's formulas as
+  definitional equalities and both round trips.
+* `tete_page9_incompatible`: the page's own head line « `σ_Γ = σ_C`, `ρ_Γ = ρ_C` »
+  cannot be combined with the table.
+* `connexe_of_une_face`: the connectivity step.
+
+## Implementation notes
 
 A circularised graph without isolated vertices is encoded, as the reading
 does, by its set of arcs `Ā` with the reversal `σ_Γ` (a fixed-point-free
@@ -52,7 +57,26 @@ It also confirms the reading's footnote that the page's own head line
 `ρ_C = ρ_Γ σ_Γ` it would force `σ_Γ = 1`, impossible for a fixed-point-free
 involution on a non-empty set of arcs (`tete_page9_incompatible`). The
 connectivity step holds as stated (`connexe_of_une_face`).
+
+## Not formalised
+
+mathlib has no topological surfaces, no embeddings of CW-complexes and no
+classification of surfaces, so the Proposition of page 4 (embeddings of a graph
+in an oriented surface and rotation systems) is out of reach without building
+the theory; it is not formalised. Nor is the boxed *Critère* of page 9 (a
+circularised graph is a non-trivial tree iff its contour is one polygon whose
+gluing involution is non-crossing): its proof in the reading goes through
+Euler's formula and the genus of the glued surface, i.e. the theory of genus
+for combinatorial maps, which mathlib also lacks. Morphisms are not examined.
+
+## References
+
+* A. Grothendieck, folder 152, pp. 4, 7, 9; modernised reading
+  `transcripts/152/152.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder152
 

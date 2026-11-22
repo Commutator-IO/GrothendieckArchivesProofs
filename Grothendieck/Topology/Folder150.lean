@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 150, page 19: without `Xᵢ ∩ Y = f(Ẋᵢ)`, the reconstruction is not faithful
@@ -18,10 +21,8 @@ on `[0, 1]`: `Y = {0}`, `T = [0, 1/2]`, and `X₁ = {0}`, `X₁ = ∅`. The read
 « strictement compatible » the condition `Xᵢ ∩ Y = f(Ẋᵢ)`, `Ẋᵢ = Xᵢ ∩ Ṫ` (the conic part
 `Xᵢ ∩ T` is *strict*, the circled `T' ∩ Y = 0 · Ṫ'` of page 16).
 
-What is modelled. Everything is the concrete example, inside `ℝ`: `X = [0, 1]`, `Y = {0}`,
-`T = [0, 1/2]` with the action `(λ, t) ↦ λ t` of `I = [0, 1]`, `Ṫ = {1/2}`, `X* = [1/2, 1]`,
-and the collar `E = [1/2, 3/4] ≃ Ṫ × [0, 1]`, `(1/2, s) ↦ 1/2 + s/4`. A part `C ⊂ T` is conic
-when `C = I · (C ∩ Ṫ) ∪ (C ∩ Y)` (the NB of page 15, which contains stability under `I`).
+## Main results
+
 * `isConic_T`, `T_eq_half_smul`: `T` is conic, and strict (`T = ½ · X`);
 * `compatible_not_determined` (the edition's counterexample): `{0}` and `∅` are both compatible
   with `T` and with the collar, have the same trace on `X*`, and `{0}` is nonempty — so no
@@ -29,9 +30,26 @@ when `C = I · (C ∩ Ṫ) ∪ (C ∩ Y)` (the NB of page 15, which contains sta
 * `not_strictlyCompatible_singleton_zero`: `{0}` fails `X₁ ∩ Y = f(Ẋ₁)`;
 * `eq_of_strictlyCompatible`: with that condition, `X₁` is determined by `X₁ ∩ X*`.
 
-Not formalised: the categories of page 19 and the functor `X = X* ⊔_Ẋ 𝒞(f)` for general
-spaces, transversality and equisingularity; only this example is treated.
+## Implementation notes
+
+What is modelled. Everything is the concrete example, inside `ℝ`: `X = [0, 1]`, `Y = {0}`,
+`T = [0, 1/2]` with the action `(λ, t) ↦ λ t` of `I = [0, 1]`, `Ṫ = {1/2}`, `X* = [1/2, 1]`,
+and the collar `E = [1/2, 3/4] ≃ Ṫ × [0, 1]`, `(1/2, s) ↦ 1/2 + s/4`. A part `C ⊂ T` is conic
+when `C = I · (C ∩ Ṫ) ∪ (C ∩ Y)` (the NB of page 15, which contains stability under `I`).
+
+## Not formalised
+
+The categories of page 19 and the functor `X = X* ⊔_Ẋ 𝒞(f)` for general spaces, transversality
+and equisingularity; only this example is treated.
+
+## References
+
+* A. Grothendieck, folder 150, pp. 15–19; transcription `transcripts/150/batch-01.fr.tex`,
+  modernised reading `transcripts/150/150.modern.tex`
 -/
+
+@[expose] public section
+
 
 open Set
 
@@ -212,7 +230,8 @@ theorem mem_gaps_iff : x ∈ gaps D m ↔ x ∉ D ∧ m < x ∧ x < t ∧ ∀ y 
   classical
   constructor
   · rintro ⟨a, b, ⟨ha, hb, -, hc⟩, hma, hax, hxb⟩
-    refine ⟨fun hx => hc x hx ⟨hax, hxb⟩, hma.trans_lt hax, hxb.trans_le (htop b hb), fun y hy => ?_⟩
+    refine ⟨fun hx => hc x hx ⟨hax, hxb⟩, hma.trans_lt hax, hxb.trans_le (htop b hb),
+      fun y hy => ?_⟩
     obtain hya | hay := hD.total hy ha
     · exact .inr (hya.trans hax.le)
     obtain hyb | hby := hD.total hy hb
@@ -250,10 +269,12 @@ theorem above_iff : Above D m t e ↔ IsChain (· ≤ ·) (e : Set I) ∧ D ⊆ 
         (by rintro rfl; exact hx.2 hm)
     · rintro rfl; exact hx.2 ht
   all_goals by_contra! h
-  · have := ((mem_gaps_iff hD hm ht htop).1 (hg (Finset.mem_coe.2 (Finset.mem_sdiff.2 ⟨hx, h⟩)))).2.1
+  · have := ((mem_gaps_iff hD hm ht htop).1
+      (hg (Finset.mem_coe.2 (Finset.mem_sdiff.2 ⟨hx, h⟩)))).2.1
     exact this.not_ge hxm
   · exact h (if hxD : x ∈ D then htop x hxD else
-      ((mem_gaps_iff hD hm ht htop).1 (hg (Finset.mem_coe.2 (Finset.mem_sdiff.2 ⟨hx, hxD⟩)))).2.2.1.le)
+      ((mem_gaps_iff hD hm ht htop).1
+        (hg (Finset.mem_coe.2 (Finset.mem_sdiff.2 ⟨hx, hxD⟩)))).2.2.1.le)
 
 include hm ht htop in
 /-- `e ↦ e \ D` identifies the flags above `D` with the flags of the ordinal sum. -/
@@ -302,10 +323,12 @@ theorem flags_gaps_iff : (∀ c : Finset I, IsChain (· ≤ ·) (c : Set I) →
   simpa using h {x} (by simp) (by simpa)
 
 include hm ht htop in
+omit [DecidableEq I] in
 /-- (b) with (a): `D` is the only flag above itself, i.e. the fibres of `Σ_{d'} → Σ_d` have no
 boundary strata, exactly when every step of `D` from `m = i_p` on is a cover. -/
 @[montpellier "150, 45–47"]
 theorem above_eq_iff : (∀ e, Above D m t e → e = D) ↔ ∀ a b, Consec D a b → m ≤ a → a ⋖ b := by
+  classical
   rw [← flags_gaps_iff]
   refine ⟨fun h c hc hcg => ?_, fun h e he => ?_⟩
   · have := (aboveEquiv_eq_empty hD hm ht htop _).2 (h _ ((aboveEquiv hD hm ht htop).symm

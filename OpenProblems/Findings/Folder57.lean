@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 57: rigid subgroups, stated as a proposition
@@ -11,6 +14,12 @@ import Grothendieck.Attr
 Two open rows of the edition's list of findings (`src/content/findings.ts`) for folder 57:
 `57-rigid-subgroups-one-fibre` is stated, `57-generic-hyperplane-h1-injective` is not. Nothing
 here is proved; a `def … : Prop` asserts nothing.
+
+## Main definitions
+
+* `RigidSubgroupsOneFibre` (`57-rigid-subgroups-one-fibre`): the Théorème de rigidité of p. 45.
+
+## Implementation notes
 
 Group schemes over `S` are group objects in `Over S` (`Grp (Over S)`); a closed subgroup scheme
 is a morphism of group objects whose underlying morphism of schemes is a closed immersion, and two
@@ -20,11 +29,7 @@ schematic closure of a family of closed subschemes is cut out by the infimum of 
 sheaves, so « the prime-to-`p` torsion is schematically dense » is the vanishing of that
 infimum.
 
-## Stated
-
-* `RigidSubgroupsOneFibre` (`57-rigid-subgroups-one-fibre`): the Théorème de rigidité of p. 45.
-
-## Not stated, and what is missing
+## Not formalised
 
 * The corollaries of pp. 46–49 (homomorphisms out of a rigid group agreeing on one fibre; descent
   of rigid subgroups along fppf covers with geometrically connected fibres): not written out.
@@ -37,7 +42,15 @@ infimum.
   p. 98, nearly every word of the p. 99 corollary), and the row itself suspects Corollary 1 fails
   in characteristic `p`; stating it before the facsimile is re-read would fix a reading the
   edition has not settled.
+
+## References
+
+* A. Grothendieck, folder 57, pp. 45–49, 98–99 (findings `57-rigid-subgroups-one-fibre`,
+  `57-generic-hyperplane-h1-injective`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped CategoryTheory.MonObj

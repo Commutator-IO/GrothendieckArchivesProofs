@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08 (a): 6 July 1973 (from 10:19:03) and 9 July 1973, tape 1
@@ -12,12 +15,23 @@ The entries of `docs/buffalo-ag/index.tex` lines 1054–1068 (video `Oqhr-Gt66es
 and 1072–1098 (video `vuys5SNs2eQ`, 0:00:02–0:45:50): flat and faithfully flat modules and
 morphisms, flatness criteria over Dedekind rings, faithfully flat base change.
 
+## Implementation notes
+
 Conventions. Modules are mathlib's `Module.Flat` and `Module.FaithfullyFlat`; spectra are
 `PrimeSpectrum` with `PrimeSpectrum.comap`; schemes and their morphism properties are those of
 `Mathlib.AlgebraicGeometry` (`Flat`, `Surjective`, `QuasiCompact`, `UniversallyInjective`…). A
 *maximal point* of a space is a point whose closure is an irreducible component; a map
 *dominates* a closed irreducible set `Y'` when its image is dense in `Y'`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 6 July 1973, video `Oqhr-Gt66es`,
+  10:19:03–10:52:45, and 9 July 1973, video `vuys5SNs2eQ`, 0:00:02–0:45:50
+  (`docs/buffalo-ag/index.tex`, lines 1054–1068 and 1072–1098)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TensorProduct Topology PrimeSpectrum AlgebraicGeometry
 
@@ -237,7 +251,7 @@ theorem prop_131 [QuasiSober X] [QuasiSober Y] [T0Space Y] {f : X → Y} (hf : C
       rw [specializes_iff_mem_closure, hy]; exact hC.1.genericPoint.2
     obtain ⟨x', hx', hfx'⟩ := hg h1
     have hx'Y : x' ∈ f ⁻¹' Y' := by
-      show f x' ∈ Y'
+      change f x' ∈ Y'
       rw [hfx']; exact hy.le (subset_closure (Set.mem_singleton _))
     have hsp : (⟨x', hx'Y⟩ : f ⁻¹' Y') ⤳ hC.1.genericPoint := by
       rwa [subtype_specializes_iff]
@@ -303,7 +317,8 @@ change (mathlib: `Flat.generalizingMap`, `Flat.isStableUnderBaseChange`, `IsMult
 @[buffalo "Oqhr-Gt66es-38767"]
 theorem prop_38767 (f : X ⟶ Y) [Flat f] :
     GeneralizingMap f ∧ (∀ (Y' : Scheme.{u}) (g : Y' ⟶ Y), GeneralizingMap (pullback.snd f g)) ∧
-      MorphismProperty.IsMultiplicative @Flat.{u} ∧ MorphismProperty.IsStableUnderBaseChange @Flat.{u} :=
+      MorphismProperty.IsMultiplicative @Flat.{u} ∧
+      MorphismProperty.IsStableUnderBaseChange @Flat.{u} :=
   ⟨Flat.generalizingMap f, fun _ g => Flat.generalizingMap (pullback.snd f g), inferInstance,
     inferInstance⟩
 
@@ -581,7 +596,8 @@ theorem surjective_descendsAlong :
     rw [← Scheme.Hom.comp_apply, ← pullback.condition, Scheme.Hom.comp_apply]⟩
 
 instance quasiCompact_respectsIso : MorphismProperty.RespectsIso @QuasiCompact.{u} :=
-  MorphismProperty.respectsIso_of_isStableUnderComposition (fun _ _ f (_ : IsIso f) => inferInstance)
+  MorphismProperty.respectsIso_of_isStableUnderComposition
+    (fun _ _ f (_ : IsIso f) => inferInstance)
 
 /-- Quasi-compactness descends along surjective quasi-compact morphisms. -/
 theorem quasiCompact_descendsAlong :

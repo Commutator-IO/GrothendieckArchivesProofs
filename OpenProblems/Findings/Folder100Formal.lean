@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianSchemeFirstCohomologyGenericPoint
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 100, pages 30–38: the curve criterion for algebraising formal abelian schemes, stated
@@ -14,9 +17,12 @@ algebraizable for every one-dimensional integral quotient `B` of `R` with normal
 
 Nothing here is proved; a `def … : Prop` asserts nothing.
 
-**Formal abelian schemes.** AxiomMath/Stacks has abelian schemes (`AlgebraicGeometry.IsAbelianScheme`)
-but no formal schemes of this kind, so a formal abelian scheme over `Spf R` (for the adic
-topology of an ideal `I`) is written as what it is by definition: a compatible system of abelian
+## Implementation notes
+
+**Formal abelian schemes.** AxiomMath/Stacks has abelian schemes
+(`AlgebraicGeometry.IsAbelianScheme`) but no formal schemes of this kind, so a formal abelian
+scheme over `Spf R` (for the adic topology of an ideal `I`) is written as what it is by
+definition: a compatible system of abelian
 schemes `Aₙ` over `Spec (R ⧸ I^(n+1))` with isomorphisms of group schemes
 `A_{n+1} ×_{R/I^(n+2)} R/I^(n+1) ≅ Aₙ` (`FormalAbelianScheme`). It is *algebraizable*
 (`FormalAbelianScheme.IsAlgebraizable`) when there is an abelian scheme `G` over `Spec R` and
@@ -32,9 +38,18 @@ system is its levelwise base change along `R ⧸ 𝔪^(n+1) → B′ ⧸ (𝔪B�
 algebraizability is `IsAlgebraizableAlong` for `R → B → B′`. (That the levelwise base change is
 again a formal abelian scheme is not needed for the statement and is not proved.)
 
+## Not formalised
+
 **Not stated.** The equivalent condition (iii) of page 30 (algebraizable after some proper
 surjective `S′ → Spec R`) and the Proposition of page 36 on `S_red`.
+
+## References
+
+* A. Grothendieck, folder 100, pp. 30–38 (finding `100-formal-abelian-curve-criterion`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing
 
@@ -107,6 +122,9 @@ def Compatible (X : FormalAbelianScheme I) {R' : Type u} [CommRing R'] (φ : R �
   let f := (bc (levelMap φ n)).map (X.iso n).hom.hom.hom
   (((a ≫ b) ≫ c) ≫ d) ≫ f = (e n).hom.hom.hom
 
+-- The instances `(bc (levelMap φ n)).Monoidal` time out under the library-wide
+-- `maxSynthPendingDepth = 3`; Lean's default depth finds them at once.
+set_option maxSynthPendingDepth 1 in
 /-- The pull-back of `X̂` along `φ : R → R'` is **algebraizable**: there are an abelian scheme `G`
 over `Spec R'` and isomorphisms of group schemes `G ×_{R'} R'/J^(n+1) ≅ Aₙ ×_{R/I^(n+1)} R'/J^(n+1)`
 (`J = φ(I)R'`), compatible with the transition isomorphisms of `X̂`, base changed, and the

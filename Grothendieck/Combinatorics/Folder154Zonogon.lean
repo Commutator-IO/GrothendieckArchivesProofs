@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 154, page 153: the shadow of the `ν`-cube is a `2ν`-gon
@@ -14,31 +17,46 @@ d'ordre `2ν` », and draws below it a closed outline through eight points (redr
 redraw overlay-checked against the scan, not checked by a reader). The finding reads it as the
 classical fact that the cube, a product of `ν` segments, projects to the plane onto a centrally
 symmetric convex polygon with `2ν` vertices (a zonogon). The page states the line and draws the
-figure; the statement proved here, and its proof, are the edition's.
+figure; the statement proved here, and its proof, are the edition's. Proved in general, for
+every `ν`; nothing was left to the case `ν ≤ 4`.
 
-**The statement.** A zonogon is the Minkowski sum of `ν` segments `[pᵢ, qᵢ]` of `ℝ²`; it is the image
-of the cube `[−1, 1]^ν` under `a ↦ c + ∑ aᵢ vᵢ`, with centre `c = ∑ (pᵢ + qᵢ)/2` and half-directions
-`vᵢ = (qᵢ − pᵢ)/2` (`sum_segment_eq`). Then:
+## Main results
 
-* `zono_symm`, `sum_segment_symm`: it is centrally symmetric about `c` (no hypothesis);
+* `zono_symm`, `sum_segment_symm`: the zonogon is centrally symmetric about `c` (no hypothesis);
 * `extremePoints_zono`: in any case where the `vᵢ` are nonzero, its extreme points are the vertices
   `c + ∑ εᵢ vᵢ` of the cube's image whose sign vector `ε` is realised by a linear form (`f` with
   `εᵢ f(vᵢ) > 0` for all `i`); distinct realised sign vectors give distinct points
-  (`vert_injOn`). The proof that an unrealised sign vector gives no extreme point goes through
-  Gordan's alternative, obtained from the separation theorem;
+  (`vert_injOn`);
 * `card_R`: for `ν ≥ 1` nonzero vectors of `ℝ²`, pairwise non-parallel, exactly `2ν` sign vectors
-  are realised (induction on `ν`: the new vector `w` splits exactly the two regions met by the
-  line `f(w) = 0`, those of `±w^⊥`);
+  are realised;
 * `ncard_extremePoints_sum_segment`: **the Minkowski sum of `ν ≥ 1` nondegenerate segments of `ℝ²`
   with pairwise non-parallel directions has exactly `2ν` extreme points**, and is centrally
   symmetric.
 
-Proved in general, for every `ν`; nothing was left to the case `ν ≤ 4`. Not formalised: that the
-image of the `ν`-cube under a *generic* linear map to the plane is such a sum (immediate from the
-definition, the generic condition being that no two images of the basis vectors are parallel), the
-identification of the outline's vertices with the straight-line perturbations of page 153, and the
-reading of the figure (octagon, `ν = 4`), which rests on the redraw.
+## Implementation notes
+
+**The statement.** A zonogon is the Minkowski sum of `ν` segments `[pᵢ, qᵢ]` of `ℝ²`; it is the
+image of the cube `[−1, 1]^ν` under `a ↦ c + ∑ aᵢ vᵢ`, with centre `c = ∑ (pᵢ + qᵢ)/2` and
+half-directions `vᵢ = (qᵢ − pᵢ)/2` (`sum_segment_eq`).
+
+The proof that an unrealised sign vector gives no extreme point goes through Gordan's
+alternative, obtained from the separation theorem. `card_R` is by induction on `ν`: the new
+vector `w` splits exactly the two regions met by the line `f(w) = 0`, those of `±w^⊥`.
+
+## Not formalised
+
+That the image of the `ν`-cube under a *generic* linear map to the plane is such a sum (immediate
+from the definition, the generic condition being that no two images of the basis vectors are
+parallel), the identification of the outline's vertices with the straight-line perturbations of
+page 153, and the reading of the figure (octagon, `ν = 4`), which rests on the redraw.
+
+## References
+
+* A. Grothendieck, Folder 154, p. 153 (redraw 08-23; finding `154-cube-shadow-2nu-gon`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder154Zonogon
 
@@ -605,7 +623,7 @@ theorem ncard_extremePoints_sum_segment {ν : ℕ} (hν : 0 < ν) (p q : Fin ν 
     have e : cross ((1 / 2 : ℝ) • (q i - p i)) ((1 / 2 : ℝ) • (q j - p j)) =
         (1 / 4) * cross (q i - p i) (q j - p j) := by
       simp only [cross, Prod.smul_fst, Prod.smul_snd, smul_eq_mul]; ring
-    show cross _ _ ≠ 0
+    change cross _ _ ≠ 0
     rw [e]
     exact mul_ne_zero (by norm_num) this
   rw [sum_segment_eq, extremePoints_zono _ _ hv, (vert_injOn _ _).ncard_image,

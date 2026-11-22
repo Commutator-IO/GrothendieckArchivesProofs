@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
@@ -6,14 +11,21 @@ public import StacksFrontier.RingTheory.Catenary.Defs
 public import StacksFrontier.RingTheory.Nagata.Defs
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Étale cohomology and Hodge theory: the open problems, stated as propositions
 
 Section « Étale cohomology and Hodge theory » of the note on the open problems of the Montpellier
 notes (`docs/problems/article.tex`): problems p:cd, p:lower, p:box, p:ext2. Nothing here is
 proved; a `def … : Prop` asserts nothing.
+
+## Main definitions
+
+* `CdShiftThree` (p:cd): the page's conjectured global bound, as stated. Faithful.
+* `LowerBoundExceptions`, `LowerBoundRegular`, `LowerBoundCatenaryJapanese` (p:lower): the page's
+  inequality with its two exceptions, and its two refinements. Faithful, with the reading of
+  « `k` itself real » said below.
+
+## Implementation notes
 
 The `p`-cohomological dimension of a scheme is written with the étale cohomology of Mathlib and
 of the Stacks library: `Sheaf.H F q` on the small étale site, the `Ext` groups out of the constant
@@ -23,14 +35,7 @@ The cohomological dimension of a field `k` is that of `Spec k`, which is the Gal
 dimension of `k` (the étale cohomology of `Spec k` is the Galois cohomology of `k`; this
 identification is not formalised, and the statements below are written on the étale side).
 
-## Stated
-
-* `CdShiftThree` (p:cd): the page's conjectured global bound, as stated. Faithful.
-* `LowerBoundExceptions`, `LowerBoundRegular`, `LowerBoundCatenaryJapanese` (p:lower): the page's
-  inequality with its two exceptions, and its two refinements. Faithful, with the reading of
-  « `k` itself real » said below.
-
-## Not stated, and what is missing
+## Not formalised
 
 * p:box (the Hodge types of the deleted neighbourhood `X ∩ B_y` of a point of a complex variety):
   Mathlib has neither mixed Hodge structures nor the mixed Hodge structure on the cohomology of
@@ -43,7 +48,17 @@ identification is not formalised, and the statements below are written on the é
   group scheme as an abelian fppf sheaf, and a quasi-coherent module as an fppf sheaf. Stacks has
   pieces of the fppf site and an fppf/étale comparison, but not that package in a form we could
   check without a local build; not stated rather than stated wrongly.
+* The identification of the étale cohomology of `Spec k` with the Galois cohomology of `k`
+  (above).
+
+## References
+
+* the note on the open problems of the Montpellier notes (`docs/problems/article.tex`), section
+  « Étale cohomology and Hodge theory », problems p:cd, p:lower, p:box, p:ext2
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry Polynomial
 
@@ -53,7 +68,8 @@ namespace OpenProblems.EtaleCohomology
 
 /-- An abelian sheaf on the small étale site of `X` is `p`-primary torsion: every local section is
 killed by a power of `p`. -/
-def IsPPrimaryTorsion (p : ℕ) {X : Scheme.{u}} (F : Sheaf X.smallEtaleTopology AddCommGrpCat.{u + 1}) :
+def IsPPrimaryTorsion (p : ℕ) {X : Scheme.{u}}
+    (F : Sheaf X.smallEtaleTopology AddCommGrpCat.{u + 1}) :
     Prop :=
   ∀ (U : X.Etaleᵒᵖ) (s : F.obj.obj U), ∃ n : ℕ, (p ^ n) • s = 0
 
@@ -109,7 +125,8 @@ Artin–Schreier). For a formally real `k(x)`, the ring `k(x)[T]/(T² + 1)` is t
 `k(x)(√-1)`. -/
 def ExceptionB (r : ℕ) : Prop :=
   r = 2 ∧ ∃ P : PrimeSpectrum A, IsFormallyReal P.asIdeal.ResidueField ∧
-    etaleCd 2 (Spec (CommRingCat.of (AdjoinRoot (Polynomial.X ^ 2 + 1 : P.asIdeal.ResidueField[X])))) < ⊤
+    etaleCd 2 (Spec (CommRingCat.of
+      (AdjoinRoot (Polynomial.X ^ 2 + 1 : P.asIdeal.ResidueField[X])))) < ⊤
 
 /-- The inequality of p:lower, `cd_r(K) ≥ cd_r(k) + dim A`, for a local domain `A` of dimension
 `d` with fraction field `K` and residue field `k`. -/

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 4: claims of the blackboards not covered by an index entry
@@ -10,7 +13,15 @@ public import Mathlib
 Items of `public/buffalo-boards/PqCQM3Pcl6Q-*.json` (3:23:52–9:02:23) that make a mathematical
 claim not already formalised by an entry of `docs/buffalo-topos/lean/Part04.json`. The status of
 every board item is in `docs/buffalo-topos/lean/Part04-boards.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 3:23:52–9:02:23, the
+  reconstructed blackboards `public/buffalo-boards/PqCQM3Pcl6Q-*.json`
 -/
+
+@[expose] public section
+
 
 universe v u
 

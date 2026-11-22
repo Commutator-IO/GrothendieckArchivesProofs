@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04c
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (d): 18 June 1973, gluing, projective space
@@ -11,7 +14,15 @@ import Grothendieck.Attr
 The entries of `docs/buffalo-ag/index.tex` lines 612–631 (video `thSz9ZHDK9o`, 6:01:54–6:59:05):
 gluing schemes, lines and hyperplanes of a vector space, invertible modules and the functor
 `𝐏(V)` of invertible quotients, its charts `𝐏_e` and their representing algebras.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 18 June 1973, video `thSz9ZHDK9o`,
+  6:01:54–6:59:05 (`docs/buffalo-ag/index.tex`, lines 612–631)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite AlgebraicGeometry TensorProduct Module
 
@@ -270,7 +281,8 @@ theorem prop_25011 {A L ι : Type u} [CommRing A] [IsLocalRing A] [AddCommGroup 
     ∃ i, IsUnit (e (x i)) := by
   by_contra h
   push Not at h
-  have hle : Submodule.span A (Set.range x) ≤ Submodule.comap e.toLinearMap (IsLocalRing.maximalIdeal A) := by
+  have hle : Submodule.span A (Set.range x) ≤
+      Submodule.comap e.toLinearMap (IsLocalRing.maximalIdeal A) := by
     rw [Submodule.span_le]
     rintro _ ⟨i, rfl⟩
     exact h i

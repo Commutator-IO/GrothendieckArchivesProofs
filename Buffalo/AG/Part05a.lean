@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05 (a): (undated session, from 7:04:25) – 19 June 1973
@@ -13,14 +16,27 @@ Zariski sheaves on `Sch/S` and their restrictions to the small sites, limits and
 Zariski sheaves, local representability, projective bundles `𝐏(ℳ)`, the vector bundle `𝐕(ℳ)` and
 the presentation of `𝐏(ℳ)` as the quotient of `𝐕*` by `𝔾_m`.
 
+## Implementation notes
+
 Conventions. The big Zariski site is mathlib's `Scheme.zariskiTopology` (on all schemes, the case
-`S = Spec ℤ`) or `S.overGrothendieckTopology @IsOpenImmersion` (on `Sch/S`). Mathlib has no
-projective bundle `𝐏(ℳ)` (the functor of invertible quotients on `Sch/S`, or `Proj Sym ℳ`
-with its functor of points): the entries on `𝐏(ℳ)` are formalised in their ring-theoretic
-content, over `S' = Spec k'`: an invertible quotient of `M_{k'} = k' ⊗ M` is a surjection
-`M_{k'} → L` with `L` an invertible module (locally free of rank `1`, mathlib's
+`S = Spec ℤ`) or `S.overGrothendieckTopology @IsOpenImmersion` (on `Sch/S`).
+
+## Not formalised
+
+Mathlib has no projective bundle `𝐏(ℳ)` (the functor of invertible quotients on `Sch/S`, or
+`Proj Sym ℳ` with its functor of points): the entries on `𝐏(ℳ)` are formalised in their
+ring-theoretic content, over `S' = Spec k'`: an invertible quotient of `M_{k'} = k' ⊗ M` is a
+surjection `M_{k'} → L` with `L` an invertible module (locally free of rank `1`, mathlib's
 `Module.Invertible`), and on a local ring `k'` it is a surjection `M_{k'} → k'`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), undated session (from 7:04:25) – 19 June
+  1973, video `thSz9ZHDK9o`, 7:04:25–8:54:39 (`docs/buffalo-ag/index.tex`, lines 632–683)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite AlgebraicGeometry TensorProduct
 
@@ -397,7 +413,8 @@ multiplications by units. -/
 @[buffalo "thSz9ZHDK9o-30903"]
 def prop_30903 : (A ≃ₗ[A] A) ≃* Aˣ :=
   (LinearMap.GeneralLinearGroup.generalLinearEquiv A A).symm.trans
-    (Units.mapEquiv ((RingEquiv.moduleEndSelf A).symm.trans (RingEquiv.toOpposite A).symm).toMulEquiv)
+    (Units.mapEquiv ((RingEquiv.moduleEndSelf A).symm.trans
+      (RingEquiv.toOpposite A).symm).toMulEquiv)
 
 /-- thSz9ZHDK9o-30966 (8:36:06) [prop] (pointwise) `Isom(R, L)` is a principal homogeneous set
 under `Rˣ` when nonempty: two trivializations of `L` differ by a unique unit. -/
@@ -453,7 +470,8 @@ epimorphism `e ∘ q`, with kernel `ker q`. -/
 @[buffalo "thSz9ZHDK9o-31232"]
 theorem prop_31232 {M L : Type*} [AddCommGroup M] [Module A M] [AddCommGroup L] [Module A L]
     (q : M →ₗ[A] L) (hq : Function.Surjective q) (e : L ≃ₗ[A] A) :
-    Function.Surjective (e.toLinearMap ∘ₗ q) ∧ LinearMap.ker (e.toLinearMap ∘ₗ q) = LinearMap.ker q := by
+    Function.Surjective (e.toLinearMap ∘ₗ q) ∧
+      LinearMap.ker (e.toLinearMap ∘ₗ q) = LinearMap.ker q := by
   refine ⟨e.surjective.comp hq, ?_⟩
   rw [LinearMap.ker_comp, LinearEquiv.ker, Submodule.comap_bot]
 

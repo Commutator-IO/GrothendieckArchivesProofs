@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 84: the product of quadratic algebras, in split coordinates
@@ -29,6 +32,8 @@ These are findings `84-product-quadratic-algebras-formula` and
 `84-product-coinvariants-one-etale` of `src/content/findings.ts`. Proving them
 says only that the claims hold as stated in coordinates; whether they stand in
 the literature is a separate question.
+
+## Main results
 
 What is formalised, over an arbitrary commutative ring `R`, without dividing
 by `2`:
@@ -70,7 +75,17 @@ by `2`:
   `span_eq_top_iff_isUnit` (page 79, `L = 𝒪`), `push_pull`,
   `push_pull_square` and `push_pull_unit_iff` (pages 125 to 169: the comparison
   of pushout and pullback needs and uses `γχ = 2`).
+
+## References
+
+* A. Grothendieck, Folder 84, pages 48, 62–65, 79–87, 98–106 and 125–169 (modernised reading
+  `transcripts/84/84.modern.tex`; findings `84-product-quadratic-algebras-formula`,
+  `84-product-coinvariants-one-etale`, `84-two-regular-triplet-classification`,
+  `84-chi-trivialised-extension-product`)
 -/
+
+@[expose] public section
+
 
 universe u
 
@@ -211,8 +226,10 @@ lemma sigmaTensor_apply (b₁ b₂ : R) (v : Fin 2 × Fin 2 → R) :
     sigmaTensor b₁ b₂ v (1, 1) = v (1, 1) := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     first
-      | (simp [sigmaTensor, sigmaE, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]; done)
-      | (simp [sigmaTensor, sigmaE, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]; ring)
+      | (simp [sigmaTensor, sigmaE, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+          Fin.sum_univ_two]; done)
+      | (simp [sigmaTensor, sigmaE, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+          Fin.sum_univ_two]; ring)
 
 /-- Page 83: `E₁ ⊗ E₂ → E₁ * E₂` kills `Im(σ₁ ⊗ σ₂ − id)`. -/
 theorem range_le_ker (b₁ b₂ : R) :
@@ -324,8 +341,10 @@ lemma sigmaATensor_apply (b₁ b₂ : R) (v : Fin 2 × Fin 2 → R) :
     sigmaATensor b₁ b₂ v (1, 1) = v (1, 1) := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     first
-      | (simp [sigmaATensor, sigmaA, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]; done)
-      | (simp [sigmaATensor, sigmaA, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]; ring)
+      | (simp [sigmaATensor, sigmaA, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+          Fin.sum_univ_two]; done)
+      | (simp [sigmaATensor, sigmaA, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+          Fin.sum_univ_two]; ring)
 
 /-- `A → (A₁ ⊗ A₂)^{σ₁⊗σ₂}` is an isomorphism: `i` is injective and its image is
 the submodule of invariants of `σ₁ ⊗ σ₂`. -/
@@ -387,7 +406,8 @@ theorem invariants_of_span_eq_top {b₁ b₂ : R} (h : Ideal.span {2, b₁, b₂
     · intro v hv
       obtain ⟨e0, e1, e2⟩ := (mem_invariants_iff v).1 hv
       refine ⟨![v (0, 0), v (1, 1) * g₀ + v (0, 1) * g₁ + v (1, 0) * g₂], ?_⟩
-      obtain ⟨a0, a1, a2, a3⟩ := iMap_apply b₁ b₂ ![v (0, 0), v (1, 1) * g₀ + v (0, 1) * g₁ + v (1, 0) * g₂]
+      obtain ⟨a0, a1, a2, a3⟩ :=
+        iMap_apply b₁ b₂ ![v (0, 0), v (1, 1) * g₀ + v (0, 1) * g₁ + v (1, 0) * g₂]
       simp only [Matrix.cons_val_zero, Matrix.cons_val_one] at a0 a1 a2 a3
       have key : b₁ * v (1, 0) = b₂ * v (0, 1) := by
         linear_combination -e0 - b₂ * e1
@@ -569,7 +589,7 @@ noncomputable def movesHom {b c b' c' : R} (ε : Rˣ) (t : R)
   AdjoinRoot.liftAlgHom _ (Algebra.ofId R _)
     (algebraMap R _ (ε : R) * AdjoinRoot.root _ + algebraMap R _ t) (by
       have r := root_sq b c
-      show (qpoly b' c').eval₂ (algebraMap R (QAlg b c)) _ = 0
+      change (qpoly b' c').eval₂ (algebraMap R (QAlg b c)) _ = 0
       rw [qpoly_eval₂, hb, hc]
       simp only [map_add, map_sub, map_mul, map_pow, map_ofNat]
       linear_combination (algebraMap R (QAlg b c) (ε : R)) ^ 2 * r)
@@ -812,7 +832,9 @@ theorem chiSplitting_eq {π : M × L →ₗ[R] L} {ϖ : M →ₗ[R] M × L}
       have := LinearMap.congr_fun h.retr ξ
       simp only [LinearMap.coe_comp, Function.comp_apply, LinearMap.smul_apply,
         LinearMap.id_apply, LinearMap.inr_apply] at this
-      simp [piOf]
+      simp only [LinearMap.coe_comp, LinearMap.coe_inr, Function.comp_apply, piOf,
+          LinearMap.coe_add, LinearMap.coe_inl, LinearMap.coe_fst, LinearMap.coe_smul,
+          LinearMap.coe_snd, Pi.add_apply, Pi.smul_apply]
       rw [show ((0 : M), (0 : L)) = 0 from rfl, map_zero, zero_add, this]
   · ext η
     · simpa [varpiOf] using LinearMap.congr_fun h.sect η
@@ -864,7 +886,10 @@ theorem iso_iff (b b' : M →ₗ[R] L) :
       rw [hp, map_add, map_add, h2']
       refine Prod.ext ?_ ?_
       · simp [transv, h1']
-      · simp [transv, hw]
+      · simp only [Prod.snd_add, transv, hw, LinearMap.add_apply, LinearMap.id_coe, id_eq,
+            LinearMap.coe_comp, LinearMap.coe_inr, LinearMap.coe_snd, LinearMap.coe_inl,
+            LinearMap.coe_fst, Function.comp_apply, Prod.mk_add_mk, add_zero, zero_add,
+            add_right_inj, left_eq_add]
         rw [show ((0 : M), (0 : L)) = 0 from rfl, map_zero]; rfl
     refine ⟨w, ?_⟩
     have e := h3.symm.trans (by rw [hf, piOf_comp_transv])
@@ -1417,7 +1442,8 @@ structure ChiExt (χ : R) where
 lemma smul_tensorHom' {A B C D : ModuleCat.{u} R} (r : R) (f : A ⟶ B) (g : C ⟶ D) :
     (r • f) ⊗ₘ g = r • (f ⊗ₘ g) :=
   ModuleCat.MonoidalCategory.tensor_ext fun x y => by
-    simp [ModuleCat.MonoidalCategory.tensorHom_tmul]; rw [TensorProduct.smul_tmul']
+    simp only [ModuleCat.MonoidalCategory.tensorHom_tmul, ModuleCat.hom_smul,
+      LinearMap.smul_apply]; rw [TensorProduct.smul_tmul']
 
 /-- Scalars pass through `⊗ₘ` in `ModuleCat` (right factor). -/
 lemma tensorHom_smul' {A B C D : ModuleCat.{u} R} (r : R) (f : A ⟶ B) (g : C ⟶ D) :
@@ -1951,7 +1977,13 @@ noncomputable def coordT (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) :
 noncomputable def coord (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) :
     Amal X₁ X₂ →ₗ[R] R × (L₁ ⊗[R] L₂) :=
   amalDesc X₁ X₂ (coordT s₁ s₂) (LinearMap.inr R R _) (by
-    ext u e <;> simp [coordT, psiT, jK, μK]
+    ext u e <;> simp only [coordT, psiT, jK, AlgebraTensorModule.curry_apply,
+        LinearMap.restrictScalars_self, curry_apply, LinearMap.coe_comp, LinearMap.coe_add,
+        LinearMap.coe_fst, LinearMap.coe_snd, map_comp_add, LinearMap.coe_inl, Function.comp_apply,
+        Pi.add_apply, map_tmul, LinearMap.id_coe, id_eq, LinearMap.prod_apply, Function.prod_apply,
+        ChiTriv.ψ_ι_apply, zero_tmul, map_zero, ChiTriv.Splitting.p_ι_apply,
+        LinearMap.toSpanSingleton_apply, add_zero, μK, LinearMap.coe_inr,
+        tmul_zero, ChiTriv.π_ι_apply, tmul_smul, zero_add]
     rw [s₁.π_eq u, add_tmul, smul_tmul'])
 
 @[simp] lemma coord_star (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) (x : E₁ ⊗[R] E₂) :
@@ -2343,7 +2375,8 @@ theorem eCoord_range (l ζ : R) :
   · rintro ⟨s, rfl⟩
     refine ⟨l • (qbasis b c).coord 0 + s • (qbasis b c).coord 1, ?_⟩
     rw [eCoord_eq]
-    simp only [LinearMap.add_apply, LinearMap.smul_apply, ← qbasis_zero, ← qbasis_one, Module.Basis.coord_apply,
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, ← qbasis_zero, ← qbasis_one,
+      Module.Basis.coord_apply,
       Module.Basis.repr_self, smul_eq_mul]
     ext <;> simp; ring
 

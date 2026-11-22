@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (b): 13 June 1973, locally ringed spaces and schemes
@@ -12,7 +15,15 @@ The entries of `docs/buffalo-ag/index.tex` lines 519–548 (video `thSz9ZHDK9o`,
 the open sets `U_f` of a ringed space, morphisms of spectra, local homomorphisms and morphisms of
 locally ringed spaces, the counterexample of a discrete valuation ring, the full faithfulness of
 `Spec`, schemes and their functor of points.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 13 June 1973, video `thSz9ZHDK9o`,
+  2:26:42–3:57:31 (`docs/buffalo-ag/index.tex`, lines 519–548)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite IsLocalRing TopologicalSpace AlgebraicGeometry
 
@@ -164,7 +175,8 @@ theorem prop_10708 {X Y : LocallyRingedSpace.{u}} (φ : X.toPresheafedSpace ⟶ 
     refine (X.toRingedSpace.mem_basicOpen _ x hxU).2 ?_
     rw [← key]
     exact hu.map _
-  refine ⟨incl, ⟨fun hloc U f => le_antisymm (incl U f) fun x hx => ?_, fun H x => ⟨fun a ha => ?_⟩⟩⟩
+  refine ⟨incl, ⟨fun hloc U f => le_antisymm (incl U f) fun x hx => ?_,
+    fun H x => ⟨fun a ha => ?_⟩⟩⟩
   · obtain ⟨hxU, hu⟩ := hx
     refine ⟨hxU, ?_⟩
     have hxU' : φ.base x ∈ U := hxU

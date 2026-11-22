@@ -1,15 +1,26 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part07
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07: blackboard items
 
 The board items of `public/buffalo-boards/` in the time range of part 07 (video `Oqhr-Gt66es`,
 5:24:53–10:19:03) that no index entry formalises (`docs/buffalo-ag/lean/Part07-boards.json`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), video `Oqhr-Gt66es`, 5:24:53–10:19:03
+  (reconstructed blackboards `public/buffalo-boards/`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry PrimeSpectrum TensorProduct
 

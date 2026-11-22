@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Monad.Comonadicity
@@ -13,17 +18,18 @@ public import Mathlib.CategoryTheory.Adjunction.Opposites
 public import Mathlib.Order.Sum.Order
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 19: the comonadicity theorem (page 4), the comonad over a product base
 # (pages 7–11), Gabriel–Popescu (pages 14–15) and chains of adjoints (pages 79–80)
 
 Issue #26 lists folder 19 in tier 2: « Comonadicity and Gabriel–Popescu ». Those
 two statements of `transcripts/19/19.modern.tex` are formalised here, and the
-finding `19-comonad-matrix-product-base` (pages 7–11).
+finding `19-comonad-matrix-product-base` (pages 7–11). The « il faut » of b) of
+théorème 1.12 and the « ou I fini » of page 7 are refuted.
 
-## Théorème 1.12 (page 4)
+## Main results
+
+### Théorème 1.12 (page 4)
 
 > **Théorème.** Soit `f ⊣ g` une adjonction, `φ = fg`, et `h` le foncteur de
 > comparaison.
@@ -37,8 +43,6 @@ finding `19-comonad-matrix-product-base` (pages 7–11).
 > `(u,v)` dont l'image par `f` a un noyau — est la condition que le manuscrit
 > appelle *condition C*. [Footnote:] Les doubles flèches dont `f` voit le noyau
 > sont, dans le vocabulaire d'aujourd'hui, les paires `f`-scindées.
-
-`h` is mathlib's `Comonad.comparison adj`, and condition C is `ConditionC` below.
 
 * `theoreme_a` — a), in the margin's weaker form (condition C instead of all
   equalizers), and `theoreme_a'` in the form of the text. True as stated.
@@ -57,17 +61,7 @@ finding `19-comonad-matrix-product-base` (pages 7–11).
   conservative and, for every **`f`-split** pair (one whose image has a *split*
   equalizer), `Ker(u,v)` exists and `f` commutes with it. From mathlib.
 
-So the reading faithfully reproduces the manuscript (the transcription, page 4,
-has « il faut et il suffit » and the margin's condition C), and the footnote's
-gloss is where the error sits: a pair « dont `f` voit le noyau » is not an
-`f`-split pair. Every `f`-split pair has an equalizer in `B`, so condition C is
-*stronger* than Beck's condition: sufficient, not necessary. The same applies
-to the « Conclusion » of pages 4–6 (adjunctions with `f` conservative and
-condition C ↔ comonads): the comonads so obtained are only those whose forgetful
-functor satisfies condition C, and the counterexample above is one that does not;
-with Beck's condition in place of C the correspondence is right.
-
-## A product base: the matrix of the `φ_ji` (pages 7–11)
+### A product base: the matrix of the `φ_ji` (pages 7–11)
 
 > Le reste du texte examine ce que devient tout ceci quand `B = ∏_{i ∈ I} B_i`. […]
 > En posant `φ_ji = f_j g_i : B_i → B_j` et en supposant que les `f_j` commutent
@@ -81,6 +75,7 @@ with Beck's condition in place of C the correspondence is right.
 > `φ(X', X'') = (X' × φ'(X''), φ''(X') × X'')`.
 
 Setting: adjunctions `f_i ⊣ g_i`, `f_i : A → B_i`, and `A` with `I`-indexed products.
+
 * `adjPi` — (3.4): `f = (f_i) ⊣ g`, `g((X_i)) = ∏ g_i(X_i)`.
 * `matrice` — (3.6): if `f_j` commutes with `I`-indexed products, `pr_j φ((X_i))` is
   the product of the `φ_ji(X_i)`, with projections `f_j(pr_i)`. True as stated.
@@ -100,27 +95,54 @@ Setting: adjunctions `f_i ⊣ g_i`, `f_i : A → B_i`, and `A` with `I`-indexed 
   elements and `∏_i φ_ji(X_i)` four. The phrase is on the page (« p. ex. `f_j`
   exacts ; ou `I` fini », transcription page 7); the exactness alternative is right.
 
-The coassociativity relations between the `λ_kji`, which the page does not write,
-and the description of `A` by quadruples `(X', X'', u', u'')` (pages 9–10), are not
-formalised.
-
-## Gabriel–Popescu (pages 14–15)
+### Gabriel–Popescu (pages 14–15)
 
 > Le foncteur `Hom_C(U, -) : C → Mod_R` est pleinement fidèle, et son adjoint à
 > gauche `- ⊗_R U` est exact : c'est le théorème de Gabriel–Popescu.
 
 (`C` a Grothendieck category, `U` a generator, `R = End_C(U)`, modules on the
-right.) This is in mathlib (`IsGrothendieckAbelian.GabrielPopescu.full`,
-`…preservesFiniteLimits`, and `isSeparator_iff_faithful_preadditiveCoyonedaObj`);
-`gabriel_popescu` restates it in the reading's form. A generator is mathlib's
-*separator*, and right `R`-modules are `ModuleCat Rᵐᵒᵖ`. The reading's further
-claim — the functor is an equivalence iff `U` is moreover small projective
-(Morita) — and the manuscript's original claim of an equivalence for a bare
-generator are not formalised here.
+right.)
+
+* `gabriel_popescu` — restates in the reading's form what is in mathlib
+  (`IsGrothendieckAbelian.GabrielPopescu.full`, `…preservesFiniteLimits`, and
+  `isSeparator_iff_faithful_preadditiveCoyonedaObj`).
+
+## Implementation notes
+
+* Théorème 1.12: `h` is mathlib's `Comonad.comparison adj`, and condition C is
+  `ConditionC` below.
+* The reading faithfully reproduces the manuscript (the transcription, page 4,
+  has « il faut et il suffit » and the margin's condition C), and the footnote's
+  gloss is where the error sits: a pair « dont `f` voit le noyau » is not an
+  `f`-split pair. Every `f`-split pair has an equalizer in `B`, so condition C is
+  *stronger* than Beck's condition: sufficient, not necessary. The same applies
+  to the « Conclusion » of pages 4–6 (adjunctions with `f` conservative and
+  condition C ↔ comonads): the comonads so obtained are only those whose forgetful
+  functor satisfies condition C, and the counterexample above is one that does not;
+  with Beck's condition in place of C the correspondence is right.
+* Gabriel–Popescu: a generator is mathlib's *separator*, and right `R`-modules are
+  `ModuleCat Rᵐᵒᵖ`.
 
 What this certifies is that the reading holds together, not that it is what the
 pages say (issue #26).
+
+## Not formalised
+
+* The coassociativity relations between the `λ_kji`, which the page does not write,
+  and the description of `A` by quadruples `(X', X'', u', u'')` (pages 9–10).
+* The reading's further claim on Gabriel–Popescu — the functor is an equivalence iff
+  `U` is moreover small projective (Morita) — and the manuscript's original claim of
+  an equivalence for a bare generator.
+
+## References
+
+* A. Grothendieck, folder 19, pp. 4–11 and 14–15 (`transcripts/19/19.modern.tex`;
+  finding `19-comonad-matrix-product-base`, pages 7–11)
+* Issue #26
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder19
 
@@ -399,7 +421,8 @@ theorem counit_matrice (X : ∀ i, B i) (k : I) :
 @[montpellier "19, 7–11"]
 theorem comult_matrice (X : ∀ i, B i) (k j i : I) :
     (adjPi f g adj).toComonad.δ.app X k ≫
-        (f k).map (Limits.Pi.π _ j ≫ (g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i))) =
+        (f k).map (Limits.Pi.π _ j ≫
+          (g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i))) =
       (f k).map (Limits.Pi.π (fun i => (g i).obj (X i)) i) ≫ (lam f g adj k j i).app (X i) := by
   have h1 := adjPi_unit_π_assoc f g adj ((gPi g).obj X) j
     ((g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i)))
@@ -415,7 +438,8 @@ theorem comult_unique [∀ j, PreservesLimitsOfShape (Discrete I) (f j)] (X : �
     (t : (adjPi f g adj).toComonad.obj X k ⟶
       ((adjPi f g adj).toComonad.obj ((adjPi f g adj).toComonad.obj X)) k)
     (ht : ∀ j i, t ≫
-        (f k).map (Limits.Pi.π _ j ≫ (g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i))) =
+        (f k).map (Limits.Pi.π _ j ≫
+          (g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i))) =
       (f k).map (Limits.Pi.π (fun i => (g i).obj (X i)) i) ≫ (lam f g adj k j i).app (X i)) :
     t = (adjPi f g adj).toComonad.δ.app X k := by
   have hk := (isLimitMapConeFanMkEquiv (f k) _ _)
@@ -519,7 +543,7 @@ def binaryFanOfFanLeft {F : WalkingPair → C} {P : C} (p : ∀ j, P ⟶ F j)
       Fan.IsLimit.fac h _ .right)
     (fun {T} a b (m : T ⟶ P) (ha : m ≫ p .left ≫ e.hom = a) (hb : m ≫ p .right = b) => by
       refine Fan.IsLimit.hom_ext h _ _ fun j => ?_
-      show m ≫ p j = Fan.IsLimit.lift h (famPair (a ≫ e.inv) b) ≫ p j
+      change m ≫ p j = Fan.IsLimit.lift h (famPair (a ≫ e.inv) b) ≫ p j
       have h1 : Fan.IsLimit.lift h (famPair (a ≫ e.inv) b) ≫ p j = famPair (a ≫ e.inv) b j :=
         Fan.IsLimit.fac h _ j
       rw [h1]
@@ -541,7 +565,7 @@ def binaryFanOfFanRight {F : WalkingPair → C} {P : C} (p : ∀ j, P ⟶ F j)
       rw [reassoc_of% h1]; simp)
     (fun {T} a b (m : T ⟶ P) (ha : m ≫ p .left = a) (hb : m ≫ p .right ≫ e.hom = b) => by
       refine Fan.IsLimit.hom_ext h _ _ fun j => ?_
-      show m ≫ p j = Fan.IsLimit.lift h (famPair a (b ≫ e.inv)) ≫ p j
+      change m ≫ p j = Fan.IsLimit.lift h (famPair a (b ≫ e.inv)) ≫ p j
       have h1 : Fan.IsLimit.lift h (famPair a (b ≫ e.inv)) ≫ p j = famPair a (b ≫ e.inv) j :=
         Fan.IsLimit.fac h _ j
       rw [h1]
@@ -1228,6 +1252,7 @@ variable {I : Type w'} {A : Type u₁'} [Category.{v'} A] {B : I → Type u₂'}
   [∀ i, Category.{v'} (B i)]
 variable (f : ∀ i, A ⥤ B i) (g : ∀ i, B i ⥤ A) (adj : ∀ i, f i ⊣ g i)
 
+set_option linter.unusedDecidableInType false in
 /-- **The essential image of `g_i`.** If `g_i` is fully faithful and `f = (f_j)` is
 conservative, `Y` lies in the essential image of `g_i` iff `f_j(η_i,Y)` is invertible for
 every `j ≠ i`. -/
@@ -1327,7 +1352,8 @@ theorem essImage_g'_iff (Y : A) :
     (g .left).essImage Y ↔ IsIso ((versQ f g adj).obj Y).u'' := by
   have := reflectsIso_of_comonadic f g adj
   rw [essImage_iff f g adj .left Y, quadruplet_u'']
-  exact ⟨fun h => h .right (by decide), fun h j hj => by cases j <;> first | exact h | exact absurd rfl hj⟩
+  exact ⟨fun h => h .right (by decide),
+    fun h j hj => by cases j <;> first | exact h | exact absurd rfl hj⟩
 
 /-- **Pages 10–11: the essential image of `g''`.** `Y` lies in the essential image of `g''`
 iff the `u'` of its quadruple, `f'(η''_Y)`, is invertible. -/
@@ -1336,7 +1362,8 @@ theorem essImage_g''_iff (Y : A) :
     (g .right).essImage Y ↔ IsIso ((versQ f g adj).obj Y).u' := by
   have := reflectsIso_of_comonadic f g adj
   rw [essImage_iff f g adj .right Y, quadruplet_u']
-  exact ⟨fun h => h .left (by decide), fun h j hj => by cases j <;> first | exact h | exact absurd rfl hj⟩
+  exact ⟨fun h => h .left (by decide),
+    fun h j hj => by cases j <;> first | exact h | exact absurd rfl hj⟩
 
 /-- **Pages 10–11, on the quadruples.** A quadruple lies in the essential image of
 `g' ⋙ Φ` iff `u''` is invertible. -/

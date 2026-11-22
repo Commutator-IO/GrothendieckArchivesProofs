@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder55Ideals
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 55, page 13: condition (v) of Lemme B holds for every coherent Ideal
@@ -76,6 +79,8 @@ traces `U ∩ Y` of opens of `X`, and `𝒪_Y(U ∩ Y)` is identified with `(�
 direct image of `𝒪_Y`, which `Q_ext_of_eqOn_Supp` and `subsingleton_of_not_mem_Supp` justify.
 So (v) is stated on `X`, with `U` an open set of `X` containing `y`.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
 

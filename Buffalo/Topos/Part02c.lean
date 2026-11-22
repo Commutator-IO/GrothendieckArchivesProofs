@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2c: sober spaces and fibre functors (18 and 25 May 1973)
@@ -12,11 +15,22 @@ Entries of `docs/buffalo-topos/index.tex` from « Irreducible closed sets and so
 « Points and morphisms of sober spaces » (video `URU5jgTvjhU`, 7:54:19–8:33:13). The status of
 each entry is in `docs/buffalo-topos/lean/Part02.json`.
 
+## Implementation notes
+
 The space `X̃` of irreducible closed subsets is `Sob X` (a type synonym of Mathlib's
 `IrreducibleCloseds X`) with the topology of the sets `Ũ = {Y | Y ∩ U ≠ ∅}`. Fibre functors on
 `Sh(X)` are Mathlib's points of the site `𝒪(X)` (`GrothendieckTopology.Point`, SGA 4 IV 6.3):
 `irrPoint Y` is the point `F ↦ F_Y` attached to an irreducible closed set `Y`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 7:54:19–8:33:13
+  (18 and 25 May 1973)
+* [SGA 4] exposé IV, 6.3
 -/
+
+@[expose] public section
+
 
 universe u
 
@@ -36,8 +50,8 @@ union of two *distinct* closed subsets. -/
 def IsIrreducibleLiteral (Z : Type*) [TopologicalSpace Z] : Prop :=
   Nonempty Z ∧ ¬ ∃ A B : Set Z, IsClosed A ∧ IsClosed B ∧ A ≠ B ∧ A ∪ B = Set.univ
 
-/-- URU5jgTvjhU-28459 (7:54:19) [def] The literal reading is never satisfied (`Z = Z ∪ ∅`), though the
-point is irreducible: « distinct » must be « distinct from `Z` ». -/
+/-- URU5jgTvjhU-28459 (7:54:19) [def] The literal reading is never satisfied (`Z = Z ∪ ∅`), though
+the point is irreducible: « distinct » must be « distinct from `Z` ». -/
 @[buffalo "URU5jgTvjhU-28459"]
 theorem isIrreducibleLiteral_false (Z : Type*) [TopologicalSpace Z] : ¬ IsIrreducibleLiteral Z := by
   rintro ⟨⟨z⟩, h⟩
@@ -54,7 +68,8 @@ theorem irreducibleSpace_iff_closed (Z : Type*) [TopologicalSpace Z] :
   rw [irreducibleSpace_def, IsIrreducible, isPreirreducible_iff_isClosed_union_isClosed]
   simp only [Set.top_eq_univ]
   rw [← Set.nonempty_iff_univ_nonempty]
-  refine and_congr_right fun _ => ⟨fun h ⟨A, B, hA, hB, hA', hB', hAB⟩ => ?_, fun h A B hA hB hAB => ?_⟩
+  refine and_congr_right fun _ => ⟨fun h ⟨A, B, hA, hB, hA', hB', hAB⟩ => ?_,
+      fun h A B hA hB hAB => ?_⟩
   · rcases h A B hA hB hAB.ge with h' | h'
     · exact hA' (Set.univ_subset_iff.1 h')
     · exact hB' (Set.univ_subset_iff.1 h')
@@ -153,7 +168,8 @@ instance : TopologicalSpace (Sob Z) where
   isOpen_sUnion := by
     intro S hS
     choose U hU hSU using hS
-    refine ⟨⋃ (s : Set (Sob Z)) (h : s ∈ S), U s h, isOpen_iUnion fun s => isOpen_iUnion fun h => hU s h, ?_⟩
+    refine ⟨⋃ (s : Set (Sob Z)) (h : s ∈ S), U s h,
+        isOpen_iUnion fun s => isOpen_iUnion fun h => hU s h, ?_⟩
     ext Y
     constructor
     · rintro ⟨s, hs, hY⟩
@@ -398,7 +414,7 @@ theorem sobMap_t1 [T1Space Z] :
   · ext Y
     constructor
     · rintro ⟨x, rfl⟩
-      show IsClosed {sobMap x}
+      change IsClosed {sobMap x}
       rw [← closure_subset_iff_isClosed, closure_sob_singleton]
       intro Y' hY'
       have hx : ((sobMap x : Sob Z) : Set Z) = {x} := by simp
@@ -641,8 +657,8 @@ def pullback_stalk' {X Y : TopCat.{u}} (f : X ⟶ Y) (F : Y.Presheaf (Type u)) (
     F.stalk (f x) ≅ ((TopCat.Presheaf.pullback (Type u) f).obj F).stalk x :=
   TopCat.Presheaf.stalkPullbackIso (Type u) f F x
 
-/-- URU5jgTvjhU-30471 (8:27:51) [thm] (case `X = pt`) If `Y` is sober, every point of the site `𝒪(Y)`
-is isomorphic to the point of a unique `y ∈ Y`. -/
+/-- URU5jgTvjhU-30471 (8:27:51) [thm] (case `X = pt`) If `Y` is sober, every point of the site
+`𝒪(Y)` is isomorphic to the point of a unique `y ∈ Y`. -/
 @[buffalo "URU5jgTvjhU-30471"]
 theorem sober_points [QuasiSober Z] [T0Space Z] (Φ : Point.{u} (Opens.grothendieckTopology Z)) :
     ∃! y : Z, Nonempty (Opens.pointGrothendieckTopology y ≅ Φ) := by

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 53, page 21: a cancellative algebraic monoid is a group
@@ -19,22 +22,44 @@ edition's reconstruction, not the page's. The statement over an algebraically cl
 classical (Putcha, *Linear algebraic monoids*, 1988; Brion's survey, 2014).
 
 This file proves the case of `K`-points, `K` algebraically closed, by the route the reading
-proposes: a left translation is an injective polynomial self-map of a Zariski-closed set,
-hence surjective by Ax–Grothendieck (`MvPolynomial.ax_grothendieck_zeroLocus`).
+proposes.
 
-What is modelled. A *monoid of `K`-points with a polynomial law* is a monoid `M` with an
-injective map `φ : M → (ι → K)` (`ι` finite) whose image is the zero locus of an ideal of
-`K[X_i]`, and polynomials `m i` in two sets of variables with `φ (x * y) = law m (φ x) (φ y)`.
-* `law`, `translation`, `eval_translation`: the law and its left translations as polynomials;
-* `isUnit_of_isLeftCancelMul`: in such a monoid, if left multiplications are injective, every
-  element is a unit (only left cancellation is used);
+## Main definitions
+
+* `law`, `translation`, `eval_translation`: the law and its left translations as polynomials.
+
+## Main results
+
+* `isUnit_of_isLeftCancelMul`: in a monoid of `K`-points with a polynomial law, if left
+  multiplications are injective, every element is a unit (only left cancellation is used);
 * `inv_mem_of_isClosed`: a submonoid of `GL_n(K)` which is closed in `GL_n` — cut out by
   polynomials in the entries and in `det⁻¹` — is a subgroup (the special case on page 21:
   a closed submonoid of `GL_n` is a group, the reason for `M_n`).
 
-Not formalised: monoid schemes over a ring, scheme-theoretic monomorphisms, finite
+## Implementation notes
+
+What is modelled. A *monoid of `K`-points with a polynomial law* is a monoid `M` with an
+injective map `φ : M → (ι → K)` (`ι` finite) whose image is the zero locus of an ideal of
+`K[X_i]`, and polynomials `m i` in two sets of variables with `φ (x * y) = law m (φ x) (φ y)`.
+
+The proof: a left translation is an injective polynomial self-map of a Zariski-closed set,
+hence surjective by Ax–Grothendieck (`MvPolynomial.ax_grothendieck_zeroLocus`).
+
+## Not formalised
+
+Monoid schemes over a ring, scheme-theoretic monomorphisms, finite
 presentation (the page's generality), and the embedding into `M_n` of page 30.
+
+## References
+
+* A. Grothendieck, folder 53, pp. 21 and 30 (transcription `transcripts/53/batch-02.fr.tex`,
+  reading `transcripts/53/53.modern.tex`)
+* Putcha, *Linear algebraic monoids*, 1988
+* Brion's survey (2014)
 -/
+
+@[expose] public section
+
 
 open MvPolynomial
 
@@ -322,13 +347,18 @@ theorem ker_toLines : RingHom.ker toLines = Ideal.span {sumSq ℝ} := by
       intro t
       have := congrArg (Polynomial.eval (t : ℂ)) hrf
       rw [eval_toLines, hreq] at this
-      simp [Complex.ext_iff] at this
+      simp only [Polynomial.eval₂_add, Polynomial.eval₂_mul, Polynomial.eval₂_C, RingHom.coe_comp,
+          coe_algebraMap, Polynomial.coe_evalRingHom, Function.comp_apply, Polynomial.eval₂_X,
+          Polynomial.eval_zero, Complex.ext_iff, add_re, mul_re, ofReal_re, I_re, zero_mul, I_im,
+          ofReal_im, mul_zero, sub_self, mul_im, one_mul, zero_add, zero_re, add_im, add_zero,
+          zero_im, mul_eq_zero] at this
       exact ⟨this.1, mul_eq_zero.2 this.2.symm⟩
     have h0 : r.coeff 0 = 0 := Polynomial.funext fun t => by simpa using (hev t).1
     have h1 : Polynomial.X * r.coeff 1 = 0 := Polynomial.funext fun t => by simpa using (hev t).2
     have h1' : r.coeff 1 = 0 := (mul_eq_zero.1 h1).resolve_left Polynomial.X_ne_zero
     rw [Ideal.mem_span_singleton]
-    exact (Polynomial.modByMonic_eq_zero_iff_dvd (monic_sumSq ℝ)).1 (by rw [← hr, hreq, h0, h1']; simp)
+    exact (Polynomial.modByMonic_eq_zero_iff_dvd (monic_sumSq ℝ)).1
+      (by rw [← hr, hreq, h0, h1']; simp)
   · rw [Ideal.span_le, Set.singleton_subset_iff]
     exact toLines_sumSq
 

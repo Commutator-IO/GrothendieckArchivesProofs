@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
 public import Mathlib.Algebra.Category.FGModuleCat.Basic
-
-@[expose] public section
 
 /-!
 # Grothendieck, plan « Motifs » (IHÉS 2ILL5), pp. 2–3: « serein » means dualizable
@@ -16,7 +19,11 @@ a proof that it is the usual one; the transcription was not used here, only that
 The usual notion is *dualizable* (Dold–Puppe 1980; Lewis–May–Steinberger, *Equivariant stable
 homotopy theory*, LNM 1213, III.1.3): `F` has a dual `Y`, with `η : 𝟙 ⟶ Y ⊗ F`,
 `ε : F ⊗ Y ⟶ 𝟙` and the two triangle identities (Mathlib's `ExactPairing Y F`). The two agree,
-when « ≅ » is read as « the canonical map is an isomorphism »: in a monoidal category `C` in which
+when « ≅ » is read as « the canonical map is an isomorphism ».
+
+## Main results
+
+In a monoidal category `C` in which
 `F` is closed (`Closed F`, the internal Hom `ihom F` exists), put `F^∨ = (ihom F).obj 𝟙`,
 `ev : F ⊗ F^∨ ⟶ 𝟙` the evaluation, and `ν_X : F^∨ ⊗ X ⟶ (ihom F).obj X` the transpose of
 `F ⊗ (F^∨ ⊗ X) ≅ (F ⊗ F^∨) ⊗ X ⟶ 𝟙 ⊗ X ≅ X`; then
@@ -32,16 +39,29 @@ when « ≅ » is read as « the canonical map is an isomorphism »: in a monoid
   on the other side, so left and right dualizability and « serein » coincide;
 * the sanity example at the end: in `FGModuleCat K`, `K` a field, every object is « serein ».
 
+## Implementation notes
+
 No braiding or symmetry is needed for the main equivalence: with Mathlib's convention
 (`tensorLeft F ⊣ ihom F`) the internal dual `F^∨` is a *left* dual. The only nontrivial point is
-the second triangle identity in the converse direction, which is derived from the first through the
-universal property of `F^∨` (`triangle_two`).
+the second triangle identity in the converse direction, which is derived from the first through
+the universal property of `F^∨` (`triangle_two`).
 
-Not formalised: that 2ILL5's « ≅ » is the canonical map (an abstract isomorphism
+## Not formalised
+
+That 2ILL5's « ≅ » is the canonical map (an abstract isomorphism
 `F^∨ ⊗ F ≅ End F` is weaker in general; the plan does not say which is meant); anything else on
 these pages; finite free modules over an arbitrary commutative ring (only vector spaces of finite
 dimension, the case Mathlib supplies as a rigid category).
+
+## References
+
+* A. Grothendieck, plan « Motifs », Fonds Grothendieck–Illusie (IHÉS), folder 2ILL5, pp. 2–3
+* A. Dold, D. Puppe (1980)
+* L. G. Lewis, J. P. May, M. Steinberger, *Equivariant stable homotopy theory*, LNM 1213, III.1.3
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Ihes2ILL5
 

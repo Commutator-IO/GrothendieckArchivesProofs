@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.Flat
@@ -10,8 +15,6 @@ public import Mathlib.CategoryTheory.Sites.Types
 public import Mathlib.RingTheory.TensorProduct.Maps
 public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # The questions of the Buffalo lectures (1973), stated as propositions
@@ -26,7 +29,7 @@ lecturer's expectation; the `Prop` then states *his* expectation, and the docstr
 is false and why. The arguments of the note marked as the edition's own have not been checked by
 a specialist.
 
-## Stated
+## Main definitions
 
 * `PresheafToposConjecture` (p:presheaf): false.
 * `PushforwardWithRightAdjointIsEquivalence` (p:fshriek): false.
@@ -37,7 +40,7 @@ a specialist.
 * `ImmersionDescendsFpqc` (p:immersion, first question): false.
 * `FiniteEquivalenceRelationsEffective` (§ Effectivity): false (Venken 1971).
 
-## Not stated, and what is missing
+## Not formalised
 
 * p:classifying (classifying topoi of algebraic structures): Mathlib has no geometric theories,
   classifying topoi or homotopy types of topoi. The note records the programme as carried out
@@ -73,7 +76,16 @@ a specialist.
 * The second question of p:immersion (exactness of descent of subschemes without
   retrocompactness) is stated loosely in the lecture; the same counterexample answers it, and
   it is not written separately.
+
+## References
+
+* the Buffalo lectures (1973)
+* the note on the open problems of the Buffalo lectures (`docs/buffalo-open/article.tex`)
+* Venken (1971); Perrin (1976)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TensorProduct
 
@@ -149,7 +161,8 @@ case, chosen because Mathlib has strict colimits of small categories and no 2-co
 
 Status: false, by the note's own example, which is a strict pushout of small categories along
 accessible functors and so refutes this special case too: the free category on `a : u → v`,
-`b : v → w`, `h : u → w`, mapped to the chain `0 < 1 < 2` and to the free monoid on `t` (`a, b, h ↦ t`),
+`b : v → w`, `h : u → w`, mapped to the chain `0 < 1 < 2` and to the free monoid on `t`
+(`a, b, h ↦ t`),
 has as pushout the one-object category with endomorphisms `{1, t}`, `t = t²`, in which the
 idempotent `t` does not split. Directed colimits along accessible full embeddings are accessible
 (Paré and Rosický 2013). -/

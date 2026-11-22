@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -6,6 +11,8 @@ module
 The open row `16-weak-variants-imply-strong` of the edition's list of findings
 (`src/content/findings.ts`), folder 16, p. 49 (letter to Coates, January 1967). It cannot be
 stated faithfully with Mathlib and the Stacks library; what is missing.
+
+## Not formalised
 
 * `16-weak-variants-imply-strong`: the critical-dimension conditions `A'⁰(T)` (a class of
   `H^i(T)`, `2i = n − 1` or `n − 2`, whose restriction to a hyperplane section `Y` is algebraic
@@ -21,4 +28,11 @@ stated faithfully with Mathlib and the Stacks library; what is missing.
   conditions `A⁰`, `A'⁰`, `A''⁰`, `C` are about those operators, and the folder's letters use
   `A`, `C`, `D` in senses that do not match the published labels, so each would have to be
   rebuilt from the leaf.
+
+## References
+
+* A. Grothendieck, folder 16, p. 49, letter to Coates, January 1967 (finding
+  `16-weak-variants-imply-strong`)
+* S. Kleiman (1968), Th. 2.13; Y. André (2004), ch. 5
+* Stacks Project, tag 0FGV
 -/

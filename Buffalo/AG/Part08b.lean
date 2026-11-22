@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part08a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08 (b): 9 July 1973, tape 2
@@ -12,11 +15,21 @@ The entries of `docs/buffalo-ag/index.tex` lines 1099–1138 (video `vuys5SNs2eQ
 descent of properties of morphisms, of modules and of topological properties along faithfully
 flat morphisms.
 
+## Implementation notes
+
 Conventions as in `Part08a`: `g : S' ⟶ S` is the base change, `f : X ⟶ S`,
 `f' = pullback.snd f g : X ×_S S' ⟶ S'` and `g' = pullback.fst f g`. "Faithfully flat
 quasi-compact" is mathlib's `@Surjective ⊓ @Flat ⊓ @QuasiCompact`, along which mathlib proves
 fpqc descent of many properties (`Mathlib.AlgebraicGeometry.Morphisms.FlatDescent`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 9 July 1973, video `vuys5SNs2eQ`,
+  0:48:33–2:26:00 (`docs/buffalo-ag/index.tex`, lines 1099–1138)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TensorProduct Topology PrimeSpectrum AlgebraicGeometry
 
@@ -115,7 +128,8 @@ theorem prop_6088 [Surjective g] [Flat g] [QuasiCompact g] :
   refine ⟨pullback.isIso_diagonal_iff f, ?_⟩
   have : (@Surjective ⊓ @Flat : MorphismProperty Scheme.{u}).IsStableUnderBaseChange :=
     MorphismProperty.IsStableUnderBaseChange.inf
-  have : (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismProperty Scheme.{u}).IsStableUnderBaseChange :=
+  have : (@Surjective ⊓ @Flat ⊓ @QuasiCompact :
+      MorphismProperty Scheme.{u}).IsStableUnderBaseChange :=
     MorphismProperty.IsStableUnderBaseChange.inf
   have : (MorphismProperty.diagonal (MorphismProperty.isomorphisms Scheme.{u})).DescendsAlong
       (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismProperty Scheme.{u}) :=
@@ -234,7 +248,8 @@ theorem prop_7642 (φ : A →+* A') (hφ : φ.FaithfullyFlat) :
   ModuleCat.reflectsIsomorphisms_extendScalars_of_faithfullyFlat hφ
 
 omit [Algebra A A'] in
-/-- vuys5SNs2eQ-6533 (1:48:53) [thm] A faithfully flat quasi-compact morphism is of effective descent
+/-- vuys5SNs2eQ-6533 (1:48:53) [thm] A faithfully flat quasi-compact morphism is of effective
+descent
 for quasi-coherent modules. Affine case, in Beck's form: extension of scalars along a faithfully
 flat ring map is comonadic (mathlib: `comonadicExtendScalars`); comonad coalgebras are the descent
 data. -/

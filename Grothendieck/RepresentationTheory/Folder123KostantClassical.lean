@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import OpenProblems.AbelianVarieties
 public import Grothendieck.RepresentationTheory.Folder123KostantOpposite
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 123: Kostant's opposite Borels in the classical types `B`, `C`, `D`
@@ -56,6 +59,8 @@ maximal isotropic `V_n ⊇ V_{n-1}`: a numerical computation (`n = 3, 4, 5`) fin
 `2^{n-1} n!` Borels, exactly one of the two `V_n` opposite to `F_n`. The exceptional types are out
 of reach: the standard models are no longer matrices of a classical form.
 -/
+
+@[expose] public section
 
 namespace Grothendieck.Folder123KostantClassical
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Module.Injective
@@ -9,8 +14,6 @@ public import Mathlib.Topology.Category.TopCat.Opens
 public import Mathlib.CategoryTheory.Category.Cat
 public import Grothendieck.Upstream.PrimaryComponentInjective
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 21, Proposition 2.15 and Corollaire 2.16: `I`-torsion and injectivity
@@ -34,25 +37,25 @@ states, for `A` a commutative Noetherian ring and `I` an ideal:
 > des éléments annulés par une puissance de `I`. Si `K` est injectif, `H⁰_I(K)`
 > l'est aussi.
 
+Both are proved, as the reading states them; the formalisation finds nothing false.
+
+## Main results
+
+* `proposition2_15` — for `A` Noetherian and `H` of `I`-power torsion,
+  `H` injective ⟺ `Hom(-,H)` exact on `𝒞`.
+* `corollaire2_16` — `Γ_I` preserves injectives over a Noetherian ring.
+
+## Implementation notes
+
 Here `H` is, as « avec les notations précédentes » says (2.9, 2.14), an
 `A`-module every element of which is killed by a power of `I`. "`Hom(-,H)` exact
 à droite on `𝒞`" is: for every `M ∈ 𝒞` and every submodule `N ⊆ M`, every
 `N → H` extends to `M` (`ExactSurC`).
 
-What is proved, as the reading states it:
-
-* `proposition2_15` — for `A` Noetherian and `H` of `I`-power torsion,
-  `H` injective ⟺ `Hom(-,H)` exact on `𝒞`. The proof is the typescript's:
-  Baer's criterion, the image of `u` killed by one power `Iⁿ`, Artin–Rees in
-  the form `N ∩ I^{n+k} ⊆ IⁿN`, and the extension along `N/(N ∩ Iᵐ) ↪ A/Iᵐ`; that
-  argument is `Ideal.injective_of_primaryComponent_eq_top` (`Upstream/`).
-* `corollaire2_16` — `Γ_I` preserves injectives over a Noetherian ring.
-
-The bulk of the folder (2.1–2.14: abelian categories, cohomological functors,
-Eilenberg–Watts, associated primes of the representing module; the sheaf half,
-pp. 15–20; Corollaire 10 and the torsors of pp. 27–28) is not formalised here.
-Proposition 7 and Corollaire 8 (pp. 21–26, fibered categories) are, in the
-`Grothendieck.Folder21.Stack` namespace below.
+The proof of `proposition2_15` is the typescript's: Baer's criterion, the image of `u`
+killed by one power `Iⁿ`, Artin–Rees in the form `N ∩ I^{n+k} ⊆ IⁿN`, and the extension
+along `N/(N ∩ Iᵐ) ↪ A/Iᵐ`; that argument is `Ideal.injective_of_primaryComponent_eq_top`
+(`Upstream/`).
 
 **What the formalisation finds.** Nothing false. The Artin–Rees containment
 the proof needs is `N ∩ IᵐA ⊆ IⁿN`, with the ambient module on the left — the
@@ -67,7 +70,23 @@ only to invoke 2.15 (Artin–Rees).
 
 What this certifies is that the reading holds together at these points, not
 that it is what the pages say (issue #26).
+
+## Not formalised
+
+The bulk of the folder (2.1–2.14: abelian categories, cohomological functors,
+Eilenberg–Watts, associated primes of the representing module; the sheaf half,
+pp. 15–20; Corollaire 10 and the torsors of pp. 27–28) is not formalised here.
+Proposition 7 and Corollaire 8 (pp. 21–26, fibered categories) are, in the
+`Grothendieck.Folder21.Stack` namespace below.
+
+## References
+
+* A. Grothendieck, folder 21, typescript pp. 11–13 (reading `transcripts/21/21.modern.tex`)
+* Issue #26
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder21
 

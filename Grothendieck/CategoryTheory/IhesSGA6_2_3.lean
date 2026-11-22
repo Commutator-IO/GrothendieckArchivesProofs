@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Triangulated.Functor
@@ -6,8 +11,6 @@ public import Mathlib.GroupTheory.FreeAbelianGroup
 public import Mathlib.Tactic.Abel
 public import Mathlib.LinearAlgebra.Dimension.RankNullity
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, views 1–3: the group `K` of a triangulated category, and the Euler identity
@@ -24,12 +27,8 @@ of additive functions on an abelian category: `Σ (−1)ⁱ χ(Xⁱ) = Σ (−1)
 complex. The same identity is in the margin of view 2 of FG_IL_5_SGA6_2_1 (Prop. 1.1 and its
 Cor. 2, for the alternating sum of classes).
 
-Here `C` is a pretriangulated category in the sense of mathlib (`Pretriangulated C`; the octahedral
-axiom is not used), and `K₀ C` is `FreeAbelianGroup C` modulo the relations, the edition's
-encoding of `Z^(Ob C)`. Mathlib has no `K₀` of a triangulated category. The Euler identity is
-proved for dimensions, the additive function `χ = dim` on finite-dimensional vector spaces.
+## Main results
 
-**What is proved.**
 * `cl_obj₂`, `lift`, `lift_cl`, `hom_ext`: the relation of a triangle and the universal property.
 * `cl_zero`, `cl_eq_of_iso`, `cl_of_isZero`: `cl 0 = 0`, from the triangle `0 → 0 → 0 → 0`, and
   isomorphic objects have the same class, from `X → Y → 0 → X[1]`.
@@ -47,12 +46,30 @@ proved for dimensions, the additive function `χ = dim` on finite-dimensional ve
   `Hⁱ = ker dⁱ / im dⁱ⁻¹` (`cohomology`). The proof is rank–nullity in each degree and a
   telescoping sum (`sum_alternating_telescope`).
 
-**Not formalised.** The « ⇒ » half of the two-triangle Cor. (Thomason, Lemma 2.4), which needs
+## Implementation notes
+
+Here `C` is a pretriangulated category in the sense of mathlib (`Pretriangulated C`; the octahedral
+axiom is not used), and `K₀ C` is `FreeAbelianGroup C` modulo the relations, the edition's
+encoding of `Z^(Ob C)`. Mathlib has no `K₀` of a triangulated category. The Euler identity is
+proved for dimensions, the additive function `χ = dim` on finite-dimensional vector spaces.
+
+## Not formalised
+
+The « ⇒ » half of the two-triangle Cor. (Thomason, Lemma 2.4), which needs
 the page's monoid argument; the description of `K(C)` as the quotient of the monoid of
 isomorphism classes; `K(φ)` an isomorphism for an equivalence; the exact sequence for a Verdier
 quotient (marked « à vérifier » on view 3); § 2's comparison `K(C) ≅ K(D^b(C))` for an abelian
 category, and the Euler identity for an arbitrary additive function or for finite-length modules.
+
+## References
+
+* A. Grothendieck, Fonds Grothendieck–Illusie (IHÉS), FG_IL_5_SGA6_2_3, views 1–3, and
+  FG_IL_5_SGA6_2_1, view 2
+* Thomason, Lemma 2.4
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_2_3
 

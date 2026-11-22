@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.DerivationLeibnizProd
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 2, pages 9 and 13: a nonzero class with trivial total Chern class
@@ -18,26 +21,17 @@ point of `P^r` (`ξ = 1 − L^{-1}`, `ξ^r = Σ (−1)^i binom(r, i) L^{-i}`, `c
 in `Ã(P^r) = ℤ[η]/(η^{r+1})` (page 9), and concludes on page 13 that for a divisor `Y`
 of class `x'` with `(r−1)! x' = 0`, `c(i_!(O_Y)) = 1`.
 
-This is finding `2-trivial-total-chern-class` of `src/content/findings.ts`. mathlib has
-no `K`-group of coherent sheaves and no Chern classes, so what is proved is the algebra of
-the two pages, in the splitting-principle model the reading uses: `i_!(O_Y) = [O_Y] ⊗ ξ^r
-= Σ_i (−1)^i binom(r, i) ([L^{-i}] − [L^{-i} ⊗ O(−Y)])`, with `c(L^{-i}) = 1 − iη` and
-`c(L^{-i} ⊗ O(−Y)) = 1 − y − iη` (`y = x'`, first Chern classes adding), so that
+This is finding `2-trivial-total-chern-class` of `src/content/findings.ts`. What is proved is
+the algebra of the two pages, in the splitting-principle model the reading uses.
 
-  `c(i_!(O_Y)) = ∏_{i=0}^{r} ((1 − iη) / (1 − y − iη))^{(−1)^i binom(r,i)}`.
-
-Congruences modulo `X^{r+1}` in `A⟦X⟧` are identities in `A[η]/(η^{r+1})`.
+## Main results
 
 * `chernPoint_int` and `chernPoint` (page 9): for `r ≥ 1` and any commutative ring `A`,
   `∏_{i=0}^{r} (1 − iX)^{(−1)^i binom(r,i)} ≡ 1 + (−1)^{r−1} (r−1)! X^r  (mod X^{r+1})`.
-  Proof by the logarithmic derivative over `ℤ`: `P'/P = −Σ_m S(m+1) X^m` with
-  `S(k) = Σ_i (−1)^i binom(r,i) i^k`, zero for `k < r` and `(−1)^r r!` for `k = r`
-  (mathlib's forward differences), then `n p_n = 0` for `n < r` and `r p_r = −S(r)`.
 * `chernImmersion` (page 13): for any commutative ring `A` and `y ∈ A` with `1 − y` a unit
   (`y` nilpotent in the geometric case, `chernImmersion_of_isNilpotent`) and
   `(r−1)! · y = 0`, `∏_{i=0}^{r} ((1 − iX)/(1 − y − iX))^{(−1)^i binom(r,i)} ≡ 1`
-  modulo `X^{r+1}`. The denominator product is the numerator one rescaled by `(1 − y)^{-1}`,
-  so the two agree modulo `X^{r+1}` once `(r−1)! (1 − (1 − y)^{-r}) = 0`.
+  modulo `X^{r+1}`.
 * `chernRatio`, `chernCurve`, `chernEllipticNB` (the N.B. of page 13, read in the second
   transcription pass): the page itself gives the example, `X` an elliptic curve,
   `x = (a) − (0)` with `a + a = 0`, `a ≠ 0`, and `r = 3`. With `p, q` the classes of the two
@@ -45,10 +39,37 @@ Congruences modulo `X^{r+1}` in `A⟦X⟧` are identities in `A[η]/(η^{r+1})`.
   `∏ ((1 − p − iX)/(1 − q − iX))^{(−1)^i binom(r,i)} ≡ 1` modulo `X^{r+1}`; for `r = 3`
   the hypothesis `2(p − q) = 0` given by `a + a = 0` suffices.
 
+## Implementation notes
+
+mathlib has no `K`-group of coherent sheaves and no Chern classes, so the model is the
+splitting-principle one: `i_!(O_Y) = [O_Y] ⊗ ξ^r
+= Σ_i (−1)^i binom(r, i) ([L^{-i}] − [L^{-i} ⊗ O(−Y)])`, with `c(L^{-i}) = 1 − iη` and
+`c(L^{-i} ⊗ O(−Y)) = 1 − y − iη` (`y = x'`, first Chern classes adding), so that
+
+  `c(i_!(O_Y)) = ∏_{i=0}^{r} ((1 − iη) / (1 − y − iη))^{(−1)^i binom(r,i)}`.
+
+Congruences modulo `X^{r+1}` in `A⟦X⟧` are identities in `A[η]/(η^{r+1})`.
+
+* `chernPoint`: proof by the logarithmic derivative over `ℤ`: `P'/P = −Σ_m S(m+1) X^m` with
+  `S(k) = Σ_i (−1)^i binom(r,i) i^k`, zero for `k < r` and `(−1)^r r!` for `k = r`
+  (mathlib's forward differences), then `n p_n = 0` for `n < r` and `r p_r = −S(r)`.
+* `chernImmersion`: the denominator product is the numerator one rescaled by `(1 − y)^{-1}`,
+  so the two agree modulo `X^{r+1}` once `(r−1)! (1 − (1 − y)^{-r}) = 0`.
+
+## Not formalised
+
 That the classes `i_!(O_Y)` and `i_!(x)` are nonzero in `K(X × P^r)`, which the N.B.
 asserts, and the restriction `r ≥ 3`, are geometric and not formalised. Page 21 states
 `n ≥ 3` for its example itself (« si n − 1 > 1 i.e. n ≥ 3, CK a de la torsion »).
+
+## References
+
+* A. Grothendieck, folder 2, pp. 9–13 and 21 (reading `transcripts/2/2.modern.tex`; finding
+  `2-trivial-total-chern-class`)
 -/
+
+@[expose] public section
+
 
 open PowerSeries Finset
 

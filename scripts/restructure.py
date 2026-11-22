@@ -150,6 +150,16 @@ def main(dry: bool) -> None:
     paths = {"/".join(o.split(".")) + ".lean": "/".join(n.split(".")) + ".lean"
              for o, n in moves.items()}
     path_re = re.compile("|".join(re.escape(p) for p in sorted(paths, key=len, reverse=True)))
+    # `Grothendieck/Combinatorics/Folder80*.lean`-style globs, when every file they match moved to one topic.
+    by_prefix = {}
+    for o_, n_ in paths.items():
+        m = re.match(r"Grothendieck/(Folder\d+(?:_\d+)?)", o_)
+        if m:
+            by_prefix.setdefault(m.group(1), set()).add(n_.rsplit("/", 1)[0])
+    globs = {f"Grothendieck/{k}*.lean": f"{next(iter(v))}/{k}*.lean"
+             for k, v in by_prefix.items() if len(v) == 1}
+    glob_re = re.compile("|".join(re.escape(g) for g in sorted(globs, key=len, reverse=True))
+                         or "(?!)")
     tracked = subprocess.run(["git", "ls-files"], capture_output=True, text=True,
                              check=True).stdout.split()
     for name in tracked:
@@ -164,6 +174,7 @@ def main(dry: bool) -> None:
         if p.suffix == ".lean":
             new = imp.sub(lambda m: m.group(1) + moves.get(m.group(2), m.group(2)), new)
         new = path_re.sub(lambda m: paths[m.group(0)], new)
+        new = glob_re.sub(lambda m: globs[m.group(0)], new)
         if p.suffix == ".lean" and new != text:
             new = reflow(new, set(paths.values()))
         if new != text:

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -10,6 +15,8 @@ whether the reduction of the Lefschetz standard conjecture
 Lefschetz condition `A⁰(Y_T)` on a hyperplane section `Y_T` of `T = X × X` can be dropped from
 `C(Y) + A'⁰(X × X) + A''⁰(X × X) + A⁰(Y_T) ⟹ C(X)`. Status: open; the equivalence
 `C(X) ⟺ C(Y) + A⁰(X × X)` is Kleiman's (1968, Th. 2.13).
+
+## Not formalised
 
 Not stated, because a faithful statement needs, on top of a Weil cohomology theory: smooth
 hyperplane sections `φ : Y ↪ X` of a smooth projective variety (zero loci of sections of a very
@@ -25,4 +32,11 @@ algebra (cohomology groups as modules, algebraic classes as submodules, weak and
 as hypotheses) would not be faithful: the question is whether the geometry of `Y_T` is needed,
 which an abstract setting cannot see. The two linear-algebra halves of the reconstruction are proved
 in `Grothendieck/AlgebraicGeometry/Folder16.lean` (`split_even`, `split_odd`, `split_odd_circular`).
+
+## References
+
+* the note on the open problems of the Montpellier notes (`docs/problems/article.tex`), section
+  « Algebraic cycles », problem p:lef
+* A. Grothendieck, folder 16, p. 49 (letter of January 1967)
+* S. Kleiman (1968), Th. 2.13
 -/

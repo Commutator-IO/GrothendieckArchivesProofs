@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Group.End
@@ -13,8 +18,6 @@ public import Mathlib.Data.Fintype.Pigeonhole
 public import Mathlib.SetTheory.Cardinal.Finite
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 158, Proposition 1 (§5.1)
 
@@ -25,8 +28,68 @@ pages 44–46), states:
 > trivial et qui est pseudo-cofiltrant. Alors il existe `p ∈ M` tel que
 > `up = p` pour tout `u ∈ M` — en particulier `p² = p` — et `M` est cofiltrant.
 
-It is proved here as the reading states it, with no hypothesis added. The
-proof follows the reading's three steps:
+It is proved here as the reading states it, with no hypothesis added. The file also formalises
+the monoids with a minimal element (pages 21 to 41, finding `158-minimal-monoid-cofiltered`) and
+the finite categories (pages 50 to 53, finding `158-finite-category-cofiltered`).
+
+What the formalisation found. The Proposition holds as stated, but the
+reading's modern gloss on it does not. The gloss says `p` « engendre un idéal
+à gauche minimal réduit à un zéro à gauche : c'est le noyau de Rees du monoïde
+fini, dont la trivialité du groupe enveloppant force qu'il soit ponctuel ».
+`Mp = {p}` is indeed a minimal left ideal; but the kernel (minimal two-sided
+ideal) is `MpM = pM`, which need not be a point, and `p` is neither unique nor
+a two-sided zero: `contre_noyau_non_ponctuel` exhibits a three-element monoid
+satisfying every hypothesis whose kernel has two elements. (Also, `u p = p` for
+all `u` makes `p` what semigroup theory usually calls a *right* zero.)
+
+## Main results
+
+### Proposition 1 (pages 44–46)
+
+* `etape1`: pseudo-cofilteringness and finiteness give a `p` lying in every principal right
+  ideal `uM` (step 1 below); the Proposition itself follows the three steps;
+* `contre_noyau_non_ponctuel`: a three-element monoid satisfying every hypothesis whose kernel
+  has two elements.
+
+### Monoids with a minimal element (pages 21 to 41), finding `158-minimal-monoid-cofiltered`
+
+* `cofiltrant_iff_simplyConnected`: a monoid with a minimal element is cofiltered iff every
+  connected right `M`-set has a simply connected category of elements.
+* `simplyConnected_of_cofiltrant`: the direction from cofiltered, for any monoid.
+* `quotPsi_not_simplyConnected` (pp. 21–33, with `φ = ψ` as in the Corollaire of p. 33):
+  if the powers of `ψ` are distinct, the relative degree `q − p` of `ψ^p u = ψ^q v` is a
+  `ℤ`-valued cocycle on `M/R_ψ`, of degree `1` on the endomorphism `ψ` of the class of `1`.
+* `cofiltrant_iff_rhoMin` (pp. 35–41): if `ψ^r = ψ^s`, `r ≠ s`, a power `e` of `ψ` is a
+  minimal idempotent; left multiplication permutes the minimal elements `eM`, and `M` is
+  cofiltered iff this representation `M → Perm(eM)` is trivial — otherwise the point fails.
+
+What the formalisation found: the statement holds, and the Corollaire's dichotomy
+works with `φ = ψ`: hypotheses (B), (C), (D) of pp. 22–30 reduce to « the powers of `ψ`
+are distinct », (D) holding for `φ = ψ` by itself.
+
+### Finite categories (pages 50 to 53), finding `158-finite-category-cofiltered`
+
+* `common_ancestor` (the doubling lemma, any category): under (H), two elements of a
+  connected presheaf have a common ancestor — otherwise `F` glued to itself along the two
+  disjoint subpresheaves they generate is connected and carries a `ℤ`-cocycle that is not a
+  coboundary.
+* `cone_objs_of_H`, `square_of_H`: (H) with `X` connected gives cones over pairs of objects
+  (terminal presheaf) and squares over cospans (representables) — the step « (H) ⇒
+  pseudo-cofiltrant » that p. 53 asserts without argument, for any category.
+* `isCofiltered_of_H`: a finite, non-empty, connected category satisfying (H) is cofiltered
+  (Mathlib's `IsCofiltered`).
+* `discrete_counterexample`: the discrete category on two objects satisfies (H) and is not
+  cofiltered.
+
+What the formalisation found: as read (« a finite category X such that every connected
+presheaf… ») the statement is false for disconnected `X`; with `X` connected, as the page
+must intend, it holds, and the unargued step holds for every small category.
+
+## Implementation notes
+
+### Proposition 1
+
+The proof follows the reading's three steps:
 
 1. (`etape1`) pseudo-cofilteringness and finiteness give a `p` lying in every
    principal right ideal `uM`;
@@ -54,69 +117,49 @@ same side, `∀ u v, ∃ w, u w = v w`, which is the side the proof produces.
 "Trivial group completion" is stated as: every monoid morphism from `M` to a
 group is trivial. The groups quantified over are those in `M`'s universe; the
 group completion of `M` lives there, so this is the same condition, and taking
-fewer groups only weakens the hypothesis.
-
-What the formalisation found. The Proposition holds as stated, but the
-reading's modern gloss on it does not. The gloss says `p` « engendre un idéal
-à gauche minimal réduit à un zéro à gauche : c'est le noyau de Rees du monoïde
-fini, dont la trivialité du groupe enveloppant force qu'il soit ponctuel ».
-`Mp = {p}` is indeed a minimal left ideal; but the kernel (minimal two-sided
-ideal) is `MpM = pM`, which need not be a point, and `p` is neither unique nor
-a two-sided zero: `contre_noyau_non_ponctuel` exhibits a three-element monoid
-satisfying every hypothesis whose kernel has two elements. (Also, `u p = p` for
-all `u` makes `p` what semigroup theory usually calls a *right* zero.) mathlib
+fewer groups only weakens the hypothesis. mathlib
 has no structure theory of finite semigroups (kernels, completely simple
 semigroups), so the proof is self-contained.
-## Monoids with a minimal element (pages 21 to 41), finding `158-minimal-monoid-cofiltered`
+
+### Monoids with a minimal element
 
 A right `M`-set is `RSet M`; its category of elements has the elements as objects and
 `m : x·m → x` as arrows. A functor from it to a group `G` is a cocycle
 `c(x, mn) = c(x, m) c(x·m, n)`; `SimplyConnected` says every such cocycle, for every group
 `G` in `M`'s universe, is a coboundary `g(x) g(x·m)⁻¹` — for a connected category this is
-`π₁ = 1` (the equivalence with the fundamental group is not formalised). `ψ` is minimal if
-`ψ ∈ uM` for every `u`.
+`π₁ = 1`. `ψ` is minimal if `ψ ∈ uM` for every `u`.
 
-* `cofiltrant_iff_simplyConnected`: a monoid with a minimal element is cofiltered iff every
-  connected right `M`-set has a simply connected category of elements.
-* `simplyConnected_of_cofiltrant`: the direction from cofiltered, for any monoid.
-* `quotPsi_not_simplyConnected` (pp. 21–33, with `φ = ψ` as in the Corollaire of p. 33):
-  if the powers of `ψ` are distinct, the relative degree `q − p` of `ψ^p u = ψ^q v` is a
-  `ℤ`-valued cocycle on `M/R_ψ`, of degree `1` on the endomorphism `ψ` of the class of `1`.
-* `cofiltrant_iff_rhoMin` (pp. 35–41): if `ψ^r = ψ^s`, `r ≠ s`, a power `e` of `ψ` is a
-  minimal idempotent; left multiplication permutes the minimal elements `eM`, and `M` is
-  cofiltered iff this representation `M → Perm(eM)` is trivial — otherwise the point fails.
-
-What the formalisation found: the statement holds, and the Corollaire's dichotomy
-works with `φ = ψ`: hypotheses (B), (C), (D) of pp. 22–30 reduce to « the powers of `ψ`
-are distinct », (D) holding for `φ = ψ` by itself. The degree needs no
+The degree needs no
 least object and no presentation of `π₁` (Proposition 1, p. 19): `ψ^p u = ψ^q u` forces
 `p = q` for every `u` because `uM ∋ ψ`. In the other case, that the minimal elements form
 `eM`, stable under left multiplication, is what makes `M → Perm(eM)` well defined, the step
-p. 41 leaves under its illegible words. The `H¹(−, ℚ)` variant of p. 39 is not formalised.
-## Finite categories (pages 50 to 53), finding `158-finite-category-cofiltered`
+p. 41 leaves under its illegible words.
+
+### Finite categories
 
 A presheaf is `Psh X`, with the same cocycle form of « simply connected »; (H), `HypH X`,
 says every connected presheaf has a simply connected category of elements.
 
-* `common_ancestor` (the doubling lemma, any category): under (H), two elements of a
-  connected presheaf have a common ancestor — otherwise `F` glued to itself along the two
-  disjoint subpresheaves they generate is connected and carries a `ℤ`-cocycle that is not a
-  coboundary.
-* `cone_objs_of_H`, `square_of_H`: (H) with `X` connected gives cones over pairs of objects
-  (terminal presheaf) and squares over cospans (representables) — the step « (H) ⇒
-  pseudo-cofiltrant » that p. 53 asserts without argument, for any category.
-* `isCofiltered_of_H`: a finite, non-empty, connected category satisfying (H) is cofiltered
-  (Mathlib's `IsCofiltered`). Proof as on pp. 50–52: an object `e` mapping to every object, a
-  minimal idempotent `p` of `End e` (Proposition 1's step 1), the local system
-  `L(z) = Hom(e, z) p` on the least objects (bijective transitions by counting), constant by
-  (H), which gives `p c f = p c g`.
-* `discrete_counterexample`: the discrete category on two objects satisfies (H) and is not
-  cofiltered.
+`isCofiltered_of_H` is proved as on pp. 50–52: an object `e` mapping to every object, a
+minimal idempotent `p` of `End e` (Proposition 1's step 1), the local system
+`L(z) = Hom(e, z) p` on the least objects (bijective transitions by counting), constant by
+(H), which gives `p c f = p c g`.
 
-What the formalisation found: as read (« a finite category X such that every connected
-presheaf… ») the statement is false for disconnected `X`; with `X` connected, as the page
-must intend, it holds, and the unargued step holds for every small category.
+## Not formalised
+
+* The reading's §6 counterexample without finiteness (`Ep(E)`, `E` infinite).
+* The equivalence of `SimplyConnected` with the triviality of the fundamental group.
+* The `H¹(−, ℚ)` variant of p. 39.
+
+## References
+
+* A. Grothendieck, Folder 158, §5.1, pp. 44–46; pp. 19, 21–41, 50–53 (reading
+  `transcripts/158/158.modern.tex`; findings `158-minimal-monoid-cofiltered`,
+  `158-finite-category-cofiltered`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder158
 

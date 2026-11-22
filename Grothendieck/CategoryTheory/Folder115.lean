@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 115, pages 3–7: Isbell duality from the kernel transform
@@ -20,12 +23,15 @@ kernel (page 7) gives `𝒪 ⊣ Spec : Â ⇄ (A^∨)^op` with `𝒪(Φ)(a) = Ho
 `115-isbell-duality-derived-from-kernels` of `src/content/findings.ts` (the finding's
 question, whether this derivation is in print, is not a mathematical one).
 
-What is formalised. The kernel is written `K : Aᵒᵖ ⥤ C ⥤ Type u`, `A`, `C` small; the
-page's kernel on `A × B` is the case `C = Bᵒᵖ`, and the hom of `A` is `K = coyoneda`
-(`C = A`).
+Holds as stated: the duality is literally the kernel adjunction at `K = Hom`.
+
+## Main definitions
 
 * `kernelS K : (Aᵒᵖ ⥤ Type u)ᵒᵖ ⥤ C ⥤ Type u`, `ˢK(L)(c) = Hom(L, K(-, c))`, and
   `kernelD K : (C ⥤ Type u)ᵒᵖ ⥤ Aᵒᵖ ⥤ Type u`, `ᵈK(M)(a) = Hom(M, K(a, -))`.
+
+## Main results
+
 * `kernelEquiv`: `Hom(M, ˢK(L)) ≃ Hom(L, ᵈK(M))`, both sides being the families
   `L(a) × M(c) → K(a, c)` natural in `a` and `c`; `kernelAdj`: `(ˢK)ʳᵒᵖ ⊣ ᵈK`, the dual
   adjunction of pages 3–5, for every kernel.
@@ -36,10 +42,24 @@ page's kernel on `A × B` is the case `C = Bᵒᵖ`, and the hom of `A` is `K = 
   `Spec(Hom_A(a, -)) ≅ y a` (Yoneda); `isbellO_preservesColimits`: `𝒪` sends colimits of
   `Â` to limits of `A^∨`, being a left adjoint into `(A^∨)^op`.
 
-Holds as stated: the duality is literally the kernel adjunction at `K = Hom`. Not
-formalised: the eleven-node wheel of page 5, the families `(Aᵢ)` and the uniqueness of
-`𝒪` and `Spec` from their restriction along `y`.
+## Implementation notes
+
+The kernel is written `K : Aᵒᵖ ⥤ C ⥤ Type u`, `A`, `C` small; the page's kernel on
+`A × B` is the case `C = Bᵒᵖ`, and the hom of `A` is `K = coyoneda` (`C = A`).
+
+## Not formalised
+
+The eleven-node wheel of page 5, the families `(Aᵢ)` and the uniqueness of `𝒪` and `Spec`
+from their restriction along `y`.
+
+## References
+
+* A. Grothendieck, cote 115, pp. 3–7 (finding `115-isbell-duality-derived-from-kernels`);
+  modernised reading `transcripts/115/115.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder115
 
@@ -163,7 +183,15 @@ noncomputable def isoOfRestrict {D : Type u} [SmallCategory D] {ℰ : Type v} [C
 /-- `𝒪 ∘ y ≅ (a ↦ Hom_A(a, -))`, naturally in `a`. -/
 def isbellO_restrict : yoneda ⋙ (isbellO : (Aᵒᵖ ⥤ Type u) ⥤ _) ≅ coyoneda.rightOp :=
   NatIso.ofComponents (fun a => (isbellO_yoneda a).op.symm) fun f => by
-    apply Quiver.Hom.unop_inj; ext; simp [isbellO_yoneda, yonedaEquiv]; ext; simp
+    apply Quiver.Hom.unop_inj; ext; simp only [Functor.comp_obj, Functor.rightOp_obj,
+                                        Functor.flip_obj_obj, yoneda_obj_obj, Functor.comp_map,
+                                        Functor.rightOp_map, isbellO_yoneda, yonedaEquiv, op_unop,
+                                        Functor.flip_obj_map, Functor.flip_map_app, yoneda_obj_map,
+                                        Quiver.Hom.unop_op, TypeCat.hom_ofHom, TypeCat.Fun.coe_mk,
+                                        Iso.symm_hom, Iso.op_inv, unop_comp, NatTrans.comp_app,
+                                        NatIso.ofComponents_inv_app, TypeCat.Fun.toFun_apply,
+                                        comp_apply, Equiv.toIso_inv_hom_apply, Equiv.symm_mk,
+                                        Equiv.coe_fn_mk]; ext; simp
 
 /-- `𝒪` is the left Kan extension along `y` of `a ↦ Hom_A(a, -)`. -/
 @[montpellier "115, 3–7"]

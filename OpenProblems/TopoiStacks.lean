@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -7,6 +12,8 @@ Section « Topoi and stacks » of the note on the open problems of the Montpelli
 (`docs/problems/article.tex`): problems p:noncoh, p:fol, p:pic, p:domram. None of them can be
 stated faithfully with Mathlib and the Stacks library; for each, what is missing. A first-order
 part of p:noncoh is proved in `OpenProblems/TopoiStacksNoncoh.lean`.
+
+## Not formalised
 
 * p:noncoh (folder 161-2, pp. 39, 41–42, *Algèbre universelle*, [c. 1963–1973]): the classifying
   topoi of the geometric theories of rings with irreducible spectrum and of rings with
@@ -46,4 +53,17 @@ part of p:noncoh is proved in `OpenProblems/TopoiStacksNoncoh.lean`.
   realisation, axioms R1, R2) are fully faithful. Status: open (Proposition 6 of the page, without
   proof; nothing found). Missing: stacks of categories over the étale site, multigaloisian
   categories, and the axioms R1–R2 themselves, which the edition has not verified.
+
+## References
+
+* the note on the open problems of the Montpellier notes (`docs/problems/article.tex`), section
+  « Topoi and stacks », problems p:noncoh, p:fol, p:pic, p:domram
+* A. Grothendieck, folder 161-2, pp. 39, 41–42, *Algèbre universelle*
+* A. Grothendieck, folder 119, pp. 144–145 (March 1986)
+* A. Grothendieck, folder 134-1, p. 5 (letter to Deligne, 27 August 1974); letter to Breen,
+  5 February 1975
+* A. Grothendieck, folder 29, p. 197, *Groupe fondamental*
+* [SGA 4] IV 9.8.3
+* M. Makkai, G. E. Reyes, *First Order Categorical Logic*, Lecture Notes in Mathematics 611,
+  Springer, 1977, Theorem 6.2.4
 -/

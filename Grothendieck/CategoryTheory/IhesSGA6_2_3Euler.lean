@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.CategoryTheory.Abelian.GrothendieckGroup
@@ -6,8 +11,6 @@ public import Mathlib.Algebra.Order.Interval.Finset.SuccPred
 public import Mathlib.Algebra.Ring.NegOnePow
 public import Mathlib.Data.Int.Interval
 public import Mathlib.Data.Int.SuccPred
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, view 3, item 5: the Euler formula for any additive function
@@ -20,6 +23,17 @@ every abelian category, using the group `KZero A` of the vendored AxiomMath/Stac
 `StacksFrontier/CategoryTheory/Abelian/GrothendieckGroup.lean` (Stacks tag 02MU): the free
 abelian group on the objects of `A` modulo `[X₂] = [X₁] + [X₃]` for every short exact sequence.
 
+## Main results
+
+For `X : CochainComplex A ℤ` with `Xⁱ = 0` for `i ∉ [a, b]`:
+
+* `sum_negOnePow_mk_X_eq`: `Σ_{a ≤ i ≤ b} (−1)ⁱ [Xⁱ] = Σ_{a ≤ i ≤ b} (−1)ⁱ [Hⁱ(X)]` in `KZero A`;
+* `sum_negOnePow_eq_sum_negOnePow_homology`: the same for any `χ : A → G` additive on short
+  exact sequences;
+* `sum_negOnePow_eq_zero_of_exact`: an exact bounded complex has `Σ (−1)ⁱ χ(Xⁱ) = 0`.
+
+## Implementation notes
+
 The identity is first proved once in `KZero A` (`sum_negOnePow_mk_X_eq`), where the class of each
 term splits along two short exact sequences: `0 → Zⁱ → Xⁱ → Bⁱ⁺¹ → 0` (cycles, then the image of
 the differential) and `0 → Bⁱ → Zⁱ → Hⁱ → 0`. The alternating sum of the boundary classes
@@ -28,12 +42,14 @@ function `χ` with values in an abelian group `G` factors through `KZero A` by i
 property (`KZero.lift`, `KZero.universal`), which gives the formula for `χ`
 (`sum_negOnePow_eq_sum_negOnePow_homology`).
 
-**What is proved.** For `X : CochainComplex A ℤ` with `Xⁱ = 0` for `i ∉ [a, b]`:
-* `sum_negOnePow_mk_X_eq`: `Σ_{a ≤ i ≤ b} (−1)ⁱ [Xⁱ] = Σ_{a ≤ i ≤ b} (−1)ⁱ [Hⁱ(X)]` in `KZero A`;
-* `sum_negOnePow_eq_sum_negOnePow_homology`: the same for any `χ : A → G` additive on short
-  exact sequences;
-* `sum_negOnePow_eq_zero_of_exact`: an exact bounded complex has `Σ (−1)ⁱ χ(Xⁱ) = 0`.
+## References
+
+* A. Grothendieck, Fonds Grothendieck–Illusie (IHÉS), FG_IL_5_SGA6_2_3, view 3, item 5
+* Stacks Project, tag 02MU
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_2_3Euler
 
@@ -126,7 +142,8 @@ theorem sum_negOnePow_mk_X_eq {a b : ℤ} (hab : a ≤ b + 1)
   have hb : bdry X (b + 1) = 0 :=
     KZero'.mk_image_eq_zero_of_isZero_tgt _
       (IsZero.of_mono (X.iCycles (b + 1)) (hX (b + 1) (Or.inr (by omega))))
-  rw [Finset.sum_congr rfl fun i _ => by rw [mk_X, smul_add], Finset.sum_add_distrib, sum_Icc_negOnePow_add (bdry X) a b (by omega), ha, hb, smul_zero,
+  rw [Finset.sum_congr rfl fun i _ => by rw [mk_X, smul_add], Finset.sum_add_distrib,
+    sum_Icc_negOnePow_add (bdry X) a b (by omega), ha, hb, smul_zero,
     smul_zero, add_zero, add_zero]
 
 /-- **The Euler formula** (view 3, item 5). Let `χ` be an additive function on the abelian

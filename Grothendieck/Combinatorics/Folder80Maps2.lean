@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.Fintype.Card
@@ -6,8 +11,6 @@ public import Mathlib.Algebra.Group.Action.Defs
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Algebra.BigOperators.Ring.Finset
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 80, pages 20, 24, 28: the bigon-free dichotomy, in combinatorial maps
@@ -19,6 +22,22 @@ Finding `80-bigon-free-five-line-dichotomy`. Page 24 (boxed, announced on page 2
 
 with `II′_{3,2}` the reading's name for the page's `I′_{3,2}` (a pencil of three and a pencil
 of two, without the line joining their centres).
+
+## Main definitions
+
+* `BigonFree`: every line carries at least three vertices.
+* `GMap`, `PseudolineMap`: generalised maps and pseudoline maps (see the implementation notes).
+
+## Main results
+
+* `dichotomy`: **the incidence core.** If a bigon-free incidence structure has a simple
+  crossing, it is `II_4` or contains `II_5`, `II′_{3,2}` or `III_6`.
+* `melchior`: a bigon-free pseudoline map has a simple crossing (Melchior's inequality
+  `Σ (3 − ν(v)) ≥ 3`, from `χ = 1`, `E = Σ ν(v)` and `2E ≥ 3F`; the faces have at least three
+  sides because the skeleton has no loop and no multiple edge, `face_six`);
+* `map_dichotomy`: **the page's boxed statement**, for every bigon-free pseudoline map.
+
+## Implementation notes
 
 **The incidence core** (`dichotomy`). Lines `L`, points `P`, a relation `on`; two distinct lines
 meet in exactly one point (`meet`), every point is on at least two lines (`two`: the points are
@@ -39,19 +58,27 @@ two edge-ends (`pass`), each line is connected (`conn`), every vertex is on two 
 two lines meet at exactly one vertex (`meet`), and `χ = 1` (`euler`). Going straight is not
 used: the axioms are weaker than the page's, so the theorem is stronger.
 
-* `melchior`: a bigon-free pseudoline map has a simple crossing (Melchior's inequality
-  `Σ (3 − ν(v)) ≥ 3`, from `χ = 1`, `E = Σ ν(v)` and `2E ≥ 3F`; the faces have at least three
-  sides because the skeleton has no loop and no multiple edge, `face_six`);
-* `map_dichotomy`: **the page's boxed statement**, for every bigon-free pseudoline map.
+**The proof** is the one of the problems paper (§ Pseudoline arrangements): Melchior gives a
+simple crossing, hence four lines in general position (`exists_gp4`); a further line through
+none or one of their six vertices gives `II_5` or `II′_{3,2}`, otherwise it is a diagonal
+(`diag_of`); two diagonals of different pairs give `III_6` (`iii6_of`), two of the same pair are
+equal (`diag_unique`), and a lone diagonal is bigonal (`not_bigonFree`). The numbering lemma of
+page 28 is proved in `Grothendieck/Combinatorics/Folder80Numbering.lean`.
 
-The proof is the one of the problems paper (§ Pseudoline arrangements): Melchior gives a simple
-crossing, hence four lines in general position (`exists_gp4`); a further line through none or
-one of their six vertices gives `II_5` or `II′_{3,2}`, otherwise it is a diagonal (`diag_of`);
-two diagonals of different pairs give `III_6` (`iii6_of`), two of the same pair are equal
-(`diag_unique`), and a lone diagonal is bigonal (`not_bigonFree`). The numbering lemma of
-page 28 is proved in `Grothendieck/Combinatorics/Folder80Numbering.lean`. Not formalised: the
-passage from a topological arrangement to its map.
+## Not formalised
+
+The passage from a topological arrangement to its map.
+
+## References
+
+* A. Grothendieck, folder 80, pp. 20, 24, 28, 60 (finding
+  `80-bigon-free-five-line-dichotomy`)
+* the problems paper, § Pseudoline arrangements
+* Melchior's inequality
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Maps2
 
@@ -460,6 +487,7 @@ theorem confine {l : L} (Z : X.M.Vtx → Prop)
 
 variable [Fintype D]
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 /-- The four flags of a line at a vertex. -/
 theorem at_four {d x1 x2 x3 x4 : D} (hn : [x1, x2, x3, x4].Nodup)
@@ -473,6 +501,7 @@ theorem at_four {d x1 x2 x3 x4 : D} (hn : [x1, x2, x3, x4].Nodup)
   have := Finset.eq_of_subset_of_card_le hsub (by rw [h4, List.toFinset_card_of_nodup hn]; rfl)
   rw [← List.mem_toFinset, this]; simp [hf, hl]
 
+set_option linter.unusedFintypeInType false in
 /-- No loop: the two ends of an edge are distinct vertices. -/
 theorem noLoop (hbf : BigonFree X.On) (d : D) : X.M.vtx (X.M.a0 d) ≠ X.M.vtx d := by
   intro h
@@ -485,6 +514,7 @@ theorem noLoop (hbf : BigonFree X.On) (d : D) : X.M.vtx (X.M.a0 d) ≠ X.M.vtx d
   simp only [List.mem_cons, List.not_mem_nil, or_false] at this
   rcases this with rfl | rfl | rfl | rfl <;> simp [h, X.M.a0_a0, X.M.a0_a2]
 
+set_option linter.unusedFintypeInType false in
 /-- No multiple edge: two edges with the same ends are equal. -/
 theorem noMulti (hbf : BigonFree X.On) {x y : D} (hv : X.M.vtx x = X.M.vtx y)
     (hw : X.M.vtx (X.M.a0 x) = X.M.vtx (X.M.a0 y)) : X.M.edge x = X.M.edge y := by
@@ -536,6 +566,7 @@ theorem a1_ne_a2 (d : D) : X.M.a1 d ≠ X.M.a2 d := by
     · simp only [a1_eq_iff, ← h, X.M.a1_a1]; tauto
     · simp only [a2_eq_iff, X.M.a2_a2]; tauto
 
+set_option linter.unusedFintypeInType false in
 theorem edge_a1_ne (hbf : BigonFree X.On) (d : D) : X.M.edge (X.M.a1 d) ≠ X.M.edge d := by
   intro h
   rcases edge_eq.1 h with h | h | h | h
@@ -571,6 +602,7 @@ theorem face_six (hbf : BigonFree X.On) (d : D) :
       rcases hx with rfl | rfl | rfl | rfl | rfl | rfl | h <;> simp_all
   exact (List.toFinset_card_of_nodup hn).symm.trans_le (Finset.card_le_card hsub)
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 /-- **Melchior's inequality** gives a simple crossing: from `χ = 1`, `4E = 4 Σ ν(v)` and
 `6F ≤ 4E`, `Σ (3 − ν(v)) ≥ 3`, so some vertex is on exactly two lines. -/
@@ -626,6 +658,7 @@ theorem melchior (hbf : BigonFree X.On) :
     fun c hc => ?_⟩
   simpa [hab'] using (hν _ _).1 hc
 
+set_option linter.unusedFintypeInType false in
 /-- **The page's boxed statement** (pages 20, 24): every bigon-free combinatorial arrangement of
 pseudolines in the real projective plane is `II_4` or contains `II_5`, `II′_{3,2}` or
 `III_6`. -/

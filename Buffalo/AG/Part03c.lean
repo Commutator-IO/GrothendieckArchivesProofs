@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part03b
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 03 (c): 12 June 1973, to 1:36:31
@@ -12,11 +15,21 @@ The entries of `docs/buffalo-ag/index.tex` lines 442–491 (video `thSz9ZHDK9o`,
 disjoint and universal sums, constant objects, monomorphisms and the spectrum, the structure sheaf
 and quasi-coherent modules, gluing and descent.
 
+## Implementation notes
+
 Conventions. An affine algebraic space over `K` is a `K`-algebra read in the opposite category; a
 monomorphism `Y → S` of affine spaces is an epimorphism of rings `A → C`, stated as: two ring maps
 out of `C` that agree on `A` are equal. Statements about fibre products of spectra are made either
 at the level of rings or for mathlib's schemes.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 12 June 1973, video `thSz9ZHDK9o`,
+  0:01:06–1:36:31 (`docs/buffalo-ag/index.tex`, lines 442–491)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TensorProduct Topology PrimeSpectrum
 
@@ -136,18 +149,22 @@ theorem prop_1239 {C : Type*} [Category C] [Limits.HasPullbacks C] [FinitaryPreE
         (Limits.Sigma.ι (fun _ : J => T) p.2) (𝟙 T) (by simp) (by simp)) :=
   prop_918 _ _
 
-theorem prop_1239_disjoint (K : Type*) [Field K] {I : Type*} [DecidableEq I] {i j : I}
+theorem prop_1239_disjoint (K : Type*) [Field K] {I : Type*} {i j : I}
     (hij : i ≠ j) :
-    @Subsingleton (@TensorProduct (I → K) _ K K _ _ (Pi.evalRingHom (fun _ => K) i).toAlgebra.toModule
+    @Subsingleton (@TensorProduct (I → K) _ K K _ _
+      (Pi.evalRingHom (fun _ => K) i).toAlgebra.toModule
       (Pi.evalRingHom (fun _ => K) j).toAlgebra.toModule) := by
+  classical
   exact subsingleton_tensor_of_ringHom _ _ (Pi.single i 1) (by simp) (by simp [hij.symm])
 
 /-- thSz9ZHDK9o-1369 (0:22:49) [prop] For `I` a finite group, `I_K` is an affine algebraic group.
 Proved: its points with values in a field `L` are the elements of `I` (every `K`-algebra map
 `K^I → L` is an evaluation); the Hopf algebra structure is `comul` (`prop_1568`). -/
 @[buffalo "thSz9ZHDK9o-1369"]
-theorem prop_1369 (K L : Type*) [Field K] [Field L] [Algebra K L] {I : Type*} [Fintype I]
-    [DecidableEq I] (φ : (I → K) →ₐ[K] L) : ∃! i : I, ∀ x : I → K, φ x = algebraMap K L (x i) := by
+theorem prop_1369 (K L : Type*) [Field K] [Field L] [Algebra K L] {I : Type*} [Finite I]
+    (φ : (I → K) →ₐ[K] L) : ∃! i : I, ∀ x : I → K, φ x = algebraMap K L (x i) := by
+  classical
+  have := Fintype.ofFinite I
   set e : I → (I → K) := fun i => Pi.single i 1 with he
   have hsmul : ∀ (x : I → K) j, Pi.single j (x j) = x j • e j := fun x j => by
     ext k; by_cases h : k = j <;> simp [he, h]
@@ -292,7 +309,8 @@ immersions are stable under base change and are embeddings, with image the preim
 @[buffalo "thSz9ZHDK9o-2288"]
 theorem prop_2288 {X Y S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S) (g : Y ⟶ S)
     [AlgebraicGeometry.IsImmersion g] :
-    IsEmbedding (Limits.pullback.fst f g) ∧ Set.range (Limits.pullback.fst f g) = f ⁻¹' Set.range g :=
+    IsEmbedding (Limits.pullback.fst f g) ∧
+      Set.range (Limits.pullback.fst f g) = f ⁻¹' Set.range g :=
   ⟨AlgebraicGeometry.Scheme.Hom.isEmbedding _, AlgebraicGeometry.Scheme.Pullback.range_fst f g⟩
 
 /-- thSz9ZHDK9o-2416 (0:40:16) [prop] For two subobjects `X`, `Y` of `S`,
@@ -317,8 +335,8 @@ theorem prop_2810 {A B : Type*} [CommRing A] [CommRing B] (u : A →+* B) (J : I
     closure (comap u '' zeroLocus (J : Set B)) = zeroLocus (J.comap u : Set A) :=
   closure_image_comap_zeroLocus u J
 
-/-- thSz9ZHDK9o-3134 (0:52:14) [prop] `Spec u` is dominant iff `ker u ⊂ nil(A)`; for `A` reduced, iff
-`u` is injective (mathlib: `PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical`). -/
+/-- thSz9ZHDK9o-3134 (0:52:14) [prop] `Spec u` is dominant iff `ker u ⊂ nil(A)`; for `A` reduced,
+iff `u` is injective (mathlib: `PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical`). -/
 @[buffalo "thSz9ZHDK9o-3134"]
 theorem prop_3134 {A B : Type*} [CommRing A] [CommRing B] (u : A →+* B) :
     (DenseRange (comap u) ↔ RingHom.ker u ≤ nilradical A) ∧
@@ -370,7 +388,8 @@ sheaves of modules is not formalised. -/
 theorem prop_3792 {A : Type*} [CommRing A] (M N : Type*) [AddCommGroup M] [Module A M]
     [AddCommGroup N] [Module A N] [Module.FinitePresentation A M] (f : A) :
     IsLocalizedModule (Submonoid.powers f)
-      (IsLocalizedModule.map (Submonoid.powers f) (LocalizedModule.mkLinearMap (Submonoid.powers f) M)
+      (IsLocalizedModule.map (Submonoid.powers f)
+        (LocalizedModule.mkLinearMap (Submonoid.powers f) M)
         (LocalizedModule.mkLinearMap (Submonoid.powers f) N)) ∧
     (IsNoetherianRing A → (Module.Finite A N ↔ Module.FinitePresentation A N)) :=
   ⟨Module.FinitePresentation.isLocalizedModule_map _ _ _,
@@ -442,7 +461,7 @@ def prop_5165 (f g : A) :
 /-- thSz9ZHDK9o-5297 (1:28:17) [prop] If `X = ⋃ X_{f_i}` (finite), `A → ∏ A_{f_i}` is faithfully
 flat (`prop_37263`). -/
 @[buffalo "thSz9ZHDK9o-5297"]
-theorem prop_5297 {ι : Type*} [Fintype ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
+theorem prop_5297 {ι : Type*} [Finite ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
     Module.FaithfullyFlat A (Π i, Localization.Away (f i)) :=
   prop_37263 f hf
 
@@ -485,7 +504,8 @@ def prop_5680 {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S) (hf : f.F
 quasi-coherent `𝒪_X`-modules (mathlib: `AlgebraicGeometry.tildeEquiv`). -/
 @[buffalo "thSz9ZHDK9o-5791"]
 def thm_5791 (R : CommRingCat.{u}) :
-    ModuleCat R ≌ (SheafOfModules.isQuasicoherent (AlgebraicGeometry.Spec R).ringCatSheaf).FullSubcategory :=
+    ModuleCat R ≌
+      (SheafOfModules.isQuasicoherent (AlgebraicGeometry.Spec R).ringCatSheaf).FullSubcategory :=
   AlgebraicGeometry.tildeEquiv
 
 end Descent

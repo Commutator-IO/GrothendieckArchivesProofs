@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part03b
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3c: sober spaces, ordered categories, very dense subsets (4 June 1973)
@@ -11,9 +14,17 @@ import Grothendieck.Attr
 Entries of `docs/buffalo-topos/index.tex` lines 390–535 on sober spaces and generic points, the
 Zariski-type topologies, tensor products of sheaves of modules, algebras of finite presentation,
 points of presheaf topoi, the topoi of ordered categories, very dense subsets, the equivariant
-topoi `Top(X, G)`, and localization (video `PqCQM3Pcl6Q`, 0:39:21 and 1:55:37–3:22:52). The status of
-each entry is in `docs/buffalo-topos/lean/Part03.json`.
+topoi `Top(X, G)`, and localization (video `PqCQM3Pcl6Q`, 0:39:21 and 1:55:37–3:22:52). The
+status of each entry is in `docs/buffalo-topos/lean/Part03.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 0:39:21 and
+  1:55:37–3:22:52 (4 June 1973)
 -/
+
+@[expose] public section
+
 
 universe w u
 
@@ -186,7 +197,8 @@ theorem maxSpec_not_quasiSober : ¬ QuasiSober (MaximalSpectrum K[X]) := fun h =
 end MaxSpec
 
 /-- Sheaves for equal topologies. -/
-def sheafEquivOfEq {C : Type*} [Category C] {A : Type*} [Category A] {J₁ J₂ : GrothendieckTopology C}
+def sheafEquivOfEq {C : Type*} [Category C] {A : Type*} [Category A]
+    {J₁ J₂ : GrothendieckTopology C}
     (h : J₁ = J₂) : Sheaf J₁ A ≌ Sheaf J₂ A := by subst h; exact CategoryTheory.Equivalence.refl
 
 variable {X : Type u} [TopologicalSpace X]
@@ -212,7 +224,8 @@ def sheafEquivPresheafOfMinimalBasis {C : Type u} [SmallCategory C] (G : C ⥤ O
     have : G.preimage (homOfLE hcd) ≫ g = 𝟙 c := G.map_injective (Subsingleton.elim _ _)
     rw [← this]
     exact S.downward_closed hg _
-  exact (G.sheafInducedTopologyEquivOfIsCoverDense (Opens.grothendieckTopology X) (Type u)).symm.trans
+  exact (G.sheafInducedTopologyEquivOfIsCoverDense (Opens.grothendieckTopology X)
+      (Type u)).symm.trans
     ((sheafEquivOfEq hbot).trans (sheafBotEquivalence _))
 
 
@@ -306,7 +319,8 @@ theorem isVeryDense_iff (E : Set X) :
 /-- PqCQM3Pcl6Q-10259 ... and equivalently the fibre functors at the points of `E` form a
 conservative family. -/
 theorem isVeryDense_iff_conservative (E : Set X) : IsVeryDense E ↔
-    (ObjectProperty.ofObj (fun e : E => Opens.pointGrothendieckTopology e.1)).IsConservativeFamilyOfPoints := by
+    (ObjectProperty.ofObj
+      (fun e : E => Opens.pointGrothendieckTopology e.1)).IsConservativeFamilyOfPoints := by
   rw [isVeryDense_iff]
   constructor
   · intro h
@@ -453,7 +467,8 @@ def tensor_free (R : Type u) [CommRing R] (M : Type u) [AddCommGroup M] [Module 
 `ℤ` in a number field (its ring of integers) is a finite `ℤ`-module, hence of finite type. -/
 @[buffalo "PqCQM3Pcl6Q-8242"]
 theorem ringOfIntegers_finite (K : Type*) [Field K] [NumberField K] :
-    Module.Finite ℤ (NumberField.RingOfIntegers K) ∧ Algebra.FiniteType ℤ (NumberField.RingOfIntegers K) :=
+    Module.Finite ℤ (NumberField.RingOfIntegers K) ∧
+      Algebra.FiniteType ℤ (NumberField.RingOfIntegers K) :=
   ⟨inferInstance, inferInstance⟩
 
 /-- PqCQM3Pcl6Q-8368 (2:19:28) [prop], the first step: finitely many elements of `K` (the

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2b: infinite products, connectedness, torsors, stacks (18 May 1973)
@@ -11,7 +14,15 @@ import Grothendieck.Attr
 Entries of `docs/buffalo-topos/index.tex` from « Stalks and infinite products » to « Gluing and
 quotient topoi » (video `URU5jgTvjhU`, 6:51:54–7:52:11). The status of each entry is in
 `docs/buffalo-topos/lean/Part02.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 6:51:54–7:52:11
+  (18 May 1973)
 -/
+
+@[expose] public section
+
 
 universe u
 
@@ -172,7 +183,7 @@ theorem product_of_epis_not_epi :
       simpa [Metric.mem_ball, Real.norm_eq_abs] using this
     · have hx0 : x ≠ 0 := by
         rintro rfl
-        exact hx1 (by simp; positivity)
+        exact hx1 (by simp only [abs_zero, one_div, inv_pos]; positivity)
       refine ⟨U ⊓ ⟨{0}ᶜ, isOpen_compl_singleton⟩, homOfLE inf_le_left, ⟨hx, hx0⟩,
         ⟨fun _ => false, continuous_const, fun y => ⟨fun h => by simp at h, fun _ => y.2.2⟩⟩, rfl⟩
   · have hπ : Epi (Pi.π (fun _ : ℕ => unitSheaf) 0) :=
@@ -371,7 +382,8 @@ def subterminalEquivOpens :
       exact Subsingleton.elim (α := U ⟶ ⊤) _ _
     · intro ha
       exact le_sSup ⟨a, ha⟩
-  right_inv W := le_antisymm (sSup_le fun _ hV => by obtain ⟨_, h⟩ := hV; exact h) (le_sSup (show W ∈ _ from ⟨homOfLE le_top, (le_rfl : W ≤ W)⟩))
+  right_inv W := le_antisymm (sSup_le fun _ hV => by obtain ⟨_, h⟩ := hV; exact h)
+    (le_sSup (show W ∈ _ from ⟨homOfLE le_top, (le_rfl : W ≤ W)⟩))
 
 /-- URU5jgTvjhU-25977 (7:12:57) [prop] `X` is connected iff `e` is not the sum of two disjoint
 non-initial subobjects, i.e. `X` is not the union of two disjoint nonempty open sets. -/
@@ -386,7 +398,8 @@ theorem preconnected_iff_opens (Z : Type*) [TopologicalSpace Z] :
       ext x
       have h1 := congrArg (fun W : Opens Z => x ∈ W) hUV
       have h2 := congrArg (fun W : Opens Z => x ∈ W) hdisj
-      simp at h1 h2
+      simp only [Opens.mem_sup, Opens.mem_top, eq_iff_iff, iff_true, Opens.mem_inf, Opens.mem_bot,
+          iff_false, not_and] at h1 h2
       constructor
       · exact fun hx hV => h2 hx hV
       · intro hV
@@ -496,7 +509,8 @@ abbrev sheafHConst (M : AddCommGrpCat.{u}) (n : ℕ) : Type _ :=
 maps `X → ℤ`) is surjective. -/
 @[buffalo "URU5jgTvjhU-26392"]
 theorem preconnected_iff_const_surjective (Z : Type*) [TopologicalSpace Z] :
-    PreconnectedSpace Z ↔ Function.Surjective (LocallyConstant.const Z : ℤ → LocallyConstant Z ℤ) := by
+    PreconnectedSpace Z ↔
+      Function.Surjective (LocallyConstant.const Z : ℤ → LocallyConstant Z ℤ) := by
   classical
   constructor
   · intro _ f

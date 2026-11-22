@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 100, pages 36–38: points of dimension one avoiding countably many divisors
@@ -15,6 +18,8 @@ discrete valuation ring, parametrises the `V`-homomorphisms `Θ → V` by `𝔪�
 Baire. This file proves the case `n = 1`, `Θ = V⟦T⟧` of dimension `2`, which is the reachable
 part of finding `100-baire-dimension-one-points` of `src/content/findings.ts`.
 
+## Main results
+
 * `quotEquiv`: for `a ∈ 𝔪`, `V⟦T⟧ ⧸ (T − a) ≃ V` (`T − a` is a distinguished polynomial, so the
   quotient is `V[T] ⧸ (T − a)`); the kernel `(T − a)` of `T ↦ a` is a point of dimension one.
 * `exists_poly_mul_unit`: a nonzero `f ∈ V⟦T⟧` is `Q · u` with `Q` a nonzero polynomial and `u`
@@ -24,17 +29,31 @@ part of finding `100-baire-dimension-one-points` of `src/content/findings.ts`.
 * `uncountable`: a complete discrete valuation ring is uncountable (the series
   `∑ εᵢ ϖⁱ`, `εᵢ ∈ {0, 1}`, are pairwise distinct).
 * `exists_avoid`: for countably many nonzero `fᵢ ∈ V⟦T⟧` there is `a ∈ 𝔪` with `fᵢ ∉ (T − a)`
-  for every `i`. Countability of the bad set replaces Baire: each `fᵢ` excludes finitely many
-  `a`, and `𝔪 = ϖV` is uncountable.
+  for every `i`.
 
-Not formalised here: the case of several variables, where the bad set of one `f` is no longer
+## Implementation notes
+
+In `exists_avoid`, countability of the bad set replaces Baire: each `fᵢ` excludes finitely many
+`a`, and `𝔪 = ϖV` is uncountable.
+
+## Not formalised
+
+The case of several variables, where the bad set of one `f` is no longer
 finite and Baire is needed, is `Grothendieck/RingTheory/Folder100Baire.lean` (the parametrisation of
 the `V`-homomorphisms `V⟦T₁, …, Tₙ⟧ → V` by `𝔪ⁿ`, zero sets closed with empty interior, Baire,
 `Folder100Baire.exists_avoid`, and the lifting of points along a finite extension of
 `V⟦T₁, …, Tₙ⟧`); the reduction of a complete local domain to such an extension (Cohen) is in
 `Grothendieck/RingTheory/Folder100Cohen.lean`; the Proposition of page 36 is proved below by another
 route.
+
+## References
+
+* A. Grothendieck, cote 100, pp. 36–38, « Un argument de Baire » (finding
+  `100-baire-dimension-one-points`); modernised reading `transcripts/100/100.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder100
 
@@ -317,7 +336,7 @@ theorem exists_mem_maximalIdeal_forall_notMem (f : ℕ → Ideal R) (hf : ∀ j,
   refine ⟨L, ?_, fun j hj => ?_⟩
   · simpa [a, N, s, seq] using hLk 0
   · apply (s (j + 1)).2 j (Nat.lt_succ_self j)
-    show a (j + 1) ∈ f j ⊔ maximalIdeal R ^ N (j + 1)
+    change a (j + 1) ∈ f j ⊔ maximalIdeal R ^ N (j + 1)
     rw [← sub_sub_cancel L (a (j + 1))]
     exact sub_mem (Ideal.mem_sup_left hj) (Ideal.mem_sup_right (hLk _))
 
@@ -430,7 +449,8 @@ theorem exists_coheight_le_one (I : ℕ → Ideal R) (n : ℕ) :
 
 omit [IsAdicComplete (maximalIdeal R) R] in
 lemma coheight_lt_top (x : PrimeSpectrum R) : Order.coheight x < ⊤ := by
-  exact WithBot.coe_lt_coe.1 (((Order.coheight_le_krullDim x).trans_lt ringKrullDim_lt_top).trans_le (by simp))
+  exact WithBot.coe_lt_coe.1 (((Order.coheight_le_krullDim x).trans_lt ringKrullDim_lt_top).trans_le
+    (by simp))
 
 /-- **Proposition of page 36**, in the form corrected by the edition. In the spectrum of a
 complete noetherian local ring, countably many closed subsets whose union contains every point
@@ -541,7 +561,8 @@ theorem topologicalKrullDim_closure_singleton {A : Type*} [CommRing A] (x : Prim
   have hs := Ideal.Quotient.mk_surjective (I := x.asIdeal)
   let e : PrimeSpectrum (A ⧸ x.asIdeal) ≃ₜ closure ({x} : Set (PrimeSpectrum A)) :=
     (isClosedEmbedding_comap_of_surjective _ _ hs).isEmbedding.toHomeomorph.trans
-      (Homeomorph.setCongr (by rw [range_comap_of_surjective _ _ hs, Ideal.mk_ker, PrimeSpectrum.closure_singleton]))
+      (Homeomorph.setCongr (by rw [range_comap_of_surjective _ _ hs, Ideal.mk_ker,
+        PrimeSpectrum.closure_singleton]))
   rw [← IsHomeomorph.topologicalKrullDim_eq _ e.isHomeomorph,
     topologicalKrullDim_eq_ringKrullDim, ringKrullDim_quotient, Order.coheight_eq_krullDim_Ici]
   rfl

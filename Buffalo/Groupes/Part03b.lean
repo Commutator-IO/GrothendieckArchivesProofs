@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03 (b): regularity, smoothness, normality
@@ -12,13 +15,27 @@ Entries `3ULFIl_2Wis-9030` to `3ULFIl_2Wis-13937` of `docs/buffalo-groupes/index
 2 July 1973 and the session of 10 July 1973). Statuses in
 `docs/buffalo-groupes/lean/Part03.json`.
 
+## Implementation notes
+
 Conventions. A scheme is regular when all its local rings are regular local rings (Mathlib's
 `IsRegularLocalRing`), normal when they are integrally closed domains; "geometrically `P`" is
 Mathlib's `AlgebraicGeometry.geometrically P` (every base change to a field has `P`). Mathlib's
 `Smooth` is the smoothness of the structure morphism (formally smooth and locally of finite
-presentation); its equivalence with "locally of finite type and geometrically regular" is not in
+presentation).
+
+## Not formalised
+
+The equivalence of `Smooth` with "locally of finite type and geometrically regular" is not in
 Mathlib, so the statements below are made with whichever notion Mathlib carries.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `3ULFIl_2Wis`, entries 9030–13937 (end
+  of 2 July 1973 and the session of 10 July 1973)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part03
 

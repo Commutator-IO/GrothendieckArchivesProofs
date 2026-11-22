@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder126EtaleSplitting
@@ -5,8 +10,6 @@ public import StacksFrontier.AlgebraicGeometry.Morphisms.SigmaMap
 public import StacksFrontier.AlgebraicGeometry.UniversalHomeomorphismLocal.Basic
 public import StacksFrontier.AlgebraicGeometry.Limits.DescendingMorphisms.Finite
 import Grothendieck.Attr
-
-@[expose] public noncomputable section
 
 /-!
 # Folder 126, pages 17–22: the factorisation over an étale covering
@@ -20,6 +23,8 @@ coproducts of schemes.
 
 This is the covering along which `X^ét` is descended.
 -/
+
+@[expose] public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Grothendieck.Folder126GeometricPoints Grothendieck.Folder126EtaleSplitting

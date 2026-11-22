@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part08b
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08 (c): 9 July 1973 (tape 3) and 10 July 1973 (to 4:14:24)
@@ -13,10 +16,21 @@ The entries of `docs/buffalo-ag/index.tex` lines 1110–1124 and 1142–1190 (vi
 subsets and open sets, monomorphisms that are not immersions, constructible sets and Chevalley's
 theorem, descent of integrality and finiteness.
 
+## Implementation notes
+
 Statements about the closure of the image of a quasi-compact morphism are proved for
 `Spec B → Spec A` (a quasi-compact morphism of affine schemes) and, abstractly, for any continuous
 map satisfying the conclusion of `prop_12865` (`SpecClosure`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 9 and 10 July 1973, video `vuys5SNs2eQ`,
+  1:06:53–1:14:24 and 2:49:55–4:14:24 (`docs/buffalo-ag/index.tex`, lines 1110–1124 and
+  1142–1190)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TensorProduct Topology PrimeSpectrum AlgebraicGeometry
 
@@ -200,7 +214,8 @@ theorem cex_10967 (k : Type u) [Field k] :
     let m : PrimeSpectrum (Polynomial k) :=
       ⟨Ideal.span {Polynomial.X},
         (Ideal.span_singleton_prime Polynomial.X_ne_zero).2 Polynomial.prime_X⟩
-    let ι : ({x | x ≠ m} : Set (PrimeSpectrum (Polynomial k))) ⊕ Unit → PrimeSpectrum (Polynomial k) :=
+    let ι : ({x | x ≠ m} : Set (PrimeSpectrum (Polynomial k))) ⊕ Unit →
+        PrimeSpectrum (Polynomial k) :=
       Sum.elim Subtype.val (fun _ => m)
     Continuous ι ∧ Function.Bijective ι ∧ ¬ IsEmbedding ι := by
   intro m ι

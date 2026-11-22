@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part01a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (c): `μ_n`, `SL_n`, `PGL_n`, `α_{p^i}` and Frobenius
@@ -11,9 +14,19 @@ import Grothendieck.Attr
 Entries `_lTf_L0yvrU-6199` to `_lTf_L0yvrU-8015` of `docs/buffalo-groupes/index.tex` (6 June and
 the beginning of 11 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.json`.
 
+## Implementation notes
+
 Dual numbers `k[ε]` (Mathlib `DualNumber k`) serve as the test algebra on which the infinitesimal
 groups `μ_p`, `α_p` and the Frobenius kernels have non-trivial points.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 6199–8015 (6 June
+  and the beginning of 11 June 1973)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part01
 
@@ -94,7 +107,8 @@ def onePlusEps : (DualNumber k)ˣ where
     sub_add_cancel]
 
 theorem onePlusEps_pow (m : ℕ) :
-    ((onePlusEps k ^ m : (DualNumber k)ˣ) : DualNumber k) = 1 + (m : DualNumber k) * DualNumber.eps := by
+    ((onePlusEps k ^ m : (DualNumber k)ˣ) : DualNumber k) =
+      1 + (m : DualNumber k) * DualNumber.eps := by
   induction m with
   | zero => simp
   | succ m ih =>
@@ -204,8 +218,9 @@ noncomputable def center_SL (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [
 
 /-- _lTf_L0yvrU-7164 (1:59:24) [prop] On points over an algebraically closed field,
 `GL_n/(center) = PGL_n ≃ SL_n/μ_n = PSL_n` (Mathlib
-`Matrix.ProjectiveSpecialLinearGroup.isoPSLOfAlgClosed`); the quotients as group schemes are not formalised. -/
 @[buffalo "_lTf_L0yvrU-7164"]
+`Matrix.ProjectiveSpecialLinearGroup.isoPSLOfAlgClosed`); the quotients as group schemes are not
+formalised. -/
 noncomputable def PGL_eq_PSL (n : Type) [Fintype n] [DecidableEq n] (F : Type*) [Field F]
     [IsAlgClosed F] :
     Matrix.ProjGenLinGroup n F ≃* Matrix.ProjectiveSpecialLinearGroup n F :=
@@ -343,7 +358,8 @@ theorem alpha_reduced {A : Type*} [CommRing A] [IsReduced A] (p : ℕ) [ExpChar 
     alpha A p i = ⊥ := by
   ext x
   rw [mem_alpha, AddSubgroup.mem_bot]
-  exact ⟨fun h ↦ IsReduced.eq_zero _ ⟨_, h⟩, fun h ↦ by rw [h]; exact zero_pow (pow_pos (expChar_pos A p) i).ne'⟩
+  exact ⟨fun h ↦ IsReduced.eq_zero _ ⟨_, h⟩,
+      fun h ↦ by rw [h]; exact zero_pow (pow_pos (expChar_pos A p) i).ne'⟩
 
 /-- _lTf_L0yvrU-7545 (2:05:45) [prop] `α_{p^i}` is represented by `k[t]/(t^{p^i})`… -/
 @[buffalo "_lTf_L0yvrU-7545"]
@@ -353,7 +369,8 @@ noncomputable def alpha_repr (m : ℕ) (A : Type u) [CommRing A] [Algebra k A] :
 
 /-- _lTf_L0yvrU-7545 (2:05:45) [prop] … free of rank `p^i`… -/
 @[buffalo "_lTf_L0yvrU-7545"]
-theorem alpha_rank [Nontrivial k] (m : ℕ) : (AdjoinRoot.powerBasis' (monic_X_pow (R := k) m)).dim = m := by
+theorem alpha_rank [Nontrivial k] (m : ℕ) :
+    (AdjoinRoot.powerBasis' (monic_X_pow (R := k) m)).dim = m := by
   simp only [AdjoinRoot.powerBasis']
   exact natDegree_X_pow m
 
@@ -474,9 +491,10 @@ theorem frobKer_reduced (n : Type) [Fintype n] [DecidableEq n] {A : Type*} [Comm
   · exact IsReduced.eq_zero _ ⟨_, this⟩
 
 /-- The entries of `1 + x E_{ij}` satisfy `λ_{ab}^p = δ_{ab}` when `x^p = 0`. -/
-theorem transvection_frobKer {B : Type*} [CommRing B] {n : Type} [Fintype n] [DecidableEq n]
+theorem transvection_frobKer {B : Type*} [CommRing B] {n : Type} [Finite n] [DecidableEq n]
     (p : ℕ) (hp0 : p ≠ 0) {i j : n} (hij : i ≠ j) (x : B) (hx : x ^ p = 0) (a b : n) :
     Matrix.transvection i j x a b ^ p = if a = b then 1 else 0 := by
+  have := Fintype.ofFinite n
   by_cases hab : a = b
   · subst hab
     have hn : ¬ (i = a ∧ j = a) := fun h ↦ hij (h.1.trans h.2.symm)
@@ -531,15 +549,17 @@ theorem frobKer_noncomm [Nontrivial k] {n : Type} [Fintype n] [DecidableEq n] (p
 /-- _lTf_L0yvrU-8015 (2:13:35) [prop] `F_G : GL_n → GL_n` is not an isomorphism (`n ≥ 2`): its
 kernel has the non-trivial point `1 + ε E_{ij}` over `k[ε]`. -/
 @[buffalo "_lTf_L0yvrU-8015"]
-theorem frobGL_kernel_nontrivial [Nontrivial k] {n : Type} [Fintype n] [DecidableEq n] (p : ℕ)
+theorem frobGL_kernel_nontrivial [Nontrivial k] {n : Type} [Finite n] [DecidableEq n] (p : ℕ)
     (hp : 2 ≤ p) {i j : n} (hij : i ≠ j) :
     (∀ a b, Matrix.transvection i j (DualNumber.eps : DualNumber k) a b ^ p =
       if a = b then 1 else 0) ∧ Matrix.transvection i j (DualNumber.eps : DualNumber k) ≠ 1 := by
+  have := Fintype.ofFinite n
   have hx : (DualNumber.eps : DualNumber k) ^ p = 0 := (alpha_nontrivial k p hp).1
   have hp0 : p ≠ 0 := by omega
   refine ⟨transvection_frobKer _ hp0 hij _ hx, fun h ↦ ?_⟩
   · have := congrFun (congrFun h i) j
-    simp [Matrix.transvection, hij] at this
+    simp only [Matrix.transvection, Matrix.add_apply, ne_eq, hij, not_false_eq_true,
+        Matrix.one_apply_ne, Matrix.single_apply_same, zero_add] at this
     exact (alpha_nontrivial k p hp).2 this
 
 end Buffalo.Groupes.Part01

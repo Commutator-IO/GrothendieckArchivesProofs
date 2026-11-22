@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.RingTheory.Folder22CohenAlgebras
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 22, pages 15 to 17: uniqueness of formally smooth lifts (3.10, 3.12)
@@ -65,6 +68,8 @@ FormalSmoothness.lean`, which that module does not export.
 * As in `Folder22CohenAlgebras`, Cohen algebras and condition P (Déf. 3.7, Lemme 3.2,
   Théorème 3.6, Cor. 3.8, 3.11).
 -/
+
+@[expose] public section
 
 open IsLocalRing
 open scoped TensorProduct

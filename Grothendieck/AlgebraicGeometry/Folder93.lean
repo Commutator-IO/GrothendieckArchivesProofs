@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Polynomial.HasseDeriv
@@ -29,8 +34,6 @@ public import Mathlib.RingTheory.Algebraic.Defs
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 93, pages 72, 115–123: the Schwarzian difference with divided derivatives
 
@@ -44,8 +47,10 @@ import Grothendieck.Attr
 > at Frobenius level `p` for `p > 3` but only at level `p²` for `p = 2, 3`.
 
 This file proves the algebraic core, in the local model `R[X]` over an arbitrary
-commutative ring `R` (`X` playing the uniformisant `t`, `D k = Polynomial.hasseDeriv k`
-the divided derivative `D⁽ᵏ⁾ = (1/k!) dᵏ/dtᵏ`, defined without dividing by `k!`):
+commutative ring `R`. Proving these statements says only that they hold as stated; the
+literature question of the finding stays open.
+
+## Main results
 
 * `N f = (D⁽²⁾f)² − D⁽³⁾f · D⁽¹⁾f` and `G0 f = N f / (D⁽¹⁾f)²` (with `Ring.inverse`),
   over any `R`, characteristics 2 and 3 included.
@@ -87,12 +92,26 @@ the divided derivative `D⁽ᵏ⁾ = (1/k!) dᵏ/dtᵏ`, defined without dividin
   page 121 fails: in `𝔽₅[T]/(T^5)`, `s = 2t` has `G₀ = 0` but is no homography of
   determinant `1`. The determinant `s₁` is a unit, not a square in general.
 
+## Implementation notes
+
+In the local model `R[X]`, `X` plays the uniformisant `t`, and `D k = Polynomial.hasseDeriv k`
+is the divided derivative `D⁽ᵏ⁾ = (1/k!) dᵏ/dtᵏ`, defined without dividing by `k!`.
+
+## Not formalised
+
 Not proved: the reduction from `T^(p^N) − α` to `T^(p^N)` for `α ≠ 0` (it is where
 `Pic(A) = 0` would enter), the torsor `Conn₀`, uniqueness of `G₀` up to sign over `ℤ`
 (page 72), and the passage from the local model to a smooth curve.
-Proving these statements says only that they hold as stated; the literature question
-of the finding stays open.
+
+## References
+
+* A. Grothendieck, Folder 93, pages 72 and 115–123 (modernised reading
+  `transcripts/93/93.modern.tex`, stations III and IX; finding
+  `93-integral-schwarzian-level-p2`)
 -/
+
+@[expose] public section
+
 
 open Polynomial
 open scoped Ring
@@ -650,7 +669,8 @@ theorem det_one_square (u : R) {a b c d : R} (hdet : a * d - b * c = 1)
   have h1 := X_pow_dvd_iff.1 h 1 (by norm_num)
   rw [coeff_sub, coeff_mul_lin_zero] at h0
   rw [coeff_sub, coeff_mul_lin_succ] at h1
-  simp [coeff_C, coeff_X] at h0 h1
+  simp only [mul_coeff_zero, coeff_C, ↓reduceIte, coeff_X, one_ne_zero, mul_zero, coeff_add,
+      zero_add, zero_sub, neg_eq_zero, coeff_mul_X, add_zero] at h0 h1
   refine ⟨u * d, ?_⟩
   linear_combination (-u) * hdet - u * d * h1 - u * c * h0
 
@@ -1744,7 +1764,8 @@ lemma of_injective : Function.Injective (AdjoinRoot.of (P p n α)) := by
   exact C_eq_zero.1 <| eq_zero_of_P_dvd p n α ha fun m hm => by
     rw [coeff_C, ite_eq_right_iff.2 fun h => absurd h (by have := q_pos p n; omega)]
 
-instance charP_B [Fact p.Prime] [CharP A p] : CharP (B p n α) p := charP_of_injective_ringHom (of_injective p n α) p
+instance charP_B [Fact p.Prime] [CharP A p] : CharP (B p n α) p :=
+  charP_of_injective_ringHom (of_injective p n α) p
 
 /-- The Taylor map `f ↦ f(β + Y)`, `β` the class of `T` in `B`. -/
 noncomputable def θ : A[X] →ₐ[A] (B p n α)[X] := aeval (X + C (AdjoinRoot.root (P p n α)))
@@ -1815,7 +1836,8 @@ theorem descent [Fact p.Prime] [CharP A p] (x : A[X])
   have hk : ∀ k, 0 < k → k < p ^ n → r.coeff k = 0 := by
     intro k hk0 hkq
     have h1 := X_pow_dvd_iff.1 h' k hkq
-    rw [coeff_sub, coeff_C, ite_eq_right_iff.2 fun h => absurd h (by omega), sub_zero, θ_coeff, AdjoinRoot.mk_eq_zero] at h1
+    rw [coeff_sub, coeff_C, ite_eq_right_iff.2 fun h => absurd h (by omega), sub_zero, θ_coeff,
+      AdjoinRoot.mk_eq_zero] at h1
     have h2 := eq_zero_of_P_dvd p n α h1 fun m hm => by
       rw [hasseDeriv_coeff, hr _ (by omega), mul_zero]
     simpa [hasseDeriv_coeff] using congrArg (coeff · 0) h2

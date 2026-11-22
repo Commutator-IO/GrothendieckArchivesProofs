@@ -1,23 +1,38 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
-# Buffalo, topos theory, part 5a: adding arrows, combining theories, additive categories (late June 1973)
+# Buffalo, topos theory, part 5a: adding arrows, combining theories, additivity
+
+Late June 1973.
 
 Entries of `docs/buffalo-topos/index.tex` lines 679–712 (video `PqCQM3Pcl6Q`, 9:02:23–10:12:40):
 rule 3 (adding arrows) and rule 4 (combining theories), the limits of the faithfulness criterion
 for generating families, and additive categories as an exactness property. The status of each
 entry is in `docs/buffalo-topos/lean/Part05.json`.
 
+## Implementation notes
+
 Mathlib has no 2-category `Cat_D` of categories with limits of type `D`, no `D`-envelopes and no
 2-representable theories `T_R = Hom_D(R, -)`; the statements below are the faithful special cases
 it carries: `D = ∅` (bare categories, where envelopes are free categories, quotients and
 Gabriel–Zisman localizations), and the exactness facts behind each step.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 9:02:23–10:12:40
+  (late June 1973)
 -/
+
+@[expose] public section
+
 
 universe w v u v' u'
 

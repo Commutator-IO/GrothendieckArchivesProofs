@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01c
@@ -6,14 +11,14 @@ public import StacksFrontier.RingTheory.RegularRing.Defs
 public import StacksFrontier.RingTheory.AdicCompletion.NoetherianRing.PowerSeriesSurjection
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Buffalo, algebraic geometry, parts 05–06: regular rings, Koszul complexes and completions
 
 Entries of `docs/buffalo-ag/index.tex` that `Part05c.lean` and `Part06b.lean` left partial or
 unformalised because Mathlib (at `715a03a`) lacked the material, completed here with files of
 AxiomMath/Stacks vendored under `lean/Stacks/` (Apache-2.0, see `lean/Stacks/NOTICE.md`).
+
+## Main results
 
 * `Oqhr-Gt66es-7990` (Koszul complexes): `prop_7990_koszul`. The Koszul complex `K_•(x)` of a
   finite sequence and its homology are the Stacks definitions (`Koszul.IsKoszulRegularOn x M`
@@ -27,11 +32,24 @@ AxiomMath/Stacks vendored under `lean/Stacks/` (Apache-2.0, see `lean/Stacks/NOT
 * `Oqhr-Gt66es-8250` (a noetherian local ring is regular iff its completion is):
   `prop_8250`. The completion has the same Krull dimension (`ringKrullDim_completion`, the
   statement of tag 07NV) and the same minimal number of generators of the maximal ideal
-  (Mathlib's `AdicCompletion.spanFinrank_maximalIdeal_eq`). The two lemmas are proved here,
-  following the argument of AxiomMath's `StacksFrontier/RingTheory/AdicCompletion/
-  PermanenceOfProperties.lean` (tags 07NV, 07NY), whose own import closure (230 files) is too
-  large to vendor: only the noetherianity of the completion (tag 0316, two files) is imported.
+  (Mathlib's `AdicCompletion.spanFinrank_maximalIdeal_eq`).
+
+## Implementation notes
+
+The two lemmas behind `prop_8250` are proved here, following the argument of AxiomMath's
+`StacksFrontier/RingTheory/AdicCompletion/PermanenceOfProperties.lean` (tags 07NV, 07NY), whose
+own import closure (230 files) is too large to vendor: only the noetherianity of the completion
+(tag 0316, two files) is imported.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), entries `Oqhr-Gt66es-7990`, `8055`, `2525`,
+  `8250` (`docs/buffalo-ag/index.tex`)
+* Stacks Project, tags 062E, 062F, 00OD, 0316, 07NV, 07NY
 -/
+
+@[expose] public section
+
 
 open IsLocalRing
 

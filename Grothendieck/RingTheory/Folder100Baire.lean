@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.RingTheory.Folder100
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 100, pages 36–38: Baire's theorem on `𝔪ⁿ`
@@ -69,6 +72,8 @@ with the product of the `𝔪`-adic topologies, not given an explicit metric. Th
 page 36 is not deduced from the Corollary by this route (it is proved in `Folder100.lean` by
 countable prime avoidance), nor is the application to formal abelian schemes.
 -/
+
+@[expose] public section
 
 namespace Grothendieck.Folder100Baire
 

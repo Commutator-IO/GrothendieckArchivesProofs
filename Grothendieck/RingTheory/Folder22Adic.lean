@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.RingTheory.PowerSeries.Evaluation
@@ -7,8 +12,6 @@ public import StacksFrontier.RingTheory.FormallySmooth.Topological
 public import StacksFrontier.RingTheory.MvPowerSeries.HomExt
 public import Grothendieck.RingTheory.Folder22
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 22, pages 22 and 24: the `t`-adic half of the obstruction
@@ -20,13 +23,8 @@ topology, and not for the discrete one. The discrete half is in
 file proves the `t`-adic half, which was left open there because mathlib has no formal smoothness
 for topological rings.
 
-The notion used is the one of the vendored AxiomMath/Stacks file
-`StacksFrontier/RingTheory/FormallySmooth/Topological.lean`: `RingHom.FormallySmoothNAdic φ n`
-(Stacks tag 07NI, in the elementary form of tag 07EC (2)(b), EGA 0_IV 19.3.1): every square-zero
-lifting problem `R → A`, `S → A/J` in which the map `S → A/J` kills a power of `n` has a solution.
-For `n = (t)` this is formal smoothness of `k → k[[t]]` for the `t`-adic topology.
+## Main results
 
-**What is proved.**
 * `formallySmoothNAdic_C_X`: for every commutative ring `k`, `k → k[[t]]` is formally smooth for
   the `(t)`-adic topology. No hypothesis on `k` is needed: in particular it holds for
   `k = ℚ(x_i : i ∈ I)`, whatever `I`.
@@ -36,6 +34,14 @@ For `n = (t)` this is formal smoothness of `k → k[[t]]` for the `t`-adic topol
   infinite: formally smooth for the `t`-adic topology, not formally smooth for the discrete one
   (the second half quoted from `Grothendieck.Folder22`).
 
+## Implementation notes
+
+The notion used is the one of the vendored AxiomMath/Stacks file
+`StacksFrontier/RingTheory/FormallySmooth/Topological.lean`: `RingHom.FormallySmoothNAdic φ n`
+(Stacks tag 07NI, in the elementary form of tag 07EC (2)(b), EGA 0_IV 19.3.1): every square-zero
+lifting problem `R → A`, `S → A/J` in which the map `S → A/J` kills a power of `n` has a solution.
+For `n = (t)` this is formal smoothness of `k → k[[t]]` for the `t`-adic topology.
+
 The proof: the image `ψ(t)` lifts to a `c ∈ A` with `cᵐ ∈ J`, so `c` is nilpotent; evaluation of
 power series at `c` (mathlib's `PowerSeries.eval₂Hom`, `A` discrete) is a ring map
 `k[[t]] → A` extending `f`, and it lifts `ψ` because two maps out of `k[[t]]` into a ring
@@ -44,7 +50,16 @@ separated for an ideal containing the image of `t` agree once they agree on cons
 The argument is the one-variable case of `formallySmoothNAdic_C_mvPowerSeries` in AxiomMath's
 `StacksFrontier/RingTheory/FormallySmooth/CompleteLocalTransfer.lean`, whose import closure (628
 files) is too large to vendor; it is redone here for `PowerSeries`.
+
+## References
+
+* A. Grothendieck, folder 22, pp. 22 and 24 (finding `22-power-series-discrete-obstruction`)
+* [EGA 0_IV] 19.3.1
+* Stacks Project, tags 07NI, 07EC
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder22Adic
 

@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.CategoryTheory.Folder19
 public import Mathlib.CategoryTheory.Sites.Limits
 public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 19, after théorème 1.12: descent along a surjective morphism of topoi
@@ -15,7 +18,20 @@ a morphism of topoi `u : E → F` whose inverse image `u*` is conservative, `u*`
 to `u_*`, conservative and left exact, hence commutes with all equalizers, and théorème 1.12
 in the margin's form identifies `F` with the category of coalgebras of the comonad `u* u_*` on
 `E`. The section notes that this application was not formalised, Mathlib having no morphisms
-of topoi.
+of topoi. This file proves it.
+
+## Main results
+
+* `conditionC_inverseImage`: for a morphism of topoi whose target has equalizers, the inverse
+  image satisfies condition C of page 4;
+* `MorphismOfTopoi.comparison_isEquivalence` (the remark): if moreover the inverse image is
+  conservative, the comparison functor from the target `F` to the coalgebras of the comonad
+  `u* u_*` on the source `E` is an equivalence;
+* `IsMorphismOfSites.comparison_isEquivalence`: the same for the morphism of topoi
+  `Sh(D) → Sh(C)` of a morphism of sites given by `u : C ⥤ D` with `u_s` conservative:
+  `Sh(C)` is equivalent to the coalgebras of `u_s u^s` on `Sh(D)`.
+
+## Implementation notes
 
 This file states it with the structure `MorphismOfTopoi` of the vendored AxiomMath/Stacks
 library (file `StacksFrontier/CategoryTheory/Sites/Topos/MorphismOfTopoi.lean`: a pushforward,
@@ -27,19 +43,21 @@ morphism of topoi of a morphism of sites, `Functor.IsMorphismOfSites.morphismOfT
 the adjunction `u* ⊣ u_*`: condition C holds because the target has equalizers and the inverse
 image preserves finite limits, equalizers among them.
 
-**What is proved.**
-* `conditionC_inverseImage`: for a morphism of topoi whose target has equalizers, the inverse
-  image satisfies condition C of page 4;
-* `MorphismOfTopoi.comparison_isEquivalence` (the remark): if moreover the inverse image is
-  conservative, the comparison functor from the target `F` to the coalgebras of the comonad
-  `u* u_*` on the source `E` is an equivalence;
-* `IsMorphismOfSites.comparison_isEquivalence`: the same for the morphism of topoi
-  `Sh(D) → Sh(C)` of a morphism of sites given by `u : C ⥤ D` with `u_s` conservative:
-  `Sh(C)` is equivalent to the coalgebras of `u_s u^s` on `Sh(D)`.
+## Not formalised
 
 The hypothesis is the conservativity of `u*`; the identification with surjective morphisms
 (`u*` faithful) and the criterion of page 34 of folder 161-2 are not formalised here.
+
+## References
+
+* A. Grothendieck, folder 19, théorème 1.12 (page 4); the edition's reading
+  `docs/lean/sections/19.tex`
+* A. Grothendieck, folder 161-2, page 34
+* Stacks Project, tag 00XC
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder19
 

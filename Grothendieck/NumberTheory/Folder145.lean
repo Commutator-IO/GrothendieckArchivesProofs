@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 145, pages 34–35: the unit-exponent exercise
@@ -19,14 +22,10 @@ This is finding `145-unit-exponent-exercise` of `src/content/findings.ts`; the p
 the edition's (a dihedral quotient). Proving it says only that the claim holds as stated;
 whether it stands in the literature is a separate question.
 
-What is formalised.
+So the exercise holds, more generally: only the oddness of `p` is used, not that `p` is
+a unit at the odd primes.
 
-mathlib has no free profinite group and no `ℤ̂`-powers. A relation holds in the free
-profinite group on `l₀, l₁` iff it holds for every image of `(l₀, l₁)` in every finite
-group, and `p ∈ ℤ̂` acts on a finite group `G` through its residue modulo `card G`. So
-`p` is a compatible family of residues `p n ∈ ZMod n` (`n ≠ 0`), `x ^ p` in a finite
-group `G` is `x ^ (p (card G)).val` (`hatPow`), and (14) for `p` is `Rel14 p`: for every
-finite group `G` and `x y z : G` with `z * y * x = 1`, `z^p * y^p * x^p = 1`.
+## Main results
 
 * `dihedral_witness`: for an odd integer `m` and `N ≠ 0`, in `DihedralGroup N` the
   reflections `x = sr 1`, `y = sr 0` and `z = (y x)⁻¹` satisfy `z^m y^m x^m = 1` iff
@@ -36,10 +35,25 @@ finite group `G` and `x y z : G` with `z * y * x = 1`, `z^p * y^p * x^p = 1`.
   `p` a unit.
 * `rel14_zero`: the oddness cannot be dropped, `p = 0` satisfies (14).
 
-So the exercise holds, more generally: only the oddness of `p` is used, not that `p` is
-a unit at the odd primes. The compatibility of the family is used only to pass from
-`p (2N)` to `p N` and to `p 2`.
+## Implementation notes
+
+mathlib has no free profinite group and no `ℤ̂`-powers. A relation holds in the free
+profinite group on `l₀, l₁` iff it holds for every image of `(l₀, l₁)` in every finite
+group, and `p ∈ ℤ̂` acts on a finite group `G` through its residue modulo `card G`. So
+`p` is a compatible family of residues `p n ∈ ZMod n` (`n ≠ 0`), `x ^ p` in a finite
+group `G` is `x ^ (p (card G)).val` (`hatPow`), and (14) for `p` is `Rel14 p`: for every
+finite group `G` and `x y z : G` with `z * y * x = 1`, `z^p * y^p * x^p = 1`.
+
+The compatibility of the family is used only to pass from `p (2N)` to `p N` and to `p 2`.
+
+## References
+
+* A. Grothendieck, cote 145 (« Les rectificateurs triviaux »), pp. 34–35 (finding
+  `145-unit-exponent-exercise`); modernised reading `transcripts/145/145.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder145
 

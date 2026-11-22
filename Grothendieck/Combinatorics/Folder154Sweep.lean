@@ -1,14 +1,41 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 154, pages 142, 144, 145: one half-sweep of seven pseudolines, written twice
 
-Finding `154-sweep-142-144-same` (`src/content/findings.ts`).
+Finding `154-sweep-142-144-same` (`src/content/findings.ts`). The wiring diagram of page 142 and
+the table of page 144 are the same reduced sweep; the word of page 145 is reduced for its first
+eight terms and not with its (uncertain) ninth. The pairs listed by the finding are as stated;
+nothing in it needed correcting.
+
+## Main results
+
+* `pairs_word142`, `run_word142`: the redraw's 13 crossings are adjacent transpositions, in this
+  order, and end at `G A E D C F B`;
+* `table144_eq_states`: the ten rows of page 144 are states of that same sweep, after
+  `0, 2, 3, 4, 5, 6, 7, 8, 10, 13` of its crossings — between two rows, the crossings are those of
+  the row, made one after the other (`D/E` and `F/G`; `C/E` and `B/D`; `C/D`, `B/F` and `G/A` being
+  made at once on the page): the table and the diagram are the same sweep;
+* `inv_run_le_length`: any word in the `σᵢ` reaching a permutation has at least as many letters as
+  the permutation has inversions (general, by induction: one adjacent transposition changes the
+  inversions by at most one, `inv_mul_adjSwap_le`); hence `isReduced_of_inv_eq`;
+* `inv_run_word142`, `isReduced_word142`: the 13 crossings are reduced (13 = number of inversions
+  of `G A E D C F B`); `uncrossed142`: the pairs never crossed are exactly
+  `A/B, A/C, A/D, A/E, A/F, C/F, D/F, E/F` (8 = 21 − 13), each crossed pair crossed once;
+* `isReduced_word145_8`, `word145_9_crosses_CF_twice`, `not_isReduced_word145_9`: the first eight
+  terms of the word of page 145 are reduced; with the ninth term `σ₆`, read as uncertain, the
+  strands `C` and `F` cross a second time (at the third and ninth crossings) and the word is no
+  longer reduced: `σ₃ σ₂ σ₁ σ₄ σ₃ σ₆ σ₅` (7 letters) gives the same permutation.
+
+## Implementation notes
 
 **What is encoded, and whose it is.**
 * The crossings of the wiring diagram at the top right of page 142 are read off the machine redraw
@@ -28,27 +55,18 @@ Finding `154-sweep-142-144-same` (`src/content/findings.ts`).
 A state of the sweep is a permutation `st : Perm (Fin 7)`, `st p` being the strand in place `p`
 (strands `A = 0, …, G = 6`, places `0, …, 6`); `σᵢ` acts on the right, `st ↦ st * swap (i−1) i`.
 
-**Results.**
-* `pairs_word142`, `run_word142`: the redraw's 13 crossings are adjacent transpositions, in this
-  order, and end at `G A E D C F B`;
-* `table144_eq_states`: the ten rows of page 144 are states of that same sweep, after
-  `0, 2, 3, 4, 5, 6, 7, 8, 10, 13` of its crossings — between two rows, the crossings are those of
-  the row, made one after the other (`D/E` and `F/G`; `C/E` and `B/D`; `C/D`, `B/F` and `G/A` being
-  made at once on the page): the table and the diagram are the same sweep;
-* `inv_run_le_length`: any word in the `σᵢ` reaching a permutation has at least as many letters as
-  the permutation has inversions (general, by induction: one adjacent transposition changes the
-  inversions by at most one, `inv_mul_adjSwap_le`); hence `isReduced_of_inv_eq`;
-* `inv_run_word142`, `isReduced_word142`: the 13 crossings are reduced (13 = number of inversions
-  of `G A E D C F B`); `uncrossed142`: the pairs never crossed are exactly
-  `A/B, A/C, A/D, A/E, A/F, C/F, D/F, E/F` (8 = 21 − 13), each crossed pair crossed once;
-* `isReduced_word145_8`, `word145_9_crosses_CF_twice`, `not_isReduced_word145_9`: the first eight
-  terms of the word of page 145 are reduced; with the ninth term `σ₆`, read as uncertain, the
-  strands `C` and `F` cross a second time (at the third and ninth crossings) and the word is no
-  longer reduced: `σ₃ σ₂ σ₁ σ₄ σ₃ σ₆ σ₅` (7 letters) gives the same permutation.
+## Not formalised
 
-The pairs listed by the finding are as stated; nothing in it needed correcting. Not formalised:
-the wiring diagram of page 144 (redraw 08-18), whose wires are not identified with letters.
+The wiring diagram of page 144 (redraw 08-18), whose wires are not identified with letters.
+
+## References
+
+* A. Grothendieck, Folder 154, pp. 142, 144, 145 (redraws `transcripts/154/drawings/08-2.tex`
+  and 08-18; finding `154-sweep-142-144-same`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder154Sweep
 
@@ -118,7 +136,7 @@ theorem inv_mul_adjSwap_le {n : ℕ} (σ : Perm (Fin n)) (k : ℕ) (hk : k + 1 <
       rw [Finset.mem_erase] at hx'
       obtain ⟨hne, hxS⟩ := hx'
       have hxS' : x.1 < x.2 ∧ (σ * s) x.2 < (σ * s) x.1 := (Finset.mem_filter.1 hxS).2
-      show (s x.1, s x.2) ∈ T
+      change (s x.1, s x.2) ∈ T
       refine Finset.mem_filter.2 ⟨Finset.mem_univ _, adjSwap_lt k hk x.1 x.2 hxS'.1 ?_, hxS'.2⟩
       rintro ⟨h1, h2⟩
       exact hne (Prod.ext (Fin.ext h1) (Fin.ext h2))
@@ -126,7 +144,7 @@ theorem inv_mul_adjSwap_le {n : ℕ} (σ : Perm (Fin n)) (k : ℕ) (hk : k + 1 <
       simp only [Prod.mk.injEq] at hxy
       exact Prod.ext (s.injective hxy.1) (s.injective hxy.2)
   have h2 : S.card - 1 ≤ (S.erase e).card := Finset.pred_card_le_card_erase
-  show S.card ≤ T.card + 1
+  change S.card ≤ T.card + 1
   omega
 
 lemma inv_mul_sig_le (σ : Perm (Fin 7)) (i : ℕ) : inv (σ * sig i) ≤ inv σ + 1 := by

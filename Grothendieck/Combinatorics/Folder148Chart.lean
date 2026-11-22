@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Tactic.NormNum
 public import Mathlib.Data.List.Basic
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 148, pages 30–32: the counts of the chart of special structures on five points
@@ -13,9 +16,20 @@ Page 30 tabulates nine types of « special » structures on a five-point set `K`
 of the strata of `M̄₀,₅`; the number of structures of a type is `120 / |G|`, with `G` the group of
 holomorphic automorphisms of the structure (`120 = |𝔖₅|`). Page 32 counts the arrows between them,
 fourteen types in three groups. The folder states 542 vertices and 1620 arrows; this file checks
-these counts from the orders of the groups and the arrow numbers as the reading tabulates them. It
-checks the arithmetic of the chart, not the classification of the structures (#91, nv:97).
+these counts from the orders of the groups and the arrow numbers as the reading tabulates them
+(#91, nv:97).
+
+## Not formalised
+
+It checks the arithmetic of the chart, not the classification of the structures.
+
+## References
+
+* A. Grothendieck, folder 148, pp. 30–32
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder148Chart
 
@@ -35,7 +49,8 @@ theorem vertices :
     (counts.take 3).sum = 62 ∧ ((counts.drop 3).take 3).sum = 240 ∧ (counts.drop 6).sum = 240 ∧
       counts.sum = 542 := by decide
 
-/-- The arrows of page 32, in the reading's three groups (each type counted once, by its sources). -/
+/-- The arrows of page 32, in the reading's three groups (each type counted once, by its
+sources). -/
 @[montpellier "148, 32"]
 def arrows : List (List ℕ) :=
   [[60, 120], [60, 120, 60, 60, 120], [120, 120, 120, 120, 360, 120, 60]]

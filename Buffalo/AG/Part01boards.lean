@@ -1,15 +1,26 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 01: board items not covered by the index
 
 Claims on the reconstructed blackboards `public/buffalo-boards/51wmmpHand0-*.json` (0:00:00–4:55:19)
 that no index entry of part 01 formalises. Status in `docs/buffalo-ag/lean/Part01-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), video `51wmmpHand0`, 0:00:00–4:55:19
+  (reconstructed blackboards `public/buffalo-boards/51wmmpHand0-*.json`)
 -/
+
+@[expose] public section
+
 
 open MvPolynomial
 

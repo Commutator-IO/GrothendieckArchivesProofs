@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01d
 public import Buffalo.Topos.Part01c
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2a: étale morphisms, ring objects, internal Hom (18 May 1973)
@@ -13,9 +16,19 @@ Entries of `docs/buffalo-topos/index.tex` from « Étale morphisms and slice cat
 « Internal Hom and the subobject sheaf » (video `URU5jgTvjhU`, 5:39:20–6:50:49). The status of
 each entry is in `docs/buffalo-topos/lean/Part02.json`.
 
+## Implementation notes
+
 Conventions are those of `Part01`: sheaves of sets on a space `X` are
 `TopCat.Sheaf (Type u) X = Sheaf (Opens.grothendieckTopology X) (Type u)`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 5:39:20–6:50:49
+  (18 May 1973)
 -/
+
+@[expose] public section
+
 
 universe u
 
@@ -151,7 +164,8 @@ def baseChange_adj {C : Type*} [Category C] [HasPullbacks C] {X' X : C} (g : X' 
     Over.map g ⊣ Over.pullback g :=
   Over.mapPullbackAdj g
 
-/-- URU5jgTvjhU-21075 (5:51:15) [prop] `f_*` commutes with limits, hence sends group objects to group
+/-- URU5jgTvjhU-21075 (5:51:15) [prop] `f_*` commutes with limits, hence sends group objects to
+group
 objects. -/
 @[buffalo "URU5jgTvjhU-21075"]
 def pushforward_grp (f : X ⟶ Y) :
@@ -244,11 +258,13 @@ def unitsObj_hom (Z : C) : (Z ⟶ unitsObj A) ≃ (Z ⟶ A)ˣ where
       val_inv := by
         rw [← lift_ringMul, ← Category.assoc g, ← Category.assoc g, ← prod.comp_lift,
           prod.lift_fst_snd, Category.comp_id, Category.assoc, pullback.condition,
-          ← Category.assoc, show g ≫ pullback.snd _ _ = terminal.from Z from Subsingleton.elim _ _, from_ringOne]
+          ← Category.assoc,
+          show g ≫ pullback.snd _ _ = terminal.from Z from Subsingleton.elim _ _, from_ringOne]
       inv_val := by
         rw [mul_comm, ← lift_ringMul, ← Category.assoc g, ← Category.assoc g, ← prod.comp_lift,
           prod.lift_fst_snd, Category.comp_id, Category.assoc, pullback.condition,
-          ← Category.assoc, show g ≫ pullback.snd _ _ = terminal.from Z from Subsingleton.elim _ _, from_ringOne] }
+          ← Category.assoc,
+          show g ≫ pullback.snd _ _ = terminal.from Z from Subsingleton.elim _ _, from_ringOne] }
   invFun v := pullback.lift (prod.lift v.val v.inv) (terminal.from Z)
     (by rw [lift_ringMul, v.val_inv, from_ringOne])
   left_inv g := by
@@ -299,7 +315,8 @@ end RingObj
 theorem epi_iff_isIso_codiagonal {C : Type*} [Category C] {S T : C} (f : S ⟶ T)
     [HasPushout f f] : Epi f ↔ IsIso (pushout.desc (f := f) (g := f) (𝟙 T) (𝟙 T) rfl) := by
   rw [epi_iff_isIso_inl (pushout.isColimit f f)]
-  have h : pushout.inl f f ≫ pushout.desc (f := f) (g := f) (𝟙 T) (𝟙 T) rfl = 𝟙 _ := pushout.inl_desc _ _ _
+  have h : pushout.inl f f ≫ pushout.desc (f := f) (g := f) (𝟙 T) (𝟙 T) rfl = 𝟙 _ :=
+    pushout.inl_desc _ _ _
   constructor
   · intro hi
     change IsIso (pushout.inl f f) at hi
@@ -395,7 +412,8 @@ def constSheaf_grp :
 /-- URU5jgTvjhU-22740 (6:19:00) [prop] A ring `I` gives a sheaf of rings `I_X` (Mathlib's constant
 sheaf with values in `CommRingCat`). -/
 @[buffalo "URU5jgTvjhU-22740"]
-abbrev constSheafRing (R : CommRingCat.{u}) : Sheaf (Opens.grothendieckTopology X) CommRingCat.{u} :=
+abbrev constSheafRing (R : CommRingCat.{u}) :
+    Sheaf (Opens.grothendieckTopology X) CommRingCat.{u} :=
   (constantSheaf (Opens.grothendieckTopology X) CommRingCat.{u}).obj R
 
 /-- URU5jgTvjhU-22867 (6:21:07) [prop] The total ring of fractions of a domain is a field. -/
@@ -541,7 +559,8 @@ def classifier_types (𝒞 : Subobject.Classifier (Type u)) : 𝒞.Ω ≃ Bool :
   (classifier_homEquiv 𝒞 PUnit.{u + 1}).trans <| (subobject_types PUnit.{u + 1}).toEquiv.trans <|
     (Equiv.punitArrowEquiv Prop).trans Equiv.propEquivBool
 
-/-- URU5jgTvjhU-24459 (6:47:39) [prop] `f^*` commutes with binary products, the hypothesis under which
+/-- URU5jgTvjhU-24459 (6:47:39) [prop] `f^*` commutes with binary products, the hypothesis under
+which
 the canonical arrow `f^*𝓗om(F,G) → 𝓗om(f^*F, f^*G)` is defined (Mathlib's `expComparison`). -/
 example (f : X ⟶ Y) :
     PreservesLimitsOfShape (Discrete WalkingPair) (TopCat.Sheaf.pullback (Type u) f) :=

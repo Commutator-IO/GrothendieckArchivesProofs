@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 156-3, betweenness read on the cuts of a tronçon (pages 11–15)
@@ -21,7 +24,11 @@ that comparability together with, for each comparable pair, the unlabelled
 partition of `C(ε)` into its pieces determines the strict betweenness relation,
 hence the order up to reversal: in a 3-chain `J`, the middle element is the
 unique one for which the pieces of `C(ε)` and `C(ε′)` containing the third
-element, `ε, ε′` the two pairs through it, are disjoint. Proved here:
+element, `ε, ε′` the two pairs through it, are disjoint. Proved. What this certifies is that
+the reading holds together, not that it is what the page says (issue #26), and not that the
+statement is new: the finding stays open as a literature question.
+
+## Main results
 
 * `piece_above`, `piece_below`, `piece_between` — the three pieces computed on
   page 15 (`X_{a,b} = L_{>b}`, `X_{b,c} = L_{<b}`, `X_{c,a} = ]a, c[`);
@@ -39,16 +46,24 @@ element, `ε, ε′` the two pairs through it, are disjoint. Proved here:
   the tronçon `ℚ`;
 * `btwLe_iff`, `btwLe_reading_fails` — the non-strict betweenness of page 11.
 
+## Implementation notes
+
 What the proof makes plain. Only density (c) and directedness (b) are used:
 the local conditions a), a′) and d) play no part. Density serves twice — to
 make the two other intersections non-empty on page 15 — and directedness only
 in the lemma of pages 11–13. The non-strict relation `R̄(a, b, c)` is
 `R(a, b, c)` or (`b ∈ {a, c}` and `a, c` comparable): the reading's « `R(a, b, c)`
 or `b ∈ {a, c}` » fails for `a, c` incomparable, which the lemma never meets
-since it is applied with `x < y`. What this certifies is that the reading holds
-together, not that it is what the page says (issue #26), and not that the
-statement is new: the finding stays open as a literature question.
+since it is applied with `x < y`.
+
+## References
+
+* A. Grothendieck, *Vers une géométrie des formes*, chapter III, Folder 156-3, pp. 8, 11–15
+  (reading `transcripts/156-3/156-3.modern.tex`; finding `156-3-betweenness-from-cuts`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_3
 

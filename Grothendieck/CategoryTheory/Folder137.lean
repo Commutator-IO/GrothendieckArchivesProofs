@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 137, pages 74–83: polynomial categories and `⊗`-pd-categories
@@ -22,16 +25,21 @@ sets `𝐏_p(X, Y) = Hom(Γ^p X, Y)` with `g ∘ f = g ∘ Γ^q(f) ∘ α_{q,p}`
 
 What is formalised is the core of that equivalence, the part that carries the inverse
 `𝐏_p(X, Y) = Hom(Γ^p X, Y)` and the composition rule, for any degree-one category `C`
-(no additivity, no tensor product needed):
+(no additivity, no tensor product needed). Proving the statement says only that it holds as
+formalised; whether it is in the literature is a separate question.
+
+## Main definitions
 
 * `PDCategory C`: functors `Γⁿ : C ⥤ C`, natural `α_{p,q} : Γ^{pq} → Γ^p ∘ Γ^q`, an
   isomorphism `ε : Γ¹ ≅ id` (the page's `Γ¹ = id`), the unit conditions (**) and the
-  associativity square of p. 80 — a comonad graded by the monoid `(ℕ, ·)`. Indices are
-  carried with an equation `p * q = n`, so that no cast appears.
+  associativity square of p. 80 — a comonad graded by the monoid `(ℕ, ·)`.
 * `PolynomialCategory C`: sets `𝐏ₙ(X, Y)`, composition of degree `q * p`, identities of
   degree one, associativity, and an identification `ι : (X ⟶ Y) ≃ 𝐏₁(X, Y)` compatible
   with composition; `Representation`: objects `Γⁿ X` and `γₙ` representing `𝐏ₙ(X, -)`
   on `C`.
+
+## Main results
+
 * `PDCategory.toPoly` (pp. 81–82): the composition `g ∘ Γ^q(f) ∘ α_{q,p}` is
   associative and unital, additive in `g` when `C` is preadditive (`toPoly_comp_add`),
   and `PDCategory.representation`: `𝐏ₙ(X, -)` is represented by `Γⁿ X`, `γₙ = id`.
@@ -43,13 +51,26 @@ What is formalised is the core of that equivalence, the part that carries the in
   isomorphism of polynomial categories `𝐏_p(X, Y) ≃ Hom(Γ^p X, Y)`, `φ ↦ φ ∘ γ_p`,
   compatible with composition, identities and degree-one maps.
 
-Not formalised: the products and the additivity of `𝐏` (axioms a)–c)), the
-multidegree decompositions and homogeneity under scalars (d)), f), g) and the half
-`𝟏 ≅ Γ^q(𝟏)` of (***), the tensor product, strictness, the exponential formula
-`Γ*(X ⊕ Y) ≅ Γ*X ⊗ Γ*Y`, and the example of `k`-modules (Roby). Proving the statement
-says only that it holds as formalised; whether it is in the literature is a separate
-question.
+## Implementation notes
+
+In `PDCategory C`, indices are carried with an equation `p * q = n`, so that no cast appears.
+
+## Not formalised
+
+The products and the additivity of `𝐏` (axioms a)–c)), the multidegree decompositions and
+homogeneity under scalars (d)), f), g) and the half `𝟏 ≅ Γ^q(𝟏)` of (***), the tensor product,
+strictness, the exponential formula `Γ*(X ⊕ Y) ≅ Γ*X ⊗ Γ*Y`, and the example of `k`-modules
+(Roby).
+
+## References
+
+* A. Grothendieck, cote 137 (« Catégories polynomiales »), pp. 74–85 (finding
+  `137-polynomial-categories-pd-tensor-categories`); modernised reading
+  `transcripts/137/137.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder137
 
@@ -1957,25 +1978,30 @@ lemma pairMap_ι {W X Y : C} (v : W ⟶ X) (w : W ⟶ Y) :
 variable {P}
 
 lemma pairMap_rep (R : P.Representation) {n : ℕ} {W X Y : C} (φ : R.obj n W ⟶ X ⨯ Y) :
-    P.pairMap n W X Y (R.rep n W _ φ) = (R.rep n W X (φ ≫ prod.fst), R.rep n W Y (φ ≫ prod.snd)) := by
+    P.pairMap n W X Y (R.rep n W _ φ) =
+      (R.rep n W X (φ ≫ prod.fst), R.rep n W Y (φ ≫ prod.snd)) := by
   simp [pairMap, R.rep_comp]
 
 /-- Axiom a), degreewise: `𝐏ₙ(W, X × Y) ≃ 𝐏ₙ(W, X) × 𝐏ₙ(W, Y)`. -/
 @[montpellier "137, 74–76"]
-theorem pairMap_bijective (R : P.Representation) (n : ℕ) (W X Y : C) : Function.Bijective (P.pairMap n W X Y) := by
+theorem pairMap_bijective (R : P.Representation) (n : ℕ) (W X Y : C) :
+    Function.Bijective (P.pairMap n W X Y) := by
   let e : (R.obj n W ⟶ X ⨯ Y) ≃ (R.obj n W ⟶ X) × (R.obj n W ⟶ Y) :=
     ⟨fun φ => (φ ≫ prod.fst, φ ≫ prod.snd), fun p => prod.lift p.1 p.2,
       fun φ => by ext <;> simp, fun p => by simp⟩
-  convert (e.trans ((R.rep n W X).prodCongr (R.rep n W Y))).bijective.comp (R.rep n W _).symm.bijective
+  convert (e.trans ((R.rep n W X).prodCongr (R.rep n W Y))).bijective.comp
+    (R.rep n W _).symm.bijective
   ext1 a
   obtain ⟨φ, rfl⟩ := (R.rep n W _).surjective a
   simp [e, pairMap_rep R]
 
 /-- The pairing `(f, g) ↦ (f, g) : W → X × Y` in degree `n`. -/
-noncomputable def pairEquiv (R : P.Representation) (n : ℕ) (W X Y : C) : P.Hom n W (X ⨯ Y) ≃ P.Hom n W X × P.Hom n W Y :=
+noncomputable def pairEquiv (R : P.Representation) (n : ℕ) (W X Y : C) :
+    P.Hom n W (X ⨯ Y) ≃ P.Hom n W X × P.Hom n W Y :=
   Equiv.ofBijective _ (pairMap_bijective R n W X Y)
 
-lemma pairEquiv_symm_rep (R : P.Representation) {n : ℕ} {W X Y : C} (φ : R.obj n W ⟶ X) (ψ : R.obj n W ⟶ Y) :
+lemma pairEquiv_symm_rep (R : P.Representation) {n : ℕ} {W X Y : C} (φ : R.obj n W ⟶ X)
+    (ψ : R.obj n W ⟶ Y) :
     (pairEquiv R n W X Y).symm (R.rep n W X φ, R.rep n W Y ψ) = R.rep n W _ (prod.lift φ ψ) :=
   (Equiv.symm_apply_eq _).2 (by simp [pairEquiv, pairMap_rep R])
 
@@ -2008,7 +2034,8 @@ theorem add_eq (R : P.Representation) {n : ℕ} {W X : C} (a b : P.Hom n W X) :
 
 /-- `(f + g) ∘ h = f ∘ h + g ∘ h`, for `h` of any degree (p. 74). -/
 @[montpellier "137, 74"]
-theorem comp_add (R : P.Representation) {p q n : ℕ} {V W X : C} (h : P.Hom p V W) (a b : P.Hom q W X)
+theorem comp_add (R : P.Representation) {p q n : ℕ} {V W X : C} (h : P.Hom p V W)
+    (a b : P.Hom q W X)
     (hn : q * p = n) : P.comp h (add R a b) hn = add R (P.comp h a hn) (P.comp h b hn) := by
   have hpair : P.comp h ((pairEquiv R q W X X).symm (a, b)) hn =
       (pairEquiv R n V X X).symm (P.comp h a hn, P.comp h b hn) := by
@@ -2020,7 +2047,8 @@ theorem comp_add (R : P.Representation) {p q n : ℕ} {V W X : C} (h : P.Hom p V
 
 /-- On degree one, the sum is the addition of `C` (axiom c)). -/
 @[montpellier "137, 74–76"]
-theorem ι_add (R : P.Representation) {W X : C} (f g : W ⟶ X) : add R (P.ι f) (P.ι g) = P.ι (f + g) := by
+theorem ι_add (R : P.Representation) {W X : C} (f g : W ⟶ X) :
+    add R (P.ι f) (P.ι g) = P.ι (f + g) := by
   rw [add, show (pairEquiv R 1 W X X).symm (P.ι f, P.ι g) = P.ι (prod.lift f g) from
     (Equiv.symm_apply_eq _).2 (by simp [pairEquiv, P.pairMap_ι]), ← P.ι_comp]
   simp

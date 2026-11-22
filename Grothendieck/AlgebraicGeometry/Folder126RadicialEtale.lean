@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.HenselianRings.StrictlyHenselianFiniteAlgebras
 public import StacksFrontier.RingTheory.Henselian.Unramified
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 17–23: the radicial–étale factorisation, local core
@@ -14,6 +17,33 @@ Finding `126-radicial-etale-factorisation`. Pages 17–23 of folder 126 (under t
 locally noetherian, whose fibres all have the same number `n` of geometric points; then `f`
 factors as a finite surjective radicial `X → X^ét` followed by a finite étale cover `X^ét → Y`,
 and every `Y`-morphism from `X` to an étale `Y`-scheme factors uniquely through `X^ét`.*
+
+**Is it true as read?** Yes (see the implementation notes). This file formalises the argument in
+its local form, over a strictly henselian base.
+
+## Main results
+
+* `radicial_etale_factorisation_of_strictlyHenselian`: let `R` be a strictly henselian local
+  ring and `A` a module-finite `R`-algebra such that `Spec A → Spec R` is an open map and, for
+  every algebraically closed field `K` and every ring map `φ : R → K`, the number of `R`-maps
+  `A → K` over `φ` (the geometric points of the fibre over `φ`, `GeomPoints`) is a constant
+  `n`. Then there are a finite index type `ι` with `|ι| = n` and strictly henselian local
+  module-finite `R`-algebras `Bᵢ` with `A ≃ₐ[R] ∏ᵢ Bᵢ`, such that
+  * every `Spec Bᵢ → Spec R` has exactly one geometric point over every geometric point of
+    `Spec R` (it is surjective and universally injective, i.e. radicial — the first arrow `f₁`);
+  * `etalePartMap e : R^ι → A` (the trivial finite étale cover `∐_ι Spec R`, the second arrow
+    `f₂`) has the universal property: every `R`-algebra map `R^J → A` from a split finite étale
+    algebra factors uniquely through it (`existsUnique_comp_etalePartMap_eq`), and so does every
+    `R`-algebra map `T → A` from any finite étale `R`-algebra `T`
+    (`existsUnique_comp_etalePartMap_eq_of_etale`), since such a `T` is split
+    (`exists_algEquiv_pi_of_etale`, Stacks 04GL).
+* The general pieces: a ring map from a finite product into a local ring factors through exactly
+  one factor (`exists_map_single_eq_one`, `geomPointsPiEquiv`); a prime of an integral extension
+  over `ker φ` gives a geometric point over `φ` (`exists_ringHom_lift_of_prime`, Stacks 09GU via
+  `IsAlgClosed.lift`); openness gives a point of each factor over each prime
+  (`nonempty_geomPoints_of_isOpenMap`).
+
+## Implementation notes
 
 **The reading.** « Univ. ouvert » is an interlinear addition on page 17 whose reading is marked
 uncertain in the transcription (and « factorisation » in the heading is uncertain too). The
@@ -28,31 +58,14 @@ and closed in `Spec A`, so its image is an open set containing the closed point,
 fibre has exactly `|ι|` of them, and constancy of `d` forces exactly one over every point: each
 `Spec Bᵢ → Spec R` is radicial, and `Spec A → ∐_ι Spec R` is the factorisation. The global
 `X^ét` is obtained from these by étale descent, and its universal property is the topological
-invariance of the étale site. That argument is the one formalised below in its local form.
+invariance of the étale site. That argument is the one formalised here in its local form.
 
-**What is proved.** `radicial_etale_factorisation_of_strictlyHenselian`: let `R` be a strictly
-henselian local ring and `A` a module-finite `R`-algebra such that `Spec A → Spec R` is an open
-map and, for every algebraically closed field `K` and every ring map `φ : R → K`, the number of
-`R`-maps `A → K` over `φ` (the geometric points of the fibre over `φ`, `GeomPoints`) is a constant
-`n`. Then there are a finite index type `ι` with `|ι| = n` and strictly henselian local
-module-finite `R`-algebras `Bᵢ` with `A ≃ₐ[R] ∏ᵢ Bᵢ`, such that
-* every `Spec Bᵢ → Spec R` has exactly one geometric point over every geometric point of `Spec R`
-  (it is surjective and universally injective, i.e. radicial — the first arrow `f₁`);
-* `etalePartMap e : R^ι → A` (the trivial finite étale cover `∐_ι Spec R`, the second arrow `f₂`)
-  has the universal property: every `R`-algebra map `R^J → A` from a split finite étale algebra
-  factors uniquely through it (`existsUnique_comp_etalePartMap_eq`), and so does every `R`-algebra
-  map `T → A` from any finite étale `R`-algebra `T` (`existsUnique_comp_etalePartMap_eq_of_etale`),
-  since such a `T` is split (`exists_algEquiv_pi_of_etale`, Stacks 04GL).
-
-The general pieces: a ring map from a finite product into a local ring factors through exactly
-one factor (`exists_map_single_eq_one`, `geomPointsPiEquiv`); a prime of an integral extension
-over `ker φ` gives a geometric point over `φ` (`exists_ringHom_lift_of_prime`, Stacks 09GU via
-`IsAlgClosed.lift`); openness gives a point of each factor over each prime
-(`nonempty_geomPoints_of_isOpenMap`). The splitting itself is the AxiomMath/Stacks
+The splitting itself is the AxiomMath/Stacks
 `exists_algEquiv_pi_strictHenselian_of_module_finite` (from 04GJ), and the count on the closed
 fibre is its `finiteAlgHomCharsEquiv`.
 
-**Not formalised.**
+## Not formalised
+
 * The global statement is proved elsewhere, not from this local core: the universal property
   of page 23 and the uniqueness of the factorisation over any `Y` in
   `Grothendieck.Folder126RadicialEtaleGlobal` (Stacks 0BTY), and the existence of `X^ét` over a
@@ -62,7 +75,17 @@ fibre is its `finiteAlgHomCharsEquiv`.
 * Universal openness enters only through the openness of `Spec A → Spec R` after base change;
   the page's remark that « `d` constant » may be dropped for connected `Y` is false (the
   reading's counterexample `y² = t` over `k[t]`) and is not stated.
+
+## References
+
+* A. Grothendieck, folder 126 (« Descente fidèlement plate »), pp. 17–23 (finding
+  `126-radicial-etale-factorisation`)
+* [SGA 1] exposé IX, §4
+* Stacks Project, tags 04GJ, 04GL, 09GU, 02L5, 0BTY
 -/
+
+@[expose] public section
+
 
 open IsLocalRing
 
@@ -89,15 +112,16 @@ theorem idempotent_eq_zero_or_one {T : Type*} [CommRing T] [IsLocalRing T] {t : 
     exact (h.mul_left_eq_zero).mp h0
 
 /-- A ring map from a finite product into a local ring sends one of the unit idempotents to `1`. -/
-theorem exists_map_single_eq_one {ι : Type*} [Fintype ι] [DecidableEq ι] {B : ι → Type*}
+theorem exists_map_single_eq_one {ι : Type*} [Finite ι] [DecidableEq ι] {B : ι → Type*}
     [∀ i, CommRing (B i)] {T : Type*} [CommRing T] [IsLocalRing T] (F : (∀ i, B i) →+* T) :
     ∃ i, F (Pi.single i 1) = 1 := by
+  have := Fintype.ofFinite ι
   by_contra h
   simp only [not_exists] at h
   have h0 : ∀ i, F (Pi.single i 1) = 0 := by
     intro i
     have hidem : IsIdempotentElem (F (Pi.single i 1)) := by
-      show F (Pi.single i 1) * F (Pi.single i 1) = F (Pi.single i 1)
+      change F (Pi.single i 1) * F (Pi.single i 1) = F (Pi.single i 1)
       rw [← map_mul, ← Pi.single_mul, one_mul]
     exact (idempotent_eq_zero_or_one hidem).resolve_right (h i)
   have hsum : (∑ i, Pi.single i (1 : B i) : ∀ i, B i) = 1 := Finset.univ_sum_single (1 : ∀ i, B i)
@@ -127,13 +151,13 @@ def restrictSingle {ι : Type*} [DecidableEq ι] {B : ι → Type*} [∀ i, Comm
   toFun b := F (Pi.single i b)
   map_one' := hi
   map_mul' a b := by
-    show F (Pi.single i (a * b)) = F (Pi.single i a) * F (Pi.single i b)
+    change F (Pi.single i (a * b)) = F (Pi.single i a) * F (Pi.single i b)
     rw [Pi.single_mul, map_mul]
   map_zero' := by
-    show F (Pi.single i 0) = 0
+    change F (Pi.single i 0) = 0
     rw [Pi.single_zero, map_zero]
   map_add' a b := by
-    show F (Pi.single i (a + b)) = F (Pi.single i a) + F (Pi.single i b)
+    change F (Pi.single i (a + b)) = F (Pi.single i a) + F (Pi.single i b)
     rw [Pi.single_add, map_add]
 
 /-- The geometric points of a finite product are the disjoint union of those of its factors. -/
@@ -151,10 +175,10 @@ noncomputable def geomPointsPiEquiv {R : Type*} [CommRing R] {ι : Type*} [Finty
         have hij : i = j := by
           by_contra hne
           have h1 : (ψ.1.comp (Pi.evalRingHom B i)) (Pi.single i 1) = 1 := by
-            show ψ.1 (Pi.single i 1 i) = 1
+            change ψ.1 (Pi.single i 1 i) = 1
             rw [Pi.single_eq_same, map_one]
           have h2 : (ψ'.1.comp (Pi.evalRingHom B j)) (Pi.single i 1) = 0 := by
-            show ψ'.1 (Pi.single i 1 j) = 0
+            change ψ'.1 (Pi.single i 1 j) = 0
             rw [Pi.single_eq_of_ne' hne, map_zero]
           exact one_ne_zero (h1.symm.trans ((RingHom.congr_fun h' _).trans h2))
         subst hij
@@ -170,7 +194,7 @@ noncomputable def geomPointsPiEquiv {R : Type*} [CommRing R] {ι : Type*} [Finty
         have hcomp : (restrictSingle F i hi).comp (algebraMap R (B i)) = φ := by
           refine RingHom.ext fun r => ?_
           rw [← hF]
-          show F (Pi.single i (algebraMap R (B i) r)) = F (algebraMap R (∀ j, B j) r)
+          change F (Pi.single i (algebraMap R (B i) r)) = F (algebraMap R (∀ j, B j) r)
           exact (map_eq_map_single_apply F hi (algebraMap R (∀ j, B j) r)).symm
         exact ⟨⟨i, ⟨restrictSingle F i hi, hcomp⟩⟩,
           Subtype.ext (RingHom.ext fun x => (map_eq_map_single_apply F hi x).symm)⟩)
@@ -198,6 +222,9 @@ def geomPointsCongr {R A A' : Type*} [CommRing R] [CommRing A] [CommRing A'] [Al
     ext x
     simp
 
+-- The instance search for `IsAlgClosed.lift` times out under the library-wide
+-- `maxSynthPendingDepth = 3`; Lean's default depth finds it at once.
+set_option maxSynthPendingDepth 1 in
 /-- A prime `q` of an integral `R`-algebra `B` lying over the kernel of `φ : R → K`, with `K`
 algebraically closed, carries a geometric point of `Spec B` over `φ`. -/
 theorem exists_ringHom_lift_of_prime {R B K : Type*} [CommRing R] [CommRing B] [Algebra R B]
@@ -229,14 +256,14 @@ theorem nonempty_geomPoints_of_isOpenMap {R : Type*} [CommRing R] [IsLocalRing R
   classical
   let π : A →+* B i := (Pi.evalRingHom B i).comp e.toAlgHom.toRingHom
   have hπ : Function.Surjective π := fun b => ⟨e.symm (Pi.single i b), by
-    show e (e.symm (Pi.single i b)) i = b
+    change e (e.symm (Pi.single i b)) i = b
     rw [AlgEquiv.apply_symm_apply, Pi.single_eq_same]⟩
   have hπalg : π.comp (algebraMap R A) = algebraMap R (B i) := by
     refine RingHom.ext fun r => ?_
     exact congrFun (e.commutes r) i
   let ε : A := e.symm (Pi.single i 1)
   have hπε : π ε = 1 := by
-    show e (e.symm (Pi.single i 1)) i = 1
+    change e (e.symm (Pi.single i 1)) i = 1
     rw [AlgEquiv.apply_symm_apply, Pi.single_eq_same]
   -- the kernel of `π` is killed by the idempotent `ε`
   have hker : ∀ x, π x = 0 → x * ε = 0 := by
@@ -245,7 +272,7 @@ theorem nonempty_geomPoints_of_isOpenMap {R : Type*} [CommRing R] [IsLocalRing R
     apply e.injective
     rw [map_mul, map_zero]
     funext j
-    show e x j * e (e.symm (Pi.single i 1)) j = 0
+    change e x j * e (e.symm (Pi.single i 1)) j = 0
     rw [AlgEquiv.apply_symm_apply]
     by_cases hj : j = i
     · rw [hj, Pi.single_eq_same, mul_one]
@@ -261,7 +288,7 @@ theorem nonempty_geomPoints_of_isOpenMap {R : Type*} [CommRing R] [IsLocalRing R
     exact (maximalIdeal.isMaximal (B i)).ne_top ((Ideal.eq_top_iff_one _).mpr h')
   have hMAc : PrimeSpectrum.comap (algebraMap R A) MA = closedPoint R := by
     ext1
-    show ((maximalIdeal (B i)).comap π).comap (algebraMap R A) = maximalIdeal R
+    change ((maximalIdeal (B i)).comap π).comap (algebraMap R A) = maximalIdeal R
     rw [Ideal.comap_comap, hπalg]
     exact eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := R)
       (maximalIdeal (B i)))
@@ -286,7 +313,7 @@ theorem nonempty_geomPoints_of_isOpenMap {R : Type*} [CommRing R] [IsLocalRing R
   have hqP : (P.asIdeal.map π).comap π = P.asIdeal := by
     rw [Ideal.comap_map_of_surjective' π hπ, sup_eq_left.mpr hkerP]
   have hqunder : RingHom.ker φ = (P.asIdeal.map π).under R := by
-    show RingHom.ker φ = (P.asIdeal.map π).comap (algebraMap R (B i))
+    change RingHom.ker φ = (P.asIdeal.map π).comap (algebraMap R (B i))
     rw [← hπalg, ← Ideal.comap_comap, hqP]
     exact (congrArg PrimeSpectrum.asIdeal hPp).symm
   obtain ⟨ψ, hψ⟩ := exists_ringHom_lift_of_prime (P.asIdeal.map π) φ hqunder
@@ -312,8 +339,9 @@ theorem etalePartMap_apply {R A : Type*} [CommRing R] [CommRing A] [Algebra R A]
 /-- An `R`-algebra map from a split finite étale algebra `R^J` into a local `R`-algebra is the
 evaluation at one point of `J`. -/
 theorem exists_eq_ofId_comp_evalAlgHom {R T J : Type*} [CommRing R] [CommRing T]
-    [IsLocalRing T] [Algebra R T] [Fintype J] (f : (J → R) →ₐ[R] T) :
+    [IsLocalRing T] [Algebra R T] [Finite J] (f : (J → R) →ₐ[R] T) :
     ∃ j, f = (Algebra.ofId R T).comp (Pi.evalAlgHom R (fun _ : J => R) j) := by
+  have := Fintype.ofFinite J
   classical
   obtain ⟨j, hj⟩ := exists_map_single_eq_one (B := fun _ : J => R) f.toRingHom
   refine ⟨j, AlgHom.ext fun x => ?_⟩
@@ -325,12 +353,13 @@ theorem exists_eq_ofId_comp_evalAlgHom {R T J : Type*} [CommRing R] [CommRing T]
     · rw [hk, Pi.smul_apply, Pi.single_eq_same, Pi.single_eq_same, smul_eq_mul, mul_one]
     · rw [Pi.smul_apply, Pi.single_eq_of_ne hk, Pi.single_eq_of_ne hk, smul_zero]
   have hj' : f (Pi.single j 1) = 1 := hj
-  show f x = algebraMap R T (x j)
+  change f x = algebraMap R T (x j)
   rw [h1, h2, map_smul, hj', Algebra.smul_def, mul_one]
 
 /-- An `R`-algebra map `R^J → R^ι` over a local ring `R` is induced by a map `ι → J`. -/
 theorem exists_apply_eq_of_algHom_pi {R : Type*} [CommRing R] [IsLocalRing R] {ι J : Type*}
-    [Fintype J] (h : (J → R) →ₐ[R] (ι → R)) : ∃ τ : ι → J, ∀ x i, h x i = x (τ i) := by
+    [Finite J] (h : (J → R) →ₐ[R] (ι → R)) : ∃ τ : ι → J, ∀ x i, h x i = x (τ i) := by
+  have := Fintype.ofFinite J
   choose τ hτ using fun i =>
     exists_eq_ofId_comp_evalAlgHom ((Pi.evalAlgHom R (fun _ : ι => R) i).comp h)
   exact ⟨τ, fun x i => AlgHom.congr_fun (hτ i) x⟩
@@ -343,8 +372,9 @@ uniquely through `X^ét`). -/
 theorem existsUnique_comp_etalePartMap_eq {R : Type*} [CommRing R] [IsLocalRing R]
     {A : Type*} [CommRing A] [Algebra R A] {ι : Type*} {B : ι → Type*} [∀ i, CommRing (B i)]
     [∀ i, Algebra R (B i)] [∀ i, IsLocalRing (B i)] (e : A ≃ₐ[R] ∀ i, B i) {J : Type*}
-    [Fintype J] (f : (J → R) →ₐ[R] A) :
+    [Finite J] (f : (J → R) →ₐ[R] A) :
     ∃! g : (J → R) →ₐ[R] (ι → R), (etalePartMap e).comp g = f := by
+  have := Fintype.ofFinite J
   classical
   choose σ hσ using fun i =>
     exists_eq_ofId_comp_evalAlgHom ((Pi.evalAlgHom R B i).comp (e.toAlgHom.comp f))
@@ -404,7 +434,7 @@ theorem radicial_etale_factorisation_of_strictlyHenselian
     have h0 : residue R a = 0 :=
       (residue_eq_zero_iff a).mpr ((mem_maximalIdeal a).mpr (mem_nonunits_iff.mpr hna))
     have h1 : φ₀ a = 0 := by
-      show algebraMap (ResidueField R) k (residue R a) = 0
+      change algebraMap (ResidueField R) k (residue R a) = 0
       rw [h0, map_zero]
     rw [h1] at ha
     exact not_isUnit_zero ha
@@ -511,12 +541,12 @@ theorem existsUnique_comp_etalePartMap_eq_of_etale {R : Type u} [CommRing R]
   obtain ⟨n, ⟨eT⟩⟩ := exists_algEquiv_pi_of_etale R T
   obtain ⟨g, hg, huniq⟩ := existsUnique_comp_etalePartMap_eq e (f.comp eT.symm.toAlgHom)
   refine ⟨g.comp eT.toAlgHom, ?_, fun g' hg' => ?_⟩
-  · show (etalePartMap e).comp (g.comp eT.toAlgHom) = f
+  · change (etalePartMap e).comp (g.comp eT.toAlgHom) = f
     rw [← AlgHom.comp_assoc, hg]
     ext x
     simp
   · have := huniq (g'.comp eT.symm.toAlgHom) (by
-      show (etalePartMap e).comp (g'.comp eT.symm.toAlgHom) = f.comp eT.symm.toAlgHom
+      change (etalePartMap e).comp (g'.comp eT.symm.toAlgHom) = f.comp eT.symm.toAlgHom
       rw [← AlgHom.comp_assoc, hg'])
     rw [← this]
     ext x

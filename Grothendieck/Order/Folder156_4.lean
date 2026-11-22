@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Order.Basic
@@ -6,8 +11,6 @@ public import Mathlib.Data.List.Chain
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Fin.VecNotation
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 156-4, pages 65–68: supports, cosupports, and the presumed Boolean algebra
@@ -21,7 +24,13 @@ equals its support. Page 68:
 
 > Je présume qu'on a en fait une algèbre de Boole (« ultra-stonienne », à cause des Sup quelc.)
 
-This is finding `156-4-supports-boolean-presumption`. Proved here:
+This is finding `156-4-supports-boolean-presumption`.
+
+**What the formalisation finds.** The presumption fails: the lattice of saturated parts is a
+complete ortholattice, not in general a Boolean algebra, even under the hypotheses on
+`(𝓜, ≤, R)` of pages 58–61.
+
+## Main results
 
 * `cosupp_antitone`, `subset_supp`, `cosupp_supp`, `isSaturated_cosupp`,
   `isSaturated_iInter`, `inter_cosupp_eq_empty`, `supp_union_cosupp`: for any poset and any
@@ -37,12 +46,19 @@ This is finding `156-4-supports-boolean-presumption`. Proved here:
   `hexagon_not_distrib`: `{b, d} ∧ ({b} ∨ {c}) = {b, d}` while
   `({b, d} ∧ {b}) ∨ ({b, d} ∧ {c}) = {b}`.
 
-**What the formalisation finds.** The presumption fails: the lattice of saturated parts is a
-complete ortholattice, not in general a Boolean algebra, even under the hypotheses on
-`(𝓜, ≤, R)` of pages 58–61. What the model checks of the axioms is the structure of
-`(𝓜, ≤, R)` that pages 58–64 impose; the figures themselves (C 1–C 3, stated for the set of
-figures) are not encoded.
+## Not formalised
+
+What the model checks of the axioms is the structure of `(𝓜, ≤, R)` that pages 58–64 impose;
+the figures themselves (C 1–C 3, stated for the set of figures) are not encoded.
+
+## References
+
+* A. Grothendieck, Folder 156-4, § XIII, pp. 58–68 (reading
+  `transcripts/156-4/156-4.modern.tex`; finding `156-4-supports-boolean-presumption`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_4
 

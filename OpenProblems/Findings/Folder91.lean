@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 91: Weil restriction and centralisers, stated as propositions
@@ -12,14 +15,7 @@ Two open rows of the edition's list of findings (`src/content/findings.ts`) for 
 `91-weil-restriction-finite-etale-criterion` and `91-centraliser-condition-R`. Nothing here is
 proved; a `def … : Prop` asserts nothing.
 
-For `t : T → S` and a `T`-scheme `X`, the Weil restriction `Res_{T/S}(X)` is written by its
-functor of points on `S`-schemes, `S' ↦ Hom_T(S' ×_S T, X)` (`weilRestriction`); it « is finite
-étale » when it is represented by a finite étale `S`-scheme. A morphism of such functors is finite
-étale when each of its fibres over an `S'`-point is represented by a finite étale `S'`-scheme.
-The number `ν(s)` of geometric points of `T_s` is the number of points of
-`T ×_S Spec \bar{κ(s)}`, `\bar{κ(s)}` an algebraic closure of the residue field.
-
-## Stated
+## Main definitions
 
 * `WeilRestrictionFiniteEtaleTFAE` (`91-weil-restriction-finite-etale-criterion`): Corollary 3 of
   p. 53, the four conditions equivalent.
@@ -28,7 +24,16 @@ The number `ν(s)` of geometric points of `T_s` is the number of points of
 * `CentraliserRepresentable` (`91-centraliser-condition-R`): the corollary of p. 9 for
   centralisers.
 
-## Not stated, and what is missing
+## Implementation notes
+
+For `t : T → S` and a `T`-scheme `X`, the Weil restriction `Res_{T/S}(X)` is written by its
+functor of points on `S`-schemes, `S' ↦ Hom_T(S' ×_S T, X)` (`weilRestriction`); it « is finite
+étale » when it is represented by a finite étale `S`-scheme. A morphism of such functors is finite
+étale when each of its fibres over an `S'`-point is represented by a finite étale `S'`-scheme.
+The number `ν(s)` of geometric points of `T_s` is the number of points of
+`T ×_S Spec \bar{κ(s)}`, `\bar{κ(s)}` an algebraic closure of the residue field.
+
+## Not formalised
 
 * The transporters `Transp_G(H, K)` and normalisers `Norm_G(H)` of the same corollary: « under
   the same hypotheses on `K` » rests on a partly uncertain reading (« de t.f. sur S » for `K`),
@@ -36,7 +41,16 @@ The number `ν(s)` of geometric points of `T_s` is the number of points of
 * The theorem of p. 4 (the locus where a monomorphism of finite type into a flat `X` becomes an
   isomorphism is representable iff it commutes with adic limits): the row's claim is the
   corollary, and the theorem is the means.
+
+## References
+
+* A. Grothendieck, folder 91, pp. 4, 9, 53, 55–58 (findings
+  `91-weil-restriction-finite-etale-criterion`, `91-centraliser-condition-R`)
+* M. Romagny (2022), Cor. A.8
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 open scoped CategoryTheory.MonObj
@@ -65,6 +79,8 @@ def IsFiniteEtaleOver (R : Over S) : Prop :=
 def IsRepresentedFiniteEtale (F : (Over S)ᵒᵖ ⥤ Type u) : Prop :=
   ∃ R : Over S, IsFiniteEtaleOver R ∧ Nonempty (yoneda.obj R ≅ F)
 
+set_option synthInstance.maxHeartbeats 80000 in
+-- `maxSynthPendingDepth = 3` makes the `HasLimit` search for the pullback slower.
 /-- A morphism `a : F ⟶ F'` of functors on `S`-schemes is represented by finite étale morphisms:
 for every `S`-scheme `S'` and `y ∈ F'(S')`, the fibre product `F ×_{F'} S'` is represented by a
 finite étale `S'`-scheme. -/

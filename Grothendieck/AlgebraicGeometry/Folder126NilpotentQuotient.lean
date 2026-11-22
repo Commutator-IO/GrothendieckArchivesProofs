@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.LinearAlgebra.TensorProduct.Quotient
 public import Mathlib.RingTheory.Flat.Equalizer
 public import StacksFrontier.RingTheory.Flat.SquareZeroConormal
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 4 to 7: deforming a flat equivalence relation across a nilpotent thickening
@@ -23,7 +26,8 @@ nilpotent ideal `𝒥_Y`, is an isomorphism.
 
 This file formalises those two closing steps of page 7, in the affine case.
 
-**What is proved.**
+## Main results
+
 * `subsingleton_of_nilpotent_smul_top_eq_top`: Nakayama's lemma for a nilpotent ideal, with no
   finiteness: if `I ^ n = 0` and `I • Q = Q`, then `Q = 0`.
 * `surjective_of_lTensor_quotient_nilpotent`: an `A`-linear map `u : M → N` which is surjective
@@ -42,7 +46,9 @@ This file formalises those two closing steps of page 7, in the affine case.
   `R → X ×_Y X` modulo `𝒥_Y`, which the page identifies with `R₀ ≅ X₀ ×_{Y₀} X₀`). Then `B'`
   is flat over `A'` (`X → Y` flat) and `φ` is bijective (`R ≅ X ×_Y X`).
 
-**How.** Nakayama for a nilpotent ideal is the induction `Iᵏ • Q = Q`. Surjectivity: the cokernel
+## Implementation notes
+
+Nakayama for a nilpotent ideal is the induction `Iᵏ • Q = Q`. Surjectivity: the cokernel
 `Q` of `u` satisfies `(A ⧸ I) ⊗ Q = 0` by right exactness, that is `Q = I • Q`
 (`TensorProduct.quotTensorEquivQuotSMul`). Injectivity: with `u` surjective and `N` flat, the
 sequence `0 → (A ⧸ I) ⊗ Ker u → (A ⧸ I) ⊗ M → (A ⧸ I) ⊗ N` stays exact
@@ -53,10 +59,22 @@ the Tor criterion for flatness across a nilpotent ideal), and flatness of `C'` o
 `Module.Flat.trans`. The draft pointed to Stacks 08VU, whose vendored form is stated for ringed
 topoi; the affine statement used here is the module-level 063Y.
 
-**Not formalised.**
+## Not formalised
+
 * The scheme-level statement: effectivity of `R`, the construction of `Y` as the ringed space
   `(Y₀, Ker(𝒪_X ⇉ 𝒪_R))` and the gluing of its affine pieces into a scheme, the reduction from a
   nilpotent `𝒥_X` to `𝒥_X² = 0`, and the identification `R₀ = R ×_X X₀`.
+* The descent of `𝒥_X` to `𝒥_Y` along `X₀ → Y₀` (faithfully flat descent, Stacks 023N in the
+  vendored files, not connected here), which this file takes as the hypothesis that
+  `I ⊗_{A'} B → J` is bijective for a given `A'`.
+* The heart of pages 5 to 7: exactness of `0 → 𝒥_Y → 𝒪_Y → 𝒪_{Y₀} → 0`, in particular the
+  surjectivity of `𝒪_Y → 𝒪_{Y₀}` by lifting an invariant function and correcting the lift with
+  `Ȟ¹(X₀/Y₀, 𝒥_Y) = 0`, and the vanishing `Ȟ⁰(X₀/Y₀, ℋ¹(𝒥_Y)) = 0` of Remark 2 (page 3) for
+  fpqc quasi-separated covers of an affine. The vendored files have the Amitsur complex exact
+  (Stacks 023M) only in the abstract form of a Čech conerve; its degree-one exactness on the
+  concrete tensor products `B ⊗ B ⊗ M` is not available, and nothing here constructs `A'` from
+  `B'` and `C'`. Here `A'` and `φ` are given.
+
 * Here `A'` and `φ` are given and the descent of `𝒥_X` is the hypothesis that `I ⊗_{A'} B → J`
   is bijective. `Folder126NilpotentDescent` removes that hypothesis in the affine case: it
   constructs `A' = Ker(B' ⇉ C')`, proves `0 → 𝒥_Y → 𝒪_Y → 𝒪_{Y₀} → 0` exact (lifting an
@@ -65,7 +83,15 @@ topoi; the affine statement used here is the module-level 063Y.
   `Module.Descent.exact_amitsur_degree_one`), and derives the bijectivity by descent
   (Stacks 023N). The vanishing `Ȟ⁰(X₀/Y₀, ℋ¹(𝒥_Y)) = 0` of Remark 2 (page 3) for fpqc
   quasi-separated covers of a non-affine `Y₀` remains open, with the other points listed there.
+
+## References
+
+* A. Grothendieck, folder 126, pp. 3–7 (finding `126-nilpotent-deformation-quotient`)
+* Stacks Project, tags 063Y, 051C, 08VU, 023N, 023M
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder126NilpotentQuotient
 

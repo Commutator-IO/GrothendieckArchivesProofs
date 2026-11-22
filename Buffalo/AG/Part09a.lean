@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09 (a): 10 July 1973, from 4:22:15
@@ -12,12 +15,22 @@ The entries of `docs/buffalo-ag/index.tex` lines 1191–1218 (video `vuys5SNs2eQ
 effective descent for schemes, the radicial and the very ample cases, norms, the finite
 extension principle, descent and group actions.
 
+## Implementation notes
+
 Conventions. mathlib has no category of descent data of schemes relative to `S' → S` and no
 relative ampleness, so the statements on descent data are made *on points* (Grothendieck's own
 reading, `X''(Z) ⊂ X'(Z) × X'(Z)`): a scheme over `S'` is replaced by a family of sets `X' s`
 over the points `s` of a set `S'` mapping to `S`, and `S'' = S' ×_S S'` by the pairs `(s, t)` with
 `π s = π t`. By Yoneda, the statements on points for every `Z` are the scheme statements.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 10 July 1973, video `vuys5SNs2eQ`,
+  4:22:15–5:39:27 (`docs/buffalo-ag/index.tex`, lines 1191–1218)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Topology TensorProduct
 

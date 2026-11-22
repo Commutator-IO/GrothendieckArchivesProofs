@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part01
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01: board items not covered by the index
@@ -10,7 +13,15 @@ public import Buffalo.Groupes.Part01
 Items of the reconstructed blackboards `public/buffalo-boards/_lTf_L0yvrU-*.json` in the time
 range of Part 01 that no index entry formalises. Statuses in
 `docs/buffalo-groupes/lean/Part01-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU` (reconstructed
+  blackboards `public/buffalo-boards/_lTf_L0yvrU-*.json`)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part01
 

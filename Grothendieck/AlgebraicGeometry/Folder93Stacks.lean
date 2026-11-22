@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.DeRham.Cartier.Coordinates
 public import Grothendieck.AlgebraicGeometry.Folder93
-
-@[expose] public section
 
 /-!
 # Folder 93: Cartier descent in rank one on an algebra with Frobenius coordinates
@@ -21,7 +24,10 @@ differentials `dt₁, …, dtₙ` a basis of `Ω[B⁄A]`. A polynomial algebra o
 them, and so does an algebra étale over one; the same file proves the Cartier isomorphism for
 them.
 
-**What is proved.** For a basis `b` of `Ω[B⁄A]` with `b j = dtⱼ`:
+## Main results
+
+For a basis `b` of `Ω[B⁄A]` with `b j = dtⱼ`:
+
 * `partialD`: the partial derivative `∂/∂tⱼ`, the coordinate of `d y` along `dtⱼ`;
 * `partialD_t`: `∂tₗ/∂tⱼ = δₗⱼ`;
 * `partialD_iterate_p_eq_zero`: `(∂/∂tⱼ)ᵖ = 0` on `B`. It kills the `p`-th powers and lowers
@@ -31,9 +37,19 @@ them.
   `a ∈ B` whose connection `∂/∂tⱼ + a` has zero `p`-curvature, `aᵖ + (∂/∂tⱼ)^{p-1} a = 0`, the
   horizontal sections generate `B`. This is `Folder93.horizontal_generate` with `x = tⱼ`.
 
-Not formalised: Cartier descent for a connection in several variables at once (integrable,
+## Not formalised
+
+Cartier descent for a connection in several variables at once (integrable,
 all `p`-curvatures zero), for a nontrivial line bundle, and in higher rank on such an algebra.
+
+## References
+
+* A. Grothendieck, Folder 93
+* the vendored AxiomMath/Stacks file `StacksFrontier/RingTheory/DeRham/Cartier/Coordinates.lean`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder93.Frobenius
 
@@ -88,7 +104,8 @@ theorem partialD_prod_eq_zero (j : Fin n) (a : Fin n → ℕ) (s : Finset (Fin n
     have hlj : ¬ l = j := by
       rintro rfl
       exact hs (Finset.mem_insert_self _ _)
-    rw [Finset.prod_insert hl, Derivation.leibniz, Derivation.leibniz_pow, partialD_t_of_ne b hb hlj, ih (fun h => hs (Finset.mem_insert_of_mem h))]
+    rw [Finset.prod_insert hl, Derivation.leibniz, Derivation.leibniz_pow,
+      partialD_t_of_ne b hb hlj, ih (fun h => hs (Finset.mem_insert_of_mem h))]
     simp
 
 include hb in

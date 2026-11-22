@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder11
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.Concrete.DiagonalExpansion
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 11 (pages 33, 37, 41): push-forwards into a graded algebra with a diagonal class
@@ -18,18 +21,13 @@ of its pull-back (`Folder11.Simplicial.adj`, `adj_unique`), so a morphism is det
 pull-back and every pull-back has one.
 
 This file proves that step in the graded case, with the signs, for an algebra whose duality is
-given by a diagonal class `Δ` rather than assumed. The vendored AxiomMath/Stacks file
-`StacksFrontier/AlgebraicGeometry/WeilCohomology/Concrete/DiagonalExpansion.lean` (the algebra
-of the proofs of Stacks Lemma 0FIJ and Remark 0FIK) packages, in
-`Stacks.WeilCohomology.DiagonalExpansion.DiagonalData`, a `ℤ`-graded graded-commutative
-algebra `A` with `A ⊗ A ≅ B` by Künneth, a class `Δ = κ(∑ e_t ⊗ f_t) ∈ B^n`, `n` even, with
-`Δ · p₁ a = Δ · p₂ a`, and a gauge `λ` vanishing outside degree `n` with `∑ λ(f_t) e_t = 1`.
-These two conditions on `Δ` are candidate axioms for the page's `Δ`; from them the library
-proves that `λ(y x)` is a perfect pairing in complementary degrees
-(`isPerfPair_tracePairing`) and that `λ` is the only gauge so normalised (`trace_unique`).
+given by a diagonal class `Δ` rather than assumed.
 
-**What is proved**, for `hD : DiagonalData 𝒜 ℬ p₁ p₂ n Δ λ l`, any `F`-algebra `E` (no grading
-needed) with a linear form `κ_E`, and any algebra map `h : A → E` (the pull-back `f^*`):
+## Main results
+
+For `hD : DiagonalData 𝒜 ℬ p₁ p₂ n Δ λ l`, any `F`-algebra `E` (no grading needed) with a
+linear form `κ_E`, and any algebra map `h : A → E` (the pull-back `f^*`):
+
 * `trace_mul_decompose`, `eq_zero_of_forall_trace_mul`: `λ(y x)` is nondegenerate on the whole
   of `A`, not only between homogeneous pieces;
 * `push`, `trace_mul_push`: the push-forward `h_* x = ∑_t (-1)^{a_t} κ_E(h(e_t) x) f_t`, with
@@ -41,11 +39,33 @@ needed) with a linear form `κ_E`, and any algebra map `h : A → E` (the pull-b
   `f : E → A` with the projection formula and `λ ∘ f = κ_E` is `h_*`;
 * `gauge_unique`: the gauge of `A` is determined by `Δ` (Remark 0FIK, from `trace_unique`).
 
-Not formalised: the graded simplicial bivariant algebras themselves (tensor powers of graded
-algebras with Koszul signs, the Künneth isomorphisms `A(I) ⊗ A(pt) ≅ A(I ⊔ pt)`), hence the
-graded equivalence of pages 37 and 41, and p. 41's full faithfulness of `A ↦ (A(pt), Δ)`
-as a functor: the axioms above are offered for its `Δ`, not read on the page.
+## Implementation notes
+
+The vendored AxiomMath/Stacks file
+`StacksFrontier/AlgebraicGeometry/WeilCohomology/Concrete/DiagonalExpansion.lean` (the algebra
+of the proofs of Stacks Lemma 0FIJ and Remark 0FIK) packages, in
+`Stacks.WeilCohomology.DiagonalExpansion.DiagonalData`, a `ℤ`-graded graded-commutative
+algebra `A` with `A ⊗ A ≅ B` by Künneth, a class `Δ = κ(∑ e_t ⊗ f_t) ∈ B^n`, `n` even, with
+`Δ · p₁ a = Δ · p₂ a`, and a gauge `λ` vanishing outside degree `n` with `∑ λ(f_t) e_t = 1`.
+These two conditions on `Δ` are candidate axioms for the page's `Δ`; from them the library
+proves that `λ(y x)` is a perfect pairing in complementary degrees
+(`isPerfPair_tracePairing`) and that `λ` is the only gauge so normalised (`trace_unique`).
+
+## Not formalised
+
+The graded simplicial bivariant algebras themselves (tensor powers of graded algebras with
+Koszul signs, the Künneth isomorphisms `A(I) ⊗ A(pt) ≅ A(I ⊔ pt)`), hence the graded
+equivalence of pages 37 and 41, and p. 41's full faithfulness of `A ↦ (A(pt), Δ)` as a
+functor: the axioms above are offered for its `Δ`, not read on the page.
+
+## References
+
+* A. Grothendieck, folder 11, pp. 33, 37, 41
+* Stacks Project, tags 0FIJ, 0FIK
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder11.GradedPoincare
 

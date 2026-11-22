@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 62, pages 35–47: the invariant `j` of a conic with an étale trisection
@@ -25,6 +28,8 @@ This is finding `62-triples-rigidified-moduli` of `src/content/findings.ts`, fib
 over a field `K` in which `6` is invertible, for `t ∉ {0, 1}` (the points off the
 trisection).
 
+## Main results
+
 * `j_sub_j`, `j_eq_iff`: for `s, t ∉ {0, 1}`, `j s − j t` is `4/27` times the product
   of the six factors `s − g(t)`, denominators cleared, divided by `(s(s − 1) t(t − 1))²`; so
   `j s = j t` iff `s` is one of the six images of `t`.
@@ -37,8 +42,18 @@ trisection).
 * `j_eq_one_sub_jcl`: `j = 1 − j_cl/1728`.
 * `kappa_kappa`: `κ` is an involution; `j_kappa_mul`: `j(κt) j(t) = 1` (12).
 
-The torsor and barycentre descriptions of pages 49–53, over a base, are not formalised.
+## Not formalised
+
+The torsor and barycentre descriptions of pages 49–53, over a base.
+
+## References
+
+* A. Grothendieck, folder 62, pp. 35–47 (finding `62-triples-rigidified-moduli`); modernised
+  reading `transcripts/62/62.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Folder62
 

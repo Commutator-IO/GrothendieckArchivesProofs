@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.CategoryTheory.Folder113
 public import Mathlib.CategoryTheory.Linear.LinearFunctor
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.Motives.Category
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 113, page 3: Morita invariance in its `k`-linear form
@@ -15,15 +18,9 @@ additive form (`morita`: restriction along `P° → (Kar P)°` is an equivalence
 and leaves out the `k`-linear form, for want of a `k`-linear structure on the Karoubi envelope in
 Mathlib.
 
-That structure is `CategoryTheory.Idempotents.Karoubi.linear` (with `Karoubi.instModule`) of the
-vendored AxiomMath/Stacks file
-`StacksFrontier/AlgebraicGeometry/WeilCohomology/Motives/Category.lean`, the file of the
-category of Chow motives (Stacks tag 0FGA): `r • f` on `Hom((X, p), (Y, q))` is `r • f` in `P`,
-which the idempotents absorb. Upstream it is a `local instance`; this file switches it on with
-`attribute [local instance]`, so that it is in force only here.
+## Main results
 
-**What is proved.** Let `k` be a commutative ring, `P` a `k`-linear category and `D` a
-`k`-linear category.
+Let `k` be a commutative ring, `P` a `k`-linear category and `D` a `k`-linear category.
 * `linear_of_toKaroubi_op`: a functor on `(Kar P)°` is `k`-linear as soon as its
   restriction to `P°` is (the `k`-linear analogue of `additive_of_toKaroubi_op`);
 * `linearFunctor`, `restrictionLinear`: the full subcategory of additive `k`-linear functors and
@@ -34,10 +31,28 @@ which the idempotents absorb. Upstream it is a `local instance`; this file switc
 * `morita_linear_module`: the case `D = ModuleCat k`, the reading's `(Kar P)^k ≃ P^k` with
   `P^k` the `k`-linear presheaves of `k`-modules.
 
-Not formalised: the reading's remark that an additive functor `P° → Ab` is automatically
-`k`-module valued (so that `P^k` does not depend on the `k`-structure), and
-`Kar(P) ≃ Proj_tf(P^k)`.
+## Implementation notes
+
+The `k`-linear structure is `CategoryTheory.Idempotents.Karoubi.linear` (with
+`Karoubi.instModule`) of the vendored AxiomMath/Stacks file
+`StacksFrontier/AlgebraicGeometry/WeilCohomology/Motives/Category.lean`, the file of the
+category of Chow motives (Stacks tag 0FGA): `r • f` on `Hom((X, p), (Y, q))` is `r • f` in `P`,
+which the idempotents absorb. Upstream it is a `local instance`; this file switches it on with
+`attribute [local instance]`, so that it is in force only here.
+
+## Not formalised
+
+The reading's remark that an additive functor `P° → Ab` is automatically `k`-module valued (so
+that `P^k` does not depend on the `k`-structure), and `Kar(P) ≃ Proj_tf(P^k)`.
+
+## References
+
+* A. Grothendieck, cote 113, p. 3
+* Stacks Project, tag 0FGA
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder113
 

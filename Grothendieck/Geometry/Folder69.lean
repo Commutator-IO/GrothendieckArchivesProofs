@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.GroupTheory.Index
@@ -8,8 +13,6 @@ public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.GroupTheory.SpecificGroups.Quaternion
 public import Mathlib.Tactic.Group
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 69, pages 25–26: the automorphisms of the 27-line graph fixing a triangle
@@ -29,10 +32,7 @@ This is the reachable part of finding `69-triangle-q8-baer-torsor` of
 says only that the count holds; whether the description by a `Q₈`-Baer torsor is in the
 literature is a separate question.
 
-What is formalised. The vertices are `Fin 27`: `aᵢ = i`, `bᵢ = 6 + i` (`0 ≤ i < 6`) and
-`c_{ij} = 12 + k` for the `k`-th pair `i < j` in lexicographic order; `aᵢ` meets `bⱼ`
-iff `i ≠ j`, `aᵢ` and `bᵢ` meet `c_{jk}` iff `i ∈ {j, k}`, `c_{ij}` meets `c_{kl}` iff
-`{i, j} ∩ {k, l} = ∅`. The triangle is `t = {a₀, b₁, c₀₁}`.
+## Main results
 
 * `card_Wt`: the permutations of the vertices preserving the graph and `t` form a group
   of order `1152`; `card_aut`: the same for the graph automorphisms `C ≃g C` preserving
@@ -40,12 +40,27 @@ iff `i ≠ j`, `aᵢ` and `bᵢ` meet `c_{jk}` iff `i ∈ {j, k}`, `c_{ij}` meet
 * `card_pointwise`: those fixing `t` pointwise form a group of order `192`.
 * `degree_eq` (every line meets ten others) and `isTriangle_t`.
 
+## Implementation notes
+
+The vertices are `Fin 27`: `aᵢ = i`, `bᵢ = 6 + i` (`0 ≤ i < 6`) and
+`c_{ij} = 12 + k` for the `k`-th pair `i < j` in lexicographic order; `aᵢ` meets `bⱼ`
+iff `i ≠ j`, `aᵢ` and `bᵢ` meet `c_{jk}` iff `i ∈ {j, k}`, `c_{ij}` meets `c_{kl}` iff
+`{i, j} ∩ {k, l} = ∅`. The triangle is `t = {a₀, b₁, c₀₁}`.
+
 The proof is a stabiliser chain: the base `a₀, b₁, a₁, a₂, a₃, a₄` has orbits of sizes
 `3, 2, 8, 4, 3, 2` (`3 · 2 · 8 · 4 · 3 · 2 = 1152`); each orbit is contained in the set
 of vertices with the same incidences with the points already fixed, and exhausted by
 explicit automorphisms (`g0_7`, …, `g5_5`), checked by the kernel; an automorphism
 fixing the base fixes everything, since the base separates the vertices.
+
+## References
+
+* A. Grothendieck, folder 69, pp. 25–26 (finding `69-triangle-q8-baer-torsor`); modernised
+  reading `transcripts/69/69.modern.tex`, § 9
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder69
 

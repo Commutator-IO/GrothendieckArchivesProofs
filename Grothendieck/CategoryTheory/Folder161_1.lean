@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Localization.Bousfield
@@ -10,8 +15,6 @@ public import Grothendieck.Upstream.AdjunctionIdempotent
 public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
 public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 161-1: the fixed part of an adjunction, idempotent adjunctions, local objects
@@ -38,7 +41,18 @@ states, for an adjunction `u ⊣ v` between `E` and `F`, unit `η`, counit `ε`:
 > conclut « Or c'est vrai sauf erreur… » : un objet `Σ`-local est dans l'image
 > essentielle de `α`.
 
-What is proved here, all as the reading states it:
+**What the formalisation finds.** Nothing false. The equivalence (1) needs
+nothing beyond the adjunction; the idempotence conditions are redundant exactly
+as the footnote says; the local-object statement holds for an arbitrary
+reflective subcategory. The fifth condition of page 3 is the second one again.
+Page 6's descent of adjoints holds, and does not need `β` fully faithful.
+
+What this certifies is that the reading holds together, not that it is what the
+pages say (issue #26).
+
+## Main results
+
+All as the reading states it:
 
 * `condition1` — the equivalence (1), for any full subcategory given by an
   `ObjectProperty`, with `Ē'` its closure under isomorphism.
@@ -71,18 +85,18 @@ What is proved here, all as the reading states it:
   `ψ ∘ α'` representable is representable; hence if `β ∘ α'` has a right
   adjoint, so has `β` — without the full faithfulness of `β` the page assumes.
 
-**What the formalisation finds.** Nothing false. The equivalence (1) needs
-nothing beyond the adjunction; the idempotence conditions are redundant exactly
-as the footnote says; the local-object statement holds for an arbitrary
-reflective subcategory. The fifth condition of page 3 is the second one again.
-Page 6's descent of adjoints holds, and does not need `β` fully faithful. The
-rest of the folder (the free symmetric monoidal category, the sign `ε(L)` of
-Picard categories, the Kan-extension and Giraud material of pages 15–19) is not
-formalised here.
+## Not formalised
 
-What this certifies is that the reading holds together, not that it is what the
-pages say (issue #26).
+The rest of the folder (the free symmetric monoidal category, the sign `ε(L)` of
+Picard categories, the Kan-extension and Giraud material of pages 15–19).
+
+## References
+
+* A. Grothendieck, Folder 161-1, pp. 3–7 (reading `transcripts/161-1/161-1.modern.tex`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder161_1
 
@@ -121,7 +135,7 @@ theorem condition1 (P : ObjectProperty E) :
     have hg' : g ≫ adj.unit.app Y = e.inv := hg
     refine ⟨e.hom ≫ g, ?_, ?_⟩
     · apply bY.1
-      show (adj.unit.app Y ≫ e.hom ≫ g) ≫ adj.unit.app Y = 𝟙 Y ≫ adj.unit.app Y
+      change (adj.unit.app Y ≫ e.hom ≫ g) ≫ adj.unit.app Y = 𝟙 Y ≫ adj.unit.app Y
       rw [Category.assoc, Category.assoc, hg', e.hom_inv_id]
       simp
     · rw [Category.assoc, hg', e.hom_inv_id]
@@ -278,7 +292,7 @@ instance : (E0 adj).IsClosedUnderIsomorphisms where
   of_iso {Y Y'} e h := by
     have : IsIso (adj.unit.app Y) := h
     have hη : adj.unit.app Y' = e.inv ≫ adj.unit.app Y ≫ v.map (u.map e.hom) := by simp
-    show IsIso (adj.unit.app Y')
+    change IsIso (adj.unit.app Y')
     rw [hη]
     infer_instance
 
@@ -286,7 +300,7 @@ instance : (F0 adj).IsClosedUnderIsomorphisms where
   of_iso {P P'} e h := by
     have : IsIso (adj.counit.app P) := h
     have hε : adj.counit.app P' = u.map (v.map e.inv) ≫ adj.counit.app P ≫ e.hom := by simp
-    show IsIso (adj.counit.app P')
+    change IsIso (adj.counit.app P')
     rw [hε]
     infer_instance
 
@@ -651,7 +665,7 @@ theorem local_mem_essImage {ξ : E} (hξ : (Sigma' (α' := α')).isLocal ξ) : �
   -- … and `r` is also a section, because `α α' ξ` is local for `η`.
   have hrη : r ≫ η = 𝟙 _ := by
     apply (ObjectProperty.isLocal_adj_unit_app adj' ξ _ ⟨α'.obj ξ, rfl⟩).1
-    show η ≫ r ≫ η = η ≫ 𝟙 _
+    change η ≫ r ≫ η = η ≫ 𝟙 _
     rw [← Category.assoc, hr']
     simp
   exact ⟨α'.obj ξ, ⟨{ hom := r, inv := η, hom_inv_id := hrη, inv_hom_id := hr' }⟩⟩

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
@@ -8,8 +13,6 @@ public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import StacksFrontier.AlgebraicGeometry.Morphisms.UniversalHomeomorphism.Defs.Integral
 import Grothendieck.Attr
 
-@[expose] public noncomputable section
-
 /-!
 # Folder 126, page 17: geometric points of the fibres
 
@@ -18,14 +21,16 @@ states its hypothesis as « the fibres all have the same number `n` of geometric
 file makes that hypothesis a definition for a morphism of schemes and proves what the descent
 argument needs from it.
 
-**Definitions.**
+## Main definitions
+
 * `GeomFibre f p`: the geometric points of `X` over a geometric point `p : Spec K ⟶ Y`, i.e. the
   morphisms `q : Spec K ⟶ X` with `q ≫ f = p`.
 * `HasGeomDegree f n`: every geometric fibre of `f`, over an algebraically closed field, is
   finite with exactly `n` points (it is in bijection with `Fin n`, so that an infinite fibre is
   not counted as `0`, as `Nat.card` would).
 
-**Results.**
+## Main results
+
 * `geomFibrePullbackEquiv`, `HasGeomDegree.pullback_snd`: geometric fibres do not change under
   base change, so neither does the degree.
 * `universallyInjective_of_forall_subsingleton`: at most one geometric point over every geometric
@@ -39,7 +44,15 @@ argument needs from it.
   `hasGeomDegree_one_of_universalHomeomorphism` is the converse for a finite morphism. This is
   the criterion that makes each sheet `W_k → U` of the étale-local splitting a universal
   homeomorphism, once the `n` sheets share the `n` geometric points of every fibre.
+
+## References
+
+* A. Grothendieck, folder 126, p. 17 (finding `126-radicial-etale-factorisation`)
+* Stacks Project, tag 01S4
 -/
+
+@[expose] public noncomputable section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 

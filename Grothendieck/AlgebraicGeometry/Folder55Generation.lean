@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CoherentSiteSections
 public import Mathlib.CategoryTheory.Sites.Spaces
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
-
-@[expose] public section
 
 /-!
 # Local generation on the slice site of a topological space, checked point by point
@@ -15,6 +18,9 @@ family (`Stacks.SheafOfModules.GeneratesLocally`) and finite type in the section
 forms used for the coherence of the structure sheaf in
 `Grothendieck/AlgebraicGeometry/Folder55Coherent.lean`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TopologicalSpace Opposite Stacks.SheafOfModules
 

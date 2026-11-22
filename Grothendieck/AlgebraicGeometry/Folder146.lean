@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 146, page 70: the trivialising exponents of `L_i` and `L` on `M_{0,n}`, `n = 4, 5, 6`
@@ -15,15 +18,12 @@ smallest exponent that makes the line bundles `L_i` (attached to the marked poin
 gives `3` for `L` and `6` for `L_i`. The reading does not verify the table. This file settles the
 two entries for `n = 4`; it is the reachable part of finding
 `146-equivariant-trivialising-exponents` of `src/content/findings.ts`, which drops if the
-`n = 4` values do not check.
+`n = 4` values do not check. It also settles the columns `n = 5` and `n = 6`, and proves the
+general formula for every `n` in a homogeneous model.
 
-The model. `M_{0,4} = U = ℙ¹ ∖ {0, 1, ∞}` with coordinate `λ`, the fourth point moving;
-`𝔖_{I∖{4}} = 𝔖₃` permutes `0, 1, ∞` and acts on `U` by the six anharmonic substitutions
-(`anh`, composition table `mul`, `mul_group`, `anh_mul`), and on the tangent line `L₄` at the
-moving point through the derivative `g′(λ)` (`der`). By the chain rule (`der_mul`),
-`g ↦ g′(λ)` is a 1-cocycle of `𝔖₃` with values in the units of `O(U)`; as `Pic(U) = 0`, the
-equivariant structures on `L₄^{⊗m}` up to isomorphism are classified by the class of its
-`m`-th power, and the exponent of the table is the order of that class.
+## Main results
+
+### `n = 4`, the bundle `L₄`
 
 * `der_pow_six`: `g′(λ)⁶ = h(gλ)/h(λ)` with `h = λ⁴(1 − λ)⁴`, so `L₄^{⊗6}` is equivariantly
   trivial.
@@ -34,16 +34,19 @@ equivariant structures on `L₄^{⊗m}` up to isomorphism are classified by the 
 
 So the class of `L₄` has order exactly `6`, the value of the table.
 
+### `n = 4`, the bundle `L`
+
 The entry `3` for `L = L₁ ⊗ L₂ ⊗ L₃ ⊗ L₄` under `𝔖₄`, page 70, also checks, for the cocycle
 `derL g = sgn g · g′(λ)` of `L` (the Klein group acting trivially, see the section on `L`):
+
 * `derL_mul`: it is a 1-cocycle; `derL_pow_three`: its cube is the coboundary of
   `λ²(1 − λ)²`;
 * `coboundary_derL_iff`: its `m`-th power is the coboundary of a nowhere-zero function on
   `U(K)` iff `3 ∣ m` (`3 ≠ 0`, a root `ζ` of `ζ² − ζ + 1`, where the factor is `ζ²`).
+
 Page 72 only claims `L^{⊗6} ≃ 1`.
 
-Not formalised: the identification of the equivariant Picard group with `H¹(𝔖₃, O(U)^*)`, the
-reduction from `𝔖₄` to `𝔖₃` and the formula `sgn g · g′(λ)` for the action on `L`.
+### `n = 5` and `n = 6`
 
 The column `n = 5`, queried on the page (« 12 ? » for `L` and for `L_i`), is settled at the
 end of the file at the level of cocycles: `L` has order `4` (`coboundary_cL_iff`), `L₅` has
@@ -51,13 +54,39 @@ order `12` (`coboundary_c5_iff`). The column `n = 6` (« 20 ? » for `L`, « 60 
 settled after it: `L` has order `5` (`coboundary_cL6_iff`), `L₆` has order `20`
 (`coboundary_c6_iff`).
 
+### Every `n`
+
 The last section proves the general formula, for every `n`, in a homogeneous model of
 `M_{0,n}` (configurations of vectors of `K²`, functions of weight instead of cocycles): `L`
 has order `n − 1` (`trivL_iff`) and `L_i` has order `(n − 1)(n − 2)` (`trivLi_iff`). The
 final section shows that, for `n = 4, 5, 6`, the two models agree: a trivialisation in the
 homogeneous model restricts to one of the normalised cocycles (`coboundary_cL_of_trivL` and
 its companions, `trivL_five_iff` and its companions).
+
+## Implementation notes
+
+The model. `M_{0,4} = U = ℙ¹ ∖ {0, 1, ∞}` with coordinate `λ`, the fourth point moving;
+`𝔖_{I∖{4}} = 𝔖₃` permutes `0, 1, ∞` and acts on `U` by the six anharmonic substitutions
+(`anh`, composition table `mul`, `mul_group`, `anh_mul`), and on the tangent line `L₄` at the
+moving point through the derivative `g′(λ)` (`der`). By the chain rule (`der_mul`),
+`g ↦ g′(λ)` is a 1-cocycle of `𝔖₃` with values in the units of `O(U)`; as `Pic(U) = 0`, the
+equivariant structures on `L₄^{⊗m}` up to isomorphism are classified by the class of its
+`m`-th power, and the exponent of the table is the order of that class.
+
+## Not formalised
+
+The identification of the equivariant Picard group with `H¹(𝔖₃, O(U)^*)`, the reduction from
+`𝔖₄` to `𝔖₃` and the formula `sgn g · g′(λ)` for the action on `L`.
+
+## References
+
+* A. Grothendieck, cote 146 (« Les fibrés `L_i` et le groupe de Picard équivariant »),
+  pp. 70–73 (finding `146-equivariant-trivialising-exponents`); modernised reading
+  `transcripts/146/146.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder146
 
@@ -1253,14 +1282,25 @@ lemma step5 (i : Fin 4) {p : K × K} (hp : U5 p) : ∃ (a b c d : K) (t : Fin 5 
     · simp [Fin.prod_univ_succ, cL]; norm_num
   · refine ⟨1, 0, 1, -1, ![-1, 1, 1, 1 / (p.1 - 1), 1 / (p.2 - 1)], by norm_num, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [e1, e1']
-    · funext k; fin_cases k <;> simp [cfg5, lin, act5, Equiv.swap_apply_def] <;>
+    · funext k; fin_cases k <;> simp only [cfg5, act5, Fin.zero_eta, Fin.isValue,
+        Matrix.cons_val_zero, one_div, lin, Nat.reduceAdd, Fin.mk_one, Fin.castSucc_one,
+        Fin.succ_one_eq_two, Equiv.swap_apply_def, zero_ne_one, ↓reduceIte, Fin.reduceEq, mul_zero,
+        mul_one, add_zero, zero_add, neg_smul, one_smul, Prod.neg_mk, neg_zero, neg_neg,
+        Matrix.cons_val_one, Matrix.cons_val, Fin.reduceFinMk,
+        add_neg_cancel, one_mul, Prod.smul_mk, smul_eq_mul,
+        Prod.mk.injEq] <;>
         (try refine ⟨?_, ?_⟩) <;> (field_simp; try ring)
     · simp [Fin.prod_univ_succ, cL]; field_simp
   · refine ⟨1 - p.1, 0, 1, -p.1, ![-1 / p.1, 1 / (1 - p.1), 1 / (p.1 * (1 - p.1)), 1,
       1 / (p.2 - p.1)], ?_, ?_, ?_, ?_⟩
     · simp [h0, e2]
     · intro k; fin_cases k <;> simp [h0, e2, e3]
-    · funext k; fin_cases k <;> simp [cfg5, lin, act5, Equiv.swap_apply_def] <;>
+    · funext k; fin_cases k <;> simp only [cfg5, act5, Fin.zero_eta, Fin.isValue,
+        Matrix.cons_val_zero, one_div, mul_inv_rev, lin, Nat.reduceAdd, Fin.reduceFinMk,
+        Fin.reduceCastSucc, Fin.reduceSucc, Equiv.swap_apply_def, Fin.reduceEq, ↓reduceIte,
+        mul_zero, mul_one, add_zero, zero_add, Prod.smul_mk, smul_eq_mul, mul_neg, Prod.mk.injEq,
+        true_and, Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val, one_mul,
+        add_neg_cancel, and_true, one_smul] <;>
         (try refine ⟨?_, ?_⟩) <;> (field_simp; try ring)
     · simp [Fin.prod_univ_succ, cL]; field_simp; ring
   · refine ⟨1, 0, 0, 1, ![1, 1, 1, 1, 1], by norm_num, ?_, ?_, ?_⟩
@@ -1318,16 +1358,30 @@ lemma step5i (i : Fin 3) {p : K × K} (hp : U5 p) : ∃ (a b c d s : K) (t : Fin
   · refine ⟨1, 0, 1, -1, 1 / (p.2 - 1), ![-1, 1, 1, 1 / (p.1 - 1)], by norm_num, by simp [e1'],
       ?_, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [e1]
-    · simp [act4, act5, lin]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
+    · simp only [act4, act5, Fin.mk_one, Fin.isValue, Fin.castSucc_one, one_div, lin, one_mul,
+          mul_one, add_zero, Prod.smul_mk, smul_eq_mul,
+          Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
-      fin_cases k <;> (simp [pts4, lin, act4, act5, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [pts4, act4, act5, Fin.mk_one, Fin.isValue, Fin.castSucc_one,
+          Fin.zero_eta, Matrix.cons_val_zero, one_div, lin, Nat.reduceAdd, Fin.succ_one_eq_two,
+          Equiv.swap_apply_def, zero_ne_one, ↓reduceIte, Fin.reduceEq, mul_zero, mul_one, add_zero,
+          zero_add, neg_smul, one_smul, Prod.neg_mk, neg_zero, neg_neg, Matrix.cons_val_one,
+          Matrix.cons_val, Fin.reduceFinMk, 
+          add_neg_cancel, one_mul, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]
                        try field_ring)
     · simp [c5]; field_simp
   · refine ⟨1 - p.1, 0, 1, -p.1, 1 / (p.2 - p.1), ![-1 / p.1, 1 / (1 - p.1),
       1 / (p.1 * (1 - p.1)), 1], by simp [h0, e2], by simp [e3], ?_, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [h0, e2]
-    · simp [act4, act5, lin]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
-    · funext k; fin_cases k <;> simp [pts4, lin, act4, act5, Equiv.swap_apply_def] <;>
+    · simp only [act4, act5, Fin.reduceFinMk, Fin.reduceCastSucc, one_div, lin, mul_one, add_zero,
+          one_mul, Prod.smul_mk, smul_eq_mul,
+          Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
+    · funext k; fin_cases k <;> simp only [pts4, act4, act5, Fin.reduceFinMk, Fin.reduceCastSucc,
+        Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero, one_div, mul_inv_rev, lin, Nat.reduceAdd,
+        Fin.reduceSucc, Equiv.swap_apply_def, Fin.reduceEq, ↓reduceIte, mul_zero, mul_one, add_zero,
+        zero_add, Prod.smul_mk, smul_eq_mul, mul_neg, Prod.mk.injEq, true_and, Fin.mk_one,
+        Matrix.cons_val_one, Matrix.cons_val, one_mul, add_neg_cancel,
+        and_true, one_smul] <;>
         (try refine ⟨?_, ?_⟩) <;> (field_simp; try ring)
     · simp [c5]; field_simp; ring
 
@@ -1399,14 +1453,24 @@ lemma step6 (i : Fin 5) {p : K × K × K} (hp : U6 p) : ∃ (a b c d : K) (t : F
       by norm_num, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [e1, e1', e1'']
     · funext k
-      fin_cases k <;> (simp [cfg6, lin, act6, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [cfg6, act6, Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero,
+          one_div, lin, Nat.reduceAdd, Fin.mk_one, Fin.castSucc_one, Fin.succ_one_eq_two,
+          Equiv.swap_apply_def, zero_ne_one, ↓reduceIte, Fin.reduceEq, mul_zero, mul_one, add_zero,
+          zero_add, neg_smul, one_smul, Prod.neg_mk, neg_zero, neg_neg, Matrix.cons_val_one,
+          Matrix.cons_val, Fin.reduceFinMk, 
+          add_neg_cancel, one_mul, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]
                        try field_ring)
     · simp [Fin.prod_univ_succ, cL6]; field_simp
   · refine ⟨1 - p.1, 0, 1, -p.1, ![-1 / p.1, 1 / (1 - p.1), 1 / (p.1 * (1 - p.1)), 1,
       1 / (p.2.1 - p.1), 1 / (p.2.2 - p.1)], by simp [h0, e2], ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [h0, e2, e3, e4]
     · funext k
-      fin_cases k <;> (simp [cfg6, lin, act6, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [cfg6, act6, Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero,
+          one_div, mul_inv_rev, lin, Nat.reduceAdd, Fin.reduceFinMk, Fin.reduceCastSucc,
+          Fin.reduceSucc, Equiv.swap_apply_def, Fin.reduceEq, ↓reduceIte, mul_zero, mul_one,
+          add_zero, zero_add, Prod.smul_mk, smul_eq_mul, mul_neg, Prod.mk.injEq, true_and,
+          Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val, one_mul,
+          add_neg_cancel, and_true, one_smul]
                        try field_ring)
     · simp [Fin.prod_univ_succ, cL6]; field_simp; ring
   · refine ⟨1, 0, 0, 1, ![1, 1, 1, 1, 1, 1], by norm_num, ?_, ?_, ?_⟩
@@ -1443,18 +1507,32 @@ lemma step6i (i : Fin 4) {p : K × K × K} (hp : U6 p) : ∃ (a b c d s : K) (t 
   · refine ⟨1, 0, 1, -1, 1 / (p.2.2 - 1), ![-1, 1, 1, 1 / (p.1 - 1), 1 / (p.2.1 - 1)],
       by norm_num, by simp [e1''], ?_, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [e1, e1']
-    · simp [act6s, act6, lin]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
+    · simp only [act6s, act6, Fin.mk_one, Fin.isValue, Fin.castSucc_one, one_div, lin, one_mul,
+          mul_one, add_zero, Prod.smul_mk, smul_eq_mul,
+          Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
-      fin_cases k <;> (simp [pts5, lin, act6s, act6, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [pts5, act6s, act6, Fin.mk_one, Fin.isValue, Fin.castSucc_one,
+          Fin.zero_eta, Matrix.cons_val_zero, one_div, lin, Nat.reduceAdd, Fin.succ_one_eq_two,
+          Equiv.swap_apply_def, zero_ne_one, ↓reduceIte, Fin.reduceEq, mul_zero, mul_one, add_zero,
+          zero_add, neg_smul, one_smul, Prod.neg_mk, neg_zero, neg_neg, Matrix.cons_val_one,
+          Matrix.cons_val, Fin.reduceFinMk, 
+          add_neg_cancel, one_mul, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]
                        try field_ring)
     · simp [c6]; field_simp
   · refine ⟨1 - p.1, 0, 1, -p.1, 1 / (p.2.2 - p.1), ![-1 / p.1, 1 / (1 - p.1),
       1 / (p.1 * (1 - p.1)), 1, 1 / (p.2.1 - p.1)], by simp [h0, e2], by simp [e4], ?_, ?_,
       ?_, ?_⟩
     · intro k; fin_cases k <;> simp [h0, e2, e3]
-    · simp [act6s, act6, lin]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
+    · simp only [act6s, act6, Fin.reduceFinMk, Fin.reduceCastSucc, one_div, lin, mul_one, add_zero,
+          one_mul, Prod.smul_mk, smul_eq_mul,
+          Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
-      fin_cases k <;> (simp [pts5, lin, act6s, act6, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [pts5, act6s, act6, Fin.reduceFinMk, Fin.reduceCastSucc,
+          Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero, one_div, mul_inv_rev, lin, Nat.reduceAdd,
+          Fin.reduceSucc, Equiv.swap_apply_def, Fin.reduceEq, ↓reduceIte, mul_zero, mul_one,
+          add_zero, zero_add, Prod.smul_mk, smul_eq_mul, mul_neg, Prod.mk.injEq, true_and,
+          Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val, one_mul,
+          add_neg_cancel, and_true, one_smul]
                        try field_ring)
     · simp [c6]; field_simp; ring
   · refine ⟨1, 0, 0, 1, 1, ![1, 1, 1, 1, 1], by norm_num, one_ne_zero, ?_, ?_, ?_, ?_⟩
@@ -1556,9 +1634,21 @@ lemma step4 (a : Fin 6) {x : K} (hx : U x) :
   fin_cases a <;> refine ⟨by simp [mat4], fun k => by fin_cases k <;> simp [t4, h0, e1, e2],
     funext fun k => ?_, funext fun k => ?_, ?_, ?_⟩
   all_goals first
-    | (fin_cases k <;> (simp [mat4, t4, cfg4, pts3, perm4, lin, anh, Equiv.swap_apply_def]
+    | (fin_cases k <;> (simp only [cfg4, anh, Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero, t4,
+        lin, mat4, Nat.reduceAdd, perm4, Equiv.Perm.coe_one, id_eq, mul_zero, mul_one, add_zero,
+        zero_add, one_smul, Fin.mk_one, Matrix.cons_val_one, Fin.reduceFinMk, Matrix.cons_val,
+        one_mul, zero_mul, pts3, Fin.castSucc_zero, Fin.castSucc_one, Fin.reduceCastSucc, one_div,
+        Equiv.swap_apply_left, Equiv.swap_apply_def, one_ne_zero, ↓reduceIte, Fin.reduceEq,
+        Prod.smul_mk, smul_eq_mul, Prod.mk.injEq, true_and, neg_add_cancel,
+        neg_smul, Prod.neg_mk, neg_neg, neg_zero, neg_mul, and_true, zero_ne_one, add_neg_cancel,
+        Equiv.Perm.coe_mul, Function.comp_apply]
                         try field_ring))
-    | (simp [mat4, t4, der, derL, sgn, Fin.prod_univ_succ]; try field_ring)
+    | (simp only [t4, Fin.prod_univ_succ, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_succ,
+        Finset.univ_unique, Fin.default_eq_zero, Matrix.cons_val_fin_one, Finset.prod_const_one,
+        mul_one, one_pow, mat4, mul_zero, sub_zero, derL, sgn, der, Matrix.cons_val, one_div,
+        Finset.prod_inv_distrib, Finset.prod_const, Finset.card_singleton, pow_one, one_mul,
+        inv_pow, zero_sub, neg_mul, mul_neg, even_two, Even.neg_pow, neg_neg, sub_neg_eq_add,
+        zero_add]; try field_ring)
 
 /-- **The two models agree for `L`, `n = 4`**: restricting a trivialisation of the homogeneous
 model to `0, 1, ∞, λ` trivialises the cocycle `derL` of the anharmonic group. -/

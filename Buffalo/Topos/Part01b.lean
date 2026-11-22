@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1b: torsors, generators, abelian sheaves (11 May 1973)
@@ -11,7 +14,15 @@ import Grothendieck.Attr
 Entries of `docs/buffalo-topos/index.tex` from « Torsors and stalkwise checks » to « Abelian
 sheaves and injectives » (video `URU5jgTvjhU`, 2:33:33–3:21:12). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 2:33:33–3:21:12
+  (11 May 1973)
 -/
+
+@[expose] public section
+
 
 universe u
 
@@ -185,7 +196,8 @@ theorem sheaf_image {F G : Sheaf (Opens.grothendieckTopology X) (Type u)} (f : F
 /-- URU5jgTvjhU-11157 (3:05:57) [prop] In `Sh(X)`, a monomorphism that is an epimorphism is an
 isomorphism (the category is balanced). -/
 @[buffalo "URU5jgTvjhU-11157"]
-theorem sheaf_isIso_of_mono_of_epi {F G : Sheaf (Opens.grothendieckTopology X) (Type u)} (f : F ⟶ G) [Mono f] [Epi f] :
+theorem sheaf_isIso_of_mono_of_epi {F G : Sheaf (Opens.grothendieckTopology X) (Type u)}
+    (f : F ⟶ G) [Mono f] [Epi f] :
     IsIso f :=
   isIso_of_mono_of_epi f
 

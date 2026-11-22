@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder55LemmaB
@@ -6,8 +11,6 @@ public import Mathlib.Topology.Sheaves.Forget
 public import Mathlib.Algebra.Category.Ring.Limits
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 55, page 13: the structure sheaf of the counterexample, as a sheaf of rings
 
@@ -15,7 +18,14 @@ import Grothendieck.Attr
 a sheaf of rings on `Xsp`, `Grothendieck.Folder55LemmaB.Osheaf`, the input of the coherence
 statements of `Grothendieck/AlgebraicGeometry/Folder55Coherent.lean`. The ring data `κ`, `ε`, `ι`
 stay abstract.
+
+## References
+
+* A. Grothendieck, folder 55, p. 13 (Lemme B)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TopologicalSpace Opposite
 
@@ -29,7 +39,7 @@ theorem O_zero_mem (U : Opens Xsp) : (0 : Sec k D K U) ∈ (O κ ε ι).sections
   refine ⟨fun _ _ => ⟨?_, ?_, rfl⟩, fun _ _ => ?_, fun _ => ⟨0, fun y _ => ?_⟩⟩
   · exact map_zero ι
   · exact map_zero ι
-  · show ι (κ (0 : k)) = (0 : K)
+  · change ι (κ (0 : k)) = (0 : K)
     rw [map_zero, map_zero]
   · exact (map_zero (constHom κ ι y.1)).symm
 
@@ -39,17 +49,17 @@ theorem O_neg_mem {U : Opens Xsp} {s : Sec k D K U} (hs : s ∈ (O κ ε ι).sec
   refine ⟨fun n h => ?_, fun n h => ?_, fun h => ?_⟩
   · obtain ⟨h1, h2, h3⟩ := hsC n h
     refine ⟨?_, ?_, ?_⟩
-    · show ι (-atC s h).1 = -atO s (mem_o_of_c h)
+    · change ι (-atC s h).1 = -atO s (mem_o_of_c h)
       rw [Prod.fst_neg, map_neg, h1]
-    · show ι (-atC s h).2 = -atD s (mem_d_of_c h)
+    · change ι (-atC s h).2 = -atD s (mem_d_of_c h)
       rw [Prod.snd_neg, map_neg, h2]
-    · show ε (-atC s h).1 = ε (-atC s h).2
+    · change ε (-atC s h).1 = ε (-atC s h).2
       rw [Prod.fst_neg, Prod.snd_neg, map_neg, map_neg, h3]
-  · show ι (κ (-atE s h)) = -atO s (mem_o_of_e h)
+  · change ι (κ (-atE s h)) = -atO s (mem_o_of_e h)
     rw [map_neg, map_neg, hsE n h]
   · obtain ⟨N, hN⟩ := hsI h
     refine ⟨N, fun y hy => ?_⟩
-    show -s y = constHom κ ι y.1 (-atInf s h)
+    change -s y = constHom κ ι y.1 (-atInf s h)
     rw [map_neg, hN y hy]
 
 /-- The sections of `𝒪` over `U`, as a subring of all the functions. -/

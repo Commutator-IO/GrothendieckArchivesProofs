@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.GroupTheory.GroupAction.Quotient
@@ -14,8 +19,6 @@ public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 public import Grothendieck.Upstream.SemilocalStableRange
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 79: coset graphs with homotheties, and the polyhedra `P_{M,i}` of `(Z/n)²`
 
@@ -24,15 +27,14 @@ traduction en théorie des groupes », pages 238 to 269; « Le commutant de
 `SL(M)` et de `SL(M)'` », pages 92 to 95; « Un sommet est-il déterminé par son
 étoile ? », pages 275 to 280; « Orientation et connexité », pages 17 to 20;
 « Lire `Z'_Λ` sur les étoiles » and « Le fait mirifique », pages 96 to 101 and
-136 to 140; « Points antipodiques et homothéties », pages 178 to 189) is the source of the findings `79-homothety-groups-as-subgroups`,
-`79-commutant-octahedral-exception`, `79-vertex-determined-by-star`,
-`79-semilocal-diameter-three`, `79-star-polygon-twist` and
-`79-homothety-distance-three` of
-`src/content/findings.ts`. Proving them says only that the claims hold as
-stated (or as corrected below); whether they stand in the literature is a
+136 to 140; « Points antipodiques et homothéties », pages 178 to 189) is the source of the
+findings `79-homothety-groups-as-subgroups`, `79-commutant-octahedral-exception`,
+`79-vertex-determined-by-star`, `79-semilocal-diameter-three`, `79-star-polygon-twist` and
+`79-homothety-distance-three` of `src/content/findings.ts`. Proving them says only that the
+claims hold as stated (or as corrected below); whether they stand in the literature is a
 separate question.
 
-What is formalised:
+## Main results
 
 * **(88)–(89), pages 242 to 247.** For a group `H`, a subgroup `U₀` and
   `σ ∈ H` with `σ² ∈ U₀` and `U₀ ∩ σU₀σ⁻¹ = 1` (the coset graph `H/U₀`, with
@@ -76,16 +78,32 @@ What is formalised:
   `homothety_adj` (if `λx` is a neighbour of `x`, it is the only one),
   `homothety_common_nbr` (a common neighbour of `x` and `λx` forces equal
   stars), hence `homothety_dist_ge_three`: if `x` has two neighbours and no
-  other vertex has its star, `λx` is at distance at least `3` from `x`. The
-  double-cone lemma of page 275 (equal stars only for the octahedron) is not
-  formalised; in the model it is replaced by `same_star_iff`. In the model
-  (`Adj`, edges of type `± e` on `M*/±1`), over any commutative ring:
-  `commutant_dist` (a map `λ ≠ 1` commuting with `SL(2, R)` fixes no vertex,
-  moves none to a neighbour, and moves one, equivalently all, to distance `2`
+  other vertex has its star, `λx` is at distance at least `3` from `x`. In the model,
+  over any commutative ring: `commutant_dist` (a map `λ ≠ 1` commuting with `SL(2, R)` fixes
+  no vertex, moves none to a neighbour, and moves one, equivalently all, to distance `2`
   iff `R` is exceptional and `λ = σ`), `sigma_common_nbr`; over a semi-local
   ring `commutant_dist_three` (distance exactly `3` for `λ ≠ 1, σ`), and over
   `Z/n`, `n ≥ 2`, `zmod_scal_dist_three` (units `μ ≠ ± 1`).
+
+## Implementation notes
+
+The model is `Adj`, edges of type `± e` on `M*/±1`. On page 188 the double-cone lemma of
+page 275 is replaced, in the model, by `same_star_iff`.
+
+## Not formalised
+
+The double-cone lemma of page 275 (equal stars only for the octahedron).
+
+## References
+
+* A. Grothendieck, folder 79, pp. 17–20, 67, 92–101, 136–140, 178–189, 238–269, 275–280
+  (findings `79-homothety-groups-as-subgroups`, `79-commutant-octahedral-exception`,
+  `79-vertex-determined-by-star`, `79-semilocal-diameter-three`, `79-star-polygon-twist`,
+  `79-homothety-distance-three`); modernised reading `transcripts/79/79.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder79
 
@@ -683,7 +701,10 @@ theorem exceptional_zmod_iff (n : ℕ) :
     have : (4 : ZMod n) = ((4 : ℕ) : ZMod n) := by norm_num
     rw [this, ZMod.natCast_eq_zero_iff] at h4
     have hle : n ≤ 4 := Nat.le_of_dvd (by norm_num) h4
-    interval_cases n <;> simp_all <;> revert h2 <;> decide
+    interval_cases n <;> simp_all only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_dvd_iff,
+        isUnit_iff_eq_one, IsUnit.dvd, Nat.cast_ofNat, Nat.one_le_ofNat, OfNat.one_ne_ofNat,
+        Nat.reduceDvd, Nat.reduceLeDiff, Nat.reduceEqDiff, dvd_refl,
+        Std.le_refl] <;> revert h2 <;> decide
   · rintro rfl
     refine ⟨fun s => ?_, by decide⟩
     fin_cases s <;> decide
@@ -771,7 +792,8 @@ theorem sigma_ne_scal (hR : Exceptional R) (h2 : (2 : R) ≠ 0) (c : Rˣ) (v : V
   | H x y h =>
     rw [sigma_vtx, scal_vtx, Ne, vtx_eq_iff]
     rintro (e | e) <;> apply h2 <;>
-      simpa [det2_add_right, det2_smul_right, det2_neg_right, det2_self, h] using congrArg (det2 x) e
+      simpa [det2_add_right, det2_smul_right, det2_neg_right,
+          det2_self, h] using congrArg (det2 x) e
 
 /-- The ring computation of pages 93 to 95: a unimodular `(p, q)` whose class
 is fixed by every `(1, t; 0, 1)` modulo `± 1`. -/
@@ -1078,7 +1100,8 @@ theorem semilocal_dist_three [Finite (MaximalSpectrum R)] (e : Rˣ) {x y : Fin 2
 /-- A local ring is semi-local. -/
 theorem finite_maximalSpectrum_of_local [IsLocalRing R] : Finite (MaximalSpectrum R) := by
   have : Subsingleton (MaximalSpectrum R) := ⟨fun a b => MaximalSpectrum.ext
-    ((IsLocalRing.eq_maximalIdeal a.isMaximal).trans (IsLocalRing.eq_maximalIdeal b.isMaximal).symm)⟩
+    ((IsLocalRing.eq_maximalIdeal a.isMaximal).trans
+      (IsLocalRing.eq_maximalIdeal b.isMaximal).symm)⟩
   exact Finite.of_subsingleton
 
 /-- The case of a local ring (in particular a field). -/
@@ -1702,7 +1725,8 @@ induces at `s` is the one it induces at `g s`. -/
 @[montpellier "79, 184–187"]
 theorem toSix_at_smul (hn : 2 < n) (hpol : ∀ s, IsPolygon n (onStar A A s))
     {l g : Equiv.Perm S} (hg : ∀ a b, A (g a) (g b) ↔ A a b) (hgl : g * l = l * g)
-    {ν : (ZMod n)ˣ} {s : S} (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
+    {ν : (ZMod n)ˣ} {s : S}
+    (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
     onStar A (twistGraph A l) (g s) = (twist ν (⟨_, hpol (g s)⟩ : Pol n _)).1 := by
   obtain ⟨φ, hφ⟩ := hpol s
   have hA : onStar A A (g s) = cyc (φ.trans (starEquiv hg s)) 1 := by
@@ -1729,7 +1753,8 @@ theorem toSix_of_transitive (hn : 2 < n) (hpol : ∀ s, IsPolygon n (onStar A A 
     {l : Equiv.Perm S}
     (htr : ∀ s s' : S, ∃ g : Equiv.Perm S, (∀ a b, A (g a) (g b) ↔ A a b) ∧ g * l = l * g ∧
       g s = s')
-    {ν : (ZMod n)ˣ} {s : S} (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
+    {ν : (ZMod n)ˣ} {s : S}
+    (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
     ToSix A hpol l ν := fun s' => by
   obtain ⟨g, hg, hgl, rfl⟩ := htr s s'
   exact toSix_at_smul hn hpol hg hgl h
@@ -2054,8 +2079,10 @@ theorem homothety_dist_le_two (hσ : σ * σ ∈ U₀) (hl : ∀ (h : H) x, l (h
     (hconn : ∀ a b, Relation.ReflTransGen (IsArc (U₀ := U₀) (σ := σ)) a b) {x : H ⧸ U₀}
     (hx : l x = x ∨ IsArc (U₀ := U₀) (σ := σ) x (l x) ∨
       ∃ t, IsArc (U₀ := U₀) (σ := σ) x t ∧ IsArc (U₀ := U₀) (σ := σ) t (l x)) :
-    n = 4 ∧ (∃ e : H ⧸ U₀ ≃ Fin 3 × Bool, ∀ a b, IsArc (U₀ := U₀) (σ := σ) a b ↔ (e a).1 ≠ (e b).1) ∧
-      ∀ y, l y ≠ y ∧ star (IsArc (U₀ := U₀) (σ := σ)) (l y) = star (IsArc (U₀ := U₀) (σ := σ)) y := by
+    n = 4 ∧ (∃ e : H ⧸ U₀ ≃ Fin 3 × Bool,
+        ∀ a b, IsArc (U₀ := U₀) (σ := σ) a b ↔ (e a).1 ≠ (e b).1) ∧
+      ∀ y, l y ≠ y ∧
+        star (IsArc (U₀ := U₀) (σ := σ)) (l y) = star (IsArc (U₀ := U₀) (σ := σ)) y := by
   have fixed : ∀ y, l y ≠ y := fun y e => hl1 (homothety_fixed hl e)
   -- the star of `x` has two distinct vertices, so `λ x` is not a neighbour of `x`
   have hadj : ¬ IsArc (U₀ := U₀) (σ := σ) x (l x) := by
@@ -2238,7 +2265,8 @@ theorem octahedron_toSix (e : (ZMod 4)ˣ) :
   have tri : ∀ u t, Adj (ZMod 4) e u t → ∃ w, Adj (ZMod 4) e w u ∧ Adj (ZMod 4) e w t :=
     fun _ _ h => triangulated_of_pol (fun _ _ => adj_symm_model (e : ZMod 4))
       (isPolygon_adj (by norm_num) e) h
-  refine ⟨toSix_one_of_star_eq (by norm_num) _ (l := sigmaPerm exceptional_zmod_four) hs, toSix_one_of_star_eq (by norm_num) _ h1,
+  refine ⟨toSix_one_of_star_eq (by norm_num) _ (l := sigmaPerm exceptional_zmod_four) hs,
+    toSix_one_of_star_eq (by norm_num) _ h1,
     by rw [twistGraph_eq_self hs]; exact tri, by rw [twistGraph_eq_self h1]; exact tri, ?_⟩
   intro h
   apply sigma_ne_scal exceptional_zmod_four (by decide) 1 (vtx det2_e)

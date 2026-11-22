@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.LinearAlgebra.Matrix.Trace
@@ -13,36 +18,49 @@ public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 85: the invariant of a rotation of order 5 (pages 10, 27, 30, 40)
 
-**Partial, and chosen.** The finding `85-a5-pgl2-moduli-spec-z-phi`
-(`src/content/findings.ts`) states the theorem of page 40 of the reading
-(`transcripts/85/85.modern.tex`):
+Three findings of `src/content/findings.ts`, all partial, on the reading
+(`transcripts/85/85.modern.tex`).
+
+**The rotation of order 5: partial, and chosen.** The finding
+`85-a5-pgl2-moduli-spec-z-phi` (`src/content/findings.ts`) states the theorem of page 40 of
+the reading (`transcripts/85/85.modern.tex`):
 
 > For any scheme `S`, the groupoid of pairs `(G, φ)`, `G` a form of `PGL₂` over
 > `S` and `φ : 𝔄₅ → G` a monomorphism, is rigid, and `φ ↦ A(φ(π))` (`π` a
 > standard 5-cycle) makes its functor of isomorphism classes representable by
 > `Spec ℤ[T]/(T² + T − 1)`.
 
-Rigidity, representability and the passage to forms of `PGL₂` are out of
-reach here. What this file proves is the computation under the statement:
+What this file proves is the computation under the statement:
 the value `A(φ(π))` is a root of `T² + T − 1`, and, conversely, a root is
 attained.
 
-The invariant. For `PGL₂` the reading (pages 23 and 27) takes
-`A(v) = (Tr v)² / det v − 2` for a lift `v ∈ GL₂`. Here `invA g` is this
-expression for a `2 × 2` matrix `g` over a commutative ring `R`, with
-`Ring.inverse` for the division; it is used only when `det g` is a unit. It
-does not depend on the lift (`invA_smul`).
+What the formalisation found: the computation holds over every base, in
+characteristics 2, 3 and 5 included; in characteristic 5 the model gives the
+unipotent `p` (`ζ = 1`, `A = 2`). The model lives in the split `PGL₂` over
+`ℤ[ζ₅]`, not over `ℤ[T]/(T² + T − 1)`: over `ℚ(√5)`, a real field, the split
+`PGL₂` contains no `𝔄₅` (the criterion the reading cites from memory), so a
+model over `ℤ[φ]` needs a non-split form, which is why the theorem speaks of
+forms of `PGL₂`.
 
-Order 5 on every fibre. For a matrix with invertible determinant, "the image
-of `g` in `PGL₂(k(s))` is not `1`, for every point `s`" says that `g 0 1`,
-`g 1 0` and `g 0 0 − g 1 1` do not all vanish in any residue field, that is,
-that they generate the unit ideal (`NullePartScalaire`). Since 5 is prime,
-"of order 5 on every fibre" is then `g⁵` scalar.
+**Representations of `G₂` (pages 4 to 10), finding `85-g2-pgl2-moduli-over-z`: partial, and
+chosen.**
+
+**Representations of `𝔻_∞` (pages 16 to 20), finding `85-dinfty-torsor-classification`:
+partial, the split group over a field.** What the formalisation found: the equivalence of
+page 17 as read, with `R` a torsor under `𝒰_{2−α}`, is false. Over `ℚ`, `H¹(ℚ, 𝔾_m) = 0`
+would leave one class for `α = −6`, and automorphisms of `PGL₂` over a field are inner, so
+`dinfty_not_conj_rat` gives two; and the automorphism group of an object of `C′` is
+`𝒰_ρ(S)`, against `₂𝒰_ρ` of page 19, which `centralizer_iff` confirms. The classes match
+torsors under `₂𝒰_ρ` (`μ₂` for `ρ` invertible). Also, « `u_s² ≠ 1`, that is `α + 2`
+invertible » is not an equivalence: `t₁ = t₀` gives `u = 1`, `α = 2`
+(`dinfty_add_two_not_iff`).
+
+## Main results
+
+### The rotation of order 5 (pages 10, 27, 30, 40)
 
 * `pow_five_eq`: `g⁵ = x₅ g + y₅` with `x₅ = t⁴ − 3dt² + d²` (Cayley–Hamilton,
   iterated), `t = Tr g`, `d = det g`; `coeff_eq`: `x₅ = d² (A² + A − 1)`.
@@ -59,17 +77,9 @@ that they generate the unit ideal (`NullePartScalaire`). Since 5 is prime,
   are the relations of the (2, 3, 5) triangle group, which is `𝔄₅`; the
   homomorphism from `𝔄₅` and its injectivity are not formalised.
 
-What the formalisation found: the computation holds over every base, in
-characteristics 2, 3 and 5 included; in characteristic 5 the model gives the
-unipotent `p` (`ζ = 1`, `A = 2`). The model lives in the split `PGL₂` over
-`ℤ[ζ₅]`, not over `ℤ[T]/(T² + T − 1)`: over `ℚ(√5)`, a real field, the split
-`PGL₂` contains no `𝔄₅` (the criterion the reading cites from memory), so a
-model over `ℤ[φ]` needs a non-split form, which is why the theorem speaks of
-forms of `PGL₂`.
+### Representations of `G₂` (pages 4 to 10)
 
-## Representations of `G₂` (pages 4 to 10), finding `85-g2-pgl2-moduli-over-z`
-
-**Partial, and chosen.** `G₂ = ⟨τ₀, τ₁, τ₂ | τᵢ², (τ₀τ₂)²⟩`, `ρ₀ = τ₀τ₁`,
+`G₂ = ⟨τ₀, τ₁, τ₂ | τᵢ², (τ₀τ₂)²⟩`, `ρ₀ = τ₀τ₁`,
 `ρ₁ = τ₁τ₂`, `α₀ = A(ρ₀)`, `α₁ = A(ρ₁)`. A homomorphism to `PGL₂(R)` is given by
 `τᵢ ∈ GL₂(R)` with `τᵢ²` and `(τ₀τ₂)²` scalar. Condition (*) of page 4 at a
 point (`ρ₀² ≠ 1`, `ρ₁² ≠ 1`, `ρ₀ρ₁ ≠ ρ₁ρ₀` in `PGL₂(k)`) is `Star`;
@@ -96,14 +106,9 @@ point (`ρ₀² ≠ 1`, `ρ₁² ≠ 1`, `ρ₀ρ₁ ≠ ρ₁ρ₀` in `PGL₂(
   `isScalar_pow_three_iff`, `order_four_iff` (needs `2` invertible),
   `order_six_iff` (needs `6` invertible), condition c) of the corollary.
 
-Not formalised: forms of `PGL₂` and descent from `R[ℓ]` to `R` (the realisation
-over `R` itself lives in a form, not in the split group in general); conjugacy
-over a general base or over a field without `ℓ`; the identification of `Pₙ` with
-`Fₙ = ∏_{d ∣ n, d ≥ 3} Ψ_d` for general `n`.
+### Representations of `𝔻_∞` (pages 16 to 20)
 
-## Representations of `𝔻_∞` (pages 16 to 20), finding `85-dinfty-torsor-classification`
-
-**Partial: the split group over a field.** A homomorphism `𝔻_∞ → PGL₂(K)` with `u² ≠ 1`,
+A homomorphism `𝔻_∞ → PGL₂(K)` with `u² ≠ 1`,
 `u = φ(τ₀τ₁)`, is given by `t₀, t₁ ∈ GL₂(K)` with `t₀²`, `t₁²` scalar and `(t₀t₁)²` not
 scalar (`DRep`); conjugacy in `PGL₂(K)` is `PConj`.
 
@@ -120,15 +125,39 @@ scalar (`DRep`); conjugacy in `PGL₂(K)` is `PConj`.
 * `dinfty_not_conj_rat`: over `ℚ`, `α = −6` (`ρ = 8`, `𝒰_ρ ≅ 𝔾_m`) is carried by two
   representations that are not conjugate, `det t₀ = −1` and `det s₀ = 1`.
 
-What the formalisation found: the equivalence of page 17 as read, with `R` a torsor under
-`𝒰_{2−α}`, is false. Over `ℚ`, `H¹(ℚ, 𝔾_m) = 0` would leave one class for `α = −6`, and
-automorphisms of `PGL₂` over a field are inner, so `dinfty_not_conj_rat` gives two; and the
-automorphism group of an object of `C′` is `𝒰_ρ(S)`, against `₂𝒰_ρ` of page 19, which
-`centralizer_iff` confirms. The classes match torsors under `₂𝒰_ρ` (`μ₂` for `ρ`
-invertible). Also, « `u_s² ≠ 1`, that is `α + 2` invertible » is not an equivalence:
-`t₁ = t₀` gives `u = 1`, `α = 2` (`dinfty_add_two_not_iff`). Forms of `PGL₂`, local rings
-and torsors over `S` are not formalised.
+## Implementation notes
+
+The invariant. For `PGL₂` the reading (pages 23 and 27) takes
+`A(v) = (Tr v)² / det v − 2` for a lift `v ∈ GL₂`. Here `invA g` is this
+expression for a `2 × 2` matrix `g` over a commutative ring `R`, with
+`Ring.inverse` for the division; it is used only when `det g` is a unit. It
+does not depend on the lift (`invA_smul`).
+
+Order 5 on every fibre. For a matrix with invertible determinant, "the image
+of `g` in `PGL₂(k(s))` is not `1`, for every point `s`" says that `g 0 1`,
+`g 1 0` and `g 0 0 − g 1 1` do not all vanish in any residue field, that is,
+that they generate the unit ideal (`NullePartScalaire`). Since 5 is prime,
+"of order 5 on every fibre" is then `g⁵` scalar.
+
+## Not formalised
+
+* Order 5: rigidity, representability and the passage to forms of `PGL₂` are out of
+  reach here; the homomorphism from `𝔄₅` and its injectivity.
+* `G₂`: forms of `PGL₂` and descent from `R[ℓ]` to `R` (the realisation
+  over `R` itself lives in a form, not in the split group in general); conjugacy
+  over a general base or over a field without `ℓ`; the identification of `Pₙ` with
+  `Fₙ = ∏_{d ∣ n, d ≥ 3} Ψ_d` for general `n`.
+* `𝔻_∞`: forms of `PGL₂`, local rings and torsors over `S` are not formalised.
+
+## References
+
+* A. Grothendieck, Folder 85, pages 4–10, 16–20, 23, 27, 29–31 and 40 (reading
+  `transcripts/85/85.modern.tex`; findings `85-a5-pgl2-moduli-spec-z-phi`,
+  `85-g2-pgl2-moduli-over-z`, `85-dinfty-torsor-classification`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder85
 
@@ -207,7 +236,9 @@ theorem sq_add_sub_of_pow_five (g : Matrix (Fin 2) (Fin 2) R) (hg : IsUnit g.det
   have e10 := congrFun (congrFun e 1) 0
   have e00 := congrFun (congrFun e 0) 0
   have e11 := congrFun (congrFun e 1) 1
-  simp at e01 e10 e00 e11
+  simp only [Fin.isValue, Matrix.smul_apply, ne_eq, zero_ne_one, not_false_eq_true, one_apply_ne,
+      smul_eq_mul, mul_zero, neg_mul, neg_smul, Matrix.add_apply, Matrix.neg_apply, neg_zero,
+      add_zero, one_ne_zero, one_apply_eq, mul_one] at e01 e10 e00 e11
   have h1 : x = 0 := eq_zero_of_nps hns (by linear_combination -e01) (by linear_combination -e10)
     (by linear_combination e11 - e00)
   rw [hx, coeff_eq g hg] at h1
@@ -288,7 +319,13 @@ theorem sp_sq : sModel * pModel ζ * (sModel * pModel ζ) = sModel * pModel ζ -
   have h5 := zeta_pow_five h
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [sModel, pModel, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    simp only [sModel, pModel, cons_mul, Nat.succ_eq_add_one, Nat.reduceAdd, vecMul_cons, head_cons,
+        zero_smul, tail_cons, neg_smul, one_smul, neg_cons, neg_zero, neg_empty, empty_vecMul,
+        add_zero, zero_add, empty_mul, Equiv.symm_apply_apply, Fin.zero_eta, Fin.isValue,
+        Matrix.mul_apply, of_apply, cons_val', cons_val_fin_one, cons_val_zero, Fin.sum_univ_two,
+        mul_zero, cons_val_one, neg_mul, Matrix.sub_apply, one_apply_eq, zero_sub, neg_inj,
+        Fin.mk_one, mul_neg, zero_mul, mul_one, ne_eq, zero_ne_one, not_false_eq_true, one_apply_ne,
+        sub_zero, one_mul, one_ne_zero, sub_self] <;>
     first | linear_combination h5 | linear_combination -h5
 
 /-- `(sp)³ = −1`: the product `sp` has order 3 in `PGL₂`. -/
@@ -316,7 +353,8 @@ theorem exists_model_adjoinRoot :
     let f : Polynomial ℤ := Polynomial.X ^ 4 + Polynomial.X ^ 3 + Polynomial.X ^ 2
       + Polynomial.X + 1
     let ζ := AdjoinRoot.root f
-    (sModel : Matrix (Fin 2) (Fin 2) (AdjoinRoot f)) ^ 2 = (-1 : AdjoinRoot f) • 1 ∧ (sModel * pModel ζ) ^ 3 = (-1 : AdjoinRoot f) • 1 ∧
+    (sModel : Matrix (Fin 2) (Fin 2) (AdjoinRoot f)) ^ 2 = (-1 : AdjoinRoot f) • 1 ∧
+      (sModel * pModel ζ) ^ 3 = (-1 : AdjoinRoot f) • 1 ∧
       (∃ c : AdjoinRoot f, pModel ζ ^ 5 = c • 1) ∧
       NullePartScalaire (sModel : Matrix (Fin 2) (Fin 2) (AdjoinRoot f)) ∧
       NullePartScalaire (pModel ζ) ∧ NullePartScalaire (sModel * pModel ζ) ∧
@@ -406,7 +444,9 @@ theorem isScalar_smul_add_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScal
   constructor
   · intro h
     obtain ⟨h1, h2, h3⟩ := (isScalar_iff _).1 h
-    simp at h1 h2 h3
+    simp only [Fin.isValue, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, ne_eq, zero_ne_one,
+        not_false_eq_true, one_apply_ne, mul_zero, add_zero, one_ne_zero, one_apply_eq, mul_one,
+        add_left_inj] at h1 h2 h3
     exact eq_zero_of_nps hg h1 h2 (by linear_combination h3)
   · rintro rfl; exact ⟨y, by simp⟩
 
@@ -415,7 +455,8 @@ theorem nps_smul_add_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScalaire 
     (x y : R) : NullePartScalaire (x • g + y • (1 : Matrix (Fin 2) (Fin 2) R)) ↔ IsUnit x := by
   rw [nps_iff_maximal, isUnit_iff_maximal]
   rw [nps_iff_maximal] at hg
-  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, one_apply_ne (show (0 : Fin 2) ≠ 1 by decide),
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
+    one_apply_ne (show (0 : Fin 2) ≠ 1 by decide),
     one_apply_ne (show (1 : Fin 2) ≠ 0 by decide), one_apply_eq, mul_zero, add_zero, mul_one]
   refine forall₂_congr fun m hm => ?_
   have e : x * g 0 0 + y - (x * g 1 1 + y) = x * (g 0 0 - g 1 1) := by ring
@@ -638,7 +679,11 @@ theorem trace_triple_sq (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ�
   have e1 := trace_zero_entry h1
   have e2 := trace_zero_entry h2
   simp only [trace_fin_two, det_fin_two, Matrix.mul_apply, Fin.sum_univ_two, e0, e1, e2] at h02 ⊢
-  linear_combination (-(2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 0)^2 - 2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 1)*(τ₁ 1 0) + 2*(τ₀ 0 0)*(τ₂ 0 1)*(τ₁ 0 0)*(τ₁ 1 0) + 2*(τ₀ 0 0)*(τ₂ 1 0)*(τ₁ 0 0)*(τ₁ 0 1) + 2*(τ₀ 0 1)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 1 0) + (τ₀ 0 1)*(τ₂ 0 1)*(τ₁ 1 0)^2 - (τ₀ 0 1)*(τ₂ 1 0)*(τ₁ 0 0)^2 + 2*(τ₀ 1 0)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 0 1) - (τ₀ 1 0)*(τ₂ 0 1)*(τ₁ 0 0)^2 + (τ₀ 1 0)*(τ₂ 1 0)*(τ₁ 0 1)^2)) * h02
+  linear_combination (-(2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 0)^2 - 2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 1)*(τ₁ 1 0) +
+      2*(τ₀ 0 0)*(τ₂ 0 1)*(τ₁ 0 0)*(τ₁ 1 0) + 2*(τ₀ 0 0)*(τ₂ 1 0)*(τ₁ 0 0)*(τ₁ 0 1) +
+      2*(τ₀ 0 1)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 1 0) + (τ₀ 0 1)*(τ₂ 0 1)*(τ₁ 1 0)^2 -
+      (τ₀ 0 1)*(τ₂ 1 0)*(τ₁ 0 0)^2 + 2*(τ₀ 1 0)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 0 1) -
+      (τ₀ 1 0)*(τ₂ 0 1)*(τ₁ 0 0)^2 + (τ₀ 1 0)*(τ₂ 1 0)*(τ₁ 0 1)^2)) * h02
 
 /-- `ρ₀ρ₁ − ρ₁ρ₀ = −Tr(τ₀τ₁τ₂) τ₁` for traceless `τᵢ`. -/
 @[montpellier "85, 4–10, 29–31"]
@@ -884,7 +929,10 @@ theorem commutant_eq {X g : Matrix (Fin 2) (Fin 2) R} (hX : NullePartScalaire X)
   refine ⟨g 0 0 - (r₁ * g 0 1 + r₂ * g 1 0 + r₃ * (g 0 0 - g 1 1)) * X 0 0,
     r₁ * g 0 1 + r₂ * g 1 0 + r₃ * (g 0 0 - g 1 1), ?_⟩
   ext i j
-  fin_cases i <;> fin_cases j <;> simp <;>
+  fin_cases i <;> fin_cases j <;> simp only [Fin.zero_eta, Fin.isValue, Matrix.add_apply,
+      Matrix.smul_apply, one_apply_eq, smul_eq_mul, mul_one, sub_add_cancel, Fin.mk_one,
+      Nat.reduceAdd, ne_eq, zero_ne_one, not_false_eq_true, one_apply_ne, mul_zero, zero_add,
+      one_ne_zero] <;>
     first
     | linear_combination r₂ * A + (-r₃) * B + (-(g 0 1)) * hr
     | linear_combination (-r₁) * A + r₃ * C + (-(g 1 0)) * hr
@@ -1053,7 +1101,9 @@ theorem eq_smul_tau1N {M : Matrix (Fin 2) (Fin 2) K} {ℓ b : K} (hb : b ≠ 0)
     Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.empty_val', Matrix.cons_val_fin_one] at h0 h1
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [tau1N] <;>
+  fin_cases i <;> fin_cases j <;> simp only [Fin.zero_eta, Fin.isValue, tau1N, Matrix.smul_apply,
+      of_apply, cons_val', cons_val_zero, cons_val_fin_one, smul_eq_mul, Fin.mk_one, cons_val_one,
+      mul_neg] <;>
     first
     | linear_combination (-(M 0 0)) * hbi
     | linear_combination (b⁻¹ * (b - 1)) * hT + b⁻¹ * h0 + (-b⁻¹) * h1 + (-(M 0 1)) * hbi
@@ -1135,12 +1185,16 @@ theorem conj_pair {X Y : Matrix (Fin 2) (Fin 2) K} {ℓ b : K} (hb : b ≠ 0)
         · exact (mul_eq_zero.1 ((mul_eq_zero.1 b1).resolve_left hb)).resolve_left h
     exact hC (Matrix.exists_mulVec_eq_zero_iff.1 ⟨v, hv0, hCv⟩)
   · ext i j
-    fin_cases i <;> fin_cases j <;> simp [rho0N, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    fin_cases i <;> fin_cases j <;> simp only [Fin.isValue, Fin.zero_eta, Matrix.mul_apply,
+        of_apply, cons_val', cons_val_zero, cons_val_fin_one, Fin.sum_univ_two, cons_val_one, rho0N,
+        mul_zero, add_zero, Fin.mk_one, mul_one] <;>
       first
       | linear_combination e0 | linear_combination e1
       | linear_combination G1 | linear_combination G2
   · ext i j
-    fin_cases i <;> fin_cases j <;> simp [rho1N, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    fin_cases i <;> fin_cases j <;> simp only [Fin.isValue, Fin.zero_eta, Matrix.mul_apply,
+        of_apply, cons_val', cons_val_zero, cons_val_fin_one, Fin.sum_univ_two, cons_val_one, rho1N,
+        mul_zero, mul_neg, zero_add, Fin.mk_one, mul_one] <;>
       first
       | linear_combination hw0 | linear_combination hw1
       | linear_combination G3 | linear_combination G4

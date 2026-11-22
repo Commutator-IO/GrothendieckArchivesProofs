@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (c): 3 July 1973
@@ -12,10 +15,24 @@ The entries of `docs/buffalo-ag/index.tex` lines 996–1053 (video `Oqhr-Gt66es`
 finite, proper and quasi-affine morphisms, ample sheaves, radicial morphisms, open and
 generalizing morphisms, flat and faithfully flat modules.
 
+## Implementation notes
+
 Conventions. Quasi-affine schemes are mathlib's `Scheme.IsQuasiAffine`; quasi-affine morphisms
 (`IsQuasiAffineHom`) are defined here by quasi-affine preimages of affine open sets. Radicial means
-universally injective (`UniversallyInjective`). Ample sheaves are not in mathlib.
+universally injective (`UniversallyInjective`).
+
+## Not formalised
+
+Ample sheaves are not in mathlib.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 3 July 1973, video `Oqhr-Gt66es`,
+  8:31:46–10:34:12 (`docs/buffalo-ag/index.tex`, lines 996–1053)
 -/
+
+@[expose] public section
+
 
 open TensorProduct Polynomial AlgebraicGeometry CategoryTheory Limits PrimeSpectrum Topology
 
@@ -121,13 +138,15 @@ theorem prop_33316_factor (R : CommRingCat.{u}) (g : X ⟶ Spec R) :
     Category.comp_id]
 
 /-- Oqhr-Gt66es-33470 (9:17:50) [prop] (part) For `X` quasi-compact: `X` quasi-affine iff
-`X → Spec Γ(X, 𝒪_X)` is an open immersion iff the affine `X_f`, `f ∈ Γ(X, 𝒪_X)`, cover `X`; they then
+`X → Spec Γ(X, 𝒪_X)` is an open immersion iff the affine `X_f`, `f ∈ Γ(X, 𝒪_X)`, cover `X`;
+they then
 form a base of the topology. -/
 @[buffalo "Oqhr-Gt66es-33470"]
 theorem prop_33470 [CompactSpace X] :
     (X.IsQuasiAffine ↔ IsOpenImmersion X.toSpecΓ) ∧
     (X.IsQuasiAffine →
-      TopologicalSpace.Opens.IsBasis { X.basicOpen r | (r : Γ(X, ⊤)) (_ : IsAffineOpen (X.basicOpen r)) }) ∧
+      TopologicalSpace.Opens.IsBasis
+        { X.basicOpen r | (r : Γ(X, ⊤)) (_ : IsAffineOpen (X.basicOpen r)) }) ∧
     ((∀ x : X, ∃ r : Γ(X, ⊤), IsAffineOpen (X.basicOpen r) ∧ x ∈ X.basicOpen r) →
       X.IsQuasiAffine) :=
   ⟨⟨fun _ => inferInstance, fun _ => ⟨⟩⟩, fun _ => Scheme.IsQuasiAffine.isBasis_basicOpen X,
@@ -168,7 +187,8 @@ theorem prop_35012 (f : X ⟶ Y) [IsIntegralHom f] [UniversallyInjective f] [Sur
       [Surjective f'], IsHomeomorph f' := fun f' _ _ _ =>
     isHomeomorph_iff_continuous_isClosedMap_bijective.2
       ⟨f'.continuous, f'.isClosedMap, f'.injective, f'.surjective⟩
-  have : UniversallyInjective (pullback.snd f g) := MorphismProperty.of_isPullback (P := @UniversallyInjective)
+  have : UniversallyInjective (pullback.snd f g) := MorphismProperty.of_isPullback
+    (P := @UniversallyInjective)
     (IsPullback.of_hasPullback f g) inferInstance
   exact key _
 

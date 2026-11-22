@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 101, pages 10–11: local duality in dimension one for every `O_X`-module
@@ -17,8 +20,9 @@ gives `Ext^•(X; F, O_X)` as the cohomology of `Hom_K(M₁, K) → Hom_A(M₀, 
 `g ↦ g ∘ u mod A`, and the duality maps become `Ext⁰ → Hom_A(Coker u, K/A)` and
 `Ext¹ → Hom_A(Ker u, K/A)`. The page proves them bijective by three facts a), b), c). This is
 the reachable part of finding `101-sheaf-duality-dim-one` of `src/content/findings.ts`, in the
-page's own model: the equivalence between `O_X`-modules and triples, and the computation of
-`Ext` by that resolution, are the page's reduction and are not formalised.
+page's own model.
+
+## Main results
 
 * `eq_zero_of_mem`, fact a): a `K`-linear map with values in `A` is zero.
 * `lift_K`, fact b): `A` being complete, every `A`-linear `K → K/A` is the reduction of
@@ -28,8 +32,23 @@ page's own model: the equivalence between `O_X`-modules and triples, and the com
 * `duality_dim_one`: the two duality maps `phi0 : Ext⁰ → Hom_A(Coker u, K/A)` and
   `phi1 : Ext¹ → Hom_A(Ker u, K/A)` are bijective for every triple.
 
+## Implementation notes
+
 `Ext0` is the kernel and `Ext1` the cokernel (by `imD`) of `g ↦ g ∘ u mod A`.
+
+## Not formalised
+
+The equivalence between `O_X`-modules and triples, and the computation of `Ext` by that
+resolution, are the page's reduction and are not formalised.
+
+## References
+
+* A. Grothendieck, cote 101, pp. 10–11, « Dimensions 0 et 1 : la dualité tient » (finding
+  `101-sheaf-duality-dim-one`); modernised reading `transcripts/101/101.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder101
 

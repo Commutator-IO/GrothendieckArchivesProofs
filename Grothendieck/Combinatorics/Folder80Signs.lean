@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Combinatorics.Folder80Maps3
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 80, pages 39–54: the sign algebra behind the three-pencil case
@@ -12,16 +15,10 @@ Finding `80-skeleton-full-faithfulness`. `Folder80Maps3` proves page 54 for ever
 arrangement in which each triangle has a fourth line through none of its vertices. What it
 leaves is the case where every other line passes through a vertex of some triangle: the
 arrangement lies in three pencils, the complete quadrangle `III₆` being the first example.
+This file closes that case by another route, through chirotopes.
 
-This file closes that case by another route, through chirotopes. A chirotope is written
-additively, `χ i j l : ZMod 2` being the sign bit of the triple (`0` for `+`, `1` for `-`),
-defined on the *bases*, the triples of pairwise distinct lines with no common point. An
-isomorphism of labelled skeleta gives, along each line `i`, the same points in the same cyclic
-order up to reversal; by the representation theorem in rank 2 the two contractions at `i` then
-differ by a sign `s i` and a reorientation `ε i`:
-`χ' (σ i) (σ j) (σ l) = χ i j l + s i + ε i j + ε i l` (`LocallyEquivalent`).
+## Main results
 
-**What is proved.**
 * `eq_zero_of_fourth`: if a sign function is, at each line `i`, of the form
   `ψ i j l = δ i j + δ i l`, it vanishes on a triangle that has a fourth line through none of
   its vertices (the four triples of four lines in general position have equal values, and their
@@ -40,10 +37,28 @@ differ by a sign `s i` and a reorientation `ε i`:
   relation along every line are locally equivalent.
 * `reorientation_of_sameSeparation`: **steps 1–4 together.**
 
-**Not formalised.** Folkman–Lawrence, which turns the reorientation into a homeomorphism of the
-projective plane, and the fact that on an actual arrangement the separation relation along `i`
-is the one the cyclic order of the vertices of `L_i` records.
+## Implementation notes
+
+A chirotope is written additively, `χ i j l : ZMod 2` being the sign bit of the triple (`0` for
+`+`, `1` for `-`), defined on the *bases*, the triples of pairwise distinct lines with no common
+point. An isomorphism of labelled skeleta gives, along each line `i`, the same points in the
+same cyclic order up to reversal; by the representation theorem in rank 2 the two contractions
+at `i` then differ by a sign `s i` and a reorientation `ε i`:
+`χ' (σ i) (σ j) (σ l) = χ i j l + s i + ε i j + ε i l` (`LocallyEquivalent`).
+
+## Not formalised
+
+Folkman–Lawrence, which turns the reorientation into a homeomorphism of the projective plane,
+and the fact that on an actual arrangement the separation relation along `i` is the one the
+cyclic order of the vertices of `L_i` records.
+
+## References
+
+* A. Grothendieck, Folder 80, pages 39–54 (finding `80-skeleton-full-faithfulness`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Signs
 
@@ -308,7 +323,8 @@ theorem locallyEquivalent_of_sameSeparation (hI : Incidence on) (hbf : BigonFree
   let c : L → L → P := fun i j => if h : i ≠ j then Classical.choose (hI.meet i j h)
     else Classical.choice ⟨Classical.choose (hbf i)⟩
   have c_on : ∀ {i j}, i ≠ j → on (c i j) i ∧ on (c i j) j := fun {i j} h => by
-    simp only [c, ne_eq, h, not_false_eq_true, ↓reduceDIte]; exact Classical.choose_spec (hI.meet i j h)
+    simp only [c, ne_eq, h, not_false_eq_true,
+        ↓reduceDIte]; exact Classical.choose_spec (hI.meet i j h)
   have c_eq : ∀ {i j : L} {p : P}, i ≠ j → on p i → on p j → c i j = p :=
     fun h hi hj => hI.unique h (c_on h).1 (c_on h).2 hi hj
   have basis_iff : ∀ {i j l : L}, i ≠ j → i ≠ l → (Basis on i j l ↔ c i j ≠ c i l) := by

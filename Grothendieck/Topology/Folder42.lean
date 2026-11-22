@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.NoetherianIsOpenOfStableUnderGeneralization
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 42: Lemme 1, the proposition of page 3, Lemme 2, Corollaire 1
@@ -27,21 +30,36 @@ states:
 >
 > **Corollaire 1.** For `X` locally Noetherian, `Γ(X, 𝒪_X) ≅ lim_x 𝒪_{X,x}`.
 
-All are proved here, Corollaire 1 for `X = Spec A` with `A` Noetherian (the
-affine case, to which the reading reduces it). What this certifies is that the
-reading holds together, not that it is what the page says (issue #26): that is
-for a reader with the leaf in front of them.
+## Main results
+
+All are proved here: Lemme 1, the proposition of page 3, Lemme 2 (1) and (2), and
+Corollaire 1 for `X = Spec A` with `A` Noetherian (the affine case, to which the reading
+reduces it).
+
+* `isOpen_of_stableUnderGeneralization`: a set stable under generization that contains, with
+  each point `x`, a nonempty open of `closure {x}`, is open in a Noetherian sober space.
+
+## Implementation notes
 
 What the proofs make plain. The step « constructible and stable under
 generization, hence open » is used only in the form proved here as
-`isOpen_of_stableUnderGeneralization`: a set stable under generization that
-contains, with each point `x`, a nonempty open of `closure {x}`, is open in a
-Noetherian sober space. Lemme 2 (2) does not use the Noetherian hypothesis.
+`isOpen_of_stableUnderGeneralization`. Lemme 2 (2) does not use the Noetherian hypothesis.
 Lemme 2 (1) uses it only to make the kernel of `A → A_𝔭` finitely generated —
 which is where the reading's footnote bears: the kernel is the set of elements
 killed by *some* element outside `𝔭`, not by every one. Corollaire 1 needs, from
 Lemme 2, only that one `f ∉ 𝔭` kills that kernel.
+
+What this certifies is that the reading holds together, not that it is what the page says
+(issue #26): that is for a reader with the leaf in front of them.
+
+## References
+
+* A. Grothendieck, folder 42, pp. 3–5 (reading `transcripts/42/42.modern.tex`)
+* Issue #26
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder42
 
@@ -99,7 +117,7 @@ theorem exists_mul_eq_zero_of_ker [IsNoetherianRing A] :
     induction hy using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨c, hc⟩ := Finset.dvd_prod_of_mem (fun x => (s x : A)) hx
-      show (∏ x ∈ t, (s x : A)) * x = 0
+      change (∏ x ∈ t, (s x : A)) * x = 0
       rw [hc, mul_comm (s x : A) c, mul_assoc, hs x hx, mul_zero]
     | zero => exact mul_zero f
     | add a b _ _ ha hb => rw [mul_add, ha, hb, add_zero]
@@ -260,14 +278,15 @@ theorem corollaire1 [IsNoetherianRing A] :
       have : (x.1 : PrimeSpectrum A).asIdeal.IsPrime := (x.1 : PrimeSpectrum A).isPrime
       obtain ⟨⟨a, ⟨s, hs⟩⟩, e⟩ :=
         IsLocalization.surj (x.1 : PrimeSpectrum A).asIdeal.primeCompl (ξ x.1)
-      refine ⟨⟨_, lemme1 hξ a s⟩, ⟨hs, e⟩, CategoryTheory.homOfLE le_top, a, s, fun y => ⟨y.2.1, ?_⟩⟩
-      show ξ y.1 = Localization.mk a ⟨s, y.2.1⟩
+      refine ⟨⟨_, lemme1 hξ a s⟩, ⟨hs, e⟩, CategoryTheory.homOfLE le_top, a, s,
+          fun y => ⟨y.2.1, ?_⟩⟩
+      change ξ y.1 = Localization.mk a ⟨s, y.2.1⟩
       rw [Localization.mk_eq_mk', IsLocalization.eq_mk'_iff_mul_eq]
       exact y.2.2⟩
     refine ⟨a, Subtype.ext (funext fun P => ?_)⟩
     have h := congrArg (fun t => t.1 ⟨P, trivial⟩) ha
     simp only at h
-    show algebraMap A _ a = ξ P
+    change algebraMap A _ a = ξ P
     rw [← h, toOpenₗ_eq_const, ← Localization.mk_one_eq_algebraMap]
     rfl
 
@@ -345,7 +364,7 @@ theorem proposition [NoetherianSpace X] [QuasiSober X] (hH : ConditionH F) :
     obtain ⟨g, hg, -⟩ := F.existsUnique_gluing' V ⊤ (fun _ => homOfLE le_top)
       (fun z _ => Opens.mem_iSup.2 ⟨z, hxU z, hs z⟩) sf hcompat
     refine ⟨g, Subtype.ext (funext fun x => ?_)⟩
-    show F.presheaf.germ ⊤ x trivial g = ξ x
+    change F.presheaf.germ ⊤ x trivial g = ξ x
     rw [← hgerm x x ⟨hxU x, hs x⟩, ← hg x, TopCat.Presheaf.germ_res_apply]
 
 end Sheaves
@@ -659,7 +678,8 @@ theorem toReseau_surjective [IsLocallyNoetherian X] [LocallyOfFiniteType sY] [Is
     intro x y
     have : IsLocallyNoetherian (pullback (𝒰.f x) (𝒰.f y)) :=
       isLocallyNoetherian_of_isOpenImmersion (pullback.fst _ _ ≫ 𝒰.f x)
-    exact eq_of_fromSpecStalk_comp fun p => (Φ.matches_comp (pullback.fst _ _) rfl p (hmatch x _)).trans
+    exact eq_of_fromSpecStalk_comp fun p =>
+      (Φ.matches_comp (pullback.fst _ _) rfl p (hmatch x _)).trans
       (Φ.matches_comp (pullback.snd _ _) pullback.condition.symm p (hmatch y _)).symm
   let F := 𝒰.glueMorphisms g hglue
   have hF : ∀ x, 𝒰.f x ≫ F = g x := 𝒰.ι_glueMorphisms g hglue

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1: claims of the blackboards not covered by an index entry
@@ -10,7 +13,15 @@ public import Buffalo.Topos.Part01a
 Items of `public/buffalo-boards/URU5jgTvjhU-*.json` (0:03:26–5:34:24) that make a mathematical
 claim not already formalised by an entry of `docs/buffalo-topos/lean/Part01.json`. The status of
 every board item is in `docs/buffalo-topos/lean/Part01-boards.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 0:03:26–5:34:24, the
+  reconstructed blackboards `public/buffalo-boards/URU5jgTvjhU-*.json`
 -/
+
+@[expose] public section
+
 
 universe u
 

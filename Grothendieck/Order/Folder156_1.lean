@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 156-1, the segment model is a biorder (pages 10–13)
@@ -12,18 +15,17 @@ The modernised reading `transcripts/156-1/156-1.modern.tex` gives, for the third
 draft of chapter I of *Vers une géométrie des formes* (pages 5–9), a model of a
 one-dimensional form: a set `L` of lieux, a set `S` of segments, and for each
 segment `I` its set of lieux `Ĩ` (here `car I`) and its two extremities `∂I`
-(here `bd I`), with `∂I ⊆ Ĩ`. The axioms are F1 (divisibility), F2, F3
-(branches), the filtering condition F′3 that the reading reconstructs from the
-foot of page 6, F4 (gluing at a regular lieu) and F5 (a regular lieu has order
-two). They are written below as the reading states them, with `I_{x,z}` the
-sub-segment of `I` with extremities `x, z` given by F1, which here is a
-hypothesis `IsSub I x z J` on a segment `J`.
+(here `bd I`), with `∂I ⊆ Ĩ`.
 
 The finding `156-1-segment-biorder` (`src/content/findings.ts`) states, after
 pages 12–13, that a model which is a single segment is the same thing as a
 poset with distinct least and greatest elements, dense and locally directed in
 both directions, the segments being the intervals `[x, y]`, `x < y`, and that
-the order need not be total. Proved here:
+the order need not be total. Proved, both directions. What this certifies is that the reading
+holds together, not that it is what the page says (issue #26), and not that the
+statement is new: the finding stays open as a literature question.
+
+## Main results
 
 * `SegModel.biorder` — the forward direction: fixing an extremity `x₀` of the
   segment `I = L`, the relation of page 11, `x ≤ y` iff `x ∈ [x₀, y]`, is a
@@ -40,15 +42,29 @@ the order need not be total. Proved here:
   ordered (the points between `(0, 0)` and `(2, 0)` for the open-cone order on
   `ℚ²`), hence a model-segment whose order is not total.
 
+## Implementation notes
+
+The axioms are F1 (divisibility), F2, F3
+(branches), the filtering condition F′3 that the reading reconstructs from the
+foot of page 6, F4 (gluing at a regular lieu) and F5 (a regular lieu has order
+two). They are written as the reading states them, with `I_{x,z}` the
+sub-segment of `I` with extremities `x, z` given by F1, which here is a
+hypothesis `IsSub I x z J` on a segment `J`.
+
 What the proof makes plain. The forward direction uses F1, F2, F′3 and F4 only:
 F3 and F5 are not needed for it. F′3 gives local directedness and nothing else
 does: F4, at a regular lieu, is what makes every interval a segment. In the
 converse F4 holds without its regularity hypothesis, and of the bounds only
 `⊥ ≠ ⊤` and `Icc ⊥ ⊤ = univ` are used, for the whole set to be a segment.
-What this certifies is that the reading holds together, not that it is what the
-page says (issue #26), and not that the statement is new: the finding stays
-open as a literature question.
+
+## References
+
+* A. Grothendieck, *Vers une géométrie des formes*, chapter I, third draft, Folder 156-1,
+  pp. 5–13 (reading `transcripts/156-1/156-1.modern.tex`; finding `156-1-segment-biorder`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_1
 
@@ -572,8 +588,8 @@ theorem intervals_axioms [DenselyOrdered α] (hd : LocDirDown α) (hu : LocDirUp
       have h2 : J.1.2 ∈ Icc a b := hJ ⟨J.2.le, le_rfl⟩
       have h1 : J.1.1 ∈ Icc a b := hJ ⟨le_rfl, J.2.le⟩
       rcases intervals_mem_bd.1 hzJ with e | e
-      · right; show Icc J.1.1 J.1.2 ⊆ _; rw [← e]; exact Icc_subset_Icc le_rfl h2.2
-      · left; show Icc J.1.1 J.1.2 ⊆ _; rw [← e]; exact Icc_subset_Icc h1.1 le_rfl
+      · right; change Icc J.1.1 J.1.2 ⊆ _; rw [← e]; exact Icc_subset_Icc le_rfl h2.2
+      · left; change Icc J.1.1 J.1.2 ⊆ _; rw [← e]; exact Icc_subset_Icc h1.1 le_rfl
     have hI : Icc a z ∩ Icc z b = {z} := Icc_inter_Icc_eq_singleton haz.le hzb.le
     rcases pair_eq_pair_iff.1 hxy with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
     · rw [intervals_car_of_bd hJx.2 haz,
@@ -592,7 +608,7 @@ theorem intervals_axioms [DenselyOrdered α] (hd : LocDirDown α) (hu : LocDirUp
         Or.inl rfl⟩
     · refine ⟨b, ⟨hab.le, le_rfl⟩, hab.ne', c, ⟨le_rfl, hcd.le⟩, hcd.ne, ⟨(_, b), hab⟩,
         ⟨(c, _), hcd⟩, ⟨subset_rfl, rfl⟩, ⟨subset_rfl, pair_comm _ _⟩, Or.inr ?_⟩
-      show Icc _ b ∩ Icc c _ = _
+      change Icc _ b ∩ Icc c _ = _
       rw [inter_comm]; exact Icc_inter_Icc_eq_singleton hcd.le hab.le
     · refine ⟨a, ⟨le_rfl, hab.le⟩, hab.ne, d, ⟨hcd.le, le_rfl⟩, hcd.ne', ⟨(a, _), hab⟩,
         ⟨(_, d), hcd⟩, ⟨subset_rfl, pair_comm _ _⟩, ⟨subset_rfl, rfl⟩, Or.inr ?_⟩

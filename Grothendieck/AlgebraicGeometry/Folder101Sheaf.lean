@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.Topology.Sheaves.OpenImmersion.ModuleExtensionByZeroExplicit
@@ -8,8 +13,6 @@ public import StacksFrontier.Algebra.Homology.DerivedCategory.RightDerivedExactF
 public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CokernelFinitePresentation
 public import StacksFrontier.Topology.Sheaves.Cohomology.Locality.DegreeZeroSections
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 101, page 10: the sheaf side, `j_!𝒪_U` and local cohomology of any `𝒪_X`-module
@@ -58,6 +61,8 @@ injectivity (only « injective ⇒ not surjective » is proved, in `Folder101Dim
 equivalence between `𝒪_X`-modules on the spectrum of a discrete valuation ring and the page's
 triples.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits Opposite TopologicalSpace AlgebraicGeometry
 open RingedSpaceModuleAdjunction TopCat.Presheaf

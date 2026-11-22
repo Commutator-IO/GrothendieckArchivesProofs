@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 55, page 13: Lemme B, the identity principle and noetherianity
@@ -18,8 +21,9 @@ every increasing sequence of coherent subsheaves of a coherent sheaf is stationa
 `transcripts/55/55.modern.tex`, section « Le lemme B ».
 
 Mathlib has no coherent sheaves on a ringed space, so this file proves the two steps of the
-argument that do not depend on them, in a model where a subsheaf is a family of sets of
-sections, stable under restriction and local:
+argument that do not depend on them, with (v) replaced by a uniformity hypothesis.
+
+## Main results
 
 * `stationary_of_locally_stationary`: on a quasi-compact space, an increasing sequence of
   subsheaves which is eventually constant on some neighbourhood of every point is eventually
@@ -36,11 +40,25 @@ sections, stable under restriction and local:
   increasing sequence of subsheaves whose germs stabilise everywhere but which accumulates
   at `∞` is not stationary.
 
-Not formalised: that (v) implies the uniformity hypothesis of `stationary_of_germs` (the core of
-Lemme B, which needs coherent sheaves, supports of `𝒪/𝒥` and a primary decomposition at the
-stalk); the page gives no proof of it, and it is not checked here that (i)–(v) suffice for an
-arbitrary ringed space.
+## Implementation notes
+
+The model: a subsheaf is a family of sets of sections, stable under restriction and local.
+
+## Not formalised
+
+That (v) implies the uniformity hypothesis of `stationary_of_germs` (the core of Lemme B, which
+needs coherent sheaves, supports of `𝒪/𝒥` and a primary decomposition at the stalk); the page
+gives no proof of it, and it is not checked here that (i)–(v) suffice for an arbitrary ringed
+space.
+
+## References
+
+* A. Grothendieck, folder 55, p. 13 (Lemme B) and p. 5 (Lemme A); modernised reading
+  `transcripts/55/55.modern.tex`, section « Le lemme B »
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TopologicalSpace Opposite
 
@@ -149,7 +167,8 @@ theorem isNoetherianRing_of_tilde {A P : Type*} [CommRing A] [PartialOrder P] (C
     (htilde_mem : ∀ I : Ideal A, I.FG → C (tilde I))
     (hΓ : ∀ I : Ideal A, I.FG → Γ (tilde I) = I) :
     IsNoetherianRing A := by
-  refine isNoetherian_iff_fg_wellFounded.2 (wellFoundedGT_iff_monotone_chain_condition.2 fun a => ?_)
+  refine isNoetherian_iff_fg_wellFounded.2
+    (wellFoundedGT_iff_monotone_chain_condition.2 fun a => ?_)
   obtain ⟨k₀, hk₀⟩ := hB (fun k => tilde (a k).1)
     (fun i j hij => htilde_mono _ _ (a i).2 (a j).2 (a.mono hij)) (fun k => htilde_mem _ (a k).2)
   exact ⟨k₀, fun m hm => Subtype.ext <| by rw [← hΓ _ (a k₀).2, ← hΓ _ (a m).2, hk₀ m hm]⟩

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder126Sheets
@@ -5,8 +10,6 @@ public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
 public import StacksFrontier.AlgebraicGeometry.MoreMorphisms.EtaleLocalizationQuasiFinite.PurelyInseparableDecomposition
 public import StacksFrontier.AlgebraicGeometry.Morphisms.Fibres.SingletonFibreGeometricPoint
 import Grothendieck.Attr
-
-@[expose] public noncomputable section
 
 /-!
 # Folder 126, pages 17–22: the radicial–étale factorisation exists étale-locally
@@ -32,6 +35,8 @@ lemma of `Grothendieck.Folder126Sheets` then gives the factorisation.
 
 The noetherian hypothesis of page 17 is not used.
 -/
+
+@[expose] public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Grothendieck.Folder126GeometricPoints Grothendieck.Folder126Sheets

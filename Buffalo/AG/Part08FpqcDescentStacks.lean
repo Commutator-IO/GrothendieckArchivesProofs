@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.Descent.Modules.FpqcFinitePresentation
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08: fpqc descent of finite type and finite presentation
@@ -14,14 +17,17 @@ presentation, if and only if `F' = g^* F` is) only in the affine case and for fi
 (`prop_3491`). Both halves are proved here, for modules and for quasi-coherent sheaves, from
 AxiomMath/Stacks (Apache-2.0).
 
-**What is proved.**
+## Main results
+
 * `prop_3491_module`: for a faithfully flat ring map `A → A'` and an `A`-module `M`, `M` is finite
   (resp. finitely presented) over `A` if and only if `A' ⊗_A M` is so over `A'`.
 * `prop_3491_fpqc`: for a flat, surjective, quasi-compact morphism of schemes `g : X' ⟶ X` and a
   quasi-coherent `𝒪_X`-module `F`, `F` is of finite type (resp. of finite presentation) if and
   only if `g^* F` is.
 
-**How.** For modules, descent of finite generation is Mathlib's
+## Implementation notes
+
+For modules, descent of finite generation is Mathlib's
 `Module.Finite.of_finite_tensorProduct_of_faithfullyFlat` and descent of finite presentation is
 Stacks 03C4 (2), `Module.FinitePresentation.of_isBaseChange_of_faithfullyFlat`
 (`StacksFrontier/RingTheory/Flat/FaithfullyFlat/Descent.lean`): `M` is finite, so a quotient
@@ -34,11 +40,22 @@ over an affine `X` the covering is refined by a single affine faithfully flat sc
 the module statement above applies. The converse directions are the stability of finite type
 and finite presentation under pullback (Stacks 01B6, 01BQ).
 
-**Not formalised.** Nothing of the entry is left out. The modules are those of the universe of
-the rings, and the sheaf statement is for the pullback functor `Scheme.Modules.pullback` of
-Mathlib; the hypothesis "faithfully flat quasi-compact" is read as flat, surjective and
-quasi-compact, as in `Part08b`.
+The modules are those of the universe of the rings, and the sheaf statement is for the pullback
+functor `Scheme.Modules.pullback` of Mathlib; the hypothesis "faithfully flat quasi-compact" is
+read as flat, surjective and quasi-compact, as in `Part08b`.
+
+## Not formalised
+
+Nothing of the entry is left out.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), entry `vuys5SNs2eQ-3491` (0:58:11)
+* Stacks Project, tags 03C4, 05AZ, 05B0, 01B6, 01BQ
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry
 open scoped TensorProduct

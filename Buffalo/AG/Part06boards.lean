@@ -1,15 +1,26 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part06
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: blackboard items
 
 The board items of `public/buffalo-boards/` in the time range of part 06 (`Oqhr-Gt66es`,
 3486–19492 s) that no index entry formalises (`docs/buffalo-ag/lean/Part06-boards.json`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), video `Oqhr-Gt66es`, 3486–19492 s
+  (reconstructed blackboards `public/buffalo-boards/`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TensorProduct
 
@@ -57,7 +68,8 @@ theorem board_11246 : Function.Injective (algebraMap ℤ ℚ) ∧
 /-- Board `Oqhr-Gt66es-8803`, t = 11441: for `A` local with residue field `k`, the map
 `𝔪 ⊗_A k → A ⊗_A k` induced by the injection `𝔪 ↪ A` is zero. -/
 theorem board_11441 (A : Type u) [CommRing A] [IsLocalRing A] :
-    LinearMap.rTensor (A ⧸ IsLocalRing.maximalIdeal A) (IsLocalRing.maximalIdeal A).subtype = 0 := by
+    LinearMap.rTensor (A ⧸ IsLocalRing.maximalIdeal A)
+      (IsLocalRing.maximalIdeal A).subtype = 0 := by
   apply TensorProduct.ext'
   intro x c
   obtain ⟨c, rfl⟩ := Ideal.Quotient.mk_surjective c

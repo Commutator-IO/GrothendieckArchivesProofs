@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 02: board items not covered by the index
@@ -10,7 +13,15 @@ public import Buffalo.AG.Part02
 Claims on the reconstructed blackboards `public/buffalo-boards/51wmmpHand0-*.json`
 (4:56:31–8:36:03) that no index entry of part 02 formalises, and the counterexamples behind the
 corrections of the boards. Status in `docs/buffalo-ag/lean/Part02-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), video `51wmmpHand0`, 4:56:31–8:36:03
+  (reconstructed blackboards `public/buffalo-boards/51wmmpHand0-*.json`)
 -/
+
+@[expose] public section
+
 
 open TopologicalSpace PrimeSpectrum
 
@@ -18,10 +29,11 @@ namespace Buffalo.AG.Part02
 
 /-- Board 51wmmpHand0-17719, t = 19952 [m] (corrected) `∐ X_i(K') → X(K')` is injective when
 `K' ≠ 0`; for `K' = 0` it is not as soon as there are two indices (`cex_21337`). -/
-theorem board_19952 {k : Type*} [CommRing k] {ι : Type*} [DecidableEq ι] (A : ι → Type*)
+theorem board_19952 {k : Type*} [CommRing k] {ι : Type*} (A : ι → Type*)
     [∀ i, CommRing (A i)] [∀ i, Algebra k (A i)] (k' : Type*) [CommRing k'] [Algebra k k']
     [Nontrivial k'] :
     Function.Injective (fun x : (Σ i, A i →ₐ[k] k') => x.2.comp (Pi.evalAlgHom k A x.1)) := by
+  classical
   rintro ⟨i, ψ⟩ ⟨j, ψ'⟩ h
   have hij : i = j := by
     by_contra hij

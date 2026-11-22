@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 6a: accessible categories, `Ind`, cardinal filtrations (10 July 1973)
@@ -12,12 +15,22 @@ Entries of `docs/buffalo-topos/index.tex` lines 831–879 (video `4gynb9uTEE4`, 
 accessible functors, objects and categories, the examples `Set^op` and topoi, `Ind`-categories and
 cardinal filtrations. The status of each entry is in `docs/buffalo-topos/lean/Part06.json`.
 
+## Implementation notes
+
 Grothendieck's cardinal `π` (families of cardinality `≤ π`) corresponds to Mathlib's regular
 cardinal `κ = π⁺` (families of cardinality `< κ`): an ordered set dominating `π` is a
 `κ`-filtered ordered set (`dominates_iff_isCardinalFiltered`). His `π`-accessible functors and
 objects are Mathlib's `Functor.IsCardinalAccessible` and `IsCardinalPresentable`; his
 `π`-accessible categories with small colimits are Mathlib's `IsCardinalLocallyPresentable`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 4:14:44–5:32:58
+  (10 July 1973)
 -/
+
+@[expose] public section
+
 
 universe w v u
 
@@ -479,7 +492,8 @@ theorem retract_isCardinalPresentable {E : Type*} [Category* E] {X Y : E} (h : R
 envelope `Karoubi`. Presheaves do not change when `C` is replaced by its Karoubian envelope. -/
 @[buffalo "4gynb9uTEE4-18396"]
 instance type_isIdempotentComplete : IsIdempotentComplete (Type v) :=
-  (Idempotents.isIdempotentComplete_iff_hasEqualizer_of_id_and_idempotent _).2 (fun _ _ _ => inferInstance)
+  (Idempotents.isIdempotentComplete_iff_hasEqualizer_of_id_and_idempotent _).2
+    (fun _ _ _ => inferInstance)
 
 def presheafKaroubiEquiv : (Cᵒᵖ ⥤ Type v) ≌ (Idempotents.Karoubi Cᵒᵖ ⥤ Type v) :=
   Idempotents.karoubiUniversal _ _
@@ -608,7 +622,8 @@ def isColimit_partialCoproducts (X : Type u) {κ : Cardinal.{u}} (hκ : ℵ₀ �
 `κ'`-presentable for every regular `κ' ≥ κ` (Mathlib). -/
 @[buffalo "4gynb9uTEE4-19702"]
 theorem locallyPresentable_of_le {κ κ' : Cardinal.{w}}
-    [Fact κ.IsRegular] [Fact κ'.IsRegular] [IsCardinalLocallyPresentable E κ] (h : κ ≤ κ') : IsCardinalLocallyPresentable E κ' :=
+    [Fact κ.IsRegular] [Fact κ'.IsRegular] [IsCardinalLocallyPresentable E κ] (h : κ ≤ κ') :
+    IsCardinalLocallyPresentable E κ' :=
   IsCardinalLocallyPresentable.of_le E h
 
 /-- 4gynb9uTEE4-19912 (5:31:52) [cex] A functor from the point commutes with all colimits indexed

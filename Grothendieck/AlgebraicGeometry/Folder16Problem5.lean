@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.ClassicalTheory
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 16, page 49: `A⁰(X)`, `A′⁰(X)`, `A″⁰(X)` in a classical Weil cohomology theory
@@ -16,25 +19,28 @@ The reading (« Les variantes faibles, qui ne le sont pas ») introduces, for a 
   class of `H^{2i}(Y)`;
 * `A′⁰`, `A″⁰`: their restrictions to the critical dimension, `2i = n − 1` (`n` odd) and
   `2i = n − 2` (`n` even);
+
 and claims that `A⁰(X)` — the Lefschetz-type statement on algebraic classes in the critical
 dimension, `L : Z^i → Z^{i+1}` (`n = 2i + 1`) or `L² : Z^i → Z^{i+2}` (`n = 2i + 2`) onto — follows
 from `A′⁰(X) + A″⁰(X)`, « comme on le voit en décomposant l'opérateur de la dimension critique à
 travers la section hyperplane » (`L = φ_*φ^*`). This is the step of the finding
-`16-weak-variants-imply-strong` that the edition did not find in the literature.
+`16-weak-variants-imply-strong` that the edition did not find in the literature. Proved for `n`
+odd under a splitting hypothesis that cannot be dropped, and for `n` even with `A″` in the next
+degree and `A⁰(Y)`.
 
-Everything is stated inside a classical Weil cohomology theory `T` (Stacks 0FGV,
-`Stacks.WeilCohomology.ClassicalWeilCohomologyTheory`), with algebraic classes the `F`-span of
-the image of the cycle class map. Hard and weak Lefschetz, the identity `L = φ_*φ^*` (which needs
-`γ(Y) = ξ`) and the projection formula are not axioms there; they enter as explicit hypotheses.
+## Main definitions
 
-**What is proved.**
 * `algebraicClasses`, `lefschetzOp` (cup product with `ξ = γ(h)`, `h ∈ CH¹(X)`), and
   `sectionPushforward` (the Gysin map `H^{2r}(Y) → H^{2r+2}(X)` of the Poincaré-duality
-  pushforward, for `dim X = dim Y + 1`); `pullback_mem`, `lefschetzOp_mem`,
-  `sectionPushforward_mem`: `φ^*`, `L` and `φ_*` carry algebraic classes to algebraic classes
-  (from the axioms `cycleClass_gysin`, `cycleClass_mul`, `cycleClass_pushforward`).
-* The page's conditions: `AZero`, `APrime`, `APrimeZero`, `ADoublePrime`, `ADoublePrimeZero`, and
-  the inclusions `aPrimeZero_of_aPrime`, `aDoublePrimeZero_odd_of_aDoublePrime`.
+  pushforward, for `dim X = dim Y + 1`).
+* The page's conditions: `AZero`, `APrime`, `APrimeZero`, `ADoublePrime`, `ADoublePrimeZero`.
+
+## Main results
+
+* `pullback_mem`, `lefschetzOp_mem`, `sectionPushforward_mem`: `φ^*`, `L` and `φ_*` carry
+  algebraic classes to algebraic classes (from the axioms `cycleClass_gysin`, `cycleClass_mul`,
+  `cycleClass_pushforward`).
+* The inclusions `aPrimeZero_of_aPrime`, `aDoublePrimeZero_odd_of_aDoublePrime`.
 * The « trivial » direction: under `L = φ_*φ^*` and hard Lefschetz (injectivity of `L`, resp.
   `L²`, in the critical degree), `A⁰(X) ⇒ A′⁰(X)` (`aPrimeZero_of_aZero`) and, for `n` odd,
   `A⁰(X) ⇒ A″⁰(X)` (`aDoublePrimeZero_odd_of_aZero`).
@@ -50,12 +56,21 @@ the image of the cycle class map. Hard and weak Lefschetz, the identity `L = φ_
 * `aZero_of`: the two together, `A′⁰(X) + A″(X) + A⁰(Y) ⇒ A⁰(X)` (with the splitting for `n`
   odd).
 
+## Implementation notes
+
+Everything is stated inside a classical Weil cohomology theory `T` (Stacks 0FGV,
+`Stacks.WeilCohomology.ClassicalWeilCohomologyTheory`), with algebraic classes the `F`-span of
+the image of the cycle class map. Hard and weak Lefschetz, the identity `L = φ_*φ^*` (which needs
+`γ(Y) = ξ`) and the projection formula are not axioms there; they enter as explicit hypotheses.
+
 **How.** The statements reduce to linear algebra of three or five vector spaces with subspaces of
 algebraic classes (`odd_step`, `odd_converse`, `even_step`, `even_first_half`,
 `even_converse`); the Weil theory supplies the spaces, the maps and their compatibility with
 algebraic classes, the degree identifications being `ExternallyGraded.degreeCast`.
 
-**Not formalised.** Hyperplane sections, `γ(Y) = ξ`, the projection formula, and weak and hard
+## Not formalised
+
+Hyperplane sections, `γ(Y) = ξ`, the projection formula, and weak and hard
 Lefschetz are hypotheses, not theorems of the theory. The full `A(X)` (all `L^{n−2i}`), hence
 `A(X) ⇒ A′(X)` and `C(Y) ⇒ A″(X)` outside the critical dimension, and `C(X)` itself (the
 algebraicity of `Λ` as a correspondence), with the equivalence
@@ -64,7 +79,16 @@ Theorem 2.13, for the form with `A⁰`). Whether the splitting of `Z^i(Y)` holds
 cohomology: the model of `odd_step_fails_without_splitting` is linear algebra, not a variety. For
 `n` even the reading's `A″⁰` (at `2i = n − 2`) lies outside the range `2i ≥ n − 1` of `A″`, so
 `A″ ⇒ A″⁰` is only stated for `n` odd.
+
+## References
+
+* A. Grothendieck, Folder 16, p. 49 (finding `16-weak-variants-imply-strong`)
+* Stacks Project, tag 0FGV
+* S. Kleiman, 1968, Theorem 2.13
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry Stacks.WeilCohomology
 
@@ -247,7 +271,7 @@ theorem pullback_mem {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
       (algebraicClasses T Y r).comap (T.pullback φ (2 * r)) := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨α, rfl⟩
-    show T.pullback φ (2 * r) (T.cycleClass X r α) ∈ algebraicClasses T Y r
+    change T.pullback φ (2 * r) (T.cycleClass X r α) ∈ algebraicClasses T Y r
     rw [← T.cycleClass_gysin φ r α]
     exact Submodule.subset_span ⟨_, rfl⟩
   exact hle hx
@@ -260,7 +284,7 @@ theorem lefschetzOp_mem (X : (SmoothProjective k).FullSubcategory) (h : Ch.group
       (algebraicClasses T X (r + 1)).comap (lefschetzOp T X h r) := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨α, rfl⟩
-    show lefschetzOp T X h r (T.cycleClass X r α) ∈ algebraicClasses T X (r + 1)
+    change lefschetzOp T X h r (T.cycleClass X r α) ∈ algebraicClasses T X (r + 1)
     simp only [lefschetzOp, LinearMap.comp_apply]
     rw [← T.cycleClass_mul X 1 r h α]
     exact degreeCast_mem_algebraicClasses T X (by ring) _ (Submodule.subset_span ⟨_, rfl⟩)
@@ -275,7 +299,7 @@ theorem sectionPushforward_mem {X Y : (SmoothProjective k).FullSubcategory} (φ 
       (algebraicClasses T X (r + 1)).comap (sectionPushforward T φ hdim r) := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨α, rfl⟩
-    show sectionPushforward T φ hdim r (T.cycleClass Y r α) ∈ algebraicClasses T X (r + 1)
+    change sectionPushforward T φ hdim r (T.cycleClass Y r α) ∈ algebraicClasses T X (r + 1)
     simp only [sectionPushforward, LinearMap.comp_apply]
     rw [T.cycleClass_pushforward φ r α, degreeCast_trans]
     exact degreeCast_mem_algebraicClasses T X (by omega) _ (Submodule.subset_span ⟨_, rfl⟩)

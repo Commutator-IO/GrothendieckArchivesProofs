@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.RingTheory.Folder100
@@ -5,8 +10,6 @@ public import Grothendieck.RingTheory.Folder100Baire
 public import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem
 public import StacksFrontier.RingTheory.NoetherNormalization.Basic
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 100, page 38: the Corollary through Cohen's structure theorem
@@ -19,7 +22,8 @@ the Proposition of page 36, by countable prime avoidance, and the page's own rou
 `Θ = V⟦T⟧`; `Grothendieck/RingTheory/Folder100Baire.lean` does Baire on `𝔪ⁿ` for `Θ = V⟦T₁, …, Tₙ⟧`.
 This file follows the page's route in every dimension, through Cohen's structure theorem.
 
-**What is proved.**
+## Main results
+
 * `exists_coheight_eq_one_of_cohen`: the Corollary of page 38. Let `R` be a complete noetherian
   local domain which is not a field, and `(Zᵢ)` a countable family of proper closed subsets of
   `Spec R` (the « fermés rares » of the irreducible `Spec R`). Some point `x` of coheight `1`
@@ -31,7 +35,9 @@ This file follows the page's route in every dimension, through Cohen's structure
   is the `V`-linear evaluation at a point of `𝔪ⁿ` given by Baire
   (`Folder100Baire.exists_eval_ne_zero`).
 
-**How.** The page's argument. By Cohen's structure theorem (Stacks 032D,
+## Implementation notes
+
+The page's argument. By Cohen's structure theorem (Stacks 032D,
 `IsLocalRing.exists_injective_finite_mvPowerSeries`, built on Stacks 0323 and 032A), `R` is
 finite over a subring `A = Λ⟦T₁, …, T_d⟧`, `Λ` a field or a Cohen ring; when `Λ` is a field,
 `A ≃ V⟦T₁, …, T_{d-1}⟧` with `V = Λ⟦T₀⟧` (`mvPowerSeriesEquiv`), as the reading's footnote says.
@@ -40,13 +46,25 @@ A proper closed `Zᵢ` lies in `V(gᵢ)`, `gᵢ ≠ 0`, and `gᵢ` has a nonzero
 `aᵢ` vanishes, which Baire's theorem on the complete metric space `𝔪ⁿ` provides
 (`good_mvPowerSeries`, from `Folder100Baire.exists_eval_ne_zero`: the zero set of a nonzero
 series is closed with empty interior). Finally a prime `Q` of `R` over the point `P` of `A`
-(lying over) is outside every `Zᵢ`, since `aᵢ ∉ P`, and `dim R ⧸ Q = dim A ⧸ P = 1`, `R ⧸ Q` being integral over `A ⧸ P`
+(lying over) is outside every `Zᵢ`, since `aᵢ ∉ P`, and `dim R ⧸ Q = dim A ⧸ P = 1`, `R ⧸ Q`
+being integral over `A ⧸ P`
 (`ringKrullDim_eq_of_injective_isIntegral`, Stacks).
 
-**Not formalised.** The Proposition of page 36 is not deduced from the Corollary here (it is
+## Not formalised
+
+The Proposition of page 36 is not deduced from the Corollary here (it is
 proved in `Folder100.lean` by another route), nor is the application to the algebraisation of
 formal abelian schemes.
+
+## References
+
+* A. Grothendieck, cote 100, p. 38, « Un argument de Baire » (finding
+  `100-baire-dimension-one-points`); modernised reading `transcripts/100/100.modern.tex`
+* Stacks Project, tags 032D, 0323, 032A
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder100Cohen
 
@@ -179,7 +197,8 @@ theorem exists_coheight_eq_one_of_cohen (R : Type u) [CommRing R] [IsNoetherianR
   choose a ha ha0 using fun i => Submodule.exists_mem_ne_zero_of_ne_bot (hJ i)
   obtain ⟨P, hP, hPdim, hPS⟩ := exists_prime_of_cohen Λ hΛ d hd (Set.range a)
     (Set.countable_range a) (by rintro ⟨i, hi⟩; exact ha0 i hi)
-  obtain ⟨Q, hQ, hQP⟩ := Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := R) P (fun x hx => by
+  obtain ⟨Q, hQ, hQP⟩ :=
+    Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := R) P (fun x hx => by
     rw [RingHom.mem_ker] at hx
     rw [hfinj (hx.trans (map_zero f).symm)]
     exact P.zero_mem)

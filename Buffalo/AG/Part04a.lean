@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (a): 12–13 June 1973, stalks, localization, local rings
@@ -12,7 +15,15 @@ The entries of `docs/buffalo-ag/index.tex` lines 492–516 (video `thSz9ZHDK9o`,
 the stalks of `M^~` and of `𝒪_X` on `Spec A`, localization of modules and rings at a
 multiplicative subset and its universal properties, local rings and their characterisations,
 `M ↦ M^~` and infinite products, and the completion of a noetherian local ring.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 12–13 June 1973, video `thSz9ZHDK9o`,
+  1:39:49–2:23:44 (`docs/buffalo-ag/index.tex`, lines 492–516)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory IsLocalRing TensorProduct
 

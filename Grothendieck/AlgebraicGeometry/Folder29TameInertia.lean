@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder29
 public import StacksFrontier.RingTheory.DiscreteValuationRing.Abhyankar.AbhyankarLemma
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 29, page 120: tame inertia through Abhyankar's lemma
@@ -21,7 +24,8 @@ isomorphism iff `card C = card C'` and `det N = ± p^k`.
 of the Kummer computation through Abhyankar's lemma, and the criterion on the finite quotients
 through which the tame inertia acts on Kummer covers.
 
-**What is proved.**
+## Main results
+
 * `finiteInertiaMap N e`: the map `(ℤ/e)^C → (ℤ/e)^{C'}` of `N`, on the quotient
   `μ_e^C ≅ (ℤ/e)^C` of (3.1) (`k(x̄)` separably closed, `p ∤ e`), the Galois group of the Kummer
   cover obtained by extracting `e`-th roots of the equations of the branches.
@@ -41,7 +45,9 @@ through which the tame inertia acts on Kummer covers.
   map `(n) : μ_e → μ_e` on inertia is zero (only this direction is proved; the converse, that a
   ramified cover stays ramified when `e ∤ n`, is not).
 
-**Not formalised.** Mathlib and Stacks have no tame fundamental group or inertia group of a
+## Not formalised
+
+Mathlib and Stacks have no tame fundamental group or inertia group of a
 scheme, no strictly local regular scheme with a normal crossings divisor, and no Kummer
 computation for several branches. So the canonical identification (3.1) of the tame inertia at
 `x̄` with a quotient of `∏_{ℓ ≠ p} ℤ_ℓ(1)^C` (SGA 1 XIII 5.3), the statement that the map on
@@ -50,7 +56,16 @@ consequence that the inertia subgroups of `H` at `y` are exactly the conjugates 
 those of `G` at `x` are not proved. Stacks 0EYG (Abhyankar's lemma for normal crossings divisors
 on regular schemes, several branches) would be the route to the several-branch local core; its
 import closure (4,384 modules) was not used.
+
+## References
+
+* A. Grothendieck, folder 29, page 120 (reading `transcripts/29/29.modern.tex`; finding
+  `29-inertia-matrix-determinant`)
+* [SGA 1] XIII 5.3
+* Stacks Project, tags 0BRM, 0EYG
 -/
+
+@[expose] public section
 
 open Matrix
 

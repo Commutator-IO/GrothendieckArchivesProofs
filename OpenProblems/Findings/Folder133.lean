@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -6,6 +11,8 @@ module
 The open row `133-affine-quotient-not-constructible` of the edition's list of findings
 (`src/content/findings.ts`), folder 133, pp. 42–43. It cannot be stated faithfully with Mathlib
 and the Stacks library; what is missing.
+
+## Not formalised
 
 * `133-affine-quotient-not-constructible`: for smooth group schemes with connected fibres over a
   base of mixed characteristic, the largest affine quotient of the fibres does not vary
@@ -21,4 +28,9 @@ and the Stacks library; what is missing.
   Abelian schemes are in the Stacks library (`AlgebraicGeometry.IsAbelianScheme`); the rest would
   be new definitions, and the subject of the page's sentence is an interlinear addition of which
   only « un G » is read.
+
+## References
+
+* A. Grothendieck, folder 133, pp. 42–43 (finding `133-affine-quotient-not-constructible`)
+* [SGA 3] VI_B § 12
 -/
