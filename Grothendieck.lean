@@ -18,6 +18,7 @@ public import Grothendieck.Folder118
 public import Grothendieck.Folder120
 public import Grothendieck.Folder121
 public import Grothendieck.Folder125
+public import Grothendieck.Folder126Descent
 public import Grothendieck.Folder126EtaleSplitting
 public import Grothendieck.Folder126GeometricPoints
 public import Grothendieck.Folder126NilpotentQuotient
