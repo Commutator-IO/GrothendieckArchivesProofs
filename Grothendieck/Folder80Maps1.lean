@@ -175,7 +175,8 @@ theorem pcl_inter_of [Fintype E] (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L)
     have hMZ : comp M Z ∈ S := ⟨hL _ hM.1 _ hZ, (conf_comp M Z).ne_zero hM.2.1,
       hM.2.2.1.comp hZX, hM.2.2.2.comp hZY⟩
     have heq := Finset.eq_of_subset_of_card_le (fun e => by
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and]; simp +contextual [comp]) (hmax _ hMZ)
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]; simp +contextual [comp])
+      (hmax _ hMZ)
     by_cases hZe : Z e = 0
     · exact Or.inl hZe
     have hMe : M e ≠ 0 := fun hMe => by
@@ -236,7 +237,8 @@ theorem neg_mem_cov {X : ι → SignType} (hX : X ∈ cov ℓ) : -X ∈ cov ℓ 
   obtain ⟨p, rfl⟩ := hX; exact ⟨-p, funext fun i => by simp [sgn, Left.sign_neg]⟩
 
 theorem eventually_sign (a b : ℝ) : ∀ᶠ t in 𝓝[>] (0 : ℝ),
-    SignType.sign (a + t * b) = if SignType.sign a = 0 then SignType.sign b else SignType.sign a := by
+    SignType.sign (a + t * b) =
+      if SignType.sign a = 0 then SignType.sign b else SignType.sign a := by
   have hc : Tendsto (fun t : ℝ => a + t * b) (𝓝[>] 0) (𝓝 a) :=
     ((by fun_prop : Continuous fun t : ℝ => a + t * b).tendsto' 0 a (by simp)).mono_left
       nhdsWithin_le_nhds
@@ -272,7 +274,8 @@ theorem closure_cell [Finite ι] {X : ι → SignType} (hX : X ∈ cov ℓ) :
       ext q; simp [sgn, sign_pos h, le_iff_eq_or_lt, eq_comm (a := (0 : ℝ)),
         sign_eq_one_iff]
   · refine mem_closure_of_tendsto (f := fun t : ℝ => q + t • p) (b := 𝓝[>] 0)
-      (tendsto_nhdsWithin_of_tendsto_nhds ((by fun_prop : Continuous fun t : ℝ => q + t • p).tendsto'
+      (tendsto_nhdsWithin_of_tendsto_nhds
+        ((by fun_prop : Continuous fun t : ℝ => q + t • p).tendsto'
         0 q (by simp))) ?_
     filter_upwards [self_mem_nhdsWithin] with t (ht : 0 < t)
     refine funext fun i => ?_

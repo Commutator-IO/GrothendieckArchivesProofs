@@ -142,7 +142,8 @@ theorem prop_1239 {C : Type*} [Category C] [Limits.HasPullbacks C] [FinitaryPreE
 
 theorem prop_1239_disjoint (K : Type*) [Field K] {I : Type*} [DecidableEq I] {i j : I}
     (hij : i ≠ j) :
-    @Subsingleton (@TensorProduct (I → K) _ K K _ _ (Pi.evalRingHom (fun _ => K) i).toAlgebra.toModule
+    @Subsingleton (@TensorProduct (I → K) _ K K _ _
+      (Pi.evalRingHom (fun _ => K) i).toAlgebra.toModule
       (Pi.evalRingHom (fun _ => K) j).toAlgebra.toModule) := by
   exact subsingleton_tensor_of_ringHom _ _ (Pi.single i 1) (by simp) (by simp [hij.symm])
 
@@ -287,7 +288,8 @@ immersions are stable under base change and are embeddings, with image the preim
 (`prop_1899`). -/
 theorem prop_2288 {X Y S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S) (g : Y ⟶ S)
     [AlgebraicGeometry.IsImmersion g] :
-    IsEmbedding (Limits.pullback.fst f g) ∧ Set.range (Limits.pullback.fst f g) = f ⁻¹' Set.range g :=
+    IsEmbedding (Limits.pullback.fst f g) ∧
+      Set.range (Limits.pullback.fst f g) = f ⁻¹' Set.range g :=
   ⟨AlgebraicGeometry.Scheme.Hom.isEmbedding _, AlgebraicGeometry.Scheme.Pullback.range_fst f g⟩
 
 /-- thSz9ZHDK9o-2416 (0:40:16) [prop] For two subobjects `X`, `Y` of `S`,
@@ -309,8 +311,8 @@ theorem prop_2810 {A B : Type*} [CommRing A] [CommRing B] (u : A →+* B) (J : I
     closure (comap u '' zeroLocus (J : Set B)) = zeroLocus (J.comap u : Set A) :=
   closure_image_comap_zeroLocus u J
 
-/-- thSz9ZHDK9o-3134 (0:52:14) [prop] `Spec u` is dominant iff `ker u ⊂ nil(A)`; for `A` reduced, iff
-`u` is injective (mathlib: `PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical`). -/
+/-- thSz9ZHDK9o-3134 (0:52:14) [prop] `Spec u` is dominant iff `ker u ⊂ nil(A)`; for `A` reduced,
+iff `u` is injective (mathlib: `PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical`). -/
 theorem prop_3134 {A B : Type*} [CommRing A] [CommRing B] (u : A →+* B) :
     (DenseRange (comap u) ↔ RingHom.ker u ≤ nilradical A) ∧
       (IsReduced A → (DenseRange (comap u) ↔ Function.Injective u)) := by
@@ -358,7 +360,8 @@ sheaves of modules is not formalised. -/
 theorem prop_3792 {A : Type*} [CommRing A] (M N : Type*) [AddCommGroup M] [Module A M]
     [AddCommGroup N] [Module A N] [Module.FinitePresentation A M] (f : A) :
     IsLocalizedModule (Submonoid.powers f)
-      (IsLocalizedModule.map (Submonoid.powers f) (LocalizedModule.mkLinearMap (Submonoid.powers f) M)
+      (IsLocalizedModule.map (Submonoid.powers f)
+        (LocalizedModule.mkLinearMap (Submonoid.powers f) M)
         (LocalizedModule.mkLinearMap (Submonoid.powers f) N)) ∧
     (IsNoetherianRing A → (Module.Finite A N ↔ Module.FinitePresentation A N)) :=
   ⟨Module.FinitePresentation.isLocalizedModule_map _ _ _,
@@ -465,7 +468,8 @@ def prop_5680 {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S) (hf : f.F
 /-- thSz9ZHDK9o-5791 (1:36:31) [thm] `M ↦ M~` is an equivalence between `A`-modules and
 quasi-coherent `𝒪_X`-modules (mathlib: `AlgebraicGeometry.tildeEquiv`). -/
 def thm_5791 (R : CommRingCat.{u}) :
-    ModuleCat R ≌ (SheafOfModules.isQuasicoherent (AlgebraicGeometry.Spec R).ringCatSheaf).FullSubcategory :=
+    ModuleCat R ≌
+      (SheafOfModules.isQuasicoherent (AlgebraicGeometry.Spec R).ringCatSheaf).FullSubcategory :=
   AlgebraicGeometry.tildeEquiv
 
 end Descent

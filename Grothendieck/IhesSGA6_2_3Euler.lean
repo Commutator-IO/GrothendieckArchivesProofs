@@ -142,7 +142,8 @@ theorem sum_negOnePow_mk_X_eq {a b : ℤ} (hab : a ≤ b + 1)
   have hb : bdry X (b + 1) = 0 :=
     KZero'.mk_image_eq_zero_of_isZero_tgt _
       (IsZero.of_mono (X.iCycles (b + 1)) (hX (b + 1) (Or.inr (by omega))))
-  rw [Finset.sum_congr rfl fun i _ => by rw [mk_X, smul_add], Finset.sum_add_distrib, sum_Icc_negOnePow_add (bdry X) a b (by omega), ha, hb, smul_zero,
+  rw [Finset.sum_congr rfl fun i _ => by rw [mk_X, smul_add], Finset.sum_add_distrib,
+    sum_Icc_negOnePow_add (bdry X) a b (by omega), ha, hb, smul_zero,
     smul_zero, add_zero, add_zero]
 
 /-- **The Euler formula** (view 3, item 5). Let `χ` be an additive function on the abelian

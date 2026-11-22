@@ -67,7 +67,8 @@ namespace OpenProblems.EtaleCohomology
 
 /-- An abelian sheaf on the small étale site of `X` is `p`-primary torsion: every local section is
 killed by a power of `p`. -/
-def IsPPrimaryTorsion (p : ℕ) {X : Scheme.{u}} (F : Sheaf X.smallEtaleTopology AddCommGrpCat.{u + 1}) :
+def IsPPrimaryTorsion (p : ℕ) {X : Scheme.{u}}
+    (F : Sheaf X.smallEtaleTopology AddCommGrpCat.{u + 1}) :
     Prop :=
   ∀ (U : X.Etaleᵒᵖ) (s : F.obj.obj U), ∃ n : ℕ, (p ^ n) • s = 0
 
@@ -122,7 +123,8 @@ Artin–Schreier). For a formally real `k(x)`, the ring `k(x)[T]/(T² + 1)` is t
 `k(x)(√-1)`. -/
 def ExceptionB (r : ℕ) : Prop :=
   r = 2 ∧ ∃ P : PrimeSpectrum A, IsFormallyReal P.asIdeal.ResidueField ∧
-    etaleCd 2 (Spec (CommRingCat.of (AdjoinRoot (Polynomial.X ^ 2 + 1 : P.asIdeal.ResidueField[X])))) < ⊤
+    etaleCd 2 (Spec (CommRingCat.of
+      (AdjoinRoot (Polynomial.X ^ 2 + 1 : P.asIdeal.ResidueField[X])))) < ⊤
 
 /-- The inequality of p:lower, `cd_r(K) ≥ cd_r(k) + dim A`, for a local domain `A` of dimension
 `d` with fraction field `K` and residue field `k`. -/

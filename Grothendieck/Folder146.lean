@@ -1328,7 +1328,8 @@ lemma step5i (i : Fin 3) {p : K × K} (hp : U5 p) : ∃ (a b c d s : K) (t : Fin
       ?_, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [e1]
     · simp only [act4, act5, Fin.mk_one, Fin.isValue, Fin.castSucc_one, one_div, lin, one_mul,
-          mul_one, add_zero, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
+          mul_one, add_zero, Prod.smul_mk, smul_eq_mul,
+          Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
       fin_cases k <;> (simp [pts4, lin, act4, act5, Equiv.swap_apply_def]
                        try field_ring)
@@ -1337,7 +1338,8 @@ lemma step5i (i : Fin 3) {p : K × K} (hp : U5 p) : ∃ (a b c d s : K) (t : Fin
       1 / (p.1 * (1 - p.1)), 1], by simp [h0, e2], by simp [e3], ?_, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [h0, e2]
     · simp only [act4, act5, Fin.reduceFinMk, Fin.reduceCastSucc, one_div, lin, mul_one, add_zero,
-          one_mul, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
+          one_mul, Prod.smul_mk, smul_eq_mul,
+          Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k; fin_cases k <;> simp [pts4, lin, act4, act5, Equiv.swap_apply_def] <;>
         (try refine ⟨?_, ?_⟩) <;> (field_simp; try ring)
     · simp [c5]; field_simp; ring
@@ -1453,7 +1455,8 @@ lemma step6i (i : Fin 4) {p : K × K × K} (hp : U6 p) : ∃ (a b c d s : K) (t 
       by norm_num, by simp [e1''], ?_, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [e1, e1']
     · simp only [act6s, act6, Fin.mk_one, Fin.isValue, Fin.castSucc_one, one_div, lin, one_mul,
-          mul_one, add_zero, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
+          mul_one, add_zero, Prod.smul_mk, smul_eq_mul,
+          Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
       fin_cases k <;> (simp [pts5, lin, act6s, act6, Equiv.swap_apply_def]
                        try field_ring)
@@ -1463,7 +1466,8 @@ lemma step6i (i : Fin 4) {p : K × K × K} (hp : U6 p) : ∃ (a b c d s : K) (t 
       ?_, ?_⟩
     · intro k; fin_cases k <;> simp [h0, e2, e3]
     · simp only [act6s, act6, Fin.reduceFinMk, Fin.reduceCastSucc, one_div, lin, mul_one, add_zero,
-          one_mul, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
+          one_mul, Prod.smul_mk, smul_eq_mul,
+          Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
       fin_cases k <;> (simp [pts5, lin, act6s, act6, Equiv.swap_apply_def]
                        try field_ring)

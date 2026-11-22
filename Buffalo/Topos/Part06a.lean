@@ -466,7 +466,8 @@ theorem retract_isCardinalPresentable {E : Type*} [Category* E] {X Y : E} (h : R
 /-- 4gynb9uTEE4-18396 (5:06:36) [def] `C` Karoubian: Mathlib `IsIdempotentComplete`; Karoubian
 envelope `Karoubi`. Presheaves do not change when `C` is replaced by its Karoubian envelope. -/
 instance type_isIdempotentComplete : IsIdempotentComplete (Type v) :=
-  (Idempotents.isIdempotentComplete_iff_hasEqualizer_of_id_and_idempotent _).2 (fun _ _ _ => inferInstance)
+  (Idempotents.isIdempotentComplete_iff_hasEqualizer_of_id_and_idempotent _).2
+    (fun _ _ _ => inferInstance)
 
 def presheafKaroubiEquiv : (Cᵒᵖ ⥤ Type v) ≌ (Idempotents.Karoubi Cᵒᵖ ⥤ Type v) :=
   Idempotents.karoubiUniversal _ _
@@ -588,7 +589,8 @@ def isColimit_partialCoproducts (X : Type u) {κ : Cardinal.{u}} (hκ : ℵ₀ �
 /-- 4gynb9uTEE4-19702 (5:28:22) [prop] A locally `κ`-presentable category is locally
 `κ'`-presentable for every regular `κ' ≥ κ` (Mathlib). -/
 theorem locallyPresentable_of_le {κ κ' : Cardinal.{w}}
-    [Fact κ.IsRegular] [Fact κ'.IsRegular] [IsCardinalLocallyPresentable E κ] (h : κ ≤ κ') : IsCardinalLocallyPresentable E κ' :=
+    [Fact κ.IsRegular] [Fact κ'.IsRegular] [IsCardinalLocallyPresentable E κ] (h : κ ≤ κ') :
+    IsCardinalLocallyPresentable E κ' :=
   IsCardinalLocallyPresentable.of_le E h
 
 /-- 4gynb9uTEE4-19912 (5:31:52) [cex] A functor from the point commutes with all colimits indexed

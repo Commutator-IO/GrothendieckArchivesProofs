@@ -126,12 +126,14 @@ theorem prop_33316_factor (R : CommRingCat.{u}) (g : X ⟶ Spec R) :
     Category.comp_id]
 
 /-- Oqhr-Gt66es-33470 (9:17:50) [prop] (part) For `X` quasi-compact: `X` quasi-affine iff
-`X → Spec Γ(X, 𝒪_X)` is an open immersion iff the affine `X_f`, `f ∈ Γ(X, 𝒪_X)`, cover `X`; they then
+`X → Spec Γ(X, 𝒪_X)` is an open immersion iff the affine `X_f`, `f ∈ Γ(X, 𝒪_X)`, cover `X`;
+they then
 form a base of the topology. -/
 theorem prop_33470 [CompactSpace X] :
     (X.IsQuasiAffine ↔ IsOpenImmersion X.toSpecΓ) ∧
     (X.IsQuasiAffine →
-      TopologicalSpace.Opens.IsBasis { X.basicOpen r | (r : Γ(X, ⊤)) (_ : IsAffineOpen (X.basicOpen r)) }) ∧
+      TopologicalSpace.Opens.IsBasis
+        { X.basicOpen r | (r : Γ(X, ⊤)) (_ : IsAffineOpen (X.basicOpen r)) }) ∧
     ((∀ x : X, ∃ r : Γ(X, ⊤), IsAffineOpen (X.basicOpen r) ∧ x ∈ X.basicOpen r) →
       X.IsQuasiAffine) :=
   ⟨⟨fun _ => inferInstance, fun _ => ⟨⟩⟩, fun _ => Scheme.IsQuasiAffine.isBasis_basicOpen X,
@@ -168,7 +170,8 @@ theorem prop_35012 (f : X ⟶ Y) [IsIntegralHom f] [UniversallyInjective f] [Sur
       [Surjective f'], IsHomeomorph f' := fun f' _ _ _ =>
     isHomeomorph_iff_continuous_isClosedMap_bijective.2
       ⟨f'.continuous, f'.isClosedMap, f'.injective, f'.surjective⟩
-  have : UniversallyInjective (pullback.snd f g) := MorphismProperty.of_isPullback (P := @UniversallyInjective)
+  have : UniversallyInjective (pullback.snd f g) := MorphismProperty.of_isPullback
+    (P := @UniversallyInjective)
     (IsPullback.of_hasPullback f g) inferInstance
   exact key _
 

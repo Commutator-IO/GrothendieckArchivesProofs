@@ -338,7 +338,8 @@ theorem exists_model_adjoinRoot :
     let f : Polynomial ℤ := Polynomial.X ^ 4 + Polynomial.X ^ 3 + Polynomial.X ^ 2
       + Polynomial.X + 1
     let ζ := AdjoinRoot.root f
-    (sModel : Matrix (Fin 2) (Fin 2) (AdjoinRoot f)) ^ 2 = (-1 : AdjoinRoot f) • 1 ∧ (sModel * pModel ζ) ^ 3 = (-1 : AdjoinRoot f) • 1 ∧
+    (sModel : Matrix (Fin 2) (Fin 2) (AdjoinRoot f)) ^ 2 = (-1 : AdjoinRoot f) • 1 ∧
+      (sModel * pModel ζ) ^ 3 = (-1 : AdjoinRoot f) • 1 ∧
       (∃ c : AdjoinRoot f, pModel ζ ^ 5 = c • 1) ∧
       NullePartScalaire (sModel : Matrix (Fin 2) (Fin 2) (AdjoinRoot f)) ∧
       NullePartScalaire (pModel ζ) ∧ NullePartScalaire (sModel * pModel ζ) ∧
@@ -439,7 +440,8 @@ theorem nps_smul_add_iff {g : Matrix (Fin 2) (Fin 2) R} (hg : NullePartScalaire 
     (x y : R) : NullePartScalaire (x • g + y • (1 : Matrix (Fin 2) (Fin 2) R)) ↔ IsUnit x := by
   rw [nps_iff_maximal, isUnit_iff_maximal]
   rw [nps_iff_maximal] at hg
-  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, one_apply_ne (show (0 : Fin 2) ≠ 1 by decide),
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
+    one_apply_ne (show (0 : Fin 2) ≠ 1 by decide),
     one_apply_ne (show (1 : Fin 2) ≠ 0 by decide), one_apply_eq, mul_zero, add_zero, mul_one]
   refine forall₂_congr fun m hm => ?_
   have e : x * g 0 0 + y - (x * g 1 1 + y) = x * (g 0 0 - g 1 1) := by ring
@@ -657,7 +659,11 @@ theorem trace_triple_sq (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ�
   have e1 := trace_zero_entry h1
   have e2 := trace_zero_entry h2
   simp only [trace_fin_two, det_fin_two, Matrix.mul_apply, Fin.sum_univ_two, e0, e1, e2] at h02 ⊢
-  linear_combination (-(2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 0)^2 - 2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 1)*(τ₁ 1 0) + 2*(τ₀ 0 0)*(τ₂ 0 1)*(τ₁ 0 0)*(τ₁ 1 0) + 2*(τ₀ 0 0)*(τ₂ 1 0)*(τ₁ 0 0)*(τ₁ 0 1) + 2*(τ₀ 0 1)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 1 0) + (τ₀ 0 1)*(τ₂ 0 1)*(τ₁ 1 0)^2 - (τ₀ 0 1)*(τ₂ 1 0)*(τ₁ 0 0)^2 + 2*(τ₀ 1 0)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 0 1) - (τ₀ 1 0)*(τ₂ 0 1)*(τ₁ 0 0)^2 + (τ₀ 1 0)*(τ₂ 1 0)*(τ₁ 0 1)^2)) * h02
+  linear_combination (-(2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 0)^2 - 2*(τ₀ 0 0)*(τ₂ 0 0)*(τ₁ 0 1)*(τ₁ 1 0) +
+      2*(τ₀ 0 0)*(τ₂ 0 1)*(τ₁ 0 0)*(τ₁ 1 0) + 2*(τ₀ 0 0)*(τ₂ 1 0)*(τ₁ 0 0)*(τ₁ 0 1) +
+      2*(τ₀ 0 1)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 1 0) + (τ₀ 0 1)*(τ₂ 0 1)*(τ₁ 1 0)^2 -
+      (τ₀ 0 1)*(τ₂ 1 0)*(τ₁ 0 0)^2 + 2*(τ₀ 1 0)*(τ₂ 0 0)*(τ₁ 0 0)*(τ₁ 0 1) -
+      (τ₀ 1 0)*(τ₂ 0 1)*(τ₁ 0 0)^2 + (τ₀ 1 0)*(τ₂ 1 0)*(τ₁ 0 1)^2)) * h02
 
 /-- `ρ₀ρ₁ − ρ₁ρ₀ = −Tr(τ₀τ₁τ₂) τ₁` for traceless `τᵢ`. -/
 theorem commutator_eq (h0 : τ₀.trace = 0) (h1 : τ₁.trace = 0) (h2 : τ₂.trace = 0) :

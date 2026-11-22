@@ -402,7 +402,8 @@ carrier `Option (Fin n × Bool)` of `Hemi n`). -/
 theorem card_type_hemi (n : ℕ) (k : Fin n) :
     ((Finset.univ : Finset (Option (Fin n × Bool))).filter
       (fun x => ∃ e : Bool, x = some (k, e))).card = 2 := by
-  have : (Finset.univ : Finset (Option (Fin n × Bool))).filter (fun x => ∃ e : Bool, x = some (k, e)) =
+  have : (Finset.univ : Finset (Option (Fin n × Bool))).filter
+      (fun x => ∃ e : Bool, x = some (k, e)) =
       Finset.univ.image (fun e : Bool => (some (k, e) : Option (Fin n × Bool))) := by
     ext x
     simp only [Finset.mem_filter, Finset.mem_image, Finset.mem_univ, true_and]
@@ -1062,7 +1063,8 @@ theorem Epingle.isIso_of_bijective {K L : Epingle M} (φ : K ⟶ L) (hφ : Funct
           L.u_congr (show φ.f (e.symm η) = η from e.apply_symm_apply η)]
         congr 1
         simp }
-  exact ⟨ψ, Epingle.hom_ext (funext e.symm_apply_apply), Epingle.hom_ext (funext e.apply_symm_apply)⟩
+  exact ⟨ψ, Epingle.hom_ext (funext e.symm_apply_apply),
+    Epingle.hom_ext (funext e.apply_symm_apply)⟩
 
 /-- `φ`, with values in its image. -/
 def Epingle.Hom.versImage {K L : Epingle M} (φ : K ⟶ L) :
@@ -1145,7 +1147,8 @@ theorem Epingle.mono_iff_injective {K L : Epingle M} (φ : K ⟶ L) :
     change K.u ξ _ = K.u η _ at this
     rwa [Category.id_comp, Category.id_comp, K.u_top', K.u_top'] at this
   · intro hφ
-    exact ⟨fun g h e => Epingle.hom_ext (funext fun x => hφ (congrFun (congrArg Epingle.Hom.f e) x))⟩
+    exact ⟨fun g h e =>
+      Epingle.hom_ext (funext fun x => hφ (congrFun (congrArg Epingle.Hom.f e) x))⟩
 
 end Fermees
 
@@ -1199,7 +1202,8 @@ noncomputable def u (ξ : K) (z : Sous (τ ξ)) : K :=
 
 /-- The glued pinning does not depend on the choice of `α`: this is the gluing condition. -/
 lemma u_eq {ξ : K} {β : K} (hβ : β ∈ A) (y' : Sous (τ β)) (hv : R.v β y' = ξ) (z : Sous (τ ξ)) :
-    R.u hA ξ z = R.v β ⟨z.1, z.2 ≫ eqToHom ((congrArg τ hv).symm.trans (R.τ_v β hβ y')) ≫ y'.2⟩ := by
+    R.u hA ξ z =
+      R.v β ⟨z.1, z.2 ≫ eqToHom ((congrArg τ hv).symm.trans (R.τ_v β hβ y')) ≫ y'.2⟩ := by
   have := R.compatible _ (R.rep_mem hA ξ) β hβ (R.rep hA ξ).2 y'
     ((R.τ_rep hA ξ).symm.trans ((congrArg τ hv).symm.trans (R.τ_v β hβ y')))
     ((R.rep_v hA ξ).trans hv.symm) ⟨z.1, z.2 ≫ eqToHom (R.τ_rep hA ξ)⟩

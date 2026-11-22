@@ -229,12 +229,14 @@ def numCross : ℕ := ((List.range 9).map fun l => (sq l).length).sum / 2
 
 theorem numCross_eq : numCross = 36 := by decide +kernel
 
-/-- Euler's relation `V − E + F = 1` in the projective plane, written `V + F = E + 1`: 36 vertices, `9 · 9 − 9 = 72` edges (the two end
+/-- Euler's relation `V − E + F = 1` in the projective plane, written `V + F = E + 1`: 36 vertices,
+`9 · 9 − 9 = 72` edges (the two end
 segments of each curve are one edge), 37 faces. -/
 theorem euler_proj : numCross + projSizes.length = (9 * 9 - 9) + 1 := by
   rw [numCross_eq, proj_count.1]
 
-/-- Euler's relation `V − E + F = 1` in the disc, written `V + F = E + 1`: 36 crossings and 18 ends, 81 segments and 18 rim arcs, 46
+/-- Euler's relation `V − E + F = 1` in the disc, written `V + F = E + 1`: 36 crossings and 18 ends,
+81 segments and 18 rim arcs, 46
 regions. -/
 theorem euler_disc : (numCross + rim.length) + faces.length = (9 * 9 + rim.length) + 1 := by
   rw [numCross_eq, rim_antipodal.1, faces_length]

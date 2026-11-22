@@ -409,7 +409,8 @@ theorem counit_matrice (X : ∀ i, B i) (k : I) :
 `λ̄_kji = λ_kji(Xᵢ) ∘ prᵢ`. -/
 theorem comult_matrice (X : ∀ i, B i) (k j i : I) :
     (adjPi f g adj).toComonad.δ.app X k ≫
-        (f k).map (Limits.Pi.π _ j ≫ (g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i))) =
+        (f k).map (Limits.Pi.π _ j ≫
+          (g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i))) =
       (f k).map (Limits.Pi.π (fun i => (g i).obj (X i)) i) ≫ (lam f g adj k j i).app (X i) := by
   have h1 := adjPi_unit_π_assoc f g adj ((gPi g).obj X) j
     ((g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i)))
@@ -424,7 +425,8 @@ theorem comult_unique [∀ j, PreservesLimitsOfShape (Discrete I) (f j)] (X : �
     (t : (adjPi f g adj).toComonad.obj X k ⟶
       ((adjPi f g adj).toComonad.obj ((adjPi f g adj).toComonad.obj X)) k)
     (ht : ∀ j i, t ≫
-        (f k).map (Limits.Pi.π _ j ≫ (g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i))) =
+        (f k).map (Limits.Pi.π _ j ≫
+          (g j).map ((f j).map (Limits.Pi.π (fun i => (g i).obj (X i)) i))) =
       (f k).map (Limits.Pi.π (fun i => (g i).obj (X i)) i) ≫ (lam f g adj k j i).app (X i)) :
     t = (adjPi f g adj).toComonad.δ.app X k := by
   have hk := (isLimitMapConeFanMkEquiv (f k) _ _)
@@ -1313,7 +1315,8 @@ theorem essImage_g'_iff (Y : A) :
     (g .left).essImage Y ↔ IsIso ((versQ f g adj).obj Y).u'' := by
   have := reflectsIso_of_comonadic f g adj
   rw [essImage_iff f g adj .left Y, quadruplet_u'']
-  exact ⟨fun h => h .right (by decide), fun h j hj => by cases j <;> first | exact h | exact absurd rfl hj⟩
+  exact ⟨fun h => h .right (by decide),
+    fun h j hj => by cases j <;> first | exact h | exact absurd rfl hj⟩
 
 /-- **Pages 10–11: the essential image of `g''`.** `Y` lies in the essential image of `g''`
 iff the `u'` of its quadruple, `f'(η''_Y)`, is invertible. -/
@@ -1321,7 +1324,8 @@ theorem essImage_g''_iff (Y : A) :
     (g .right).essImage Y ↔ IsIso ((versQ f g adj).obj Y).u' := by
   have := reflectsIso_of_comonadic f g adj
   rw [essImage_iff f g adj .right Y, quadruplet_u']
-  exact ⟨fun h => h .left (by decide), fun h j hj => by cases j <;> first | exact h | exact absurd rfl hj⟩
+  exact ⟨fun h => h .left (by decide),
+    fun h j hj => by cases j <;> first | exact h | exact absurd rfl hj⟩
 
 /-- **Pages 10–11, on the quadruples.** A quadruple lies in the essential image of
 `g' ⋙ Φ` iff `u''` is invertible. -/

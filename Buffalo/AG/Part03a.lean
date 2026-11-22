@@ -117,7 +117,8 @@ theorem prop_32072 :
 
 /-- 51wmmpHand0-32243 (8:57:23) [prop] `Y_1 = Y` and `Y_f ∩ Y_g = Y_{fg}` (mathlib:
 `PrimeSpectrum.basicOpen_one`, `PrimeSpectrum.basicOpen_mul`). -/
-theorem prop_32243 (f g : A) : basicOpen (1 : A) = ⊤ ∧ basicOpen (f * g) = basicOpen f ⊓ basicOpen g :=
+theorem prop_32243 (f g : A) :
+    basicOpen (1 : A) = ⊤ ∧ basicOpen (f * g) = basicOpen f ⊓ basicOpen g :=
   ⟨basicOpen_one, basicOpen_mul f g⟩
 
 /-- 51wmmpHand0-32306 (8:58:26) [prop] A map from a space to `Spec A` is continuous iff the
@@ -256,7 +257,8 @@ theorem curvePt_over_generic (k : Type*) [Field k] (n : ℕ) (hn : 0 < n) :
       (⟨⊥, Ideal.isPrime_bot⟩, ⟨⊥, Ideal.isPrime_bot⟩) := by
   refine Prod.ext (PrimeSpectrum.ext ?_) (PrimeSpectrum.ext ?_)
   · ext a
-    simp [tensorProductTo, curvePt, evExpand, RingHom.mem_ker, Algebra.TensorProduct.algebraMap_apply]
+    simp [tensorProductTo, curvePt, evExpand, RingHom.mem_ker,
+      Algebra.TensorProduct.algebraMap_apply]
   · ext a
     simp only [tensorProductTo, curvePt, comap_asIdeal, Ideal.mem_comap, RingHom.mem_ker,
       Submodule.mem_bot]
@@ -522,7 +524,8 @@ theorem exact_lTensor_of_homotopy {X Y Z : Type*} [AddCommGroup X] [Module A X] 
     exact LinearMap.congr_fun hgf' x
 
 /-- The sequence `A → B → B ⊗_A B` (`s ↦ s ⊗ 1 - 1 ⊗ s`), the Amitsur complex in degrees ≤ 1. -/
-abbrev d0 (A : Type*) [CommRing A] (B : Type*) [CommRing B] [Algebra A B] : A →ₗ[A] B := Algebra.linearMap A B
+abbrev d0 (A : Type*) [CommRing A] (B : Type*) [CommRing B] [Algebra A B] : A →ₗ[A] B :=
+    Algebra.linearMap A B
 
 /-- The first differential `s ↦ s ⊗ 1 - 1 ⊗ s`. -/
 abbrev d1 (A : Type*) [CommRing A] (B : Type*) [CommRing B] [Algebra A B] : B →ₗ[A] B ⊗[A] B :=
@@ -587,7 +590,8 @@ theorem thm_35250 (B : Type*) [CommRing B] [Algebra A B] [Module.FaithfullyFlat 
           ∃ m : M, m ⊗ₜ[A] (1 : B) = x := by
   refine ⟨fun m m' h => Module.FaithfullyFlat.tensorProduct_mk_injective (A := A) (B := B) M
     (by simpa using congrArg (TensorProduct.comm A M B) h), fun x => ?_⟩
-  have hd : (d1 A B).lTensor M = (Algebra.TensorProduct.includeLeft (S := A)).toLinearMap.lTensor M -
+  have hd : (d1 A B).lTensor M =
+      (Algebra.TensorProduct.includeLeft (S := A)).toLinearMap.lTensor M -
       (Algebra.TensorProduct.includeRight (R := A) (A := B)).toLinearMap.lTensor M := by
     rw [← LinearMap.lTensor_sub]; rfl
   rw [← sub_eq_zero, ← LinearMap.sub_apply, ← hd, descent_exact B M x]
@@ -674,7 +678,8 @@ theorem thm_36802 (B : Type*) [CommRing B] [Algebra A B] [Module.FaithfullyFlat 
     (M : Type*) [AddCommGroup M] [Module A M] :
     Function.Injective ((d0 A B).lTensor M) ∧
       Function.Exact ((d0 A B).lTensor M) ((d1 A B).lTensor M) := by
-  refine ⟨fun y z h => (TensorProduct.rid A M).injective ((thm_35250 (A := A) B M).1 ?_), descent_exact B M⟩
+  refine ⟨fun y z h => (TensorProduct.rid A M).injective ((thm_35250 (A := A) B M).1 ?_),
+    descent_exact B M⟩
   simpa only [d0_lTensor_apply] using h
 
 /-- 51wmmpHand0-36939 (10:15:39) [prop] If the `f_i` generate the unit ideal, the Čech complex of

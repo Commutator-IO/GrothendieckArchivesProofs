@@ -387,7 +387,8 @@ theorem prop_30838 {M : Type*} [AddCommGroup M] [Module A M] (u : M →ₗ[A] A)
 multiplications by units. -/
 def prop_30903 : (A ≃ₗ[A] A) ≃* Aˣ :=
   (LinearMap.GeneralLinearGroup.generalLinearEquiv A A).symm.trans
-    (Units.mapEquiv ((RingEquiv.moduleEndSelf A).symm.trans (RingEquiv.toOpposite A).symm).toMulEquiv)
+    (Units.mapEquiv ((RingEquiv.moduleEndSelf A).symm.trans
+      (RingEquiv.toOpposite A).symm).toMulEquiv)
 
 /-- thSz9ZHDK9o-30966 (8:36:06) [prop] (pointwise) `Isom(R, L)` is a principal homogeneous set
 under `Rˣ` when nonempty: two trivializations of `L` differ by a unique unit. -/
@@ -439,7 +440,8 @@ quotient `q : M → L` are the trivializations of `L`: an isomorphism `e : L ≃
 epimorphism `e ∘ q`, with kernel `ker q`. -/
 theorem prop_31232 {M L : Type*} [AddCommGroup M] [Module A M] [AddCommGroup L] [Module A L]
     (q : M →ₗ[A] L) (hq : Function.Surjective q) (e : L ≃ₗ[A] A) :
-    Function.Surjective (e.toLinearMap ∘ₗ q) ∧ LinearMap.ker (e.toLinearMap ∘ₗ q) = LinearMap.ker q := by
+    Function.Surjective (e.toLinearMap ∘ₗ q) ∧
+      LinearMap.ker (e.toLinearMap ∘ₗ q) = LinearMap.ker q := by
   refine ⟨e.surjective.comp hq, ?_⟩
   rw [LinearMap.ker_comp, LinearEquiv.ker, Submodule.comap_bot]
 

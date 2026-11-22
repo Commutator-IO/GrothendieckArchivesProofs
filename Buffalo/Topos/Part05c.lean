@@ -8,7 +8,8 @@ module
 public import Buffalo.Topos.Part05a
 
 /-!
-# Buffalo, topos theory, part 5c: exactness properties, envelopes, categories of fractions (2 July 1973)
+# Buffalo, topos theory, part 5c: exactness properties, envelopes, categories of fractions
+(2 July 1973)
 
 Entries of `docs/buffalo-topos/index.tex` lines 767–811 (video `4gynb9uTEE4`, 1:57:30–3:31:07):
 representability of theories, exactness properties (groupoids, preorders, discrete categories),
@@ -239,7 +240,8 @@ theorem torsor_no_initial (X : SingleObj G) : IsInitial X → False := by
 theorem torsor_no_product {X : SingleObj G} (c : BinaryFan X X) : IsLimit c → False := by
   intro hc
   obtain ⟨a, ha⟩ := exists_ne (1 : G)
-  obtain ⟨l₁, h₁, h₁'⟩ := BinaryFan.IsLimit.lift' hc (show X ⟶ X from (1 : G)) (show X ⟶ X from (1 : G))
+  obtain ⟨l₁, h₁, h₁'⟩ := BinaryFan.IsLimit.lift' hc (show X ⟶ X from (1 : G))
+      (show X ⟶ X from (1 : G))
   obtain ⟨l₂, h₂, h₂'⟩ := BinaryFan.IsLimit.lift' hc (show X ⟶ X from (1 : G)) (show X ⟶ X from a)
   rw [SingleObj.comp_as_mul] at h₁ h₁' h₂ h₂'
   have : l₁ = l₂ := by
@@ -252,8 +254,10 @@ theorem torsor_no_product {X : SingleObj G} (c : BinaryFan X X) : IsLimit c → 
 theorem torsor_no_coproduct {X : SingleObj G} (c : BinaryCofan X X) : IsColimit c → False := by
   intro hc
   obtain ⟨a, ha⟩ := exists_ne (1 : G)
-  obtain ⟨l₁, h₁, h₁'⟩ := BinaryCofan.IsColimit.desc' hc (show X ⟶ X from (1 : G)) (show X ⟶ X from (1 : G))
-  obtain ⟨l₂, h₂, h₂'⟩ := BinaryCofan.IsColimit.desc' hc (show X ⟶ X from (1 : G)) (show X ⟶ X from a)
+  obtain ⟨l₁, h₁, h₁'⟩ := BinaryCofan.IsColimit.desc' hc (show X ⟶ X from (1 : G))
+      (show X ⟶ X from (1 : G))
+  obtain ⟨l₂, h₂, h₂'⟩ := BinaryCofan.IsColimit.desc' hc (show X ⟶ X from (1 : G))
+      (show X ⟶ X from a)
   rw [SingleObj.comp_as_mul] at h₁ h₁' h₂ h₂'
   have : l₁ = l₂ := by
     have e : l₁ * (c.inl : G) = l₂ * c.inl := by rw [h₁, h₂]

@@ -57,7 +57,8 @@ homomorphism of noetherian local rings when `S` and `Y` are locally noetherian.
 
 Finiteness of `G_y` over `𝒪_{Y,y}` is a hypothesis of the scheme form (it
 holds for `G` coherent). Flatness of `F` over `S` at `x` is read as flatness of `F_x` over
-`𝒪_{S,p(y)}`. The page's own reading of clause c), with injectivity into `(φ_{s*} F_s)_y` rather than
+`𝒪_{S,p(y)}`. The page's own reading of clause c), with injectivity into `(φ_{s*} F_s)_y`
+rather than
 into the product of the stalks above `y`, is weaker when `φ` is not proper, and is not covered.
 
 ## References
@@ -159,7 +160,8 @@ theorem fibreMap_smul (x : X) (r : Y.presheaf.stalk (φ.base x)) (n : G.presheaf
 abbrev Above (y : Y) : Type u := {x : X // φ.base x = y}
 
 /-- `𝒪_{Y,y} → 𝒪_{X,x}` for `x` above `y`. -/
-noncomputable def ringAbove {y : Y} (x : Above φ y) : Y.presheaf.stalk y →+* X.presheaf.stalk x.1 := by
+noncomputable def ringAbove {y : Y} (x : Above φ y) :
+    Y.presheaf.stalk y →+* X.presheaf.stalk x.1 := by
   obtain ⟨x, rfl⟩ := x
   exact (φ.stalkMap x).hom
 
@@ -196,7 +198,8 @@ theorem flat_of_fibre_injective_scheme [AlgebraicGeometry.IsLocallyNoetherian S]
       n ∈ maximalIdeal (S.presheaf.stalk (p.base y)) •
         (⊤ : Submodule (S.presheaf.stalk (p.base y)) (G.presheaf.stalk y))) →
     Module.Flat (S.presheaf.stalk (p.base y)) (G.presheaf.stalk y) ∧
-      Function.Injective (fun n : G.presheaf.stalk y => fun x : Above φ y => mapAbove φ F G α x n) := by
+      Function.Injective
+        (fun n : G.presheaf.stalk y => fun x : Above φ y => mapAbove φ F G α x n) := by
   intro hM hu
   let : Module (S.presheaf.stalk (p.base y)) (G.presheaf.stalk y) :=
     Module.compHom _ (p.stalkMap y).hom
@@ -209,7 +212,8 @@ theorem flat_of_fibre_injective_scheme [AlgebraicGeometry.IsLocallyNoetherian S]
       rw [mul_smul]⟩
   have : IsLocalHom (algebraMap (S.presheaf.stalk (p.base y)) (Y.presheaf.stalk y)) :=
     inferInstanceAs (IsLocalHom (p.stalkMap y).hom)
-  let u : ∀ x : Above φ y, G.presheaf.stalk y →ₗ[S.presheaf.stalk (p.base y)] F.presheaf.stalk x.1 :=
+  let u : ∀ x : Above φ y,
+      G.presheaf.stalk y →ₗ[S.presheaf.stalk (p.base y)] F.presheaf.stalk x.1 :=
     fun x => { mapAbove φ F G α x with
       map_smul' := fun r n => by
         change mapAbove φ F G α x ((p.stalkMap y).hom r • n) = _

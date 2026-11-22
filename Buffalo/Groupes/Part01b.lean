@@ -62,7 +62,8 @@ noncomputable def WF : CommAlgCat.{u} k ⥤ Type u where
     rw [← LinearMap.rTensor_comp_apply]
     rfl
 
-/-- _lTf_L0yvrU-2899 (0:48:19) [prop] If `M ≃ kⁿ`, `W(M)` is the standard affine space: `A ⊗ M ≃ Aⁿ`. -/
+/-- _lTf_L0yvrU-2899 (0:48:19) [prop] If `M ≃ kⁿ`, `W(M)` is the standard affine space:
+`A ⊗ M ≃ Aⁿ`. -/
 noncomputable def W_free (n : ℕ) (e : M ≃ₗ[k] (Fin n → k)) (A : Type u) [CommRing A] [Algebra k A] :
     W k M A ≃ₗ[A] (Fin n → A) :=
   (e.baseChange k A M (Fin n → k)).trans (TensorProduct.piScalarRight k A A (Fin n))
@@ -166,11 +167,13 @@ def corep_pi {R : Type u} [CommRing R] [Algebra k R] {ι : Type u} (A : ι → T
   left_inv _ := rfl
   right_inv _ := rfl
 
-/-- _lTf_L0yvrU-3352 (0:55:52) [prop] … and with arbitrary projective limits (Mathlib: corepresentable
+/-- _lTf_L0yvrU-3352 (0:55:52) [prop] … and with arbitrary projective limits (Mathlib:
+corepresentable
 functors preserve limits). -/
 example (X : (CommAlgCat.{u} k)ᵒᵖ) : Limits.PreservesLimits (coyoneda.obj X) := inferInstance
 
-/-- The `kᵐᵒᵖ`-module structure on a `k`-module (`k` commutative), to form square-zero extensions. -/
+/-- The `kᵐᵒᵖ`-module structure on a `k`-module (`k` commutative), to form square-zero
+extensions. -/
 abbrev modOp (P : Type u) [AddCommGroup P] [Module k P] : Module kᵐᵒᵖ P :=
   Module.compHom P ((RingHom.id k).fromOpposite fun x y ↦ Commute.all x y)
 
@@ -298,7 +301,8 @@ theorem symm_finiteType_iff : Algebra.FiniteType k (SymmetricAlgebra k M) ↔ Mo
     | ι m =>
       have hm : m ∈ Submodule.span k (s : Set M) := hs ▸ Submodule.mem_top
       have : Submodule.span k ((SymmetricAlgebra.ι k M) '' s) ≤
-          (Algebra.adjoin k ((s.image (SymmetricAlgebra.ι k M) : Finset _) : Set _)).toSubmodule := by
+          (Algebra.adjoin k
+            ((s.image (SymmetricAlgebra.ι k M) : Finset _) : Set _)).toSubmodule := by
         rw [Submodule.span_le]
         intro y hy
         exact Algebra.subset_adjoin (by simpa using hy)

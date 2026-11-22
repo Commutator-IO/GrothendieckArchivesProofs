@@ -119,7 +119,8 @@ theorem prop_6088 [Surjective g] [Flat g] [QuasiCompact g] :
   refine ⟨pullback.isIso_diagonal_iff f, ?_⟩
   have : (@Surjective ⊓ @Flat : MorphismProperty Scheme.{u}).IsStableUnderBaseChange :=
     MorphismProperty.IsStableUnderBaseChange.inf
-  have : (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismProperty Scheme.{u}).IsStableUnderBaseChange :=
+  have : (@Surjective ⊓ @Flat ⊓ @QuasiCompact :
+      MorphismProperty Scheme.{u}).IsStableUnderBaseChange :=
     MorphismProperty.IsStableUnderBaseChange.inf
   have : (MorphismProperty.diagonal (MorphismProperty.isomorphisms Scheme.{u})).DescendsAlong
       (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismProperty Scheme.{u}) :=
@@ -230,7 +231,8 @@ theorem prop_7642 (φ : A →+* A') (hφ : φ.FaithfullyFlat) :
   ModuleCat.reflectsIsomorphisms_extendScalars_of_faithfullyFlat hφ
 
 omit [Algebra A A'] in
-/-- vuys5SNs2eQ-6533 (1:48:53) [thm] A faithfully flat quasi-compact morphism is of effective descent
+/-- vuys5SNs2eQ-6533 (1:48:53) [thm] A faithfully flat quasi-compact morphism is of effective
+descent
 for quasi-coherent modules. Affine case, in Beck's form: extension of scalars along a faithfully
 flat ring map is comonadic (mathlib: `comonadicExtendScalars`); comonad coalgebras are the descent
 data. -/

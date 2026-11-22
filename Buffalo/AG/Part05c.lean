@@ -200,7 +200,8 @@ theorem prop_1429 (A : Type*) [CommRing A] :
   ⟨isArtinianRing_iff_isNoetherianRing_krullDimLE_zero, fun _ =>
     IsArtinianRing.isNilpotent_jacobson_bot⟩
 
-/-- Oqhr-Gt66es-1556 (0:25:56) [ex] (the `ℤ/p^n` half, corrected) For `p` prime and `n ≥ 2`, `ℤ/p^n` is
+/-- Oqhr-Gt66es-1556 (0:25:56) [ex] (the `ℤ/p^n` half, corrected) For `p` prime and `n ≥ 2`,
+`ℤ/p^n` is
 artinian, every element is nilpotent or a unit (so `Spec` is a point), and it is not a field. -/
 theorem ex_1556 (p n : ℕ) [hp : Fact p.Prime] (hn : 2 ≤ n) :
     IsArtinianRing (ZMod (p ^ n)) ∧ (∀ x : ZMod (p ^ n), IsNilpotent x ∨ IsUnit x) ∧
@@ -269,7 +270,8 @@ theorem def_2202 (X : Scheme.{u}) [IsNoetherian X] (U : X.affineOpens) :
 
 /-- Oqhr-Gt66es-2270 (0:37:50) [def] A locally noetherian scheme (mathlib: `IsLocallyNoetherian`):
 `Γ(U, 𝒪_X)` noetherian for every affine open set; every quasi-compact open set is noetherian. -/
-theorem def_2270 (X : Scheme.{u}) [IsLocallyNoetherian X] (U : X.Opens) (hU : IsCompact (U : Set X)) :
+theorem def_2270 (X : Scheme.{u}) [IsLocallyNoetherian X] (U : X.Opens)
+    (hU : IsCompact (U : Set X)) :
     IsNoetherian U :=
   { toIsLocallyNoetherian := inferInstance, toCompactSpace := isCompact_iff_compactSpace.1 hU }
 
@@ -291,7 +293,8 @@ theorem prop_2728 (X : Scheme.{u}) [IsArtinianScheme X] :
   ⟨inferInstance, inferInstance, inferInstance⟩
 
 /-- Oqhr-Gt66es-2728 (0:45:28) [prop] (the ring) An artinian ring is the product of the
-localizations at its maximal ideals (mathlib: `MaximalSpectrum.toPiLocalizationEquiv`, `Spec` being discrete). -/
+localizations at its maximal ideals (mathlib: `MaximalSpectrum.toPiLocalizationEquiv`, `Spec`
+being discrete). -/
 def prop_2728_ring (R : Type*) [CommRing R] [IsArtinianRing R] :
     R ≃ₐ[R] MaximalSpectrum.PiLocalization R :=
   MaximalSpectrum.toPiLocalizationEquiv R
@@ -308,7 +311,9 @@ end LocalSchemes
 section Finiteness
 
 /-- Oqhr-Gt66es-2904 (0:48:24) [prop] Quasi-compact morphisms are stable under base change. -/
-theorem prop_2904 : MorphismProperty.IsStableUnderBaseChange (@QuasiCompact : MorphismProperty Scheme.{u}) := inferInstance
+theorem prop_2904 :
+    MorphismProperty.IsStableUnderBaseChange (@QuasiCompact : MorphismProperty Scheme.{u}) :=
+  inferInstance
 
 /-- Oqhr-Gt66es-2968 (0:49:28) [prop] Quasi-compact morphisms are stable under composition. -/
 theorem prop_2968 {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) [QuasiCompact f] [QuasiCompact g] :
@@ -352,11 +357,16 @@ theorem prop_3359 {X Y : Scheme.{u}} (f : X ⟶ Y) [IsLocallyNoetherian Y] :
 presentation morphisms (hence also of finite type) are stable under base change and
 composition. -/
 theorem prop_3421 :
-    MorphismProperty.IsStableUnderBaseChange (@QuasiCompact : MorphismProperty Scheme.{u}) ∧ MorphismProperty.IsStableUnderBaseChange (@LocallyOfFiniteType : MorphismProperty Scheme.{u}) ∧
-      MorphismProperty.IsStableUnderBaseChange (@LocallyOfFinitePresentation : MorphismProperty Scheme.{u}) ∧
+    MorphismProperty.IsStableUnderBaseChange (@QuasiCompact : MorphismProperty Scheme.{u}) ∧
+      MorphismProperty.IsStableUnderBaseChange
+        (@LocallyOfFiniteType : MorphismProperty Scheme.{u}) ∧
+      MorphismProperty.IsStableUnderBaseChange
+        (@LocallyOfFinitePresentation : MorphismProperty Scheme.{u}) ∧
       MorphismProperty.IsStableUnderComposition (@QuasiCompact : MorphismProperty Scheme.{u}) ∧
-      MorphismProperty.IsStableUnderComposition (@LocallyOfFiniteType : MorphismProperty Scheme.{u}) ∧
-      MorphismProperty.IsStableUnderComposition (@LocallyOfFinitePresentation : MorphismProperty Scheme.{u}) :=
+      MorphismProperty.IsStableUnderComposition
+        (@LocallyOfFiniteType : MorphismProperty Scheme.{u}) ∧
+      MorphismProperty.IsStableUnderComposition
+        (@LocallyOfFinitePresentation : MorphismProperty Scheme.{u}) :=
   ⟨inferInstance, inferInstance, inferInstance, inferInstance, inferInstance, inferInstance⟩
 
 end Finiteness

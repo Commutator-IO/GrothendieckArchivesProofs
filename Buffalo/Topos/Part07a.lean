@@ -315,7 +315,8 @@ strictly epimorphic, although it contains the strictly epimorphic family of the 
 theorem not_effEpi_all :
     ¬ EffectiveEpiFamily (fun f : CostructuredArrow ιZ F2g => ιZ.obj f.left) (fun f => f.hom) :=
   not_effEpi_of_cover (fun f : CostructuredArrow ιZ F2g => f.hom) fun g =>
-    ⟨CostructuredArrow.mk (S := ιZ) (Y := (show InducedCategory GrpCat.{0} (fun _ : Unit => Zg) from ()))
+    ⟨CostructuredArrow.mk (S := ιZ)
+      (Y := (show InducedCategory GrpCat.{0} (fun _ : Unit => Zg) from ()))
       (GrpCat.ofHom (zpowersHom F2 g)), by simp [gen1]⟩
 
 /-- The free group on `F₂`, the free product of copies of `ℤ` indexed by `F₂`, as a cofan. -/
@@ -340,7 +341,8 @@ def freeCofanIsColimit : IsColimit freeCofan :=
       have h2 : (zpowersHom (FreeGroup F2) (FreeGroup.of g)) gen1 = FreeGroup.of g :=
         zpowersHom_gen1 _
       change m.hom (zpowersHom (FreeGroup F2) (FreeGroup.of g) gen1) = _ at this
-      exact (congrArg _ h2.symm).trans (this.trans (FreeGroup.lift_apply_of (f := fun g => (s.inj g).hom gen1) (x := g)).symm))
+      exact (congrArg _ h2.symm).trans (this.trans
+        (FreeGroup.lift_apply_of (f := fun g => (s.inj g).hom gen1) (x := g)).symm))
 
 /-- In groups, a surjective homomorphism is a strict epimorphism. -/
 def effEpiStructOfSurjective {A B : GrpCat.{0}} (p : A ⟶ B) (hp : Function.Surjective p.hom) :
@@ -383,7 +385,8 @@ theorem sigma_effEpi_not_family :
 /-- ORG14LNb5gE-2380 (0:39:40) [cex], condition (c) for `ℤ * ℤ`: the two generators `ℤ → ℤ * ℤ`
 form a strictly epimorphic family. -/
 theorem effEpi_generators :
-    EffectiveEpiFamily (fun _ : Bool => Zg) (fun b => GrpCat.ofHom (zpowersHom F2 (FreeGroup.of b))) :=
+    EffectiveEpiFamily (fun _ : Bool => Zg)
+      (fun b => GrpCat.ofHom (zpowersHom F2 (FreeGroup.of b))) :=
   ⟨⟨{ desc := fun e _ => GrpCat.ofHom (FreeGroup.lift fun b => (e b).hom gen1)
       fac := fun e _ b => by
         ext

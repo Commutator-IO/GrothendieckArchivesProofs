@@ -56,7 +56,8 @@ namespace OpenProblems.EtaleTopos
 
 /-- The natural isomorphism `α : f⁻¹ ≅ g⁻¹` of inverse images on étale sheaves of sets is a
 2-isomorphism over `S_et`, for `S`-morphisms `f, g : X ⟶ Y` (`f ≫ q = p`, `g ≫ q = p`): its
-whiskering by `q⁻¹`, composed with `(g ≫ q)⁻¹ = p⁻¹`, is the comparison `q⁻¹ ⋙ f⁻¹ ≅ (f ≫ q)⁻¹ = p⁻¹`. -/
+whiskering by `q⁻¹`, composed with `(g ≫ q)⁻¹ = p⁻¹`, is the comparison
+`q⁻¹ ⋙ f⁻¹ ≅ (f ≫ q)⁻¹ = p⁻¹`. -/
 def IsOverBase {S X Y : Scheme.{u}} {p : X ⟶ S} {q : Y ⟶ S} {f g : X ⟶ Y} (hf : f ≫ q = p)
     (hg : g ≫ q = p) (α : smallEtalePullbackSet f ≅ smallEtalePullbackSet g) : Prop :=
   Functor.isoWhiskerLeft (smallEtalePullbackSet q) α ≪≫ smallEtalePullbackSetCompIso g q ≪≫

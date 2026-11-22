@@ -95,7 +95,8 @@ def ruleAt (x : ℕ × ℕ) (e : ℕ × ℕ × ℕ) : Bool :=
   rule ((lab x).getD e.1 (0, 0)) ((lab x).getD e.2.1 (0, 0)) e.2.2
 
 /-- The labels away from vertex 7 do not depend on `x`. -/
-theorem lab_ne (x : ℕ × ℕ) {v : ℕ} (hv : v ≠ 7) : (lab x).getD v (0, 0) = (lab (0, 0)).getD v (0, 0) := by
+theorem lab_ne (x : ℕ × ℕ) {v : ℕ} (hv : v ≠ 7) :
+    (lab x).getD v (0, 0) = (lab (0, 0)).getD v (0, 0) := by
   unfold lab
   rcases v with _|_|_|_|_|_|_|_|_|_|_|_|_|_|_|v <;> simp at hv ⊢
 
@@ -142,7 +143,8 @@ def qedges : List (ℕ × ℕ) := edges.map fun e => (prs.idxOf (lab24.getD e.1 
 /-- **The quotient is the Petersen graph.** Two labels are joined by a drawn edge iff their index
 pairs are disjoint, and the twenty drawn edges give fifteen edges. -/
 theorem quotient_adj : (∀ i < 10, ∀ j < 10,
-      (qedges.contains (i, j) || qedges.contains (j, i)) = disj (prs.getD i (0, 0)) (prs.getD j (0, 0))) ∧
+      (qedges.contains (i, j) || qedges.contains (j, i)) =
+        disj (prs.getD i (0, 0)) (prs.getD j (0, 0))) ∧
     ((qedges.map fun e => (min e.1 e.2, max e.1 e.2)).dedup.length = 15) := by
   decide +kernel
 

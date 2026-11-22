@@ -551,7 +551,8 @@ noncomputable instance comoduleRestrict : Comodule A B (A' ⊗[A] E) where
         simp only [TensorProduct.leftComm_tmul, LinearMap.rTensor_tmul]
         induction Coalgebra.comul (R := A) b with
         | tmul c d => simp
-        | add x y hx hy => simp only [TensorProduct.add_tmul, TensorProduct.tmul_add, map_add, hx, hy]
+        | add x y hx hy => simp only [TensorProduct.add_tmul, TensorProduct.tmul_add, map_add,
+            hx, hy]
       | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, hx, hy]
     have g2 : ∀ x : B ⊗[A] E,
         (((TensorProduct.leftComm A A' B E).toLinearMap ∘ₗ

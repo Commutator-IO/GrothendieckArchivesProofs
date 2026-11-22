@@ -342,7 +342,8 @@ lemma phi_smul (χ : A →ₐ[k] k) (a : A) (t : A ⊗[k] A) : phi χ (a • t) 
   rw [Algebra.smul_def, map_mul, show algebraMap A (A ⊗[k] A) a = a ⊗ₜ 1 from rfl, phi_tmul,
     smul_mul_assoc, one_mul]
 
-lemma chi_phi (χ : A →ₐ[k] k) (t : A ⊗[k] A) : χ (phi χ t) = χ (Algebra.TensorProduct.lmul' k t) := by
+lemma chi_phi (χ : A →ₐ[k] k) (t : A ⊗[k] A) :
+    χ (phi χ t) = χ (Algebra.TensorProduct.lmul' k t) := by
   induction t using TensorProduct.inductionOn with
   | tmul a b => simp [phi_tmul]
   | add s t hs ht => simp only [map_add, hs, ht]
@@ -423,7 +424,8 @@ lemma finrank_le_two_of_simple [Module.Finite k A]
     exact hn.ne_top ((Ideal.eq_top_iff_one _).2 (by
       simpa using add_mem this (Ideal.mul_mem_left _ b hw)))
   -- so `𝔪_χ = k z`, and `(c, d) ↦ c + d z` is onto
-  let f : k × k →ₗ[k] A := (LinearMap.toSpanSingleton k A 1).coprod (LinearMap.toSpanSingleton k A z)
+  let f : k × k →ₗ[k] A :=
+      (LinearMap.toSpanSingleton k A 1).coprod (LinearMap.toSpanSingleton k A z)
   have hf : Function.Surjective f := fun a => by
     obtain ⟨b, hb⟩ := Ideal.mem_span_singleton'.1 (h z hz hz0 _ (hsplit χ a))
     refine ⟨(χ a, χ' b), ?_⟩
@@ -493,7 +495,8 @@ theorem finrank_le_two [Module.Finite k A]
       rw [sub_sub_cancel, e, map_sub, delta_algebraMap, sub_zero, delta_apply]
     change (1 : A) ⊗ₜ[k] x - x ⊗ₜ 1 ∈ _
     rw [this]
-    exact sub_mem (Submodule.mem_sup_left hf) (Submodule.mem_sup_right (sub_delta_phi_mem χ (hJ hf)))
+    exact sub_mem (Submodule.mem_sup_left hf)
+        (Submodule.mem_sup_right (sub_delta_phi_mem χ (hJ hf)))
   -- exactness: `δ(x) ∈ Δ ⊂ J` forces `x ∈ k`, so `dim A ≤ 1`
   refine hlt ((finrank_le_one (1 : A) fun a => ?_).trans (by norm_num))
   obtain ⟨c, hc⟩ := hexact a (hD (delta_mem a))
@@ -597,7 +600,8 @@ lemma rTensor_smulMap_injective [Module.Flat A G]
     Function.Injective ((smulMap I G).rTensor M) := by
   have hμ : Function.Injective ((TensorProduct.lid A M).toLinearMap ∘ₗ I.subtype.rTensor M) := by
     rw [LinearMap.coe_comp]; exact (TensorProduct.lid A M).injective.comp h1
-  have e : (smulMap I G).rTensor M = ((TensorProduct.lid A M).toLinearMap ∘ₗ I.subtype.rTensor M).lTensor G ∘ₗ
+  have e : (smulMap I G).rTensor M =
+    ((TensorProduct.lid A M).toLinearMap ∘ₗ I.subtype.rTensor M).lTensor G ∘ₗ
       (TensorProduct.assoc A G I M).toLinearMap ∘ₗ
         (TensorProduct.comm A I G).toLinearMap.rTensor M := by
     refine TensorProduct.ext_threefold fun r g m => ?_
@@ -697,7 +701,8 @@ lemma rTensor_injective_of_smul_le (h0 : Module.Flat (A ⧸ I) ((A ⧸ I) ⊗[A]
       change p (c • g) ∈ LinearMap.range u
       rw [map_smul]; exact hIu (Submodule.smul_mem_smul hc trivial)
   let e := LinearEquiv.ofInjective u hu
-  let q : L →ₗ[A] K := e.symm.toLinearMap ∘ₗ p.restrict (p := L) (q := LinearMap.range u) fun (x : F →₀ A) (h : x ∈ L) => h
+  let q : L →ₗ[A] K := e.symm.toLinearMap ∘ₗ
+      p.restrict (p := L) (q := LinearMap.range u) fun (x : F →₀ A) (h : x ∈ L) => h
   have huq : u ∘ₗ q = p ∘ₗ L.subtype := by
     ext x
     simp only [q, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe]
@@ -755,7 +760,8 @@ theorem flat_of_isNilpotent (hI : IsNilpotent I)
       refine Submodule.smul_le.2 fun c hc x _ => ⟨⟨c * x, ?_⟩, Subtype.ext rfl⟩
       have hx : c * (x : A) ∈ I * (J ⊔ I ^ k) := Ideal.mul_mem_mul hc x.2
       rw [Ideal.mul_sup, ← pow_succ'] at hx
-      exact (sup_le_sup_right (Ideal.mul_le.2 fun a _ b hb => J.mul_mem_left a hb) _ : I * J ⊔ I ^ (k + 1) ≤ J ⊔ I ^ (k + 1)) hx
+      exact (sup_le_sup_right (Ideal.mul_le.2 fun a _ b hb => J.mul_mem_left a hb) _ :
+          I * J ⊔ I ^ (k + 1) ≤ J ⊔ I ^ (k + 1)) hx
   obtain ⟨n, hn⟩ := hI
   have := key n
   rwa [hn, Ideal.zero_eq_bot, sup_bot_eq] at this

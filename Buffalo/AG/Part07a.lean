@@ -100,7 +100,8 @@ theorem preconnectedSpace_iff_idempotent (R : Type*) [CommRing R] :
       rw [← he.pow_succ_eq n, pow_succ, hn, zero_mul]
     · right
       have h1 : IsNilpotent (1 - e) := by
-        refine (PrimeSpectrum.basicOpen_eq_bot_iff _).1 (SetLike.coe_injective (Set.eq_empty_of_forall_notMem ?_))
+        refine (PrimeSpectrum.basicOpen_eq_bot_iff _).1
+          (SetLike.coe_injective (Set.eq_empty_of_forall_notMem ?_))
         intro p hp
         have hpe : p ∈ (basicOpen e : Set _) := h ▸ Set.mem_univ p
         have h0 : e * (1 - e) ∈ p.asIdeal := by
@@ -310,7 +311,8 @@ theorem prop_21601 (hF : Presieve.IsSheaf J F) {ι : Type*} (G : ι → Subfunct
           exact ⟨i, by rw [op_comp, F.map_comp, types_comp_apply]; exact (G i).map h.op hi⟩) ∈
         J U.unop) := by
   refine ⟨fun i => (le_iSup G i).trans (Subfunctor.le_sheafify J _),
-    Subfunctor.sheafify_isSheaf _ hF, fun G' hG' hle => Subfunctor.sheafify_le _ _ (iSup_le hle) hF hG',
+    Subfunctor.sheafify_isSheaf _ hF,
+    fun G' hG' hle => Subfunctor.sheafify_le _ _ (iSup_le hle) hF hG',
     fun U s => ?_⟩
   change (⨆ i, G i).sieveOfSection s ∈ J U.unop ↔ _
   have : (⨆ i, G i).sieveOfSection s = Sieve.mk (fun V (g : V ⟶ U.unop) =>
@@ -410,9 +412,11 @@ theorem piToZ2_apply (m : ℕ → ℤ) (n : ℕ) : piToZ2 m n = algebraMap ℤ Z
 
 /-- The image of `2` in `∏ ℤ[1/2]` is a unit. -/
 theorem isUnit_two_pi : IsUnit (piToZ2 2) := by
-  refine isUnit_iff_exists_inv.2 ⟨fun _ => IsLocalization.mk' Z2 (1 : ℤ) ⟨2, Submonoid.mem_powers 2⟩,
+  refine isUnit_iff_exists_inv.2 ⟨fun _ => IsLocalization.mk' Z2 (1 : ℤ)
+      ⟨2, Submonoid.mem_powers 2⟩,
     funext fun n => ?_⟩
-  rw [Pi.mul_apply, piToZ2_apply, Pi.one_apply, Pi.ofNat_apply, IsLocalization.mul_mk'_eq_mk'_of_mul,
+  rw [Pi.mul_apply, piToZ2_apply, Pi.one_apply, Pi.ofNat_apply,
+    IsLocalization.mul_mk'_eq_mk'_of_mul,
     mul_one]
   exact IsLocalization.mk'_self _ (Submonoid.mem_powers 2)
 

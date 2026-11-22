@@ -85,7 +85,8 @@ theorem opens_map_iSup (f : X ⟶ Y) {ι : Type*} (V : ι → Opens Y) :
 
 /-- URU5jgTvjhU-12702 (3:31:42) [def] The direct image `f_*F(V) = F(f⁻¹(V))`. -/
 example (f : X ⟶ Y) (F : X.Presheaf (Type u)) (V : Opens Y) :
-    ((TopCat.Presheaf.pushforward (Type u) f).obj F).obj (op V) = F.obj (op ((Opens.map f).obj V)) :=
+    ((TopCat.Presheaf.pushforward (Type u) f).obj F).obj (op V) =
+      F.obj (op ((Opens.map f).obj V)) :=
   rfl
 
 /-- URU5jgTvjhU-12832 (3:33:52) [prop] On presheaves, `f_*` commutes with arbitrary limits and
@@ -249,7 +250,8 @@ theorem stalk_colimits_conservative (x : X) :
 section of `G` lifts locally to a section of `F`. -/
 theorem sheaf_epi_iff_local_lift {F G : TopCat.Sheaf (Type u) X} (φ : F ⟶ G) :
     Epi φ ↔ ∀ (U : Opens X) (t : G.obj.obj (op U)) (x : X), x ∈ U →
-      ∃ (V : Opens X) (i : V ⟶ U), x ∈ V ∧ ∃ s : F.obj.obj (op V), φ.hom.app (op V) s = G.obj.map i.op t := by
+      ∃ (V : Opens X) (i : V ⟶ U), x ∈ V ∧
+        ∃ s : F.obj.obj (op V), φ.hom.app (op V) s = G.obj.map i.op t := by
   rw [← TopCat.Sheaf.isLocallySurjective_iff_epi]
   constructor
   · intro h U t x hx

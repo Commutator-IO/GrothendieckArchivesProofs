@@ -101,7 +101,8 @@ def onePlusEps : (DualNumber k)ˣ where
     sub_add_cancel]
 
 theorem onePlusEps_pow (m : ℕ) :
-    ((onePlusEps k ^ m : (DualNumber k)ˣ) : DualNumber k) = 1 + (m : DualNumber k) * DualNumber.eps := by
+    ((onePlusEps k ^ m : (DualNumber k)ˣ) : DualNumber k) =
+      1 + (m : DualNumber k) * DualNumber.eps := by
   induction m with
   | zero => simp
   | succ m ih =>
@@ -203,7 +204,8 @@ noncomputable def center_SL (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [
 
 /-- _lTf_L0yvrU-7164 (1:59:24) [prop] On points over an algebraically closed field,
 `GL_n/(center) = PGL_n ≃ SL_n/μ_n = PSL_n` (Mathlib
-`Matrix.ProjectiveSpecialLinearGroup.isoPSLOfAlgClosed`); the quotients as group schemes are not formalised. -/
+`Matrix.ProjectiveSpecialLinearGroup.isoPSLOfAlgClosed`); the quotients as group schemes are not
+formalised. -/
 noncomputable def PGL_eq_PSL (n : Type) [Fintype n] [DecidableEq n] (F : Type*) [Field F]
     [IsAlgClosed F] :
     Matrix.ProjGenLinGroup n F ≃* Matrix.ProjectiveSpecialLinearGroup n F :=
@@ -336,7 +338,8 @@ theorem alpha_reduced {A : Type*} [CommRing A] [IsReduced A] (p : ℕ) [ExpChar 
     alpha A p i = ⊥ := by
   ext x
   rw [mem_alpha, AddSubgroup.mem_bot]
-  exact ⟨fun h ↦ IsReduced.eq_zero _ ⟨_, h⟩, fun h ↦ by rw [h]; exact zero_pow (pow_pos (expChar_pos A p) i).ne'⟩
+  exact ⟨fun h ↦ IsReduced.eq_zero _ ⟨_, h⟩,
+      fun h ↦ by rw [h]; exact zero_pow (pow_pos (expChar_pos A p) i).ne'⟩
 
 /-- _lTf_L0yvrU-7545 (2:05:45) [prop] `α_{p^i}` is represented by `k[t]/(t^{p^i})`… -/
 noncomputable def alpha_repr (m : ℕ) (A : Type u) [CommRing A] [Algebra k A] :
@@ -344,7 +347,8 @@ noncomputable def alpha_repr (m : ℕ) (A : Type u) [CommRing A] [Algebra k A] :
   (adjoinRootHomEquiv k _ A).trans (Equiv.subtypeEquivRight fun a ↦ by simp)
 
 /-- _lTf_L0yvrU-7545 (2:05:45) [prop] … free of rank `p^i`… -/
-theorem alpha_rank [Nontrivial k] (m : ℕ) : (AdjoinRoot.powerBasis' (monic_X_pow (R := k) m)).dim = m := by
+theorem alpha_rank [Nontrivial k] (m : ℕ) :
+    (AdjoinRoot.powerBasis' (monic_X_pow (R := k) m)).dim = m := by
   simp only [AdjoinRoot.powerBasis']
   exact natDegree_X_pow m
 

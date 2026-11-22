@@ -142,7 +142,8 @@ theorem prop_7502 (J : Ideal (MvPolynomial I k)) (f : MvPolynomial I k) :
 
 /-- 51wmmpHand0-7367 (2:02:47) [prop] Over fields, `V'_J ⊆ V'_{J'}` iff `√J ⊇ √J'`. -/
 theorem prop_7367 (J J' : Ideal (MvPolynomial I k)) :
-    (∀ (K : Type u) [Field K] [Algebra k K], Z k (J : Set _) K ⊆ Z k (J' : Set (MvPolynomial I k)) K) ↔
+    (∀ (K : Type u) [Field K] [Algebra k K],
+        Z k (J : Set _) K ⊆ Z k (J' : Set (MvPolynomial I k)) K) ↔
       J'.radical ≤ J.radical := by
   constructor
   · intro h
@@ -155,7 +156,8 @@ theorem prop_7367 (J J' : Ideal (MvPolynomial I k)) :
 
 /-- 51wmmpHand0-7367 (2:02:47) [prop] `J ↦ V'_J` is injective on radical ideals. -/
 theorem prop_7367_inj (J J' : Ideal (MvPolynomial I k)) (hJ : J.IsRadical) (hJ' : J'.IsRadical)
-    (h : ∀ (K : Type u) [Field K] [Algebra k K], Z k (J : Set _) K = Z k (J' : Set (MvPolynomial I k)) K) :
+    (h : ∀ (K : Type u) [Field K] [Algebra k K],
+      Z k (J : Set _) K = Z k (J' : Set (MvPolynomial I k)) K) :
     J = J' := by
   have h1 := (prop_7367 k J J').1 fun K _ _ => (h K).le
   have h2 := (prop_7367 k J' J).1 fun K _ _ => (h K).ge
@@ -206,7 +208,8 @@ theorem thm_7993 {K : Type u} [Field K] [IsAlgClosed K] {σ : Type u} [Finite σ
 
 /-- Statement (a) of the course over a field `K`. -/
 def StmtA (K : Type u) [Field K] : Prop :=
-  ∀ (A : Type u) [Field A] [Algebra K A] [Algebra.FiniteType K A], Function.Bijective (algebraMap K A)
+  ∀ (A : Type u) [Field A] [Algebra K A] [Algebra.FiniteType K A],
+    Function.Bijective (algebraMap K A)
 
 /-- Statement (b) of the course over a field `K`. -/
 def StmtB (K : Type u) [Field K] : Prop :=
@@ -483,7 +486,8 @@ def isInitialSelf : Limits.IsInitial (CommAlgCat.of k k) :=
 /-- 51wmmpHand0-11182 (3:06:22) [prop] … unlike sums: the empty sum of `k`-algebras is `k`, not
 the empty set, so the forgetful functor does not preserve initial objects. -/
 theorem prop_11182_sums :
-    ¬ Limits.PreservesColimit (Functor.empty.{0} (CommAlgCat.{u} k)) (forget (CommAlgCat.{u} k)) := by
+    ¬ Limits.PreservesColimit (Functor.empty.{0} (CommAlgCat.{u} k))
+      (forget (CommAlgCat.{u} k)) := by
   intro h
   have hi := Limits.IsInitial.isInitialObj (forget (CommAlgCat.{u} k)) _ (isInitialSelf k)
   exact (hi.to PEmpty.{u + 1} (0 : k)).elim

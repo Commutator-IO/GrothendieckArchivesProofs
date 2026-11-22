@@ -47,8 +47,9 @@ def prop_13553 (R : CommRingCat.{u}) : AlgebraicGeometry.LocallyRingedSpace.{u} 
   AlgebraicGeometry.Spec.locallyRingedSpaceObj R
 
 /-- _lTf_L0yvrU-13617 (3:46:57) [prop] `Spec` turns tensor products into fibre products:
-`Spec(A ⊗_k B) = Spec A ×_{Spec k} Spec B` (mathlib, in schemes: `AlgebraicGeometry.pullbackSpecIso`;
-the fibre product of schemes is also the one of locally ringed spaces). -/
+`Spec(A ⊗_k B) = Spec A ×_{Spec k} Spec B` (mathlib, in schemes:
+`AlgebraicGeometry.pullbackSpecIso`; the fibre product of schemes is also the one of
+locally ringed spaces). -/
 def prop_13617 (R S T : Type u) [CommRing R] [CommRing S] [CommRing T] [Algebra R S]
     [Algebra R T] :
     Limits.pullback (AlgebraicGeometry.Spec.map (CommRingCat.ofHom (algebraMap R S)))
@@ -60,11 +61,13 @@ def prop_13617 (R S T : Type u) [CommRing R] [CommRing S] [CommRing T] [Algebra 
 basic open sets: morphisms to a sheaf are the morphisms of the restrictions to the `X_f` (mathlib:
 `TopCat.Sheaf.restrictHomEquivHom`, for any basis). -/
 def prop_13646 {C : Type*} [Category C] (A : CommRingCat.{u})
-    (F : (AlgebraicGeometry.Spec.topObj A).Presheaf C) (G : (AlgebraicGeometry.Spec.topObj A).Sheaf C) :
+    (F : (AlgebraicGeometry.Spec.topObj A).Presheaf C)
+    (G : (AlgebraicGeometry.Spec.topObj A).Sheaf C) :
     ((inducedFunctor (fun f : A =>
           (basicOpen f : TopologicalSpace.Opens (AlgebraicGeometry.Spec.topObj A)))).op ⋙ F ⟶
         (inducedFunctor (fun f : A =>
-          (basicOpen f : TopologicalSpace.Opens (AlgebraicGeometry.Spec.topObj A)))).op ⋙ G.1) ≃ (F ⟶ G.1) :=
+          (basicOpen f : TopologicalSpace.Opens (AlgebraicGeometry.Spec.topObj A)))).op ⋙ G.1) ≃
+      (F ⟶ G.1) :=
   TopCat.Sheaf.restrictHomEquivHom F G isBasis_basic_opens
 
 variable {A : Type*} [CommRing A]
@@ -73,7 +76,8 @@ variable {A : Type*} [CommRing A]
 the relation is transitive. -/
 theorem prop_13976 (f g : A) :
     (basicOpen f ≤ basicOpen g ↔ ∃ (n : ℕ) (h : A), f ^ n = g * h) ∧
-      ∀ h : A, basicOpen f ≤ basicOpen g → basicOpen g ≤ basicOpen h → basicOpen f ≤ basicOpen h := by
+      ∀ h : A, basicOpen f ≤ basicOpen g → basicOpen g ≤ basicOpen h →
+        basicOpen f ≤ basicOpen h := by
   refine ⟨?_, fun h h1 h2 => h1.trans h2⟩
   rw [basicOpen_le_basicOpen_iff]
   simp only [Ideal.mem_radical_iff, Ideal.mem_span_singleton', eq_comm (b := f ^ _)]
@@ -109,7 +113,8 @@ section Tilde
 variable {A : Type*} [CommRing A] (M : Type*) [AddCommGroup M] [Module A M]
 
 /-- The element `f^n` of the multiplicative set `{f^n}`. -/
-def pw (f : A) (n : ℕ) : Submonoid.powers f := ⟨f ^ n, Submonoid.pow_mem _ (Submonoid.mem_powers f) n⟩
+def pw (f : A) (n : ℕ) : Submonoid.powers f :=
+  ⟨f ^ n, Submonoid.pow_mem _ (Submonoid.mem_powers f) n⟩
 
 @[simp] theorem coe_pw (f : A) (n : ℕ) : (pw f n : A) = f ^ n := rfl
 
@@ -302,7 +307,8 @@ example (M : Type u) [AddCommGroup M] [Module A M] [Small.{u} A] :
   Module.Flat.iff_lTensor_preserves_injective_linearMap'
 
 /-- _lTf_L0yvrU-17766 (4:56:06) [def] `M` is faithfully flat if flat and `M ⊗ N = 0 ⇒ N = 0`
-(mathlib: `Module.FaithfullyFlat`, `Module.FaithfullyFlat.iff_flat_and_lTensor_reflects_triviality`). -/
+(mathlib: `Module.FaithfullyFlat`,
+`Module.FaithfullyFlat.iff_flat_and_lTensor_reflects_triviality`). -/
 example (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M] :
     Module.FaithfullyFlat R M ↔ Module.Flat R M ∧ ∀ (N : Type u) [AddCommGroup N] [Module R N],
       Subsingleton (M ⊗[R] N) → Subsingleton N :=

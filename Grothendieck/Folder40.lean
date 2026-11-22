@@ -192,7 +192,8 @@ theorem neg_X_add_X_sq : (-PowerSeries.X + PowerSeries.X ^ 2 : (PowerSeries k)) 
     PowerSeries.X * (PowerSeries.X - 1) := by ring
 
 /-- The cusp `S = k[[X]][T]/(T^n - X²)`. -/
-abbrev Cusp (k : Type*) [Field k] (n : ℕ) := AdjoinRoot (X ^ n - C (PowerSeries.X ^ 2 : (PowerSeries k)))
+abbrev Cusp (k : Type*) [Field k] (n : ℕ) :=
+    AdjoinRoot (X ^ n - C (PowerSeries.X ^ 2 : (PowerSeries k)))
 
 /-- Power series with no coefficient at an odd exponent `< n`: a subring. -/
 def noOddBelow (n : ℕ) : Subring (PowerSeries k) where
@@ -221,7 +222,8 @@ theorem substPow_X (n : ℕ) (hn : n ≠ 0) :
   simp [substPow, PowerSeries.coe_substAlgHom, PowerSeries.subst_X
     (PowerSeries.HasSubst.X_pow (R := k) hn)]
 
-theorem substPow_mem (n : ℕ) (hn : n ≠ 0) (a : (PowerSeries k)) : substPow n hn a ∈ noOddBelow n := by
+theorem substPow_mem (n : ℕ) (hn : n ≠ 0) (a : (PowerSeries k)) :
+    substPow n hn a ∈ noOddBelow n := by
   intro m hm hmn
   simp only [substPow, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, PowerSeries.coe_substAlgHom]
   rw [PowerSeries.coeff_subst_X_pow hn, ite_eq_right_iff]
@@ -256,7 +258,8 @@ theorem cusp_not_valuation {n : ℕ} (hn : 3 ≤ n) (hodd : Odd n) (c : Cusp k n
     rw [cuspMap, AdjoinRoot.lift_of, substPow_X]
   have hY : cuspMap (k := k) n hn0 (AdjoinRoot.root _) = PowerSeries.X ^ 2 := by
     rw [cuspMap, AdjoinRoot.lift_root]
-  have hsplit : (PowerSeries.X ^ n : (PowerSeries k)) = PowerSeries.X ^ 2 * PowerSeries.X ^ (n - 2) := by
+  have hsplit : (PowerSeries.X ^ n : (PowerSeries k)) =
+      PowerSeries.X ^ 2 * PowerSeries.X ^ (n - 2) := by
     rw [← pow_add]; congr 1; omega
   have hX2 : (PowerSeries.X ^ 2 : (PowerSeries k)) ≠ 0 := pow_ne_zero _ PowerSeries.X_ne_zero
   constructor
@@ -295,7 +298,8 @@ theorem cusp_factor_ne_zero {m : ℕ} (hm : m ≠ 0) (ε : (PowerSeries k)) :
 /-- For `n = 2m` even, `k[[X]][T]/(T^n - X²)` is not a domain. -/
 theorem not_isDomain_cusp_even {m : ℕ} (hm : m ≠ 0) : ¬ IsDomain (Cusp k (2 * m)) := by
   intro hd
-  have h0 : AdjoinRoot.mk (X ^ (2 * m) - C (PowerSeries.X ^ 2 : (PowerSeries k))) (X ^ m + C (-PowerSeries.X)) *
+  have h0 : AdjoinRoot.mk (X ^ (2 * m) - C (PowerSeries.X ^ 2 : (PowerSeries k)))
+        (X ^ m + C (-PowerSeries.X)) *
       AdjoinRoot.mk _ (X ^ m + C PowerSeries.X) = 0 := by
     rw [← map_mul, AdjoinRoot.mk_eq_zero]
     exact ⟨1, by rw [mul_one, map_neg, C_pow]; ring⟩
@@ -336,7 +340,8 @@ abbrev C₂ := AdjoinRoot (X ^ p - C (-PowerSeries.X + PowerSeries.X ^ 2 : (Powe
 
 omit [CharP k p] in
 instance isDomain_C₁ : IsDomain (C₁ (k := k) p) := by
-  have := isDomain_radical hp.out.ne_zero PowerSeries.X_irreducible (isUnit_one (M := PowerSeries k))
+  have := isDomain_radical hp.out.ne_zero PowerSeries.X_irreducible
+      (isUnit_one (M := PowerSeries k))
   rwa [mul_one] at this
 
 omit hp in

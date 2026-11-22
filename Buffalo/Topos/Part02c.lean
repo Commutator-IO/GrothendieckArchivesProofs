@@ -48,8 +48,8 @@ union of two *distinct* closed subsets. -/
 def IsIrreducibleLiteral (Z : Type*) [TopologicalSpace Z] : Prop :=
   Nonempty Z ∧ ¬ ∃ A B : Set Z, IsClosed A ∧ IsClosed B ∧ A ≠ B ∧ A ∪ B = Set.univ
 
-/-- URU5jgTvjhU-28459 (7:54:19) [def] The literal reading is never satisfied (`Z = Z ∪ ∅`), though the
-point is irreducible: « distinct » must be « distinct from `Z` ». -/
+/-- URU5jgTvjhU-28459 (7:54:19) [def] The literal reading is never satisfied (`Z = Z ∪ ∅`), though
+the point is irreducible: « distinct » must be « distinct from `Z` ». -/
 theorem isIrreducibleLiteral_false (Z : Type*) [TopologicalSpace Z] : ¬ IsIrreducibleLiteral Z := by
   rintro ⟨⟨z⟩, h⟩
   exact h ⟨Set.univ, ∅, isClosed_univ, isClosed_empty,
@@ -64,7 +64,8 @@ theorem irreducibleSpace_iff_closed (Z : Type*) [TopologicalSpace Z] :
   rw [irreducibleSpace_def, IsIrreducible, isPreirreducible_iff_isClosed_union_isClosed]
   simp only [Set.top_eq_univ]
   rw [← Set.nonempty_iff_univ_nonempty]
-  refine and_congr_right fun _ => ⟨fun h ⟨A, B, hA, hB, hA', hB', hAB⟩ => ?_, fun h A B hA hB hAB => ?_⟩
+  refine and_congr_right fun _ => ⟨fun h ⟨A, B, hA, hB, hA', hB', hAB⟩ => ?_,
+      fun h A B hA hB hAB => ?_⟩
   · rcases h A B hA hB hAB.ge with h' | h'
     · exact hA' (Set.univ_subset_iff.1 h')
     · exact hB' (Set.univ_subset_iff.1 h')
@@ -154,7 +155,8 @@ instance : TopologicalSpace (Sob Z) where
   isOpen_sUnion := by
     intro S hS
     choose U hU hSU using hS
-    refine ⟨⋃ (s : Set (Sob Z)) (h : s ∈ S), U s h, isOpen_iUnion fun s => isOpen_iUnion fun h => hU s h, ?_⟩
+    refine ⟨⋃ (s : Set (Sob Z)) (h : s ∈ S), U s h,
+        isOpen_iUnion fun s => isOpen_iUnion fun h => hU s h, ?_⟩
     ext Y
     constructor
     · rintro ⟨s, hs, hY⟩
@@ -620,8 +622,8 @@ def pullback_stalk' {X Y : TopCat.{u}} (f : X ⟶ Y) (F : Y.Presheaf (Type u)) (
     F.stalk (f x) ≅ ((TopCat.Presheaf.pullback (Type u) f).obj F).stalk x :=
   TopCat.Presheaf.stalkPullbackIso (Type u) f F x
 
-/-- URU5jgTvjhU-30471 (8:27:51) [thm] (case `X = pt`) If `Y` is sober, every point of the site `𝒪(Y)`
-is isomorphic to the point of a unique `y ∈ Y`. -/
+/-- URU5jgTvjhU-30471 (8:27:51) [thm] (case `X = pt`) If `Y` is sober, every point of the site
+`𝒪(Y)` is isomorphic to the point of a unique `y ∈ Y`. -/
 theorem sober_points [QuasiSober Z] [T0Space Z] (Φ : Point.{u} (Opens.grothendieckTopology Z)) :
     ∃! y : Z, Nonempty (Opens.pointGrothendieckTopology y ≅ Φ) := by
   obtain ⟨Y, ⟨e⟩⟩ := irrPoint_surjective Φ

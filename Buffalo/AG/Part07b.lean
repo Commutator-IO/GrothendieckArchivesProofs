@@ -90,9 +90,9 @@ theorem prop_25222 {σ A : Type*} [CommRing A] [SetLike σ A] [AddSubgroupClass 
       QuasiCompact (Proj.toSpecZero 𝒜) :=
   ⟨inferInstance, inferInstance, inferInstance⟩
 
-/-- Oqhr-Gt66es-27355 (7:35:55) [def] (proper half) `f` is proper iff it is of finite type, separated
-and universally closed (mathlib: `IsProper`, whose quasi-compactness follows from universal
-closedness). -/
+/-- Oqhr-Gt66es-27355 (7:35:55) [def] (proper half) `f` is proper iff it is of finite type,
+separated and universally closed (mathlib: `IsProper`, whose quasi-compactness follows from
+universal closedness). -/
 theorem def_27355 (f : X ⟶ Y) :
     IsProper f ↔ (LocallyOfFiniteType f ∧ QuasiCompact f) ∧ IsSeparated f ∧ UniversallyClosed f :=
   ⟨fun _ => ⟨⟨inferInstance, inferInstance⟩, inferInstance, inferInstance⟩,
@@ -166,7 +166,8 @@ theorem prop_29521 (x : B) :
 /-- Oqhr-Gt66es-29585 (8:13:05) [prop] `B` is integral over `A` iff it is the union of its
 subalgebras finite over `A`. -/
 theorem prop_29585 :
-    Algebra.IsIntegral A B ↔ ∀ x : B, ∃ S : Subalgebra A B, (Subalgebra.toSubmodule S).FG ∧ x ∈ S := by
+    Algebra.IsIntegral A B ↔
+      ∀ x : B, ∃ S : Subalgebra A B, (Subalgebra.toSubmodule S).FG ∧ x ∈ S := by
   rw [Algebra.isIntegral_def]
   exact forall_congr' fun x => (prop_29521 x).2.2
 
@@ -210,7 +211,8 @@ algebras. -/
 theorem prop_30136 (f : X ⟶ Y) {A' B' : Type*} [CommRing A'] [CommRing B'] [Algebra A' B'] :
     (IsFinite f ↔ IsIntegralHom f ∧ LocallyOfFiniteType f) ∧
     (Module.Finite A' B' ↔ Algebra.IsIntegral A' B' ∧ Algebra.FiniteType A' B') :=
-  ⟨IsFinite.iff_isIntegralHom_and_locallyOfFiniteType f, Algebra.finite_iff_isIntegral_and_finiteType⟩
+  ⟨IsFinite.iff_isIntegralHom_and_locallyOfFiniteType f,
+    Algebra.finite_iff_isIntegral_and_finiteType⟩
 
 /-- Oqhr-Gt66es-30201 (8:23:21) [prop] An integral morphism is affine, separated and universally
 closed; a finite morphism is proper. -/
@@ -219,7 +221,8 @@ theorem prop_30201 (f : X ⟶ Y) :
     (IsFinite f → IsProper f) :=
   ⟨fun _ => ⟨inferInstance, inferInstance, inferInstance⟩, fun _ => inferInstance⟩
 
-/-- Oqhr-Gt66es-30267 (8:24:27) [prop] Every closed immersion is finite; `A/J` is finite over `A`. -/
+/-- Oqhr-Gt66es-30267 (8:24:27) [prop] Every closed immersion is finite; `A/J` is finite over
+`A`. -/
 theorem prop_30267 (f : X ⟶ Y) [IsClosedImmersion f] {A' : Type*} [CommRing A'] (J : Ideal A') :
     IsFinite f ∧ Module.Finite A' (A' ⧸ J) :=
   ⟨inferInstance, inferInstance⟩

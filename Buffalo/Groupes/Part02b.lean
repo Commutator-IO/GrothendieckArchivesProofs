@@ -171,7 +171,8 @@ noncomputable def diag (u : A →ₗ[k] R) : A ⊗[k] A →ₗ[k] R := u ∘ₗ 
 
 /-- _lTf_L0yvrU-26440 (7:20:40) [prop] The inclusion `X ⊆ Dist(X)` commutes with the diagonals:
 `δ(x) = x ⊠ x` for a point `x` of `X` (`X → X × X` is the diagonal). -/
-theorem diag_point (φ : A →ₐ[k] R) : diag R φ.toLinearMap = boxtimes R φ.toLinearMap φ.toLinearMap :=
+theorem diag_point (φ : A →ₐ[k] R) :
+    diag R φ.toLinearMap = boxtimes R φ.toLinearMap φ.toLinearMap :=
   TensorProduct.ext' fun a b ↦ by simp [diag]
 
 /-- _lTf_L0yvrU-26884 (7:28:04) [prop] A point `x ∈ Dist(X)(k')` lies in `X(k')` iff
@@ -217,7 +218,8 @@ theorem comm_iff_cocomm :
 theorem assoc_iff_coassoc :
     μ ∘ₗ μ.rTensor P = μ ∘ₗ μ.lTensor P ∘ₗ (TensorProduct.assoc k P P P).toLinearMap ↔
       ∀ (R : Type u) [CommRing R] [Algebra k R] (x : P →ₗ[k] R),
-        x ∘ₗ μ ∘ₗ μ.rTensor P = x ∘ₗ μ ∘ₗ μ.lTensor P ∘ₗ (TensorProduct.assoc k P P P).toLinearMap :=
+        x ∘ₗ μ ∘ₗ μ.rTensor P =
+          x ∘ₗ μ ∘ₗ μ.lTensor P ∘ₗ (TensorProduct.assoc k P P P).toLinearMap :=
   ⟨fun h R _ _ x ↦ by rw [h], fun h ↦ V_separates fun R _ _ x ↦ h R x⟩
 
 /-- _lTf_L0yvrU-26689 (7:24:49) [prop] `1 ∈ A` is a unit for `μ` iff `ε(x) = x(1)` is a counit
@@ -258,7 +260,8 @@ noncomputable def pointsToDist : WithConv (A →ₐ[k] R) →* WithConv (A →�
 
 noncomputable example : Algebra R (WithConv (A →ₗ[k] R)) := inferInstance
 
-theorem pointsToDist_injective : Function.Injective (pointsToDist (k := k) R (A := A)) := fun f g h ↦ by
+theorem pointsToDist_injective :
+    Function.Injective (pointsToDist (k := k) R (A := A)) := fun f g h ↦ by
   have := congrArg ofConv h
   exact WithConv.ofConv_injective (AlgHom.toLinearMap_injective this)
 
@@ -287,7 +290,8 @@ section Hyper
 variable {k} (A : Type u) [CommRing A] [Bialgebra k A] (R : Type u) [CommRing R] [Algebra k R]
 
 /-- The augmentation ideal `I = Ker ε`. -/
-abbrev augIdeal (k : Type u) [CommRing k] (A : Type u) [CommRing A] [Bialgebra k A] : Ideal A := RingHom.ker (Bialgebra.counitAlgHom k A)
+abbrev augIdeal (k : Type u) [CommRing k] (A : Type u) [CommRing A] [Bialgebra k A] : Ideal A :=
+  RingHom.ker (Bialgebra.counitAlgHom k A)
 
 /-- _lTf_L0yvrU-27899 (7:44:59) [def] The distributions concentrated at the origin, vanishing on a
 power of `I = Ker ε` (an `𝒪`-submodule; that it is a subalgebra is not formalised). -/
@@ -338,7 +342,8 @@ noncomputable def constConv (u v : (Γ → k) →ₗ[k] k) : (Γ → k) →ₗ[k
 /-- _lTf_L0yvrU-28231 (7:50:31) [ex] `Dist(Γ_k) = k[Γ]`: the evaluations `e_g` (the dual basis of
 the basis of `k^Γ`) multiply like `Γ`: `e_g ⋆ e_h = e_{gh}`. -/
 theorem constConv_eval (g h : Γ) :
-    constConv Γ (LinearMap.proj g) (LinearMap.proj h) = (LinearMap.proj (g * h) : (Γ → k) →ₗ[k] k) :=
+    constConv Γ (LinearMap.proj g) (LinearMap.proj h) =
+      (LinearMap.proj (g * h) : (Γ → k) →ₗ[k] k) :=
   rfl
 
 theorem dualBasis_eq_eval {Γ : Type u} [Fintype Γ] [DecidableEq Γ] (g : Γ) :
@@ -359,7 +364,8 @@ theorem aug_sq_eq (Γ' : Type*) [Group Γ'] [DecidableEq Γ'] :
   apply le_antisymm (Ideal.pow_le_self two_ne_zero)
   intro f hf
   have hf' : f 1 = 0 := hf
-  have he : (1 - Pi.single 1 1 : Γ' → k) ∈ RingHom.ker (Pi.evalRingHom (fun _ : Γ' ↦ k) (1 : Γ')) := by
+  have he : (1 - Pi.single 1 1 : Γ' → k) ∈
+      RingHom.ker (Pi.evalRingHom (fun _ : Γ' ↦ k) (1 : Γ')) := by
     rw [RingHom.mem_ker, Pi.evalRingHom_apply]; simp
   have : f = f * (1 - Pi.single 1 1) := by
     ext g
@@ -387,7 +393,8 @@ theorem one_ne_neg_one_of_two {R : Type*} [CommRing R] (h2 : (2 : R) ≠ 0) : (1
   linear_combination h
 
 /-- _lTf_L0yvrU-28615 (7:56:55) [ex] … trivial on points in characteristic `2` (`-1 = 1`), while
-`μ₂` has the non-trivial point `1 + ε` over `k[ε]` (non-zero Lie algebra, `Part01.mu_p_nontrivial`). -/
+`μ₂` has the non-trivial point `1 + ε` over `k[ε]` (non-zero Lie algebra,
+`Part01.mu_p_nontrivial`). -/
 theorem mu2_char2 {R : Type*} [CommRing R] [CharP R 2] : (-1 : R) = 1 := by
   rw [neg_eq_iff_add_eq_zero, one_add_one_eq_two, CharTwo.two_eq_zero]
 

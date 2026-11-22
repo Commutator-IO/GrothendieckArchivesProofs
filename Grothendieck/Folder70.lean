@@ -1053,14 +1053,24 @@ theorem quadric_unique (h : α ^ 2 + α - 1 = 0) (Q : QuadFn R)
   simp only [QuadFn.eval, vert, iota, Matrix.cons_val] at h0 h1 h2 h3 h4 h5 h6 h7 h8
   simp only [QuadFn.smul, qFn, QuadFn.mk.injEq]
   refine ⟨by ring, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · linear_combination (-1) * h1 + (1) * h2 + (1) * h3 + (-1) * h4 + (α) * h7 + (-α) * h8 + (-a - b - u + v + w) * h
-  · linear_combination (-α) * h0 + (1) * h2 + (1 - α) * h3 + (-1) * h5 + (α) * h6 + (α - 1) * h7 + (-2*a*α - 3*a - 2*b*α - 4*b - 2*c*α - 5*c + 2*d - 2*e - 2*f - 2*u*α - 5*u + 2*v*α + 4*v + 2*w*α + 4*w) * h
-  · linear_combination (1) * h0 + (α) * h1 + (-α - 1) * h2 + (-2*α) * h3 + (α) * h4 + (α) * h5 + (α - 1) * h7 + (1 - α) * h8 + (-a*α - 3*a - 2*b*α - 4*b + d - 2*e - 3*u + 2*v + w*α + 3*w) * h
-  · linear_combination (-α) * h0 + (α) * h1 + (1) * h4 + (-1) * h5 + (1) * h6 + (-1) * h7 + (-a + w) * h
-  · linear_combination (1) * h0 + (-1) * h1 + (-1) * h4 + (1) * h5 + (-α) * h6 + (α) * h7 + (-a + v) * h
+  · linear_combination (-1) * h1 + (1) * h2 + (1) * h3 + (-1) * h4 + (α) * h7 + (-α) * h8 +
+        (-a - b - u + v + w) * h
+  · linear_combination (-α) * h0 + (1) * h2 + (1 - α) * h3 + (-1) * h5 + (α) * h6 + (α - 1) * h7 +
+        (-2*a*α - 3*a - 2*b*α - 4*b - 2*c*α - 5*c + 2*d - 2*e - 2*f - 2*u*α - 5*u + 2*v*α + 4*v +
+          2*w*α + 4*w) * h
+  · linear_combination (1) * h0 + (α) * h1 + (-α - 1) * h2 + (-2*α) * h3 + (α) * h4 + (α) * h5 +
+        (α - 1) * h7 + (1 - α) * h8 +
+        (-a*α - 3*a - 2*b*α - 4*b + d - 2*e - 3*u + 2*v + w*α + 3*w) * h
+  · linear_combination (-α) * h0 + (α) * h1 + (1) * h4 + (-1) * h5 + (1) * h6 + (-1) * h7 +
+        (-a + w) * h
+  · linear_combination (1) * h0 + (-1) * h1 + (-1) * h4 + (1) * h5 + (-α) * h6 + (α) * h7 +
+        (-a + v) * h
   · linear_combination (-1) * h0 + (1) * h1
-  · linear_combination (-1) * h0 + (1) * h1 + (-1) * h3 + (1) * h4 + (-α) * h7 + (α) * h8 + (a + b + u - v - w) * h
-  · linear_combination (α - 1) * h0 + (-1) * h2 + (α) * h3 + (1) * h5 + (-α) * h6 + (1 - α) * h7 + (2*a*α + 3*a + 2*b*α + 4*b + 2*c*α + 5*c - 2*d + 2*e + 2*f + 2*u*α + 5*u - 2*v*α - 4*v - 2*w*α - 4*w) * h
+  · linear_combination (-1) * h0 + (1) * h1 + (-1) * h3 + (1) * h4 + (-α) * h7 + (α) * h8 +
+        (a + b + u - v - w) * h
+  · linear_combination (α - 1) * h0 + (-1) * h2 + (α) * h3 + (1) * h5 + (-α) * h6 + (1 - α) * h7 +
+        (2*a*α + 3*a + 2*b*α + 4*b + 2*c*α + 5*c - 2*d + 2*e + 2*f + 2*u*α + 5*u - 2*v*α - 4*v -
+          2*w*α - 4*w) * h
   · linear_combination h0
 
 /-- The half-discriminant `δ'` of the ternary form `a x² + b y² + c z² + u yz + v zx + w xy`:

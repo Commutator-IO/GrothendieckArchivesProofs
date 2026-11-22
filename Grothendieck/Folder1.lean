@@ -826,10 +826,12 @@ theorem bform_add {ι : Type*} (S : Finset ι) (x : ι → E) (y : ι → F) (u 
 /-- `|bform| ≤ ¼ ∑_{k,l} s_k(T) s_l(T') (Λ^f_{kl} + Λ^e_{kl})`, from the Cauchy–Binet identity
 and `|ab| ≤ (|a|² + |b|²)/2`. -/
 theorem norm_bform_le {ι : Type*} (S : Finset ι) (x : ι → E) (y : ι → F) (T T' : E →ₗ[𝕜] F) :
-    ‖bform S x y T T'‖ ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+    ‖bform S x y T T'‖ ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      T.singularValues k * T'.singularValues l *
       (lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
         lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l) := by
-  have h2 : (2 : 𝕜) * bform S x y T T' = ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), ((T.singularValues k : ℝ) : 𝕜) *
+  have h2 : (2 : 𝕜) * bform S x y T T' = ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      ((T.singularValues k : ℝ) : 𝕜) *
       ((T'.singularValues l : ℝ) : 𝕜) * ∑ i ∈ S, ∑ j ∈ S,
         conj (minor2 (fvec T) (fvec T') y k l i j) * minor2 (ebasis T) (ebasis T') x k l i j := by
     have := two_mul_sum_minor S (fun k : Fin (finrank 𝕜 E) => ((T.singularValues k : ℝ) : 𝕜))
@@ -845,7 +847,8 @@ theorem norm_bform_le {ι : Type*} (S : Finset ι) (x : ι → E) (y : ι → F)
     congr 1
     refine sum_congr rfl fun i _ => sum_congr rfl fun j _ => ?_
     simp only [minor2, map_sub, map_mul]
-  have hb : ‖(2 : 𝕜) * bform S x y T T'‖ ≤ ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+  have hb : ‖(2 : 𝕜) * bform S x y T T'‖ ≤ ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      T.singularValues k * T'.singularValues l *
       ((lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
         lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l) / 2) := by
     rw [h2]
@@ -863,10 +866,12 @@ theorem norm_bform_le {ι : Type*} (S : Finset ι) (x : ι → E) (y : ι → F)
     rw [norm_mul, RCLike.norm_conj]
     nlinarith [sq_nonneg (‖(minor2 (fvec T) (fvec T') y k l i j : 𝕜)‖ -
       ‖(minor2 (ebasis T) (ebasis T') x k l i j : 𝕜)‖)]
-  have e : ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+  have e : ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      T.singularValues k * T'.singularValues l *
       ((lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
         lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l) / 2) =
-      2 * ((1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+      2 * ((1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+        T.singularValues k * T'.singularValues l *
       (lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
         lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l)) := by
     rw [← mul_assoc, mul_sum]
@@ -888,7 +893,8 @@ theorem norm_bform_le_mul (T T' : E →ₗ[𝕜] F) {n : ℕ} (hn : #S ≤ n) :
     ‖bform S x y T T'‖ ≤
       (∑ j ∈ range n, T.singularValues j) * ∑ j ∈ range n, T'.singularValues j := by
   have hKF : ∀ (T : E →ₗ[𝕜] F) (c : Fin (finrank 𝕜 E) → ℝ), (∀ k, 0 ≤ c k) → (∀ k, c k ≤ 1) →
-      ∑ k : Fin (finrank 𝕜 E), c k ≤ #S → ∑ k : Fin (finrank 𝕜 E), T.singularValues k * c k ≤ ∑ j ∈ range n, T.singularValues j :=
+      ∑ k : Fin (finrank 𝕜 E), c k ≤ #S →
+        ∑ k : Fin (finrank 𝕜 E), T.singularValues k * c k ≤ ∑ j ∈ range n, T.singularValues j :=
     fun T c h0 h1 hs => sum_mul_le_sum_range T.singularValues T.singularValues_antitone
       T.singularValues_nonneg c h0 h1 (hs.trans (by exact_mod_cast hn))
   have hfo : ∀ T : E →ₗ[𝕜] F, ∀ k l, k ≠ l → ⟪fvec T k, fvec T l⟫_𝕜 = 0 :=
@@ -897,11 +903,13 @@ theorem norm_bform_le_mul (T T' : E →ₗ[𝕜] F) {n : ℕ} (hn : #S ≤ n) :
     fun T k l h => (ebasis T).orthonormal.2 h
   have he1 : ∀ T : E →ₗ[𝕜] F, ∀ k, ‖ebasis T k‖ ≤ 1 :=
     fun T k => ((ebasis T).orthonormal.1 k).le
-  have Aq : ∀ T : E →ₗ[𝕜] F, ∑ k : Fin (finrank 𝕜 E), T.singularValues k * wt (𝕜 := 𝕜) (fvec T) y S k ≤
+  have Aq : ∀ T : E →ₗ[𝕜] F,
+      ∑ k : Fin (finrank 𝕜 E), T.singularValues k * wt (𝕜 := 𝕜) (fvec T) y S k ≤
       ∑ j ∈ range n, T.singularValues j := fun T =>
     hKF T _ (wt_nonneg _ _ _) (wt_le_one S y hy hy1 _ (norm_fvec_le T))
       (sum_wt_le S y hy1 _ (hfo T) (norm_fvec_le T))
-  have Ap : ∀ T : E →ₗ[𝕜] F, ∑ k : Fin (finrank 𝕜 E), T.singularValues k * wt (𝕜 := 𝕜) (ebasis T) x S k ≤
+  have Ap : ∀ T : E →ₗ[𝕜] F,
+      ∑ k : Fin (finrank 𝕜 E), T.singularValues k * wt (𝕜 := 𝕜) (ebasis T) x S k ≤
       ∑ j ∈ range n, T.singularValues j := fun T =>
     hKF T _ (wt_nonneg _ _ _) (wt_le_one S x hx hx1 _ (he1 T))
       (sum_wt_le S x hx1 _ (heo T) (he1 T))
@@ -911,10 +919,12 @@ theorem norm_bform_le_mul (T T' : E →ₗ[𝕜] F) {n : ℕ} (hn : #S ≤ n) :
   have K0 : ∀ T : E →ₗ[𝕜] F, 0 ≤ ∑ j ∈ range n, T.singularValues j :=
     fun T => sum_nonneg fun j _ => T.singularValues_nonneg j
   calc ‖bform S x y T T'‖
-      ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+      ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+        T.singularValues k * T'.singularValues l *
         (lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
           lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l) := norm_bform_le S x y T T'
-    _ ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+    _ ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+        T.singularValues k * T'.singularValues l *
         (2 * wt (𝕜 := 𝕜) (fvec T) y S k * wt (𝕜 := 𝕜) (fvec T') y S l +
           2 * wt (𝕜 := 𝕜) (ebasis T) x S k * wt (𝕜 := 𝕜) (ebasis T') x S l) := by
         refine mul_le_mul_of_nonneg_left (sum_le_sum fun k _ => sum_le_sum fun l _ => ?_)
@@ -949,11 +959,14 @@ theorem norm_bform_self_le (T : E →ₗ[𝕜] F) (G : Finset (Fin (finrank 𝕜
   have Be := sum_lam_mul_le S x hx hx1 (ebasis T) (fun k l h => (ebasis T).orthonormal.2 h)
     (fun k => ((ebasis T).orthonormal.1 k).le) G (fun k => T.singularValues k) hθ
     (fun k => T.singularValues_nonneg _) hG hGc hSG
-  have e : (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T.singularValues l *
+  have e : (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      T.singularValues k * T.singularValues l *
       (lam (𝕜 := 𝕜) (fvec T) (fvec T) y S k l + lam (𝕜 := 𝕜) (ebasis T) (ebasis T) x S k l) =
-      (1 / 2) * (∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), lam (𝕜 := 𝕜) (fvec T) (fvec T) y S k l / 2 *
+      (1 / 2) * (∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+        lam (𝕜 := 𝕜) (fvec T) (fvec T) y S k l / 2 *
         (T.singularValues k * T.singularValues l) +
-        ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), lam (𝕜 := 𝕜) (ebasis T) (ebasis T) x S k l / 2 *
+        ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+          lam (𝕜 := 𝕜) (ebasis T) (ebasis T) x S k l / 2 *
         (T.singularValues k * T.singularValues l)) := by
     rw [← sum_add_distrib, mul_sum, mul_sum]
     refine sum_congr rfl fun k _ => ?_
@@ -1018,7 +1031,8 @@ theorem bform_ebasis_fvec (w : E →ₗ[𝕜] F) (n : ℕ) :
 `σ_n^2(u+v) ≤ σ_n^2(u) + σ_n^1(u) σ_n^1(v) + σ_n^2(v)`, for every `n`. -/
 theorem sigma_two_add_le (u v : E →ₗ[𝕜] F) (n : ℕ) :
     sigma n 2 (u + v) ≤ sigma n 2 u + sigma n 1 u * sigma n 1 v + sigma n 2 v :=
-  by rw [sigma_one, sigma_one]; exact LinearMap.sum_powersetCard_two_prod_singularValues_add_le u v n
+  by rw [sigma_one, sigma_one]
+     exact LinearMap.sum_powersetCard_two_prod_singularValues_add_le u v n
 
 /-- **The system (16) of page 71 for `m ≤ 2`** and every `n`. -/
 theorem sigma_system_of_le_two (u v : E →ₗ[𝕜] F) (n m : ℕ) (hm : m ≤ 2) :
@@ -1938,7 +1952,8 @@ theorem compr_eq (T w : E →ₗ[ℂ] F) (n : ℕ) :
 
 /-- `compr T T n` is the diagonal matrix of `s_j(T)`, `j < n`. -/
 theorem compr_self (T : E →ₗ[ℂ] F) (n : ℕ) :
-    compr T T n = diagonal fun j : Fin (finrank ℂ E) => (((if (j : ℕ) < n then T.singularValues j else 0 : ℝ)) : ℂ) := by
+    compr T T n = diagonal fun j : Fin (finrank ℂ E) =>
+      (((if (j : ℕ) < n then T.singularValues j else 0 : ℝ)) : ℂ) := by
   ext i j
   simp only [compr, of_apply, xs, ys, diagonal_apply]
   by_cases hij : i = j
@@ -2248,7 +2263,8 @@ theorem norm_alpha_comp_le (u : E →ₗ[ℂ] F) {w : F →ₗ[ℂ] E} (hw : ∀
   refine norm_alpha_cmat_le u _ _ (fun k l h => ?_) (fun k => ?_) (fun k l h => ?_) (fun k => ?_)
     n (fun j hj => by simp [ht0 j hj]) (fun j hj => by simp [ht0 j hj]) m
   · simp [inner_ebasis_of_ne w' h]
-  · rw [norm_smul]; exact (mul_le_of_le_one_right (norm_nonneg _) (norm_ebasis_le w' k)).trans (ht1 k)
+  · rw [norm_smul]; exact (mul_le_of_le_one_right (norm_nonneg _)
+      (norm_ebasis_le w' k)).trans (ht1 k)
   · simp [inner_fvec_of_ne w' h]
   · rw [norm_smul]; exact (mul_le_of_le_one_right (norm_nonneg _) (norm_fvec_le w' k)).trans (ht1 k)
 

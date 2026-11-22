@@ -198,7 +198,8 @@ theorem range_mk_one :
 
 /-- **Lemme, coordinate by coordinate.** In a basis `b` of `M`, `F ∈ K₀[T] ⊗ M`
 takes values in `M` on `k₀` iff each of its coordinates lies in `Ω = Int(k₀)`. -/
-theorem lemme_coordonnees {ι : Type*} [DecidableEq ι] (b : Module.Basis ι k₀ M) (F : K₀[X] ⊗[k₀] M) :
+theorem lemme_coordonnees {ι : Type*} [DecidableEq ι] (b : Module.Basis ι k₀ M)
+    (F : K₀[X] ⊗[k₀] M) :
     F ∈ valeursDansM K₀ M ↔ ∀ i, coords b K₀[X] F i ∈ Omega k₀ K₀ := by
   simp only [valeursDansM, Set.mem_ofPred_eq, range_mk_one, mem_range_rTensor b,
     coords_rTensor, Finsupp.mapRange_apply, ev_apply]
@@ -399,7 +400,8 @@ theorem omegaBaseChange_injective_of_flat [Module.Flat k₀ K₀]
     (hmul : Function.Injective (LinearMap.mul' k₀ K₀)) :
     Function.Injective (omegaBaseChange k₀ K₀) := by
   set g : K₀ ⊗[k₀] K₀[X] →ₗ[k₀] K₀[X] :=
-    (LinearMap.liftBaseChange K₀ ((LinearMap.id : K₀[X] →ₗ[K₀] K₀[X]).restrictScalars k₀)).restrictScalars k₀
+    (LinearMap.liftBaseChange K₀
+      ((LinearMap.id : K₀[X] →ₗ[K₀] K₀[X]).restrictScalars k₀)).restrictScalars k₀
   have hfac : ∀ t, omegaBaseChange k₀ K₀ t =
       g (LinearMap.lTensor K₀ (Omega k₀ K₀).val.toLinearMap t) := by
     intro t
@@ -485,7 +487,8 @@ theorem mem_range_Phi_iff_of_injective [Module.Free k₀ (Omega k₀ K₀)]
   refine ⟨∑ j ∈ g.support, (⟨g j, hg j⟩ : Omega k₀ K₀) ⊗ₜ e j, ?_⟩
   simp [map_sum, Phi_tmul, Finsupp.sum]
 
-/-- **Uniqueness.** When `K₀ ⊗_{k₀} Ω → K₀[T]` is injective and `Ω` is free, `Φ : Ω ⊗ Ω → K₀[X, Y]` is injective. -/
+/-- **Uniqueness.** When `K₀ ⊗_{k₀} Ω → K₀[T]` is injective and `Ω` is free,
+`Φ : Ω ⊗ Ω → K₀[X, Y]` is injective. -/
 theorem Phi_injective_of_injective [Module.Free k₀ (Omega k₀ K₀)]
     (hK : Function.Injective (omegaBaseChange k₀ K₀)) : Function.Injective (Phi k₀ K₀) := by
   classical
@@ -756,7 +759,8 @@ namespace Composition
 variable {Ω : Type*} [NonUnitalCommRing Ω] (c : Composition Ω)
 
 /-- `F ↦ F ∘ G` as an additive map. -/
-def rightComp (G : Ω) : Ω →+ Ω := AddMonoidHom.mk' (fun F => c.comp F G) fun F F' => c.add_comp F F' G
+def rightComp (G : Ω) : Ω →+ Ω :=
+  AddMonoidHom.mk' (fun F => c.comp F G) fun F F' => c.add_comp F F' G
 
 theorem zero_comp (G : Ω) : c.comp 0 G = 0 := (c.rightComp G).map_zero
 theorem neg_comp (F G : Ω) : c.comp (-F) G = -c.comp F G := (c.rightComp G).map_neg F
@@ -806,7 +810,8 @@ theorem sub_comp_zero_mem_zeroPart (F : Ω) : F - c.comp F 0 ∈ c.zeroPart := b
 theorem isCompl_constants_zeroPart : IsCompl c.constants.toAddSubgroup c.zeroPart :=
   ⟨AddSubgroup.disjoint_def.mpr fun hl h0 => c.eq_zero_of_mem_constants_of_mem_zeroPart hl h0,
     codisjoint_iff_le_sup.mpr fun F _ => AddSubgroup.mem_sup.mpr ⟨c.comp F 0,
-      c.comp_zero_mem_constants F, F - c.comp F 0, c.sub_comp_zero_mem_zeroPart F, add_sub_cancel _ _⟩⟩
+      c.comp_zero_mem_constants F, F - c.comp F 0, c.sub_comp_zero_mem_zeroPart F,
+      add_sub_cancel _ _⟩⟩
 
 /-- `Ω → Appl(Ω₀, Ω₀)`, `F ↦ (λ ↦ F ∘ λ)` (page 7). -/
 def toAppl (F : Ω) : c.constants → c.constants := fun l => ⟨c.comp F l, c.comp_mem_constants F l.2⟩

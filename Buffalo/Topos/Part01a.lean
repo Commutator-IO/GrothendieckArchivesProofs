@@ -325,13 +325,15 @@ theorem hasSheafify : HasSheafify (Opens.grothendieckTopology X) (Type u) := inf
 /-- URU5jgTvjhU-7310 (2:01:50) [prop] `Sh(X)` admits all colimits, and the associated-sheaf functor
 preserves them: the colimit of sheaves is the sheaf associated to the presheaf colimit. -/
 theorem sheaf_colimits :
-    (∀ (K : Type u) [SmallCategory K], HasColimitsOfShape K (Sheaf (Opens.grothendieckTopology X) (Type u))) ∧
+    (∀ (K : Type u) [SmallCategory K],
+      HasColimitsOfShape K (Sheaf (Opens.grothendieckTopology X) (Type u))) ∧
       Nonempty (PreservesColimits (presheafToSheaf (Opens.grothendieckTopology X) (Type u))) := by
   have := hasSheafify (X := X)
   exact ⟨fun K _ => inferInstance, ⟨inferInstance⟩⟩
 
 /-- URU5jgTvjhU-7310 (2:01:50) [prop] A presheaf and its associated sheaf have the same stalks. -/
-def sheafify_stalk (F : X.Presheaf (Type u)) (x : X) : TopCat.Presheaf.stalk F.sheafify.obj x ≅ F.stalk x :=
+def sheafify_stalk (F : X.Presheaf (Type u)) (x : X) :
+    TopCat.Presheaf.stalk F.sheafify.obj x ≅ F.stalk x :=
   TopCat.Presheaf.sheafifyStalkIso F x
 
 /-- A continuous, open, locally injective map is a local homeomorphism (« étalé »). -/
@@ -473,7 +475,8 @@ theorem sheafify_leftExact :
 
 /-- URU5jgTvjhU-8672 (2:24:32) [prop] In `Sh(X)`, (finite) coproducts are stable under base change
 and disjoint: `Sh(X)` is finitary extensive. -/
-theorem sheaf_finitaryExtensive : FinitaryExtensive (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
+theorem sheaf_finitaryExtensive :
+    FinitaryExtensive (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
   inferInstance
 
 /-! ## Quotients and equivalence relations -/
@@ -482,7 +485,8 @@ theorem sheaf_finitaryExtensive : FinitaryExtensive (Sheaf (Opens.grothendieckTo
 isomorphism under `F`, i.e. a subobject of `F` in the opposite category. -/
 abbrev QuotientObject {C : Type*} [Category C] (F : C) := Subobject (op F)
 
-/-- URU5jgTvjhU-8923 (2:28:43) [prop] For every morphism `f : F → G` of presheaves, the fibre product
+/-- URU5jgTvjhU-8923 (2:28:43) [prop] For every morphism `f : F → G` of presheaves, the fibre
+product
 `F ×_G F ⊆ F × F`, computed section by section, is an equivalence relation on each `F(U)`. -/
 theorem kernelPair_equivalence {F G : X.Presheaf (Type u)} (f : F ⟶ G) (U : (Opens X)ᵒᵖ) :
     Equivalence fun a b : F.obj U => f.app U a = f.app U b :=
