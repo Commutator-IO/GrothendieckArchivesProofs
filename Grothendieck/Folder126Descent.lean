@@ -10,10 +10,10 @@ public import StacksFrontier.AlgebraicGeometry.Limits.DescendingMorphisms.Finite
 /-!
 # Folder 126, pages 17–22: the factorisation over an étale covering
 
-Finding `126-radicial-etale-factorisation`, existence of `X^ét`, step 3a. Over an affine `Y`, the
-étale-local factorisations of `Grothendieck.Folder126EtaleSplitting` are assembled over a single
-étale surjective morphism `w : W ⟶ Y` with `W` affine: finitely many of the neighbourhoods cover
-`Y` (it is quasi-compact and étale morphisms are open), `W` is their disjoint union, and the
+Finding `126-radicial-etale-factorisation`, existence of `X^ét`, step 3a. Over a quasi-compact
+`Y`, the étale-local factorisations of `Grothendieck.Folder126EtaleSplitting` are assembled over a
+single étale surjective morphism `w : W ⟶ Y` with `W` affine: finitely many of the neighbourhoods
+cover `Y` (it is quasi-compact and étale morphisms are open), `W` is their disjoint union, and the
 factorisation over `W` is the disjoint union of the local ones, pullbacks distributing over finite
 coproducts of schemes.
 
@@ -29,11 +29,11 @@ namespace Grothendieck.Folder126Descent
 
 variable {X Y : Scheme.{u}}
 
-/-- **The factorisation over one étale covering.** Let `Y` be affine and `f : X ⟶ Y` finite and
-universally open with exactly `n` geometric points in every geometric fibre. There is an étale
+/-- **The factorisation over one étale covering.** Let `Y` be quasi-compact and `f : X ⟶ Y` finite
+and universally open with exactly `n` geometric points in every geometric fibre. There is an étale
 surjective `w : W ⟶ Y` with `W` affine such that the base change of `f` along `w` (any pullback
 square) factors as a universal homeomorphism followed by a finite étale morphism. -/
-theorem exists_etale_cover_factorisation [IsAffine Y] (f : X ⟶ Y) [IsFinite f]
+theorem exists_etale_cover_factorisation [CompactSpace Y] (f : X ⟶ Y) [IsFinite f]
     [UniversallyOpen f] {n : ℕ} (hn : HasGeomDegree f n) :
     ∃ (W : Scheme.{u}) (w : W ⟶ Y), Etale w ∧ Surjective w ∧ IsAffine W ∧
       ∃ (T : Scheme.{u}) (a : T ⟶ X) (b : T ⟶ W), IsPullback a b f w ∧

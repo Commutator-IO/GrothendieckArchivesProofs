@@ -14,11 +14,12 @@ public import StacksFrontier.AlgebraicGeometry.Spaces.IntegralFiniteEtaleLocal
 # Folder 126, pages 17–22: existence of the radicial–étale factorisation
 
 Finding `126-radicial-etale-factorisation`, existence of `X^ét`, steps 3b and 3c. Let `Y` be
-affine and `f : X ⟶ Y` finite and universally open with exactly `n` geometric points in every
-geometric fibre. Then `f` factors as a universal homeomorphism `X ⟶ X^ét` followed by a finite
-étale `X^ét ⟶ Y` (`exists_radicial_etale_factorisation`). With the uniqueness of
-`Grothendieck.Folder126RadicialEtaleGlobal`, this is the statement of pages 17–23 over an affine
-base; the noetherian hypothesis of page 17 is not used.
+quasi-compact and quasi-separated (for instance affine) and `f : X ⟶ Y` finite and universally open
+with exactly `n` geometric points in every geometric fibre. Then `f` factors as a universal
+homeomorphism `X ⟶ X^ét` followed by a finite étale `X^ét ⟶ Y`
+(`exists_radicial_etale_factorisation`). With the uniqueness of
+`Grothendieck.Folder126RadicialEtaleGlobal`, this is the statement of pages 17–23 over a
+quasi-compact and quasi-separated base; the noetherian hypothesis of page 17 is not used.
 
 **The descent.** Step 3a gives an étale surjective `w : W ⟶ Y` with `W` affine and a factorisation
 `T = X ×_Y W ⟶ Z ⟶ W`. Over `W ×_Y W` the two pullbacks `Z ×_Y W` and `W ×_Y Z` are both étale
@@ -237,11 +238,12 @@ theorem nonempty_geomFibre_of_surjective_of_locallyOfFiniteType (f : X ⟶ Y)
   rw [Category.assoc, pullback.condition, ← Category.assoc, pointOfClosedPoint_comp,
     Category.id_comp]
 
-/-- **Folder 126, pages 17–22: the radicial–étale factorisation exists (affine base).** Let `Y`
-be affine and `f : X ⟶ Y` finite and universally open, with exactly `n` geometric points in
-every geometric fibre. Then `f` factors as a universal homeomorphism `X ⟶ X^ét` followed by a
-finite étale morphism `X^ét ⟶ Y`. -/
-theorem exists_radicial_etale_factorisation [IsAffine Y] (f : X ⟶ Y) [IsFinite f]
+/-- **Folder 126, pages 17–22: the radicial–étale factorisation exists (qcqs base).** Let `Y` be
+quasi-compact and quasi-separated and `f : X ⟶ Y` finite and universally open, with exactly `n`
+geometric points in every geometric fibre. Then `f` factors as a universal homeomorphism `X ⟶ X^ét`
+followed by a finite étale morphism `X^ét ⟶ Y`. -/
+theorem exists_radicial_etale_factorisation [CompactSpace Y] [QuasiSeparatedSpace Y]
+    (f : X ⟶ Y) [IsFinite f]
     [UniversallyOpen f] {n : ℕ} (hn : HasGeomDegree f n) :
     ∃ (E : Scheme.{u}) (g₀ : X ⟶ E) (h₀ : E ⟶ Y),
       UniversalHomeomorphism g₀ ∧ IsFinite h₀ ∧ Etale h₀ ∧ g₀ ≫ h₀ = f := by
