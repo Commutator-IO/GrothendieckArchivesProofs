@@ -74,6 +74,7 @@ public import Grothendieck.Folder21
 public import Grothendieck.Folder22
 public import Grothendieck.Folder22Adic
 public import Grothendieck.Folder22CohenAlgebras
+public import Grothendieck.Folder22Uniqueness
 public import Grothendieck.Folder23Normalisation
 public import Grothendieck.Folder29
 public import Grothendieck.Folder29TameInertia
