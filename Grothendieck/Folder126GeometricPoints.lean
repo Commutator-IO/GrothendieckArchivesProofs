@@ -20,8 +20,9 @@ argument needs from it.
 **Definitions.**
 * `GeomFibre f p`: the geometric points of `X` over a geometric point `p : Spec K ⟶ Y`, i.e. the
   morphisms `q : Spec K ⟶ X` with `q ≫ f = p`.
-* `HasGeomDegree f n`: every geometric fibre of `f`, over an algebraically closed field, has
-  exactly `n` points.
+* `HasGeomDegree f n`: every geometric fibre of `f`, over an algebraically closed field, is
+  finite with exactly `n` points (it is in bijection with `Fin n`, so that an infinite fibre is
+  not counted as `0`, as `Nat.card` would).
 
 **Results.**
 * `geomFibrePullbackEquiv`, `HasGeomDegree.pullback_snd`: geometric fibres do not change under
@@ -53,7 +54,8 @@ abbrev GeomFibre (f : X ⟶ Y) {K : Type u} [Field K] (p : Spec (.of K) ⟶ Y) :
 
 /-- **The hypothesis of page 17.** Every geometric fibre of `f` has exactly `n` points. -/
 def HasGeomDegree (f : X ⟶ Y) (n : ℕ) : Prop :=
-  ∀ (K : Type u) [Field K] [IsAlgClosed K] (p : Spec (.of K) ⟶ Y), Nat.card (GeomFibre f p) = n
+  ∀ (K : Type u) [Field K] [IsAlgClosed K] (p : Spec (.of K) ⟶ Y),
+    Nonempty (GeomFibre f p ≃ Fin n)
 
 /-- The geometric fibre of a base change `X ×_Y U ⟶ U` over `p` is the geometric fibre of
 `X ⟶ Y` over the image of `p`. -/
@@ -69,7 +71,7 @@ def geomFibrePullbackEquiv (f : X ⟶ Y) {U : Scheme.{u}} (u : U ⟶ Y) {K : Typ
 /-- The degree of the geometric fibres is stable under base change. -/
 theorem HasGeomDegree.pullback_snd {f : X ⟶ Y} {n : ℕ} (hf : HasGeomDegree f n)
     {U : Scheme.{u}} (u : U ⟶ Y) : HasGeomDegree (pullback.snd f u) n := fun K _ _ p =>
-  (Nat.card_congr (geomFibrePullbackEquiv f u p)).trans (hf K _)
+  (hf K _).map fun e => (geomFibrePullbackEquiv f u p).trans e
 
 /-- At most one geometric point over every geometric point: `f` is universally injective. -/
 theorem universallyInjective_of_forall_subsingleton (f : X ⟶ Y)
@@ -120,8 +122,8 @@ theorem universalHomeomorphism_of_hasGeomDegree_one (f : X ⟶ Y) [IsIntegralHom
   (universalHomeomorphism_iff_integral_universallyInjective_surjective f).2
     ⟨inferInstance,
       universallyInjective_of_forall_subsingleton f fun K _ _ p =>
-        (Nat.card_eq_one_iff_unique.1 (h K p)).1,
-      surjective_of_forall_nonempty f fun K _ _ p => (Nat.card_eq_one_iff_unique.1 (h K p)).2⟩
+        (h K p).elim fun e => e.subsingleton,
+      surjective_of_forall_nonempty f fun K _ _ p => (h K p).elim fun e => ⟨e.symm 0⟩⟩
 
 /-- Conversely, a finite universal homeomorphism has exactly one geometric point over every
 geometric point. -/
@@ -130,8 +132,10 @@ theorem hasGeomDegree_one_of_universalHomeomorphism (f : X ⟶ Y) [IsFinite f]
   obtain ⟨-, hinj, hsurj⟩ :=
     (universalHomeomorphism_iff_integral_universallyInjective_surjective f).1 inferInstance
   intro K _ _ p
-  refine Nat.card_eq_one_iff_unique.2 ⟨⟨fun q₁ q₂ => Subtype.ext ?_⟩,
-    nonempty_geomFibre_of_surjective f p⟩
+  obtain ⟨q₀⟩ := nonempty_geomFibre_of_surjective f p
+  have hsub : Subsingleton (GeomFibre f p) := ⟨fun q₁ q₂ => Subtype.ext ?_⟩
+  · exact ⟨Equiv.ofBijective (fun _ : GeomFibre f p => (0 : Fin 1))
+      ⟨fun a b _ => Subsingleton.elim a b, fun _ => ⟨q₀, Subsingleton.elim _ _⟩⟩⟩
   have key : ∀ (K : Type u) [Field K], Function.Injective (fun g : Spec (.of K) ⟶ X ↦ g ≫ f) :=
     ((tfae_universallyInjective f).out 1 2).1 hinj
   exact key K (q₁.2.trans q₂.2.symm)
