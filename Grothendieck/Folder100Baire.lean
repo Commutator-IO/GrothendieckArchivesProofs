@@ -62,8 +62,8 @@ coheight one for `Q`.
 this file on Mathlib only: a complete noetherian local domain is finite over `Λ⟦T₁, …, T_d⟧`,
 `Λ` a field or a Cohen ring, and when `Λ` is a field one still has to rewrite
 `Λ⟦T₁, …, T_d⟧ ≃ V⟦T₂, …, T_d⟧` with `V = Λ⟦T₁⟧`; both steps are done in
-`Grothendieck/Folder100Cohen.lean` (`exists_coheight_eq_one_of_cohen`), where the present
-`exists_avoid` could replace `good_mvPowerSeries`. `𝔪ⁿ` is treated as an open subset of `Vⁿ`
+`Grothendieck/Folder100Cohen.lean` (`exists_coheight_eq_one_of_cohen`), whose step
+`good_mvPowerSeries` is `exists_eval_ne_zero`. `𝔪ⁿ` is treated as an open subset of `Vⁿ`
 with the product of the `𝔪`-adic topologies, not given an explicit metric. The Proposition of
 page 36 is not deduced from the Corollary by this route (it is proved in `Folder100.lean` by
 countable prime avoidance), nor is the application to formal abelian schemes.

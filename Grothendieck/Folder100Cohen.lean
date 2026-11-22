@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.Folder100
+public import Grothendieck.Folder100Baire
 public import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem
 public import StacksFrontier.RingTheory.NoetherNormalization.Basic
 
@@ -14,7 +15,8 @@ Corollary of page 38 (finding `100-baire-dimension-one-points` of `src/content/f
 in `S = Spec R`, `R` a complete noetherian local domain, countably many nowhere-dense closed
 subsets miss some point of dimension one. `Grothendieck/Folder100.lean` proves it, and the
 Proposition of page 36, by countable prime avoidance, and the page's own route only for
-`Θ = V⟦T⟧`. This file follows the page's route in every dimension.
+`Θ = V⟦T⟧`; `Grothendieck/Folder100Baire.lean` does Baire on `𝔪ⁿ` for `Θ = V⟦T₁, …, Tₙ⟧`. This
+file follows the page's route in every dimension, through Cohen's structure theorem.
 
 **What is proved.**
 * `exists_coheight_eq_one_of_cohen`: the Corollary of page 38. Let `R` be a complete noetherian
@@ -24,28 +26,32 @@ Proposition of page 36, by countable prime avoidance, and the page's own route o
   `Zᵢ`.
 * `Good.exists_prime`, `good_mvPowerSeries`: the step on `Θ = V⟦T₁, …, Tₙ⟧`, `V` a complete
   discrete valuation ring: countably many nonzero `fᵢ ∈ Θ` lie outside the kernel `P` of some
-  surjection `Θ → V`, a point of `Spec Θ` with `Θ ⧸ P ≃ V`, of dimension one.
+  surjection `Θ → V`, a point of `Spec Θ` with `Θ ⧸ P ≃ V`, of dimension one. The surjection
+  is the `V`-linear evaluation at a point of `𝔪ⁿ` given by Baire
+  (`Folder100Baire.exists_eval_ne_zero`).
+* `good_mvPowerSeries_byVariables`: the same step by a second route, one variable at a time,
+  without Baire.
 
 **How.** The page's argument. By Cohen's structure theorem (Stacks 032D,
 `IsLocalRing.exists_injective_finite_mvPowerSeries`, built on Stacks 0323 and 032A), `R` is
 finite over a subring `A = Λ⟦T₁, …, T_d⟧`, `Λ` a field or a Cohen ring; when `Λ` is a field,
 `A ≃ V⟦T₁, …, T_{d-1}⟧` with `V = Λ⟦T₀⟧` (`mvPowerSeriesEquiv`), as the reading's footnote says.
 A proper closed `Zᵢ` lies in `V(gᵢ)`, `gᵢ ≠ 0`, and `gᵢ` has a nonzero multiple `aᵢ ∈ A`
-(`R` is integral over `A`). The `V`-points of `Θ` are found one variable at a time
-(`good_powerSeries`): for `a ∈ 𝔪_V`, `B⟦T⟧ ⧸ (T − a) ≃ B` (`exists_evalHom`, `T − a` being
-distinguished), and a nonzero `f ∈ B⟦T⟧` lies in `(T − a)` for finitely many `a` only
+(`R` is integral over `A`). The `V`-point of `Θ` is the evaluation at a point `a ∈ 𝔪ⁿ` where no
+`aᵢ` vanishes, which Baire's theorem on the complete metric space `𝔪ⁿ` provides
+(`good_mvPowerSeries`, from `Folder100Baire.exists_eval_ne_zero`: the zero set of a nonzero
+series is closed with empty interior). The second route, `good_mvPowerSeries_byVariables`,
+finds the point one variable at a time (`good_powerSeries`): for `a ∈ 𝔪_V`,
+`B⟦T⟧ ⧸ (T − a) ≃ B` (`exists_evalHom`, `T − a` being distinguished), and a nonzero `f ∈ B⟦T⟧` lies in `(T − a)` for finitely many `a` only
 (`finite_bad_of_separated`: a `V`-linear coefficient functional `B → V` sends `f` to a nonzero
 `g ∈ V⟦T⟧` with `g ∈ (T − a)`, and `Folder100.finite_bad` applies to `g`); as `𝔪_V` is
 uncountable (`Folder100.uncountable`), some `a` avoids all the `fᵢ` (`exists_avoid_separated`).
-This choice, variable after variable, replaces Baire on the complete metric space `𝔪ⁿ`. Finally
+This choice, variable after variable, avoids Baire. Finally
 a prime `Q` of `R` over the point `P` of `A` (lying over) is outside every `Zᵢ`, since
 `aᵢ ∉ P`, and `dim R ⧸ Q = dim A ⧸ P = 1`, `R ⧸ Q` being integral over `A ⧸ P`
 (`ringKrullDim_eq_of_injective_isIntegral`, Stacks).
 
-**Not formalised.** Baire's theorem itself: the zero set of a nonzero series is not shown to be
-nowhere dense in `𝔪ⁿ`, and no `V`-homomorphism `Θ → V` is parametrised by its values in `𝔪ⁿ`;
-the countable choice above, one variable at a time, does the work. The surjections `Θ → V`
-are ring maps, not shown to be `V`-linear. The Proposition of page 36 is not deduced from the
+**Not formalised.** The Proposition of page 36 is not deduced from the
 Corollary here (it is proved in `Folder100.lean` by another route), nor is the application to
 the algebraisation of formal abelian schemes.
 -/
@@ -218,16 +224,27 @@ lemma C_mem_maximalIdeal (n : ℕ) {c : V} (hc : c ∈ maximalIdeal V) :
   (mem_maximalIdeal _).2 (mem_nonunits_iff.2 fun hu => mem_nonunits_iff.1
     ((mem_maximalIdeal _).1 hc) (by simpa using hu.map (MvPowerSeries.constantCoeff)))
 
-/-- **The page's step on `Θ = V⟦T₁, …, Tₙ⟧`**: countably many nonzero series stay nonzero under
-some surjection `Θ → V`, chosen one variable at a time. -/
-theorem good_mvPowerSeries : ∀ n : ℕ, Good V (MvPowerSeries (Fin n) V)
+/-- The step on `Θ = V⟦T₁, …, Tₙ⟧` by a second route: countably many nonzero series stay nonzero
+under some surjection `Θ → V`, chosen one variable at a time (no Baire). -/
+theorem good_mvPowerSeries_byVariables : ∀ n : ℕ, Good V (MvPowerSeries (Fin n) V)
   | 0 => Good.of_ringEquiv (MvPowerSeries.isEmptyEquiv (Fin 0) V).toRingEquiv.symm good_self
   | n + 1 => by
     have : IsAdicComplete (maximalIdeal (MvPowerSeries (Fin n) V)) (MvPowerSeries (Fin n) V) :=
       Stacks.CompleteLocalRing.RegularSubring.isAdicComplete_maximalIdeal_mvPowerSeries V n
     exact Good.of_ringEquiv (MvPowerSeries.finSuccEquiv V n).toRingEquiv.symm
       (good_powerSeries MvPowerSeries.C (fun _ hc => C_mem_maximalIdeal n hc) (separated_C n)
-        (good_mvPowerSeries n))
+        (good_mvPowerSeries_byVariables n))
+
+/-- **The page's step on `Θ = V⟦T₁, …, Tₙ⟧`, by Baire on `𝔪ⁿ`**: countably many nonzero series
+stay nonzero under the evaluation `Θ → V` at some `a ∈ 𝔪ⁿ`
+(`Folder100Baire.exists_eval_ne_zero`). -/
+theorem good_mvPowerSeries (n : ℕ) : Good V (MvPowerSeries (Fin n) V) := by
+  intro S hS h0
+  have := hS.to_subtype
+  obtain ⟨a, ha, h⟩ := Folder100Baire.exists_eval_ne_zero
+    (fun s : S => (s : MvPowerSeries (Fin n) V)) fun s hs => h0 (hs ▸ s.2)
+  exact ⟨(Folder100Baire.eval ha).toRingHom, Folder100Baire.eval_surjective ha,
+    fun s hs => h ⟨s, hs⟩⟩
 
 end Good
 
