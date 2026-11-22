@@ -305,7 +305,9 @@ theorem exists_quad_of_mu (m : Fin 4 → k) (hrel : m 0 + m 2 = m 1 + m 3) (hm :
   obtain ⟨i, hi⟩ : ∃ i, m i ≠ 0 := Function.ne_iff.mp hm
   have hA : ∀ i : Fin 4, 1 + (i - 1) = i := by decide
   have hrot : ∀ r : Fin 4, m (0 + r) + m (2 + r) = m (1 + r) + m (3 + r) := fun r => by
-    fin_cases r <;> simp <;> first | linear_combination hrel | linear_combination -hrel
+    fin_cases r <;> simp only [Fin.isValue, Fin.zero_eta, add_zero, Fin.mk_one, zero_add,
+        Fin.reduceAdd,
+        Fin.reduceFinMk] <;> first | linear_combination hrel | linear_combination -hrel
   set r : Fin 4 := i - 1
   have h1 : m (1 + r) ≠ 0 := by rw [show (1 : Fin 4) + r = i by simp only [r]; exact hA i]; exact hi
   obtain ⟨u, hu, hmu⟩ := exists_quad_of_mu_one (fun j => m (j + r)) (hrot r) h1
@@ -374,7 +376,9 @@ theorem mu_eq_smul_framePt (u : Fin 4 → Fin 2 → k) (hu : Closed u) (i : Fin 
     simp [wedge]
   funext j
   fin_cases i <;> fin_cases j <;>
-    simp [framePt, mu_zero, mu_one, mu_two, mu_three] at h ⊢ <;>
+    simp only [Fin.zero_eta, Fin.isValue, mu_zero, zero_add, mu_two, framePt, cons_val_zero,
+        Pi.smul_apply, smul_eq_mul, mul_zero, Fin.mk_one, mu_one, cons_val_one, Fin.reduceFinMk,
+        cons_val, mul_one, mu_three, Fin.reduceAdd] at h ⊢ <;>
     simp only [h, z, mu_zero, mu_one, mu_two, mu_three] at hrel ⊢ <;>
     first | linear_combination hrel | linear_combination -hrel
 
@@ -461,7 +465,9 @@ theorem frameMap_range : LinearMap.range (frameMap (k := k)) = plane := by
   · intro hm
     change m 0 + m 2 = m 1 + m 3 at hm
     refine ⟨![m 2, m 2 - m 3, m 2 - m 3 + m 0, m 2 - m 3 + m 0 - m 1], funext fun j => ?_⟩
-    fin_cases j <;> simp [frameMap] <;> first | ring1 | linear_combination hm
+    fin_cases j <;> simp only [frameMap, Fin.isValue, Fin.zero_eta, LinearMap.coe_mk, AddHom.coe_mk,
+        cons_val_one, cons_val_zero, neg_sub, cons_val, sub_sub_cancel, Fin.mk_one, Fin.reduceFinMk,
+        sub_eq_self] <;> first | ring1 | linear_combination hm
 
 /-- Page 6, the plane is canonically `P(k^A / k·(1,1,1,1))`: a linear isomorphism
 `k⁴ / k·(1,1,1,1) ≃ plane` sending the class of the edge `i` to `(-1)ⁱ p_i`, whose line
@@ -1540,7 +1546,10 @@ theorem nonagon_multSpace {b₁ b₂ b₃ y₄ y₆ y₈ : k} (h₁ : b₁ ≠ 0
     rw [Ne, mult_eq_zero_iff u hu l h0 h1 hl m hm1]
     intro h
     have e0 := congrFun h 0
-    interval_cases m <;> simp [partialSum, Finset.sum_range_succ, u, nonagon] at e0
+    interval_cases m <;> simp only [partialSum, Finset.range_one, nonagon, Fin.isValue,
+        Finset.sum_apply, Finset.sum_singleton, Nat.cast_zero, cons_val, cons_val_zero,
+        Pi.zero_apply, one_ne_zero, u, Finset.sum_range_succ, Nat.cast_one, add_zero,
+        Nat.cast_ofNat, add_sub_cancel] at e0
     all_goals ((try ring_nf at e0); simp [h₁, h₂, h₃] at e0)
   · obtain ⟨c, hc⟩ := (finrank_eq_one_iff_of_nonzero' _
       (fun h => hl0 (congrArg Subtype.val h) : (⟨l, hl⟩ : multSpace u) ≠ 0)).1 hf ⟨l', hl'⟩

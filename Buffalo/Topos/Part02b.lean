@@ -183,7 +183,7 @@ theorem product_of_epis_not_epi :
       simpa [Metric.mem_ball, Real.norm_eq_abs] using this
     · have hx0 : x ≠ 0 := by
         rintro rfl
-        exact hx1 (by simp; positivity)
+        exact hx1 (by simp only [abs_zero, one_div, inv_pos]; positivity)
       refine ⟨U ⊓ ⟨{0}ᶜ, isOpen_compl_singleton⟩, homOfLE inf_le_left, ⟨hx, hx0⟩,
         ⟨fun _ => false, continuous_const, fun y => ⟨fun h => by simp at h, fun _ => y.2.2⟩⟩, rfl⟩
   · have hπ : Epi (Pi.π (fun _ : ℕ => unitSheaf) 0) :=
@@ -398,7 +398,8 @@ theorem preconnected_iff_opens (Z : Type*) [TopologicalSpace Z] :
       ext x
       have h1 := congrArg (fun W : Opens Z => x ∈ W) hUV
       have h2 := congrArg (fun W : Opens Z => x ∈ W) hdisj
-      simp at h1 h2
+      simp only [Opens.mem_sup, Opens.mem_top, eq_iff_iff, iff_true, Opens.mem_inf, Opens.mem_bot,
+          iff_false, not_and] at h1 h2
       constructor
       · exact fun hx hV => h2 hx hV
       · intro hV

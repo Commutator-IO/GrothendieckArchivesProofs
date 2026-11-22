@@ -68,18 +68,19 @@ namespace Buffalo.ProblemThree
 
 noncomputable section
 
-open scoped Classical
-
+open Classical in
 /-- The map `f` of Proposition 7.1: `u ↦ (S ↦ u (⋂₀ S), A ↦ u Aᶜ)`. -/
 def eqLeft (X : Type) (u : Set X → Bool) : Set (Set X) ⊕ Set X → Bool
   | .inl S => u (⋂₀ S)
   | .inr A => u Aᶜ
 
+open Classical in
 /-- The map `g` of Proposition 7.1: `u ↦ (S ↦ ⋀_{A ∈ S} u A, A ↦ ¬ u A)`. -/
 def eqRight (X : Type) (u : Set X → Bool) : Set (Set X) ⊕ Set X → Bool
   | .inl S => decide (∀ A ∈ S, u A = true)
   | .inr A => !u A
 
+open Classical in
 /-- Evaluation at a point, `u_x(A) = [x ∈ A]`, a complete Boolean homomorphism `P(X) → 2`. -/
 def evalPoint (X : Type) (x : X) : {u : Set X → Bool // eqLeft X u = eqRight X u} :=
   ⟨fun A => decide (x ∈ A), by
@@ -88,6 +89,7 @@ def evalPoint (X : Type) (x : X) : {u : Set X → Bool // eqLeft X u = eqRight X
     · simp [eqLeft, eqRight]
     · simp [eqLeft, eqRight]⟩
 
+open Classical in
 /-- Every complete Boolean homomorphism `P(X) → 2` is evaluation at a unique point. -/
 theorem evalPoint_bijective (X : Type) : Function.Bijective (evalPoint X) := by
   constructor
@@ -113,28 +115,33 @@ theorem evalPoint_bijective (X : Type) : Function.Bijective (evalPoint X) := by
       simp only [hA, decide_eq_false_iff_not]
       exact hxA
 
+open Classical in
 /-- **Proposition 7.1.** Every set is an equalizer of two maps between powers of `2`. -/
 @[buffalo "4gynb9uTEE4-7434"]
 def equivEqualizer (X : Type) : X ≃ {u : Set X → Bool // eqLeft X u = eqRight X u} :=
   Equiv.ofBijective _ (evalPoint_bijective X)
 
+open Classical in
 /-- One step of the saturation under small limits: the types in bijection with a type of `P`
 or with the vertex of a limit cone over a small diagram of types of `P`. -/
 def LimitStep (P : Type → Prop) (X : Type) : Prop :=
   P X ∨ ∃ (K : Type) (_ : SmallCategory K) (F : K ⥤ Type) (c : Cone F),
     (∀ k, P (F.obj k)) ∧ Nonempty (IsLimit c) ∧ Nonempty (X ≃ c.pt)
 
+open Classical in
 /-- The finite stages `I₀ ⊆ I₁ ⊆ ⋯` of the saturation of `{2} → Set` under small limits. -/
 def saturation : ℕ → Type → Prop
   | 0 => fun X => Nonempty (X ≃ Bool)
   | n + 1 => LimitStep (saturation n)
 
+open Classical in
 /-- Every power `2^S` lies in `I₁`. -/
 theorem saturation_one_pow (S : Type) : saturation 1 (S → Bool) := by
   refine .inr ⟨Discrete S, inferInstance, Discrete.functor fun _ => Bool,
     (Types.productLimitCone.{0, 0} fun _ : S => Bool).cone, fun _ => ⟨Equiv.refl _⟩,
     ⟨(Types.productLimitCone.{0, 0} fun _ : S => Bool).isLimit⟩, ⟨Equiv.refl _⟩⟩
 
+open Classical in
 /-- The saturation reaches every set in two steps: `I₂ = Set`. -/
 @[buffalo "4gynb9uTEE4-7434"]
 theorem saturation_two (X : Type) : saturation 2 X := by
@@ -147,6 +154,7 @@ theorem saturation_two (X : Type) : saturation 2 X := by
   · exact saturation_one_pow _
   · exact saturation_one_pow _
 
+open Classical in
 /-- One step does not suffice: a three-element set is not in `I₁`. -/
 @[buffalo "4gynb9uTEE4-7434"]
 theorem not_saturation_one : ¬ saturation 1 (Fin 3) := by
@@ -155,6 +163,7 @@ theorem not_saturation_one : ¬ saturation 1 (Fin 3) := by
     simpa using Fintype.card_congr e
   · exact (Topos.Part05.no_limit_of_bools F (fun k => (hF k).some) hc).false e.symm
 
+open Classical in
 /-- Each stage of the saturation lies in every replete class containing `2` and closed under
 small limits. -/
 theorem saturation_le (P : Type → Prop) (hiso : ∀ {X Y : Type}, (X ≃ Y) → P X → P Y)
@@ -166,6 +175,7 @@ theorem saturation_le (P : Type → Prop) (hiso : ∀ {X Y : Type}, (X ≃ Y) �
   | n + 1, _, .inr ⟨K, _, F, c, hF, ⟨hc⟩, ⟨e⟩⟩ =>
     hiso e.symm (hlim K F c hc fun k => saturation_le P hiso h2 hlim n _ (hF k))
 
+open Classical in
 /-- **Condition (G)** for `{2} → Set` and `D` all small limits. -/
 @[buffalo "4gynb9uTEE4-7434"]
 theorem conditionG (P : Type → Prop) (hiso : ∀ {X Y : Type}, (X ≃ Y) → P X → P Y)
@@ -173,6 +183,7 @@ theorem conditionG (P : Type → Prop) (hiso : ∀ {X Y : Type}, (X ≃ Y) → P
       IsLimit c → (∀ k, P (F.obj k)) → P c.pt) (X : Type) : P X :=
   saturation_le P hiso h2 hlim 2 X (saturation_two X)
 
+open Classical in
 /-- The chain of tails `[α, κ)`, `α < κ`, as a `κ`-filtered diagram in `Setᵒᵖ`. -/
 def tailChain (κ : Cardinal.{0}) : κ.ord.ToType ⥤ Typeᵒᵖ where
   obj α := op {β // α ≤ β}
@@ -181,6 +192,7 @@ def tailChain (κ : Cardinal.{0}) : κ.ord.ToType ⥤ Typeᵒᵖ where
   map_id _ := rfl
   map_comp _ _ := rfl
 
+open Classical in
 /-- A cone over the tails in `Set` has an empty vertex: a compatible choice of points of all the
 tails would be a point of their intersection. -/
 theorem isEmpty_cocone_pt (κ : Cardinal.{0}) [Fact κ.IsRegular] (s : Cocone (tailChain κ)) :
@@ -195,18 +207,21 @@ theorem isEmpty_cocone_pt (κ : Cardinal.{0}) [Fact κ.IsRegular] (s : Cocone (t
   have : ((s.ι.app α₁).unop y).1 = β₀.1 := congrArg Subtype.val hw
   exact absurd ((s.ι.app α₁).unop y).2 (by rw [this]; exact not_le.2 h₁)
 
+open Classical in
 /-- The empty set with its inclusions in the tails, as a cocone in `Setᵒᵖ`. -/
 def tailCocone (κ : Cardinal.{0}) : Cocone (tailChain κ) where
   pt := op PEmpty
   ι := { app _ := (TypeCat.ofHom PEmpty.elim).op
          naturality _ _ _ := Quiver.Hom.unop_inj (by ext x; exact x.elim) }
 
+open Classical in
 /-- The tails have empty intersection: `∅` is their limit in `Set`. -/
 def tailCoconeIsColimit (κ : Cardinal.{0}) [Fact κ.IsRegular] : IsColimit (tailCocone κ) where
   desc s := (TypeCat.ofHom fun y => (isEmpty_cocone_pt κ s).elim y).op
   fac s _ := Quiver.Hom.unop_inj (by ext y; exact (isEmpty_cocone_pt κ s).elim y)
   uniq s _ _ := Quiver.Hom.unop_inj (by ext y; exact (isEmpty_cocone_pt κ s).elim y)
 
+open Classical in
 /-- **Proposition 7.3.** In `Setᵒᵖ` the object `2` is not `κ`-presentable, for any regular `κ`. -/
 @[buffalo "4gynb9uTEE4-7434"]
 theorem not_isCardinalPresentable (κ : Cardinal.{0}) [Fact κ.IsRegular] :
@@ -221,6 +236,7 @@ theorem not_isCardinalPresentable (κ : Cardinal.{0}) [Fact κ.IsRegular] :
   have := congrArg (fun m => m.unop ⟨j, le_rfl⟩) hu
   exact Bool.noConfusion this
 
+open Classical in
 /-- In `Setᵒᵖ` the object `2` is not presentable. -/
 @[buffalo "4gynb9uTEE4-7434"]
 theorem not_isPresentable : ¬ IsPresentable.{0} (op Bool : Typeᵒᵖ) := by

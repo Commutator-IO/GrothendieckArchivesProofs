@@ -271,7 +271,7 @@ theorem pullback_mem {X Y : (SmoothProjective k).FullSubcategory} (φ : Y ⟶ X)
       (algebraicClasses T Y r).comap (T.pullback φ (2 * r)) := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨α, rfl⟩
-    show T.pullback φ (2 * r) (T.cycleClass X r α) ∈ algebraicClasses T Y r
+    change T.pullback φ (2 * r) (T.cycleClass X r α) ∈ algebraicClasses T Y r
     rw [← T.cycleClass_gysin φ r α]
     exact Submodule.subset_span ⟨_, rfl⟩
   exact hle hx
@@ -284,7 +284,7 @@ theorem lefschetzOp_mem (X : (SmoothProjective k).FullSubcategory) (h : Ch.group
       (algebraicClasses T X (r + 1)).comap (lefschetzOp T X h r) := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨α, rfl⟩
-    show lefschetzOp T X h r (T.cycleClass X r α) ∈ algebraicClasses T X (r + 1)
+    change lefschetzOp T X h r (T.cycleClass X r α) ∈ algebraicClasses T X (r + 1)
     simp only [lefschetzOp, LinearMap.comp_apply]
     rw [← T.cycleClass_mul X 1 r h α]
     exact degreeCast_mem_algebraicClasses T X (by ring) _ (Submodule.subset_span ⟨_, rfl⟩)
@@ -299,7 +299,7 @@ theorem sectionPushforward_mem {X Y : (SmoothProjective k).FullSubcategory} (φ 
       (algebraicClasses T X (r + 1)).comap (sectionPushforward T φ hdim r) := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨α, rfl⟩
-    show sectionPushforward T φ hdim r (T.cycleClass Y r α) ∈ algebraicClasses T X (r + 1)
+    change sectionPushforward T φ hdim r (T.cycleClass Y r α) ∈ algebraicClasses T X (r + 1)
     simp only [sectionPushforward, LinearMap.comp_apply]
     rw [T.cycleClass_pushforward φ r α, degreeCast_trans]
     exact degreeCast_mem_algebraicClasses T X (by omega) _ (Submodule.subset_span ⟨_, rfl⟩)

@@ -491,9 +491,10 @@ theorem frobKer_reduced (n : Type) [Fintype n] [DecidableEq n] {A : Type*} [Comm
   · exact IsReduced.eq_zero _ ⟨_, this⟩
 
 /-- The entries of `1 + x E_{ij}` satisfy `λ_{ab}^p = δ_{ab}` when `x^p = 0`. -/
-theorem transvection_frobKer {B : Type*} [CommRing B] {n : Type} [Fintype n] [DecidableEq n]
+theorem transvection_frobKer {B : Type*} [CommRing B] {n : Type} [Finite n] [DecidableEq n]
     (p : ℕ) (hp0 : p ≠ 0) {i j : n} (hij : i ≠ j) (x : B) (hx : x ^ p = 0) (a b : n) :
     Matrix.transvection i j x a b ^ p = if a = b then 1 else 0 := by
+  have := Fintype.ofFinite n
   by_cases hab : a = b
   · subst hab
     have hn : ¬ (i = a ∧ j = a) := fun h ↦ hij (h.1.trans h.2.symm)
@@ -548,15 +549,17 @@ theorem frobKer_noncomm [Nontrivial k] {n : Type} [Fintype n] [DecidableEq n] (p
 /-- _lTf_L0yvrU-8015 (2:13:35) [prop] `F_G : GL_n → GL_n` is not an isomorphism (`n ≥ 2`): its
 kernel has the non-trivial point `1 + ε E_{ij}` over `k[ε]`. -/
 @[buffalo "_lTf_L0yvrU-8015"]
-theorem frobGL_kernel_nontrivial [Nontrivial k] {n : Type} [Fintype n] [DecidableEq n] (p : ℕ)
+theorem frobGL_kernel_nontrivial [Nontrivial k] {n : Type} [Finite n] [DecidableEq n] (p : ℕ)
     (hp : 2 ≤ p) {i j : n} (hij : i ≠ j) :
     (∀ a b, Matrix.transvection i j (DualNumber.eps : DualNumber k) a b ^ p =
       if a = b then 1 else 0) ∧ Matrix.transvection i j (DualNumber.eps : DualNumber k) ≠ 1 := by
+  have := Fintype.ofFinite n
   have hx : (DualNumber.eps : DualNumber k) ^ p = 0 := (alpha_nontrivial k p hp).1
   have hp0 : p ≠ 0 := by omega
   refine ⟨transvection_frobKer _ hp0 hij _ hx, fun h ↦ ?_⟩
   · have := congrFun (congrFun h i) j
-    simp [Matrix.transvection, hij] at this
+    simp only [Matrix.transvection, Matrix.add_apply, ne_eq, hij, not_false_eq_true,
+        Matrix.one_apply_ne, Matrix.single_apply_same, zero_add] at this
     exact (alpha_nontrivial k p hp).2 this
 
 end Buffalo.Groupes.Part01

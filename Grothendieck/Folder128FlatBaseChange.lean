@@ -324,7 +324,9 @@ lemma exU_not_mem : exU k ∉ Ideal.span {exU k - exV k} := by
   have e1 := congrArg (fun z : ExA k => (pr₁ (ι z)).snd) ha
   have e2 := congrArg (fun z : ExA k => (pr₂ (ι z)).snd) ha
   simp only [ι, map_mul, map_sub, exU, exV] at e1 e2
-  simp at e1 e2
+  simp only [DualNumber.inr_eq_smul_eps, one_smul, ι_mkA, pr₁_mkS, sub_zero, snd_mul,
+      DualNumber.snd_eps, smul_eq_mul, mul_one, DualNumber.fst_eps, MulOpposite.op_zero, zero_smul,
+      add_zero, pr₂_mkS, zero_sub, mul_neg, snd_neg, snd_zero, neg_eq_zero] at e1 e2
   rw [hfst, e2] at e1
   exact zero_ne_one e1
 

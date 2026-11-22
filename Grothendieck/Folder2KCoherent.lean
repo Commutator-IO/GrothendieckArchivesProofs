@@ -129,7 +129,7 @@ theorem lengthAtPrime_quotient_pos (p : Ideal A) [p.IsPrime] (hp : p ∈ minimal
   have : Nontrivial (Localization.AtPrime p ⊗[A] (A ⧸ I)) :=
     (Algebra.TensorProduct.quotIdealMapEquivTensorQuot (Localization.AtPrime p)
       I).injective.nontrivial
-  show 0 < ((Module.length (Localization.AtPrime p)
+  change 0 < ((Module.length (Localization.AtPrime p)
     (Localization.AtPrime p ⊗[A] (A ⧸ I))).toNat : ℤ)
   exact_mod_cast ENat.toNat_pos Module.length_pos.ne' (length_localization_ne_top p hp _)
 

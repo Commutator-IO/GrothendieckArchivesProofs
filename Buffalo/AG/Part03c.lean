@@ -149,19 +149,22 @@ theorem prop_1239 {C : Type*} [Category C] [Limits.HasPullbacks C] [FinitaryPreE
         (Limits.Sigma.ι (fun _ : J => T) p.2) (𝟙 T) (by simp) (by simp)) :=
   prop_918 _ _
 
-theorem prop_1239_disjoint (K : Type*) [Field K] {I : Type*} [DecidableEq I] {i j : I}
+theorem prop_1239_disjoint (K : Type*) [Field K] {I : Type*} {i j : I}
     (hij : i ≠ j) :
     @Subsingleton (@TensorProduct (I → K) _ K K _ _
       (Pi.evalRingHom (fun _ => K) i).toAlgebra.toModule
       (Pi.evalRingHom (fun _ => K) j).toAlgebra.toModule) := by
+  classical
   exact subsingleton_tensor_of_ringHom _ _ (Pi.single i 1) (by simp) (by simp [hij.symm])
 
 /-- thSz9ZHDK9o-1369 (0:22:49) [prop] For `I` a finite group, `I_K` is an affine algebraic group.
 Proved: its points with values in a field `L` are the elements of `I` (every `K`-algebra map
 `K^I → L` is an evaluation); the Hopf algebra structure is `comul` (`prop_1568`). -/
 @[buffalo "thSz9ZHDK9o-1369"]
-theorem prop_1369 (K L : Type*) [Field K] [Field L] [Algebra K L] {I : Type*} [Fintype I]
-    [DecidableEq I] (φ : (I → K) →ₐ[K] L) : ∃! i : I, ∀ x : I → K, φ x = algebraMap K L (x i) := by
+theorem prop_1369 (K L : Type*) [Field K] [Field L] [Algebra K L] {I : Type*} [Finite I]
+    (φ : (I → K) →ₐ[K] L) : ∃! i : I, ∀ x : I → K, φ x = algebraMap K L (x i) := by
+  classical
+  have := Fintype.ofFinite I
   set e : I → (I → K) := fun i => Pi.single i 1 with he
   have hsmul : ∀ (x : I → K) j, Pi.single j (x j) = x j • e j := fun x j => by
     ext k; by_cases h : k = j <;> simp [he, h]
@@ -332,9 +335,9 @@ theorem prop_2810 {A B : Type*} [CommRing A] [CommRing B] (u : A →+* B) (J : I
     closure (comap u '' zeroLocus (J : Set B)) = zeroLocus (J.comap u : Set A) :=
   closure_image_comap_zeroLocus u J
 
-@[buffalo "thSz9ZHDK9o-3134"]
 /-- thSz9ZHDK9o-3134 (0:52:14) [prop] `Spec u` is dominant iff `ker u ⊂ nil(A)`; for `A` reduced,
 iff `u` is injective (mathlib: `PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical`). -/
+@[buffalo "thSz9ZHDK9o-3134"]
 theorem prop_3134 {A B : Type*} [CommRing A] [CommRing B] (u : A →+* B) :
     (DenseRange (comap u) ↔ RingHom.ker u ≤ nilradical A) ∧
       (IsReduced A → (DenseRange (comap u) ↔ Function.Injective u)) := by
@@ -458,7 +461,7 @@ def prop_5165 (f g : A) :
 /-- thSz9ZHDK9o-5297 (1:28:17) [prop] If `X = ⋃ X_{f_i}` (finite), `A → ∏ A_{f_i}` is faithfully
 flat (`prop_37263`). -/
 @[buffalo "thSz9ZHDK9o-5297"]
-theorem prop_5297 {ι : Type*} [Fintype ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
+theorem prop_5297 {ι : Type*} [Finite ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
     Module.FaithfullyFlat A (Π i, Localization.Away (f i)) :=
   prop_37263 f hf
 

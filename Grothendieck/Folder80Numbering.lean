@@ -214,7 +214,8 @@ theorem exists_numbering [Finite L] (B late : List L) (hB : B.Nodup) (hl : late.
       rw [show xs = (B ++ mid) ++ late by simp [xs], List.take_append_of_le_length hk'] at hxk
       rcases List.mem_append.1 (List.mem_of_mem_take hxk) with h | h
       · exact hdisj x hx h
-      · simp [mid] at h; exact h.2 hx
+      · simp only [Finset.mem_toList, Finset.mem_filter, Finset.mem_univ, true_and,
+          mid] at h; exact h.2 hx
     · rw [List.take_of_length_le le_rfl]; exact hall y
 
 /-- From a numbering in which every line not in `late` is good for `B`, the partial
@@ -289,9 +290,10 @@ theorem numbering_iii6 [Finite L] (hbf : BigonFree X.On) (h6 : HasIII6 X.On) :
 
 /-- The case without a complete quadrangle: four lines in general position first, the lone
 diagonal (if any) last. -/
-theorem numbering_ii4 [Fintype D] [Finite L] (hbf : BigonFree X.On) (n6 : ¬HasIII6 X.On) :
+theorem numbering_ii4 [Finite D] [Finite L] (hbf : BigonFree X.On) (n6 : ¬HasIII6 X.On) :
     ∃ (n : ℕ) (e : Fin n ≃ L), IsII4 (PartialOn X (e '' {i | (i : ℕ) < 4})) ∧
       ∀ k, 4 ≤ k → k ≤ n → BigonFree (PartialOn X (e '' {i | (i : ℕ) < k})) := by
+  have := Fintype.ofFinite D
   classical
   obtain ⟨v, a, b, hab, hva, hvb, honly⟩ := PseudolineMap.melchior hbf
   obtain ⟨x, y, z, w, g⟩ := exists_gp4 X.meet (two' X) hbf hab hva hvb honly

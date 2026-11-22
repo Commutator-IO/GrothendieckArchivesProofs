@@ -319,7 +319,13 @@ theorem sp_sq : sModel * pModel ζ * (sModel * pModel ζ) = sModel * pModel ζ -
   have h5 := zeta_pow_five h
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [sModel, pModel, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    simp only [sModel, pModel, cons_mul, Nat.succ_eq_add_one, Nat.reduceAdd, vecMul_cons, head_cons,
+        zero_smul, tail_cons, neg_smul, one_smul, neg_cons, neg_zero, neg_empty, empty_vecMul,
+        add_zero, zero_add, empty_mul, Equiv.symm_apply_apply, Fin.zero_eta, Fin.isValue,
+        Matrix.mul_apply, of_apply, cons_val', cons_val_fin_one, cons_val_zero, Fin.sum_univ_two,
+        mul_zero, cons_val_one, neg_mul, Matrix.sub_apply, one_apply_eq, zero_sub, neg_inj,
+        Fin.mk_one, mul_neg, zero_mul, mul_one, ne_eq, zero_ne_one, not_false_eq_true, one_apply_ne,
+        sub_zero, one_mul, one_ne_zero, sub_self] <;>
     first | linear_combination h5 | linear_combination -h5
 
 /-- `(sp)³ = −1`: the product `sp` has order 3 in `PGL₂`. -/
@@ -923,7 +929,10 @@ theorem commutant_eq {X g : Matrix (Fin 2) (Fin 2) R} (hX : NullePartScalaire X)
   refine ⟨g 0 0 - (r₁ * g 0 1 + r₂ * g 1 0 + r₃ * (g 0 0 - g 1 1)) * X 0 0,
     r₁ * g 0 1 + r₂ * g 1 0 + r₃ * (g 0 0 - g 1 1), ?_⟩
   ext i j
-  fin_cases i <;> fin_cases j <;> simp <;>
+  fin_cases i <;> fin_cases j <;> simp only [Fin.zero_eta, Fin.isValue, Matrix.add_apply,
+      Matrix.smul_apply, one_apply_eq, smul_eq_mul, mul_one, sub_add_cancel, Fin.mk_one,
+      Nat.reduceAdd, ne_eq, zero_ne_one, not_false_eq_true, one_apply_ne, mul_zero, zero_add,
+      one_ne_zero] <;>
     first
     | linear_combination r₂ * A + (-r₃) * B + (-(g 0 1)) * hr
     | linear_combination (-r₁) * A + r₃ * C + (-(g 1 0)) * hr
@@ -1092,7 +1101,9 @@ theorem eq_smul_tau1N {M : Matrix (Fin 2) (Fin 2) K} {ℓ b : K} (hb : b ≠ 0)
     Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.empty_val', Matrix.cons_val_fin_one] at h0 h1
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [tau1N] <;>
+  fin_cases i <;> fin_cases j <;> simp only [Fin.zero_eta, Fin.isValue, tau1N, Matrix.smul_apply,
+      of_apply, cons_val', cons_val_zero, cons_val_fin_one, smul_eq_mul, Fin.mk_one, cons_val_one,
+      mul_neg] <;>
     first
     | linear_combination (-(M 0 0)) * hbi
     | linear_combination (b⁻¹ * (b - 1)) * hT + b⁻¹ * h0 + (-b⁻¹) * h1 + (-(M 0 1)) * hbi
@@ -1174,12 +1185,16 @@ theorem conj_pair {X Y : Matrix (Fin 2) (Fin 2) K} {ℓ b : K} (hb : b ≠ 0)
         · exact (mul_eq_zero.1 ((mul_eq_zero.1 b1).resolve_left hb)).resolve_left h
     exact hC (Matrix.exists_mulVec_eq_zero_iff.1 ⟨v, hv0, hCv⟩)
   · ext i j
-    fin_cases i <;> fin_cases j <;> simp [rho0N, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    fin_cases i <;> fin_cases j <;> simp only [Fin.isValue, Fin.zero_eta, Matrix.mul_apply,
+        of_apply, cons_val', cons_val_zero, cons_val_fin_one, Fin.sum_univ_two, cons_val_one, rho0N,
+        mul_zero, add_zero, Fin.mk_one, mul_one] <;>
       first
       | linear_combination e0 | linear_combination e1
       | linear_combination G1 | linear_combination G2
   · ext i j
-    fin_cases i <;> fin_cases j <;> simp [rho1N, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    fin_cases i <;> fin_cases j <;> simp only [Fin.isValue, Fin.zero_eta, Matrix.mul_apply,
+        of_apply, cons_val', cons_val_zero, cons_val_fin_one, Fin.sum_univ_two, cons_val_one, rho1N,
+        mul_zero, mul_neg, zero_add, Fin.mk_one, mul_one] <;>
       first
       | linear_combination hw0 | linear_combination hw1
       | linear_combination G3 | linear_combination G4

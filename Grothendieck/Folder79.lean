@@ -701,7 +701,10 @@ theorem exceptional_zmod_iff (n : ℕ) :
     have : (4 : ZMod n) = ((4 : ℕ) : ZMod n) := by norm_num
     rw [this, ZMod.natCast_eq_zero_iff] at h4
     have hle : n ≤ 4 := Nat.le_of_dvd (by norm_num) h4
-    interval_cases n <;> simp_all <;> revert h2 <;> decide
+    interval_cases n <;> simp_all only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_dvd_iff,
+        isUnit_iff_eq_one, IsUnit.dvd, Nat.cast_ofNat, Nat.one_le_ofNat, OfNat.one_ne_ofNat,
+        Nat.reduceDvd, Nat.reduceLeDiff, Nat.reduceEqDiff, dvd_refl,
+        Std.le_refl] <;> revert h2 <;> decide
   · rintro rfl
     refine ⟨fun s => ?_, by decide⟩
     fin_cases s <;> decide

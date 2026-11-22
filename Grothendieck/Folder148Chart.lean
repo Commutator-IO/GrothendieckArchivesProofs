@@ -49,9 +49,9 @@ theorem vertices :
     (counts.take 3).sum = 62 ∧ ((counts.drop 3).take 3).sum = 240 ∧ (counts.drop 6).sum = 240 ∧
       counts.sum = 542 := by decide
 
-@[montpellier "148, 32"]
 /-- The arrows of page 32, in the reading's three groups (each type counted once, by its
 sources). -/
+@[montpellier "148, 32"]
 def arrows : List (List ℕ) :=
   [[60, 120], [60, 120, 60, 60, 120], [120, 120, 120, 120, 360, 120, 60]]
 

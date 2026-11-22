@@ -265,7 +265,7 @@ theorem exists_algHom_ker_eq {K : Type u} [Field K] (hA : StmtA K) {A : Type u} 
 
 theorem mem_jacobson_bot_iff {A : Type*} [CommRing A] (f : A) :
     f ∈ (⊥ : Ideal A).jacobson ↔ ∀ m : Ideal A, m.IsMaximal → f ∈ m := by
-  show f ∈ sInf _ ↔ _
+  change f ∈ sInf _ ↔ _
   rw [Ideal.mem_sInf]
   exact ⟨fun h m hm => h ⟨bot_le, hm⟩, fun h m hm => h m hm.2⟩
 

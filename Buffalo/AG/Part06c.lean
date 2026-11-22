@@ -488,9 +488,9 @@ theorem prop_16267 (f : X ⟶ Y) (g : Y ⟶ Z) [QuasiSeparated g] (h : IsCoheren
   obtain ⟨_, _⟩ := h
   exact ⟨QuasiCompact.of_comp f g, QuasiSeparated.of_comp f g⟩
 
-@[buffalo "Oqhr-Gt66es-16329"]
 /-- Oqhr-Gt66es-16329 (4:32:09) [rem] Nothing can be concluded about `g` from `g ∘ f` coherent
 alone: for `f` from the empty scheme, `g ∘ f` is always coherent. -/
+@[buffalo "Oqhr-Gt66es-16329"]
 theorem rem_16329 [IsEmpty X] (h : X ⟶ Z) : IsCoherentHom h :=
   ⟨⟨fun U _ _ => by simp [Set.eq_empty_of_isEmpty]⟩, inferInstance⟩
 

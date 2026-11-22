@@ -917,7 +917,9 @@ theorem pdTheta_coeff (i : σ) (n : ℕ) {a : σ →₀ ℕ} (ha : a i = 0) (q :
         MvPolynomial.X_pow_eq_monomial, MvPolynomial.monomial_mul_monomial, one_mul]
       simp only [map_nsmul, map_tmul, lcoeff_apply, coeff_X_pow, MvPolynomial.lcoeff_apply,
         MvPolynomial.coeff_monomial, LinearMap.mul'_apply, e]
-      by_cases h1 : n = x1 <;> by_cases h2 : x2 = 0 <;> simp [h1, h2, @eq_comm _ x1] at hx ⊢
+      by_cases h1 : n = x1 <;> by_cases h2 : x2 = 0 <;> simp only [h2, add_zero, @eq_comm _ x1, h1,
+          ↓reduceIte, true_and, mul_ite, one_mul, mul_zero, smul_ite, nsmul_eq_mul,
+          false_and, Prod.mk.injEq, and_false, zero_mul, ite_self, and_true, and_self] at hx ⊢
       subst hx; simp
     rw [pdTheta_monomial, add_tmul_one_pow, sum_mul, map_sum, map_sum, sum_congr rfl key]
     have e : γ = Finsupp.single i n + a ↔ γ i = n ∧ γ.erase i = a := by

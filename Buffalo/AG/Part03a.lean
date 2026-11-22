@@ -732,8 +732,9 @@ theorem prop_36939 (M : Type*) [AddCommGroup M] [Module A M] (s : Set A)
 /-- 51wmmpHand0-37263 (10:21:03) [prop] If `f_1, …, f_n` generate the unit ideal,
 `A → ∏ A_{f_i}` is faithfully flat. -/
 @[buffalo "51wmmpHand0-37263"]
-theorem prop_37263 {ι : Type*} [Fintype ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
+theorem prop_37263 {ι : Type*} [Finite ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
     Module.FaithfullyFlat A (Π i, Localization.Away (f i)) := by
+  have := Fintype.ofFinite ι
   classical
   have : ∀ i, Module.Flat A (Localization.Away (f i)) := fun i =>
     IsLocalization.flat _ (Submonoid.powers (f i))

@@ -178,7 +178,7 @@ theorem normalisationCriterion_of_isN1 (A : Type*) [CommRing A] [IsDomain A]
       by_contra hdq
       exact hnreg (hreg q hq hdq)
     have : q.asIdeal.FiniteHeight := ⟨Or.inr (by simp [hq])⟩
-    show q.asIdeal ∈ (Ideal.span {d}).minimalPrimes
+    change q.asIdeal ∈ (Ideal.span {d}).minimalPrimes
     refine Ideal.mem_minimalPrimes_of_height_le
       ((Ideal.span_singleton_le_iff_mem _).mpr hdq) ?_
     rw [hq]

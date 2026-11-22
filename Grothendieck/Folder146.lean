@@ -1282,14 +1282,25 @@ lemma step5 (i : Fin 4) {p : K × K} (hp : U5 p) : ∃ (a b c d : K) (t : Fin 5 
     · simp [Fin.prod_univ_succ, cL]; norm_num
   · refine ⟨1, 0, 1, -1, ![-1, 1, 1, 1 / (p.1 - 1), 1 / (p.2 - 1)], by norm_num, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [e1, e1']
-    · funext k; fin_cases k <;> simp [cfg5, lin, act5, Equiv.swap_apply_def] <;>
+    · funext k; fin_cases k <;> simp only [cfg5, act5, Fin.zero_eta, Fin.isValue,
+        Matrix.cons_val_zero, one_div, lin, Nat.reduceAdd, Fin.mk_one, Fin.castSucc_one,
+        Fin.succ_one_eq_two, Equiv.swap_apply_def, zero_ne_one, ↓reduceIte, Fin.reduceEq, mul_zero,
+        mul_one, add_zero, zero_add, neg_smul, one_smul, Prod.neg_mk, neg_zero, neg_neg,
+        Matrix.cons_val_one, Matrix.cons_val, Fin.reduceFinMk,
+        add_neg_cancel, one_mul, Prod.smul_mk, smul_eq_mul,
+        Prod.mk.injEq] <;>
         (try refine ⟨?_, ?_⟩) <;> (field_simp; try ring)
     · simp [Fin.prod_univ_succ, cL]; field_simp
   · refine ⟨1 - p.1, 0, 1, -p.1, ![-1 / p.1, 1 / (1 - p.1), 1 / (p.1 * (1 - p.1)), 1,
       1 / (p.2 - p.1)], ?_, ?_, ?_, ?_⟩
     · simp [h0, e2]
     · intro k; fin_cases k <;> simp [h0, e2, e3]
-    · funext k; fin_cases k <;> simp [cfg5, lin, act5, Equiv.swap_apply_def] <;>
+    · funext k; fin_cases k <;> simp only [cfg5, act5, Fin.zero_eta, Fin.isValue,
+        Matrix.cons_val_zero, one_div, mul_inv_rev, lin, Nat.reduceAdd, Fin.reduceFinMk,
+        Fin.reduceCastSucc, Fin.reduceSucc, Equiv.swap_apply_def, Fin.reduceEq, ↓reduceIte,
+        mul_zero, mul_one, add_zero, zero_add, Prod.smul_mk, smul_eq_mul, mul_neg, Prod.mk.injEq,
+        true_and, Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val, one_mul,
+        add_neg_cancel, and_true, one_smul] <;>
         (try refine ⟨?_, ?_⟩) <;> (field_simp; try ring)
     · simp [Fin.prod_univ_succ, cL]; field_simp; ring
   · refine ⟨1, 0, 0, 1, ![1, 1, 1, 1, 1], by norm_num, ?_, ?_, ?_⟩
@@ -1351,7 +1362,12 @@ lemma step5i (i : Fin 3) {p : K × K} (hp : U5 p) : ∃ (a b c d s : K) (t : Fin
           mul_one, add_zero, Prod.smul_mk, smul_eq_mul,
           Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
-      fin_cases k <;> (simp [pts4, lin, act4, act5, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [pts4, act4, act5, Fin.mk_one, Fin.isValue, Fin.castSucc_one,
+          Fin.zero_eta, Matrix.cons_val_zero, one_div, lin, Nat.reduceAdd, Fin.succ_one_eq_two,
+          Equiv.swap_apply_def, zero_ne_one, ↓reduceIte, Fin.reduceEq, mul_zero, mul_one, add_zero,
+          zero_add, neg_smul, one_smul, Prod.neg_mk, neg_zero, neg_neg, Matrix.cons_val_one,
+          Matrix.cons_val, Fin.reduceFinMk, 
+          add_neg_cancel, one_mul, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]
                        try field_ring)
     · simp [c5]; field_simp
   · refine ⟨1 - p.1, 0, 1, -p.1, 1 / (p.2 - p.1), ![-1 / p.1, 1 / (1 - p.1),
@@ -1360,7 +1376,12 @@ lemma step5i (i : Fin 3) {p : K × K} (hp : U5 p) : ∃ (a b c d s : K) (t : Fin
     · simp only [act4, act5, Fin.reduceFinMk, Fin.reduceCastSucc, one_div, lin, mul_one, add_zero,
           one_mul, Prod.smul_mk, smul_eq_mul,
           Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
-    · funext k; fin_cases k <;> simp [pts4, lin, act4, act5, Equiv.swap_apply_def] <;>
+    · funext k; fin_cases k <;> simp only [pts4, act4, act5, Fin.reduceFinMk, Fin.reduceCastSucc,
+        Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero, one_div, mul_inv_rev, lin, Nat.reduceAdd,
+        Fin.reduceSucc, Equiv.swap_apply_def, Fin.reduceEq, ↓reduceIte, mul_zero, mul_one, add_zero,
+        zero_add, Prod.smul_mk, smul_eq_mul, mul_neg, Prod.mk.injEq, true_and, Fin.mk_one,
+        Matrix.cons_val_one, Matrix.cons_val, one_mul, add_neg_cancel,
+        and_true, one_smul] <;>
         (try refine ⟨?_, ?_⟩) <;> (field_simp; try ring)
     · simp [c5]; field_simp; ring
 
@@ -1432,14 +1453,24 @@ lemma step6 (i : Fin 5) {p : K × K × K} (hp : U6 p) : ∃ (a b c d : K) (t : F
       by norm_num, ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [e1, e1', e1'']
     · funext k
-      fin_cases k <;> (simp [cfg6, lin, act6, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [cfg6, act6, Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero,
+          one_div, lin, Nat.reduceAdd, Fin.mk_one, Fin.castSucc_one, Fin.succ_one_eq_two,
+          Equiv.swap_apply_def, zero_ne_one, ↓reduceIte, Fin.reduceEq, mul_zero, mul_one, add_zero,
+          zero_add, neg_smul, one_smul, Prod.neg_mk, neg_zero, neg_neg, Matrix.cons_val_one,
+          Matrix.cons_val, Fin.reduceFinMk, 
+          add_neg_cancel, one_mul, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]
                        try field_ring)
     · simp [Fin.prod_univ_succ, cL6]; field_simp
   · refine ⟨1 - p.1, 0, 1, -p.1, ![-1 / p.1, 1 / (1 - p.1), 1 / (p.1 * (1 - p.1)), 1,
       1 / (p.2.1 - p.1), 1 / (p.2.2 - p.1)], by simp [h0, e2], ?_, ?_, ?_⟩
     · intro k; fin_cases k <;> simp [h0, e2, e3, e4]
     · funext k
-      fin_cases k <;> (simp [cfg6, lin, act6, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [cfg6, act6, Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero,
+          one_div, mul_inv_rev, lin, Nat.reduceAdd, Fin.reduceFinMk, Fin.reduceCastSucc,
+          Fin.reduceSucc, Equiv.swap_apply_def, Fin.reduceEq, ↓reduceIte, mul_zero, mul_one,
+          add_zero, zero_add, Prod.smul_mk, smul_eq_mul, mul_neg, Prod.mk.injEq, true_and,
+          Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val, one_mul,
+          add_neg_cancel, and_true, one_smul]
                        try field_ring)
     · simp [Fin.prod_univ_succ, cL6]; field_simp; ring
   · refine ⟨1, 0, 0, 1, ![1, 1, 1, 1, 1, 1], by norm_num, ?_, ?_, ?_⟩
@@ -1480,7 +1511,12 @@ lemma step6i (i : Fin 4) {p : K × K × K} (hp : U6 p) : ∃ (a b c d s : K) (t 
           mul_one, add_zero, Prod.smul_mk, smul_eq_mul,
           Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
-      fin_cases k <;> (simp [pts5, lin, act6s, act6, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [pts5, act6s, act6, Fin.mk_one, Fin.isValue, Fin.castSucc_one,
+          Fin.zero_eta, Matrix.cons_val_zero, one_div, lin, Nat.reduceAdd, Fin.succ_one_eq_two,
+          Equiv.swap_apply_def, zero_ne_one, ↓reduceIte, Fin.reduceEq, mul_zero, mul_one, add_zero,
+          zero_add, neg_smul, one_smul, Prod.neg_mk, neg_zero, neg_neg, Matrix.cons_val_one,
+          Matrix.cons_val, Fin.reduceFinMk, 
+          add_neg_cancel, one_mul, Prod.smul_mk, smul_eq_mul, Prod.mk.injEq]
                        try field_ring)
     · simp [c6]; field_simp
   · refine ⟨1 - p.1, 0, 1, -p.1, 1 / (p.2.2 - p.1), ![-1 / p.1, 1 / (1 - p.1),
@@ -1491,7 +1527,12 @@ lemma step6i (i : Fin 4) {p : K × K × K} (hp : U6 p) : ∃ (a b c d s : K) (t 
           one_mul, Prod.smul_mk, smul_eq_mul,
           Prod.mk.injEq]; refine ⟨?_, ?_⟩ <;> (field_simp; try ring)
     · funext k
-      fin_cases k <;> (simp [pts5, lin, act6s, act6, Equiv.swap_apply_def]
+      fin_cases k <;> (simp only [pts5, act6s, act6, Fin.reduceFinMk, Fin.reduceCastSucc,
+          Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero, one_div, mul_inv_rev, lin, Nat.reduceAdd,
+          Fin.reduceSucc, Equiv.swap_apply_def, Fin.reduceEq, ↓reduceIte, mul_zero, mul_one,
+          add_zero, zero_add, Prod.smul_mk, smul_eq_mul, mul_neg, Prod.mk.injEq, true_and,
+          Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val, one_mul,
+          add_neg_cancel, and_true, one_smul]
                        try field_ring)
     · simp [c6]; field_simp; ring
   · refine ⟨1, 0, 0, 1, 1, ![1, 1, 1, 1, 1], by norm_num, one_ne_zero, ?_, ?_, ?_, ?_⟩
@@ -1593,9 +1634,21 @@ lemma step4 (a : Fin 6) {x : K} (hx : U x) :
   fin_cases a <;> refine ⟨by simp [mat4], fun k => by fin_cases k <;> simp [t4, h0, e1, e2],
     funext fun k => ?_, funext fun k => ?_, ?_, ?_⟩
   all_goals first
-    | (fin_cases k <;> (simp [mat4, t4, cfg4, pts3, perm4, lin, anh, Equiv.swap_apply_def]
+    | (fin_cases k <;> (simp only [cfg4, anh, Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero, t4,
+        lin, mat4, Nat.reduceAdd, perm4, Equiv.Perm.coe_one, id_eq, mul_zero, mul_one, add_zero,
+        zero_add, one_smul, Fin.mk_one, Matrix.cons_val_one, Fin.reduceFinMk, Matrix.cons_val,
+        one_mul, zero_mul, pts3, Fin.castSucc_zero, Fin.castSucc_one, Fin.reduceCastSucc, one_div,
+        Equiv.swap_apply_left, Equiv.swap_apply_def, one_ne_zero, ↓reduceIte, Fin.reduceEq,
+        Prod.smul_mk, smul_eq_mul, Prod.mk.injEq, true_and, neg_add_cancel,
+        neg_smul, Prod.neg_mk, neg_neg, neg_zero, neg_mul, and_true, zero_ne_one, add_neg_cancel,
+        Equiv.Perm.coe_mul, Function.comp_apply]
                         try field_ring))
-    | (simp [mat4, t4, der, derL, sgn, Fin.prod_univ_succ]; try field_ring)
+    | (simp only [t4, Fin.prod_univ_succ, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_succ,
+        Finset.univ_unique, Fin.default_eq_zero, Matrix.cons_val_fin_one, Finset.prod_const_one,
+        mul_one, one_pow, mat4, mul_zero, sub_zero, derL, sgn, der, Matrix.cons_val, one_div,
+        Finset.prod_inv_distrib, Finset.prod_const, Finset.card_singleton, pow_one, one_mul,
+        inv_pow, zero_sub, neg_mul, mul_neg, even_two, Even.neg_pow, neg_neg, sub_neg_eq_add,
+        zero_add]; try field_ring)
 
 /-- **The two models agree for `L`, `n = 4`**: restricting a trivialisation of the homogeneous
 model to `0, 1, ∞, λ` trivialises the cocycle `derL` of the anharmonic group. -/

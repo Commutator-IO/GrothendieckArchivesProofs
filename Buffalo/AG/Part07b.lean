@@ -93,10 +93,10 @@ theorem prop_25222 {σ A : Type*} [CommRing A] [SetLike σ A] [AddSubgroupClass 
       QuasiCompact (Proj.toSpecZero 𝒜) :=
   ⟨inferInstance, inferInstance, inferInstance⟩
 
-@[buffalo "Oqhr-Gt66es-27355"]
 /-- Oqhr-Gt66es-27355 (7:35:55) [def] (proper half) `f` is proper iff it is of finite type,
 separated and universally closed (mathlib: `IsProper`, whose quasi-compactness follows from
 universal closedness). -/
+@[buffalo "Oqhr-Gt66es-27355"]
 theorem def_27355 (f : X ⟶ Y) :
     IsProper f ↔ (LocallyOfFiniteType f ∧ QuasiCompact f) ∧ IsSeparated f ∧ UniversallyClosed f :=
   ⟨fun _ => ⟨⟨inferInstance, inferInstance⟩, inferInstance, inferInstance⟩,
@@ -240,9 +240,9 @@ theorem prop_30201 (f : X ⟶ Y) :
     (IsFinite f → IsProper f) :=
   ⟨fun _ => ⟨inferInstance, inferInstance, inferInstance⟩, fun _ => inferInstance⟩
 
-@[buffalo "Oqhr-Gt66es-30267"]
 /-- Oqhr-Gt66es-30267 (8:24:27) [prop] Every closed immersion is finite; `A/J` is finite over
 `A`. -/
+@[buffalo "Oqhr-Gt66es-30267"]
 theorem prop_30267 (f : X ⟶ Y) [IsClosedImmersion f] {A' : Type*} [CommRing A'] (J : Ideal A') :
     IsFinite f ∧ Module.Finite A' (A' ⧸ J) :=
   ⟨inferInstance, inferInstance⟩

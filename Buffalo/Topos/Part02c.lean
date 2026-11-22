@@ -50,9 +50,9 @@ union of two *distinct* closed subsets. -/
 def IsIrreducibleLiteral (Z : Type*) [TopologicalSpace Z] : Prop :=
   Nonempty Z ∧ ¬ ∃ A B : Set Z, IsClosed A ∧ IsClosed B ∧ A ≠ B ∧ A ∪ B = Set.univ
 
-@[buffalo "URU5jgTvjhU-28459"]
 /-- URU5jgTvjhU-28459 (7:54:19) [def] The literal reading is never satisfied (`Z = Z ∪ ∅`), though
 the point is irreducible: « distinct » must be « distinct from `Z` ». -/
+@[buffalo "URU5jgTvjhU-28459"]
 theorem isIrreducibleLiteral_false (Z : Type*) [TopologicalSpace Z] : ¬ IsIrreducibleLiteral Z := by
   rintro ⟨⟨z⟩, h⟩
   exact h ⟨Set.univ, ∅, isClosed_univ, isClosed_empty,
@@ -414,7 +414,7 @@ theorem sobMap_t1 [T1Space Z] :
   · ext Y
     constructor
     · rintro ⟨x, rfl⟩
-      show IsClosed {sobMap x}
+      change IsClosed {sobMap x}
       rw [← closure_subset_iff_isClosed, closure_sob_singleton]
       intro Y' hY'
       have hx : ((sobMap x : Sob Z) : Set Z) = {x} := by simp
@@ -657,9 +657,9 @@ def pullback_stalk' {X Y : TopCat.{u}} (f : X ⟶ Y) (F : Y.Presheaf (Type u)) (
     F.stalk (f x) ≅ ((TopCat.Presheaf.pullback (Type u) f).obj F).stalk x :=
   TopCat.Presheaf.stalkPullbackIso (Type u) f F x
 
-@[buffalo "URU5jgTvjhU-30471"]
 /-- URU5jgTvjhU-30471 (8:27:51) [thm] (case `X = pt`) If `Y` is sober, every point of the site
 `𝒪(Y)` is isomorphic to the point of a unique `y ∈ Y`. -/
+@[buffalo "URU5jgTvjhU-30471"]
 theorem sober_points [QuasiSober Z] [T0Space Z] (Φ : Point.{u} (Opens.grothendieckTopology Z)) :
     ∃! y : Z, Nonempty (Opens.pointGrothendieckTopology y ≅ Φ) := by
   obtain ⟨Y, ⟨e⟩⟩ := irrPoint_surjective Φ

@@ -14,8 +14,6 @@ public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.DescentTransport
 public import StacksFrontier.AlgebraicGeometry.Spaces.IntegralFiniteEtaleLocal
 import Grothendieck.Attr
 
-@[expose] public noncomputable section
-
 /-!
 # Folder 126, pages 17–22: existence of the radicial–étale factorisation
 
@@ -40,6 +38,8 @@ quasi-finite. The descended `X^ét ⟶ Y` is finite and étale by fpqc descent o
 homeomorphism by the criterion of `Grothendieck.Folder126GeometricPoints`, its geometric fibres
 being those of `T ⟶ Z`.
 -/
+
+@[expose] public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Grothendieck.Folder126GeometricPoints Grothendieck.Folder126EtaleSplitting

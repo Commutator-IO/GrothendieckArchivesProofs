@@ -319,11 +319,12 @@ set_option linter.unusedFintypeInType false in
 /-- **Faithfulness.** Two maps of flags `X → X'` commuting with `a1` (for instance two
 isomorphisms of arrangements) that induce the same maps on vertices and on edges are equal. -/
 @[montpellier "80, 54"]
-theorem faithful {D' L' : Type*} [Fintype D'] {X' : PseudolineMap D' L'}
+theorem faithful {D' L' : Type*} [Finite D'] {X' : PseudolineMap D' L'}
     (hbf : BigonFree X'.On) {g g' : D → D'}
     (h1 : ∀ d, g (X.M.a1 d) = X'.M.a1 (g d)) (h1' : ∀ d, g' (X.M.a1 d) = X'.M.a1 (g' d))
     (hv : ∀ d, X'.M.vtx (g d) = X'.M.vtx (g' d)) (he : ∀ d, X'.M.edge (g d) = X'.M.edge (g' d)) :
     g = g' := by
+  have := Fintype.ofFinite D'
   funext d
   have hn := noLoop hbf
   rcases edge_eq.1 (he d) with h | h | h | h
@@ -442,10 +443,11 @@ theorem vtx_const {g : X.M.Vtx → ZMod 2} (h : ∀ d, g (X.M.vtx d) = g (X.M.vt
 
 omit [Fintype D] in
 set_option linter.unusedFintypeInType false in
-theorem finrank_ker_le {V W : Type*} [Fintype V] [AddCommGroup W] [Module (ZMod 2) W]
+theorem finrank_ker_le {V W : Type*} [Finite V] [AddCommGroup W] [Module (ZMod 2) W]
     {f : (V → ZMod 2) →ₗ[ZMod 2] W}
     (h : ∀ g ∈ LinearMap.ker f, ∀ v w, g v = g w) :
     Module.finrank (ZMod 2) (LinearMap.ker f) ≤ 1 := by
+  have := Fintype.ofFinite V
   refine (Submodule.finrank_mono (t := Submodule.span (ZMod 2) {fun _ => 1}) fun g hg => ?_).trans
     ((finrank_span_le_card _).trans (by simp))
   rcases isEmpty_or_nonempty V with hV | ⟨⟨v0⟩⟩
@@ -924,7 +926,8 @@ theorem seg_val (hbf : BigonFree X.On) (hs : X.Straight) {x : L} {p q : X.M.Vtx}
   rw [hyx] at hfil
   rw [Finset.sum_congr rfl (g := fun e => if X.Inc (X.M.vtx y) e ∧ X.lineE e = x then P e else 0)
     (fun e _ => by
-      by_cases h1 : X.Inc (X.M.vtx y) e <;> by_cases h2 : X.lineE e = x <;> simp [h1, h2]
+      by_cases h1 : X.Inc (X.M.vtx y) e <;> by_cases h2 : X.lineE e = x <;> simp only [h1,
+          ↓reduceIte, h2, and_self, and_false, and_true]
       exact by_contra fun h => h2 (hP e h)), ← Finset.sum_filter, hfil,
     Finset.sum_pair hee] at h0
   have h0 := two_eq _ _ h0
@@ -1228,7 +1231,8 @@ theorem line_cycle (hbf : BigonFree X.On) (hs : X.Straight) {l : L} {z : X.M.Edg
     simp only [Matrix.mulVecLin_apply, Pi.zero_apply] at h0
     rw [incM_mulVec, Finset.sum_congr rfl
       (g := fun e => if X.Inc (X.M.vtx x) e ∧ X.lineE e = X.line x then z e else 0) fun e _ => by
-        by_cases h1 : X.Inc (X.M.vtx x) e <;> by_cases h2 : X.lineE e = X.line x <;> simp [h1, h2]
+        by_cases h1 : X.Inc (X.M.vtx x) e <;> by_cases h2 : X.lineE e = X.line x <;> simp only [h1,
+            ↓reduceIte, h2, and_self, and_false, and_true]
         exact by_contra fun h => h2 (hx ▸ hl e h), ← Finset.sum_filter, (line_edges hbf hs x).1,
       Finset.sum_pair (line_edges hbf hs x).2] at h0
     exact (two_eq _ _ h0).symm
@@ -1322,6 +1326,9 @@ theorem supp_map {c : X.M.Edge → ZMod 2} {a : L} (h : ∀ e, c e ≠ 0 → X.l
   obtain ⟨e, rfl⟩ := f.fE.surjective e'
   rw [f.line, h e (by rwa [mapC_apply] at h')]
 
+-- `[Fintype D]`, `[Fintype D']` are section variables that the type uses inside the
+-- incidence products; making them `Finite` here would change the whole section.
+set_option linter.unusedFintypeInType false in
 open Classical in
 theorem bd_map {c : X.M.Edge → ZMod 2} {p q : X.M.Vtx}
     (h : X.incM *ᵥ c = Pi.single p 1 + Pi.single q 1) :
@@ -1896,7 +1903,8 @@ theorem seg_end (hbf : BigonFree X.On) (hs : X.Straight) (x : D) {P : X.M.Edge �
   have h0 := congrFun hb (X.M.vtx x)
   rw [incM_mulVec, Finset.sum_congr rfl
     (g := fun e => if X.Inc (X.M.vtx x) e ∧ X.lineE e = X.line x then P e else 0) fun e _ => by
-      by_cases h1 : X.Inc (X.M.vtx x) e <;> by_cases h2 : X.lineE e = X.line x <;> simp [h1, h2]
+      by_cases h1 : X.Inc (X.M.vtx x) e <;> by_cases h2 : X.lineE e = X.line x <;> simp only [h1,
+          ↓reduceIte, h2, and_self, and_false, and_true]
       exact by_contra fun h => h2 (hP e h), ← Finset.sum_filter, (line_edges hbf hs x).1,
     Finset.sum_pair (line_edges hbf hs x).2] at h0
   simpa [Pi.single_eq_of_ne hp.symm] using h0

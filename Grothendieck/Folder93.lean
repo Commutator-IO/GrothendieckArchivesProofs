@@ -670,7 +670,7 @@ theorem det_one_square (u : R) {a b c d : R} (hdet : a * d - b * c = 1)
   rw [coeff_sub, coeff_mul_lin_zero] at h0
   rw [coeff_sub, coeff_mul_lin_succ] at h1
   simp only [mul_coeff_zero, coeff_C, ↓reduceIte, coeff_X, one_ne_zero, mul_zero, coeff_add,
-      zero_add, zero_sub, neg_eq_zero, coeff_mul_X, coeff_C_succ, add_zero] at h0 h1
+      zero_add, zero_sub, neg_eq_zero, coeff_mul_X, add_zero] at h0 h1
   refine ⟨u * d, ?_⟩
   linear_combination (-u) * hdet - u * d * h1 - u * c * h0
 

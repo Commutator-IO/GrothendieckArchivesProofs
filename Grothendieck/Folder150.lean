@@ -323,11 +323,12 @@ theorem flags_gaps_iff : (∀ c : Finset I, IsChain (· ≤ ·) (c : Set I) →
   simpa using h {x} (by simp) (by simpa)
 
 include hm ht htop in
-set_option linter.unusedDecidableInType false in
+omit [DecidableEq I] in
 /-- (b) with (a): `D` is the only flag above itself, i.e. the fibres of `Σ_{d'} → Σ_d` have no
 boundary strata, exactly when every step of `D` from `m = i_p` on is a cover. -/
 @[montpellier "150, 45–47"]
 theorem above_eq_iff : (∀ e, Above D m t e → e = D) ↔ ∀ a b, Consec D a b → m ≤ a → a ⋖ b := by
+  classical
   rw [← flags_gaps_iff]
   refine ⟨fun h c hc hcg => ?_, fun h e he => ?_⟩
   · have := (aboveEquiv_eq_empty hD hm ht htop _).2 (h _ ((aboveEquiv hD hm ht htop).symm

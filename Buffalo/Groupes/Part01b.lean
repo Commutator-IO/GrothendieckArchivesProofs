@@ -64,9 +64,9 @@ noncomputable def WF : CommAlgCat.{u} k ⥤ Type u where
     rw [← LinearMap.rTensor_comp_apply]
     rfl
 
-@[buffalo "_lTf_L0yvrU-2899"]
 /-- _lTf_L0yvrU-2899 (0:48:19) [prop] If `M ≃ kⁿ`, `W(M)` is the standard affine space:
 `A ⊗ M ≃ Aⁿ`. -/
+@[buffalo "_lTf_L0yvrU-2899"]
 noncomputable def W_free (n : ℕ) (e : M ≃ₗ[k] (Fin n → k)) (A : Type u) [CommRing A] [Algebra k A] :
     W k M A ≃ₗ[A] (Fin n → A) :=
   (e.baseChange k A M (Fin n → k)).trans (TensorProduct.piScalarRight k A A (Fin n))

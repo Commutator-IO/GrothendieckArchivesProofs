@@ -573,6 +573,8 @@ theorem flat_levelMap_one [Module.FaithfullyFlat A B] (hnil : IsNilpotent (RingH
   exact RingHom.flat_algebraMap_iff.mpr inferInstance
 
 set_option maxHeartbeats 2000000 in
+-- The induction step elaborates through the algebra structures of several quotient rings
+-- (`B' ⧸ J^k`, `C' ⧸ J^k C'`) and exceeds the default limit.
 /-- **The induction step** (pages 5 to 7, the reduction of a nilpotent `𝒥_X` to `𝒥_X² = 0`):
 if `B'/J^k` is flat over `A'/(J^k ∩ A')`, so is `B'/J^(k+1)` over `A'/(J^(k+1) ∩ A')`. This is
 the square-zero criterion `Ideal.bijective_fibreTensorSMulHomToKer_iff` (Stacks 063Y) for the

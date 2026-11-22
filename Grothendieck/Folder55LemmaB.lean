@@ -247,11 +247,11 @@ theorem inEO_inBasic (N : ℕ) : ∀ y, InEO N y → InBasic N y
   | c _, h => (h : False).elim
   | e m, h => by
     have : m = N := h
-    show N ≤ m
+    change N ≤ m
     omega
   | o m, h => by
     have : m = N := h
-    show N ≤ m
+    change N ≤ m
     omega
   | d _, h => (h : False).elim
 
@@ -361,13 +361,13 @@ theorem mem_O {U : Opens Xsp} {s : Sec k D K U} :
 
 theorem O_one_mem (U : Opens Xsp) : (1 : Sec k D K U) ∈ (O κ ε ι).sections U := by
   refine ⟨fun _ _ => ⟨?_, ?_, rfl⟩, fun _ _ => ?_, fun _ => ⟨0, fun y _ => ?_⟩⟩
-  · show ι (1 : D) = (1 : K)
+  · change ι (1 : D) = (1 : K)
     exact map_one ι
-  · show ι (1 : D) = (1 : K)
+  · change ι (1 : D) = (1 : K)
     exact map_one ι
-  · show ι (κ (1 : k)) = (1 : K)
+  · change ι (κ (1 : k)) = (1 : K)
     rw [map_one, map_one]
-  · show (1 : Val k D K y.1) = constHom κ ι y.1 (1 : k)
+  · change (1 : Val k D K y.1) = constHom κ ι y.1 (1 : k)
     exact (map_one (constHom κ ι y.1)).symm
 
 theorem O_add_mem {U : Opens Xsp} {s t : Sec k D K U} (hs : s ∈ (O κ ε ι).sections U)
@@ -378,18 +378,18 @@ theorem O_add_mem {U : Opens Xsp} {s t : Sec k D K U} (hs : s ∈ (O κ ε ι).s
   · obtain ⟨h1, h2, h3⟩ := hsC n h
     obtain ⟨h1', h2', h3'⟩ := htC n h
     refine ⟨?_, ?_, ?_⟩
-    · show ι (atC s h + atC t h).1 = atO s (mem_o_of_c h) + atO t (mem_o_of_c h)
+    · change ι (atC s h + atC t h).1 = atO s (mem_o_of_c h) + atO t (mem_o_of_c h)
       rw [Prod.fst_add, map_add, h1, h1']
-    · show ι (atC s h + atC t h).2 = atD s (mem_d_of_c h) + atD t (mem_d_of_c h)
+    · change ι (atC s h + atC t h).2 = atD s (mem_d_of_c h) + atD t (mem_d_of_c h)
       rw [Prod.snd_add, map_add, h2, h2']
-    · show ε (atC s h + atC t h).1 = ε (atC s h + atC t h).2
+    · change ε (atC s h + atC t h).1 = ε (atC s h + atC t h).2
       rw [Prod.fst_add, Prod.snd_add, map_add, map_add, h3, h3']
-  · show ι (κ (atE s h + atE t h)) = atO s (mem_o_of_e h) + atO t (mem_o_of_e h)
+  · change ι (κ (atE s h + atE t h)) = atO s (mem_o_of_e h) + atO t (mem_o_of_e h)
     rw [map_add, map_add, hsE n h, htE n h]
   · obtain ⟨N₁, hN₁⟩ := hsI h
     obtain ⟨N₂, hN₂⟩ := htI h
     refine ⟨max N₁ N₂, fun y hy => ?_⟩
-    show s y + t y = constHom κ ι y.1 (atInf s h + atInf t h)
+    change s y + t y = constHom κ ι y.1 (atInf s h + atInf t h)
     rw [map_add, hN₁ y (inBasic_anti (le_max_left _ _) _ hy),
       hN₂ y (inBasic_anti (le_max_right _ _) _ hy)]
 
@@ -401,18 +401,18 @@ theorem O_mul_mem {U : Opens Xsp} {s t : Sec k D K U} (hs : s ∈ (O κ ε ι).s
   · obtain ⟨h1, h2, h3⟩ := hsC n h
     obtain ⟨h1', h2', h3'⟩ := htC n h
     refine ⟨?_, ?_, ?_⟩
-    · show ι (atC s h * atC t h).1 = atO s (mem_o_of_c h) * atO t (mem_o_of_c h)
+    · change ι (atC s h * atC t h).1 = atO s (mem_o_of_c h) * atO t (mem_o_of_c h)
       rw [Prod.fst_mul, map_mul, h1, h1']
-    · show ι (atC s h * atC t h).2 = atD s (mem_d_of_c h) * atD t (mem_d_of_c h)
+    · change ι (atC s h * atC t h).2 = atD s (mem_d_of_c h) * atD t (mem_d_of_c h)
       rw [Prod.snd_mul, map_mul, h2, h2']
-    · show ε (atC s h * atC t h).1 = ε (atC s h * atC t h).2
+    · change ε (atC s h * atC t h).1 = ε (atC s h * atC t h).2
       rw [Prod.fst_mul, Prod.snd_mul, map_mul, map_mul, h3, h3']
-  · show ι (κ (atE s h * atE t h)) = atO s (mem_o_of_e h) * atO t (mem_o_of_e h)
+  · change ι (κ (atE s h * atE t h)) = atO s (mem_o_of_e h) * atO t (mem_o_of_e h)
     rw [map_mul, map_mul, hsE n h, htE n h]
   · obtain ⟨N₁, hN₁⟩ := hsI h
     obtain ⟨N₂, hN₂⟩ := htI h
     refine ⟨max N₁ N₂, fun y hy => ?_⟩
-    show s y * t y = constHom κ ι y.1 (atInf s h * atInf t h)
+    change s y * t y = constHom κ ι y.1 (atInf s h * atInf t h)
     rw [map_mul, hN₁ y (inBasic_anti (le_max_left _ _) _ hy),
       hN₂ y (inBasic_anti (le_max_right _ _) _ hy)]
 
@@ -452,7 +452,7 @@ theorem G_add_mem {j : ℕ} {U : Opens Xsp} {s t : Sec k D K U}
   obtain ⟨hsO, hs0⟩ := (mem_G κ ε ι).1 hs
   obtain ⟨htO, ht0⟩ := (mem_G κ ε ι).1 ht
   refine (mem_G κ ε ι).2 ⟨O_add_mem κ ε ι hsO htO, fun y hy => ?_⟩
-  show s y + t y = 0
+  change s y + t y = 0
   rw [hs0 y hy, ht0 y hy, add_zero]
 
 /-- `𝒢_j` is an Ideal: stable under multiplication by sections of `𝒪`. -/
@@ -461,7 +461,7 @@ theorem G_mul_mem {j : ℕ} {U : Opens Xsp} {s g : Sec k D K U}
     s * g ∈ (G κ ε ι j).sections U := by
   obtain ⟨hgO, hg0⟩ := (mem_G κ ε ι).1 hg
   refine (mem_G κ ε ι).2 ⟨O_mul_mem κ ε ι hs hgO, fun y hy => ?_⟩
-  show s y * g y = 0
+  change s y * g y = 0
   rw [hg0 y hy, mul_zero]
 
 theorem G_mono : Monotone (G κ ε ι) := by
@@ -552,7 +552,7 @@ theorem inBasic_iff_of_inPiece {n j : ℕ} (hj : n + 1 ≤ j) :
   | infty, h => (h : False).elim
   | c m, h | e m, h | o m, h => by
     have : m = n := h
-    show j ≤ m ↔ n + 1 ≤ m
+    change j ≤ m ↔ n + 1 ≤ m
     constructor <;> intro <;> omega
   | d _, _ => Iff.rfl
 
@@ -586,7 +586,7 @@ theorem G_germs_stabilize (x : Xsp) :
 theorem one_mem_G_succ (j : ℕ) :
     (1 : Sec k D K (eoOpen j)) ∈ (G κ ε ι (j + 1)).sections (eoOpen j) := by
   refine ⟨⟨fun _ h => (h : False).elim, fun _ _ => ?_, fun h => (h : False).elim⟩, fun y hy => ?_⟩
-  · show ι (κ (1 : k)) = (1 : K)
+  · change ι (κ (1 : k)) = (1 : K)
     rw [map_one, map_one]
   · exfalso
     obtain ⟨y, hyU⟩ := y

@@ -159,7 +159,7 @@ def orbitHom (A : Action (Type u) G) (x : A.V) : Action.ofMulAction G G ⟶ A wh
   hom := ↾fun h => A.ρ h x
   comm h := by
     ext (k : G)
-    show A.ρ (h * k) x = A.ρ h (A.ρ k x)
+    change A.ρ (h * k) x = A.ρ h (A.ρ k x)
     rw [map_mul]
     rfl
 
@@ -172,7 +172,7 @@ theorem forget_end (η : Action.forget (Type u) G ⟶ Action.forget (Type u) G) 
     rwa [h1] at h
   · have := hg (Action.ofMulAction G G) (1 : G)
     rw [this]
-    show g = g * 1
+    change g = g * 1
     rw [mul_one]
 
 /-- URU5jgTvjhU-34130 (9:28:50) [cex] If `G ≠ 1`, the topos `B_G` is equivalent to no `Sh(X)`:

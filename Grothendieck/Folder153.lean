@@ -498,9 +498,9 @@ theorem mem_range_Phi_iff_of_injective [Module.Free k₀ (Omega k₀ K₀)]
   refine ⟨∑ j ∈ g.support, (⟨g j, hg j⟩ : Omega k₀ K₀) ⊗ₜ e j, ?_⟩
   simp [map_sum, Phi_tmul, Finsupp.sum]
 
-@[montpellier "153, 3"]
 /-- **Uniqueness.** When `K₀ ⊗_{k₀} Ω → K₀[T]` is injective and `Ω` is free,
 `Φ : Ω ⊗ Ω → K₀[X, Y]` is injective. -/
+@[montpellier "153, 3"]
 theorem Phi_injective_of_injective [Module.Free k₀ (Omega k₀ K₀)]
     (hK : Function.Injective (omegaBaseChange k₀ K₀)) : Function.Injective (Phi k₀ K₀) := by
   classical

@@ -1977,7 +1977,13 @@ noncomputable def coordT (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) :
 noncomputable def coord (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) :
     Amal X₁ X₂ →ₗ[R] R × (L₁ ⊗[R] L₂) :=
   amalDesc X₁ X₂ (coordT s₁ s₂) (LinearMap.inr R R _) (by
-    ext u e <;> simp [coordT, psiT, jK, μK]
+    ext u e <;> simp only [coordT, psiT, jK, AlgebraTensorModule.curry_apply,
+        LinearMap.restrictScalars_self, curry_apply, LinearMap.coe_comp, LinearMap.coe_add,
+        LinearMap.coe_fst, LinearMap.coe_snd, map_comp_add, LinearMap.coe_inl, Function.comp_apply,
+        Pi.add_apply, map_tmul, LinearMap.id_coe, id_eq, LinearMap.prod_apply, Function.prod_apply,
+        ChiTriv.ψ_ι_apply, zero_tmul, map_zero, ChiTriv.Splitting.p_ι_apply,
+        LinearMap.toSpanSingleton_apply, add_zero, μK, LinearMap.coe_inr,
+        tmul_zero, ChiTriv.π_ι_apply, tmul_smul, zero_add]
     rw [s₁.π_eq u, add_tmul, smul_tmul'])
 
 @[simp] lemma coord_star (s₁ : X₁.Splitting) (s₂ : X₂.Splitting) (x : E₁ ⊗[R] E₂) :

@@ -10,8 +10,6 @@ public import StacksFrontier.AlgebraicGeometry.Morphisms.Misc.FiniteCoproduct
 public import StacksFrontier.AlgebraicGeometry.Limits.SigmaDescent
 import Grothendieck.Attr
 
-@[expose] public noncomputable section
-
 /-!
 # Folder 126, pages 17–22: a split finite morphism is radicial followed by trivial étale
 
@@ -35,6 +33,8 @@ the pieces `Spec Bᵢ` of the local splitting.
   `Sigma.desc (fun _ => 𝟙 O)`, finite (Stacks 0CYI, `isFinite_sigmaDesc`) and étale
   (`etale_sigmaDesc`).
 -/
+
+@[expose] public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Grothendieck.Folder126GeometricPoints
@@ -89,12 +89,13 @@ def sigmaGeomFibreEquiv (hdisj : ∀ k l, k ≠ l → Disjoint (W k) (W l))
 every sheet is finite and surjective, and at one geometric point `p₀` every sheet has at most one
 geometric point, then every sheet has exactly one geometric point over every geometric point. -/
 @[montpellier "126, 17–22"]
-theorem hasGeomDegree_one_of_sheets [Fintype κ] (hdisj : ∀ k l, k ≠ l → Disjoint (W k) (W l))
+theorem hasGeomDegree_one_of_sheets [Finite κ] (hdisj : ∀ k l, k ≠ l → Disjoint (W k) (W l))
     (hcov : ∀ x : T, ∃ k, x ∈ W k) {n : ℕ} (hn : HasGeomDegree b n)
     [hfin : ∀ k, IsFinite ((W k).ι ≫ b)] [hsurj : ∀ k, Surjective ((W k).ι ≫ b)]
     {K₀ : Type u} [Field K₀] [IsAlgClosed K₀] (p₀ : Spec (.of K₀) ⟶ O)
     (hp₀ : ∀ k, Subsingleton (GeomFibre ((W k).ι ≫ b) p₀)) (k : κ) :
     HasGeomDegree ((W k).ι ≫ b) 1 := by
+  have := Fintype.ofFinite κ
   -- The number of geometric points of `b` is the sum of those of the sheets.
   have hsum : ∀ (K : Type u) [Field K] [IsAlgClosed K] (p : Spec (.of K) ⟶ O),
       (∀ k, Finite (GeomFibre ((W k).ι ≫ b) p)) ∧
@@ -141,12 +142,13 @@ theorem eq_of_comp_sigmaι_eq {K : Type u} [Field K] {k l : κ} (a c : Spec (.of
 argument, `b` factors as a universal homeomorphism followed by the fold map `∐_κ O ⟶ O`, which
 is finite and étale. -/
 @[montpellier "126, 17–22"]
-theorem exists_factorisation_of_sheets [Fintype κ] (hdisj : ∀ k l, k ≠ l → Disjoint (W k) (W l))
+theorem exists_factorisation_of_sheets [Finite κ] (hdisj : ∀ k l, k ≠ l → Disjoint (W k) (W l))
     (hcov : ∀ x : T, ∃ k, x ∈ W k) {n : ℕ} (hn : HasGeomDegree b n) [IsFinite b]
     [hfin : ∀ k, IsFinite ((W k).ι ≫ b)] [hsurj : ∀ k, Surjective ((W k).ι ≫ b)]
     {K₀ : Type u} [Field K₀] [IsAlgClosed K₀] (p₀ : Spec (.of K₀) ⟶ O)
     (hp₀ : ∀ k, Subsingleton (GeomFibre ((W k).ι ≫ b) p₀)) :
     ∃ g : T ⟶ ∐ fun _ : κ => O, UniversalHomeomorphism g ∧ g ≫ fold O κ = b := by
+  have := Fintype.ofFinite κ
   have hone := hasGeomDegree_one_of_sheets b hdisj hcov hn p₀ hp₀
   have hW : TopologicalSpace.IsOpenCover W := by
     refine TopologicalSpace.IsOpenCover.mk (eq_top_iff.2 fun x _ => ?_)

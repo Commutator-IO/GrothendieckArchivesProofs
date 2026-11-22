@@ -222,10 +222,10 @@ def presheafMor : TopMor (Cᵒᵖ ⥤ Type u) (C'ᵒᵖ ⥤ Type u) where
   adj := φ.op.ranAdjunction (Type u)
   lex := inferInstance
 
-@[buffalo "PqCQM3Pcl6Q-4092"]
 /-- PqCQM3Pcl6Q-4092 (1:08:12) [prop] If `u^*` has a left exact left adjoint `u_!`, then `u_!` is
 the inverse image of a morphism of topoi in the opposite direction, of which `u^*` is the
 direct image. -/
+@[buffalo "PqCQM3Pcl6Q-4092"]
 def presheafMorOp [PreservesFiniteLimits (φ.op.lan : (Cᵒᵖ ⥤ Type u) ⥤ _)] :
     TopMor (C'ᵒᵖ ⥤ Type u) (Cᵒᵖ ⥤ Type u) where
   inv := φ.op.lan
@@ -256,7 +256,11 @@ def restrMapEquiv (φ ψ : C ⥤ C') : (φ ⟶ ψ) ≃ (restr ψ ⟶ restr φ) w
         have h1 := NatTrans.naturality_apply (η.app (yoneda.obj (ψ.obj d))) k.op (𝟙 (ψ.obj d))
         have h2 :=
           congrArg (fun t => t.app (op c) (𝟙 (ψ.obj c))) (η.naturality (yoneda.map (ψ.map k)))
-        simp [restr] at h1 h2
+        simp only [restr, Functor.whiskeringLeft_obj_obj, Functor.comp_obj, Functor.op_obj,
+            CategoryTheory.yoneda_obj_obj, Functor.comp_map, Functor.op_map, Quiver.Hom.unop_op,
+            yoneda_obj_map, hom_ofHom, Fun.coe_mk, Category.comp_id, Functor.whiskeringLeft_obj_map,
+            NatTrans.comp_app, Functor.whiskerLeft_app, yoneda_map_app, comp_apply,
+            Category.id_comp] at h1 h2
         exact h1.symm.trans h2 }
   left_inv α := by
     ext c
@@ -266,7 +270,10 @@ def restrMapEquiv (φ ψ : C ⥤ C') : (φ ⟶ ψ) ≃ (restr ψ ⟶ restr φ) w
     obtain ⟨a, rfl⟩ := (yonedaEquiv : (yoneda.obj (ψ.obj c.unop) ⟶ F) ≃
       F.obj (op (ψ.obj c.unop))).surjective x
     have h := congrArg (fun t => t.app c (𝟙 (ψ.obj c.unop))) (η.naturality a)
-    simp [restrMap, restr] at h ⊢
+    simp only [restr, Functor.whiskeringLeft_obj_obj, Functor.comp_obj, Functor.op_obj,
+        Functor.whiskeringLeft_obj_map, NatTrans.comp_app, CategoryTheory.yoneda_obj_obj,
+        Functor.whiskerLeft_app, comp_apply, restrMap, Functor.whiskeringLeft_map_app_app,
+        NatTrans.op_app, op_unop, Fun.toFun_apply] at h ⊢
     rw [CategoryTheory.yonedaEquiv_apply, h]
     generalize (η.app (yoneda.obj (ψ.obj (unop c)))).app c (𝟙 (ψ.obj (unop c))) = t
     have h3 := NatTrans.naturality_apply a (X := op (ψ.obj c.unop)) (Y := op (φ.obj c.unop))

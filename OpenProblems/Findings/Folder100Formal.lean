@@ -122,6 +122,9 @@ def Compatible (X : FormalAbelianScheme I) {R' : Type u} [CommRing R'] (φ : R �
   let f := (bc (levelMap φ n)).map (X.iso n).hom.hom.hom
   (((a ≫ b) ≫ c) ≫ d) ≫ f = (e n).hom.hom.hom
 
+-- The instances `(bc (levelMap φ n)).Monoidal` time out under the library-wide
+-- `maxSynthPendingDepth = 3`; Lean's default depth finds them at once.
+set_option maxSynthPendingDepth 1 in
 /-- The pull-back of `X̂` along `φ : R → R'` is **algebraizable**: there are an abelian scheme `G`
 over `Spec R'` and isomorphisms of group schemes `G ×_{R'} R'/J^(n+1) ≅ Aₙ ×_{R/I^(n+1)} R'/J^(n+1)`
 (`J = φ(I)R'`), compatible with the transition isomorphisms of `X̂`, base changed, and the

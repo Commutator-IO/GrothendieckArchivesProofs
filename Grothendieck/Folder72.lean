@@ -1906,7 +1906,7 @@ theorem not_condAw_imp : ∃ (a : ℕ → Fin 2 → ℤ) (a' : ℕ → Module.Du
     simp only [Fin.isValue, zsmul_eq_mul, Fin.sum_univ_two, sv, ps_apply, LinearMap.smul_apply,
         LinearMap.coe_proj, Function.eval, Pi.single_eq_same, Int.nsmul_eq_mul, Nat.cast_ofNat,
         mul_one, Int.cast_ofNat, funext_iff, Pi.add_apply, Pi.mul_apply, Pi.intCast_apply,
-        Int.cast_eq, Pi.ofNat_apply, Pi.zero_apply, Fin.forall_fin_two, ne_eq, zero_ne_one,
+        Int.cast_eq, Pi.ofNat_apply, Fin.forall_fin_two, ne_eq, zero_ne_one,
         not_false_eq_true, Pi.single_eq_of_ne, mul_zero, add_zero, one_ne_zero, zero_add,
         mul_eq_zero, OfNat.ofNat_ne_zero, or_false] at hg
     exact Fin.forall_fin_two.2 ⟨by omega, hg.2⟩

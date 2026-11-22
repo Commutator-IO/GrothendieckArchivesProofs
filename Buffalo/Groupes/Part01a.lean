@@ -97,9 +97,9 @@ noncomputable def affineSpacesEquiv :
     (CommAlgCat.{u} k)ᵒᵖ ≌ (coyoneda (C := CommAlgCat.{u} k)).EssImageSubcategory :=
   (coyoneda (C := CommAlgCat.{u} k)).toEssImage.asEquivalence
 
-@[buffalo "_lTf_L0yvrU-393"]
 /-- _lTf_L0yvrU-393 (0:06:33) [prop] The space represented by `A` has
 `X(k') = Hom_{k-alg}(A, k')`. -/
+@[buffalo "_lTf_L0yvrU-393"]
 def pointsEquiv (A B : CommAlgCat.{u} k) : (coyoneda.obj (op A)).obj B ≃ (A →ₐ[k] B) where
   toFun f := f.hom
   invFun f := CommAlgCat.ofHom f

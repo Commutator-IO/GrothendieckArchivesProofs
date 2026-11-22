@@ -1197,7 +1197,10 @@ theorem qMat4_ker_char_five (h5 : (5 : R) = 0) (hα : α = 2) (v : Fin 4 → R) 
     · linear_combination (-2) * r0 - r1 + (v 0 + v 1 - v 3) * h5
     · linear_combination (-2) * r0 - r2 + (v 0 + v 2 - v 3) * h5
   · intro hv
-    rw [hv]; ext i; fin_cases i <;> simp <;>
+    rw [hv]; ext i; fin_cases i <;> simp only [Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue,
+        Pi.smul_apply, cons_val_zero, smul_eq_mul, mul_one, cons_val_one, cons_val,
+        add_sub_cancel_right, sub_self, sub_add_cancel, neg_add_rev, Fin.zero_eta, Pi.zero_apply,
+        Fin.mk_one, Fin.reduceFinMk] <;>
       first | linear_combination (v 3) * h5 | linear_combination (-v 3) * h5
 
 /-- With `α = 2`, the point `(1, 2, 2, 1)` lies on the quadric, in any ring. -/
@@ -1368,7 +1371,12 @@ theorem isAff_comp {f g : R × R × R → R × R × R} (hf : IsAff f) (hg : IsAf
   refine ⟨by ring, by ring, by ring⟩
 
 theorem isAff_sigmaOf (k : Fin 3) : IsAff (sigmaOf α k) := fun p => by
-  fin_cases k <;> simp [sigmaOf, sigma0, sigma1, sigma2, Prod.ext_iff] <;> (try constructor) <;>
+  fin_cases k <;> simp only [sigmaOf, Fin.zero_eta, Fin.isValue, Matrix.cons_val', sigma0,
+      Prod.mk.eta, sigma1, sigma2, Matrix.cons_val_fin_one, Matrix.cons_val_zero, Prod.fst_zero,
+      Prod.snd_zero, add_zero, sub_zero, mul_zero, sub_self, Prod.mk_sub_mk, zero_sub, Prod.smul_mk,
+      smul_eq_mul, mul_neg, mul_one, smul_zero, Prod.mk_add_mk, zero_add, neg_sub, sub_neg_eq_add,
+      Prod.ext_iff, and_true, Fin.mk_one, Matrix.cons_val_one, add_right_inj, Fin.reduceFinMk,
+      Matrix.cons_val] <;> (try constructor) <;>
     ring
 
 /-- **The order 120 of the group** of the icosahedron (pages 75 and 87): over every nonzero
