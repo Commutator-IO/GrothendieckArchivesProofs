@@ -152,10 +152,12 @@ theorem proj_eq_coeff (m : M) (x : V) :
   act_coord _ δ m x
 
 omit [AddCommGroup M] in
+omit [DecidableEq M] in
 /-- _lTf_L0yvrU-28993 (8:03:13) [prop] … for every `x`, only finitely many `p_m x` are non-zero,
 and `x = ∑_m p_m x`. -/
 @[buffalo "_lTf_L0yvrU-28993"]
 theorem proj_finite (x : V) : Set.Finite {m : M | proj δ m x ≠ 0} := by
+  classical
   refine (TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M))
       (δ x)).support.finite_toSet.subset
     fun m hm ↦ ?_
@@ -171,11 +173,13 @@ theorem sum_proj (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (x : V)
     CommSemiring.counit_apply, one_smul, proj_eq_coeff]
 
 omit [AddCommGroup M] in
+omit [DecidableEq M] in
 /-- _lTf_L0yvrU-29057 (8:04:17) [thm] One direction: an action of `D(M)` gives a grading
 `V = ⊕ V_m` (`V_m` the image of `p_m`): every `x` is uniquely a finite sum of `x_m ∈ V_m`. -/
 @[buffalo "_lTf_L0yvrU-29057"]
 theorem grading (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (x : V) :
     ∃! y : M →₀ V, (∀ m, proj δ m (y m) = y m) ∧ (y.sum fun _ v ↦ v) = x := by
+  classical
   refine ⟨TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M)) (δ x), ⟨fun m ↦ ?_, ?_⟩, ?_⟩
   · rw [← proj_eq_coeff, proj_proj hδ]; simp
   · rw [Finsupp.sum]
@@ -192,11 +196,13 @@ theorem grading (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (x : V) 
       rw [Finsupp.notMem_support_iff.mp hn, map_zero]
 
 omit [AddCommGroup M] in
+omit [DecidableEq M] in
 /-- _lTf_L0yvrU-29140 (8:05:40) [prop] On `V_m`, `δ x = x ⊗ e^m`; hence a point `g` of `D(M)`
 (an algebra map `k[M] → k'`) acts by the scalar `χ_m(g) = g(e^m)` (`(g ⊗ id)(δ x) = x ⊗ g(e^m)`). -/
 @[buffalo "_lTf_L0yvrU-29140"]
 theorem delta_of_mem (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (m : M) (x : V) :
     δ (proj δ m x) = proj δ m x ⊗ₜ AddMonoidAlgebra.single m 1 := by
+  classical
   rw [← (TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M))).symm_apply_apply
     (δ (proj δ m x)), TensorProduct.equivFinsuppOfBasisRight_symm_apply]
   have : TensorProduct.equivFinsuppOfBasisRight (eb (k := k) (M := M)) (δ (proj δ m x)) =
@@ -209,10 +215,12 @@ theorem delta_of_mem (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (m 
   rw [this, Finsupp.sum_single_index (by simp)]
   rfl
 
+omit [DecidableEq M] in
 theorem point_acts_by_character (hδ : Part01.IsComodule k (AddMonoidAlgebra k M) V δ) (m : M)
     (x : V) (R : Type u) [CommRing R] [Algebra k R] (g : AddMonoidAlgebra k M →ₐ[k] R) :
     g.toLinearMap.lTensor V (δ (proj δ m x)) = proj δ m x ⊗ₜ g (AddMonoidAlgebra.single m 1) ∧
       IsUnit (g (AddMonoidAlgebra.single m 1)) := by
+  classical
   refine ⟨by rw [delta_of_mem hδ]; rfl, ?_⟩
   refine ⟨⟨_, g (AddMonoidAlgebra.single (-m) 1), ?_, ?_⟩, rfl⟩ <;>
     rw [← map_mul, AddMonoidAlgebra.single_mul_single, mul_one] <;>
@@ -297,6 +305,7 @@ theorem coeff_grouplike {u : AddMonoidAlgebra k M} (hu : IsGroupLikeElem k u) (m
   · simp [h]
 
 omit [AddCommGroup M] in
+omit [DecidableEq M] in
 /-- _lTf_L0yvrU-30047 (8:20:47) [thm] (affine `S = Spec R`) A homomorphism `D(M) → 𝔾_m`, i.e. a
 group-like element `u = ∑ u_m e^m` of `R[M]`, is a family of pairwise orthogonal idempotents
 `u_m` with `∑ u_m = 1`: a partition of `S` into open and closed pieces `S_m`. -/
@@ -304,6 +313,7 @@ group-like element `u = ∑ u_m e^m` of `R[M]`, is a family of pairwise orthogon
 theorem grouplike_partition {u : AddMonoidAlgebra k M} (hu : IsGroupLikeElem k u) :
     (∀ m, IsIdempotentElem (u.coeff m)) ∧ (∀ m n, m ≠ n → u.coeff m * u.coeff n = 0) ∧
       (u.coeff.sum fun _ c ↦ c) = 1 := by
+  classical
   refine ⟨fun m ↦ by
     have := coeff_grouplike hu m m
     simp only [↓reduceIte] at this
@@ -317,6 +327,7 @@ theorem grouplike_partition {u : AddMonoidAlgebra k M} (hu : IsGroupLikeElem k u
   exact this
 
 omit [AddCommGroup M] in
+omit [DecidableEq M] in
 /-- _lTf_L0yvrU-30047 (8:20:47) [prop] If `S = Spec R` is connected and non-empty (no idempotents
 but `0, 1`), every homomorphism `D(M) → 𝔾_m` comes from a unique `m ∈ M`: the group-like elements
 of `R[M]` are the `e^m`. -/
@@ -324,6 +335,7 @@ of `R[M]` are the `e^m`. -/
 theorem grouplike_connected [Nontrivial k] (hk : ∀ e : k, IsIdempotentElem e → e = 0 ∨ e = 1)
     {u : AddMonoidAlgebra k M} (hu : IsGroupLikeElem k u) :
     ∃! m : M, u = AddMonoidAlgebra.single m 1 := by
+  classical
   obtain ⟨hidem, horth, hsum⟩ := grouplike_partition hu
   have hne : u.coeff ≠ 0 := by
     intro h; rw [h, Finsupp.sum_zero_index] at hsum; exact zero_ne_one hsum
