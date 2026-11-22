@@ -2,6 +2,7 @@ module
 
 public import Grothendieck.Folder29
 public import StacksFrontier.RingTheory.DiscreteValuationRing.Abhyankar.AbhyankarLemma
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -49,7 +50,6 @@ consequence that the inertia subgroups of `H` at `y` are exactly the conjugates 
 those of `G` at `x` are not proved. Stacks 0EYG (Abhyankar's lemma for normal crossings divisors
 on regular schemes, several branches) would be the route to the several-branch local core; its
 import closure (4,384 modules) was not used.
-import Grothendieck.Attr
 -/
 
 open Matrix
