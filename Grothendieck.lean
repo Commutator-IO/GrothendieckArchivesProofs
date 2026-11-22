@@ -21,6 +21,7 @@ public import Grothendieck.Folder125
 public import Grothendieck.Folder126GeometricPoints
 public import Grothendieck.Folder126NilpotentQuotient
 public import Grothendieck.Folder126RadicialEtale
+public import Grothendieck.Folder126Sheets
 public import Grothendieck.Folder128
 public import Grothendieck.Folder13
 public import Grothendieck.Folder133
