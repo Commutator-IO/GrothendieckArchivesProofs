@@ -169,8 +169,7 @@ section FibreProducts
 
 /-- The spectrum of a field is a single point. -/
 theorem subsingleton_primeSpectrum_field (L : Type*) [Field L] : Subsingleton (PrimeSpectrum L) :=
-  ⟨fun p q => PrimeSpectrum.ext ((Ideal.eq_bot_of_prime p.asIdeal).trans
-    (Ideal.eq_bot_of_prime q.asIdeal).symm)⟩
+  Ring.KrullDimLE.subsingleton_primeSpectrum L
 
 /-- A prime pulled back along `C → L → R`, `L` a field, is the kernel of `C → L`. -/
 theorem comap_comp_of_ker {C L R : Type*} [CommRing C] [Field L] [CommRing R] (P : Ideal C)

@@ -547,12 +547,8 @@ lemma coheight_eq_one {α : Type*} [PartialOrder α] {x : α} (h1 : ¬ IsMax x)
   exact zero_lt_one
 
 lemma isMax_iff {A : Type*} [CommRing A] (x : PrimeSpectrum A) :
-    IsMax x ↔ x.asIdeal.IsMaximal := by
-  refine ⟨fun h => ?_, fun h y hy => (h.eq_of_le y.2.ne_top hy).ge⟩
-  obtain ⟨M, hM, hxM⟩ := Ideal.exists_le_maximal _ x.2.ne_top
-  have : x.asIdeal = M :=
-    le_antisymm hxM (h (b := ⟨M, hM.isPrime⟩) (show x ≤ ⟨M, hM.isPrime⟩ from hxM))
-  exact this ▸ hM
+    IsMax x ↔ x.asIdeal.IsMaximal :=
+  PrimeSpectrum.isMax_iff
 
 /-- A point of `Spec A` of coheight one: it is not closed, and every point specialising it
 strictly is closed. -/

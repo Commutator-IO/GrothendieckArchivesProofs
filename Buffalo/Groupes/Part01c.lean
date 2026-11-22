@@ -183,15 +183,8 @@ theorem frobUnits_not_injective [Nontrivial k] (p : ℕ) [Fact p.Prime] [CharP k
 @[buffalo "_lTf_L0yvrU-6843"]
 theorem SL_eq_ker_det (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [CommRing A] :
     (Matrix.SpecialLinearGroup.toGL : Matrix.SpecialLinearGroup n A →* _).range =
-      (Matrix.GeneralLinearGroup.det : Matrix.GeneralLinearGroup n A →* Aˣ).ker := by
-  ext g
-  constructor
-  · rintro ⟨s, rfl⟩
-    ext
-    simp
-  · intro hg
-    refine ⟨⟨g, by simpa [Units.ext_iff] using hg⟩, ?_⟩
-    ext; rfl
+      (Matrix.GeneralLinearGroup.det : Matrix.GeneralLinearGroup n A →* Aˣ).ker :=
+  Matrix.SpecialLinearGroup.range_toGL_eq_ker_det
 
 /-- _lTf_L0yvrU-6906 (1:55:06) [prop] The center of `GL_n` is `𝔾_m` embedded as the scalar
 matrices (Mathlib `Matrix.GeneralLinearGroup.center_eq_range_scalar`). -/

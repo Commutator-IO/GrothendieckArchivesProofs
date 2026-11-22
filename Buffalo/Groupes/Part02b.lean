@@ -402,14 +402,8 @@ theorem aug_sq_eq (Γ' : Type*) [Group Γ'] :
 it is a bijection `{1, -1} = μ₂(R)` … -/
 @[buffalo "_lTf_L0yvrU-28615"]
 theorem mu2_points {R : Type*} [CommRing R] [IsDomain R] (x : R) :
-    x ^ 2 = 1 ↔ x = 1 ∨ x = -1 := by
-  constructor
-  · intro h
-    have : (x - 1) * (x + 1) = 0 := by linear_combination h
-    rcases mul_eq_zero.mp this with h' | h'
-    · exact Or.inl (sub_eq_zero.mp h')
-    · exact Or.inr (eq_neg_of_add_eq_zero_left h')
-  · rintro (rfl | rfl) <;> ring
+    x ^ 2 = 1 ↔ x = 1 ∨ x = -1 :=
+  sq_eq_one_iff
 
 theorem one_ne_neg_one_of_two {R : Type*} [CommRing R] (h2 : (2 : R) ≠ 0) : (1 : R) ≠ -1 := by
   intro h

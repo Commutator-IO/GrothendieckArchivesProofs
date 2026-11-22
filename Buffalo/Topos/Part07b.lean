@@ -227,7 +227,7 @@ def const_leftAdjoint (C : Type u) [SmallCategory C] :
 /-- ... and the constant functor commutes with all limits. -/
 theorem const_preservesLimits (C : Type u) [SmallCategory C] :
     PreservesLimits (Functor.const Cᵒᵖ : Type u ⥤ (Cᵒᵖ ⥤ Type u)) :=
-  colimConstAdj.rightAdjoint_preservesLimits
+  Buffalo.Topos.Part03.const_preservesLimits
 
 /-- `Set` is Karoubian. -/
 instance types_isIdempotentComplete : IsIdempotentComplete (Type u) :=

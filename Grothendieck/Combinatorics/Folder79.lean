@@ -1115,8 +1115,7 @@ theorem local_dist_three [IsLocalRing R] (e : Rˣ) {x y : Fin 2 → R}
 
 /-- A finite ring is semi-local. -/
 theorem finite_maximalSpectrum_of_finite [Finite R] : Finite (MaximalSpectrum R) :=
-  Finite.of_injective (fun m : MaximalSpectrum R => (m.asIdeal : Set R))
-    (fun _ _ e => MaximalSpectrum.ext (SetLike.coe_injective e))
+  inferInstance
 
 /-- The case `Λ = Z/n`, `n ≥ 1` (for `n ≥ 5` this is Singerman and Strudwick's
 Theorem 11, with equality). -/

@@ -119,39 +119,8 @@ variable {𝕜 : Type*} [RCLike 𝕜]
 /-- Bessel's inequality for a finite family of pairwise orthogonal vectors of norm `≤ 1`. -/
 theorem sum_norm_inner_sq_le {ι : Type*} (s : Finset ι) (y : ι → E)
     (horth : ∀ i ∈ s, ∀ j ∈ s, i ≠ j → ⟪y i, y j⟫_𝕜 = 0) (hle : ∀ i ∈ s, ‖y i‖ ≤ 1)
-    (z : E) : ∑ i ∈ s, ‖⟪y i, z⟫_𝕜‖ ^ 2 ≤ ‖z‖ ^ 2 := by
-  classical
-  set c : ι → 𝕜 := fun i => ⟪y i, z⟫_𝕜 with hc
-  set p : E := ∑ i ∈ s, c i • y i with hp
-  set S : ℝ := ∑ i ∈ s, ‖c i‖ ^ 2 with hS
-  have hS0 : 0 ≤ S := sum_nonneg fun i _ => by positivity
-  have hpz : ⟪p, z⟫_𝕜 = (S : 𝕜) := by
-    rw [hp, sum_inner, hS]
-    push_cast
-    refine sum_congr rfl fun i _ => ?_
-    rw [inner_smul_left, hc, RCLike.conj_mul]
-  have hyp : ∀ i ∈ s, ⟪y i, p⟫_𝕜 = c i * ⟪y i, y i⟫_𝕜 := by
-    intro i hi
-    rw [hp, inner_sum, sum_eq_single i]
-    · rw [inner_smul_right]
-    · intro j hj hji
-      rw [inner_smul_right, horth i hi j hj (Ne.symm hji), mul_zero]
-    · intro h; exact absurd hi h
-  have hpp : ‖p‖ ^ 2 ≤ S := by
-    have h1 : ‖p‖ ^ 2 = ∑ i ∈ s, ‖c i‖ ^ 2 * ‖y i‖ ^ 2 := by
-      rw [← @inner_self_eq_norm_sq 𝕜, hp, sum_inner, map_sum]
-      refine sum_congr rfl fun i hi => ?_
-      rw [inner_smul_left, ← hp, hyp i hi, ← mul_assoc, RCLike.conj_mul,
-        inner_self_eq_norm_sq_to_K]
-      norm_cast
-    rw [h1, hS]
-    exact sum_le_sum fun i hi =>
-      mul_le_of_le_one_right (by positivity) (pow_le_one₀ (norm_nonneg _) (hle i hi))
-  have hSle : S ≤ ‖p‖ * ‖z‖ := by
-    have := norm_inner_le_norm (𝕜 := 𝕜) p z
-    rwa [hpz, RCLike.norm_ofReal, abs_of_nonneg hS0] at this
-  have hpz' : ‖p‖ ≤ ‖z‖ := by nlinarith [norm_nonneg p, norm_nonneg z]
-  nlinarith [norm_nonneg z]
+    (z : E) : ∑ i ∈ s, ‖⟪y i, z⟫_𝕜‖ ^ 2 ≤ ‖z‖ ^ 2 :=
+  sum_norm_inner_sq_le_norm_sq_of_orthogonal s horth hle z
 
 
 /-- The key counting step: for `s` antitone and nonnegative, and weights `0 ≤ c j ≤ 1` of total
@@ -456,33 +425,8 @@ open scoped ComplexConjugate
 /-- Lagrange's inequality: `∑_{i,j ∈ S} |a_i b_j - a_j b_i|² ≤ 2 (∑ |a_i|²)(∑ |b_i|²)`. -/
 theorem sum_sum_norm_sub_sq_le {ι : Type*} (S : Finset ι) (a b : ι → 𝕜) :
     ∑ i ∈ S, ∑ j ∈ S, ‖a i * b j - a j * b i‖ ^ 2 ≤
-      2 * (∑ i ∈ S, ‖a i‖ ^ 2) * ∑ i ∈ S, ‖b i‖ ^ 2 := by
-  set z : ι → 𝕜 := fun i => conj (a i) * b i with hz
-  have key : ∀ i j, ‖a i * b j - a j * b i‖ ^ 2 =
-      (‖a i‖ ^ 2 * ‖b j‖ ^ 2 + ‖a j‖ ^ 2 * ‖b i‖ ^ 2) - 2 * RCLike.re (z i * conj (z j)) := by
-    intro i j
-    rw [@norm_sub_sq 𝕜, RCLike.inner_apply', norm_mul, norm_mul]
-    have : conj (a i * b j) * (a j * b i) = z i * conj (z j) := by
-      simp only [hz, map_mul, RCLike.conj_conj]; ring
-    rw [this]; ring
-  have h2 : ∑ i ∈ S, ∑ j ∈ S, RCLike.re (z i * conj (z j)) = ‖∑ i ∈ S, z i‖ ^ 2 := by
-    have h : (∑ i ∈ S, z i) * conj (∑ i ∈ S, z i) = ∑ i ∈ S, ∑ j ∈ S, z i * conj (z j) := by
-      rw [map_sum, sum_mul_sum]
-    rw [RCLike.mul_conj] at h
-    have h' := congrArg RCLike.re h
-    rw [← RCLike.ofReal_pow, RCLike.ofReal_re] at h'
-    rw [h']
-    simp only [map_sum]
-  have h3 : ∑ i ∈ S, ∑ j ∈ S, (‖a i‖ ^ 2 * ‖b j‖ ^ 2 + ‖a j‖ ^ 2 * ‖b i‖ ^ 2) =
-      2 * (∑ i ∈ S, ‖a i‖ ^ 2) * ∑ i ∈ S, ‖b i‖ ^ 2 := by
-    simp only [sum_add_distrib]
-    rw [sum_comm (f := fun i j => ‖a j‖ ^ 2 * ‖b i‖ ^ 2), mul_assoc, sum_mul_sum]
-    ring
-  calc ∑ i ∈ S, ∑ j ∈ S, ‖a i * b j - a j * b i‖ ^ 2
-      = ∑ i ∈ S, ∑ j ∈ S, (‖a i‖ ^ 2 * ‖b j‖ ^ 2 + ‖a j‖ ^ 2 * ‖b i‖ ^ 2)
-        - 2 * ∑ i ∈ S, ∑ j ∈ S, RCLike.re (z i * conj (z j)) := by
-        simp only [key, sum_sub_distrib, mul_sum]
-    _ ≤ _ := by rw [h3, h2]; nlinarith [sq_nonneg ‖∑ i ∈ S, z i‖]
+      2 * (∑ i ∈ S, ‖a i‖ ^ 2) * ∑ i ∈ S, ‖b i‖ ^ 2 :=
+  RCLike.sum_sum_norm_mul_sub_mul_sq_le S a b
 
 /-- `2 e_2(f_0, …, f_{n-1}) = (∑ f_i)² - ∑ f_i²`. -/
 theorem two_mul_sum_powersetCard_two (f : ℕ → ℝ) (n : ℕ) :

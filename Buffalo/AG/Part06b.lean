@@ -421,9 +421,8 @@ Mathlib has no Koszul complex; proved: the case of one element, whose Koszul com
 `0 → M → M → 0` (multiplication by `x`) has `H₁ = 0` iff `x` is `M`-regular. -/
 @[buffalo "Oqhr-Gt66es-7990"]
 theorem prop_7990 {A M : Type u} [CommRing A] [AddCommGroup M] [Module A M] (x : A) :
-    IsSMulRegular M x ↔ LinearMap.ker (LinearMap.lsmul A M x) = ⊥ := by
-  rw [LinearMap.ker_eq_bot]
-  rfl
+    IsSMulRegular M x ↔ LinearMap.ker (LinearMap.lsmul A M x) = ⊥ :=
+  isSMulRegular_iff_ker_lsmul_eq_bot M x
 
 /-- Oqhr-Gt66es-8055 (2:14:15) [prop] A field is regular; if `A` is regular, so is `A[t]`; hence
 `k[t₁, …, tₙ]` is regular. (The open sets `𝔾_m`, `GL_n` of affine space: not formalised, mathlib

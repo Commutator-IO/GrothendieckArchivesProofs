@@ -98,15 +98,8 @@ for all proper ideals). -/
 @[buffalo "Oqhr-Gt66es-37402"]
 theorem prop_37402 (M : Type v) [AddCommGroup M] [Module A M] :
     Module.FaithfullyFlat A M ↔
-      Module.Flat A M ∧ ∀ 𝔪 : Ideal A, 𝔪.IsMaximal → 𝔪 • (⊤ : Submodule A M) ≠ ⊤ := by
-  rw [Module.FaithfullyFlat.iff_flat_and_proper_ideal A M]
-  refine and_congr_right fun _ => ⟨fun h 𝔪 h𝔪 => h 𝔪 h𝔪.ne_top, fun h I hI => ?_⟩
-  obtain ⟨𝔪, h𝔪, hI𝔪⟩ := I.exists_le_maximal hI
-  intro hItop
-  apply h 𝔪 h𝔪
-  have := Submodule.smul_mono_left (N := (⊤ : Submodule A M)) hI𝔪
-  rw [hItop] at this
-  exact top_le_iff.1 this
+      Module.Flat A M ∧ ∀ 𝔪 : Ideal A, 𝔪.IsMaximal → 𝔪 • (⊤ : Submodule A M) ≠ ⊤ :=
+  Module.faithfullyFlat_iff A M
 
 variable {B : Type v} [CommRing B] [Algebra A B]
 
