@@ -6,6 +6,7 @@ public import Mathlib.AlgebraicGeometry.AffineScheme
 public import Mathlib.Topology.Sheaves.LocallySurjective
 public import StacksFrontier.Algebra.Homology.DerivedCategory.RightDerivedExactFunctor
 public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CokernelFinitePresentation
+public import StacksFrontier.Topology.Sheaves.Cohomology.Locality.DegreeZeroSections
 
 @[expose] public section
 
@@ -32,6 +33,8 @@ sequence).
   `𝒪_X`-module `M`.
 * `localCohomology_eq_punctured`: hence `Hⁿ⁺¹_x(M) ≅ Hⁿ(X ∖ {x}, M)` for `n ≥ 1`, and the same
   for `n = 0` when `Γ(X, M) = 0`, by the connecting maps of the long exact sequence.
+* `nonempty_iso_cokernel`: `H¹_x(M) ≅ Coker(Γ(X, M) → Γ(X ∖ {x}, M))` for every `𝒪_X`-module
+  `M` (and `H⁰_x(M)` is the kernel by definition): page 10's `H⁰_x = Ker u`, `H¹_x = Coker u`.
 * `localCohomology_jO`: for `F = j_!𝒪_U`, `H⁰_x(F) = 0`, `H¹_x(F) ≅ Γ(X ∖ {x}, F)` and
   `Hⁿ⁺¹_x(F) ≅ Hⁿ(X ∖ {x}, F)`: the local cohomology of page 10 is the cohomology of `F` on the
   punctured spectrum.
@@ -284,6 +287,47 @@ theorem localCohomology_jO {f : A} (hf : f ∈ IsLocalRing.maximalIdeal A) :
     · exact hδ0 _ (isZero_rightDerived_zero_jO A hf)
     · exact hδ _ n hn
 
+open Stacks.Cohomology.SectionsWithSupport in
+instance preservesFiniteLimits_sectionsOnComplement :
+    PreservesFiniteLimits (sectionsOnComplement (X A) {x₀ A} (isClosed_x₀ A)) := by
+  constructor
+  intro J _ _
+  have : PreservesLimitsOfShape J (SheafOfModules.evaluation (structureSheafRing (X A))
+    (op (openComplement {x₀ A} (isClosed_x₀ A)))) := inferInstance
+  have : PreservesLimitsOfShape J (ModuleCat.restrictScalars.{u}
+      ((structureSheafRing (X A)).obj.map
+        (homOfLE (le_top : openComplement {x₀ A} (isClosed_x₀ A) ≤ ⊤)).op).hom) :=
+    ⟨fun {_} => inferInstance⟩
+  exact comp_preservesLimitsOfShape _ _
+
+open Stacks.Cohomology.SectionsWithSupport in
+/-- **Folder 101, page 10: `H¹_x(M)` is the cokernel of restriction to the punctured spectrum**,
+`Γ(X, M) → Γ(X ∖ {x}, M)`, for every `𝒪_X`-module `M` on the spectrum of a local ring
+(`H⁰_x(M)` is its kernel by definition). For a discrete valuation ring, `X ∖ {x}` is the generic
+point and this is page 10's `H¹_x(F) = Coker u` for the triple `(Γ(X, F), F_η, u)`. -/
+theorem nonempty_iso_cokernel (M : ModuleSheaves (X A)) :
+    Nonempty ((Hx A 1).obj M ≅
+      cokernel ((restrictionToComplement (X A) {x₀ A} (isClosed_x₀ A)).app M)) := by
+  obtain ⟨δ, -, hex⟩ := longExact_rightDerived_sectionsWithSupport (X A) {x₀ A}
+    (isClosed_x₀ A)
+  have h2 := (hex 0 M).exact 1
+  have hepi : Epi ((δ 0).app M) := ((hex 0 M).exact 2).epi_f
+    ((isZero_cohomology A M (by omega)).eq_of_tgt _ _)
+  let e₁ := (Functor.rightDerivedZeroIsoSelf (Γfun A)).app M
+  let e₂ := (Functor.rightDerivedZeroIsoSelf
+    (sectionsOnComplement (X A) {x₀ A} (isClosed_x₀ A))).app M
+  have hnat := Functor.toRightDerivedZero_naturality_app
+    (restrictionToComplement (X A) {x₀ A} (isClosed_x₀ A)) M
+  refine ⟨(IsColimit.coconePointUniqueUpToIso (@ShortComplex.Exact.gIsCokernel _ _ _ _ _ h2 hepi)
+    (colimit.isColimit _)) ≪≫
+    cokernel.mapIso _ _ e₁ e₂ ?_⟩
+  change (NatTrans.rightDerived (restrictionToComplement (X A) {x₀ A} (isClosed_x₀ A)) 0).app M
+    ≫ e₂.hom = e₁.hom ≫ _
+  rw [← cancel_epi e₁.inv]
+  simp only [e₁, e₂, Functor.rightDerivedZeroIsoSelf_inv, Iso.app_inv, Iso.app_hom]
+  rw [← Category.assoc, hnat, Category.assoc, Functor.rightDerivedZeroIsoSelf_inv_hom_id_app,
+    Category.comp_id, Functor.rightDerivedZeroIsoSelf_inv_hom_id_app_assoc]
+
 end Local
 
 section DVR
@@ -314,18 +358,6 @@ instance preservesEpimorphisms_sectionsOnComplement :
   preserves {_ _} φ _ := (ModuleCat.epi_iff_surjective _).2
     (surjective_evaluation_of_le A _ (η A) (η_mem A)
       (fun _ hV q hq => by rw [eq_η_of_mem A hq]; exact hV) φ)
-
-instance preservesFiniteLimits_sectionsOnComplement :
-    PreservesFiniteLimits (sectionsOnComplement (X A) {x₀ A} (isClosed_x₀ A)) := by
-  constructor
-  intro J _ _
-  have : PreservesLimitsOfShape J (SheafOfModules.evaluation (structureSheafRing (X A))
-    (op (openComplement {x₀ A} (isClosed_x₀ A)))) := inferInstance
-  have : PreservesLimitsOfShape J (ModuleCat.restrictScalars.{u}
-      ((structureSheafRing (X A)).obj.map
-        (homOfLE (le_top : openComplement {x₀ A} (isClosed_x₀ A) ≤ ⊤)).op).hom) :=
-    ⟨fun {_} => inferInstance⟩
-  exact comp_preservesLimitsOfShape _ _
 
 instance preservesFiniteColimits_sectionsOnComplement :
     PreservesFiniteColimits (sectionsOnComplement (X A) {x₀ A} (isClosed_x₀ A)) :=
