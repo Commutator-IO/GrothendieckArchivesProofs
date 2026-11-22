@@ -4,6 +4,7 @@ public import Grothendieck.EffectiveVenken
 public import Grothendieck.Folder1
 public import Grothendieck.Folder10
 public import Grothendieck.Folder100
+public import Grothendieck.Folder100Baire
 public import Grothendieck.Folder100Cohen
 public import Grothendieck.Folder101
 public import Grothendieck.Folder101DimTwo
@@ -23,6 +24,7 @@ public import Grothendieck.Folder126EtaleSplitting
 public import Grothendieck.Folder126Existence
 public import Grothendieck.Folder126GeometricPoints
 public import Grothendieck.Folder126Glue
+public import Grothendieck.Folder126NilpotentDescent
 public import Grothendieck.Folder126NilpotentQuotient
 public import Grothendieck.Folder126RadicialEtale
 public import Grothendieck.Folder126RadicialEtaleGlobal
@@ -73,6 +75,7 @@ public import Grothendieck.Folder21
 public import Grothendieck.Folder22
 public import Grothendieck.Folder22Adic
 public import Grothendieck.Folder22CohenAlgebras
+public import Grothendieck.Folder22Uniqueness
 public import Grothendieck.Folder23Normalisation
 public import Grothendieck.Folder29
 public import Grothendieck.Folder29TameInertia
@@ -136,6 +139,7 @@ public import Grothendieck.Folder94
 public import Grothendieck.Folder94Koszul
 public import Grothendieck.Folder98
 public import Grothendieck.Folder123Kostant
+public import Grothendieck.Folder123KostantClassical
 public import Grothendieck.Folder123KostantOpposite
 public import Grothendieck.Folder147
 public import Grothendieck.IhesSGA6_1_4
