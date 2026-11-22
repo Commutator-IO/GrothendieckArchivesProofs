@@ -52,13 +52,15 @@ over `ker φ` gives a geometric point over `φ` (`exists_ringHom_lift_of_prime`,
 fibre is its `finiteAlgHomCharsEquiv`.
 
 **Not formalised.**
-* The global statement over a locally noetherian `Y`: the base change to the strict
+* Existence of the global factorisation over a locally noetherian `Y`: the base change to the strict
   henselisations, and the construction of `X^ét` by descent of étale covers (SGA 1 IX §4, the
   draft's Stacks 02L5), are not done; Mathlib has no finite étale part `π₀(X/Y)` of a finite
   morphism.
-* The topological invariance of the étale site used on page 23 is in AxiomMath/Stacks
-  (`Stacks.Etale.etalePullback_isEquivalence`, 04DZ) but is not applied here: it serves the global
-  statement, which is not formalised.
+* The global universal property of page 23 (every `Y`-morphism from `X` to an étale `Y`-scheme
+  factors uniquely through `X^ét`, over any `Y`) and the uniqueness of the factorisation up to
+  unique isomorphism are proved in `Grothendieck.Folder126RadicialEtaleGlobal`, from the
+  topological invariance of the étale site (Stacks 0BTY); only the existence of `X^ét` over a
+  general `Y` is missing.
 * Universal openness enters only through the openness of `Spec A → Spec R` after base change;
   the page's remark that « `d` constant » may be dropped for connected `Y` is false (the
   reading's counterexample `y² = t` over `k[t]`) and is not stated.

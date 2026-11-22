@@ -47,3 +47,14 @@ leanOptions = { autoImplicit = false, relaxedAutoImplicit = false, maxSynthPendi
 # (definitions, not theorems): one file per section of the edition's two notes on open problems.
 [[lean_lib]]
 name = "OpenProblems"
+
+# Issue #31, question 3. The trusted statements, written with Mathlib (and reviewed Stacks
+# definitions) alone and left unproved: a `sorry` is expected here, so warnings are not errors in
+# this library, which is not a default target. `Solution` proves the same statements through the
+# libraries above; `lake comparator` (`comparator.json`) checks that they match.
+[[lean_lib]]
+name = "Challenge"
+leanOptions = { warningAsError = false }
+
+[[lean_lib]]
+name = "Solution"
