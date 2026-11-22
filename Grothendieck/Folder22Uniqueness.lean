@@ -5,65 +5,69 @@ public import Grothendieck.Folder22CohenAlgebras
 @[expose] public section
 
 /-!
-# Folder 22, pages 15 to 17: uniqueness of formally smooth lifts (3.10 and 3.12)
+# Folder 22, pages 15 to 17: uniqueness of formally smooth lifts (3.10, 3.12)
 
-The typescript of folder 22 (`transcripts/22/22.modern.tex`, pages 15–17) states, after the
-existence of a formally smooth flat lift of a special fibre (3.10, and its case `B_0 = K`, the
-Cohen ring of 3.12), that such a lift is *unique up to isomorphism*. The existence halves are
+The typescript of folder 22 (`transcripts/22/22.modern.tex`, pages 15–17) states, with the
+existence of a formally smooth flat lift `B` of a special fibre `B_0` (Cor. 3.10, and its case
+`B_0 = K` a separable extension of `k`, the « Cohen ring » of Cor. 3.12), that such a lift is
+*unique up to isomorphism*, and in 3.12 that, when `𝔪_B = 𝔪_A B`, `B` is formally smooth over `A`
+if and only if it is flat with `K/k` separable. The existence halves are
 `Grothendieck.Folder22CohenAlgebras.corollaire3_10` and `corollaire3_12_existence`; this file
-proves the uniqueness halves.
+proves the uniqueness halves and the equivalence 1) ⇔ 2) of 3.12.
 
 The finding: uniqueness needs less than the page assumes. Only the source `B` has to be formally
-smooth, only the target `B'` flat; the base `A` needs neither to be complete nor noetherian, and
-the isomorphism is the one given on the special fibres.
+smooth and only the target `B'` flat; the base `A` need be neither complete nor noetherian; and
+the isomorphism can be chosen to induce the given one on special fibres.
+
+Formal smoothness is `RingHom.FormallySmoothNAdic f 𝔪_B` (Stacks 07NI, 07EC (2)(b)), as in
+`Grothendieck/Folder22CohenAlgebras.lean`.
 
 **What is proved.**
 * `exists_algHom_lift`: let `A` be a local ring, `B` a noetherian local `A`-algebra (local
-  structure map) formally smooth for its `𝔪_B`-adic topology, `B'` a complete noetherian local
-  `A`-algebra, and `e₀ : k ⊗_A B ≃ k ⊗_A B'` an isomorphism of special fibres over `k = A/𝔪_A`.
-  Then there is a local `A`-algebra map `φ : B → B'` with `1 ⊗ φ(b) = e₀ (1 ⊗ b)`.
-* `corollaire3_10_uniqueness`: if moreover `B` is complete and `B'` is flat over `A`, every such
-  `φ` is an isomorphism; hence `B ≃ B'` as `A`-algebras, by an isomorphism lifting `e₀`.
-  This is the uniqueness half of 3.10 (EGA 0_IV 19.7.2, Stacks 07NR for the existence).
-* `corollaire3_10_uniqueness'`: the symmetric form of the page — `B` and `B'` both complete,
-  flat and formally smooth with isomorphic special fibres are isomorphic over `A`.
+  structure map) formally smooth over `A` for its `𝔪_B`-adic topology, `B'` a complete noetherian
+  local `A`-algebra, and `e₀ : k ⊗_A B ≃ k ⊗_A B'` an isomorphism of special fibres. There is an
+  `A`-algebra map `φ : B → B'` with `e₀ (1 ⊗ b) = 1 ⊗ φ(b)`.
+* `bijective_of_lift`: if moreover `B` is complete and `B'` flat over `A`, every such `φ` is
+  bijective.
+* `corollaire3_10_uniqueness`: hence `B ≃ B'` as `A`-algebras, by an isomorphism lifting `e₀`:
+  the uniqueness half of 3.10 (EGA 0_IV 19.7.2; Stacks 07NR is the existence).
 * `corollaire3_12_uniqueness`: the uniqueness half of 3.12. Two complete noetherian local
-  `A`-algebras, flat and formally smooth, whose special fibres are both isomorphic to the same
-  `k`-algebra `K` (a separable extension in the page), are isomorphic over `A` (the « Cohen ring »
-  of `K` over `A` is unique up to non-unique isomorphism).
+  `A`-algebras, flat and formally smooth, whose special fibres are both identified with the same
+  `k`-algebra `K`, are isomorphic over `A`, compatibly with the identifications.
+* `corollaire3_12`: 1) ⇔ 2) of 3.12. For a local homomorphism `f : A → B` of noetherian local
+  rings with `𝔪_B = 𝔪_A B`, `f` is formally smooth for the `𝔪_B`-adic topology if and only if `B`
+  is flat over `A` and `k(B)/k(A)` is separable (`Algebra.IsSeparableExtension`).
 
 **How.** Put `J = 𝔪_A B'`, so that `B'/J ≅ k ⊗_A B'`, and let `ψ : B → B'/J` be
-`B → k ⊗_A B ≅ k ⊗_A B' ≅ B'/J` (surjective). Formal smoothness of `B` lifts `ψ` to `φ : B → B'`:
-the lifting property is passed from square-zero quotients to `B'/J` through the `𝔪_{B'}`-adic
-topology, `J` being closed and `B'` complete (Stacks' `exists_continuous_lift_of_isFormallySmooth_
-of_isAdic`; this is the « step by step » lifting `B → B'/J^n` and the passage to the limit of the
-page). `φ` is surjective since it is surjective modulo `J = (𝔪_A B) B'`, `B` is complete and `B'`
-Hausdorff for these ideals (`surjective_of_mk_map_comp_surjective`). `φ` is injective by the local
-flatness criterion (Stacks 00MK, EGA III 4.6.7.1, in Stacks'
+`B → k ⊗_A B ≅ k ⊗_A B' ≅ B'/J`, which is surjective. Formal smoothness lifts `ψ` to
+`φ : B → B'`: `J` is closed in the complete `𝔪_{B'}`-adic ring `B'`, and Stacks'
+`exists_continuous_lift_of_isFormallySmooth_of_isAdic` performs the page's step-by-step lifting
+along `B'/J^{n+1} → B'/J^n` and the passage to the limit. `φ` is surjective because it is
+surjective modulo `J = (𝔪_A B) B'`, `B` is `𝔪_A B`-adically complete and `B'` is Hausdorff
+(`surjective_of_mk_map_comp_surjective`). `φ` is injective by the local flatness criterion
+(Stacks 00MK, EGA III 4.6.7.1, as Stacks'
 `injective_and_flat_quotient_range_of_injective_mapQ_maximalIdeal_of_isNoetherianRing`): `B'` is
-flat over `A`, `B` is a finite module over itself, and `φ` is injective modulo `𝔪_A` because
-`e₀` is. The three topological helpers and the lifting lemma below are adapted from private
-lemmas of AxiomMath/Stacks (Apache-2.0), `StacksFrontier/RingTheory/GeometricallyRegular/
-FormalSmoothness.lean`, which are not exported.
+flat over `A`, `B` is finite over itself, and `φ` is injective modulo `𝔪_A` because `e₀` is.
+This is the local flatness argument of the page, not Nakayama on the graded pieces.
+For 3.12, `corollaire3_9` reduces formal smoothness to that of the special fibre over `k`. When
+`𝔪_B = 𝔪_A B` the special fibre is the residue field `K` of `B` (`specialFiberEquivResidueField`),
+whose maximal ideal is `⊥`. Formal smoothness for the `⊥`-adic topology is mathlib's
+`Algebra.FormallySmooth` (`formallySmoothNAdic_bot_iff`), which for a field extension is
+separability (`Algebra.FormallySmooth.iff_isSeparableExtension`, EGA 0_IV 19.6.1).
+The three topological helpers and the lifting lemma are adapted from private lemmas of
+AxiomMath/Stacks (Apache-2.0), `StacksFrontier/RingTheory/GeometricallyRegular/
+FormalSmoothness.lean`, which that module does not export.
 
 **Not formalised.**
-* The equivalence 1) ⇔ 2) of 3.12 (when `𝔪_B = 𝔪_A B`: formally smooth ⇔ flat with residue
-  extension `K/k` separable). By `corollaire3_9` and `question1` it reduces to: for a field
-  extension `K/k`, `K` is geometrically regular over `k` (equivalently formally smooth for the
-  discrete topology) if and only if `K/k` is separable, together with the identification of the
-  special fibre `k ⊗_A B` with `K` when `𝔪_B = 𝔪_A B`. The second half is elementary; for the
-  first, the pinned Stacks has `Algebra.FormallySmooth.iff_isSeparableExtension` (discrete formal
-  smoothness), but not the comparison of mathlib's `Algebra.FormallySmooth` with
-  `RingHom.FormallySmoothNAdic … ⊥` on a field in the direction needed (`FormallySmoothNAdic` for
-  `𝔪 = ⊥` quantifies over maps killing a power of `⊥`, i.e. all maps, so the two agree, but the
-  universe bookkeeping between `.{max u v}` and mathlib's universe of test algebras is not done
-  here).
-* Uniqueness of the isomorphism: `φ` is not unique (Cohen rings have non-trivial automorphisms
-  inducing the identity on `K`); the page does not claim it.
+* Uniqueness of the isomorphism itself: `φ` is not unique (a Cohen ring has automorphisms inducing
+  the identity on `K`), and the page does not claim it.
+* As in `Folder22CohenAlgebras`, Cohen algebras and condition P (Déf. 3.7, Lemme 3.2,
+  Théorème 3.6, Cor. 3.8, 3.11).
 -/
 
 open IsLocalRing
 open scoped TensorProduct
+open Module
 
 universe u v
 
@@ -219,9 +223,13 @@ omit [IsNoetherianRing B] [IsLocalRing B] [IsNoetherianRing B'] [IsLocalRing B']
   [IsLocalHom (algebraMap A B')] in
 theorem specialFiberMap_surjective
     (e₀ : ResidueField A ⊗[A] B ≃ₐ[ResidueField A] ResidueField A ⊗[A] B') :
-    Function.Surjective (specialFiberMap e₀) :=
-  (AlgEquiv.surjective _).comp ((AlgEquiv.surjective e₀).comp
-    (Algebra.TensorProduct.includeRight_surjective B residue_surjective))
+    Function.Surjective (specialFiberMap e₀) := by
+  intro y
+  obtain ⟨z, hz⟩ :=
+    (Algebra.TensorProduct.quotIdealMapEquivQuotTensor B' (maximalIdeal A)).symm.surjective y
+  obtain ⟨w, rfl⟩ := e₀.surjective z
+  obtain ⟨b, rfl⟩ := Algebra.TensorProduct.includeRight_surjective B residue_surjective w
+  exact ⟨b, hz⟩
 
 omit [IsNoetherianRing B] [IsLocalRing B] [IsNoetherianRing B'] [IsLocalRing B']
   [IsAdicComplete (maximalIdeal B') B'] [IsLocalHom (algebraMap A B)]
@@ -230,15 +238,14 @@ theorem specialFiberMap_algebraMap
     (e₀ : ResidueField A ⊗[A] B ≃ₐ[ResidueField A] ResidueField A ⊗[A] B') (r : A) :
     specialFiberMap e₀ (algebraMap A B r) = Ideal.Quotient.mk _ (algebraMap A B' r) := by
   apply (Algebra.TensorProduct.quotIdealMapEquivQuotTensor B' (maximalIdeal A)).injective
-  rw [quotIdealMapEquivQuotTensor_specialFiberMap,
-    Algebra.TensorProduct.quotIdealMapEquivQuotTensor_mk]
+  rw [quotIdealMapEquivQuotTensor_specialFiberMap]
   have h (C : Type v) [CommRing C] [Algebra A C] :
       (1 : ResidueField A) ⊗ₜ[A] algebraMap A C r =
-        algebraMap (ResidueField A) (ResidueField A ⊗[A] C) (residue r) := by
+        algebraMap (ResidueField A) (ResidueField A ⊗[A] C) (residue A r) := by
     rw [← Algebra.TensorProduct.algebraMap_apply',
       IsScalarTower.algebraMap_apply A (ResidueField A) (ResidueField A ⊗[A] C)]
     rfl
-  rw [h B, h B', AlgEquiv.commutes]
+  exact ((congrArg e₀ (h B)).trans (e₀.commutes _)).trans (h B').symm
 
 omit [IsNoetherianRing B] [IsLocalRing B] [IsNoetherianRing B'] [IsLocalRing B']
   [IsAdicComplete (maximalIdeal B') B'] [IsLocalHom (algebraMap A B)]
@@ -252,6 +259,7 @@ theorem mk_eq_specialFiberMap
   rw [quotIdealMapEquivQuotTensor_specialFiberMap, hφ]
   rfl
 
+omit [IsNoetherianRing B] [IsLocalHom (algebraMap A B)] in
 /-- **Existence of the comparison map.** If `B` is formally smooth over `A` for its `𝔪_B`-adic
 topology and `B'` is complete, every isomorphism `e₀` of special fibres lifts to an `A`-algebra
 map `φ : B → B'`. -/
@@ -281,7 +289,8 @@ theorem bijective_of_lift [IsAdicComplete (maximalIdeal B) B] [Module.Flat A B']
       rw [← mk_eq_specialFiberMap e₀ φ hφ]
       exact Ideal.Quotient.eq_zero_iff_mem.mpr hs
     have h2 : e₀ (1 ⊗ₜ s) = 0 := by
-      rw [← quotIdealMapEquivQuotTensor_specialFiberMap, h1, map_zero]
+      rw [← quotIdealMapEquivQuotTensor_specialFiberMap, h1]
+      exact map_zero _
     have h3 : Algebra.TensorProduct.quotIdealMapEquivQuotTensor B (maximalIdeal A)
         (Ideal.Quotient.mk I s) = 0 := by
       rw [Algebra.TensorProduct.quotIdealMapEquivQuotTensor_mk]
@@ -289,7 +298,8 @@ theorem bijective_of_lift [IsAdicComplete (maximalIdeal B) B] [Module.Flat A B']
     exact Ideal.Quotient.eq_zero_iff_mem.mp
       ((map_eq_zero_iff _ (AlgEquiv.injective _)).mp h3)
   constructor
-  · refine (Module.Flat.injective_and_flat_quotient_range_of_injective_mapQ_maximalIdeal_of_isNoetherianRing
+  · refine
+      (Flat.injective_and_flat_quotient_range_of_injective_mapQ_maximalIdeal_of_isNoetherianRing
       (S := B) φ.toLinearMap ?_).1
     apply (injective_iff_map_eq_zero _).mpr
     intro z hz
@@ -311,7 +321,7 @@ theorem bijective_of_lift [IsAdicComplete (maximalIdeal B) B] [Module.Flat A B']
       (map_maximalIdeal_le _) ‹_› I.fg_of_isNoetherianRing
     have : IsHausdorff (I.map (φ : B →+* B')) B' := by
       rw [hmap]
-      exact IsHausdorff.of_isLocalRing (map_maximalIdeal_lt_top _).ne
+      exact IsHausdorff.of_isLocalRing J B' (map_maximalIdeal_lt_top _).ne
     refine surjective_of_mk_map_comp_surjective (I := I) (φ : B →+* B') ?_
     rw [hmap]
     intro y
@@ -381,20 +391,22 @@ noncomputable def specialFiberEquivResidueField {A : Type u} {B : Type v} [CommR
   letI : Algebra A B := f.toAlgebra
   letI : Algebra (ResidueField A) (ResidueField B) := (ResidueField.map f).toAlgebra
   AlgEquiv.ofRingEquiv
-    (f := (Algebra.TensorProduct.quotIdealMapEquivQuotTensor B (maximalIdeal A)).symm.toRingEquiv.trans
-      (Ideal.quotEquivOfEq hm.symm))
+    (f := (Algebra.TensorProduct.quotIdealMapEquivQuotTensor B
+      (maximalIdeal A)).symm.toRingEquiv.trans (Ideal.quotEquivOfEq hm.symm))
     (by
       intro x
       obtain ⟨a, rfl⟩ := residue_surjective x
-      have h1 : algebraMap (ResidueField A) (ResidueField A ⊗[A] B) (residue a) =
+      have h1 : algebraMap (ResidueField A) (ResidueField A ⊗[A] B) (residue A a) =
           (1 : ResidueField A) ⊗ₜ[A] f a := by
+        change algebraMap (ResidueField A) _ (algebraMap A (ResidueField A) a) = _
         rw [← IsScalarTower.algebraMap_apply A (ResidueField A) (ResidueField A ⊗[A] B),
           Algebra.TensorProduct.algebraMap_apply']
         rfl
-      rw [h1, RingEquiv.trans_apply]
-      erw [AlgEquiv.symm_apply_eq.mpr
-        (Algebra.TensorProduct.quotIdealMapEquivQuotTensor_mk B (maximalIdeal A) (f a)).symm]
-      rfl)
+      rw [h1]
+      have h2 : (Algebra.TensorProduct.quotIdealMapEquivQuotTensor B (maximalIdeal A)).symm
+          ((1 : ResidueField A) ⊗ₜ[A] f a) = Ideal.Quotient.mk _ (f a) :=
+        (AlgEquiv.symm_apply_eq _).mpr rfl
+      exact (congrArg (Ideal.quotEquivOfEq hm.symm) h2).trans rfl)
 
 /-- **Corollaire 3.12, 1) ⇔ 2).** Let `f : A → B` be a local homomorphism of noetherian local
 rings with `𝔪_B = 𝔪_A B`. Then `B` is formally smooth over `A` for the `𝔪_B`-adic topology if
@@ -408,10 +420,9 @@ theorem corollaire3_12 {A : Type u} {B : Type v} [CommRing A] [IsNoetherianRing 
     letI : Algebra (ResidueField A) (ResidueField B) := (ResidueField.map f).toAlgebra
     RingHom.FormallySmoothNAdic.{max u v} f (maximalIdeal B) ↔
       Module.Flat A B ∧ Algebra.IsSeparableExtension (ResidueField A) (ResidueField B) := by
-  letI : Algebra A B := f.toAlgebra
-  letI : Algebra (ResidueField A) (ResidueField B) := (ResidueField.map f).toAlgebra
-  rw [Grothendieck.Folder22CohenAlgebras.corollaire3_9 f]
-  refine and_congr_right fun _ => ?_
+  let : Algebra A B := f.toAlgebra
+  let : Algebra (ResidueField A) (ResidueField B) := (ResidueField.map f).toAlgebra
+  refine (Grothendieck.Folder22CohenAlgebras.corollaire3_9 f).trans (and_congr_right fun _ => ?_)
   let E := specialFiberEquivResidueField f hm
   have hbot : maximalIdeal (ResidueField A ⊗[A] B) = ⊥ := by
     ext x
