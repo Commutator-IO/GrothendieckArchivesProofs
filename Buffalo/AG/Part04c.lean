@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.AG.Part04b
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -28,6 +29,7 @@ noncomputable section
 /-- thSz9ZHDK9o-14657 (4:04:17) [prop] To `u : A → Γ(X, 𝒪_X)`, `X` locally ringed, one associates
 `φ : x ↦ ker(A → κ(x))` (here `u⁻¹` of the point `toΓSpecFun x` of `Spec Γ(X)`), continuous, with
 `φ⁻¹(D(f)) = X_{u(f)}`. -/
+@[buffalo "thSz9ZHDK9o-14657"]
 theorem prop_14657 (X : LocallyRingedSpace.{u}) {A : Type u} [CommRing A]
     (u : A →+* LocallyRingedSpace.Γ.obj (op X)) :
     (∀ (x : X) (a : A), a ∈ (PrimeSpectrum.comap u (X.toΓSpecFun x)).asIdeal ↔
@@ -53,6 +55,7 @@ example (X : LocallyRingedSpace.{u}) :
 /-- thSz9ZHDK9o-14914 (4:08:34) [thm] For every locally ringed space `X`,
 `Hom(X, Spec A) ≃ Hom(A, Γ(X, 𝒪_X))` functorially: `Spec` is right adjoint to `Γ` (opposite
 rings). -/
+@[buffalo "thSz9ZHDK9o-14914"]
 def thm_14914 : LocallyRingedSpace.Γ.rightOp ⊣ Spec.toLocallyRingedSpace.{u} :=
   ΓSpec.locallyRingedSpaceAdjunction
 
@@ -60,12 +63,14 @@ def thm_14914 : LocallyRingedSpace.Γ.rightOp ⊣ Spec.toLocallyRingedSpace.{u} 
 
 /-- thSz9ZHDK9o-15240 (4:14:00) [prop] The opposite of the category of `k`-algebras is equivalent
 to the category of affine schemes over `Spec k`. -/
+@[buffalo "thSz9ZHDK9o-15240"]
 def prop_15240 (k : CommRingCat.{u}) :
     (CommAlgCat.{u} k)ᵒᵖ ≌ Over (AffineScheme.equivCommRingCat.inverse.obj (op k)) :=
   (Buffalo.AG.Part01.prop_12039 k).symm.trans (Over.postEquiv _ AffineScheme.equivCommRingCat.symm)
 
 /-- thSz9ZHDK9o-15432 (4:17:12) [prop] A `k`-scheme `X → Spec k` defines a functor from
 `k`-algebras to sets, `k' ↦ X(k') = Hom_k(Spec k', X)`. -/
+@[buffalo "thSz9ZHDK9o-15432"]
 def ptsOver (k : CommRingCat.{u}) (X : Over (Spec k)) : CommAlgCat.{u} k ⥤ Type u where
   obj k' := {f : Spec (CommRingCat.of k') ⟶ X.left //
     f ≫ X.hom = Spec.map (CommRingCat.ofHom (algebraMap k k'))}
@@ -87,12 +92,14 @@ def ptsOver (k : CommRingCat.{u}) (X : Over (Spec k)) : CommAlgCat.{u} k ⥤ Typ
 
 /-- thSz9ZHDK9o-15698 (4:21:38) [prop] The functor represented by a scheme is a sheaf for the
 Zariski topology. -/
+@[buffalo "thSz9ZHDK9o-15698"]
 theorem prop_15698 (X : Scheme.{u}) :
     Presieve.IsSheaf Scheme.zariskiTopology (yoneda.obj X) :=
   GrothendieckTopology.Subcanonical.isSheaf_of_isRepresentable _
 
 /-- thSz9ZHDK9o-15892 (4:24:52) [prop] The jointly surjective families of open immersions form a
 pretopology on schemes (`Scheme.zariskiPretopology`) generating the Zariski topology. -/
+@[buffalo "thSz9ZHDK9o-15892"]
 theorem prop_15892 :
     Scheme.zariskiTopology.{u} = Scheme.zariskiPretopology.toGrothendieck :=
   Scheme.zariskiTopology_eq
@@ -106,6 +113,7 @@ instance Spec_isCoverDense : Scheme.Spec.{u}.IsCoverDense Scheme.zariskiTopology
 
 /-- thSz9ZHDK9o-16149 (4:29:09) [prop] Restriction to affine schemes is fully faithful from
 Zariski sheaves on schemes: morphisms between restrictions extend uniquely. -/
+@[buffalo "thSz9ZHDK9o-16149"]
 def prop_16149 (F G : Sheaf Scheme.zariskiTopology.{u} (Type u)) :
     (Scheme.Spec.op ⋙ F.obj ⟶ Scheme.Spec.op ⋙ G.obj) ≃ (F.obj ⟶ G.obj) :=
   Functor.IsCoverDense.restrictHomEquivHom
@@ -121,6 +129,7 @@ example : Scheme.Spec.{u}.IsDenseSubsite (Scheme.Spec.inducedTopology Scheme.zar
 
 /-- thSz9ZHDK9o-16277 (4:31:17) [prop] Every open subset of a scheme is a scheme (with an open
 immersion into it); the affine opens form a basis; on an affine scheme, the `X_f` do. -/
+@[buffalo "thSz9ZHDK9o-16277"]
 theorem prop_16277 (X : Scheme.{u}) (U : X.Opens) :
     IsOpenImmersion U.ι ∧ Opens.IsBasis X.affineOpens ∧
       (IsAffine X → Opens.IsBasis (Set.range (X.basicOpen : Γ(X, ⊤) → X.Opens))) :=
@@ -131,6 +140,7 @@ theorem prop_16277 (X : Scheme.{u}) (U : X.Opens) :
 /-- thSz9ZHDK9o-16684 (4:38:04) [prop] Sums exist in locally ringed spaces and in ringed
 (sheafed) spaces, and are computed on the underlying spaces: the forgetful functors
 `LRS → SheafedSpace → Top` preserve them. -/
+@[buffalo "thSz9ZHDK9o-16684"]
 theorem prop_16684 (ι : Type u) :
     HasColimitsOfShape (Discrete ι) LocallyRingedSpace.{u} ∧
       PreservesColimitsOfShape (Discrete ι) LocallyRingedSpace.forgetToSheafedSpace.{u} ∧
@@ -141,6 +151,7 @@ theorem prop_16684 (ι : Type u) :
 /-- thSz9ZHDK9o-16874 (4:41:14) [prop] The sum of schemes is a scheme, the sum in the category of
 schemes, computed on underlying spaces, its summands being disjoint open sets; sums also exist
 over a base `S`. -/
+@[buffalo "thSz9ZHDK9o-16874"]
 theorem prop_16874 {σ : Type u} (g : σ → Scheme.{u}) (S : Scheme.{u}) :
     HasColimitsOfShape (Discrete σ) Scheme.{u} ∧
       PreservesColimitsOfShape (Discrete σ) Scheme.forgetToTop.{u} ∧
@@ -152,6 +163,7 @@ theorem prop_16874 {σ : Type u} (g : σ → Scheme.{u}) (S : Scheme.{u}) :
 
 /-- thSz9ZHDK9o-17064 (4:44:24) [prop] A morphism `S' → ∐ X_i` amounts to a decomposition of `S'`
 into the disjoint open sets `S'_i = f⁻¹(X_i)`, covering `S'`, with morphisms `S'_i → X_i`. -/
+@[buffalo "thSz9ZHDK9o-17064"]
 theorem prop_17064 {σ : Type u} (g : σ → Scheme.{u}) {S' : Scheme.{u}} (f : S' ⟶ ∐ g) :
     (∀ i j, i ≠ j → Disjoint (f.base ⁻¹' Set.range (Sigma.ι g i).base)
       (f.base ⁻¹' Set.range (Sigma.ι g j).base)) ∧
@@ -180,6 +192,7 @@ theorem prop_17064_cex {σ : Type u} (g : σ → Scheme.{u}) {k l : σ} (hkl : k
 /-- thSz9ZHDK9o-17128 (4:45:28) [prop] Among Zariski sheaves, the sheaf represented by `∐ X_i`
 is the sum of the sheaves represented by the `X_i`: every Zariski sheaf `F` takes sums of
 schemes to products, `F(∐ X_i) = ∏ F(X_i)` (so `Hom(h_{∐X_i}, F) = ∏ Hom(h_{X_i}, F)`). -/
+@[buffalo "thSz9ZHDK9o-17128"]
 theorem prop_17128 {F : Scheme.{u}ᵒᵖ ⥤ Type u} (hF : Presieve.IsSheaf Scheme.zariskiTopology F)
     (ι : Type u) : PreservesLimitsOfShape (Discrete ι) F :=
   preservesLimitsOfShape_discrete_of_isSheaf_zariskiTopology hF
@@ -187,6 +200,7 @@ theorem prop_17128 {F : Scheme.{u}ᵒᵖ ⥤ Type u} (hF : Presieve.IsSheaf Sche
 /-- thSz9ZHDK9o-17192 (4:46:32) [prop] A family of monomorphisms `F_i → F` with pairwise disjoint
 images, jointly epimorphic, makes `F` the sum of the `F_i`. Partial: the case of sets (sheaves on
 a point); for Zariski sheaves, epimorphisms are only local surjections. -/
+@[buffalo "thSz9ZHDK9o-17192"]
 theorem prop_17192 {ι F : Type u} {X : ι → Type u} (f : ∀ i, X i → F)
     (hinj : ∀ i, Function.Injective (f i))
     (hdisj : ∀ i j, i ≠ j → Disjoint (Set.range (f i)) (Set.range (f j)))
@@ -212,6 +226,7 @@ theorem unique_obj_empty {F : Scheme.{u}ᵒᵖ ⥤ Type u}
 /-- thSz9ZHDK9o-17324 (4:48:44) [prop] For `i ≠ j`, `X_i ×_X X_j` is empty; the empty scheme
 represents the initial sheaf: `Hom(S', ∅)` is a point if `S'` is empty and empty otherwise, and
 it maps uniquely to every Zariski sheaf. -/
+@[buffalo "thSz9ZHDK9o-17324"]
 theorem prop_17324 {σ : Type u} (g : σ → Scheme.{u}) {i j : σ} (hij : i ≠ j) (S' : Scheme.{u})
     (F : Sheaf Scheme.zariskiTopology.{u} (Type u)) :
     IsEmpty ↑(pullback (Sigma.ι g i) (Sigma.ι g j) : Scheme.{u}) ∧
@@ -227,6 +242,7 @@ theorem prop_17324 {σ : Type u} (g : σ → Scheme.{u}) {i j : σ} (hij : i ≠
 /-- thSz9ZHDK9o-17740 (4:55:40) [prop] Subsheaves `F_i` cover `F` (their supremum among
 subsheaves, the sheafification of `⋃ F_i`, is `F`) iff every section of `F` belongs, locally,
 to one of the `F_i`. Stated for any site. -/
+@[buffalo "thSz9ZHDK9o-17740"]
 theorem prop_17740 {C : Type*} [Category C] (J : GrothendieckTopology C) {F : Cᵒᵖ ⥤ Type*}
     {ι : Type*} (G : ι → Subfunctor F) :
     ((⨆ i, G i).sheafify J = ⊤ ↔
@@ -242,12 +258,14 @@ theorem prop_17740 {C : Type*} [Category C] (J : GrothendieckTopology C) {F : C�
 /-- thSz9ZHDK9o-17546 (4:52:26) [prop] A morphism of Zariski sheaves is an epimorphism if every
 section lifts locally. Partial: this direction (`epi_of_isLocallySurjective`); the converse uses
 sheafification, which mathlib does not provide on the large site of schemes. -/
+@[buffalo "thSz9ZHDK9o-17546"]
 theorem prop_17546 {F G : Sheaf Scheme.zariskiTopology.{u} (Type u)} (φ : F ⟶ G)
     [Sheaf.IsLocallySurjective φ] : Epi φ :=
   inferInstance
 
 /-- thSz9ZHDK9o-18065 (5:01:05) [prop] If `U = ⋃ U_i` is open in `X`, every morphism `S' → U`
 factors, locally on `S'`, through some `U_i` (so `h_U = sup h_{U_i}`). -/
+@[buffalo "thSz9ZHDK9o-18065"]
 theorem prop_18065 {X S' : Scheme.{u}} {ι : Type*} (U : ι → X.Opens) (f : S' ⟶ X)
     (hf : Set.range f.base ⊆ ⋃ i, (U i : Set X)) (s : S') :
     ∃ i, s ∈ f ⁻¹ᵁ U i ∧ ∃ h : (f ⁻¹ᵁ U i).toScheme ⟶ (U i).toScheme,
@@ -257,6 +275,7 @@ theorem prop_18065 {X S' : Scheme.{u}} {ι : Type*} (U : ι → X.Opens) (f : S'
 
 /-- thSz9ZHDK9o-17934 (4:58:54) [prop] For `X = ∐ X_i`, every morphism `S' → X` factors locally
 on `S'` through some `X_i`, on the preimages of the `X_i` (`prop_17064`). -/
+@[buffalo "thSz9ZHDK9o-17934"]
 theorem prop_17934 {σ : Type u} (g : σ → Scheme.{u}) {S' : Scheme.{u}} (f : S' ⟶ ∐ g)
     (s : S') : ∃ i, s ∈ f ⁻¹ᵁ (Sigma.ι g i).opensRange ∧
       ∃ h : (f ⁻¹ᵁ (Sigma.ι g i).opensRange).toScheme ⟶ g i,
@@ -283,6 +302,7 @@ def emptySheafIsInitial : IsInitial (emptySheaf.{u}) :=
 /-- thSz9ZHDK9o-18390 (5:06:30) [prop] The inclusion of Zariski sheaves into presheaves commutes
 with (small) projective limits, but not with inductive limits: the initial sheaf, represented by
 the empty scheme, is not the initial presheaf (which is empty on `∅`). -/
+@[buffalo "thSz9ZHDK9o-18390"]
 theorem prop_18390 :
     (∀ (K : Type u) [SmallCategory K],
       PreservesLimitsOfShape K (sheafToPresheaf Scheme.zariskiTopology.{u} (Type u))) ∧
@@ -295,6 +315,7 @@ theorem prop_18390 :
 
 /-- thSz9ZHDK9o-19298 (5:21:38) [prop] `Spec A' = ⋃ D(fᵢ)` iff the `fᵢ` generate the unit
 ideal. -/
+@[buffalo "thSz9ZHDK9o-19298"]
 theorem prop_19298 {A' : Type u} [CommRing A'] {ι : Type*} (f : ι → A') :
     (⨆ i, PrimeSpectrum.basicOpen (f i)) = ⊤ ↔ Ideal.span (Set.range f) = ⊤ :=
   PrimeSpectrum.iSup_basicOpen_eq_top_iff
@@ -303,6 +324,7 @@ theorem prop_19298 {A' : Type u} [CommRing A'] {ι : Type*} (f : ι → A') :
 `Spec A'_{fᵢ} → Spec A'` form a Zariski covering, so a Zariski sheaf `F` gives an exact
 `F(A') → ∏ F(A'_{fᵢ}) ⇉ ∏ F(A'_{fᵢfⱼ})`. Partial: the converse (exactness for these coverings
 suffices for the sheaf property) is the comparison lemma (`prop_17450`). -/
+@[buffalo "thSz9ZHDK9o-19365"]
 theorem prop_19365 {R : CommRingCat.{u}} {ι : Type u} (s : ι → R)
     (hs : Ideal.span (Set.range s) = ⊤) :
     Sieve.ofArrows (fun i => Spec (CommRingCat.of (Localization.Away (s i))))
@@ -315,6 +337,7 @@ theorem prop_19365 {R : CommRingCat.{u}} {ι : Type u} (s : ι → R)
 /-- thSz9ZHDK9o-19840 (5:30:40) [def] `F → G` is an open immersion if its base change by every
 `S' → G`, `S'` a scheme, is (representable and) an open immersion `U' ⊂ S'` (mathlib's
 `IsOpenImmersion.presheaf`, i.e. `MorphismProperty.relative yoneda`). -/
+@[buffalo "thSz9ZHDK9o-19840"]
 theorem def_19840 {F G : Scheme.{u}ᵒᵖ ⥤ Type u} (f : F ⟶ G) (hf : IsOpenImmersion.presheaf f)
     {S' : Scheme.{u}} (g : yoneda.obj S' ⟶ G) :
     IsOpenImmersion (hf.rep.snd g) :=
@@ -323,12 +346,14 @@ theorem def_19840 {F G : Scheme.{u}ᵒᵖ ⥤ Type u} (f : F ⟶ G) (hf : IsOpen
 /-- thSz9ZHDK9o-19970 (5:32:50) [prop] A property `P` of morphisms of schemes stable under base
 change extends to morphisms of sheaves (`P.presheaf`), and on morphisms of schemes it is `P`
 again. -/
+@[buffalo "thSz9ZHDK9o-19970"]
 theorem prop_19970 (P : MorphismProperty Scheme.{u}) [P.IsStableUnderBaseChange]
     {X Y : Scheme.{u}} (f : X ⟶ Y) : P.presheaf (yoneda.map f) ↔ P f :=
   MorphismProperty.relative_map_iff
 
 /-- thSz9ZHDK9o-20034 (5:33:54) [prop] If `U' ⊂ S'` is open and `S'' → S'`, the preimage `U''` is
 `S'' ×_{S'} U'`; open immersions of schemes are stable under base change. -/
+@[buffalo "thSz9ZHDK9o-20034"]
 def prop_20034 {S'' S' : Scheme.{u}} (f : S'' ⟶ S') (U' : S'.Opens) :
     pullback f U'.ι ≅ (f ⁻¹ᵁ U').toScheme :=
   pullbackRestrictIsoRestrict f U'
@@ -336,6 +361,7 @@ def prop_20034 {S'' S' : Scheme.{u}} (f : S'' ⟶ S') (U' : S'.Opens) :
 example : MorphismProperty.IsStableUnderBaseChange (@IsOpenImmersion) := inferInstance
 
 /-- thSz9ZHDK9o-20162 (5:36:02) [prop] Open immersions of sheaves are stable under base change. -/
+@[buffalo "thSz9ZHDK9o-20162"]
 theorem prop_20162 :
     MorphismProperty.IsStableUnderBaseChange
       (IsOpenImmersion.presheaf : MorphismProperty (Scheme.{u}ᵒᵖ ⥤ Type u)) :=
@@ -343,6 +369,7 @@ theorem prop_20162 :
 
 /-- thSz9ZHDK9o-20290 (5:38:10) [prop] The composite of two open immersions of sheaves is an open
 immersion. -/
+@[buffalo "thSz9ZHDK9o-20290"]
 theorem prop_20290 :
     MorphismProperty.IsStableUnderComposition
       (IsOpenImmersion.presheaf : MorphismProperty (Scheme.{u}ᵒᵖ ⥤ Type u)) :=
@@ -353,6 +380,7 @@ theorem prop_20290 :
 /-- thSz9ZHDK9o-20468 (5:41:08) [thm] (Representability criterion, sufficiency.) A Zariski sheaf
 `F` with open immersions `h_{X_i} → F` that cover it (jointly locally surjective) is
 representable by a scheme. Necessity: `prop_21454`. -/
+@[buffalo "thSz9ZHDK9o-20468"]
 theorem thm_20468 (F : Sheaf Scheme.zariskiTopology.{u} (Type u)) {ι : Type u}
     {X : ι → Scheme.{u}} (f : ∀ i, yoneda.obj (X i) ⟶ F.obj)
     (hf : ∀ i, IsOpenImmersion.presheaf (f i))
@@ -362,6 +390,7 @@ theorem thm_20468 (F : Sheaf Scheme.zariskiTopology.{u} (Type u)) {ι : Type u}
 
 /-- thSz9ZHDK9o-20672 (5:44:32) [prop] In the criterion one may take the `F_i` representable by
 affine schemes, `F_i = h_{Spec R_i}`. -/
+@[buffalo "thSz9ZHDK9o-20672"]
 theorem prop_20672 (F : Sheaf Scheme.zariskiTopology.{u} (Type u)) {ι : Type u}
     {R : ι → CommRingCat.{u}} (f : ∀ i, yoneda.obj (Spec (R i)) ⟶ F.obj)
     (hf : ∀ i, IsOpenImmersion.presheaf (f i))
@@ -371,6 +400,7 @@ theorem prop_20672 (F : Sheaf Scheme.zariskiTopology.{u} (Type u)) {ι : Type u}
 
 /-- thSz9ZHDK9o-20995 (5:49:55) [prop] An open set of `Spec k'` is a union of open sets
 `D(g_λ)` (and `h_{U'}` is then the supremum of the `h_{D(g_λ)}`, `prop_18065`). -/
+@[buffalo "thSz9ZHDK9o-20995"]
 theorem prop_20995 {k' : Type u} [CommRing k'] (U' : Opens (PrimeSpectrum k')) :
     ∃ Us ⊆ Set.range (@PrimeSpectrum.basicOpen k' _), U' = sSup Us :=
   Opens.isBasis_iff_cover.1 PrimeSpectrum.isBasis_basic_opens U'
@@ -378,6 +408,7 @@ theorem prop_20995 {k' : Type u} [CommRing k'] (U' : Opens (PrimeSpectrum k')) :
 /-- thSz9ZHDK9o-21254 (5:54:14) [prop] `Spec k' ∖ V(J)` represents the subfunctor
 `B ↦ {u : k' → B | u(J)B = B}`: `Spec u` lands in it iff `u(J)` generates the unit ideal; if
 `J = (g_λ)`, iff the `u(g_λ)` generate the unit ideal of `B`. -/
+@[buffalo "thSz9ZHDK9o-21254"]
 theorem prop_21254 {k' B : Type u} [CommRing k'] [CommRing B] (u : k' →+* B) (J : Ideal k') :
     (Set.range (PrimeSpectrum.comap u) ⊆ (PrimeSpectrum.zeroLocus (J : Set k'))ᶜ ↔
       J.map u = ⊤) ∧
@@ -396,12 +427,14 @@ theorem prop_21254 {k' B : Type u} [CommRing k'] [CommRing B] (u : k' →+* B) (
 /-- thSz9ZHDK9o-21454 (5:57:34) [prop] For a scheme covered by affine opens `X_i`, the
 `h_{X_i} → h_X` are open immersions of sheaves (`relative_map`), and they cover `h_X`: every
 `S' → X` factors locally through some `X_i` (`prop_18065`). -/
+@[buffalo "thSz9ZHDK9o-21454"]
 theorem prop_21454 (X : Scheme.{u}) (i : X.affineCover.I₀) :
     IsOpenImmersion.presheaf (yoneda.map (X.affineCover.f i)) :=
   MorphismProperty.relative_map inferInstance
 
 /-- thSz9ZHDK9o-21516 (5:58:36) [prop] If `F_j → F` is an open immersion, so is its base change
 `F_i ∩ F_j → F_i` by `F_i → F` (`prop_20162`). -/
+@[buffalo "thSz9ZHDK9o-21516"]
 theorem prop_21516 {F Fi Fj : Scheme.{u}ᵒᵖ ⥤ Type u} (fi : Fi ⟶ F) (fj : Fj ⟶ F)
     (hj : IsOpenImmersion.presheaf fj) :
     IsOpenImmersion.presheaf (pullback.snd fj fi) :=

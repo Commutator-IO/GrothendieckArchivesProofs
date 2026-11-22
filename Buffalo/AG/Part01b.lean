@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.AG.Part01a
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -27,6 +28,7 @@ variable (k : Type u) [CommRing k] {I : Type u}
 
 /-- 51wmmpHand0-5809 (1:36:49) [prop] `E^1` (the forgetful functor `k' ↦ k'`) is represented by
 `k[t]`, by `φ ↦ φ(t)`. -/
+@[buffalo "51wmmpHand0-5809"]
 def E1.corepresentableBy :
     (forget (CommAlgCat.{u} k)).CorepresentableBy (CommAlgCat.of k (Polynomial k)) where
   homEquiv :=
@@ -40,6 +42,7 @@ def E1.corepresentableBy :
   homEquiv_comp _ _ := rfl
 
 /-- 51wmmpHand0-5809 (1:36:49) [prop] `E^I` is the `I`-th cartesian power of `E^1`. -/
+@[buffalo "51wmmpHand0-5809"]
 theorem prop_5809 (k' : CommAlgCat.{u} k) :
     (E k I).obj k' = (I → (forget (CommAlgCat.{u} k)).obj k') := rfl
 
@@ -50,6 +53,7 @@ example (S : Set (MvPolynomial I k)) (k' : CommAlgCat.{u} k) (x : I → k') :
 
 /-- 51wmmpHand0-6129 (1:42:09) [prop] The functors isomorphic to some `V_S` are exactly the
 representable functors; `V_J` is represented by `P_I/J`. -/
+@[buffalo "51wmmpHand0-6129"]
 theorem prop_6129 (F : CommAlgCat.{u} k ⥤ Type u) :
     ((∃ (I : Type u) (S : Set (MvPolynomial I k)), Nonempty (F ≅ (VS k S).toFunctor)) ↔
       F.IsCorepresentable) ∧
@@ -69,6 +73,7 @@ theorem essImage_coyoneda_iff (F : CommAlgCat.{u} k ⥤ Type u) :
 homomorphisms `A' → A` (`prop_4188`), and the category of affine algebraic spaces (the
 representable functors, the essential image of `coyoneda`) is anti-equivalent to that of
 `k`-algebras. -/
+@[buffalo "51wmmpHand0-6911"]
 theorem prop_6911 : (coyoneda (C := CommAlgCat.{u} k)).toEssImage.IsEquivalence ∧
     ∀ F : CommAlgCat.{u} k ⥤ Type u, coyoneda.essImage F ↔ IsAffineAlgSpace k F :=
   ⟨inferInstance, fun F => (essImage_coyoneda_iff k F).trans (prop_3423 k F).symm⟩
@@ -77,6 +82,7 @@ theorem prop_6911 : (coyoneda (C := CommAlgCat.{u} k)).toEssImage.IsEquivalence 
 
 /-- 51wmmpHand0-7174 (1:59:34) [prop] Tested on fields (more generally on reduced `k'`),
 `V'_J = V'_{√J}`. -/
+@[buffalo "51wmmpHand0-7174"]
 theorem prop_7174 (J : Ideal (MvPolynomial I k)) (L : Type*) [CommRing L] [IsReduced L]
     [Algebra k L] : Z k (J : Set _) L = Z k (J.radical : Set (MvPolynomial I k)) L := by
   ext x
@@ -87,6 +93,7 @@ theorem prop_7174 (J : Ideal (MvPolynomial I k)) (L : Type*) [CommRing L] [IsRed
 
 /-- 51wmmpHand0-7240 (2:00:40) [prop] `√J` is the preimage of the nilradical of `P_I/J`;
 `P_I/√J` is reduced, and is `P_I/J` modulo its nilradical. -/
+@[buffalo "51wmmpHand0-7240"]
 theorem prop_7240 {R : Type*} [CommRing R] (J : Ideal R) :
     J.radical = (nilradical (R ⧸ J)).comap (Ideal.Quotient.mk J) ∧ IsReduced (R ⧸ J.radical) ∧
       Nonempty (((R ⧸ J) ⧸ nilradical (R ⧸ J)) ≃+* R ⧸ J.radical) := by
@@ -106,6 +113,7 @@ theorem prop_7240 {R : Type*} [CommRing R] (J : Ideal R) :
 
 /-- 51wmmpHand0-7502 (2:05:02) [prop] `√J` is the set of `f` vanishing on `V_J(k')` for every
 field `k'` over `k`. -/
+@[buffalo "51wmmpHand0-7502"]
 theorem prop_7502 (J : Ideal (MvPolynomial I k)) (f : MvPolynomial I k) :
     f ∈ J.radical ↔
       ∀ (K : Type u) [Field K] [Algebra k K], ∀ x ∈ Z k (J : Set _) K, aeval x f = 0 := by
@@ -126,6 +134,7 @@ theorem prop_7502 (J : Ideal (MvPolynomial I k)) (f : MvPolynomial I k) :
     exact Ideal.Quotient.eq_zero_iff_mem.1 (IsFractionRing.injective _ K this)
 
 /-- 51wmmpHand0-7367 (2:02:47) [prop] Over fields, `V'_J ⊆ V'_{J'}` iff `√J ⊇ √J'`. -/
+@[buffalo "51wmmpHand0-7367"]
 theorem prop_7367 (J J' : Ideal (MvPolynomial I k)) :
     (∀ (K : Type u) [Field K] [Algebra k K], Z k (J : Set _) K ⊆ Z k (J' : Set (MvPolynomial I k)) K) ↔
       J'.radical ≤ J.radical := by
@@ -139,6 +148,7 @@ theorem prop_7367 (J J' : Ideal (MvPolynomial I k)) :
     exact hx f (h (Ideal.le_radical hf))
 
 /-- 51wmmpHand0-7367 (2:02:47) [prop] `J ↦ V'_J` is injective on radical ideals. -/
+@[buffalo "51wmmpHand0-7367"]
 theorem prop_7367_inj (J J' : Ideal (MvPolynomial I k)) (hJ : J.IsRadical) (hJ' : J'.IsRadical)
     (h : ∀ (K : Type u) [Field K] [Algebra k K], Z k (J : Set _) K = Z k (J' : Set (MvPolynomial I k)) K) :
     J = J' := by
@@ -149,6 +159,7 @@ theorem prop_7367_inj (J J' : Ideal (MvPolynomial I k)) (hJ : J.IsRadical) (hJ' 
 
 /-- 51wmmpHand0-7566 (2:06:06) [prop] If `f ∈ A` is killed by every homomorphism from `A` to a
 field, then `f` is nilpotent. -/
+@[buffalo "51wmmpHand0-7566"]
 theorem prop_7566 {A : Type u} [CommRing A] (f : A)
     (h : ∀ (K : Type u) [Field K] (φ : A →+* K), φ f = 0) : IsNilpotent f := by
   rw [← mem_nilradical, nilradical_eq_sInf, Ideal.mem_sInf]
@@ -161,6 +172,7 @@ theorem prop_7566 {A : Type u} [CommRing A] (f : A)
 /-- 51wmmpHand0-7663 (2:07:43) [prop] Every nonzero ring has a maximal ideal (Krull,
 `Ideal.exists_maximal`); the intersection of the kernels of the homomorphisms into fields is the
 nilradical. -/
+@[buffalo "51wmmpHand0-7663"]
 theorem prop_7663 {A : Type u} [CommRing A] :
     (Nontrivial A → ∃ m : Ideal A, m.IsMaximal) ∧
       ∀ f : A, IsNilpotent f ↔ ∀ (K : Type u) [Field K] (φ : A →+* K), φ f = 0 :=
@@ -168,6 +180,7 @@ theorem prop_7663 {A : Type u} [CommRing A] :
 
 /-- 51wmmpHand0-7725 (2:08:45) [prop] The kernels of the homomorphisms from `A` to fields are
 the prime ideals of `A`; the nilradical is the intersection of the prime ideals. -/
+@[buffalo "51wmmpHand0-7725"]
 theorem prop_7725 {A : Type u} [CommRing A] :
     (∀ (K : Type u) [Field K] (φ : A →+* K), (RingHom.ker φ).IsPrime) ∧
       (∀ p : Ideal A, p.IsPrime → ∃ (K : Type u) (_ : Field K) (φ : A →+* K), RingHom.ker φ = p) ∧
@@ -185,6 +198,7 @@ theorem prop_7725 {A : Type u} [CommRing A] :
 /-- 51wmmpHand0-7993 (2:13:13) [thm] Nullstellensatz: over an algebraically closed field, in
 finitely many variables, `√J` is the set of polynomials vanishing on the zeros of `J` in `k^n`
 (mathlib: `MvPolynomial.vanishingIdeal_zeroLocus_eq_radical`). -/
+@[buffalo "51wmmpHand0-7993"]
 theorem thm_7993 {K : Type u} [Field K] [IsAlgClosed K] {σ : Type u} [Finite σ]
     (J : Ideal (MvPolynomial σ K)) : vanishingIdeal K (zeroLocus K J) = J.radical :=
   vanishingIdeal_zeroLocus_eq_radical J
@@ -205,6 +219,7 @@ def NS (K : Type u) [Field K] : Prop :=
 
 /-- 51wmmpHand0-8263 (2:17:43) [thm] Statement (a): a finitely generated algebra over an
 algebraically closed field `K` which is a field is `K`. -/
+@[buffalo "51wmmpHand0-8263"]
 theorem thm_8263 (K : Type u) [Field K] [IsAlgClosed K] : StmtA K := by
   intro A _ _ _
   have : Module.Finite K A := finite_of_finite_type_of_isJacobsonRing K A
@@ -213,6 +228,7 @@ theorem thm_8263 (K : Type u) [Field K] [IsAlgClosed K] : StmtA K := by
 
 /-- 51wmmpHand0-8327 (2:18:47) [thm] Statement (b): over any field, the nilradical of a
 finitely generated algebra is the intersection of its maximal ideals. -/
+@[buffalo "51wmmpHand0-8327"]
 theorem thm_8327 (K : Type u) [Field K] : StmtB K := by
   intro A _ _ _
   have : IsJacobsonRing A := isJacobsonRing_of_finiteType (A := K)
@@ -237,6 +253,7 @@ theorem mem_jacobson_bot_iff {A : Type*} [CommRing A] (f : A) :
 
 /-- 51wmmpHand0-8519 (2:21:59) [thm] The Nullstellensatz (algebraic form) is equivalent to the
 conjunction of (a) and (b) (over every field `K`). -/
+@[buffalo "51wmmpHand0-8519"]
 theorem thm_8519 (K : Type u) [Field K] : NS K ↔ StmtA K ∧ StmtB K := by
   constructor
   · intro hNS
@@ -266,6 +283,7 @@ theorem thm_8519 (K : Type u) [Field K] : NS K ↔ StmtA K ∧ StmtB K := by
 
 /-- 51wmmpHand0-8519 (2:21:59) [thm] (a) requires `K` to be algebraically closed: `ℂ` is a
 finitely generated `ℝ`-algebra and a field, but not `ℝ`. -/
+@[buffalo "51wmmpHand0-8519"]
 theorem thm_8519_real : ¬ StmtA ℝ := fun h => by
   have : Algebra.FiniteType ℝ ℂ := inferInstance
   obtain ⟨r, hr⟩ := (h ℂ).2 Complex.I
@@ -275,11 +293,13 @@ theorem thm_8519_real : ¬ StmtA ℝ := fun h => by
 /-- 51wmmpHand0-8200 (2:16:40) [thm] Algebraic form of the Nullstellensatz: over an
 algebraically closed field, an element of a finitely generated algebra killed by every
 `K`-homomorphism to `K` is nilpotent. -/
+@[buffalo "51wmmpHand0-8200"]
 theorem thm_8200 (K : Type u) [Field K] [IsAlgClosed K] : NS K :=
   (thm_8519 K).2 ⟨thm_8263 K, thm_8327 K⟩
 
 /-- 51wmmpHand0-8452 (2:20:52) [prop] Over an algebraically closed field, `u ↦ ker u` is a
 bijection from `Hom_K(A, K)` onto the maximal ideals of a finitely generated `A`. -/
+@[buffalo "51wmmpHand0-8452"]
 theorem prop_8452 {K A : Type u} [Field K] [IsAlgClosed K] [CommRing A] [Algebra K A]
     [Algebra.FiniteType K A] :
     Function.Bijective (fun u : A →ₐ[K] K => (⟨RingHom.ker u, RingHom.ker_isMaximal_of_surjective u
@@ -297,12 +317,14 @@ theorem prop_8452 {K A : Type u} [Field K] [IsAlgClosed K] [CommRing A] [Algebra
 /-- 51wmmpHand0-8585 (2:23:05) [thm] Statement (a'): over any field, a finitely generated algebra
 that is a field is a finite extension (Zariski's lemma; mathlib:
 `finite_of_finite_type_of_isJacobsonRing`). -/
+@[buffalo "51wmmpHand0-8585"]
 theorem thm_8585 {K A : Type u} [Field K] [Field A] [Algebra K A] [Algebra.FiniteType K A] :
     Module.Finite K A :=
   finite_of_finite_type_of_isJacobsonRing K A
 
 /-- 51wmmpHand0-8650 (2:24:10) [prop] An element of a finitely generated algebra over a field
 `K` killed by every `K`-homomorphism to a finite extension of `K` is nilpotent. -/
+@[buffalo "51wmmpHand0-8650"]
 theorem prop_8650 {K A : Type u} [Field K] [CommRing A] [Algebra K A] [Algebra.FiniteType K A]
     (f : A) (h : ∀ (L : Type u) [Field L] [Algebra K L] [Module.Finite K L] (u : A →ₐ[K] L),
       u f = 0) : IsNilpotent f := by
@@ -320,6 +342,7 @@ theorem mem_radical_iff_isNilpotent {R : Type*} [CommRing R] (J : Ideal R) (f : 
 /-- 51wmmpHand0-8717 (2:25:17) [prop] Over a field `K`, in finitely many variables, the
 correspondence between closed subspaces and radical ideals holds when one tests only on finite
 extensions of `K`. -/
+@[buffalo "51wmmpHand0-8717"]
 theorem prop_8717 {K : Type u} [Field K] {σ : Type u} [Finite σ] (J J' : Ideal (MvPolynomial σ K)) :
     (∀ (L : Type u) [Field L] [Algebra K L] [Module.Finite K L],
       Z K (J : Set _) L ⊆ Z K (J' : Set (MvPolynomial σ K)) L) ↔ J'.radical ≤ J.radical := by
@@ -339,6 +362,7 @@ theorem prop_8717 {K : Type u} [Field K] {σ : Type u} [Finite σ] (J J' : Ideal
 
 /-- 51wmmpHand0-8717 (2:25:17) [prop] If `K` is algebraically closed, testing on `K` itself
 suffices. -/
+@[buffalo "51wmmpHand0-8717"]
 theorem prop_8717_algClosed {K : Type u} [Field K] [IsAlgClosed K] {σ : Type u} [Finite σ]
     (J J' : Ideal (MvPolynomial σ K)) :
     Z K (J : Set _) K ⊆ Z K (J' : Set (MvPolynomial σ K)) K ↔ J'.radical ≤ J.radical := by
@@ -360,6 +384,7 @@ theorem prop_8717_algClosed {K : Type u} [Field K] [IsAlgClosed K] {σ : Type u}
 
 /-- 51wmmpHand0-9373 (2:36:13) [prop] For `X = V_A`, `Hom(X, E^1) ≃ A`: the morphisms
 `V_A → E^1` are the elements of `A` (an element `a` acting by `u ↦ u(a)`). -/
+@[buffalo "51wmmpHand0-9373"]
 def prop_9373 (A : Type u) [CommRing A] [Algebra k A] :
     (V k A ⟶ forget (CommAlgCat.{u} k)) ≃ A :=
   homEquivOfCorep k (V.corepresentableBy k A)
@@ -370,6 +395,7 @@ theorem prop_9373_apply (A : Type u) [CommRing A] [Algebra k A] (a : A) (k' : Co
 
 /-- 51wmmpHand0-9437 (2:37:17) [prop] `E^1` is an algebra object: addition, multiplication
 `E^1 × E^1 → E^1` (here `E^2 → E^1`) and scalars are natural transformations. -/
+@[buffalo "51wmmpHand0-9437"]
 def addE : E k (ULift.{u} (Fin 2)) ⟶ forget (CommAlgCat.{u} k) where
   app _ := ↾fun x => x ⟨0⟩ + x ⟨1⟩
   naturality _ _ u := ConcreteCategory.hom_ext _ _ fun x =>
@@ -390,6 +416,7 @@ def smulE (c : k) : forget (CommAlgCat.{u} k) ⟶ forget (CommAlgCat.{u} k) wher
 /-- 51wmmpHand0-9504 (2:38:24) [prop] and 51wmmpHand0-9652 (2:40:52) [prop] The ring structure
 of `Hom(V_A, E^1)` deduced from that of `E^1` (pointwise operations in each `k'`) is that of
 `A`. -/
+@[buffalo "51wmmpHand0-9504"]
 theorem prop_9504 (A : Type u) [CommRing A] [Algebra k A] (a b : A) (c : k)
     (k' : CommAlgCat.{u} k) (u : (V k A).obj k') :
     ((prop_9373 k A).symm (a + b)).app k' u =
@@ -402,6 +429,7 @@ theorem prop_9504 (A : Type u) [CommRing A] [Algebra k A] (a b : A) (c : k)
 
 /-- 51wmmpHand0-9780 (2:43:00) [prop] A morphism `E^I → E^1` is given by a unique polynomial of
 `P_I`. -/
+@[buffalo "51wmmpHand0-9780"]
 def prop_9780 : (E k I ⟶ forget (CommAlgCat.{u} k)) ≃ MvPolynomial I k :=
   homEquivOfCorep k (E.corepresentableBy k I)
 
@@ -411,6 +439,7 @@ theorem prop_9780_apply (f : MvPolynomial I k) (k' : CommAlgCat.{u} k) (x : (E k
 
 /-- 51wmmpHand0-9910 (2:45:10) [prop] For `X = V_J`, restricting polynomials to `V_J(k')`
 identifies `P_I/J` with the morphisms `V_J → E^1`. -/
+@[buffalo "51wmmpHand0-9910"]
 def prop_9910 (J : Ideal (MvPolynomial I k)) :
     ((VJ k J).toFunctor ⟶ forget (CommAlgCat.{u} k)) ≃ MvPolynomial I k ⧸ J :=
   homEquivOfCorep k (VJ.corepresentableBy k J)
@@ -425,6 +454,7 @@ theorem prop_9910_apply (J : Ideal (MvPolynomial I k)) (f : MvPolynomial I k)
 /-- 51wmmpHand0-10536 (2:55:36) [prop] The category of affine spaces is opposite to that of
 `k`-algebras (`prop_6911`); its projective limits are the inductive limits of `k`-algebras, which
 exist. -/
+@[buffalo "51wmmpHand0-10536"]
 theorem prop_10536 : Limits.HasLimits (CommAlgCat.{u} k)ᵒᵖ := inferInstance
 
 /-- 51wmmpHand0-10603 (2:56:43) [def] Products (mathlib: `CategoryTheory.Limits.Fan`, a limit
@@ -437,6 +467,7 @@ example : Limits.HasCoproducts.{u} (CommAlgCat.{u} k) := inferInstance
 
 /-- 51wmmpHand0-10867 (3:01:07) [prop] The sum of two `k`-algebras is `A' ⊗_k A''`, with
 `x' ↦ x' ⊗ 1` and `x'' ↦ 1 ⊗ x''`. -/
+@[buffalo "51wmmpHand0-10867"]
 def prop_10867 (A B C : Type u) [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
     [CommRing C] [Algebra k C] :
     (TensorProduct k A B →ₐ[k] C) ≃ (A →ₐ[k] C) × (B →ₐ[k] C) where
@@ -457,6 +488,7 @@ def forgetIsoUnder : forget (CommAlgCat.{u} k) ≅
 
 /-- 51wmmpHand0-11182 (3:06:22) [prop] Filtered inductive limits of `k`-algebras are computed on
 the underlying sets. -/
+@[buffalo "51wmmpHand0-11182"]
 instance prop_11182 : Limits.PreservesFilteredColimits (forget (CommAlgCat.{u} k)) :=
   ⟨fun _ _ _ => Limits.preservesColimitsOfShape_of_natIso (forgetIsoUnder k).symm⟩
 
@@ -467,6 +499,7 @@ def isInitialSelf : Limits.IsInitial (CommAlgCat.of k k) :=
 
 /-- 51wmmpHand0-11182 (3:06:22) [prop] … unlike sums: the empty sum of `k`-algebras is `k`, not
 the empty set, so the forgetful functor does not preserve initial objects. -/
+@[buffalo "51wmmpHand0-11182"]
 theorem prop_11182_sums :
     ¬ Limits.PreservesColimit (Functor.empty.{0} (CommAlgCat.{u} k)) (forget (CommAlgCat.{u} k)) := by
   intro h

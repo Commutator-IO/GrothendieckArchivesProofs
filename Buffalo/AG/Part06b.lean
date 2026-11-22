@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -41,6 +42,7 @@ theorem dvr_prime_eq (p : Ideal R) [hp : p.IsPrime] : p = ⊥ ∨ p = IsLocalRin
 /-- Oqhr-Gt66es-5841 (1:37:21) [ex] A discrete valuation ring (e.g. `k[[t]]`) is a local domain
 with a single nonzero prime ideal; its spectrum has a generic point `(0)` and a special point `𝔪`,
 lying in the closure of the former. -/
+@[buffalo "Oqhr-Gt66es-5841"]
 theorem ex_5841 :
     (∀ p : Ideal R, p.IsPrime → p = ⊥ ∨ p = IsLocalRing.maximalIdeal R) ∧
     IsLocalRing.maximalIdeal R ≠ ⊥ ∧
@@ -53,6 +55,7 @@ theorem ex_5841 :
 
 /-- Oqhr-Gt66es-5903 (1:38:23) [cex] A discrete valuation ring is not artinian, although its
 spectrum is finite (two points) and it is noetherian. -/
+@[buffalo "Oqhr-Gt66es-5903"]
 theorem cex_5903 : ¬ IsArtinianRing R ∧ IsNoetherianRing R := by
   refine ⟨fun h => IsDiscreteValuationRing.not_isField R (IsArtinianRing.isField_of_isDomain R),
     inferInstance⟩
@@ -60,6 +63,7 @@ theorem cex_5903 : ¬ IsArtinianRing R ∧ IsNoetherianRing R := by
 /-- Oqhr-Gt66es-5968 (1:39:28) [prop] For a noetherian local ring `𝒪` (a local ring of a locally
 noetherian scheme), `𝒪/𝔪ⁿ` is an artinian local ring; for `I` finite, `k^I` (the ring of the
 constant scheme `I_k`) is artinian. -/
+@[buffalo "Oqhr-Gt66es-5968"]
 theorem prop_5968 (O : Type u) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] (n : ℕ)
     (hn : n ≠ 0) :
     IsArtinianRing (O ⧸ IsLocalRing.maximalIdeal O ^ n) ∧
@@ -102,12 +106,14 @@ section Reduced
 /-- Oqhr-Gt66es-6097 (1:41:37) [def] `X` is reduced if `𝒪_X` has no nonzero nilpotent section over
 any open set (mathlib: `AlgebraicGeometry.IsReduced`); equivalently its local rings are reduced
 (`isReduced_of_isReduced_stalk`, and the instance on stalks). -/
+@[buffalo "Oqhr-Gt66es-6097"]
 theorem def_6097 (X : Scheme.{u}) :
     AlgebraicGeometry.IsReduced X ↔ ∀ x : X, _root_.IsReduced (X.presheaf.stalk x) :=
   ⟨fun _ _ => inferInstance, fun h => by have := h; exact isReduced_of_isReduced_stalk X⟩
 
 /-- Oqhr-Gt66es-6161 (1:42:41) [prop] Being reduced is local (open subschemes of a reduced scheme
 are reduced, and reducedness is read on the local rings), and `Spec A` is reduced iff `A` is. -/
+@[buffalo "Oqhr-Gt66es-6161"]
 theorem prop_6161 :
     (∀ {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] [AlgebraicGeometry.IsReduced Y],
       AlgebraicGeometry.IsReduced X) ∧
@@ -137,6 +143,7 @@ theorem isPreirreducible_of_cover {T : Type*} [TopologicalSpace T] {ι : Type*} 
 integral iff the `X_i` are integral and pairwise meet. Proved for the underlying spaces
 (irreducibility; reducedness is local by 6161), for a nonempty family: `X` is irreducible iff the `X_i` are irreducible
 and pairwise meet. -/
+@[buffalo "Oqhr-Gt66es-6355"]
 theorem prop_6355 {T : Type*} [TopologicalSpace T] {ι : Type*} [Nonempty ι] (U : ι → Set T)
     (hU : ∀ i, IsOpen (U i)) (hcov : ⋃ i, U i = Set.univ) (hne : ∀ i, (U i).Nonempty) :
     IrreducibleSpace T ↔ (∀ i, IsIrreducible (U i)) ∧ ∀ i j, (U i ∩ U j).Nonempty := by
@@ -153,11 +160,13 @@ theorem prop_6355 {T : Type*} [TopologicalSpace T] {ι : Type*} [Nonempty ι] (U
       isPreirreducible_of_cover U hU hcov (fun j => (hirr j).2) hmeet⟩
 
 /-- Oqhr-Gt66es-6430 (1:47:10) [prop] `Spec A` is integral iff `A` is an integral domain. -/
+@[buffalo "Oqhr-Gt66es-6430"]
 theorem prop_6430 (R : CommRingCat.{u}) : AlgebraicGeometry.IsIntegral (Spec R) ↔ IsDomain R :=
   affine_isIntegral_iff R
 
 /-- Oqhr-Gt66es-6568 (1:49:28) [def] A scheme is normal if all its local rings are integrally
 closed integral domains. -/
+@[buffalo "Oqhr-Gt66es-6568"]
 def IsNormalScheme (X : Scheme.{u}) : Prop :=
   ∀ x : X, IsDomain (X.presheaf.stalk x) ∧ IsIntegrallyClosed (X.presheaf.stalk x)
 
@@ -165,6 +174,7 @@ def IsNormalScheme (X : Scheme.{u}) : Prop :=
 integral schemes. Proved: the key point, that when the local ring `R_𝔭` is a domain, `𝔭` contains
 a single minimal prime (so the irreducible components through a point are one, and they are
 disjoint). -/
+@[buffalo "Oqhr-Gt66es-6634"]
 theorem prop_6634 {R : Type u} [CommRing R] (p : Ideal R) [p.IsPrime]
     [IsDomain (Localization.AtPrime p)] (q₁ q₂ : Ideal R) (h₁ : q₁ ∈ minimalPrimes R)
     (h₂ : q₂ ∈ minimalPrimes R) (hq₁ : q₁ ≤ p) (hq₂ : q₂ ≤ p) : q₁ = q₂ := by
@@ -183,6 +193,7 @@ theorem prop_6634 {R : Type u} [CommRing R] (p : Ideal R) [p.IsPrime]
 integrally closed. Proved: if the local rings `A_𝔪` are integrally closed, so is `A`
 (mathlib: `IsIntegrallyClosed.of_localization_maximal`), and conversely the localizations of an
 integrally closed domain are integrally closed (`isIntegrallyClosed_of_isLocalization`). -/
+@[buffalo "Oqhr-Gt66es-6697"]
 theorem prop_6697 (A : Type u) [CommRing A] [IsDomain A] :
     IsIntegrallyClosed A ↔
       ∀ (p : Ideal A) [p.IsPrime], IsIntegrallyClosed (Localization.AtPrime p) := by
@@ -194,6 +205,7 @@ theorem prop_6697 (A : Type u) [CommRing A] [IsDomain A] :
 
 /-- Oqhr-Gt66es-6899 (1:54:59) [prop] For `X` integral with generic point `η`, the residue field
 at `η` is the function field: the residue map from `𝒪_{X,η} = K(X)` is bijective. -/
+@[buffalo "Oqhr-Gt66es-6899"]
 theorem prop_6899 (X : Scheme.{u}) [AlgebraicGeometry.IsIntegral X] :
     Function.Bijective (X.residue (genericPoint X)) := by
   refine ⟨?_, Ideal.Quotient.mk_surjective⟩
@@ -216,6 +228,7 @@ schemes is an isomorphism over a nonempty open set of `X`. Affine case: if `B` i
 by a finite set and every element of `B` is a fraction of elements of `A` (same function field),
 there is `f ∈ A`, nonzero in `B`, with `B ⊂ A_f`, i.e. `A_f → B_f` is surjective (and injective when
 `A → B` is), so `Spec B_f → Spec A_f` is an isomorphism over `D(f)`. -/
+@[buffalo "Oqhr-Gt66es-7023"]
 theorem prop_7023 {A B : Type*} [CommRing A] [CommRing B] [Algebra A B] (s : Finset B)
     (hs : Algebra.adjoin A (s : Set B) = ⊤)
     (hfrac : ∀ b : B, ∃ a d : A, algebraMap A B d ≠ 0 ∧ algebraMap A B d * b = algebraMap A B a)
@@ -253,6 +266,7 @@ quasi-compact morphism, locally of finite type and locally quasi-finite (finite 
 as an open immersion into its relative normalization (`Scheme.Hom.toNormalization`), followed by
 an integral morphism. Grothendieck's form follows when `X` is normal integral and `f` birational,
 the relative normalization then being `X` itself (not formalised). -/
+@[buffalo "Oqhr-Gt66es-7150"]
 theorem thm_7150 {X Y : Scheme.{u}} (f : X ⟶ Y) [LocallyQuasiFinite f] [LocallyOfFiniteType f]
     [IsSeparated f] [QuasiCompact f] :
     IsOpenImmersion f.toNormalization ∧ IsIntegralHom f.fromNormalization ∧
@@ -270,6 +284,7 @@ def nodeParam : MvPolynomial (Fin 2) k →ₐ[k] k[X] :=
 integral (`t² = x + 1`) and a fraction (`x t = y`), so the map is finite and birational; and it is
 not surjective (in characteristic `≠ 2`): every element of the image takes the same value at
 `t = 1` and `t = -1` (the two points above the node), but `t` does not. -/
+@[buffalo "Oqhr-Gt66es-7280"]
 theorem ex_7280 (h2 : (2 : k) ≠ 0) :
     nodeParam k (MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 2 * (MvPolynomial.X 0 + 1)) = 0 ∧
     X ^ 2 = nodeParam k (MvPolynomial.X 0) + 1 ∧
@@ -302,6 +317,7 @@ def cuspParam : MvPolynomial (Fin 2) k →ₐ[k] k[X] :=
 bijective on points without being an isomorphism. Proved: the parametrisation kills the equation;
 `t ↦ (t², t³)` is a bijection from `k` onto the `k`-points of the cusp; `t` is not in the image of
 `k[x, y]` (no element of the image has a term in `t`). -/
+@[buffalo "Oqhr-Gt66es-7347"]
 theorem ex_7347 :
     cuspParam k (MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 3) = 0 ∧
     Set.BijOn (fun t : k => (t ^ 2, t ^ 3)) Set.univ {p : k × k | p.2 ^ 2 = p.1 ^ 3} ∧
@@ -352,6 +368,7 @@ theorem ex_7347 :
 finite fibres, and is an isomorphism iff `X` is normal. Affine case of the last clause: for a
 domain `A` with fraction field `K`, `A → A'` (integral closure of `A` in `K`) is an isomorphism iff
 `A` is integrally closed. -/
+@[buffalo "Oqhr-Gt66es-7413"]
 theorem prop_7413 (A : Type u) [CommRing A] [IsDomain A] :
     integralClosure A (FractionRing A) = ⊥ ↔ IsIntegrallyClosed A := by
   constructor
@@ -370,6 +387,7 @@ end Birational
 section Regular
 
 /-- Oqhr-Gt66es-7602 (2:06:42) [def] A scheme is regular if all its local rings are regular. -/
+@[buffalo "Oqhr-Gt66es-7602"]
 def IsRegularScheme (X : Scheme.{u}) : Prop :=
   ∀ x : X, IsRegularLocalRing (X.presheaf.stalk x)
 
@@ -377,6 +395,7 @@ def IsRegularScheme (X : Scheme.{u}) : Prop :=
 generated by an `A`-regular sequence `x₁, …, xₙ`. The definition as stated (mathlib's
 `IsRegularLocalRing` asks instead for `dim A` generators; the two agree, proved on Stacks in
 `Part06RegularSequenceStacks.lean`, `isRegularBySequence_iff`). -/
+@[buffalo "Oqhr-Gt66es-7860"]
 def IsRegularBySequence (A : Type u) [CommRing A] [IsLocalRing A] : Prop :=
   IsNoetherianRing A ∧ ∃ xs : List A, RingTheory.Sequence.IsRegular A xs ∧
     Ideal.ofList xs = IsLocalRing.maximalIdeal A
@@ -384,6 +403,7 @@ def IsRegularBySequence (A : Type u) [CommRing A] [IsLocalRing A] : Prop :=
 /-- Oqhr-Gt66es-7990 (2:13:10) [prop] For an `M`-regular sequence, the Koszul complex is acyclic.
 Mathlib has no Koszul complex; proved: the case of one element, whose Koszul complex
 `0 → M → M → 0` (multiplication by `x`) has `H₁ = 0` iff `x` is `M`-regular. -/
+@[buffalo "Oqhr-Gt66es-7990"]
 theorem prop_7990 {A M : Type u} [CommRing A] [AddCommGroup M] [Module A M] (x : A) :
     IsSMulRegular M x ↔ LinearMap.ker (LinearMap.lsmul A M x) = ⊥ := by
   rw [LinearMap.ker_eq_bot]
@@ -392,6 +412,7 @@ theorem prop_7990 {A M : Type u} [CommRing A] [AddCommGroup M] [Module A M] (x :
 /-- Oqhr-Gt66es-8055 (2:14:15) [prop] A field is regular; if `A` is regular, so is `A[t]`; hence
 `k[t₁, …, tₙ]` is regular. (The open sets `𝔾_m`, `GL_n` of affine space: not formalised, mathlib
 lacking the regularity of localizations of regular rings.) -/
+@[buffalo "Oqhr-Gt66es-8055"]
 theorem prop_8055 (k : Type u) [Field k] (A : Type u) [CommRing A] [IsRegularRing A] (n : ℕ) :
     IsRegularLocalRing k ∧ IsRegularRing A[X] ∧ IsRegularRing (MvPolynomial (Fin n) k) :=
   ⟨inferInstance, inferInstance, inferInstance⟩
@@ -399,6 +420,7 @@ theorem prop_8055 (k : Type u) [Field k] (A : Type u) [CommRing A] [IsRegularRin
 /-- Oqhr-Gt66es-8186 (2:16:26) [prop] (corrected) A ring is regular if its localizations at all
 primes are; principal ideal domains and Dedekind rings are regular (for example `ℤ` and rings of
 integers of number fields), as are their polynomial rings. -/
+@[buffalo "Oqhr-Gt66es-8186"]
 theorem prop_8186 (R : Type u) [CommRing R] [IsDedekindDomain R] (K : Type u) [Field K]
     [NumberField K] :
     IsRegularRing R ∧ IsRegularRing ℤ ∧ IsRegularRing (NumberField.RingOfIntegers K) ∧
@@ -446,6 +468,7 @@ section Endomorphisms
 monomorphism is an isomorphism (EGA IV 17.9.6; not formalised); consequently a monoid scheme
 whose left translations are monomorphisms is a group. Proved: the last step, on points — a monoid
 whose left translations are bijective is a group. -/
+@[buffalo "Oqhr-Gt66es-8653"]
 theorem prop_8653 {M : Type u} [Monoid M] (h : ∀ a : M, Function.Bijective (a * ·)) (a : M) :
     IsUnit a := by
   obtain ⟨b, hb⟩ := (h a).2 1
@@ -457,6 +480,7 @@ theorem prop_8653 {M : Type u} [Monoid M] (h : ∀ a : M, Function.Bijective (a 
 
 /-- Oqhr-Gt66es-8805 (2:26:45) [prop] A surjective endomorphism of a finitely generated module over
 a commutative ring is bijective (mathlib: `OrzechProperty.injective_of_surjective_endomorphism`). -/
+@[buffalo "Oqhr-Gt66es-8805"]
 theorem prop_8805 {A M : Type u} [CommRing A] [AddCommGroup M] [Module A M] [Module.Finite A M]
     (f : M →ₗ[A] M) (hf : Function.Surjective f) : Function.Bijective f :=
   ⟨OrzechProperty.injective_of_surjective_endomorphism f hf, hf⟩
@@ -464,6 +488,7 @@ theorem prop_8805 {A M : Type u} [CommRing A] [AddCommGroup M] [Module A M] [Mod
 /-- Oqhr-Gt66es-9207 (2:33:27) [prop] A surjective endomorphism of a finitely presented algebra is
 an isomorphism. Proved: the noetherian case (the kernels of the iterates stabilize); the general
 case by passage to the limit is not formalised. -/
+@[buffalo "Oqhr-Gt66es-9207"]
 theorem prop_9207 {A : Type u} [CommRing A] [IsNoetherianRing A] (φ : A →+* A)
     (hφ : Function.Surjective φ) : Function.Bijective φ := by
   refine ⟨?_, hφ⟩
@@ -494,6 +519,7 @@ variable {C : Type u} [Category.{v} C] [HasPullbacks C] (P : MorphismProperty C)
 
 /-- Oqhr-Gt66es-9661 (2:41:01) [prop] Affine morphisms contain the isomorphisms and are stable
 under composition and under base change. -/
+@[buffalo "Oqhr-Gt66es-9661"]
 theorem prop_9661 :
     (∀ {X Y : Scheme.{u}} (f : X ⟶ Y) [IsIso f], IsAffineHom f) ∧
     (∀ {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) [IsAffineHom f] [IsAffineHom g],
@@ -503,6 +529,7 @@ theorem prop_9661 :
 
 /-- Oqhr-Gt66es-9795 (2:43:15) [prop] A class stable under composition and base change is stable
 under fibre product: `f₁ ×_S f₂ ∈ M` if `f₁, f₂ ∈ M` (mathlib: `MorphismProperty.pullbackMap`). -/
+@[buffalo "Oqhr-Gt66es-9795"]
 theorem prop_9795 [P.IsStableUnderBaseChange] [P.IsStableUnderComposition] {S X X' Y Y' : C}
     {f : X ⟶ S} {g : Y ⟶ S} {f' : X' ⟶ S} {g' : Y' ⟶ S} {i₁ : X ⟶ X'} {i₂ : Y ⟶ Y'}
     (h₁ : P i₁) (h₂ : P i₂) (e₁ : f = i₁ ≫ f') (e₂ : g = i₂ ≫ g') :
@@ -513,6 +540,7 @@ theorem prop_9795 [P.IsStableUnderBaseChange] [P.IsStableUnderComposition] {S X 
 /-- Oqhr-Gt66es-10079 (2:47:59) [prop] For such a class `M` (multiplicative, stable under base
 change): if `g ∘ f ∈ M` and the diagonal `Δ_g ∈ M`, then `f ∈ M` (`f` is its graph, a base change
 of `Δ_g`, followed by a base change of `g ∘ f`). -/
+@[buffalo "Oqhr-Gt66es-10079"]
 theorem prop_10079 [P.IsStableUnderBaseChange] [P.IsMultiplicative] {X Y Z : C} (f : X ⟶ Y)
     (g : Y ⟶ Z) (hΔ : P (pullback.diagonal g)) (hfg : P (f ≫ g)) : P f := by
   set gr : X ⟶ pullback (f ≫ g) g := pullback.lift (𝟙 X) f (by simp)
@@ -524,6 +552,7 @@ theorem prop_10079 [P.IsStableUnderBaseChange] [P.IsMultiplicative] {X Y Z : C} 
 /-- Oqhr-Gt66es-10336 (2:52:16) [prop] Giving a morphism `f : X → Y` over `S` is equivalent to
 giving a section `Γ_f = (id, f)` of `X ×_S Y → X`; `f` is `Γ_f` followed by the second
 projection. -/
+@[buffalo "Oqhr-Gt66es-10336"]
 def prop_10336 {X Y S : C} (p : X ⟶ S) (g : Y ⟶ S) :
     {f : X ⟶ Y // f ≫ g = p} ≃ {s : X ⟶ pullback p g // s ≫ pullback.fst p g = 𝟙 X} where
   toFun f := ⟨pullback.lift (𝟙 X) f.1 (by simp [f.2]), by simp⟩
@@ -537,6 +566,7 @@ def prop_10336 {X Y S : C} (p : X ⟶ S) (g : Y ⟶ S) :
 /-- Oqhr-Gt66es-10408 (2:53:28) [prop] The graph `Γ_f` is a monomorphism and is deduced from
 `Δ_g : Y → Y ×_Z Y` by the base change `f × id_Y` (mathlib:
 `pullback_lift_diagonal_isPullback`). -/
+@[buffalo "Oqhr-Gt66es-10408"]
 theorem prop_10408 {X Y Z : C} (f : X ⟶ Y) (g : Y ⟶ Z) :
     Mono (pullback.lift (𝟙 X) f (by simp) : X ⟶ pullback (f ≫ g) g) ∧
     IsPullback f (pullback.lift (𝟙 X) f (by simp)) (pullback.diagonal g)
@@ -548,6 +578,7 @@ theorem prop_10408 {X Y Z : C} (f : X ⟶ Y) (g : Y ⟶ Z) :
 /-- Oqhr-Gt66es-10536 (2:55:36) [prop] For `g : Y → S` and a class `M` as above, the following are
 equivalent: `Δ_g ∈ M`; every graph `Γ_f : X → X ×_S Y` is in `M`; for all `u, v : X → Y`, the kernel
 of `(u, v)` (base change of `Δ_g` along `(u, v)`) is in `M`. -/
+@[buffalo "Oqhr-Gt66es-10536"]
 theorem prop_10536 [P.IsStableUnderBaseChange] [P.RespectsIso] {Y S : C} (g : Y ⟶ S) :
     List.TFAE [P (pullback.diagonal g),
       ∀ (X : C) (p : X ⟶ S) (f : X ⟶ Y) (h : f ≫ g = p),
@@ -575,6 +606,7 @@ theorem prop_10536 [P.IsStableUnderBaseChange] [P.RespectsIso] {Y S : C} (g : Y 
 
 /-- Oqhr-Gt66es-10860 (3:01:00) [prop] These conditions are also equivalent to: every section of
 every base change `Y ×_S S' → S'` is in `M` (`M` multiplicative, stable under base change). -/
+@[buffalo "Oqhr-Gt66es-10860"]
 theorem prop_10860 [P.IsStableUnderBaseChange] [P.IsMultiplicative] {Y S : C} (g : Y ⟶ S) :
     P (pullback.diagonal g) ↔ ∀ (S' : C) (φ : S' ⟶ S) (s : S' ⟶ pullback g φ),
       s ≫ pullback.snd g φ = 𝟙 S' → P s := by
@@ -590,6 +622,7 @@ theorem prop_10860 [P.IsStableUnderBaseChange] [P.IsMultiplicative] {Y S : C} (g
 
 /-- Oqhr-Gt66es-11051 (3:04:11) [prop] Monomorphisms are stable under base change and composition;
 every diagonal is a monomorphism; if `g ∘ f` is a monomorphism, so is `f`. -/
+@[buffalo "Oqhr-Gt66es-11051"]
 theorem prop_11051 :
     (∀ {X Y S : C} (f : X ⟶ S) (g : Y ⟶ S) [Mono f], Mono (pullback.snd f g)) ∧
     (∀ {X Y Z : C} (f : X ⟶ Y) (g : Y ⟶ Z) [Mono f] [Mono g], Mono (f ≫ g)) ∧
@@ -600,6 +633,7 @@ theorem prop_11051 :
 
 /-- Oqhr-Gt66es-11114 (3:05:14) [prop] Surjective morphisms of schemes are stable under composition
 and base change. -/
+@[buffalo "Oqhr-Gt66es-11114"]
 theorem prop_11114 :
     MorphismProperty.IsStableUnderComposition @Surjective.{u} ∧
     MorphismProperty.IsStableUnderBaseChange @Surjective.{u} :=
@@ -608,6 +642,7 @@ theorem prop_11114 :
 
 /-- Oqhr-Gt66es-11246 (3:07:26) [prop] Epimorphisms of schemes are stable under composition (not
 under base change: for affine schemes, see `board_11246`). -/
+@[buffalo "Oqhr-Gt66es-11246"]
 theorem prop_11246 {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) [Epi f] [Epi g] : Epi (f ≫ g) :=
   inferInstance
 
@@ -621,6 +656,7 @@ example {X Y : Scheme.{u}} (f : X ⟶ Y) [QuasiCompact f] (U : Set Y) (hU : IsOp
 quasi-compact iff each `f⁻¹(S_i)` is quasi-compact for the affine open sets `S_i` of `S` (mathlib:
 `quasiCompact_iff_forall_isAffineOpen`; for an arbitrary affine covering, mathlib's
 `HasAffineProperty @QuasiCompact`). -/
+@[buffalo "Oqhr-Gt66es-11643"]
 theorem prop_11643 {X S : Scheme.{u}} (f : X ⟶ S) :
     QuasiCompact f ↔ ∀ U : S.Opens, IsAffineOpen U → IsCompact (f ⁻¹ᵁ U : Set X) :=
   quasiCompact_iff_forall_isAffineOpen

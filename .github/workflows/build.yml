@@ -138,6 +138,22 @@ jobs:
           name: statement-definitions
           path: statement-definitions.md
 
+      # Issue #39, step 3: the declarations by cote of the Montpellier notes, by entry of the
+      # Buffalo index and by EGA/SGA item, from the attributes of `Grothendieck/Attr.lean` and
+      # Stacks' `@[ega]`/`@[sga]`. Kept as an artifact and printed in the log; the copy in
+      # `docs/review/source-index.md` is refreshed by hand.
+      - name: List the declarations by source
+        run: |
+          lake env lean --run scripts/SourceIndex.lean GrothendieckArchivesProofs \
+            source-index.md GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems
+          cat source-index.md
+
+      - name: Upload the source index
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-index
+          path: source-index.md
+
       # Issue #31, question 3: each statement of Challenge/ (Mathlib alone, unproved) is proved
       # with exactly that statement by Solution/, through the libraries above, using only the
       # three axioms (comparator.json). lake comparator sandboxes the build with bubblewrap.

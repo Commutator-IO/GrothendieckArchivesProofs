@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.Topos.Part02a
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -27,6 +28,7 @@ variable {X : TopCat.{u}}
 /-! ## Stalks and infinite products -/
 
 /-- URU5jgTvjhU-24714 (6:51:54) [prop] The canonical arrow `(∏ᵢ Fᵢ)_x → ∏ᵢ (Fᵢ)_x`. -/
+@[buffalo "URU5jgTvjhU-24714"]
 def stalk_piComparison {ι : Type u} (F : ι → X.Presheaf (Type u)) (x : X) :
     (TopCat.Presheaf.stalkFunctor (Type u) x).obj (∏ᶜ F) ⟶
       ∏ᶜ fun i => (TopCat.Presheaf.stalkFunctor (Type u) x).obj (F i) :=
@@ -36,6 +38,7 @@ def stalk_piComparison {ι : Type u} (F : ι → X.Presheaf (Type u)) (x : X) :
 `Uₙ = ]-1/(n+1), 1/(n+1)[`, `fₙ = a` and `gₙ = a` on `Uₙ`, `b` elsewhere (maps to
 `{a, b} = Bool`), each `fₙ, gₙ` have the same germ at `0`, but they coincide on no common
 neighbourhood of `0`: the arrow `(∏ Fᵢ)₀ → ∏ (Fᵢ)₀` is not injective. -/
+@[buffalo "URU5jgTvjhU-24851"]
 theorem germ_product_counterexample :
     ∃ f g : ℕ → ℝ → Bool, (∀ n, f n =ᶠ[𝓝 0] g n) ∧ ¬ ∀ᶠ y in 𝓝 (0 : ℝ), ∀ n, f n y = g n y := by
   refine ⟨fun _ _ => true, fun n y => decide (|y| < 1 / ((n : ℝ) + 1)), fun n => ?_, ?_⟩
@@ -57,6 +60,7 @@ theorem germ_product_counterexample :
 
 /-- URU5jgTvjhU-25045 (6:57:25) [prop] (injectivity half, in germ form) Germs at `x` of families of
 maps commute with products iff `x` has a smallest open neighbourhood. -/
+@[buffalo "URU5jgTvjhU-25045"]
 theorem germ_product_iff {Z : Type u} [TopologicalSpace Z] (x : Z) :
     (∀ (ι : Type u) (f g : ι → Z → Bool), (∀ i, f i =ᶠ[𝓝 x] g i) →
         ∀ᶠ y in 𝓝 x, ∀ i, f i y = g i y) ↔
@@ -79,6 +83,7 @@ theorem germ_product_iff {Z : Type u} [TopologicalSpace Z] (x : Z) :
 
 /-- URU5jgTvjhU-25045 (6:57:25) [prop] If points are closed, `x` has a smallest open neighbourhood
 iff `x` is isolated. -/
+@[buffalo "URU5jgTvjhU-25045"]
 theorem smallest_nhd_iff_isolated {Z : Type u} [TopologicalSpace Z] [T1Space Z] (x : Z) :
     (∃ U : Set Z, IsOpen U ∧ x ∈ U ∧ ∀ V : Set Z, IsOpen V → x ∈ V → U ⊆ V) ↔ IsOpen {x} := by
   constructor
@@ -152,6 +157,7 @@ theorem not_epi_from_prod (ψ : ∏ᶜ shrinkingSheaf ⟶ unitSheaf) : ¬ Epi ψ
 /-- URU5jgTvjhU-25113 (6:58:33) [cex], URU5jgTvjhU-25307 (7:01:47) [ex] and URU5jgTvjhU-7768
 (2:09:28) In `Sh(ℝ)`, with `Fₙ = Uₙ ⊔ (ℝ ∖ {0})`, `Uₙ = ]-1/(n+1), 1/(n+1)[`, each `Fₙ → e` is an
 epimorphism but their product `∏ Fₙ → ∏ e = e` is not. -/
+@[buffalo "URU5jgTvjhU-25113"]
 theorem product_of_epis_not_epi :
     (∀ n, Epi (toUnitSheaf (shrinkingSheaf n))) ∧
       ¬ Epi (Limits.Pi.map fun n => toUnitSheaf (shrinkingSheaf n)) := by
@@ -279,6 +285,7 @@ theorem stone_epi_surjective {F G : TopCat.Sheaf (Type u) X} (φ : F ⟶ G) [Epi
 
 /-- URU5jgTvjhU-25503 (7:05:03) [prop] (corrected: `X` compact *Hausdorff* totally disconnected)
 `F → G` is an epimorphism iff `F(U) → G(U)` is surjective for every open-closed `U`. -/
+@[buffalo "URU5jgTvjhU-25503"]
 theorem stone_epi_iff {F G : TopCat.Sheaf (Type u) X} (φ : F ⟶ G) :
     Epi φ ↔ ∀ U : Opens X, IsClopen (U : Set X) → Function.Surjective (φ.hom.app (op U)) := by
   refine ⟨fun _ U hU => stone_epi_surjective φ U hU, fun h => ?_⟩
@@ -290,6 +297,7 @@ theorem stone_epi_iff {F G : TopCat.Sheaf (Type u) X} (φ : F ⟶ G) :
 
 /-- URU5jgTvjhU-25503 (7:05:03) [prop] On such a space every product of epimorphisms of sheaves is
 an epimorphism. -/
+@[buffalo "URU5jgTvjhU-25503"]
 theorem stone_prod_epi {ι : Type u} {F G : ι → Sheaf (Opens.grothendieckTopology X) (Type u)}
     (φ : ∀ i, F i ⟶ G i)
     [hφ : ∀ i, Epi (φ i)] : Epi (Limits.Pi.map φ) := by
@@ -326,6 +334,7 @@ end Stone
 
 /-- URU5jgTvjhU-26587 (7:23:07) [rem] The lattice of open sets of `X` is that of the subobjects
 (subsheaves) of the terminal sheaf `e = 𝒪(-, X)`. -/
+@[buffalo "URU5jgTvjhU-26587"]
 def subterminalEquivOpens :
     {S : Subfunctor (yoneda.obj (⊤ : Opens X)) // TopCat.Presheaf.IsSheaf (X := X) S.toFunctor} ≃
       Opens X where
@@ -366,6 +375,7 @@ def subterminalEquivOpens :
 
 /-- URU5jgTvjhU-25977 (7:12:57) [prop] `X` is connected iff `e` is not the sum of two disjoint
 non-initial subobjects, i.e. `X` is not the union of two disjoint nonempty open sets. -/
+@[buffalo "URU5jgTvjhU-25977"]
 theorem preconnected_iff_opens (Z : Type*) [TopologicalSpace Z] :
     PreconnectedSpace Z ↔
       ∀ U V : Opens Z, U ⊔ V = ⊤ → U ⊓ V = ⊥ → U = ⊥ ∨ V = ⊥ := by
@@ -450,6 +460,7 @@ def isInitial_of_isEmpty [IsEmpty X] (F : TopCat.Sheaf (Type u) X) : IsInitial F
 
 /-- URU5jgTvjhU-26075 (7:14:35) [prop] and URU5jgTvjhU-33121 (9:12:01) [prop] `X` is empty iff
 `∅ → e` is an isomorphism in `Sh(X)`. -/
+@[buffalo "URU5jgTvjhU-26075"]
 theorem sheaf_isIso_initial_iff :
     IsIso (initial.to (⊤_ (Sheaf (Opens.grothendieckTopology X) (Type u)))) ↔ IsEmpty X := by
   rw [isIso_initial_to_terminal_iff]
@@ -464,6 +475,7 @@ theorem sheaf_isIso_initial_iff :
 
 /-- URU5jgTvjhU-26075 (7:14:35) [prop] and URU5jgTvjhU-32997 (9:09:57) [prop] `X` is empty iff
 `Sh(X)` is equivalent to the point category; in particular `Sh(∅)` is the « empty topos ». -/
+@[buffalo "URU5jgTvjhU-26075"]
 theorem sheaf_equiv_point_iff :
     Nonempty (Sheaf (Opens.grothendieckTopology X) (Type u) ≌ Discrete PUnit.{1}) ↔ IsEmpty X := by
   rw [← allInitial_iff_equiv_point, ← isIso_initial_to_terminal_iff, sheaf_isIso_initial_iff]
@@ -471,15 +483,18 @@ theorem sheaf_equiv_point_iff :
 /-- URU5jgTvjhU-26202 (7:16:42) [def] `H^i(X, F)`: Mathlib's sheaf cohomology `Sheaf.H`, the
 `Ext` groups from the constant sheaf `ℤ` in the abelian category of abelian sheaves (which has
 enough injectives, `Part01.ab_enoughInjectives`). -/
+@[buffalo "URU5jgTvjhU-26202"]
 abbrev sheafH (F : Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u}) (n : ℕ) : Type _ :=
   Sheaf.H F n
 
 /-- URU5jgTvjhU-26328 (7:18:48) [def] `H^i(X, M) = H^i(X, M_X)` for an abelian group `M`. -/
+@[buffalo "URU5jgTvjhU-26328"]
 abbrev sheafHConst (M : AddCommGrpCat.{u}) (n : ℕ) : Type _ :=
   Sheaf.H ((constantSheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u}).obj M) n
 
 /-- URU5jgTvjhU-26392 (7:19:52) [prop] `X` is connected iff `ℤ → H⁰(X, ℤ)` (the locally constant
 maps `X → ℤ`) is surjective. -/
+@[buffalo "URU5jgTvjhU-26392"]
 theorem preconnected_iff_const_surjective (Z : Type*) [TopologicalSpace Z] :
     PreconnectedSpace Z ↔ Function.Surjective (LocallyConstant.const Z : ℤ → LocallyConstant Z ℤ) := by
   classical
@@ -511,6 +526,7 @@ theorem preconnected_iff_const_surjective (Z : Type*) [TopologicalSpace Z] :
 
 /-- URU5jgTvjhU-26392 (7:19:52) [prop] `X` is connected and nonempty iff `ℤ → H⁰(X, ℤ)` is
 bijective. -/
+@[buffalo "URU5jgTvjhU-26392"]
 theorem connected_iff_const_bijective (Z : Type*) [TopologicalSpace Z] :
     ConnectedSpace Z ↔ Function.Bijective (LocallyConstant.const Z : ℤ → LocallyConstant Z ℤ) := by
   rw [connectedSpace_iff_univ, _root_.IsConnected, ← preconnectedSpace_iff_univ,
@@ -534,6 +550,7 @@ open CartesianMonoidalCategory MonObj in
 /-- URU5jgTvjhU-26911 (7:28:31) [def] A `G`-torsor is an object `P` with an action of the group
 object `G` such that `G × P → P × P`, `(g, p) ↦ (gp, p)`, is an isomorphism and `P → e` an
 epimorphism. -/
+@[buffalo "URU5jgTvjhU-26911"]
 structure IsTorsorObj (G P : C) [GrpObj G] (act : G ⊗ P ⟶ P) : Prop where
   one_act : (λ_ P).inv ≫ (η[G] ▷ P) ≫ act = 𝟙 P
   mul_act : (μ[G] ▷ P) ≫ act = (α_ G G P).hom ≫ (G ◁ act) ≫ act
@@ -550,21 +567,25 @@ example : PreservesFiniteLimits (constantSheaf (Opens.grothendieckTopology X) (T
 
 /-- URU5jgTvjhU-27104 (7:31:44) [def] A fibred category over `𝒪(X)`: a pseudofunctor
 `𝒪(X)ᵒᵖ → Cat` (restriction functors, transitive up to coherent isomorphism). -/
+@[buffalo "URU5jgTvjhU-27104"]
 abbrev FibredCategoryOver (X : TopCat.{u}) : Type _ :=
   Pseudofunctor (LocallyDiscrete (Opens X)ᵒᵖ) Cat.{u, u + 1}
 
 /-- URU5jgTvjhU-27291 (7:34:51) [def] A fibred category is a stack if morphisms glue (the presheaves
 `𝓗om` are sheaves) and descent data are effective (Mathlib's `Pseudofunctor.IsStack`). -/
+@[buffalo "URU5jgTvjhU-27291"]
 abbrev IsStackOver (F : FibredCategoryOver X) : Prop :=
   F.IsStack (Opens.grothendieckTopology X)
 
 /-- URU5jgTvjhU-27167 (7:32:47) [ex] The fibred category `U ↦ Sh(U)` (Mathlib's
 `pseudofunctorOver`, with `Sh(𝒪(X)/U) ≃ Sh(U)`). -/
+@[buffalo "URU5jgTvjhU-27167"]
 abbrev sheavesFibred (X : TopCat.{u}) :=
   (Opens.grothendieckTopology X).pseudofunctorOver (Type u)
 
 /-- URU5jgTvjhU-27873 (7:44:33) [def] A stack over a category `ℰ`: descent along epimorphic
 families, here for the canonical topology of `ℰ`. -/
+@[buffalo "URU5jgTvjhU-27873"]
 abbrev IsStackOverCategory {E : Type*} [Category E] (F : Pseudofunctor (LocallyDiscrete Eᵒᵖ) Cat) :
     Prop :=
   F.IsStack (Sheaf.canonicalTopology E)
@@ -573,6 +594,7 @@ abbrev IsStackOverCategory {E : Type*} [Category E] (F : Pseudofunctor (LocallyD
 
 /-- URU5jgTvjhU-28139 (7:48:59) [prop] The open sets of a sum `∐ Xᵢ` are the families of open sets
 of the `Xᵢ`: `𝒪(∐ Xᵢ) ≃ ∏ 𝒪(Xᵢ)`, the lattice isomorphism underlying `Sh(∐ Xᵢ) ≃ ∏ Sh(Xᵢ)`. -/
+@[buffalo "URU5jgTvjhU-28139"]
 def opensSigmaIso {ι : Type*} (Z : ι → Type*) [∀ i, TopologicalSpace (Z i)] :
     Opens (Σ i, Z i) ≃o ∀ i, Opens (Z i) where
   toFun U i := ⟨Sigma.mk i ⁻¹' U, U.2.preimage continuous_sigmaMk⟩

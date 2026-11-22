@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -65,6 +66,7 @@ def effEpiOfDenseAt {X : E} (hX : ι.DenseAt X) :
 
 /-- ORG14LNb5gE-2891 (0:48:11) [prop], direction (b) ⇒ (b′), pointwise: if `X` is the colimit of
 `C/X`, the family of all arrows `Y → X`, `Y` in `C`, is strictly epimorphic. -/
+@[buffalo "ORG14LNb5gE-2891"]
 theorem effEpi_of_denseAt {X : E} (hX : ι.isDenseAt X) :
     EffectiveEpiFamily (fun g : CostructuredArrow ι X => ι.obj g.left) (fun g => g.hom) :=
   ⟨⟨effEpiOfDenseAt ι hX.some⟩⟩
@@ -72,6 +74,7 @@ theorem effEpi_of_denseAt {X : E} (hX : ι.isDenseAt X) :
 /-- ORG14LNb5gE-2891 (0:48:11) [prop], direction (b′) ⇒ (b): for `C` full in `E`, if for every
 object the family of all arrows from `C` is strictly epimorphic, then every `X` is the colimit of
 `C/X` (the compatibility over an arbitrary test object is checked after restriction to `C`). -/
+@[buffalo "ORG14LNb5gE-2891"]
 def denseAtOfEffEpi [ι.Full]
     (H : ∀ Y : E, EffectiveEpiFamily (fun g : CostructuredArrow ι Y => ι.obj g.left)
       (fun g => g.hom)) (X : E) : ι.DenseAt X :=
@@ -106,6 +109,7 @@ def denseAtOfEffEpi [ι.Full]
       simpa using hm g }
 
 /-- ORG14LNb5gE-2891 (0:48:11) [prop] (b) ⇔ (b′), for `C` full in `E`. -/
+@[buffalo "ORG14LNb5gE-2891"]
 theorem isDense_iff_effEpi [ι.Full] :
     ι.IsDense ↔ ∀ X : E,
       EffectiveEpiFamily (fun g : CostructuredArrow ι X => ι.obj g.left) (fun g => g.hom) :=
@@ -114,12 +118,14 @@ theorem isDense_iff_effEpi [ι.Full] :
 
 /-- ORG14LNb5gE-2248 (0:37:28) [prop] (a) ⇔ (b): for `C` full in `E`, the restricted Yoneda
 functor `E → Ĉ` is fully faithful iff `ι` is dense (every `X` is the colimit of `C/X`). -/
+@[buffalo "ORG14LNb5gE-2248"]
 theorem dense_iff_fullyFaithful [ι.Full] :
     ι.IsDense ↔ Nonempty (Presheaf.restrictedULiftYoneda.{w} ι).FullyFaithful :=
   Functor.isDense_iff_fullyFaithful_restrictedULiftYoneda ι
 
 /-- ORG14LNb5gE-2248 (0:37:28) [prop] (b) ⇒ (c): every `X` is the target of a strictly
 epimorphic family with sources in `C` (all the arrows from `C`). -/
+@[buffalo "ORG14LNb5gE-2248"]
 theorem dense_strictlyGenerated [ι.IsDense] (X : E) :
     EffectiveEpiFamily (fun g : CostructuredArrow ι X => ι.obj g.left) (fun g => g.hom) :=
   effEpi_of_denseAt ι (Functor.IsDense.isDenseAt ι X)
@@ -127,6 +133,7 @@ theorem dense_strictlyGenerated [ι.IsDense] (X : E) :
 /-- ORG14LNb5gE-3001 (0:50:01) [prop] A family `(Y_a → X)` is strictly epimorphic iff, for every
 `Z`, `Hom(X, Z)` is the set of compatible families of the `Hom(Y_a, Z)`: Mathlib's
 `EffectiveEpiFamily` is by definition this sheaf condition for the representables. -/
+@[buffalo "ORG14LNb5gE-3001"]
 theorem effEpi_iff_sheaf {B : E} {α : Type*} (X : α → E) (π : ∀ a, X a ⟶ B) :
     EffectiveEpiFamily X π ↔ ∀ Y : E, (Presieve.ofArrows X π).IsSheafFor (yoneda.obj Y) := by
   rw [← Sieve.effectiveEpimorphic_family, Presieve.EffectiveEpimorphic.iff_forall_isSheafFor_yoneda]
@@ -149,6 +156,7 @@ theorem effEpi_of_universal {B : E} {α : Type*} (X : α → E) (π : ∀ a, X a
 
 /-- ORG14LNb5gE-2829 (0:47:09) [prop] If a strictly and universally epimorphic family `(Y_b → B)`
 factors through a family `(X_a → B)`, the latter is again strictly and universally epimorphic. -/
+@[buffalo "ORG14LNb5gE-2829"]
 theorem universal_of_factor {B : E} {α β : Type*} {X : α → E} (π : ∀ a, X a ⟶ B) {Y : β → E}
     (ρ : ∀ b, Y b ⟶ B) (h : IsUniversalStrictEpi Y ρ)
     (hf : ∀ b, ∃ a, ∃ u : Y b ⟶ X a, u ≫ π a = ρ b) : IsUniversalStrictEpi X π := by
@@ -160,6 +168,7 @@ theorem universal_of_factor {B : E} {α β : Type*} {X : α → E} (π : ∀ a, 
 /-- ORG14LNb5gE-2765 (0:46:05) [prop] (c′) ⇒ (b): if every object is the target of a strictly and
 universally epimorphic family with sources in the full subcategory `C`, every `X` is the colimit
 of `C/X`. -/
+@[buffalo "ORG14LNb5gE-2765"]
 theorem isDenseAt_of_universal [ι.Full]
     (H : ∀ X : E, ∃ (α : Type v) (c : α → C) (π : ∀ a, ι.obj (c a) ⟶ X),
       IsUniversalStrictEpi _ π) (X : E) : ι.isDenseAt X :=
@@ -170,6 +179,7 @@ theorem isDenseAt_of_universal [ι.Full]
 
 /-- ORG14LNb5gE-2572 (0:42:52) [prop], first half (Mathlib): if fibre products exist and
 distribute over the coproduct, `(X_a → B)` is strictly epimorphic as soon as `∐ X_a → B` is. -/
+@[buffalo "ORG14LNb5gE-2572"]
 def effEpiFamilyOfDesc {B : E} {α : Type*} (X : α → E) (π : ∀ a, X a ⟶ B) [HasCoproduct X]
     [EffectiveEpi (Sigma.desc π)]
     [∀ {Z : E} (g : Z ⟶ ∐ X) (a : α), HasPullback g (Sigma.ι X a)]
@@ -180,12 +190,14 @@ def effEpiFamilyOfDesc {B : E} {α : Type*} (X : α → E) (π : ∀ a, X a ⟶ 
 
 /-- ORG14LNb5gE-2572 (0:42:52) [prop], converse (always true, Mathlib): if `(X_a → B)` is strictly
 epimorphic, so is `∐ X_a → B`. -/
+@[buffalo "ORG14LNb5gE-2572"]
 theorem effEpi_desc {B : E} {α : Type*} (X : α → E) (π : ∀ a, X a ⟶ B) [HasCoproduct X]
     [EffectiveEpiFamily X π] : EffectiveEpi (Sigma.desc π) := inferInstance
 
 /-- ORG14LNb5gE-1967 (0:32:47) [prop] The comparison lemma: if a small full subcategory
 `G : C → D` is cover-dense (generates) for the site `(D, K)`, `Sh(C, J) ≃ Sh(D, K)` for the induced
 topology `J`. Stated for the topos `Sh(D, K)`. -/
+@[buffalo "ORG14LNb5gE-1967"]
 def generating_sheafEquiv {C D : Type u} [SmallCategory C] [SmallCategory D] (G : C ⥤ D)
     (K : GrothendieckTopology D) [G.IsCoverDense K] [G.IsLocallyFull K] [G.IsLocallyFaithful K] :
     Sheaf (G.inducedTopology K) (Type u) ≌ Sheaf K (Type u) :=
@@ -291,6 +303,7 @@ theorem not_effEpi_of_cover {α : Type} (π : α → (Zg ⟶ F2g))
 /-- ORG14LNb5gE-2446 (0:40:46) [cex] The family of all the arrows `ℤ → ℤ * ℤ` in groups is not
 strictly epimorphic, although it contains the strictly epimorphic family of the two generators
 (`effEpi_generators`): enlarging a strictly epimorphic family can make it lose this property. -/
+@[buffalo "ORG14LNb5gE-2446"]
 theorem not_effEpi_all :
     ¬ EffectiveEpiFamily (fun f : CostructuredArrow ιZ F2g => ιZ.obj f.left) (fun f => f.hom) :=
   not_effEpi_of_cover (fun f : CostructuredArrow ιZ F2g => f.hom) fun g =>
@@ -345,6 +358,7 @@ def effEpiStructOfSurjective {A B : GrpCat.{0}} (p : A ⟶ B) (hp : Function.Sur
 /-- ORG14LNb5gE-2572 (0:42:52) [prop] « false in general »: in groups, the map `∐_{g ∈ F₂} ℤ → F₂`
 is a strict epimorphism (it is surjective), but the family `(ℤ → F₂)_{g}` is not strictly
 epimorphic. -/
+@[buffalo "ORG14LNb5gE-2572"]
 theorem sigma_effEpi_not_family :
     EffectiveEpi (freeCofanIsColimit.desc (Cofan.mk F2g fun g => GrpCat.ofHom (zpowersHom F2 g))) ∧
       ¬ EffectiveEpiFamily (fun _ : F2 => Zg) (fun g => GrpCat.ofHom (zpowersHom F2 g)) := by
@@ -361,6 +375,7 @@ theorem sigma_effEpi_not_family :
 
 /-- ORG14LNb5gE-2380 (0:39:40) [cex], condition (c) for `ℤ * ℤ`: the two generators `ℤ → ℤ * ℤ`
 form a strictly epimorphic family. -/
+@[buffalo "ORG14LNb5gE-2380"]
 theorem effEpi_generators :
     EffectiveEpiFamily (fun _ : Bool => Zg) (fun b => GrpCat.ofHom (zpowersHom F2 (FreeGroup.of b))) :=
   ⟨⟨{ desc := fun e _ => GrpCat.ofHom (FreeGroup.lift fun b => (e b).hom gen1)
@@ -380,6 +395,7 @@ theorem effEpi_generators :
         simpa using this }⟩⟩
 /-- ORG14LNb5gE-2380 (0:39:40) [cex] In groups, with `C = {ℤ}`: `ℤ * ℤ` satisfies (c) (the two
 generators form a strictly epimorphic family) but is not the colimit of `C/(ℤ * ℤ)` (b). -/
+@[buffalo "ORG14LNb5gE-2380"]
 theorem free_c_not_b : EffectiveEpiFamily (fun _ : Bool => Zg)
       (fun b => GrpCat.ofHom (zpowersHom F2 (FreeGroup.of b))) ∧ ¬ ιZ.isDenseAt F2g :=
   ⟨effEpi_generators, fun h => not_effEpi_all (effEpi_of_denseAt ιZ h)⟩
@@ -415,6 +431,7 @@ def sheafInclAdj (h : τ ≤ τ') :
 
 /-- ORG14LNb5gE-4763 (1:19:23) [prop], one direction: for `τ'` finer than `τ`, `Sh(C, τ')` is a
 subtopos of `Sh(C, τ)`: the inclusion is fully faithful with a left exact left adjoint. -/
+@[buffalo "ORG14LNb5gE-4763"]
 theorem subtopos_of_le (h : τ ≤ τ') :
     (sheafIncl h).Full ∧ (sheafIncl h).Faithful ∧
       PreservesFiniteLimits (sheafToPresheaf τ (Type u) ⋙ presheafToSheaf τ' (Type u)) :=

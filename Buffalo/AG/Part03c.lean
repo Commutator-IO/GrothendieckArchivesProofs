@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.AG.Part03b
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -41,6 +42,7 @@ example (M : Type*) [AddCommGroup M] [Module A M] [Module.Flat A M] {N₁ N₂ N
 
 /-- thSz9ZHDK9o-129 (0:02:09) [prop] The diagonal of `Spec A` over `K` is a closed immersion,
 `A ⊗_K A → A` being surjective (`prop_37586`). -/
+@[buffalo "thSz9ZHDK9o-129"]
 theorem prop_129 (K : Type*) [CommRing K] [Algebra K A] :
     IsClosedEmbedding (comap (Algebra.TensorProduct.lmul' K : A ⊗[K] A →ₐ[K] A).toRingHom) :=
   (prop_37586 K).2
@@ -48,6 +50,7 @@ theorem prop_129 (K : Type*) [CommRing K] [Algebra K A] :
 /-- thSz9ZHDK9o-336 (0:05:36) [prop] Finite sums of affine spaces correspond to finite products of
 algebras (mathlib, for affine schemes: `AlgebraicGeometry.sigmaSpec` is an isomorphism for a finite
 family). -/
+@[buffalo "thSz9ZHDK9o-336"]
 theorem prop_336 {ι : Type u} [Finite ι] (R : ι → CommRingCat.{u}) :
     IsIso (AlgebraicGeometry.sigmaSpec R) :=
   inferInstance
@@ -64,6 +67,7 @@ example {C : Type*} [Category C] {X Y : C} (c : Limits.BinaryCofan X Y) : Prop :
 
 /-- thSz9ZHDK9o-527 (0:08:47) [prop] `u` is a monomorphism iff `X ×_Y X ≃ X` via the diagonal
 (mathlib: `Limits.pullback.isIso_diagonal_iff`). -/
+@[buffalo "thSz9ZHDK9o-527"]
 theorem prop_527 {C : Type*} [Category C] {X Y : C} (u : X ⟶ Y) [Limits.HasPullback u u] :
     IsIso (Limits.pullback.diagonal u) ↔ Mono u :=
   Limits.pullback.isIso_diagonal_iff u
@@ -87,6 +91,7 @@ theorem subsingleton_tensor_of_ringHom {R S T : Type*} [CommRing R] [CommRing S]
 
 /-- thSz9ZHDK9o-658 (0:10:58) [prop] For `A = A₁ × A₂`, the `A → A_i` are surjective (closed
 immersions) and `A₁ ⊗_A A₂ = 0`. -/
+@[buffalo "thSz9ZHDK9o-658"]
 theorem prop_658 (A₁ A₂ : Type*) [CommRing A₁] [CommRing A₂] :
     Function.Surjective (RingHom.fst A₁ A₂) ∧ Function.Surjective (RingHom.snd A₁ A₂) ∧
       @Subsingleton (@TensorProduct (A₁ × A₂) _ A₁ A₂ _ _ (RingHom.fst A₁ A₂).toAlgebra.toModule
@@ -97,11 +102,13 @@ theorem prop_658 (A₁ A₂ : Type*) [CommRing A₁] [CommRing A₂] :
 /-- thSz9ZHDK9o-593 (0:09:53) [prop] Finite sums of affine algebraic spaces are disjoint and
 universal. Proved: the disjointness `A₁ ⊗_{A₁ × A₂} A₂ = 0` (`prop_658`); mathlib has finitary
 extensivity (universal and disjoint finite sums) for all schemes (`FinitaryExtensive Scheme`). -/
+@[buffalo "thSz9ZHDK9o-593"]
 theorem prop_593 : FinitaryExtensive AlgebraicGeometry.Scheme.{u} := inferInstance
 
 /-- thSz9ZHDK9o-918 (0:15:18) [prop] If finite sums are universal, products (and fibre products)
 distribute over them: `∐ (X_i ×_S Y_j) ≃ (∐ X_i) ×_S (∐ Y_j)` (mathlib:
 `FinitaryPreExtensive.isIso_sigmaDesc_map`). -/
+@[buffalo "thSz9ZHDK9o-918"]
 theorem prop_918 {C : Type*} [Category C] [Limits.HasPullbacks C] [FinitaryPreExtensive C]
     {ι ι' : Type*} [Finite ι] [Finite ι'] {S : C} {X : ι → C} {Y : ι' → C}
     (f : ∀ i, X i ⟶ S) (g : ∀ i, Y i ⟶ S) :
@@ -111,6 +118,7 @@ theorem prop_918 {C : Type*} [Category C] [Limits.HasPullbacks C] [FinitaryPreEx
   inferInstance
 
 /-- thSz9ZHDK9o-1176 (0:19:36) [def] The constant object `I_C = ∐_I e`. -/
+@[buffalo "thSz9ZHDK9o-1176"]
 abbrev constObj (C : Type*) [Category C] [Limits.HasTerminal C] (I : Type*)
     [Limits.HasCoproduct fun _ : I => ⊤_ C] : C :=
   ∐ fun _ : I => ⊤_ C
@@ -119,6 +127,7 @@ abbrev constObj (C : Type*) [Category C] [Limits.HasTerminal C] (I : Type*)
 `I ↦ I_C` is left exact. Proved: the product part `I_C × J_C ≃ (I × J)_C`, which needs only
 universality (`prop_918` over the final object), and, for affine spaces, the disjointness used for
 fibre products: two distinct points `e ⇉ I_C` have empty intersection, `K ⊗_{K^I} K = 0`. -/
+@[buffalo "thSz9ZHDK9o-1239"]
 theorem prop_1239 {C : Type*} [Category C] [Limits.HasPullbacks C] [FinitaryPreExtensive C]
     (T : C) (hT : Limits.IsTerminal T) {I J : Type*} [Finite I] [Finite J] :
     IsIso (Limits.Sigma.desc fun (p : I × J) ↦
@@ -136,6 +145,7 @@ theorem prop_1239_disjoint (K : Type*) [Field K] {I : Type*} [DecidableEq I] {i 
 /-- thSz9ZHDK9o-1369 (0:22:49) [prop] For `I` a finite group, `I_K` is an affine algebraic group.
 Proved: its points with values in a field `L` are the elements of `I` (every `K`-algebra map
 `K^I → L` is an evaluation); the Hopf algebra structure is `comul` (`prop_1568`). -/
+@[buffalo "thSz9ZHDK9o-1369"]
 theorem prop_1369 (K L : Type*) [Field K] [Field L] [Algebra K L] {I : Type*} [Fintype I]
     [DecidableEq I] (φ : (I → K) →ₐ[K] L) : ∃! i : I, ∀ x : I → K, φ x = algebraMap K L (x i) := by
   set e : I → (I → K) := fun i => Pi.single i 1 with he
@@ -170,6 +180,7 @@ theorem prop_1369 (K L : Type*) [Field K] [Field L] [Algebra K L] {I : Type*} [F
 /-- thSz9ZHDK9o-1437 (0:23:57) [prop] A functor between categories with finite limits is left exact
 iff it preserves fibre products and the final object (mathlib:
 `Limits.preservesFiniteLimits_of_preservesTerminal_and_pullbacks`). -/
+@[buffalo "thSz9ZHDK9o-1437"]
 theorem prop_1437 {C D : Type*} [Category C] [Category D] [Limits.HasTerminal C]
     [Limits.HasPullbacks C] (G : C ⥤ D) :
     Limits.PreservesFiniteLimits G ↔
@@ -181,6 +192,7 @@ theorem prop_1437 {C D : Type*} [Category C] [Category D] [Limits.HasTerminal C]
 /-- thSz9ZHDK9o-1502 (0:25:02) [prop] `I_K = Spec K^I`: `K^I` is the product of `I` copies of `K`
 in `K`-algebras, so its spectrum is the sum of `I` copies of the final object (mathlib, for
 schemes: `prop_336`). -/
+@[buffalo "thSz9ZHDK9o-1502"]
 def prop_1502 (K A : Type*) [CommRing K] [CommRing A] [Algebra K A] (I : Type*) :
     (A →ₐ[K] (I → K)) ≃ (I → (A →ₐ[K] K)) where
   toFun φ i := (Pi.evalAlgHom K (fun _ => K) i).comp φ
@@ -191,6 +203,7 @@ def prop_1502 (K A : Type*) [CommRing K] [CommRing A] [Algebra K A] (I : Type*) 
 /-- thSz9ZHDK9o-1568 (0:26:08) [prop] The law `I × I → I` induces the comultiplication
 `K^I → K^{I×I}`, `φ ↦ ((i, j) ↦ φ(ij))`, transpose to the law, and `K^{I×I} ≃ K^I ⊗_K K^I` for
 `I` finite (mathlib: `finsuppTensorFinsupp'`). -/
+@[buffalo "thSz9ZHDK9o-1568"]
 def comul (K : Type*) [CommRing K] (I : Type*) [Mul I] : (I → K) →ₐ[K] (I × I → K) :=
   AlgHom.pi fun p => Pi.evalAlgHom K (fun _ => K) (p.1 * p.2)
 
@@ -208,6 +221,7 @@ section Mono
 /-- thSz9ZHDK9o-1836 (0:30:36) [prop] If `Y → S` is a monomorphism of affine spaces, i.e.
 `u : A → C` is an epimorphism of rings, `Spec C → Spec A` is injective: two primes over the same
 `𝔭` give two maps of `C` to a common field over `κ(𝔭)`, which agree on `A`. -/
+@[buffalo "thSz9ZHDK9o-1836"]
 theorem prop_1836 {A C : Type u} [CommRing A] [CommRing C] (u : A →+* C)
     (hu : ∀ (T : Type u) [CommRing T] (g h : C →+* T), g.comp u = h.comp u → g = h) :
     Function.Injective (comap u) := by
@@ -245,6 +259,7 @@ theorem prop_1836 {A C : Type u} [CommRing A] [CommRing C] (u : A →+* C)
 /-- thSz9ZHDK9o-1899 (0:31:39) [prop] `Spec(X ×_S Y)` is, in `Spec X`, the preimage of `Spec Y`
 (mathlib, for schemes and without the monomorphism hypothesis for the image:
 `Scheme.Pullback.range_fst`; with `prop_1836` the map is moreover injective in the affine case). -/
+@[buffalo "thSz9ZHDK9o-1899"]
 theorem prop_1899 {X Y S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S) (g : Y ⟶ S) :
     Set.range (Limits.pullback.fst f g) = f ⁻¹' Set.range g :=
   AlgebraicGeometry.Scheme.Pullback.range_fst f g
@@ -253,6 +268,7 @@ variable {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
 
 /-- thSz9ZHDK9o-2093 (0:34:53) [prop] If `A → C` is surjective, so is `B → B ⊗_A C`, and the
 topology of `Spec(B ⊗_A C)` is induced by that of `Spec B` (closed embedding). -/
+@[buffalo "thSz9ZHDK9o-2093"]
 theorem prop_2093 (C : Type*) [CommRing C] [Algebra A C]
     (hC : Function.Surjective (algebraMap A C)) :
     Function.Surjective (algebraMap B (B ⊗[A] C)) ∧
@@ -263,6 +279,7 @@ theorem prop_2093 (C : Type*) [CommRing C] [Algebra A C]
 
 /-- thSz9ZHDK9o-2156 (0:35:56) [prop] `B ⊗_A A_f = B_f` and the topology of `Spec(B ⊗_A A_f)` is
 induced by that of `Spec B` (open embedding) (mathlib: `IsLocalization.Away.tensor`). -/
+@[buffalo "thSz9ZHDK9o-2156"]
 theorem prop_2156 (f : A) :
     IsLocalization.Away (algebraMap A B f) (B ⊗[A] Localization.Away f) ∧
       IsOpenEmbedding (comap (algebraMap B (B ⊗[A] Localization.Away f))) :=
@@ -272,6 +289,7 @@ theorem prop_2156 (f : A) :
 immersion), the topology of `Spec(B ⊗_A C)` is induced by that of `Spec B`. Proved for schemes:
 immersions are stable under base change and are embeddings, with image the preimage
 (`prop_1899`). -/
+@[buffalo "thSz9ZHDK9o-2288"]
 theorem prop_2288 {X Y S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S) (g : Y ⟶ S)
     [AlgebraicGeometry.IsImmersion g] :
     IsEmbedding (Limits.pullback.fst f g) ∧ Set.range (Limits.pullback.fst f g) = f ⁻¹' Set.range g :=
@@ -280,24 +298,28 @@ theorem prop_2288 {X Y S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S) (g : Y �
 /-- thSz9ZHDK9o-2416 (0:40:16) [prop] For two subobjects `X`, `Y` of `S`,
 `Spec(X ∩ Y) = Spec X ∩ Spec Y` in `Spec S` (mathlib, for schemes:
 `Scheme.Pullback.range_fst_comp`; true for any two morphisms). -/
+@[buffalo "thSz9ZHDK9o-2416"]
 theorem prop_2416 {X Y S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S) (g : Y ⟶ S) :
     Set.range (Limits.pullback.fst f g ≫ f) = Set.range f ∩ Set.range g :=
   AlgebraicGeometry.Scheme.Pullback.range_fst_comp f g
 
 /-- thSz9ZHDK9o-2613 (0:43:33) [prop] The fibre `X ×_S Spec κ(𝔭)` has as underlying space the fibre
 of `X → S` at `𝔭`, with the induced topology (mathlib: `Scheme.Hom.fiberHomeo`). -/
+@[buffalo "thSz9ZHDK9o-2613"]
 def prop_2613 {X S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S) (s : S) :
     f.fiber s ≃ₜ f ⁻¹' {s} :=
   f.fiberHomeo s
 
 /-- thSz9ZHDK9o-2810 (0:46:50) [prop] The closure of `φ(V(J))` is `V(u⁻¹(J))` (mathlib:
 `PrimeSpectrum.closure_image_comap_zeroLocus`). -/
+@[buffalo "thSz9ZHDK9o-2810"]
 theorem prop_2810 {A B : Type*} [CommRing A] [CommRing B] (u : A →+* B) (J : Ideal B) :
     closure (comap u '' zeroLocus (J : Set B)) = zeroLocus (J.comap u : Set A) :=
   closure_image_comap_zeroLocus u J
 
 /-- thSz9ZHDK9o-3134 (0:52:14) [prop] `Spec u` is dominant iff `ker u ⊂ nil(A)`; for `A` reduced, iff
 `u` is injective (mathlib: `PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical`). -/
+@[buffalo "thSz9ZHDK9o-3134"]
 theorem prop_3134 {A B : Type*} [CommRing A] [CommRing B] (u : A →+* B) :
     (DenseRange (comap u) ↔ RingHom.ker u ≤ nilradical A) ∧
       (IsReduced A → (DenseRange (comap u) ↔ Function.Injective u)) := by
@@ -319,6 +341,7 @@ example {R : CommRingCat.{u}} (M : ModuleCat.{u} R) (f : R) :
 
 /-- thSz9ZHDK9o-3469 (0:57:49) [prop] `A~` is a sheaf of `A`-algebras with `Γ(X, A~) = A`
 (mathlib: `AlgebraicGeometry.StructureSheaf.globalSectionsIso`). -/
+@[buffalo "thSz9ZHDK9o-3469"]
 def prop_3469 (R : Type u) [CommRing R] :
     CommRingCat.of R ≅ (AlgebraicGeometry.Spec.structureSheaf R).obj.obj (Opposite.op ⊤) :=
   AlgebraicGeometry.StructureSheaf.globalSectionsIso R
@@ -333,6 +356,7 @@ example (R : Type u) [CommRing R] :
 tensor products. Proved: it commutes with all colimits, being a left adjoint (mathlib:
 `AlgebraicGeometry.tilde.adjunction`); exactness and tensor products are not formalised (sections
 over `D(f)`: `prop_4112`). -/
+@[buffalo "thSz9ZHDK9o-3728"]
 theorem prop_3728 (R : CommRingCat.{u}) :
     Limits.PreservesColimitsOfSize.{u, u} (AlgebraicGeometry.tilde.functor R) :=
   AlgebraicGeometry.tilde.adjunction.leftAdjoint_preservesColimits
@@ -342,6 +366,7 @@ for `A` noetherian, finitely presented = finitely generated. Proved: on each `D(
 `Hom_A(M, N)_f = Hom_{A_f}(M_f, N_f)` (mathlib: `Module.FinitePresentation.isLocalizedModule_map`),
 and the noetherian case (mathlib: `Module.finitePresentation_of_finite`); the internal `Hom` of
 sheaves of modules is not formalised. -/
+@[buffalo "thSz9ZHDK9o-3792"]
 theorem prop_3792 {A : Type*} [CommRing A] (M N : Type*) [AddCommGroup M] [Module A M]
     [AddCommGroup N] [Module A N] [Module.FinitePresentation A M] (f : A) :
     IsLocalizedModule (Submonoid.powers f)
@@ -353,12 +378,14 @@ theorem prop_3792 {A : Type*} [CommRing A] (M N : Type*) [AddCommGroup M] [Modul
 
 /-- thSz9ZHDK9o-3856 (1:04:16) [prop] `M ↦ M~` is fully faithful (mathlib:
 `AlgebraicGeometry.tilde.fullyFaithfulFunctor`). -/
+@[buffalo "thSz9ZHDK9o-3856"]
 def prop_3856 (R : CommRingCat.{u}) : (AlgebraicGeometry.tilde.functor R).FullyFaithful :=
   AlgebraicGeometry.tilde.fullyFaithfulFunctor
 
 /-- thSz9ZHDK9o-4112 (1:08:32) [prop] `M~ ⊗ N~ ≃ (M ⊗ N)~`. Proved on sections over each `D(f)`:
 `(M ⊗ N)_f ≃ M_f ⊗_{A_f} N_f` (mathlib: `AlgebraTensorModule.distribBaseChange`, with
 `M_f = A_f ⊗ M`, `prop_17115`); the tensor product of sheaves of modules is not formalised. -/
+@[buffalo "thSz9ZHDK9o-4112"]
 def prop_4112 {A : Type*} [CommRing A] (M N : Type*) [AddCommGroup M] [Module A M]
     [AddCommGroup N] [Module A N] (f : A) :
     Localization.Away f ⊗[A] (M ⊗[A] N) ≃ₗ[Localization.Away f]
@@ -371,6 +398,7 @@ example (R : CommRingCat.{u}) (M : (AlgebraicGeometry.Spec R).Modules) : Prop :=
 
 /-- thSz9ZHDK9o-4841 (1:20:41) [thm] On `Spec A`, an `𝒪_X`-module is quasi-coherent iff it is
 isomorphic to some `M~` (mathlib: `AlgebraicGeometry.essImage_tilde`). -/
+@[buffalo "thSz9ZHDK9o-4841"]
 theorem thm_4841 (R : CommRingCat.{u}) :
     (AlgebraicGeometry.tilde.functor R).essImage =
       SheafOfModules.isQuasicoherent (AlgebraicGeometry.Spec R).ringCatSheaf :=
@@ -379,6 +407,7 @@ theorem thm_4841 (R : CommRingCat.{u}) :
 /-- thSz9ZHDK9o-4903 (1:21:43) [prop] Every `M~` is a cokernel of free modules, and conversely
 such a cokernel is some `M~` (mathlib: `AlgebraicGeometry.presentationTilde`,
 `AlgebraicGeometry.isIso_fromTildeΓ_of_presentation`). -/
+@[buffalo "thSz9ZHDK9o-4903"]
 theorem prop_4903 {R : CommRingCat.{u}} (M : (AlgebraicGeometry.Spec R).Modules)
     (P : M.Presentation) : IsIso M.fromTildeΓ :=
   AlgebraicGeometry.isIso_fromTildeΓ_of_presentation M P
@@ -395,7 +424,7 @@ variable {A : Type*} [CommRing A]
 come from an `A`-module. Proved: extension of scalars along the faithfully flat
 `A → ∏ A_{f_i}` (`prop_37263`) is comonadic (mathlib: `comonadicExtendScalars`), i.e. descent
 for modules is effective; the identification of coalgebras with gluing data is not stated. -/
-@[instance_reducible]
+@[buffalo "thSz9ZHDK9o-5103", instance_reducible]
 def prop_5103 {ι : Type u} [Fintype ι] {R : Type u} [CommRing R] (f : ι → R)
     (hf : Ideal.span (Set.range f) = ⊤) :
     ComonadicLeftAdjoint (ModuleCat.extendScalars.{_, _, u}
@@ -404,6 +433,7 @@ def prop_5103 {ι : Type u} [Fintype ι] {R : Type u} [CommRing R] (f : ι → R
 
 /-- thSz9ZHDK9o-5165 (1:26:05) [prop] For `A' = ∏ A_{f_i}`, `A' ⊗_A A' ≃ ∏ A_{f_i f_j}`, so the
 gluing datum is a descent datum. Proved: each `A_f ⊗_A A_g ≃ (A_f)_g` (`prop_17311`). -/
+@[buffalo "thSz9ZHDK9o-5165"]
 def prop_5165 (f g : A) :
     Localization.Away f ⊗[A] Localization.Away g ≃ₐ[Localization.Away f]
       Localization.Away (algebraMap A (Localization.Away f) g) :=
@@ -411,6 +441,7 @@ def prop_5165 (f g : A) :
 
 /-- thSz9ZHDK9o-5297 (1:28:17) [prop] If `X = ⋃ X_{f_i}` (finite), `A → ∏ A_{f_i}` is faithfully
 flat (`prop_37263`). -/
+@[buffalo "thSz9ZHDK9o-5297"]
 theorem prop_5297 {ι : Type*} [Fintype ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
     Module.FaithfullyFlat A (Π i, Localization.Away (f i)) :=
   prop_37263 f hf
@@ -427,6 +458,7 @@ every fibred category. Proved: its descent data are equivalent, compatibly with 
 descent data for the identity of `X` (both families generate the maximal sieve; mathlib:
 `Pseudofunctor.DescentData.exists_equivalence_of_sieve_eq`); that the identity is of effective
 descent is not stated in mathlib. -/
+@[buffalo "thSz9ZHDK9o-5614"]
 theorem prop_5614 {C : Type*} [Category C] (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat)
     {X S : C} (f : X ⟶ S) (s : S ⟶ X) (hs : s ≫ f = 𝟙 S) :
     ∃ e : F.DescentData (fun _ : Unit => f) ≌ F.DescentData (fun _ : Unit => 𝟙 S),
@@ -444,13 +476,14 @@ theorem prop_5614 {C : Type*} [Category C] (F : Pseudofunctor (LocallyDiscrete C
 /-- thSz9ZHDK9o-5680 (1:34:40) [prop] If `A → A'` is faithfully flat, `Spec A' → Spec A` is of
 effective descent for modules. Proved in comonadic form (mathlib: `comonadicExtendScalars`), with
 `H⁰` (`thm_35250`). -/
-@[instance_reducible]
+@[buffalo "thSz9ZHDK9o-5680", instance_reducible]
 def prop_5680 {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S) (hf : f.FaithfullyFlat) :
     ComonadicLeftAdjoint (ModuleCat.extendScalars.{_, _, u} f) :=
   comonadicExtendScalars hf
 
 /-- thSz9ZHDK9o-5791 (1:36:31) [thm] `M ↦ M~` is an equivalence between `A`-modules and
 quasi-coherent `𝒪_X`-modules (mathlib: `AlgebraicGeometry.tildeEquiv`). -/
+@[buffalo "thSz9ZHDK9o-5791"]
 def thm_5791 (R : CommRingCat.{u}) :
     ModuleCat R ≌ (SheafOfModules.isQuasicoherent (AlgebraicGeometry.Spec R).ringCatSheaf).FullSubcategory :=
   AlgebraicGeometry.tildeEquiv

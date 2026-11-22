@@ -1,6 +1,7 @@
 module
 
 public import StacksFrontier.RingTheory.RegularRing.GlobalDimension
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -41,6 +42,7 @@ namespace Buffalo.AG.Part06
 /-- Oqhr-Gt66es-8121 (2:15:21) [thm] (Serre) A noetherian local ring `R` is regular if and only if
 its global dimension `sup_M pd_R M` is finite, and then the global dimension is `dim R`; the
 localization of a regular local ring at a prime is therefore regular. Stacks 00OC and 0AFS. -/
+@[buffalo "Oqhr-Gt66es-8121"]
 theorem thm_8121 {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R] :
     (IsRegularLocalRing R ↔ (⨆ M : ModuleCat.{u} R, projectiveDimension M) ≠ ⊤) ∧
     (IsRegularLocalRing R → (⨆ M : ModuleCat.{u} R, projectiveDimension M) = ringKrullDim R) ∧

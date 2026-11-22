@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.Groupes.Part02c
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -29,12 +30,14 @@ open AlgebraicGeometry CategoryTheory
 /-- 3ULFIl_2Wis-575 (0:09:35) [prop] A morphism to the spectrum of a field is universally open;
 the affine case: for `X = Spec A` and base change `Spec B`, the projection
 `Spec (A ⊗_K B) → Spec A` is open (Mathlib `isOpenMap_comap_algebraMap_tensorProduct_of_field`). -/
+@[buffalo "3ULFIl_2Wis-575"]
 theorem open_over_field {K A B : Type*} [Field K] [CommRing A] [CommRing B] [Algebra K A]
     [Algebra K B] : IsOpenMap (PrimeSpectrum.comap (algebraMap A (A ⊗[K] B))) :=
   PrimeSpectrum.isOpenMap_comap_algebraMap_tensorProduct_of_field
 
 /-- 3ULFIl_2Wis-638 (0:10:38) [prop] A flat morphism locally of finite presentation is open
 (Mathlib `UniversallyOpen.of_flat`). -/
+@[buffalo "3ULFIl_2Wis-638"]
 theorem open_of_flat {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] [LocallyOfFinitePresentation f] :
     IsOpenMap f :=
   f.isOpenMap
@@ -47,6 +50,7 @@ section Reduced
 
 /-- 3ULFIl_2Wis-2460 (0:41:00) [prop] (affine) A morphism `Spec A → Spec B` from a reduced
 scheme that lands set-theoretically in `V(I)` factors through `Spec (B/I)`. -/
+@[buffalo "3ULFIl_2Wis-2460"]
 theorem factor_of_reduced {A B : Type*} [CommRing A] [CommRing B] [IsReduced A] (φ : B →+* A)
     (I : Ideal B) (h : ∀ x ∈ I, ∀ P : PrimeSpectrum A, φ x ∈ P.asIdeal) :
     ∃ ψ : B ⧸ I →+* A, ψ.comp (Ideal.Quotient.mk I) = φ := by
@@ -69,6 +73,7 @@ variable (k : Type u) [Field k]
 /-- 3ULFIl_2Wis-2844 (0:47:24) [def] (quasi-compact case, Mathlib
 `Algebra.Etale.iff_exists_algEquiv_prod`) `Spec A` is étale over `k` iff `A` is a finite product of
 finite separable extensions of `k`. -/
+@[buffalo "3ULFIl_2Wis-2844"]
 theorem etale_iff (A : Type u) [CommRing A] [Algebra k A] :
     Algebra.Etale k A ↔
       ∃ (I : Type u) (_ : Finite I) (Ai : I → Type u) (_ : ∀ i, Field (Ai i))
@@ -78,6 +83,7 @@ theorem etale_iff (A : Type u) [CommRing A] [Algebra k A] :
 
 /-- 3ULFIl_2Wis-2844 (0:47:24) [def] The entry's "equivalent to geometrically reduced" is false:
 `𝔸¹_k = Spec k[X]` is geometrically reduced but not étale. -/
+@[buffalo "3ULFIl_2Wis-2844"]
 theorem affineLine_geomReduced_not_etale :
     Algebra.IsGeometricallyReduced k k[X] ∧ ¬ Algebra.Etale k k[X] := by
   refine ⟨(Algebra.isGeometricallyReduced_field_iff k k[X]).mpr ?_, fun h ↦ ?_⟩
@@ -86,6 +92,7 @@ theorem affineLine_geomReduced_not_etale :
 
 /-- 3ULFIl_2Wis-2911 (0:48:31) [prop] (Mathlib `equivPiOfIsSepClosed`) Over a separably closed
 field, an étale algebra is constant: `A ≃ k^{Spec A}`. -/
+@[buffalo "3ULFIl_2Wis-2911"]
 noncomputable def etale_constant (A : Type u) [CommRing A] [Algebra k A] [Algebra.EssFiniteType k A]
     [Algebra.FormallyEtale k A] [IsSepClosed k] : A ≃ₐ[k] (PrimeSpectrum A → k) :=
   Algebra.FormallyEtale.equivPiOfIsSepClosed k A
@@ -97,6 +104,7 @@ example (A K : Type u) [CommRing A] [Algebra k A] [Field K] [Algebra k K] [Algeb
 
 /-- 3ULFIl_2Wis-3449 (0:57:29) [prop] For `X = Spec K`, `K/k` separable, the `k'`-points are
 the `k̄`-points, `k̄` the separable closure of `k` in `k'`: every `K → k'` lands in `k̄`. -/
+@[buffalo "3ULFIl_2Wis-3449"]
 theorem points_in_sepClosure {K L : Type u} [Field K] [Field L] [Algebra k K] [Algebra k L]
     [Algebra.IsSeparable k K] (f : K →ₐ[k] L) (x : K) : f x ∈ separableClosure k L :=
   (map_mem_separableClosure_iff f).mpr (Algebra.IsSeparable.isSeparable k x)
@@ -105,6 +113,7 @@ theorem points_in_sepClosure {K L : Type u} [Field K] [Field L] [Algebra k K] [A
 `Spec K` (`K/k` finite) is continuous: the stabilizer of a point is the fixing subgroup of its
 image, an open subgroup (Mathlib `fixingSubgroup_isOpen`; `Gal(L/k)` is profinite,
 `InfiniteGalois.continuousMulEquivToLimit`). -/
+@[buffalo "3ULFIl_2Wis-3514"]
 theorem stabilizer_isOpen {K L : Type u} [Field K] [Field L] [Algebra k K] [Algebra k L]
     [FiniteDimensional k K] (f : K →ₐ[k] L) :
     IsOpen {σ : Gal(L/k) | (σ : L →ₐ[k] L).comp f = f} := by
@@ -123,6 +132,7 @@ theorem stabilizer_isOpen {K L : Type u} [Field K] [Field L] [Algebra k K] [Alge
 /-- 3ULFIl_2Wis-3644 (1:00:44) [thm] On connected étale schemes (Mathlib, infinite Galois
 theory): intermediate fields of `L/k` correspond to closed subgroups of `Gal(L/k)`, the finite
 ones (`Spec K`, `K/k` finite) to the open subgroups. -/
+@[buffalo "3ULFIl_2Wis-3644"]
 noncomputable def galoisCorrespondence (L : Type u) [Field L] [Algebra k L] [IsGalois k L] :
     IntermediateField k L ≃o (ClosedSubgroup Gal(L/k))ᵒᵈ :=
   InfiniteGalois.IntermediateFieldEquivClosedSubgroup
@@ -145,6 +155,7 @@ example {I : Type u} [Finite I] (A : I → Type u) [∀ i, CommRing (A i)] [∀ 
 
 /-- 3ULFIl_2Wis-4027 (1:07:07) [cex] For `K/k` finite separable of degree `n` and `k''`
 separably closed, `Spec (k'' ⊗_k K)` has exactly `n` points. -/
+@[buffalo "3ULFIl_2Wis-4027"]
 theorem card_points_baseChange (K K'' : Type u) [Field K] [Algebra k K] [FiniteDimensional k K]
     [Algebra.IsSeparable k K] [Field K''] [Algebra k K''] [IsSepClosed K''] :
     Nat.card (PrimeSpectrum (K'' ⊗[k] K)) = Module.finrank k K := by
@@ -158,6 +169,7 @@ theorem card_points_baseChange (K K'' : Type u) [Field K] [Algebra k K] [FiniteD
 /-- 3ULFIl_2Wis-4156 (1:09:16) [ex] For `k'/k` purely inseparable of degree `p`,
 `k' = k[t]/(t^p - a)`, after extension to a field `k''` in which `a = b^p`, the point carries
 the non-zero nilpotent `t - b`. -/
+@[buffalo "3ULFIl_2Wis-4156"]
 theorem insep_nilpotent {K'' : Type u} [Field K''] (p : ℕ) [hp : Fact p.Prime] [CharP K'' p]
     (b : K'') : (AdjoinRoot.root (X ^ p - C (b ^ p)) - AdjoinRoot.of _ b) ^ p = 0 ∧
       AdjoinRoot.root (X ^ p - C (b ^ p)) - AdjoinRoot.of (X ^ p - C (b ^ p)) b ≠ 0 := by
@@ -178,6 +190,7 @@ theorem insep_nilpotent {K'' : Type u} [Field K''] (p : ℕ) [hp : Fact p.Prime]
 /-- 3ULFIl_2Wis-4291 (1:11:31) [prop] (affine, `I` finite) A morphism `Spec A → ∐_I Spec k`,
 i.e. an algebra map `k^I → A`, gives a decomposition `1 = ∑ eᵢ` into complete orthogonal
 idempotents (`Spec A = ∐ Spec Aeᵢ`). -/
+@[buffalo "3ULFIl_2Wis-4291"]
 theorem decomposition_of_map {I : Type*} [Fintype I] [DecidableEq I] (A : Type*) [CommRing A]
     [Algebra k A] (f : (I → k) →ₐ[k] A) :
     CompleteOrthogonalIdempotents fun i ↦ f (Pi.single i 1) :=
@@ -191,6 +204,7 @@ section Irreducible
 
 /-- 3ULFIl_2Wis-5302 (1:28:22) [cex] `ℝ[x, y]/(x² + y²)` is a domain (irreducible, with the
 rational point `0`) … -/
+@[buffalo "3ULFIl_2Wis-5302"]
 theorem real_irreducible : Irreducible (X ^ 2 + C (X ^ 2) : ℝ[X][X]) := by
   have hm : (X ^ 2 + C (X ^ 2) : ℝ[X][X]).Monic := by
     apply Monic.add_of_left (monic_X_pow 2)
@@ -226,6 +240,7 @@ theorem complex_not_domain :
 /-- 3ULFIl_2Wis-5696 (1:34:56) [prop] The entry's "only one irreducible component of `X_{k'}`
 passes over the point" is too strong: for `X = Spec ℂ` over `ℝ` (regular, so geometrically normal)
 `X_ℂ = Spec (ℂ ⊗_ℝ ℂ)` has two points, i.e. two irreducible components over the one point of `X`. -/
+@[buffalo "3ULFIl_2Wis-5696"]
 theorem two_components : Nat.card (PrimeSpectrum (ℂ ⊗[ℝ] ℂ)) = 2 := by
   rw [card_points_baseChange ℝ ℂ ℂ, Complex.finrank_real_complex]
 

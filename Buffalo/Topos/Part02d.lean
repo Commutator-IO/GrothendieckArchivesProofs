@@ -2,6 +2,7 @@ module
 
 public import Buffalo.Topos.Part02b
 public import Buffalo.Topos.Part02c
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -38,6 +39,7 @@ instance opens_subcanonical : (Opens.grothendieckTopology X).Subcanonical :=
 
 /-- URU5jgTvjhU-30599 (8:29:59) [prop] Two functors on `Sh(Y)` that commute with colimits and are
 isomorphic on the generating subcategory `𝒪(Y)` (the representable sheaves) are isomorphic. -/
+@[buffalo "URU5jgTvjhU-30599"]
 theorem iso_of_iso_on_opens {E : Type*} [Category.{u} E]
     (L₁ L₂ : Sheaf (Opens.grothendieckTopology X) (Type u) ⥤ E)
     [PreservesColimitsOfSize.{u, u} L₁] [PreservesColimitsOfSize.{u, u} L₂]
@@ -70,6 +72,7 @@ variable {C : Type u} [Category.{v} C]
 
 /-- URU5jgTvjhU-31132 (8:38:52) [def] `(Gᵢ)` is generating if `X ↦ Hom(-, X)|_C` is faithful:
 two arrows agreeing after every `Gᵢ → E` are equal. -/
+@[buffalo "URU5jgTvjhU-31132"]
 def IsSeparatingFamily {ι : Type*} (G : ι → C) : Prop :=
   ∀ ⦃E F : C⦄ (f g : E ⟶ F), (∀ i (a : G i ⟶ E), a ≫ f = a ≫ g) → f = g
 
@@ -79,6 +82,7 @@ abbrev restrictedYonedaFamily {ι : Type*} (G : ι → C) :
   yoneda ⋙ (Functor.whiskeringLeft _ _ _).obj (ObjectProperty.ofObj G).ι.op
 
 /-- URU5jgTvjhU-31132 (8:38:52) [def] The family is generating iff `E → Ĉ` is faithful. -/
+@[buffalo "URU5jgTvjhU-31132"]
 theorem isSeparatingFamily_iff_faithful {ι : Type*} (G : ι → C) :
     IsSeparatingFamily G ↔ (restrictedYonedaFamily G).Faithful := by
   constructor
@@ -93,6 +97,7 @@ theorem isSeparatingFamily_iff_faithful {ι : Type*} (G : ι → C) :
 
 /-- URU5jgTvjhU-31258 (8:40:58) [prop] With equalizers, « conservative on monomorphisms » (the SGA 4
 definition, `Part01.IsGeneratingFamily`) implies « faithful ». -/
+@[buffalo "URU5jgTvjhU-31258"]
 theorem IsGeneratingFamily.isSeparatingFamily [HasEqualizers C] {ι : Type*} {G : ι → C}
     (hG : IsGeneratingFamily G) : IsSeparatingFamily G := by
   intro E F f g h
@@ -102,6 +107,7 @@ theorem IsGeneratingFamily.isSeparatingFamily [HasEqualizers C] {ι : Type*} {G 
 
 /-- URU5jgTvjhU-31258 (8:40:58) [prop] In a balanced category (such as a topos), « faithful »
 implies « conservative » (`Part01.IsConservativeFamily`). -/
+@[buffalo "URU5jgTvjhU-31258"]
 theorem IsSeparatingFamily.isConservativeFamily [Balanced C] {ι : Type*} {G : ι → C}
     (hG : IsSeparatingFamily G) : IsConservativeFamily G := by
   intro E F f hf
@@ -113,6 +119,7 @@ theorem IsSeparatingFamily.isConservativeFamily [Balanced C] {ι : Type*} {G : �
 
 /-- URU5jgTvjhU-31066 (8:37:46) [def] A topos, first (provisional) form: arbitrary colimits, finite
 limits, and a small generating family. -/
+@[buffalo "URU5jgTvjhU-31066"]
 structure IsToposFirstForm (C : Type u) [Category.{v} C] : Prop where
   hasColimits : HasColimitsOfSize.{v, v} C
   hasFiniteLimits : HasFiniteLimits C
@@ -120,17 +127,20 @@ structure IsToposFirstForm (C : Type u) [Category.{v} C] : Prop where
 
 /-- URU5jgTvjhU-31573 (8:46:13) [def] A coproduct `∐ Xᵢ` is universal if it is stable under every
 base change `X' → ∐ Xᵢ` (Mathlib's `IsUniversalColimit`). -/
+@[buffalo "URU5jgTvjhU-31573"]
 def IsUniversalCoproduct {ι : Type*} (Xs : ι → C) [HasCoproduct Xs] : Prop :=
   IsUniversalColimit (colimit.cocone (Discrete.functor Xs))
 
 /-- URU5jgTvjhU-31704 (8:48:24) [def] It is disjoint if the `Xᵢ → ∐ Xᵢ` are monomorphisms and
 `Xᵢ ×_X Xⱼ` is initial for `i ≠ j`. -/
+@[buffalo "URU5jgTvjhU-31704"]
 def IsDisjointCoproduct [HasPullbacks C] {ι : Type*} (Xs : ι → C) [HasCoproduct Xs] : Prop :=
   (∀ i, Mono (Sigma.ι Xs i)) ∧
     ∀ i j, i ≠ j → Nonempty (IsInitial (pullback (Sigma.ι Xs i) (Sigma.ι Xs j)))
 
 /-- URU5jgTvjhU-31896 (8:51:36) [def] An equivalence relation `R ⇉ X`: `R(Z) → X(Z) × X(Z)` is, for
 every `Z`, the graph of an equivalence relation. -/
+@[buffalo "URU5jgTvjhU-31896"]
 structure IsEquivRel {R Y : C} (r₁ r₂ : R ⟶ Y) : Prop where
   mono : ∀ {Z : C} (a b : Z ⟶ R), a ≫ r₁ = b ≫ r₁ → a ≫ r₂ = b ≫ r₂ → a = b
   refl : ∀ {Z : C} (y : Z ⟶ Y), ∃ a : Z ⟶ R, a ≫ r₁ = y ∧ a ≫ r₂ = y
@@ -139,17 +149,20 @@ structure IsEquivRel {R Y : C} (r₁ r₂ : R ⟶ Y) : Prop where
     ∃ c : Z ⟶ R, c ≫ r₁ = a ≫ r₁ ∧ c ≫ r₂ = b ≫ r₂
 
 /-- URU5jgTvjhU-31896 (8:51:36) [def] It is effective if `R ≃ X ×_{X/R} X`. -/
+@[buffalo "URU5jgTvjhU-31896"]
 def IsEffectiveEquivRel {R Y : C} (r₁ r₂ : R ⟶ Y) [HasCoequalizer r₁ r₂] : Prop :=
   IsEquivRel r₁ r₂ ∧ Nonempty (IsLimit (PullbackCone.mk r₁ r₂ (coequalizer.condition r₁ r₂)))
 
 /-- URU5jgTvjhU-31962 (8:52:42) [def] It is universal if passage to the quotient commutes with base
 changes `Y' → X/R` (the coequalizer is a universal colimit; `X → X/R` is then a universal
 epimorphism). -/
+@[buffalo "URU5jgTvjhU-31962"]
 def IsUniversalQuotient {R Y : C} (r₁ r₂ : R ⟶ Y) [HasCoequalizer r₁ r₂] : Prop :=
   IsUniversalColimit (colimit.cocone (parallelPair r₁ r₂))
 
 /-- URU5jgTvjhU-31446 (8:44:06) [def] A topos (Giraud): (a) finite limits, (b) universal disjoint
 small coproducts, (c) universal effective equivalence relations, (d) a small generating family. -/
+@[buffalo "URU5jgTvjhU-31446"]
 structure IsGiraudTopos (C : Type u) [Category.{v} C] : Prop where
   finiteLimits : HasFiniteLimits C
   coproducts : HasCoproducts.{v} C
@@ -161,6 +174,7 @@ structure IsGiraudTopos (C : Type u) [Category.{v} C] : Prop where
 
 /-- URU5jgTvjhU-32152 (8:55:52) [prop] In a (locally small) category with a subobject classifier,
 the subobjects of an object form a small set (`Sub(Y) ≃ Hom(Y, Ω)`). -/
+@[buffalo "URU5jgTvjhU-32152"]
 theorem small_subobject [HasPullbacks C] (𝒞 : Subobject.Classifier C) (Y : C) :
     Small.{v} (Subobject Y) :=
   small_of_injective (f := (𝒞.representableBy.homEquiv (X := Y)).symm) (Equiv.injective _)
@@ -168,6 +182,7 @@ theorem small_subobject [HasPullbacks C] (𝒞 : Subobject.Classifier C) (Y : C)
 end Defs
 
 /-- URU5jgTvjhU-31066 (8:37:46) [def] `Sh(X)` is a topos in the first sense. -/
+@[buffalo "URU5jgTvjhU-31066"]
 theorem sheaf_isToposFirstForm :
     IsToposFirstForm (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
   ⟨inferInstance, inferInstance, ⟨Opens X, opensSheaf, fun _ _ f g h => opensSheaf_separating f g h⟩⟩
@@ -176,6 +191,7 @@ theorem sheaf_isToposFirstForm :
 
 /-- URU5jgTvjhU-32217 (8:56:57) [prop] `ℰ_ab` (here for `ℰ = Sh(X)`) is a Grothendieck abelian
 category (abelian, exact filtered colimits, a generator), hence has enough injectives. -/
+@[buffalo "URU5jgTvjhU-32217"]
 theorem ab_grothendieck_injectives :
     IsGrothendieckAbelian.{u} (Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u}) ∧
       EnoughInjectives (Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u}) :=
@@ -184,18 +200,21 @@ theorem ab_grothendieck_injectives :
 /-- URU5jgTvjhU-32283 (8:58:03) [prop] An injective object of `ℰ_ab` is injective in `ℰ` as soon as
 the free abelian group functor `ℰ → ℰ_ab` (left adjoint of the forgetful functor) preserves
 monomorphisms. -/
+@[buffalo "URU5jgTvjhU-32283"]
 theorem injective_of_adjoint {C D : Type*} [Category C] [Category D] {L : C ⥤ D} {R : D ⥤ C}
     [L.PreservesMonomorphisms] (adj : L ⊣ R) (I : D) (hI : Injective I) : Injective (R.obj I) :=
   adj.map_injective I hI
 
 /-- URU5jgTvjhU-32541 (9:02:21) [def] `Γ(X) = Hom(e, X)`: Mathlib's `Sheaf.Γ`, the sections over the
 terminal open set. -/
+@[buffalo "URU5jgTvjhU-32541"]
 def gammaIso : Sheaf.Γ (Opens.grothendieckTopology X) (Type u) ≅
     (sheafSections (Opens.grothendieckTopology X) (Type u)).obj (op ⊤) :=
   Sheaf.ΓNatIsoSheafSections _ _ isTerminalTop
 
 /-- URU5jgTvjhU-32668 (9:04:28) [def] `I ↦ I_ℰ = ∐_I e` commutes with colimits (it is a left
 adjoint) and with finite limits (`Part02.constantSheaf_preservesFiniteLimits`). -/
+@[buffalo "URU5jgTvjhU-32668"]
 theorem constantSheaf_exact :
     Nonempty (PreservesColimits (constantSheaf (Opens.grothendieckTopology X) (Type u))) ∧
       Nonempty (PreservesFiniteLimits (constantSheaf (Opens.grothendieckTopology X) (Type u))) :=
@@ -204,6 +223,7 @@ theorem constantSheaf_exact :
 /-! ## Basic examples of topoi -/
 
 /-- URU5jgTvjhU-32997 (9:09:57) [prop] `Sh(∅)` is equivalent to the point category. -/
+@[buffalo "URU5jgTvjhU-32997"]
 theorem sheaf_empty_equiv_point :
     Nonempty (Sheaf (Opens.grothendieckTopology (TopCat.of PEmpty.{u + 1})) (Type u) ≌
       Discrete PUnit.{1}) :=
@@ -211,6 +231,7 @@ theorem sheaf_empty_equiv_point :
 
 /-- URU5jgTvjhU-33121 (9:12:01) [prop] A category with strict initial objects (such as a topos) is
 « empty » (equivalent to the point) iff `∅ → e` is an isomorphism. -/
+@[buffalo "URU5jgTvjhU-33121"]
 theorem empty_iff_isIso {C : Type*} [Category C] [HasInitial C] [HasTerminal C]
     [HasStrictInitialObjects C] :
     Nonempty (C ≌ Discrete PUnit.{1}) ↔ IsIso (initial.to (⊤_ C)) := by
@@ -218,6 +239,7 @@ theorem empty_iff_isIso {C : Type*} [Category C] [HasInitial C] [HasTerminal C]
 
 /-- URU5jgTvjhU-33443 (9:17:23) [prop] For the point topos, `I ↦ I_ℰ` is an equivalence
 `Set → Sh(pt)` (the left adjoint of the equivalence `Γ`). -/
+@[buffalo "URU5jgTvjhU-33443"]
 theorem constantSheaf_pt_isEquivalence :
     (constantSheaf (Opens.grothendieckTopology pt.{u}) (Type u)).IsEquivalence :=
   have : ((sheafSections (Opens.grothendieckTopology pt.{u}) (Type u)).obj (op ⊤)).IsEquivalence :=
@@ -225,19 +247,23 @@ theorem constantSheaf_pt_isEquivalence :
   (constantSheaf_adj (X := pt.{u})).isEquivalence_left_of_isEquivalence_right
 
 /-- URU5jgTvjhU-33698 (9:21:38) [def] `B_G`, the category of `G`-sets (Mathlib's `Action`). -/
+@[buffalo "URU5jgTvjhU-33698"]
 abbrev BG (G : Type u) [Group G] : Type _ := Action (Type u) G
 
 /-- URU5jgTvjhU-33505 (9:18:25) [prop] (case `X = pt`) `B_G` is the category of presheaves on the
 one-object category `G`, a topos. -/
+@[buffalo "URU5jgTvjhU-33505"]
 def BG_equiv (G : Type u) [Group G] : BG G ≌ (SingleObj G ⥤ Type u) :=
   Action.functorCategoryEquivalence (Type u) G
 
 /-- URU5jgTvjhU-33822 (9:23:42) [prop] `H^i(G, M)` is `Ext^i(ℤ, M)` in the category of `G`-modules
 (Mathlib's `groupCohomologyIsoExt`), and `H⁰(G, M) = M^G`. -/
+@[buffalo "URU5jgTvjhU-33822"]
 def groupCohomology_ext (G : Type) [Group G] (M : Rep ℤ G) (n : ℕ) :=
   groupCohomologyIsoExt M n
 
 /-- URU5jgTvjhU-33822 (9:23:42) [prop] `Γ(M) = M^G`. -/
+@[buffalo "URU5jgTvjhU-33822"]
 def groupCohomology_zero (G : Type) [Group G] (M : Rep ℤ G) :=
   groupCohomology.H0Iso M
 

@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -35,6 +36,7 @@ variable {A : Type u} [CommRing A]
 /-- Oqhr-Gt66es-37143 (10:19:03) [def] `M` is flat if `M ⊗_A -` is exact, faithfully flat if
 moreover `M ⊗_A N = 0` implies `N = 0` (mathlib: `Module.Flat`,
 `Module.FaithfullyFlat.iff_flat_and_lTensor_reflects_triviality`). -/
+@[buffalo "Oqhr-Gt66es-37143"]
 theorem def_37143 (M : Type v) [AddCommGroup M] [Module A M] :
     Module.FaithfullyFlat A M ↔
       Module.Flat A M ∧ ∀ (N : Type max u v) [AddCommGroup N] [Module A N],
@@ -45,6 +47,7 @@ theorem def_37143 (M : Type v) [AddCommGroup M] [Module A M] :
 injective (resp. surjective, bijective) as soon as `M ⊗ u` is (mathlib for the forward
 directions: `Module.FaithfullyFlat.lTensor_injective_iff_injective` and its variants; the converses
 test `N → 0` and `0 → N`). -/
+@[buffalo "Oqhr-Gt66es-37209"]
 theorem prop_37209 (M : Type v) [AddCommGroup M] [Module A M] [Module.Flat A M] :
     (Module.FaithfullyFlat A M ↔ ∀ (N P : Type max u v) [AddCommGroup N] [Module A N]
         [AddCommGroup P] [Module A P] (w : N →ₗ[A] P),
@@ -78,6 +81,7 @@ theorem prop_37209 (M : Type v) [AddCommGroup M] [Module A M] [Module.Flat A M] 
 /-- Oqhr-Gt66es-37402 (10:23:22) [prop] `M` is faithfully flat if and only if it is flat and
 `M/𝔪M ≠ 0` for every maximal ideal `𝔪` (mathlib: `Module.FaithfullyFlat.iff_flat_and_proper_ideal`,
 for all proper ideals). -/
+@[buffalo "Oqhr-Gt66es-37402"]
 theorem prop_37402 (M : Type v) [AddCommGroup M] [Module A M] :
     Module.FaithfullyFlat A M ↔
       Module.Flat A M ∧ ∀ 𝔪 : Ideal A, 𝔪.IsMaximal → 𝔪 • (⊤ : Submodule A M) ≠ ⊤ := by
@@ -95,6 +99,7 @@ variable {B : Type v} [CommRing B] [Algebra A B]
 /-- Oqhr-Gt66es-37726 (10:28:46) [prop] `B` is faithfully flat over `A` if and only if it is flat
 and `Spec B → Spec A` is surjective (mathlib: `Module.FaithfullyFlat.of_comap_surjective`,
 `PrimeSpectrum.comap_surjective_of_faithfullyFlat`). -/
+@[buffalo "Oqhr-Gt66es-37726"]
 theorem prop_37726 :
     Module.FaithfullyFlat A B ↔
       Module.Flat A B ∧ Function.Surjective (comap (algebraMap A B)) :=
@@ -104,6 +109,7 @@ theorem prop_37726 :
 /-- Oqhr-Gt66es-37918 (10:31:58) [prop] For a local homomorphism of local rings, `B` flat over
 `A` is equivalent to `B` faithfully flat, and then `Spec B → Spec A` is surjective (mathlib:
 `Module.FaithfullyFlat.of_flat_of_isLocalHom`). -/
+@[buffalo "Oqhr-Gt66es-37918"]
 theorem prop_37918 [IsLocalRing A] [IsLocalRing B] [IsLocalHom (algebraMap A B)] :
     (Module.Flat A B ↔ Module.FaithfullyFlat A B) ∧
       (Module.Flat A B → Function.Surjective (comap (algebraMap A B))) :=
@@ -115,6 +121,7 @@ theorem prop_37918 [IsLocalRing A] [IsLocalRing B] [IsLocalHom (algebraMap A B)]
 flat over `A[S⁻¹]` (for whatever `A[S⁻¹]`-algebra structure compatible with `A`); in particular the
 local rings `B_𝔮` are flat over `A_𝔭` (mathlib: `Module.flat_iff_of_isLocalization`,
 `Localization.flat`). -/
+@[buffalo "Oqhr-Gt66es-38052"]
 theorem prop_38052 [Module.Flat A B] (S : Submonoid A) (T : Submonoid B)
     [Algebra (Localization S) (Localization T)]
     [IsScalarTower A (Localization S) (Localization T)] :
@@ -123,6 +130,7 @@ theorem prop_38052 [Module.Flat A B] (S : Submonoid A) (T : Submonoid B)
 
 /-- Oqhr-Gt66es-38114 (10:35:14) [prop] If `B` is flat over `A`, `Spec B → Spec A` is
 generalizing (mathlib: `RingHom.Flat.generalizingMap_comap`). -/
+@[buffalo "Oqhr-Gt66es-38114"]
 theorem prop_38114 [Module.Flat A B] : GeneralizingMap (comap (algebraMap A B)) :=
   RingHom.Flat.generalizingMap_comap (RingHom.flat_algebraMap_iff.2 inferInstance)
 
@@ -130,6 +138,7 @@ theorem prop_38114 [Module.Flat A B] : GeneralizingMap (comap (algebraMap A B)) 
 over the fibres of the sheaf of rings; on `Spec A` (stalk of `M~` at `𝔭` = `M_𝔭`): `M` is flat
 over `A` iff every `M_𝔭` is flat over `A_𝔭` (mathlib: `Module.Flat.localizedModule`,
 `Module.flat_of_localized_maximal`). -/
+@[buffalo "Oqhr-Gt66es-38243"]
 theorem prop_38243 (M : Type v) [AddCommGroup M] [Module A M] :
     Module.Flat A M ↔ ∀ (𝔭 : Ideal A) [𝔭.IsPrime],
       Module.Flat (Localization.AtPrime 𝔭) (LocalizedModule 𝔭.primeCompl M) := by
@@ -138,6 +147,7 @@ theorem prop_38243 (M : Type v) [AddCommGroup M] [Module A M] :
 
 /-- Oqhr-Gt66es-38374 (10:39:34) [prop] `M~` on `Spec A` is flat if and only if `M` is flat
 (stalks of `M~` are the `M_𝔭`; see `prop_38243`). -/
+@[buffalo "Oqhr-Gt66es-38374"]
 theorem prop_38374 (M : Type v) [AddCommGroup M] [Module A M] :
     (∀ (𝔭 : Ideal A) [𝔭.IsPrime],
       Module.Flat (Localization.AtPrime 𝔭) (LocalizedModule 𝔭.primeCompl M)) ↔ Module.Flat A M :=
@@ -147,6 +157,7 @@ theorem prop_38374 (M : Type v) [AddCommGroup M] [Module A M] :
 `Spec B → Spec A`, `f^* = B ⊗_A -`: `B` is faithfully flat iff `B ⊗_A -` preserves injections and
 `B ⊗_A N = 0 ⇒ N = 0` (mathlib: `Module.FaithfullyFlat.iff_flat_and_lTensor_reflects_triviality`,
 `Module.Flat.iff_lTensor_preserves_injective_linearMap`). -/
+@[buffalo "Oqhr-Gt66es-39030"]
 theorem prop_39030 :
     Module.FaithfullyFlat A B ↔
       (∀ (N P : Type (max u v)) [AddCommGroup N] [Module A N] [AddCommGroup P] [Module A P]
@@ -199,6 +210,7 @@ def IsMaximalPoint (x : X) : Prop := closure ({x} : Set X) ∈ irreducibleCompon
 
 /-- vuys5SNs2eQ-2 (0:00:02) [prop] A generalizing morphism sends the maximal points of `X` (generic
 points of the irreducible components) to maximal points of `Y`. -/
+@[buffalo "vuys5SNs2eQ-2"]
 theorem prop_2 [QuasiSober X] [QuasiSober Y] {f : X → Y} (hf : Continuous f)
     (hg : GeneralizingMap f) {x : X} (hx : IsMaximalPoint x) : IsMaximalPoint (f x) := by
   have := closure_image_mem_irreducibleComponents hf hg hx
@@ -211,6 +223,7 @@ theorem prop_2 [QuasiSober X] [QuasiSober Y] {f : X → Y} (hf : Continuous f)
 /-- vuys5SNs2eQ-131 (0:02:11) [prop] `f` is generalizing if and only if, for every irreducible
 closed `Y' ⊂ Y`, every irreducible component of the subspace `f⁻¹(Y')` dominates `Y'` (for
 `X` quasi-sober and `Y` sober, e.g. schemes). -/
+@[buffalo "vuys5SNs2eQ-131"]
 theorem prop_131 [QuasiSober X] [QuasiSober Y] [T0Space Y] {f : X → Y} (hf : Continuous f) :
     GeneralizingMap f ↔ ∀ Y' : Set Y, IsClosed Y' → IsIrreducible Y' →
       ∀ C ∈ irreducibleComponents (f ⁻¹' Y'), Y' ⊆ closure ((f ∘ Subtype.val) '' C) := by
@@ -272,12 +285,14 @@ variable {X Y : Scheme.{u}}
 
 /-- Oqhr-Gt66es-38502 (10:41:42) [prop] A module `M` on `X` is flat relative to `f` if each `M_x` is
 flat over `𝒪_{Y,f(x)}`. For `M = 𝒪_X` this is mathlib's `Flat f` (`Flat.iff_flat_stalkMap`). -/
+@[buffalo "Oqhr-Gt66es-38502"]
 theorem prop_38502 (f : X ⟶ Y) : Flat f ↔ ∀ x, (f.stalkMap x).hom.Flat :=
   Flat.iff_flat_stalkMap f
 
 /-- Oqhr-Gt66es-38630 (10:43:50) [def] `f` is flat (mathlib: `AlgebraicGeometry.Flat`, local on
 both sides, `HasRingHomProperty @Flat RingHom.Flat`); equivalently all `𝒪_{X,x}` are flat over
 `𝒪_{Y,f(x)}`; for `Spec B → Spec A`, `B` is flat over `A` (`Flat.SpecMap_iff`). -/
+@[buffalo "Oqhr-Gt66es-38630"]
 theorem def_38630 (f : X ⟶ Y) {R S : CommRingCat.{u}} (φ : R ⟶ S) :
     (Flat f ↔ ∀ x, (f.stalkMap x).hom.Flat) ∧ (Flat (Spec.map φ) ↔ φ.hom.Flat) :=
   ⟨Flat.iff_flat_stalkMap f, Flat.SpecMap_iff⟩
@@ -285,6 +300,7 @@ theorem def_38630 (f : X ⟶ Y) {R S : CommRingCat.{u}} (φ : R ⟶ S) :
 /-- Oqhr-Gt66es-38767 (10:46:07) [prop] A flat morphism is generalizing, hence universally
 generalizing; flat morphisms contain the isomorphisms and are stable under composition and base
 change (mathlib: `Flat.generalizingMap`, `Flat.isStableUnderBaseChange`, `IsMultiplicative`). -/
+@[buffalo "Oqhr-Gt66es-38767"]
 theorem prop_38767 (f : X ⟶ Y) [Flat f] :
     GeneralizingMap f ∧ (∀ (Y' : Scheme.{u}) (g : Y' ⟶ Y), GeneralizingMap (pullback.snd f g)) ∧
       MorphismProperty.IsMultiplicative @Flat.{u} ∧ MorphismProperty.IsStableUnderBaseChange @Flat.{u} :=
@@ -293,6 +309,7 @@ theorem prop_38767 (f : X ⟶ Y) [Flat f] :
 
 /-- Oqhr-Gt66es-38963 (10:49:23) [def] `f` is faithfully flat if it is flat and surjective; these
 morphisms are stable under composition and base change. -/
+@[buffalo "Oqhr-Gt66es-38963"]
 theorem def_38963 {Z S' : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : S' ⟶ Y)
     [Flat f] [Surjective f] [Flat g] [Surjective g] :
     (Flat (f ≫ g) ∧ Surjective (f ≫ g)) ∧
@@ -301,6 +318,7 @@ theorem def_38963 {Z S' : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : S' ⟶ Y)
 
 /-- Oqhr-Gt66es-39165 (10:52:45) [prop] If `f` is flat, the closure of the image of every
 irreducible component of `X` is an irreducible component of `Y`. -/
+@[buffalo "Oqhr-Gt66es-39165"]
 theorem prop_39165 (f : X ⟶ Y) [Flat f] {Z : Set X} (hZ : Z ∈ irreducibleComponents X) :
     closure (f '' Z) ∈ irreducibleComponents Y :=
   closure_image_mem_irreducibleComponents f.continuous (Flat.generalizingMap f) hZ
@@ -308,6 +326,7 @@ theorem prop_39165 (f : X ⟶ Y) [Flat f] {Z : Set X} (hZ : Z ∈ irreducibleCom
 /-- vuys5SNs2eQ-131 (0:02:11) [prop] For a field extension `k'/k` and a `k`-scheme `X`, every
 irreducible component of `X_{k'}` dominates an irreducible component of `X` (the projection is
 flat, being a base change of `Spec k' → Spec k`). -/
+@[buffalo "vuys5SNs2eQ-131"]
 theorem prop_131_field (k k' : Type u) [Field k] [Field k'] (φ : k →+* k')
     (h : X ⟶ Spec (CommRingCat.of k)) {Z : Set ↥(pullback h (Spec.map (CommRingCat.ofHom φ)))}
     (hZ : Z ∈ irreducibleComponents _) :
@@ -326,6 +345,7 @@ variable {A : Type u} [CommRing A]
 
 /-- vuys5SNs2eQ-327 (0:05:27) [prop] Over a principal ideal ring (domain), a module is flat if and
 only if it is torsion-free (mathlib: `Module.Flat.flat_iff_torsion_eq_bot_of_isBezout`). -/
+@[buffalo "vuys5SNs2eQ-327"]
 theorem prop_327 [IsDomain A] [IsPrincipalIdealRing A] (M : Type v) [AddCommGroup M] [Module A M] :
     Module.Flat A M ↔ Submodule.torsion A M = ⊥ :=
   Module.Flat.flat_iff_torsion_eq_bot_of_isBezout
@@ -333,24 +353,28 @@ theorem prop_327 [IsDomain A] [IsPrincipalIdealRing A] (M : Type v) [AddCommGrou
 /-- vuys5SNs2eQ-327 (0:05:27) [prop] The hypothesis "domain" cannot be dropped from `prop_327` if
 torsion-free is read as `a m = 0 ⇒ a = 0 ∨ m = 0`: over the principal ideal ring `ℤ/4`, the module
 `ℤ/4` is flat but `2 · 2 = 0`. -/
+@[buffalo "vuys5SNs2eQ-327"]
 theorem cex_327 : Module.Flat (ZMod 4) (ZMod 4) ∧ (2 : ZMod 4) • (2 : ZMod 4) = 0 ∧
     (2 : ZMod 4) ≠ 0 :=
   ⟨inferInstance, by decide, by decide⟩
 
 /-- vuys5SNs2eQ-390 (0:06:30) [prop] Over an integral domain, every flat module is torsion-free
 (mathlib: `Module.Flat.torsion_eq_bot`). -/
+@[buffalo "vuys5SNs2eQ-390"]
 theorem prop_390 [IsDomain A] (M : Type v) [AddCommGroup M] [Module A M] [Module.Flat A M] :
     Submodule.torsion A M = ⊥ :=
   Module.Flat.torsion_eq_bot
 
 /-- vuys5SNs2eQ-455 (0:07:35) [prop] Over a Dedekind ring every torsion-free module is flat
 (mathlib: `IsDedekindDomain.flat_iff_torsion_eq_bot`, proved by localizing at maximal ideals). -/
+@[buffalo "vuys5SNs2eQ-455"]
 theorem prop_455 [IsDedekindDomain A] (M : Type v) [AddCommGroup M] [Module A M] :
     Module.Flat A M ↔ Submodule.torsion A M = ⊥ :=
   IsDedekindDomain.flat_iff_torsion_eq_bot
 
 /-- vuys5SNs2eQ-520 (0:08:40) [prop] A filtered inductive limit of flat modules is flat (proved
 with the equational criterion `Module.Flat.iff_forall_isTrivialRelation`). -/
+@[buffalo "vuys5SNs2eQ-520"]
 theorem prop_520 {ι : Type*} [Preorder ι] [IsDirectedOrder ι] [Nonempty ι] [DecidableEq ι]
     {G : ι → Type*} [∀ i, AddCommGroup (G i)] [∀ i, Module A (G i)]
     (f : ∀ i j, i ≤ j → G i →ₗ[A] G j) [DirectedSystem G (f · · ·)]
@@ -382,6 +406,7 @@ theorem flat_iff_smul_eq_zero [IsDedekindDomain A] {B : Type v} [CommRing B]
 `X` is flat over `Y` iff every irreducible component of `X` dominates `Y`. Affine case: `A` a
 Dedekind ring, `B` a reduced `A`-algebra; `B` is flat iff every minimal prime of `B` lies over the
 generic point `(0)` of `Spec A`. -/
+@[buffalo "vuys5SNs2eQ-584"]
 theorem prop_584 [IsDedekindDomain A] {B : Type v} [CommRing B] [Algebra A B]
     [IsReduced B] :
     Module.Flat A B ↔ ∀ q ∈ minimalPrimes B, q.comap (algebraMap A B) = ⊥ := by
@@ -412,6 +437,7 @@ theorem prop_584 [IsDedekindDomain A] {B : Type v} [CommRing B] [Algebra A B]
 /-- vuys5SNs2eQ-587 (0:09:47) [prop] Without `X` reduced (`X` locally noetherian), `X` is flat over
 `Y` iff all associated points of `X` map to the generic point of `Y`. Affine case: `A` Dedekind,
 `B` a noetherian `A`-algebra; `B` is flat iff every associated prime of `B` lies over `(0)`. -/
+@[buffalo "vuys5SNs2eQ-587"]
 theorem prop_587 [IsDedekindDomain A] {B : Type v} [CommRing B] [Algebra A B]
     [IsNoetherianRing B] :
     Module.Flat A B ↔ ∀ P ∈ associatedPrimes B B, P.comap (algebraMap A B) = ⊥ := by
@@ -451,6 +477,7 @@ variable {A : Type u} [CommRing A] {B : Type v} [CommRing B] [Algebra A B]
 /-- vuys5SNs2eQ-1166 (0:19:26) [prop] If `f` is faithfully flat, `Y' ↦ f⁻¹(Y')` is injective on
 subschemes. Proved for open subschemes (`f` surjective) and for closed subschemes of an affine
 scheme (`Ideal.map_injective_of_faithfullyFlat`). -/
+@[buffalo "vuys5SNs2eQ-1166"]
 theorem prop_1166 {X Y : Scheme.{u}} (f : X ⟶ Y) [Surjective f] [Module.FaithfullyFlat A B] :
     Function.Injective (fun U : Y.Opens => f ⁻¹ᵁ U) ∧
       Function.Injective (Ideal.map (algebraMap A B)) := by
@@ -462,6 +489,7 @@ theorem prop_1166 {X Y : Scheme.{u}} (f : X ⟶ Y) [Surjective f] [Module.Faithf
 quasi-coherent modules is exact and faithful, and two submodules that become equal are equal.
 Affine case (mathlib: `Module.FaithfullyFlat.lTensor_exact_iff_exact`,
 `Submodule.baseChange_injective`). -/
+@[buffalo "vuys5SNs2eQ-1230"]
 theorem prop_1230 [Module.FaithfullyFlat A B] {M N P : Type v} [AddCommGroup M] [Module A M]
     [AddCommGroup N] [Module A N] [AddCommGroup P] [Module A P] (u : M →ₗ[A] N) (w : N →ₗ[A] P) :
     (Function.Exact (u.lTensor B) (w.lTensor B) ↔ Function.Exact u w) ∧
@@ -474,6 +502,7 @@ theorem prop_1230 [Module.FaithfullyFlat A B] {M N P : Type v} [AddCommGroup M] 
 /-- vuys5SNs2eQ-1299 (0:21:39) [prop] If `S' → S` is faithfully flat, base change is faithful:
 `Hom_S(X, Y) → Hom_{S'}(X', Y')` is injective. No quasi-compactness is needed: `X' → X` is flat and
 surjective, hence an epimorphism (mathlib: `epi_of_flat_of_surjective`). -/
+@[buffalo "vuys5SNs2eQ-1299"]
 theorem prop_1299 {S S' X Y : Scheme.{u}} (g : S' ⟶ S) [Flat g] [Surjective g] (hX : X ⟶ S)
     (hY : Y ⟶ S) (u v : X ⟶ Y) (hu : u ≫ hY = hX) (hv : v ≫ hY = hX)
     (h : pullback.map hX g hY g u (𝟙 _) (𝟙 _) (by simp [hu]) (by simp) =
@@ -494,6 +523,7 @@ include H hUY in
 /-- vuys5SNs2eQ-1625 (0:27:05) [prop] For a cartesian square there is a canonical base change
 morphism `g^* f_* F → f'_* F'`. For `F = 𝒪_X` on affine opens: mathlib's `pushoutSection`,
 `Γ(X, U_X) ⊗_{Γ(S, U_S)} Γ(T, U_T) → Γ(X ×_S T, U_Y)`. -/
+@[buffalo "vuys5SNs2eQ-1625"]
 theorem prop_1625 :
     Nonempty (pushout (iX.appLE US UX hUSX) (f.appLE US UT hUST) ⟶ Γ(Y, UY)) :=
   ⟨pushoutSection H hUST hUSX hUY⟩
@@ -501,6 +531,7 @@ theorem prop_1625 :
 /-- vuys5SNs2eQ-1827 (0:30:27) [prop] `f` qcqs, `g` flat: `g^* f_* F ≅ f'_* g'^* F`. Case
 `F = 𝒪_X`, `i = 0`, over affine opens of the base (mathlib:
 `isIso_pushoutSection_of_isQuasiSeparated_of_flat_right`). -/
+@[buffalo "vuys5SNs2eQ-1827"]
 theorem prop_1827 [Flat f] (hUS : IsAffineOpen US) (hUT : IsAffineOpen UT)
     (hUX : IsCompact (X := X) UX) (hUX' : IsQuasiSeparated (α := X) UX) :
     IsIso (pushoutSection H hUST hUSX hUY) :=
@@ -509,6 +540,7 @@ theorem prop_1827 [Flat f] (hUS : IsAffineOpen US) (hUT : IsAffineOpen UT)
 /-- vuys5SNs2eQ-2356 (0:39:16) [prop] The base change morphism is an isomorphism with no flatness
 hypothesis if `f` is affine. Case `F = 𝒪_X` over affine opens (mathlib:
 `isIso_pushoutSection_of_isAffineOpen`). -/
+@[buffalo "vuys5SNs2eQ-2356"]
 theorem prop_2356 (hUS : IsAffineOpen US) (hUT : IsAffineOpen UT) (hUX : IsAffineOpen UX) :
     IsIso (pushoutSection H hUST hUSX hUY) :=
   isIso_pushoutSection_of_isAffineOpen H hUST hUSX hUY hUS hUT hUX
@@ -517,6 +549,7 @@ end Sections
 
 /-- vuys5SNs2eQ-2099 (0:34:59) [prop] A flat local homomorphism of local rings is faithfully flat,
 and the map of spectra is surjective (as `prop_37918`). -/
+@[buffalo "vuys5SNs2eQ-2099"]
 theorem prop_2099 [IsLocalRing A] [IsLocalRing B] [IsLocalHom (algebraMap A B)]
     [Module.Flat A B] :
     Module.FaithfullyFlat A B ∧ Function.Surjective (comap (algebraMap A B)) :=
@@ -524,12 +557,14 @@ theorem prop_2099 [IsLocalRing A] [IsLocalRing B] [IsLocalHom (algebraMap A B)]
 
 /-- vuys5SNs2eQ-2164 (0:36:04) [prop] A flat morphism is generalizing, hence universally
 generalizing (as `prop_38767`). -/
+@[buffalo "vuys5SNs2eQ-2164"]
 theorem prop_2164 {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
     GeneralizingMap f ∧ ∀ (Y' : Scheme.{u}) (g : Y' ⟶ Y), GeneralizingMap (pullback.snd f g) :=
   ⟨(prop_38767 f).1, (prop_38767 f).2.1⟩
 
 /-- vuys5SNs2eQ-2620 (0:43:40) [def] `f` is radicial if it is universally injective (mathlib:
 `AlgebraicGeometry.UniversallyInjective`, `universallyInjective_eq`). -/
+@[buffalo "vuys5SNs2eQ-2620"]
 theorem def_2620 :
     @UniversallyInjective = MorphismProperty.universally (topologically Function.Injective) :=
   universallyInjective_eq
@@ -578,6 +613,7 @@ attribute [local instance] surjective_descendsAlong quasiCompact_descendsAlong
 /-- vuys5SNs2eQ-2620 (0:43:40) [prop] If `g : S' → S` is surjective, `f` is surjective (resp.
 radicial) if and only if `f'` is (radicial = diagonal surjective, and diagonal properties descend:
 mathlib's `MorphismProperty.DescendsAlong` instance for `diagonal`). -/
+@[buffalo "vuys5SNs2eQ-2620"]
 theorem prop_2620 {S S' X : Scheme.{u}} (g : S' ⟶ S) [Surjective g] (f : X ⟶ S) :
     (Surjective (pullback.snd f g) ↔ Surjective f) ∧
       (UniversallyInjective (pullback.snd f g) ↔ UniversallyInjective f) := by
@@ -592,12 +628,14 @@ theorem prop_2620 {S S' X : Scheme.{u}} (g : S' ⟶ S) [Surjective g] (f : X ⟶
 
 /-- vuys5SNs2eQ-2686 (0:44:46) [prop] A morphism is radicial iff its diagonal is surjective
 (mathlib: `UniversallyInjective.iff_diagonal`). -/
+@[buffalo "vuys5SNs2eQ-2686"]
 theorem prop_2686 {X Y : Scheme.{u}} (f : X ⟶ Y) :
     UniversallyInjective f ↔ Surjective (pullback.diagonal f) :=
   UniversallyInjective.iff_diagonal f
 
 /-- vuys5SNs2eQ-2750 (0:45:50) [prop] If `g` is surjective and quasi-compact, `f` is quasi-compact
 (resp. quasi-separated, coherent) if and only if `f'` is. -/
+@[buffalo "vuys5SNs2eQ-2750"]
 theorem prop_2750 {S S' X : Scheme.{u}} (g : S' ⟶ S) [Surjective g] [QuasiCompact g]
     (f : X ⟶ S) :
     (QuasiCompact (pullback.snd f g) ↔ QuasiCompact f) ∧

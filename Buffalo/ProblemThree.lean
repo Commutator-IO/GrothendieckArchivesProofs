@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.Topos.Part05d
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -96,6 +97,7 @@ theorem evalPoint_bijective (X : Type) : Function.Bijective (evalPoint X) := by
       exact hxA
 
 /-- **Proposition 7.1.** Every set is an equalizer of two maps between powers of `2`. -/
+@[buffalo "4gynb9uTEE4-7434"]
 def equivEqualizer (X : Type) : X ≃ {u : Set X → Bool // eqLeft X u = eqRight X u} :=
   Equiv.ofBijective _ (evalPoint_bijective X)
 
@@ -117,6 +119,7 @@ theorem saturation_one_pow (S : Type) : saturation 1 (S → Bool) := by
     ⟨(Types.productLimitCone.{0, 0} fun _ : S => Bool).isLimit⟩, ⟨Equiv.refl _⟩⟩
 
 /-- The saturation reaches every set in two steps: `I₂ = Set`. -/
+@[buffalo "4gynb9uTEE4-7434"]
 theorem saturation_two (X : Type) : saturation 2 X := by
   let f : (Set X → Bool) ⟶ (Set (Set X) ⊕ Set X → Bool) := TypeCat.ofHom (eqLeft X)
   let g : (Set X → Bool) ⟶ (Set (Set X) ⊕ Set X → Bool) := TypeCat.ofHom (eqRight X)
@@ -128,6 +131,7 @@ theorem saturation_two (X : Type) : saturation 2 X := by
   · exact saturation_one_pow _
 
 /-- One step does not suffice: a three-element set is not in `I₁`. -/
+@[buffalo "4gynb9uTEE4-7434"]
 theorem not_saturation_one : ¬ saturation 1 (Fin 3) := by
   rintro (h | ⟨K, _, F, c, hF, ⟨hc⟩, ⟨e⟩⟩)
   · obtain ⟨e⟩ : Nonempty (Fin 3 ≃ Bool) := h
@@ -146,6 +150,7 @@ theorem saturation_le (P : Type → Prop) (hiso : ∀ {X Y : Type}, (X ≃ Y) �
     hiso e.symm (hlim K F c hc fun k => saturation_le P hiso h2 hlim n _ (hF k))
 
 /-- **Condition (G)** for `{2} → Set` and `D` all small limits. -/
+@[buffalo "4gynb9uTEE4-7434"]
 theorem conditionG (P : Type → Prop) (hiso : ∀ {X Y : Type}, (X ≃ Y) → P X → P Y)
     (h2 : P Bool) (hlim : ∀ (K : Type) [SmallCategory K] (F : K ⥤ Type) (c : Cone F),
       IsLimit c → (∀ k, P (F.obj k)) → P c.pt) (X : Type) : P X :=
@@ -186,6 +191,7 @@ def tailCoconeIsColimit (κ : Cardinal.{0}) [Fact κ.IsRegular] : IsColimit (tai
   uniq s _ _ := Quiver.Hom.unop_inj (by ext y; exact (isEmpty_cocone_pt κ s).elim y)
 
 /-- **Proposition 7.3.** In `Setᵒᵖ` the object `2` is not `κ`-presentable, for any regular `κ`. -/
+@[buffalo "4gynb9uTEE4-7434"]
 theorem not_isCardinalPresentable (κ : Cardinal.{0}) [Fact κ.IsRegular] :
     ¬ IsCardinalPresentable (op Bool : Typeᵒᵖ) κ := by
   intro h
@@ -199,6 +205,7 @@ theorem not_isCardinalPresentable (κ : Cardinal.{0}) [Fact κ.IsRegular] :
   exact Bool.noConfusion this
 
 /-- In `Setᵒᵖ` the object `2` is not presentable. -/
+@[buffalo "4gynb9uTEE4-7434"]
 theorem not_isPresentable : ¬ IsPresentable.{0} (op Bool : Typeᵒᵖ) := by
   rintro ⟨κ, hκ, h⟩
   exact not_isCardinalPresentable κ h

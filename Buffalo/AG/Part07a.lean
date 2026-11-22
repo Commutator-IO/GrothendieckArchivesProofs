@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -56,6 +57,7 @@ theorem exists_eval_eq_zero_of_finrank_eq_one {k K : Type*} [Field k] [Field K] 
 
 /-- Oqhr-Gt66es-19691 (5:28:11) [prop] (part) `k` is algebraically closed iff `k' ⊗_k k'` is an
 integral domain for every finite extension `k'/k`. -/
+@[buffalo "Oqhr-Gt66es-19691"]
 theorem prop_19691 (k : Type u) [Field k] :
     IsAlgClosed k ↔ ∀ (K : Type u) [Field K] [Algebra k K] [FiniteDimensional k K],
       IsDomain (K ⊗[k] K) := by
@@ -118,12 +120,14 @@ variable {k : Type u} [Field k] {X Y : Scheme.{u}} (f : X ⟶ Spec (.of k)) (g :
 
 /-- Oqhr-Gt66es-19493 (5:24:53) [prop] (irreducible half) The product over `k` of two
 geometrically irreducible (universally open) `k`-schemes is geometrically irreducible. -/
+@[buffalo "Oqhr-Gt66es-19493"]
 theorem prop_19493 [GeometricallyIrreducible f] [GeometricallyIrreducible g] [UniversallyOpen f]
     [UniversallyOpen g] : GeometricallyIrreducible (pullback.snd f g ≫ g) :=
   GeometricallyIrreducible.comp _ _
 
 /-- Oqhr-Gt66es-19761 (5:29:21) [prop] (part) If `X` is geometrically integral over `k`, then
 `X_{k'}` is integral for every extension `k'/k`. -/
+@[buffalo "Oqhr-Gt66es-19761"]
 theorem prop_19761 :
     GeometricallyIntegral f → ∀ (K : Type u) [Field K] [Algebra k K],
       IsIntegral (pullback f (Spec.map (CommRingCat.ofHom (algebraMap k K)))) := fun h K _ _ =>
@@ -132,6 +136,7 @@ theorem prop_19761 :
 /-- Oqhr-Gt66es-19828 (5:30:28) [def] `X` is geometrically integral iff geometrically reduced
 ("separable") and geometrically irreducible (mathlib: `GeometricallyIntegral`); it is then
 integral. -/
+@[buffalo "Oqhr-Gt66es-19828"]
 theorem def_19828 :
     (GeometricallyIntegral f ↔ GeometricallyReduced f ∧ GeometricallyIrreducible f) ∧
     (GeometricallyIntegral f → IsIntegral X) := by
@@ -140,16 +145,19 @@ theorem def_19828 :
 
 /-- Oqhr-Gt66es-19891 (5:31:31) [prop] (one direction) Geometric integrality is preserved by
 extension of the base field. -/
+@[buffalo "Oqhr-Gt66es-19891"]
 theorem prop_19891 [GeometricallyIntegral f] (K : Type u) [Field K] [Algebra k K] :
     GeometricallyIntegral (baseChange f K) := inferInstance
 
 /-- Oqhr-Gt66es-19954 (5:32:34) [prop] (part) The product over `k` of a geometrically connected,
 universally open `k`-scheme and a connected one is connected. -/
+@[buffalo "Oqhr-Gt66es-19954"]
 theorem prop_19954 [GeometricallyConnected f] [UniversallyOpen f] [ConnectedSpace Y] :
     ConnectedSpace ↥(pullback f g) := inferInstance
 
 /-- Oqhr-Gt66es-20091 (5:34:51) [prop] (affine form) If `k'/k` is purely inseparable, the
 projection `Spec(k' ⊗_k A) → Spec(k ⊗_k A)` is a homeomorphism. -/
+@[buffalo "Oqhr-Gt66es-20091"]
 theorem prop_20091 (k' A : Type u) [Field k'] [Algebra k k'] [IsPurelyInseparable k k'] [CommRing A]
     [Algebra k A] :
     IsHomeomorph (PrimeSpectrum.comap
@@ -159,6 +167,7 @@ theorem prop_20091 (k' A : Type u) [Field k'] [Algebra k k'] [IsPurelyInseparabl
 /-- Oqhr-Gt66es-20413 (5:40:13) [prop] For `Y` nonempty, the projection `X ×_k Y → X` is
 surjective; it is open when `Y` is locally of finite presentation over `k` (then flat, hence
 universally open). -/
+@[buffalo "Oqhr-Gt66es-20413"]
 theorem prop_20413 [Nonempty Y] :
     Surjective (pullback.fst f g) ∧
     (LocallyOfFinitePresentation g → IsOpenMap (pullback.fst f g)) := by
@@ -171,6 +180,7 @@ theorem prop_20413 [Nonempty Y] :
 /-- Oqhr-Gt66es-21315 (5:55:15) [prop] (part) The product of two geometrically connected
 (universally open) `k`-schemes is geometrically connected; geometric connectedness is preserved by
 extension of the base field. -/
+@[buffalo "Oqhr-Gt66es-21315"]
 theorem prop_21315 [GeometricallyConnected f] [GeometricallyConnected g] [UniversallyOpen f]
     [UniversallyOpen g] (K : Type u) [Field K] [Algebra k K] :
     GeometricallyConnected (pullback.snd f g ≫ g) ∧ GeometricallyConnected (baseChange f K) :=
@@ -179,6 +189,7 @@ theorem prop_21315 [GeometricallyConnected f] [GeometricallyConnected g] [Univer
 /-- Oqhr-Gt66es-20993 (5:49:53) [prop] (part) Geometric connectedness (mathlib's
 `GeometricallyConnected`) is the connectedness of `X_{k'}` for every extension `k'/k`; it implies
 that `X ×_k Y` is connected for every connected `Y` (`X` universally open over `k`). -/
+@[buffalo "Oqhr-Gt66es-20993"]
 theorem prop_20993 :
     (GeometricallyConnected f ↔ ∀ (K : Type u) [Field K] [Algebra k K],
       ConnectedSpace ↥(pullback f (Spec.map (CommRingCat.ofHom (algebraMap k K))))) ∧
@@ -190,11 +201,13 @@ theorem prop_20993 :
 
 /-- Oqhr-Gt66es-20993 (5:49:53) [prop] (first half) A geometrically connected `k`-scheme is
 connected. -/
+@[buffalo "Oqhr-Gt66es-20993"]
 theorem prop_20993_conn [GeometricallyConnected f] : ConnectedSpace X :=
   GeometricallyConnected.connectedSpace_of_subsingleton f
 
 /-- Oqhr-Gt66es-20476 (5:41:16) [prop] (nonempty half) If `X` is nonempty, so is `X_{k'}` for
 every extension `k'/k`. -/
+@[buffalo "Oqhr-Gt66es-20476"]
 theorem prop_20476 [Nonempty X] (K : Type u) [Field K] [Algebra k K] :
     Nonempty ↥(pullback f (Spec.map (CommRingCat.ofHom (algebraMap k K)))) := by
   have : Surjective (Spec.map (CommRingCat.ofHom (algebraMap k K))) :=
@@ -205,6 +218,7 @@ theorem prop_20476 [Nonempty X] (K : Type u) [Field K] [Algebra k K] :
 
 /-- Oqhr-Gt66es-20602 (5:43:22) [prop] (affine form) The fibre of `Spec B → Spec A` at `𝔭` is
 `Spec(κ(𝔭) ⊗_A B)`: the primes of `B` over `𝔭` are those of `κ(𝔭) ⊗_A B`. -/
+@[buffalo "Oqhr-Gt66es-20602"]
 def prop_20602 (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] (p : Ideal A)
     [p.IsPrime] : ↑(p.primesOver B) ≃o PrimeSpectrum (p.Fiber B) :=
   PrimeSpectrum.primesOverOrderIsoFiber A B p
@@ -214,6 +228,7 @@ end Geometric
 /-- Oqhr-Gt66es-20796 (5:46:36) [prop] (affine form) If `Spec(k' ⊗_k k')` is connected for every
 finite Galois extension `k'/k`, then `k` is separably closed; for `k'/k` separable,
 `k' ⊗_k k' ≃ k' × T` (the diagonal is open and closed), so `T = 0` and `[k':k] = 1`. -/
+@[buffalo "Oqhr-Gt66es-20796"]
 theorem prop_20796 (k : Type u) [Field k]
     (H : ∀ (K : Type u) [Field K] [Algebra k K] [FiniteDimensional k K] [IsGalois k K],
       PreconnectedSpace (PrimeSpectrum (K ⊗[k] K))) : IsSepClosed k := by
@@ -248,6 +263,7 @@ variable {ι : Type*} [Preorder ι] [IsDirectedOrder ι] [Nonempty ι] {G : ι �
 /-- Oqhr-Gt66es-21188 (5:53:08) [prop] (affine form) A filtered inductive limit of rings whose
 only idempotents are `0` and `1` (connected spectra) has only the idempotents `0` and `1`:
 the filtered projective limit of the connected affine schemes `Spec G_i` is connected. -/
+@[buffalo "Oqhr-Gt66es-21188"]
 theorem prop_21188 (H : ∀ i (e : G i), IsIdempotentElem e → e = 0 ∨ e = 1)
     (e : Ring.DirectLimit G (fun i j h => f i j h)) (he : IsIdempotentElem e) : e = 0 ∨ e = 1 := by
   obtain ⟨i, x, rfl⟩ := Ring.DirectLimit.exists_of e
@@ -261,6 +277,7 @@ theorem prop_21188 (H : ∀ i (e : G i), IsIdempotentElem e → e = 0 ∨ e = 1)
 
 /-- Oqhr-Gt66es-36375 (10:06:15) [prop] A filtered inductive limit of rings is zero iff one of
 the rings is zero. -/
+@[buffalo "Oqhr-Gt66es-36375"]
 theorem prop_36375 :
     Subsingleton (Ring.DirectLimit G (fun i j h => f i j h)) ↔ ∃ i, Subsingleton (G i) := by
   constructor
@@ -285,6 +302,7 @@ variable {C : Type*} [Category C] {J : GrothendieckTopology C} {F : Cᵒᵖ ⥤ 
 /-- Oqhr-Gt66es-21601 (6:00:01) [prop] For subsheaves `F_i` of a sheaf `F`, the supremum is the
 sheafification of the union `⋃ F_i`: a subsheaf containing the `F_i`, the smallest one, and its
 sections over `U` are those that belong locally (on a covering sieve) to one of the `F_i`. -/
+@[buffalo "Oqhr-Gt66es-21601"]
 theorem prop_21601 (hF : Presieve.IsSheaf J F) {ι : Type*} (G : ι → Subfunctor F) :
     (∀ i, G i ≤ (⨆ i, G i).sheafify J) ∧ Presieve.IsSheaf J ((⨆ i, G i).sheafify J).toFunctor ∧
     (∀ G' : Subfunctor F, Presieve.IsSheaf J G'.toFunctor → (∀ i, G i ≤ G') →
@@ -311,11 +329,13 @@ end Subsheaves
 
 /-- Oqhr-Gt66es-22510 (6:15:10) [def] (module form) A module is coherent if it is of finite type
 and the kernel of every morphism `Rⁿ → M` is of finite type. -/
+@[buffalo "Oqhr-Gt66es-22510"]
 def IsCoherentModule (R M : Type*) [CommRing R] [AddCommGroup M] [Module R M] : Prop :=
   Module.Finite R M ∧ ∀ (n : ℕ) (φ : (Fin n → R) →ₗ[R] M), (LinearMap.ker φ).FG
 
 /-- Oqhr-Gt66es-22637 (6:17:17) [prop] (affine, noetherian form) Over a noetherian ring, coherent,
 finitely presented and finite modules coincide; in particular the ring is coherent. -/
+@[buffalo "Oqhr-Gt66es-22637"]
 theorem prop_22637 (R M : Type*) [CommRing R] [IsNoetherianRing R] [AddCommGroup M] [Module R M] :
     (IsCoherentModule R M ↔ Module.Finite R M) ∧
     (Module.FinitePresentation R M ↔ Module.Finite R M) ∧ IsCoherentModule R R :=
@@ -325,6 +345,7 @@ theorem prop_22637 (R M : Type*) [CommRing R] [IsNoetherianRing R] [AddCommGroup
 /-- Oqhr-Gt66es-22572 (6:16:12) [thm] (noetherian form) Over a noetherian ring, coherent (= finite)
 modules are stable under kernels (submodules), cokernels (quotients), images, finite sums and
 extensions. -/
+@[buffalo "Oqhr-Gt66es-22572"]
 theorem thm_22572 (R : Type*) [CommRing R] [IsNoetherianRing R] {M N P : Type*} [AddCommGroup M]
     [Module R M] [AddCommGroup N] [Module R N] [AddCommGroup P] [Module R P] :
     (Module.Finite R N → ∀ K : Submodule R N, Module.Finite R K) ∧
@@ -337,6 +358,7 @@ theorem thm_22572 (R : Type*) [CommRing R] [IsNoetherianRing R] {M N P : Type*} 
 
 /-- Oqhr-Gt66es-22896 (6:21:36) [prop] (first half) A surjective open immersion is an
 isomorphism (and conversely). -/
+@[buffalo "Oqhr-Gt66es-22896"]
 theorem prop_22896 {X Y : Scheme.{u}} (f : X ⟶ Y) :
     IsIso f ↔ IsOpenImmersion f ∧ Surjective f :=
   isIso_iff_isOpenImmersion_and_surjective f
@@ -344,6 +366,7 @@ theorem prop_22896 {X Y : Scheme.{u}} (f : X ⟶ Y) :
 /-- Oqhr-Gt66es-23161 (6:26:01) [prop] (affine form) For `Y` closed in `Spec A`, the ideal
 `J_Y` of functions vanishing on `Y` is radical, `V(J_Y) = Y`, and it is the largest ideal `J`
 with `V(J) = Y`. -/
+@[buffalo "Oqhr-Gt66es-23161"]
 theorem prop_23161 {A : Type*} [CommRing A] (Y : Set (PrimeSpectrum A)) (hY : IsClosed Y) :
     (vanishingIdeal Y).IsRadical ∧ zeroLocus (vanishingIdeal Y : Set A) = Y ∧
     ∀ J : Ideal A, zeroLocus (J : Set A) = Y → J ≤ vanishingIdeal Y := by
@@ -353,23 +376,27 @@ theorem prop_23161 {A : Type*} [CommRing A] (Y : Set (PrimeSpectrum A)) (hY : Is
   exact Ideal.le_radical
 
 /-- Oqhr-Gt66es-23290 (6:28:10) [prop] (affine form) `V(J^{n+1}) = V(J)`. -/
+@[buffalo "Oqhr-Gt66es-23290"]
 theorem prop_23290 {A : Type*} [CommRing A] (J : Ideal A) (n : ℕ) :
     zeroLocus ((J ^ (n + 1) : Ideal A) : Set A) = zeroLocus J :=
   zeroLocus_pow J n.succ_ne_zero
 
 /-- Oqhr-Gt66es-23353 (6:29:13) [prop] (affine form) The closed immersion `Spec(A/J) → Spec A`
 is onto (a homeomorphism) iff `J` is a nil ideal; it is an isomorphism only if `J = 0`. -/
+@[buffalo "Oqhr-Gt66es-23353"]
 theorem prop_23353 {A : Type*} [CommRing A] (J : Ideal A) :
     zeroLocus (J : Set A) = Set.univ ↔ J ≤ nilradical A :=
   zeroLocus_eq_univ_iff _
 
 /-- Oqhr-Gt66es-23421 (6:30:21) [prop] Every locally noetherian scheme is quasi-separated. -/
+@[buffalo "Oqhr-Gt66es-23421"]
 theorem prop_23421 (X : Scheme.{u}) [IsLocallyNoetherian X] : QuasiSeparatedSpace X :=
   inferInstance
 
 /-- Oqhr-Gt66es-23618 (6:33:38) [prop] (one direction) A coherent (quasi-compact
 quasi-separated) scheme is a finite union of affine open sets with quasi-compact pairwise
 intersections. -/
+@[buffalo "Oqhr-Gt66es-23618"]
 theorem prop_23618 (X : Scheme.{u}) [CompactSpace X] [QuasiSeparatedSpace X] :
     ∃ s : Finset X.affineOpens, (⋃ U ∈ s, (U : Set X)) = Set.univ ∧
       ∀ U ∈ s, ∀ V ∈ s, IsCompact ((U : Set X) ∩ V) := by
@@ -382,6 +409,7 @@ theorem prop_23618 (X : Scheme.{u}) [CompactSpace X] [QuasiSeparatedSpace X] :
 
 /-- Oqhr-Gt66es-24145 (6:42:25) [def] An open set is retrocompact if its intersection with every
 quasi-compact open set is quasi-compact (mathlib: `IsRetrocompact`). -/
+@[buffalo "Oqhr-Gt66es-24145"]
 theorem def_24145 {X : Type*} [TopologicalSpace X] (U : Set X) :
     IsRetrocompact U ↔ ∀ V, IsCompact V → IsOpen V → IsCompact (U ∩ V) := Iff.rfl
 
@@ -410,6 +438,7 @@ def piLocMap : Localization.Away (2 : ℕ → ℤ) →+* (ℕ → Z2) :=
 modules is not quasi-coherent in general: on `Spec ℤ`, the sections of `∏ ℤ~` over `D(2)` are
 `∏ ℤ[1/2]`, which is not `(∏ ℤ)[1/2]`: the canonical map is not onto, `(1/2ⁿ)ₙ` is not in its
 image. -/
+@[buffalo "Oqhr-Gt66es-24017"]
 theorem cex_24017 : ¬ Function.Surjective piLocMap := by
   intro h
   obtain ⟨y, hy⟩ := h fun n => IsLocalization.mk' Z2 (1 : ℤ)

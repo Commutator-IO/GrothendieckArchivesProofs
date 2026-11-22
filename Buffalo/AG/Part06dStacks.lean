@@ -3,6 +3,7 @@ module
 public import Buffalo.AG.Part06d
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProduct
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedBaseChange
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -39,6 +40,7 @@ variable (k : Type u) [Field k]
 equivalent: `k` is perfect; `A ⊗_k B` is reduced for all reduced `k`-algebras `A, B`;
 `A ⊗_k k'` is reduced for every reduced `A` and every extension `k'`; `k' ⊗_k k'` is reduced for
 every finite purely inseparable extension `k'`. (In characteristic `0` all four hold.) -/
+@[buffalo "Oqhr-Gt66es-16790"]
 theorem prop_16790_tfae (p : ℕ) [Fact p.Prime] [CharP k p] :
     List.TFAE
       [PerfectField k,
@@ -60,6 +62,7 @@ theorem prop_16790_tfae (p : ℕ) [Fact p.Prime] [CharP k p] :
 
 /-- Oqhr-Gt66es-17116 (4:45:16) [prop] If `k` is perfect and `K, L` are two extensions of `k`,
 then `K ⊗_k L` is reduced (Stacks tag 00I4). -/
+@[buffalo "Oqhr-Gt66es-17116"]
 theorem prop_17116_general [PerfectField k] (K L : Type u) [Field K] [Field L] [Algebra k K]
     [Algebra k L] : IsReduced (K ⊗[k] L) :=
   PerfectField.isReduced_tensorProduct k K L
@@ -84,6 +87,7 @@ geometrically reduced, or separable): `A ⊗_k B` is reduced for every reduced `
 `A ⊗_k k'` is reduced for every extension `k'`; `A ⊗_k K₁` is reduced; `A ⊗_k k'` is reduced for
 every finite purely inseparable extension `k'`; and Mathlib's `Algebra.IsGeometricallyReduced`
 (`A ⊗_k k̄` reduced). Stacks tags 030V and 034N. -/
+@[buffalo "Oqhr-Gt66es-17370"]
 theorem prop_17370_tfae (p : ℕ) [ExpChar k p] (A : Type u) [CommRing A] [Algebra k A]
     (K₁ : Type u) [Field K₁] [Algebra k K₁] [ExpChar K₁ p] [PerfectRing K₁ p] :
     List.TFAE
@@ -119,6 +123,7 @@ theorem prop_17370_tfae (p : ℕ) [ExpChar k p] (A : Type u) [CommRing A] [Algeb
 /-- Oqhr-Gt66es-17899 (4:58:19) [prop] (the converse over a perfect field) If `k` is perfect,
 every reduced `k`-algebra and every reduced `k`-scheme is separable (Stacks tags 00I4, 020I). With
 `prop_17899` (`Part06d`), the converse holds for every algebra if and only if `k` is perfect. -/
+@[buffalo "Oqhr-Gt66es-17899"]
 theorem prop_17899_perfect [PerfectField k] :
     (∀ (A : Type u) [CommRing A] [Algebra k A] [IsReduced A], Algebra.IsGeometricallyReduced k A) ∧
     (∀ {X : Scheme.{u}} (f : X ⟶ Spec (.of k)) [IsReduced X], GeometricallyReduced f) :=
@@ -127,6 +132,7 @@ theorem prop_17899_perfect [PerfectField k] :
 
 /-- Oqhr-Gt66es-17970 (4:59:30) [prop] For every extension `k'/k`, a `k`-scheme `X` is separable
 over `k` if and only if `X_{k'}` is separable over `k'` (Stacks tag 0384). -/
+@[buffalo "Oqhr-Gt66es-17970"]
 theorem prop_17970_iff {X : Scheme.{u}} (f : X ⟶ Spec (.of k)) (k' : Type u) [Field k']
     [Algebra k k'] :
     GeometricallyReduced f ↔
