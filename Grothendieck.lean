@@ -19,6 +19,7 @@ public import Grothendieck.Folder120
 public import Grothendieck.Folder121
 public import Grothendieck.Folder125
 public import Grothendieck.Folder126GeometricPoints
+public import Grothendieck.Folder126NilpotentDescent
 public import Grothendieck.Folder126NilpotentQuotient
 public import Grothendieck.Folder126RadicialEtale
 public import Grothendieck.Folder126RadicialEtaleGlobal
