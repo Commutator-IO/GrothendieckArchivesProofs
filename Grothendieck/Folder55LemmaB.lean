@@ -68,10 +68,13 @@ neighbourhoods on a Stein compact, where theorem A holds) also uses.
 * `G_not_uniform`: the uniformity hypothesis of `Folder55.stationary_of_germs` fails;
   `identity_principle_not_enough` gathers it.
 
-**Not formalised.** Coherence (Stacks 01BV, `SheafOfModules.IsCoherent`) of `𝒪` and of the
-`𝒢_j`, the computation of the stalks and their noetherianity, and (v) for coherent Ideals other
-than `0`: these are the arguments sketched above, on paper. They need sheaves of modules on this
-space, its stalks and its quotient sheaves, which this file does not build.
+**Proved in the companion files.** `Grothendieck/Folder55Coherent.lean` and
+`Grothendieck/Folder55Ideals.lean` prove the coherence (Stacks 01BV,
+`Stacks.SheafOfModules.IsCoherent`) of `𝒪` and of the `𝒢_j` and the noetherianity of the stalks,
+and gather the counterexample over `k⟦X⟧ ⊂ k⸨X⸩` (`lemmeB_counterexample`).
+
+**Not formalised.** (v) for coherent Ideals other than `0`: it needs the quotient sheaves
+`𝒪/𝒥` and their supports, which these files do not build.
 -/
 
 open CategoryTheory TopologicalSpace Opposite
