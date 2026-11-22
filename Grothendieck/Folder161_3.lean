@@ -4,6 +4,7 @@ public import Mathlib.Topology.Sets.Opens
 public import Mathlib.Topology.LocallyClosed
 public import Mathlib.Topology.Sober
 public import Grothendieck.Upstream.QuasiSoberPiCoreCompact
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -90,6 +91,7 @@ open TopologicalSpace Set
 /-- The page's hypothesis: every nonempty locally closed `Z ⊆ X` has a point `x`
 with a quasi-compact neighbourhood `T` in `Z`, i.e. `O ∩ Z ⊆ T ⊆ Z` for an
 open `O ∋ x`. -/
+@[montpellier "161-3, 10–11"]
 def HypG (X : Type*) [TopologicalSpace X] : Prop :=
   ∀ Z : Set X, IsLocallyClosed Z → Z.Nonempty →
     ∃ x ∈ Z, ∃ T ⊆ Z, IsCompact T ∧ ∃ O : Set X, IsOpen O ∧ x ∈ O ∧ O ∩ Z ⊆ T
@@ -97,7 +99,7 @@ def HypG (X : Type*) [TopologicalSpace X] : Prop :=
 /-- A set of pairs of opens, stable under shrinking and under arbitrary unions in
 each variable: an element of the frame coproduct of `Opens X` and `Opens Y`, the
 « S » of the page. -/
-@[ext]
+@[montpellier "161-3, 10–11", ext]
 structure CIdeal (X Y : Type*) [TopologicalSpace X] [TopologicalSpace Y] where
   carrier : Set (Opens X × Opens Y)
   mono : ∀ {U U' V V'}, (U, V) ∈ carrier → U' ≤ U → V' ≤ V → (U', V') ∈ carrier
@@ -122,6 +124,7 @@ end CIdeal
 
 /-- Pages 10–11: under `HypG X`, a `CIdeal` contains every rectangle covered by
 its own rectangles. -/
+@[montpellier "161-3, 10–11"]
 theorem covering (hG : HypG X) (S : CIdeal X Y) (U : Opens X) (V : Opens Y)
     (h : (U : Set X) ×ˢ (V : Set Y) ⊆ ⋃ p ∈ S.carrier, (p.1 : Set X) ×ˢ (p.2 : Set Y)) :
     (U, V) ∈ S.carrier := by
@@ -168,6 +171,7 @@ def rect (W : Set (X × Y)) : CIdeal X Y where
     exact hs V hV ⟨hx, hyV⟩
 
 /-- An open `W` is the union of the rectangles inside it. -/
+@[montpellier "161-3, 10–11"]
 theorem iUnion_rect {W : Set (X × Y)} (hW : IsOpen W) :
     ⋃ p ∈ (rect W).carrier, (p.1 : Set X) ×ˢ (p.2 : Set Y) = W := by
   refine subset_antisymm (iUnion₂_subset fun p hp => hp) fun ⟨x, y⟩ hxy => ?_
@@ -176,6 +180,7 @@ theorem iUnion_rect {W : Set (X × Y)} (hW : IsOpen W) :
     (show _ ∈ (rect W).carrier from huv) ⟨hx, hy⟩
 
 /-- Under `HypG X`, every `CIdeal` is `rect` of the union of its rectangles. -/
+@[montpellier "161-3, 10–11"]
 theorem eq_rect (hG : HypG X) (S : CIdeal X Y) :
     S.carrier = (rect (⋃ p ∈ S.carrier, (p.1 : Set X) ×ˢ (p.2 : Set Y))).carrier :=
   subset_antisymm (fun _ hp => subset_biUnion_of_mem (u := fun p : Opens X × Opens Y =>
@@ -389,6 +394,7 @@ theorem lift_unique (h : FrameHom (CIdeal X Y) L) (h₁ : h.comp inl = f) (h₂ 
   simp [lift_apply]
 
 /-- The universal property of the coproduct `Opens X ⊗ Opens Y`. -/
+@[montpellier "161-3, 10–11"]
 theorem existsUnique_lift :
     ∃! h : FrameHom (CIdeal X Y) L, h.comp inl = f ∧ h.comp inr = g :=
   ⟨lift f g, ⟨lift_comp_inl f g, lift_comp_inr f g⟩,
@@ -416,6 +422,7 @@ theorem toOpens_comp_inr : toOpens.comp inr = Opens.comap (ContinuousMap.snd : C
   lift_comp_inr _ _
 
 /-- Unconditionally, every open of `X × Y` comes from a C-ideal. -/
+@[montpellier "161-3, 10–11"]
 theorem toOpens_surjective : Function.Surjective (toOpens : CIdeal X Y → Opens (X × Y)) :=
   fun W => ⟨rect W, Opens.ext <| (coe_toOpens _).trans (iUnion_rect W.2)⟩
 
@@ -430,6 +437,7 @@ theorem toOpens_le_toOpens_iff (hG : HypG X) {S T : CIdeal X Y} :
 /-- Pages 10–11 as a statement on frames: under `HypG X`, the coproduct of the frames
 `Opens X` and `Opens Y` is `Opens (X × Y)`. The map is `toOpens` (`frameEquiv_apply`), the map out
 of the coproduct given by the two projections (`toOpens_comp_inl`, `toOpens_comp_inr`). -/
+@[montpellier "161-3, 10–11"]
 noncomputable def frameEquiv (hG : HypG X) : CIdeal X Y ≃o Opens (X × Y) where
   __ := Equiv.ofBijective toOpens ⟨fun _ _ h => le_antisymm
     ((toOpens_le_toOpens_iff hG).1 h.le) ((toOpens_le_toOpens_iff hG).1 h.ge), toOpens_surjective⟩
@@ -587,6 +595,7 @@ theorem not_hypI_pi {ι : Type*} [Infinite ι] : ¬ HypI (ι → K) := by
 
 /-- (G) is strictly weaker than (I) for sober spaces: `ℕ → K` is sober and satisfies (G) but
 not (I) (the counterexample of a MathOverflow answer to question 516361). -/
+@[montpellier "161-3, 10–11"]
 theorem hypG_not_hypI :
     ∃ (X : Type) (_ : TopologicalSpace X), QuasiSober X ∧ T0Space X ∧ HypG X ∧ ¬ HypI X :=
   ⟨ℕ → K, inferInstance, inferInstance, inferInstance, hypG_pi fun _ => K.scattered,
@@ -609,12 +618,14 @@ def Covers (X Y : Type*) [TopologicalSpace X] [TopologicalSpace Y] : Prop :=
     (U : Set X) ×ˢ (V : Set Y) ⊆ ⋃ p ∈ S.carrier, (p.1 : Set X) ×ˢ (p.2 : Set Y) →
       (U, V) ∈ S.carrier
 
+@[montpellier "161-3, 10–11"]
 theorem covers_of_hypG (hG : HypG X) : Covers X Y := covering hG
 
 /-- Pages 9–10, the proof in three passages to the supremum: for `x ∈ U` a compact neighbourhood
 `K ⊆ U`, and for `y ∈ V` finitely many rectangles covering `K × {y}`, whose sup contains
 `int K × V_{x,y}` (first passage); the sup over `y` gives `int K × V` (second), the sup over `x`
 gives `U × V` (third). -/
+@[montpellier "161-3, 9–10"]
 theorem covers_of_locallyCompact [LocallyCompactSpace X] : Covers X Y := by
   intro S U V h
   refine S.mem_of_le_sSup_left (s := {W | (W, V) ∈ S.carrier}) (fun x hxU => ?_)
@@ -656,6 +667,7 @@ noncomputable def coversEquiv (hc : Covers X Y) : CIdeal X Y ≃o Opens (X × Y)
 /-- The spatiality of the product locale: under `Covers X Y` (hence under (G), or for `X` locally
 compact), `Opens (X × Y)` with the inverse images along the two projections is the coproduct of
 the frames `Opens X` and `Opens Y`. -/
+@[montpellier "161-3, 10–11"]
 theorem existsUnique_opens_prod (hc : Covers X Y) {L : Type*} [Order.Frame L]
     (f : FrameHom (Opens X) L) (g : FrameHom (Opens Y) L) :
     ∃! h : FrameHom (Opens (X × Y)) L, h.comp (Opens.comap ContinuousMap.fst) = f ∧
@@ -798,7 +810,7 @@ end Box
 
 /-- A set of boxes stable under shrinking and under arbitrary unions in each coordinate
 separately: an element of the frame coproduct of the `Opens (X i)`, the « S » of pages 11–12. -/
-@[ext]
+@[montpellier "161-3, 11–12", ext]
 structure PIdeal (X : ι → Type*) [∀ i, TopologicalSpace (X i)] where
   carrier : Set (Box X)
   mono : ∀ {u v : Box X}, u ∈ carrier → v ≤ u → v ∈ carrier
@@ -1021,6 +1033,7 @@ theorem lift_unique (h : FrameHom (PIdeal X) L) (hf : ∀ i, h.comp (inj i) = f 
   exact Finset.inf_congr rfl fun i _ => DFunLike.congr_fun (hf i) (u.1 i)
 
 /-- The universal property of the coproduct `⨂ᵢ Opens (X i)` of frames. -/
+@[montpellier "161-3, 11–12"]
 theorem existsUnique_lift :
     ∃! h : FrameHom (PIdeal X) L, ∀ i, h.comp (inj i) = f i :=
   ⟨lift f, lift_comp_inj f, fun h hh => lift_unique f h hh⟩
@@ -1084,6 +1097,7 @@ theorem iUnion_piRect {W : Set (∀ i, X i)} (hW : IsOpen W) :
     · simp [b, hi]
 
 /-- Unconditionally, every open of the product comes from a `PIdeal`. -/
+@[montpellier "161-3, 11–12"]
 theorem piToOpens_surjective :
     Function.Surjective (piToOpens : PIdeal X → Opens (∀ i, X i)) :=
   fun W => ⟨piRect W, Opens.ext <| (coe_piToOpens _).trans (iUnion_piRect W.2)⟩
@@ -1104,6 +1118,7 @@ theorem piToOpens_injective_of_piCovers (hc : PiCovers X) :
   exact fun S T h => (key S).trans (h ▸ (key T).symm)
 
 /-- Under `PiCovers X`, `piToOpens` is an isomorphism of frames. -/
+@[montpellier "161-3, 11–12"]
 def piCoversEquiv (hc : PiCovers X) : PIdeal X ≃o Opens (∀ i, X i) where
   __ := Equiv.ofBijective piToOpens ⟨piToOpens_injective_of_piCovers hc, piToOpens_surjective⟩
   map_rel_iff' {S T} := show piToOpens S ≤ piToOpens T ↔ S ≤ T by
@@ -1114,6 +1129,7 @@ def piCoversEquiv (hc : PiCovers X) : PIdeal X ≃o Opens (∀ i, X i) where
 
 /-- Under `PiCovers X`, `Opens (∏ X i)` with the inverse images along the projections is the
 coproduct of the frames `Opens (X i)`. -/
+@[montpellier "161-3, 11–12"]
 theorem existsUnique_opens_pi (hc : PiCovers X) {L : Type*} [Order.Frame L]
     (f : ∀ i, FrameHom (Opens (X i)) L) :
     ∃! h : FrameHom (Opens (∀ i, X i)) L, ∀ i, h.comp (Opens.comap (proj i)) = f i := by
@@ -1210,6 +1226,7 @@ theorem PIdeal.exists_box_of_finset (S : PIdeal X) (H₀ : Finset ι) (K : ∀ i
 /-- A product of compact sets covered set-theoretically by the boxes of `S` lies in one box of
 `S`. No hypothesis on the spaces: Tychonoff gives finitely many covering boxes, whose supports
 lie in a finite `H₀`, and `exists_box_of_finset` concludes. -/
+@[montpellier "161-3, 11–12"]
 theorem PIdeal.exists_box_of_isCompact (S : PIdeal X) (K : ∀ i, Set (X i))
     (hK : ∀ i, IsCompact (K i)) (hcov : univ.pi K ⊆ ⋃ v ∈ S.carrier, v.toSet) :
     ∃ w ∈ S.carrier, ∀ i, K i ⊆ w.1 i := by
@@ -1243,6 +1260,7 @@ supremum over the coordinates of `G` other than `e`, each through compact neighb
 (`step`), then over the points `y` of the `e`-th coordinate (`base`), where the compact set
 `∏_{i ∈ G, i ≠ e} Kᵢ × {y} × ∏_{i ∉ G} X i` lies in one box of `S`
 (`exists_box_of_isCompact`). -/
+@[montpellier "161-3, 11–12"]
 theorem piCovers_of_forall_ne (e : ι) (hLC : ∀ i, i ≠ e → LocallyCompactSpace (X i))
     (hC : {i | ¬ CompactSpace (X i)}.Finite) : PiCovers X := by
   intro S u hu
@@ -1314,6 +1332,7 @@ theorem piCovers_of_forall_ne (e : ι) (hLC : ∀ i, i ≠ e → LocallyCompactS
 /-- **Pages 11–12, strongest form.** If all the `X i` but at most one are locally compact
 (« systèmes fondamentaux de voisinages quasi-compacts ») and all but finitely many are compact,
 the product locale is spatial. -/
+@[montpellier "161-3, 11–12"]
 theorem piCovers (hLC : {i | ¬ LocallyCompactSpace (X i)}.Subsingleton)
     (hC : {i | ¬ CompactSpace (X i)}.Finite) : PiCovers X := by
   by_cases hι : IsEmpty ι
@@ -1333,6 +1352,7 @@ theorem piCovers (hLC : {i | ¬ LocallyCompactSpace (X i)}.Subsingleton)
 /-- **Pages 11–12, the page's statement.** If all the `X i` but at most one have fundamental
 systems of quasi-compact neighbourhoods, and all but at most one are quasi-compact, the coproduct
 of the frames `Opens (X i)` is the frame of opens of `∏ X i`, by the comparison map `piToOpens`. -/
+@[montpellier "161-3, 11–12"]
 def piFrameEquiv (hLC : {i | ¬ LocallyCompactSpace (X i)}.Subsingleton)
     (hC : {i | ¬ CompactSpace (X i)}.Subsingleton) : PIdeal X ≃o Opens (∀ i, X i) :=
   piCoversEquiv (piCovers hLC hC.finite)

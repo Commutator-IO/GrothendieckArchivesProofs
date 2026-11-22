@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -105,6 +106,7 @@ theorem isWeaklyRegular_iff_of_exact {f : M' →ₗ[A] M} {g : M →ₗ[A] M''} 
 
 /-- For a short exact sequence `0 → M' → M → M'' → 0` and `rs` weakly regular on `M''`, the map
 `M'/(rs)M' → M/(rs)M` is injective: the vanishing of `Tor₁(M'', A/(rs))` in this guise. -/
+@[montpellier "94, 8, 9, 19"]
 theorem injective_mapQ_of_exact {f : M' →ₗ[A] M} {g : M →ₗ[A] M''} (hf : Injective f)
     (hfg : Exact f g) (hg : Surjective g) {rs : List A} (h'' : IsWeaklyRegular M'' rs) :
     Injective (mapQ _ _ f (smul_top_le_comap_smul_top (Ideal.ofList rs) f)) := by
@@ -203,6 +205,7 @@ theorem isWeaklyRegular_of_flat (N : Type*) [AddCommGroup N] [Module (A ⧸ J) N
 nonzero layer `JᵐM` is a submodule of `M`, free and nonzero over `A/J`; modulo `(t₁, …, tᵢ)` it
 still injects into `M/(t₁, …, tᵢ)M`, because `M/JᵐM` is filtered by free layers on which the
 `tⱼ` are already known to be regular. -/
+@[montpellier "94, 8–9"]
 theorem isWeaklyRegular_quotient_of_layers_free {M : Type*} [AddCommGroup M] [Module A M]
     [Nontrivial M] {n : ℕ} (hn : filt J M n = ⊥) (ι : ℕ → Type*)
     (e : ∀ k, layer J M k ≃ₗ[A] (ι k →₀ A ⧸ J)) {rs : List A} (h : IsWeaklyRegular M rs) :
@@ -253,6 +256,7 @@ theorem isWeaklyRegular_quotient_of_layers_free {M : Type*} [AddCommGroup M] [Mo
 /-- **Lemmes 6 b) and 16, key step.** Let `J` be a nilpotent ideal of `A` (`Jⁿ = 0`), `A₀ = A/J`.
 If every layer `grᵏ_J(A)` is a free `A₀`-module and every layer `grᵏ_J(R)` is a flat
 `A₀`-module, every `A`-weakly regular sequence is `R`-weakly regular. -/
+@[montpellier "94, 8–9, 19"]
 theorem isWeaklyRegular_of_gr {R : Type*} [AddCommGroup R] [Module A R] {n : ℕ} (hn : J ^ n = ⊥)
     (ι : ℕ → Type*) (eA : ∀ k, layer J A k ≃ₗ[A] (ι k →₀ A ⧸ J))
     (N : ℕ → Type*) [∀ k, AddCommGroup (N k)] [∀ k, Module (A ⧸ J) (N k)] [∀ k, Module A (N k)]
@@ -277,6 +281,7 @@ variable {J : Ideal A}
 over `A₀ = A/J` (as generic flatness provides on `U`), every `A`-weakly regular sequence is
 `R`-weakly regular. The layers of `A` are finite over the local ring `A₀`, hence free; for `R`
 flatness is used as such (no finiteness on `R`, as in Lemme 16). -/
+@[montpellier "94, 9, 19"]
 theorem isWeaklyRegular_of_gr_flat_of_isLocalRing [IsLocalRing A] [IsNoetherianRing A]
     {R : Type*} [AddCommGroup R] [Module A R] {n : ℕ} (hn : J ^ n = ⊥)
     (P : ℕ → Type*) [∀ k, AddCommGroup (P k)] [∀ k, Module (A ⧸ J) (P k)] [∀ k, Module A (P k)]
@@ -303,6 +308,7 @@ theorem isWeaklyRegular_of_gr_flat_of_isLocalRing [IsLocalRing A] [IsNoetherianR
 /-- The same, as regular sequences: for `R` finite and nonzero and `t` in the maximal ideal, an
 `A`-regular sequence is `R`-regular — so its Koszul complex, which resolves `A/(t)`, stays
 acyclic after `⊗ R`, i.e. `Tor_i^A(R, A/(t)) = 0` for `i > 0` (that last step is not formalised). -/
+@[montpellier "94, 9, 19"]
 theorem isRegular_of_gr_flat_of_isLocalRing [IsLocalRing A] [IsNoetherianRing A]
     {R : Type*} [AddCommGroup R] [Module A R] [Module.Finite A R] [Nontrivial R] {n : ℕ}
     (hn : J ^ n = ⊥)
@@ -478,6 +484,7 @@ theorem dvd_of_isUnit_away {D : Type*} [CommRing D] [IsDomain D] {g h : D} (hg :
   exact hh.dvd_of_dvd_pow (Dvd.intro b this.symm)
 
 /-- `F(A_g)` is not finitely generated over `A_g` for any `g ≠ 0`. -/
+@[montpellier "94, 7"]
 theorem not_finite_tele_away {a : ℕ → k} (ha : Injective a) {g : k[X][X]} (hg : g ≠ 0) :
     ¬ Module.Finite (Localization.Away g)
       (Tele (fun j => algebraMap k[X][X] (Localization.Away g) (hx (a j))) (Localization.Away g)) := by
@@ -503,6 +510,7 @@ theorem finite_dual {R : Type*} [CommRing R] [IsNoetherianRing R] (Q : Type*) [A
 
 /-- Hence `F` restricted to `A_g`-modules is representable by no finite module, for any
 `g ≠ 0`: the case `𝔭 = 0` of Lemma 5 (v) fails. -/
+@[montpellier "94, 7"]
 theorem not_representable_away {a : ℕ → k} (ha : Injective a) {g : k[X][X]} (hg : g ≠ 0)
     (Q : Type*) [AddCommGroup Q] [Module (Localization.Away g) Q]
     [Module.Finite (Localization.Away g) Q]
@@ -522,6 +530,7 @@ theorem eq_of_map_hx_eq_zero {K : Type*} [Field K] (φ : k[X][X] →+* K) {a : �
 
 /-- Over any field `K` receiving `k[x, y]` (e.g. a residue field `k(𝔭)`), `F(K)` is
 one-dimensional: the fibre rank of `F` is constant, equal to `1`. -/
+@[montpellier "94, 7"]
 theorem finrank_tele_field {K : Type*} [Field K] (φ : k[X][X] →+* K) {a : ℕ → k}
     (ha : Injective a) : Module.finrank K (Tele (fun j => φ (hx (a j))) K) = 1 := by
   obtain ⟨N, hN⟩ := exists_forall_gt_not (eq_of_map_hx_eq_zero φ ha)
@@ -532,6 +541,7 @@ theorem finrank_tele_field {K : Type*} [Field K] (φ : k[X][X] →+* K) {a : ℕ
 /-- At every prime `𝔭`, all but at most one `x − a_j` are units of `A_𝔭`, so from some stage
 on `F(M) ≅ M` for every `A_𝔭`-module `M` (and every `Â_𝔭`-module): the completion and local
 finiteness conditions hold. -/
+@[montpellier "94, 7"]
 theorem tele_atPrime_bijective (p : Ideal k[X][X]) [p.IsPrime] {a : ℕ → k} (ha : Injective a) :
     ∃ N, ∀ (M : Type u) [AddCommGroup M] [Module (Localization.AtPrime p) M],
       Bijective (teleOf (fun j => algebraMap k[X][X] (Localization.AtPrime p) (hx (a j))) M N) := by
@@ -868,6 +878,7 @@ instance (M : Type*) [AddCommGroup M] [Module A M] [Module.Finite A M] (k : ℕ)
 regular on `R_𝔭`. `U` is the locus where the finitely many nonzero layers of `A` and of `R`
 are free over `A/J` (open by finite presentation, dense since it contains the minimal primes,
 at which `A/J` localises to a field). -/
+@[montpellier "94, 8–9"]
 theorem exists_isOpen_dense_isWeaklyRegular {n : ℕ} (hn : J ^ n = ⊥) [IsReduced (A ⧸ J)]
     (R : Type*) [AddCommGroup R] [Module A R] [Module.Finite A R] :
     ∃ U : Set (PrimeSpectrum A), IsOpen U ∧ Dense U ∧ ∀ 𝔭 ∈ U, ∀ rs : List A,
@@ -902,6 +913,7 @@ theorem exists_isOpen_dense_isWeaklyRegular {n : ℕ} (hn : J ^ n = ⊥) [IsRedu
 
 /-- **Lemme 6 for `X = S`, as stated.** The same dense open `U`, for every `A_𝔭`-weakly regular
 sequence of `A_𝔭` (each term is a unit times the image of an element of `A`). -/
+@[montpellier "94, 8–9"]
 theorem exists_isOpen_dense_isWeaklyRegular' {n : ℕ} (hn : J ^ n = ⊥) [IsReduced (A ⧸ J)]
     (R : Type*) [AddCommGroup R] [Module A R] [Module.Finite A R] :
     ∃ U : Set (PrimeSpectrum A), IsOpen U ∧ Dense U ∧
@@ -932,6 +944,7 @@ finite module `P` with `dim_{B_𝔮}(B_𝔮 ⊗ P) = dim_k(k ⊗ P)` at every mi
 `B_𝔮` is a field) is free. A basis of `k ⊗ P` lifts to a surjection `Bⁿ → P`; at each minimal
 `𝔮` it becomes a surjection between `B_𝔮`-spaces of the same dimension, hence injective, so the
 coordinates of a kernel element lie in every minimal prime, i.e. in the nilradical `0`. -/
+@[montpellier "94, 7"]
 theorem free_of_finrank_eq_of_isReduced {B P : Type*} [CommRing B] [IsLocalRing B] [IsReduced B]
     [AddCommGroup P] [Module B P] [Module.Finite B P]
     (h : ∀ 𝔮 : PrimeSpectrum B, 𝔮.asIdeal ∈ minimalPrimes B →
@@ -973,6 +986,7 @@ theorem free_of_finrank_eq_of_isReduced {B P : Type*} [CommRing B] [IsLocalRing 
 /-- **Rem. 5 bis, the last step.** If `P` (here `F(B)`) is finitely presented with free
 localisations at the maximal ideals, and `φ : P ⊗ M → N` (here `F(B) ⊗ M → F(M)`) is bijective
 at every maximal ideal, then `P` is projective and `N ≅ Hom(P^∨, M)`. -/
+@[montpellier "94, 7"]
 theorem nonempty_equiv_hom_dual {B P M N : Type*} [CommRing B] [AddCommGroup P] [Module B P]
     [Module.FinitePresentation B P] [AddCommGroup M] [Module B M] [AddCommGroup N] [Module B N]
     (hP : ∀ (m : Ideal B) [m.IsMaximal],

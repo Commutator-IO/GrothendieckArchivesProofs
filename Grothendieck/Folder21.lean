@@ -8,6 +8,7 @@ public import Mathlib.Topology.Sober
 public import Mathlib.Topology.Category.TopCat.Opens
 public import Mathlib.CategoryTheory.Category.Cat
 public import Grothendieck.Upstream.PrimaryComponentInjective
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -104,6 +105,7 @@ def gammaI (K : Type*) [AddCommGroup K] [Module A K] : Submodule A K where
 
 /-- **Proposition 2.15.** Over a Noetherian ring, an `I`-power-torsion module `H`
 is injective if and only if `Hom(-,H)` is right exact on `𝒞`. -/
+@[montpellier "21, 11–13"]
 theorem proposition2_15 [IsNoetherianRing A] (H : Type u) [AddCommGroup H] [Module A H]
     (hH : TorsionI I H) : Module.Injective A H ↔ ExactSurC I H := by
   constructor
@@ -123,6 +125,7 @@ theorem proposition2_15 [IsNoetherianRing A] (H : Type u) [AddCommGroup H] [Modu
 
 /-- **Corollaire 2.16.** Over a Noetherian ring, if `K` is injective then so is
 `H⁰_I(K)`. -/
+@[montpellier "21, 11–13"]
 theorem corollaire2_16 [IsNoetherianRing A] (K : Type u) [AddCommGroup K] [Module A K]
     [hK : Module.Injective A K] : Module.Injective A (gammaI I K) := by
   rw [proposition2_15 I _ fun x => x.2.imp fun n hn a ha => Subtype.ext (hn a ha)]
@@ -265,19 +268,23 @@ variable (F)
 /-! ### The conditions of Définition 6 -/
 
 /-- `(P₁)` relative to `Y`: for every open `V`, restriction `𝓕(V) ⥤ 𝓕(V - Y)` is faithful. -/
+@[montpellier "21, 21"]
 def P1 (Y : Set X) : Prop :=
   ∀ ⦃V T : Opens X⦄ (h : T ≤ V), (T : Set X) = (V : Set X) \ Y → (res F h).Faithful
 
 /-- `(P₂)` relative to `Y`: restriction is fully faithful. -/
+@[montpellier "21, 21"]
 def P2 (Y : Set X) : Prop :=
   ∀ ⦃V T : Opens X⦄ (h : T ≤ V), (T : Set X) = (V : Set X) \ Y → (res F h).Full ∧ (res F h).Faithful
 
 /-- `(P₃)` relative to `Y`: restriction is an equivalence. -/
+@[montpellier "21, 21"]
 def P3 (Y : Set X) : Prop :=
   ∀ ⦃V T : Opens X⦄ (h : T ≤ V), (T : Set X) = (V : Set X) \ Y → (res F h).IsEquivalence
 
 /-- Faithfulness at `x` of `Pseudolim_W 𝓕(W) ⥤ Pseudolim_W 𝓕(W - W ∩ cl{x})`, unfolded:
 two morphisms over a neighbourhood of `x` that agree off `cl{x}` agree near `x`. -/
+@[montpellier "21, 21"]
 def FaithfulAt (x : X) : Prop :=
   ∀ ⦃W T : Opens X⦄ (h : T ≤ W), x ∈ W → (T : Set X) = (W : Set X) \ closure {x} →
     ∀ ⦃f g : F.obj (op W)⦄ (a b : f ⟶ g), (res F h).map a = (res F h).map b →
@@ -285,6 +292,7 @@ def FaithfulAt (x : X) : Prop :=
 
 /-- Fullness at `x`, unfolded: a morphism off `cl{x}` agrees, near `x` and off `cl{x}`,
 with a morphism defined near `x`. -/
+@[montpellier "21, 21"]
 def FullAt (x : X) : Prop :=
   ∀ ⦃W T : Opens X⦄ (h : T ≤ W), x ∈ W → (T : Set X) = (W : Set X) \ closure {x} →
     ∀ ⦃f g : F.obj (op W)⦄ (c : (res F h).obj f ⟶ (res F h).obj g),
@@ -294,6 +302,7 @@ def FullAt (x : X) : Prop :=
 
 /-- Essential surjectivity at `x`, unfolded: an object off `cl{x}` is, near `x` and off
 `cl{x}`, isomorphic to the restriction of an object defined near `x`. -/
+@[montpellier "21, 21"]
 def EssSurjAt (x : X) : Prop :=
   ∀ ⦃W T : Opens X⦄ (_ : T ≤ W), x ∈ W → (T : Set X) = (W : Set X) \ closure {x} →
     ∀ e : F.obj (op T), ∃ (W' : Opens X) (_ : W' ≤ W), x ∈ W' ∧
@@ -337,6 +346,7 @@ theorem diffOpen_eq {Y Y' : Set X} (hY : IsClosed Y) (hY' : Y' ⊆ Y) {V T' : Op
   simp only [diffOpen, Opens.coe_mk, Set.mem_sdiff, hT']
   exact ⟨fun h => ⟨⟨h.1, fun h' => h.2 (hY' h')⟩, h.2⟩, fun h => ⟨h.1.1, h.2⟩⟩
 
+@[montpellier "21, 21–26"]
 theorem corollaire8_P1 {Y Y' : Set X} (hY : IsClosed Y) (hP : P1 F Y) (hY' : Y' ⊆ Y) :
     P1 F Y' := by
   intro V T' h hT'
@@ -345,6 +355,7 @@ theorem corollaire8_P1 {Y Y' : Set X} (hY : IsClosed Y) (hP : P1 F Y) (hY' : Y' 
   rw [← res_comp F h hTT'] at this
   exact Functor.Faithful.of_comp _ (res F hTT')
 
+@[montpellier "21, 21–26"]
 theorem corollaire8_P2 {Y Y' : Set X} (hY : IsClosed Y) (hP : P2 F Y) (hY' : Y' ⊆ Y) :
     P2 F Y' := by
   intro V T' h hT'
@@ -354,6 +365,7 @@ theorem corollaire8_P2 {Y Y' : Set X} (hY : IsClosed Y) (hP : P2 F Y) (hY' : Y' 
   rw [← res_comp F h hTT'] at h1 h2
   exact ⟨Functor.Full.of_comp_faithful _ (res F hTT'), Functor.Faithful.of_comp _ (res F hTT')⟩
 
+@[montpellier "21, 21–26"]
 theorem corollaire8_P3 {Y Y' : Set X} (hY : IsClosed Y) (hP : P3 F Y) (hY' : Y' ⊆ Y) :
     P3 F Y' := by
   intro V T' h hT'
@@ -573,11 +585,13 @@ theorem essSurj_of_essSurjAt (hF : IsBinaryStack F) {Y : Set X} (hY : IsClosed Y
 /-- **Proposition 7, `(P₁)`.** For a binary prestack over a noetherian quasi-sober space
 (e.g. noetherian spectral) and `Y` closed, `(P₁)` relative to `Y` holds iff it holds at every
 point of `Y`. -/
+@[montpellier "21, 21–26"]
 theorem proposition7_P1 (hF : IsBinaryPrestack F) {Y : Set X} (hY : IsClosed Y) :
     P1 F Y ↔ ∀ x ∈ Y, FaithfulAt F x :=
   ⟨fun hP _ hx => faithfulAt_of_P1 hY hP hx, P1_of_faithfulAt hF hY⟩
 
 /-- **Proposition 7, `(P₂)`.** -/
+@[montpellier "21, 21–26"]
 theorem proposition7_P2 (hF : IsBinaryPrestack F) {Y : Set X} (hY : IsClosed Y) :
     P2 F Y ↔ ∀ x ∈ Y, FullAt F x ∧ FaithfulAt F x :=
   ⟨fun hP _ hx => ⟨fullAt_of_P2 hY hP hx, faithfulAt_of_P1 hY (fun _ _ h hT => (hP h hT).2) hx⟩,
@@ -586,6 +600,7 @@ theorem proposition7_P2 (hF : IsBinaryPrestack F) {Y : Set X} (hY : IsClosed Y) 
 
 /-- **Proposition 7, `(P₃)`**, for a stack (binary covers suffice): restriction to `V - Y` is
 an equivalence for every open `V` iff the induced functor on germs at each `x ∈ Y` is one. -/
+@[montpellier "21, 21–26"]
 theorem proposition7_P3 (hF : IsBinaryStack F) {Y : Set X} (hY : IsClosed Y) :
     P3 F Y ↔ ∀ x ∈ Y, (FullAt F x ∧ FaithfulAt F x) ∧ EssSurjAt F x := by
   refine ⟨fun hP x hx => ⟨(proposition7_P2 hF.toIsBinaryPrestack hY).1

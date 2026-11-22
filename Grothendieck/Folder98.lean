@@ -10,6 +10,7 @@ public import Mathlib.CategoryTheory.Iso
 public import Mathlib.Topology.Covering.Basic
 public import Mathlib.Topology.Algebra.ConstMulAction
 public import Mathlib.Algebra.Group.Action.Sum
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -72,6 +73,7 @@ namespace Grothendieck.Folder98
 variable {X Y Z : Type*}
 
 /-- `u` has degree `r`: every fibre of `u` is finite with `r` elements (Example I). -/
+@[montpellier "98, 10–12"]
 def HasDeg (u : X → Y) (r : ℕ) : Prop := ∀ y, (u ⁻¹' {y}).Finite ∧ (u ⁻¹' {y}).ncard = r
 
 /-- The fibre of `u` over `y`, as a finset. -/
@@ -93,10 +95,12 @@ theorem hasDeg_of_finset {u : X → Y} {r : ℕ} (s : Y → Finset X) (hs : ∀ 
 /-! ### The class `𝒩` and the degree: (i)–(iv), (i bis)–(iv bis) -/
 
 /-- (i), (i bis) -/
+@[montpellier "98, 10–12"]
 theorem hasDeg_id : HasDeg (id : X → X) 1 :=
   hasDeg_of_finset (fun x => {x}) (fun y x => by simp [eq_comm]) fun _ => rfl
 
 /-- (ii), (ii bis): `deg (v ∘ u) = deg v · deg u`. -/
+@[montpellier "98, 10–12"]
 theorem hasDeg_comp {u : X → Y} {v : Y → Z} {r s : ℕ} (hu : HasDeg u r) (hv : HasDeg v s) :
     HasDeg (v ∘ u) (s * r) := by
   classical
@@ -111,6 +115,7 @@ theorem hasDeg_comp {u : X → Y} {v : Y → Z} {r s : ℕ} (hu : HasDeg u r) (h
 def Pullback (u : X → Y) {Y' : Type*} (f : Y' → Y) := {p : X × Y' // u p.1 = f p.2}
 
 /-- (iii), (iii bis): the degree is invariant under base change. -/
+@[montpellier "98, 10–12"]
 theorem hasDeg_pullback {u : X → Y} {r : ℕ} (hu : HasDeg u r) {Y' : Type*} (f : Y' → Y) :
     HasDeg (fun p : Pullback u f => p.1.2) r := by
   classical
@@ -122,6 +127,7 @@ theorem hasDeg_pullback {u : X → Y} {r : ℕ} (hu : HasDeg u r) {Y' : Type*} (
   · simp [card_fib]
 
 /-- (iv), (iv bis): `deg (u₁, u₂) = deg u₁ + deg u₂`. -/
+@[montpellier "98, 10–12"]
 theorem hasDeg_sum {X₁ X₂ : Type*} {u₁ : X₁ → Y} {u₂ : X₂ → Y} {r₁ r₂ : ℕ}
     (h₁ : HasDeg u₁ r₁) (h₂ : HasDeg u₂ r₂) : HasDeg (Sum.elim u₁ u₂) (r₁ + r₂) := by
   classical
@@ -162,6 +168,7 @@ def powSetoid (E : Type*) {n : ℕ} (H : Subgroup (Equiv.Perm (Fin n))) : Setoid
 
 /-- (v), (v bis): if `u` has degree `r`, the projection `(X^n_Y)/H → Y` has degree
 `card(E^n/H)`, `E = {1, …, r}`. -/
+@[montpellier "98, 10–12"]
 theorem hasDeg_quotPow {u : X → Y} {r : ℕ} (hu : HasDeg u r) {n : ℕ}
     (H : Subgroup (Equiv.Perm (Fin n))) :
     HasDeg (QuotPow.proj : QuotPow u H → Y) (Nat.card (Quotient (powSetoid (Fin r) H))) := by
@@ -201,6 +208,7 @@ def SymY (u : X → Y) (r : ℕ) :=
   Σ y : Y, {m : Multiset X // Multiset.card m = r ∧ ∀ x ∈ m, u x = y}
 
 /-- `Can_{X/Y}(y)`: the class of the `r` points of the fibre, in any order (page 11). -/
+@[montpellier "98, 11"]
 noncomputable def Can {u : X → Y} {r : ℕ} (hu : HasDeg u r) (y : Y) : SymY u r :=
   ⟨y, (fib hu y).val, by simp [card_fib], fun x hx => (mem_fib hu).1 hx⟩
 
@@ -234,6 +242,7 @@ def SymY.flatten {w : X → Z} {r s : ℕ} (p : SymY (fun q : SymY w r => q.1) s
       rw [q.2.2.2 x hxq]; exact p.2.2.2 q hq⟩
 
 /-- (i ter): `Con_{X/X} = id`, the fibre of `id` over `x` being `{x}`. -/
+@[montpellier "98, 10–12"]
 theorem can_id (x : X) : (Can hasDeg_id x).2.1 = {x} := by
   change (fib hasDeg_id x).val = {x}
   rw [← Finset.singleton_val]
@@ -242,6 +251,7 @@ theorem can_id (x : X) : (Can hasDeg_id x).2.1 = {x} := by
 
 /-- (ii ter), the transitivity diagram of page 11: for `X → Y → Z` of degrees `r`, `s`,
 `can ∘ can ∘ Sym^s(Can_{X/Y}) ∘ Can_{Y/Z} = Can_{X/Z}`. -/
+@[montpellier "98, 11"]
 theorem can_comp {u : X → Y} {v : Y → Z} {r s : ℕ} (hu : HasDeg u r) (hv : HasDeg v s) (z : Z) :
     SymY.flatten (SymY.map (SymY.push v) (fun _ => rfl)
       (SymY.map (Can hu) (fun _ => rfl) (Can hv z))) = Can (hasDeg_comp hu hv) z := by
@@ -260,6 +270,7 @@ theorem can_comp {u : X → Y} {v : Y → Z} {r s : ℕ} (hu : HasDeg u r) (hv :
     exact ⟨fun ⟨y, hy, hxy⟩ => hxy ▸ hy, fun h => ⟨u x, h, rfl⟩⟩
 
 /-- (iii ter): `Can` commutes with base change along `f : Y' → Y`. -/
+@[montpellier "98, 10–12"]
 theorem can_pullback {u : X → Y} {r : ℕ} (hu : HasDeg u r) {Y' : Type*} (f : Y' → Y) (y' : Y') :
     (Can (hasDeg_pullback hu f) y').2.1.map (fun p => p.1.1) = (Can hu (f y')).2.1 := by
   change (fib (hasDeg_pullback hu f) y').val.map _ = (fib hu (f y')).val
@@ -272,6 +283,7 @@ theorem can_pullback {u : X → Y} {r : ℕ} (hu : HasDeg u r) {Y' : Type*} (f :
       fun hx => ⟨⟨(x, y'), hx⟩, rfl, rfl⟩⟩
 
 /-- (iv ter): for `X = X₁ ⊔ X₂`, `Can_{X/Y}` is the sum of `Can_{X₁/Y}` and `Can_{X₂/Y}`. -/
+@[montpellier "98, 10–12"]
 theorem can_sum {X₁ X₂ : Type*} {u₁ : X₁ → Y} {u₂ : X₂ → Y} {r₁ r₂ : ℕ}
     (h₁ : HasDeg u₁ r₁) (h₂ : HasDeg u₂ r₂) (y : Y) :
     (Can (hasDeg_sum h₁ h₂) y).2.1 =
@@ -290,6 +302,7 @@ theorem can_sum {X₁ X₂ : Type*} {u₁ : X₁ → Y} {u₂ : X₂ → Y} {r�
 
 /-- `Can` is compatible with the action of `G` (page 11): for `u` equivariant,
 `Can(g y) = g · Can(y)`. -/
+@[montpellier "98, 11"]
 theorem can_smul {G : Type*} [Group G] [MulAction G X] [MulAction G Y] {u : X → Y} {r : ℕ}
     (hu : HasDeg u r) (hequiv : ∀ (g : G) x, u (g • x) = g • u x) (g : G) (y : Y) :
     (Can hu (g • y)).2.1 = (Can hu y).2.1.map (g • ·) := by
@@ -332,6 +345,7 @@ variable {C : Type u} [Category.{v} C] {Φ : C → Type w}
 variable (Φ bc) in
 /-- Déf. 1: `(K₁, F₁)` and `(K₂, F₂)` are `k`-equivalent when they become isomorphic over a
 common extension `K'`. -/
+@[montpellier "98, 28"]
 def KEquiv (p q : Σ K, Φ K) : Prop :=
   ∃ (K' : C) (u₁ : p.1 ⟶ K') (u₂ : q.1 ⟶ K'), bc u₁ p.2 = bc u₂ q.2
 
@@ -345,6 +359,7 @@ def Amalgamation : Prop :=
 
 /-- Déf. 1: `k`-equivalence is an equivalence relation, by the transitivity of base change and
 the domination of two extensions of `K₂` by a third extension of `K₂`. -/
+@[montpellier "98, 28"]
 theorem kEquiv_equivalence
     (hcomp : ∀ {K K' K''} (f : K ⟶ K') (g : K' ⟶ K'') a, bc (f ≫ g) a = bc g (bc f a))
     (ham : Amalgamation C) : Equivalence (KEquiv Φ bc) where
@@ -360,6 +375,7 @@ theorem kEquiv_equivalence
 
 /-- Page 29: `𝔉(X/k)` is contravariant in `X`. A pullback `ρ` of sheaves along `X' → X`,
 compatible with base change, preserves `k`-equivalence. -/
+@[montpellier "98, 29"]
 theorem kEquiv_map {Ψ : C → Type w} {bc' : ∀ {K K' : C}, (K ⟶ K') → Ψ K → Ψ K'}
     (ρ : ∀ K, Φ K → Ψ K) (hρ : ∀ {K K'} (u : K ⟶ K') a, ρ K' (bc u a) = bc' u (ρ K a))
     {p q : Σ K, Φ K} (h : KEquiv Φ bc p q) : KEquiv Ψ bc' ⟨p.1, ρ _ p.2⟩ ⟨q.1, ρ _ q.2⟩ := by
@@ -385,6 +401,7 @@ variable {fg : C → Prop} {Ω : C}
 
 include hcomp huniv hdesc in
 /-- Cor. 5, surjectivity: every class has a representative on `X ⊗_k K̃`. -/
+@[montpellier "98, 30"]
 theorem corollaire5_surj (ham : Amalgamation C) (p : Σ K, Φ K) :
     ∃ x : Φ Ω, KEquiv Φ bc p ⟨Ω, x⟩ := by
   obtain ⟨K, a⟩ := p
@@ -396,6 +413,7 @@ theorem corollaire5_surj (ham : Amalgamation C) (p : Σ K, Φ K) :
 include hid hcomp huniv hhomog hdesc hfin in
 /-- Cor. 5, injectivity: two sheaves on `X ⊗_k K̃` are `k`-equivalent if and only if
 `F ≃ σ(G)` for an automorphism `σ` of `K̃`. -/
+@[montpellier "98, 30"]
 theorem corollaire5_iff (x y : Φ Ω) :
     KEquiv Φ bc ⟨Ω, x⟩ ⟨Ω, y⟩ ↔ ∃ σ : Ω ≅ Ω, x = bc σ.hom y := by
   constructor
@@ -433,6 +451,7 @@ variable {Γ : Type*} [Group Γ] {X : Type*} [MulAction Γ X]
 
 variable (Γ X) in
 /-- `Φ(E) = X ×^Γ E`, the contracted product. -/
+@[montpellier "98, 13"]
 abbrev Phi (E : Type*) [MulAction Γ E] := Quotient (MulAction.orbitRel Γ (X × E))
 
 variable (Γ) in
@@ -474,6 +493,7 @@ theorem Phi.mk_injective (hfree : ∀ (g : Γ) (x : X), g • x = x → g = 1) (
 
 /-- Example III, the hypothesis of page 13 (« on suppose que `Φ` transforme les morphismes de
 degré `r` en morphismes de degré `r` »): for a free action, `Φ` preserves degrees. -/
+@[montpellier "98, 13"]
 theorem hasDeg_phi (hfree : ∀ (g : Γ) (x : X), g • x = x → g = 1) {f : E → F}
     (hf : ∀ (g : Γ) e, f (g • e) = g • f e) {r : ℕ} (hr : HasDeg f r) :
     HasDeg (Phi.map Γ X f hf) r := by
@@ -529,6 +549,7 @@ def Phi.symComp {f : E → F} (hf : ∀ (g : Γ) e, f (g • e) = g • f e) (r 
 
 /-- Example III, the claim on which page 13 breaks off: `Φ` takes `Can_{E/F}` to
 `Can_{Φ E/Φ F}`, through the comparison `Phi.symComp`. -/
+@[montpellier "98, 13"]
 theorem phi_can (hfree : ∀ (g : Γ) (x : X), g • x = x → g = 1) {f : E → F}
     (hf : ∀ (g : Γ) e, f (g • e) = g • f e) {r : ℕ} (hr : HasDeg f r) (q : Phi Γ X F) :
     letI := SymY.mulAction hf r
@@ -597,6 +618,7 @@ theorem Phi.continuous_map {f : E → F} (hf : ∀ (g : Γ) e, f (g • e) = g �
 /-- Example III: for `Γ` acting on `X` with every point having a neighbourhood disjoint from its
 translates, `Φ` takes every equivariant map of discrete `Γ`-sets to a covering map; by
 `hasDeg_phi`, one with `r` sheets when the map has degree `r`. -/
+@[montpellier "98, 13"]
 theorem isCoveringMap_phi
     (hdisj : ∀ x : X, ∃ U ∈ 𝓝 x, ∀ g : Γ, ((g • ·) '' U ∩ U).Nonempty → g = 1)
     {f : E → F} (hf : ∀ (g : Γ) e, f (g • e) = g • f e) : IsCoveringMap (Phi.map Γ X f hf) := by

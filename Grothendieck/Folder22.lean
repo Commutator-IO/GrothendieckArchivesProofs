@@ -15,6 +15,7 @@ public import Mathlib.Algebra.Field.ZMod
 public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.LinearAlgebra.TensorProduct.Pi
 public import Mathlib.Algebra.FiveLemma
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -205,6 +206,7 @@ theorem can_bijective_fin (n : ℕ) : Function.Bijective (can (A := A) P (Fin n 
 
 /-- **Lemme 3.3.** For `M` finitely presented, `M ⊗_A ∏ P_i → ∏ (M ⊗_A P_i)` is an
 isomorphism. -/
+@[montpellier "22, 25"]
 theorem lemme3_3 (M : Type*) [AddCommGroup M] [Module A M] [Module.FinitePresentation A M] :
     Function.Bijective (TensorProduct.piRightHom A A M P) := by
   obtain ⟨n, m, f, g, hf, hfg⟩ := Module.FinitePresentation.exists_fin' A M
@@ -226,6 +228,7 @@ def Hypothese (A : Type u) [CommRing A] : Prop :=
   ∀ (N : Type u) [AddCommGroup N] [Module A N], Module.Finite A N → Module.FinitePresentation A N
 
 /-- **The hypothesis of 3.4 is exactly Noetherianity.** -/
+@[montpellier "22, 25"]
 theorem hypothese_iff_noetherien : Hypothese A ↔ IsNoetherianRing A := by
   refine ⟨fun h => ⟨fun I => ?_⟩, fun _ N _ _ _ => Module.finitePresentation_of_finite A N⟩
   have := h (A ⧸ I) inferInstance
@@ -234,6 +237,7 @@ theorem hypothese_iff_noetherien : Hypothese A ↔ IsNoetherianRing A := by
 /-- **Corollaire 3.4**, in the form its proof uses: if every finitely generated
 ideal is finitely presented (a coherent ring), any product of flat modules is
 flat. -/
+@[montpellier "22, 25"]
 theorem corollaire3_4_coherent
     (hA : ∀ I : Ideal A, I.FG → Module.FinitePresentation A I)
     {ι : Type*} (P : ι → Type*) [∀ i, AddCommGroup (P i)] [∀ i, Module A (P i)]
@@ -249,6 +253,7 @@ theorem corollaire3_4_coherent
 
 /-- **Corollaire 3.4.** If every finitely generated `A`-module is finitely
 presented, any product of flat `A`-modules is flat. -/
+@[montpellier "22, 25"]
 theorem corollaire3_4 (hA : Hypothese A) {ι : Type*} (P : ι → Type*)
     [∀ i, AddCommGroup (P i)] [∀ i, Module A (P i)] [∀ i, Module.Flat A (P i)] :
     Module.Flat A (∀ i, P i) :=
@@ -292,6 +297,7 @@ def limite : Submodule A (∀ n, P n) where
 /-- **Corollaire 3.5** (system indexed by `ℕ`, transition maps surjective). If
 every finitely generated `A`-module is finitely presented and every `P n` is
 projective, the projective limit is flat. -/
+@[montpellier "22, 25"]
 theorem corollaire3_5 (hA : Hypothese A) [∀ n, Module.Projective A (P n)]
     (hπ : ∀ n, Function.Surjective (π n)) : Module.Flat A (limite P π) := by
   -- Each `P (n+1) → P n` splits.
@@ -394,6 +400,7 @@ theorem mk_eq_sum_add (a : ℕ → k) (n : ℕ) :
 `a₀, a₁, …` elements of `k`. There is no derivation `D : k⟦t⟧ → k⟦t⟧ ⊗_k M` (over any base
 `R`) with `D(aₙ) = 1 ⊗ b(iₙ)` for infinitely many distinct indices `iₙ`: the coordinate
 of `D(Σ aₙ tⁿ)` along `b(iₙ)` has `tⁿ`-coefficient `1` for every `n`. -/
+@[montpellier "22, 22, 24"]
 theorem no_derivation [Nontrivial k] {ι : Type*} (b : Module.Basis ι k M) (e : ℕ → ι)
     (he : Function.Injective e) (a : ℕ → k) (D : Derivation R k⟦X⟧ (k⟦X⟧ ⊗[k] M))
     (hD : ∀ n, D (C (a n)) = 1 ⊗ₜ b (e n)) : False := by
@@ -445,6 +452,7 @@ theorem basisDx_apply (I : Type*) (i : I) :
 
 /-- **No derivation `D : A → Ω_k ⊗_k A` induces `d_k`** (pp. 22, 24), for `k = ℚ(x_i : i ∈ I)`,
 `I` infinite, `A = k[[t]]`. -/
+@[montpellier "22, 22, 24"]
 theorem no_derivation_extending_d (I : Type*) [Infinite I] :
     ¬ ∃ D : Derivation ℚ (K I)⟦X⟧ ((K I)⟦X⟧ ⊗[K I] Ω[K I⁄ℚ]),
       ∀ c, D (C c) = 1 ⊗ₜ KaehlerDifferential.D ℚ (K I) c := by
@@ -484,6 +492,7 @@ theorem not_formallySmooth_of_basis (R k : Type*) [CommRing R] [CommRing k] [Non
 
 /-- **The page's example**: for `k = ℚ(x_i : i ∈ I)`, `I` infinite, `k[[t]]` is not formally
 smooth over `k` for the discrete topology. -/
+@[montpellier "22, 22, 24"]
 theorem not_formallySmooth_discrete (I : Type*) [Infinite I] :
     ¬ Algebra.FormallySmooth (K I) (K I)⟦X⟧ := by
   let e := Infinite.natEmbedding I
@@ -493,6 +502,7 @@ theorem not_formallySmooth_discrete (I : Type*) [Infinite I] :
 /-- **The general form, in every characteristic**: for a field `K` and any base ring `R` with
 `Ω_{K/R}` infinite-dimensional, `K[[t]]` is not formally smooth over `K` for the discrete
 topology. -/
+@[montpellier "22, 23"]
 theorem not_formallySmooth_of_field (R K : Type*) [CommRing R] [Field K] [Algebra R K]
     (h : ¬ Module.Finite K Ω[K⁄R]) : ¬ Algebra.FormallySmooth K K⟦X⟧ := by
   obtain ⟨s, hs, hspan, hli⟩ := exists_linearIndependent K (Set.range (KaehlerDifferential.D R K))
@@ -507,6 +517,7 @@ theorem not_formallySmooth_of_field (R K : Type*) [CommRing R] [Field K] [Algebr
 /-- **The Proposition of page 23**, in the form « plus précisément » of the reading: for a
 field `K` over a base `R` (the page's `k`) with `Ω_{K/R}` infinite-dimensional, no derivation
 `D : K⟦t⟧ → K⟦t⟧ ⊗_K Ω_{K/R}` induces `d_{K/R}` on `K`. -/
+@[montpellier "22, 23"]
 theorem no_derivation_of_field (R K : Type*) [CommRing R] [Field K] [Algebra R K]
     (h : ¬ Module.Finite K Ω[K⁄R]) :
     ¬ ∃ D : Derivation R K⟦X⟧ (K⟦X⟧ ⊗[K] Ω[K⁄R]),
@@ -747,6 +758,7 @@ noncomputable def delta : Derivation (kPrime p) (FracF p (Fin 2)) (FracF p (Fin 
 `y = b₀ᵖ + b₁ᵖ x` (the page's example with `a_i = 0` for `2 ≤ i ≤ p − 1`) and
 `k' = k ∩ Kᵖ`, the map `K ⊗_k Ω_{k/k'} → Ω_{K/k'}` is not injective: `dy − a₁ dx` is a
 nonzero element of the kernel. -/
+@[montpellier "22, 26, 28"]
 theorem contre_exemple_page26 :
     ¬ Function.Injective
       (KaehlerDifferential.mapBaseChange (kPrime p) (FracF p (Fin 2)) (FracF p (Fin 3))) := by
@@ -807,6 +819,7 @@ theorem proj_incl (i₀ : σ) (f : K⟦X⟧) : proj i₀ (incl i₀ f) = f := by
 infinite-dimensional, no derivation `K⟦t₁, …, tₙ⟧ → K⟦t₁, …, tₙ⟧ ⊗_K Ω_{K/R}` induces
 `d_{K/R}` on `K`. Restricting along `t ↦ t_{i₀}` and projecting along `t_i ↦ 0`, `i ≠ i₀`,
 gives such a derivation in one variable, which `no_derivation_of_field` excludes. -/
+@[montpellier "22, 23"]
 theorem no_derivation_mv (i₀ : σ) (h : ¬ Module.Finite K Ω[K⁄R]) :
     ¬ ∃ D : Derivation R (MvPowerSeries σ K) (MvPowerSeries σ K ⊗[K] Ω[K⁄R]),
       ∀ c, D (MvPowerSeries.C c) = 1 ⊗ₜ KaehlerDifferential.D R K c := by
@@ -847,6 +860,7 @@ with `Ω_{K/R}` infinite-dimensional, `K⟦t₁, …, tₙ⟧` with the discrete
 smooth over `K`. As for `n = 1`: a formally smooth `S` would give, by Jacobi–Zariski, a retraction
 `r` of `S ⊗_K Ω_{K/R} → Ω_{S/R}` (`retraction_of_formallySmooth`), and `r ∘ d_{S/R}` would be a
 derivation inducing `d_{K/R}`, which `no_derivation_mv` excludes. -/
+@[montpellier "22, 23"]
 theorem not_formallySmooth_mv (i₀ : σ) (h : ¬ Module.Finite K Ω[K⁄R]) :
     ¬ Algebra.FormallySmooth K (MvPowerSeries σ K) := by
   intro _
@@ -873,6 +887,7 @@ theorem der_pow_char' (p : ℕ) {R B M : Type*} [CommRing R] [CommRing B] [Algeb
 /-- **`Ω_{B/S} = Ω_{B/R}` when `S` lands in `Bᵖ`.** For `R → S → B` with `B` of characteristic
 `p` and the image of `S` made of `p`-th powers, `Ω_{B/R} → Ω_{B/S}` is bijective: by the exact
 sequence `B ⊗_S Ω_{S/R} → Ω_{B/R} → Ω_{B/S} → 0`, whose first map is zero. -/
+@[montpellier "22, 26, 28"]
 theorem map_bijective_of_pow (p : ℕ) (R S B : Type*) [CommRing R] [CommRing S] [CommRing B]
     [Algebra R S] [Algebra S B] [Algebra R B] [IsScalarTower R S B] [CharP B p]
     (h : ∀ s : S, ∃ w : B, w ^ p = algebraMap S B s) :
@@ -1120,6 +1135,7 @@ theorem partialD_x : partialD p (none : Option (Fin p))
 /-- **The general counterexample of pages 26 and 28.** For
 `K = 𝔽_p(x, b₀, …, b_{p−1})`, `a_i = b_iᵖ`, `y = Σ a_i xⁱ`, `k = 𝔽_p(x, y)` and
 `k' = k ∩ Kᵖ`, the map `Ω_{k/k'} ⊗_k K → Ω_K` is not injective. -/
+@[montpellier "22, 26, 28"]
 theorem contre_exemple_general :
     ¬ Function.Injective ((omegaEquiv p (KG p)).symm.toLinearMap.restrictScalars (FracF p (Fin 2)) ∘ₗ
       (KaehlerDifferential.mapBaseChange (kPrimeOf p (KG p)) (FracF p (Fin 2)) (KG p)).restrictScalars
@@ -1128,6 +1144,7 @@ theorem contre_exemple_general :
 
 /-- Equivalently, the kernel of `K ⊗_k Ω_k → Ω_K` is not generated by the `dc`, `c ∈ k ∩ Kᵖ`:
 `dy − y' dx` is in it and not in their span. -/
+@[montpellier "22, 26, 28"]
 theorem contre_exemple_general_span :
     KaehlerDifferential.mapBaseChange (ZMod p) (FracF p (Fin 2)) (KG p)
         ((1 : KG p) ⊗ₜ KaehlerDifferential.D _ _ (var p (1 : Fin 2)) -

@@ -2,6 +2,7 @@ module
 
 public import Grothendieck.Folder128
 public import StacksFrontier.AlgebraicGeometry.Descent.Modules.EffectiveDescent
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -142,6 +143,7 @@ theorem faithfullyFlat_quotient_baseChange {I : Ideal A}
 `A` mapped isomorphically onto an ideal of `S`, with `S/IS` faithfully flat over `A/I`. For every
 flat `A`-algebra `B`, `Spec (B ⊗_A S) → Spec B` is an effective descent morphism for flat
 modules. (`B = A` is Cor. 2 for `X = Spec A`.) -/
+@[montpellier "128, 9"]
 theorem cor3_affine [Module.Flat A B] {I : Ideal A} (h : IsConductorIdeal S I)
     (hI : IsNilpotent I) [Module.FaithfullyFlat (A ⧸ I) (S ⧸ I.map (algebraMap A S))] :
     IsEffectiveDescentFlat B (B ⊗[A] S) :=
@@ -284,6 +286,7 @@ lemma faithfullyFlat_exI :
 
 /-- In the example, `Spec S → Spec A` is an effective descent morphism for flat modules
 (Cor. 2 applies). -/
+@[montpellier "128, 7–9"]
 theorem example_isEffectiveDescentFlat : IsEffectiveDescentFlat (ExA k) (ExS k) :=
   haveI := faithfullyFlat_exI k
   isEffectiveDescentFlat_of_quotient_faithfullyFlat (isConductorIdeal_exI k) (isNilpotent_exI k)
@@ -337,6 +340,7 @@ theorem not_injective_rTensor :
 /-- **Flatness cannot be dropped.** In the example, `Spec S → Spec A` is not an effective descent
 morphism for all modules (base extension to descent data is not an equivalence, Stacks tag
 08WY): by Stacks tag 08XA it would be universally injective. -/
+@[montpellier "128, 7–9"]
 theorem example_not_isEffectiveDescentMorphismForModules.{w} :
     ¬ ModuleCat.IsEffectiveDescentMorphismForModules.{u, u, w} (ExA k) (ExS k) := by
   rw [ModuleCat.isEffectiveDescentMorphismForModules_iff_universallyInjective]
