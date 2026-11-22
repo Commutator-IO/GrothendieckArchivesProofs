@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder91HomUnramified
+public import Grothendieck.AlgebraicGeometry.Folder91HomUnramified
 
 @[expose] public section
 

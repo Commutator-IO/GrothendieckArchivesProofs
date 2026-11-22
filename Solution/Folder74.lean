@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder74
+public import Grothendieck.Combinatorics.Folder74
 
 @[expose] public section
 

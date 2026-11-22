@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder104
+public import Grothendieck.CategoryTheory.Folder104
 
 @[expose] public section
 

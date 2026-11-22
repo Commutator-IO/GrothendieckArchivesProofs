@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder77
+public import Grothendieck.RingTheory.Folder77
 
 @[expose] public section
 

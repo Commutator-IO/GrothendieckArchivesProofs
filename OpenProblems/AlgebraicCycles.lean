@@ -31,7 +31,7 @@ build to check it against that library's API was not attempted. A statement in a
 algebra (cohomology groups as modules, algebraic classes as submodules, weak and hard Lefschetz
 as hypotheses) would not be faithful: the question is whether the geometry of `Y_T` is needed,
 which an abstract setting cannot see. The two linear-algebra halves of the reconstruction are proved
-in `Grothendieck/Folder16.lean` (`split_even`, `split_odd`, `split_odd_circular`).
+in `Grothendieck/AlgebraicGeometry/Folder16.lean` (`split_even`, `split_odd`, `split_odd_circular`).
 
 ## References
 

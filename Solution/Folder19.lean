@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder19
+public import Grothendieck.CategoryTheory.Folder19
 
 @[expose] public section
 
@@ -8,7 +8,7 @@ public import Grothendieck.Folder19
 # Folder 19, page 80: the proof of the trusted statement
 
 `Challenge.Folder19.proposition_page80`, `beck_iff` and `gabriel_popescu`, proved by the untrusted
-`Grothendieck/Folder19.lean`.
+`Grothendieck/CategoryTheory/Folder19.lean`.
 -/
 
 open CategoryTheory Limits

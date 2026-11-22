@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder145
+public import Grothendieck.NumberTheory.Folder145
 
 @[expose] public section
 

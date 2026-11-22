@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder128
+public import Grothendieck.AlgebraicGeometry.Folder128
 
 @[expose] public section
 

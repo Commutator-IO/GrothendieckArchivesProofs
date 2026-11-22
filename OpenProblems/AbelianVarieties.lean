@@ -20,14 +20,14 @@ proved; a `def … : Prop` asserts nothing.
 * `KostantOppositeTypeA` (p:kostant): the question of general position, for the groups of type
   `A_{n-1}` (`G = PGL_n(ℂ)`) only. A special case. Proved for every `n`:
   `Grothendieck.Folder123KostantOpposite.kostantOppositeTypeA`
-  (`Grothendieck/Folder123KostantOpposite.lean`).
+  (`Grothendieck/RepresentationTheory/Folder123KostantOpposite.lean`).
 * `KostantOppositeTypeC`, `KostantOppositeTypeB`, `KostantOppositeTypeD` (p:kostant): the same
   question for `Sp_{2n}`, `SO_{2n+1}`, `SO_{2n}` in their standard matrix models (the form pairing
   `e_i` with `e_{N-1-i}`, Kostant's cyclic element `cyclicElementC`, `cyclicElementB`,
-  `cyclicElementD`). Proved in `Grothendieck/Folder123KostantClassical.lean`: in types `C` and
-  `B` every `E'`-stable complete flag is opposite to the standard one; in type `D` the isotropic
-  steps `V_k`, `k < n`, are transverse, and the middle step holds for one of the two maximal
-  isotropic subspaces through `V_{n-1}` only (so it is not in the statement).
+  `cyclicElementD`). Proved in `Grothendieck/RepresentationTheory/Folder123KostantClassical.lean`:
+  in types `C` and `B` every `E'`-stable complete flag is opposite to the standard one; in type `D`
+  the isotropic steps `V_k`, `k < n`, are transverse, and the middle step holds for one of the two
+  maximal isotropic subspaces through `V_{n-1}` only (so it is not in the statement).
 
 ## Not formalised
 
@@ -49,8 +49,8 @@ proved; a `def … : Prop` asserts nothing.
   steps `k > n` of the complete flag (the orthogonal duals of the steps `k < n`) are not
   formalised either. The count of the
   quadruples, `|W|²/(h z φ(h))`, is checked as arithmetic in
-  `Grothendieck/Folder123Kostant.lean`. The second question (a distinguished conjugacy class of
-  quadruples, stable under the outer automorphisms) is not stated either.
+  `Grothendieck/RepresentationTheory/Folder123Kostant.lean`. The second question (a distinguished
+  conjugacy class of quadruples, stable under the outer automorphisms) is not stated either.
 
 ## References
 
@@ -87,13 +87,13 @@ set of vectors whose coordinates of index `≥ n - k` vanish).
 
 Status: proved in type `A`, for every `n`, by
 `Grothendieck.Folder123KostantOpposite.kostantOppositeTypeA`
-(`Grothendieck/Folder123KostantOpposite.lean`). The note checks type `A₂` by hand (all 36 pairs
-opposite). The proof: `E'` is invertible, its inverse a weighted shift of the coordinates up by
-one; a nonzero vector of an `E'`-stable `V_k` vanishing on the last `k` coordinates would give,
-by `k` applications of that shift, `k + 1` linearly independent vectors of `V_k`. The classical
-types `B`, `C`, `D` are `KostantOppositeTypeB`, `KostantOppositeTypeC`, `KostantOppositeTypeD`
-below; the exceptional types are open (the note found nothing on the general position). A special
-case of the problem, not the problem. -/
+(`Grothendieck/RepresentationTheory/Folder123KostantOpposite.lean`). The note checks type `A₂` by
+hand (all 36 pairs opposite). The proof: `E'` is invertible, its inverse a weighted shift of the
+coordinates up by one; a nonzero vector of an `E'`-stable `V_k` vanishing on the last `k`
+coordinates would give, by `k` applications of that shift, `k + 1` linearly independent vectors of
+`V_k`. The classical types `B`, `C`, `D` are `KostantOppositeTypeB`, `KostantOppositeTypeC`,
+`KostantOppositeTypeD` below; the exceptional types are open (the note found nothing on the general
+position). A special case of the problem, not the problem. -/
 @[montpellier "123, 21–22"]
 def KostantOppositeTypeA (n : ℕ) : Prop :=
   ∀ c : Fin n → ℂ, (∀ i, c i ≠ 0) →
@@ -174,8 +174,9 @@ triangular Borel exactly when the complete flag is opposite to the standard one,
 conclusion.
 
 Status: proved, by `Grothendieck.Folder123KostantClassical.kostantOppositeTypeC`
-(`Grothendieck/Folder123KostantClassical.lean`): in the basis `e₀, …, e_{2n-1}`, `E'` is a type
-`A_{2n-1}` cyclic element, so type `A` applies to the whole flag, self-orthogonal or not. -/
+(`Grothendieck/RepresentationTheory/Folder123KostantClassical.lean`): in the basis
+`e₀, …, e_{2n-1}`, `E'` is a type `A_{2n-1}` cyclic element, so type `A` applies to the whole flag,
+self-orthogonal or not. -/
 def KostantOppositeTypeC (n : ℕ) : Prop :=
   ∀ a : Fin (n + 1) → ℂ, (∀ i, a i ≠ 0) →
     ∀ V : Fin (2 * n + 1) → Submodule ℂ (Fin (2 * n) → ℂ), Monotone V →
@@ -191,7 +192,8 @@ def KostantOppositeTypeC (n : ℕ) : Prop :=
 `a₀ e₀ + a_n e_{2n}`, the zero weight of `T'`).
 
 Status: proved, by `Grothendieck.Folder123KostantClassical.kostantOppositeTypeB`
-(`Grothendieck/Folder123KostantClassical.lean`), for every `E'`-stable complete flag. -/
+(`Grothendieck/RepresentationTheory/Folder123KostantClassical.lean`), for every `E'`-stable complete
+flag. -/
 def KostantOppositeTypeB (n : ℕ) : Prop :=
   1 ≤ n → ∀ a : Fin (n + 1) → ℂ, (∀ i, a i ≠ 0) →
     ∀ V : Fin (2 * n + 2) → Submodule ℂ (Fin (2 * n + 1) → ℂ), Monotone V →
@@ -210,7 +212,8 @@ maximal isotropic subspaces, and a numerical computation (`n = 3, 4, 5`) finds, 
 `2^{n-1} n!` Borels through `T'`, exactly one of the two opposite to `F_n`.
 
 Status: proved, by `Grothendieck.Folder123KostantClassical.kostantOppositeTypeD`
-(`Grothendieck/Folder123KostantClassical.lean`). Here `E'` has a kernel of dimension 2. -/
+(`Grothendieck/RepresentationTheory/Folder123KostantClassical.lean`). Here `E'` has a kernel of
+dimension 2. -/
 def KostantOppositeTypeD (n : ℕ) : Prop :=
   3 ≤ n → ∀ a : Fin (n + 1) → ℂ, (∀ i, a i ≠ 0) →
     ∀ V : Fin n → Submodule ℂ (Fin (2 * n) → ℂ), Monotone V →

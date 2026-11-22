@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder42
+public import Grothendieck.Topology.Folder42
 
 @[expose] public section
 

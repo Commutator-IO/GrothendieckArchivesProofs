@@ -1,7 +1,7 @@
 module
 
-public import Grothendieck.Folder101DimTwo
-public import Grothendieck.Folder101Ext
+public import Grothendieck.AlgebraicGeometry.Folder101DimTwo
+public import Grothendieck.AlgebraicGeometry.Folder101Ext
 
 @[expose] public section
 

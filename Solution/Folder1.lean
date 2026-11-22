@@ -1,6 +1,6 @@
 module
 
-public import Grothendieck.Folder1
+public import Grothendieck.LinearAlgebra.Folder1
 
 @[expose] public section
 
