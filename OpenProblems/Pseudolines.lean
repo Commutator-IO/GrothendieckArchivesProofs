@@ -5,15 +5,15 @@ public import Grothendieck.Folder80Maps2
 @[expose] public section
 
 /-!
-# Pseudoline arrangements: the numbering lemma, stated as a proposition
+# Pseudoline arrangements: the numbering lemma, stated as a proposition (proved)
 
 Section « Pseudoline arrangements » of the note on the open problems of the Montpellier notes
 (`docs/problems/article.tex`) holds no open problem any more: its boxed dichotomy (folder 80,
 pp. 20, 24) and the numbering lemma of p. 28 have a short proof there (the proof is the
 edition's). The dichotomy is proved in Lean for combinatorial pseudoline maps, as
-`Grothendieck.Folder80Maps2.PseudolineMap.map_dichotomy`. The numbering lemma is not formalised;
-it is stated below as a `Prop`, with the definitions of `Grothendieck/Folder80Maps2.lean`, so
-that it is on record. It is proved on paper, not open.
+`Grothendieck.Folder80Maps2.PseudolineMap.map_dichotomy`. The numbering lemma is stated below as
+a `Prop`, with the definitions of `Grothendieck/Folder80Maps2.lean`, and proved in Lean as
+`Grothendieck.Folder80Numbering.numberingLemma` (`Grothendieck/Folder80Numbering.lean`).
 
 Not formalised either, and not stated: the passage from a topological arrangement of
 pseudolines in the real projective plane to its combinatorial map (Mathlib has no pseudolines);
@@ -41,7 +41,8 @@ Proposition of § Pseudoline arrangements). The lines of a bigon-free pseudoline
 numbered `ℓ₀, ℓ₁, …` so that the first four form a `II_4` or the first six a complete quadrangle
 `III_6`, and every partial arrangement `{ℓ₀, …, ℓ_{k-1}}` from there on is bigon-free.
 
-Status: proved on paper, not formalised. Choices: the arrangement is a combinatorial
+Status: proved, as `Grothendieck.Folder80Numbering.numberingLemma`
+(`Grothendieck/Folder80Numbering.lean`). Choices: the arrangement is a combinatorial
 `PseudolineMap` of `Grothendieck/Folder80Maps2.lean` with finitely many flags and lines; the
 partial arrangements are read on the incidence (`PartialOn`), a vertex of the partial arrangement
 being a vertex of the map met by two of its lines. -/

@@ -108,6 +108,7 @@ public import Grothendieck.Folder80Count
 public import Grothendieck.Folder80Maps1
 public import Grothendieck.Folder80Maps2
 public import Grothendieck.Folder80Maps3
+public import Grothendieck.Folder80Numbering
 public import Grothendieck.Folder80Signs
 public import Grothendieck.Folder81
 public import Grothendieck.Folder82
