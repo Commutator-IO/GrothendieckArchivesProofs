@@ -12,6 +12,9 @@ name: Kernel replay
 # This is not the full `lake check --paranoid` (the whole closure replayed by six kernels,
 # external checkers included): the external checkers take an export of the whole closure, cannot
 # trust the dependencies, and would take hours here; see #34. The replay uses Lean's own kernel.
+# The independent kernels are run instead on the proofs of the trusted statements, by
+# `lake comparator --paranoid` (the last step): there the export is only the closure of the
+# theorems named in comparator.json.
 #
 # It runs weekly, by hand, and on a pull request that changes this file or the script when the
 # `kernel-check` label is added (remove and add it again to rerun). It runs on the self-hosted
@@ -79,7 +82,7 @@ jobs:
       group: kernel-check-${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: true
     runs-on: ${{ fromJSON(inputs.runs_on || '["self-hosted","linux","x64","lean"]') }}
-    timeout-minutes: 90
+    timeout-minutes: 240
     env:
       LEAN_CI_STORE: ${{ vars.LEAN_CI_STORE || '/var/lib/lean-ci/store' }}
     steps:
@@ -125,6 +128,20 @@ jobs:
           lake env lean --run scripts/ReplayOwn.lean GrothendieckArchivesProofs \
             GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP LeanPool \
             2>&1 | tee kernel-check.log
+
+      # Issue #31, question 4: the Challenge/Solution pairs of comparator.json, checked by Lean's
+      # kernel and by the five external checkers bundled with Lean (leanchecker-paranoid,
+      # lean4lean, nanoda, con-leche, con-ron), on the closure of the named theorems only. Measured
+      # on 4 cores (22 Nov): 24 s for folder 19 (2,115 declarations), 22 min for 126 (64,164,
+      # through Stacks). Too slow for every PR build, which runs the comparator with Lean's kernel.
+      - name: Comparator with the independent kernels
+        run: |
+          if ! command -v bwrap >/dev/null && sudo -n true 2>/dev/null; then
+            sudo apt-get install -y -q bubblewrap
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+          fi
+          set -o pipefail
+          lake comparator --paranoid 2>&1 | grep -v '^Exporting' | tee -a kernel-check.log
 
       - name: Upload the log
         if: always()
