@@ -446,6 +446,9 @@ theorem prop_21454 (X : Scheme.{u}) (i : X.affineCover.I₀) :
     IsOpenImmersion.presheaf (yoneda.map (X.affineCover.f i)) :=
   MorphismProperty.relative_map inferInstance
 
+-- The instance `HasLimit (cospan fj fi)` times out under the library-wide
+-- `maxSynthPendingDepth = 3`; Lean's default depth finds it at once.
+set_option maxSynthPendingDepth 1 in
 /-- thSz9ZHDK9o-21516 (5:58:36) [prop] If `F_j → F` is an open immersion, so is its base change
 `F_i ∩ F_j → F_i` by `F_i → F` (`prop_20162`). -/
 @[buffalo "thSz9ZHDK9o-21516"]

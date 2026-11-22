@@ -365,8 +365,9 @@ theorem constConv_eval (g h : Γ) :
       (LinearMap.proj (g * h) : (Γ → k) →ₗ[k] k) :=
   rfl
 
-theorem dualBasis_eq_eval {Γ : Type u} [Fintype Γ] [DecidableEq Γ] (g : Γ) :
+theorem dualBasis_eq_eval {Γ : Type u} [Finite Γ] [DecidableEq Γ] (g : Γ) :
     (Pi.basisFun k Γ).dualBasis g = LinearMap.proj g := by
+  have := Fintype.ofFinite Γ
   ext f; simp
 
 /-- _lTf_L0yvrU-28424 (7:53:44) [prop] Representations of `Γ` on `M` are the `k[Γ]`-module
@@ -379,9 +380,10 @@ noncomputable def repEquiv (Γ' : Type u) [Group Γ'] (M : Type u) [AddCommGroup
 /-- _lTf_L0yvrU-28489 (7:54:49) [ex] For the constant group, the augmentation ideal `I ⊆ k^Γ`
 (functions vanishing at `1`) satisfies `I² = I`; hence `Lie(Γ_k) = (I/I²)^∨ = 0`. -/
 @[buffalo "_lTf_L0yvrU-28489"]
-theorem aug_sq_eq (Γ' : Type*) [Group Γ'] [DecidableEq Γ'] :
+theorem aug_sq_eq (Γ' : Type*) [Group Γ'] :
     RingHom.ker (Pi.evalRingHom (fun _ : Γ' ↦ k) (1 : Γ')) ^ 2 =
       RingHom.ker (Pi.evalRingHom (fun _ : Γ' ↦ k) (1 : Γ')) := by
+  classical
   apply le_antisymm (Ideal.pow_le_self two_ne_zero)
   intro f hf
   have hf' : f 1 = 0 := hf

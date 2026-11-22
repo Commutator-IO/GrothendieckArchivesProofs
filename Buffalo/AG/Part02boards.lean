@@ -29,10 +29,11 @@ namespace Buffalo.AG.Part02
 
 /-- Board 51wmmpHand0-17719, t = 19952 [m] (corrected) `∐ X_i(K') → X(K')` is injective when
 `K' ≠ 0`; for `K' = 0` it is not as soon as there are two indices (`cex_21337`). -/
-theorem board_19952 {k : Type*} [CommRing k] {ι : Type*} [DecidableEq ι] (A : ι → Type*)
+theorem board_19952 {k : Type*} [CommRing k] {ι : Type*} (A : ι → Type*)
     [∀ i, CommRing (A i)] [∀ i, Algebra k (A i)] (k' : Type*) [CommRing k'] [Algebra k k']
     [Nontrivial k'] :
     Function.Injective (fun x : (Σ i, A i →ₐ[k] k') => x.2.comp (Pi.evalAlgHom k A x.1)) := by
+  classical
   rintro ⟨i, ψ⟩ ⟨j, ψ'⟩ h
   have hij : i = j := by
     by_contra hij
