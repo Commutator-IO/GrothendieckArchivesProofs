@@ -63,4 +63,8 @@ held by his heirs.
 (Apache-2.0): abelian varieties (Pic⁰, φ_L, the theorem of the square) and ample sheaves over a
 field. `MMP/` holds files copied from [AxiomMath/MMP](https://github.com/AxiomMath/MMP)
 (Apache-2.0): nef divisors and numerical equivalence; one of them is ported to the pinned Stacks.
-They are listed in [`NOTICE`](NOTICE), with the commit they come from.
+`LeanPool/` holds files copied from [lean-pool](https://github.com/LeanPool/lean-pool)
+(Apache-2.0), from Michel Hua's pull requests there: classifying topoi of geometric theories,
+Diaconescu's theorem, theories of presheaf type, Morita equivalence, Boolean and De Morgan
+presheaf topoi, subtopoi and essential points; twelve of them are ported from Lean v4.36 to the
+pinned Lean and Mathlib. They are listed in [`NOTICE`](NOTICE), with the commit they come from.

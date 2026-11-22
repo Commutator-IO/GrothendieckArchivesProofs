@@ -47,3 +47,9 @@ leanOptions = { autoImplicit = false, relaxedAutoImplicit = false, maxSynthPendi
 # (definitions, not theorems): one file per section of the edition's two notes on open problems.
 [[lean_lib]]
 name = "OpenProblems"
+
+# Files copied from LeanPool/lean-pool at cb3d7f8 (Apache-2.0, Michel Hua's PRs, listed in NOTICE):
+# ToposTheoreticBridges (classifying topoi of geometric theories, Morita equivalence, Boolean and
+# De Morgan presheaf topoi), ported from Lean v4.36 to v4.35. Warnings stay errors, as above.
+[[lean_lib]]
+name = "LeanPool"

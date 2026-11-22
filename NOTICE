@@ -67,3 +67,80 @@ licensed under the Apache License, Version 2.0.
      Stacks.SheafOfModules.Tensor.sheafificationAdjunction.
 
    MMP.lean (the root importing them) is new to this repository.
+
+4. lean-pool, https://github.com/LeanPool/lean-pool (Apache License, Version 2.0)
+   The files below are copied from commit cb3d7f85 (Michel Hua's pull requests there), at the
+   same paths, under LeanPool/. Each carries its own Apache-2.0 header. They were written for
+   Lean v4.36.0 and a later Mathlib (fc4f59e) and are built here against Lean v4.35.0 and
+   Mathlib 56a0058. LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Infinitary.lean is not
+   copied: it needs Tau Ceti.
+
+   Copied unchanged:
+   LeanPool/ToposTheoreticBridges/Basic.lean
+   LeanPool/ToposTheoreticBridges/Boolean.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Bridges.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/CatSemantics.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/ClassifyingSite.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/DiaconescuGeneral.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Examples/FinitelyPresentable.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Examples/Homogeneous.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Examples/Interval.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Examples/ObjectClassifier.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Examples/PresheafType.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Examples/TorsorClassification.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Examples/Torsors.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Homomorphisms.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/InverseImage.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/LocallyFiltering.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Morleyization.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/NormalForm.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/NormalFormSemantics.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/PullbackElements.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Quotients.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Semantics.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/SheafSemantics.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Definability.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Fiber.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Generic.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Horn.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/HornStructure.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/NatTrans.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Presheaf.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Provability.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/QuotientTransport.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Substitution.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/SyntacticSite.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Transport.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntax.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/TypeSemantics.lean
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Unconditional.lean
+   LeanPool/ToposTheoreticBridges/DeMorgan.lean
+   LeanPool/ToposTheoreticBridges/Sites.lean
+
+   Modified (a note in the header of the file says how):
+   LeanPool/ToposTheoreticBridges.lean
+     Infinitary not copied; the docstring says so.
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi.lean
+     the import of ClassifyingTopoi/Infinitary is removed.
+   LeanPool/ToposTheoreticBridges/Imports.lean
+     the import of ClassifyingTopoi/Infinitary is removed.
+   LeanPool/ToposTheoreticBridges/Subpresheaf.lean
+     one rewrite goes through `change` (∪ for ⊔).
+   LeanPool/ToposTheoreticBridges/Subtopos.lean
+     Set.Ici membership through Set.mem_Ici; one rewrite becomes Iff.trans.
+   LeanPool/ToposTheoreticBridges/EssentialPoints.lean
+     an import replaced; preservesColimitsOfSize_of_retract proved directly.
+   LeanPool/ToposTheoreticBridges/Morita.lean
+     an import replaced by its counterpart in the pinned Mathlib.
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Diaconescu.lean
+     extension along uliftYoneda instead of shrinkYoneda.
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Universal.lean
+     extension along uliftYoneda instead of shrinkYoneda.
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Tensor.lean
+     an import replaced by its counterpart in the pinned Mathlib.
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/Syntactic/Extension.lean
+     an import replaced by its counterpart in the pinned Mathlib.
+   LeanPool/ToposTheoreticBridges/ClassifyingTopoi/DiaconescuExistence.lean
+     an import replaced by its counterpart in the pinned Mathlib.
+
+   LeanPool.lean (the root importing them) is new to this repository.
