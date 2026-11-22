@@ -56,6 +56,7 @@ public import Grothendieck.Folder16
 public import Grothendieck.Folder160
 public import Grothendieck.Folder161_1
 public import Grothendieck.Folder161_2
+public import Grothendieck.Folder161_2Classifying
 public import Grothendieck.Folder161_3
 public import Grothendieck.Folder161_6
 public import Grothendieck.Folder16Problem5

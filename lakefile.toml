@@ -48,6 +48,12 @@ leanOptions = { autoImplicit = false, relaxedAutoImplicit = false, maxSynthPendi
 [[lean_lib]]
 name = "OpenProblems"
 
+# Files copied from LeanPool/lean-pool at cb3d7f8 (Apache-2.0, Michel Hua's PRs, listed in NOTICE):
+# ToposTheoreticBridges (classifying topoi of geometric theories, Morita equivalence, Boolean and
+# De Morgan presheaf topoi), ported from Lean v4.36 to v4.35. Warnings stay errors, as above.
+[[lean_lib]]
+name = "LeanPool"
+
 # Issue #31, question 3. The trusted statements, written with Mathlib (and reviewed Stacks
 # definitions) alone and left unproved: a `sorry` is expected here, so warnings are not errors in
 # this library, which is not a default target. `Solution` proves the same statements through the
