@@ -44,6 +44,11 @@ classification of the coherent Ideals is needed.
   `πAb : OAb → QAbSheaf` over `ιAb`, the image of `𝒥.ι` under `SheafOfModules.toSheaf`. It rests on
   `quotMapAb_universal`, the same gluing argument as `quotMap_universal` for a sheaf of abelian
   groups as target.
+* `isColimit_cokernelCofork_mod`: **`𝒪/𝒥` is the cokernel of `𝒥 → 𝒪` in the category of sheaves
+  of `𝒪`-modules** (`SheafOfModules (Osheaf κ ε ι)`), for every Ideal `𝒥`, with `𝒥.ι` as the map.
+  `QMod 𝒥` is `𝒪/𝒥` with `𝒪(U)` acting through the quotient map (`instModuleQAb`), and `πMod` is
+  the quotient map, `𝒪`-linear. The factorisation of `g : 𝒪 → Z` is the one of the abelian case,
+  and it is `𝒪`-linear (`liftAb_smul`): `r • t` lifts `r • σ` when `t` lifts `σ`.
 * `stalkQuotientEquiv`: **the stalk of `𝒪/𝒥` at `x` is `𝒪_x/𝒥_x`** (`stalkEquivQ`,
   `Q_eq_zero_near`, `fibEquiv`).
 * `Supp 𝒥 = {x | 𝒥_x ≠ 𝒪_x}`, and `mem_Supp_iff_nontrivial_stalk` says this is where the
@@ -67,10 +72,7 @@ The finite type of `𝒥` is used in its sectionwise form, through
 **Not formalised.** `Y` is not built as a ringed space in its own right. Opens of `Y` are the
 traces `U ∩ Y` of opens of `X`, and `𝒪_Y(U ∩ Y)` is identified with `(𝒪/𝒥)(U)`: `𝒪/𝒥` is the
 direct image of `𝒪_Y`, which `Q_ext_of_eqOn_Supp` and `subsingleton_of_not_mem_Supp` justify.
-So (v) is stated on `X`, with `U` an open set of `X` containing `y`. `𝒪/𝒥` is not given its
-structure of sheaf of `𝒪`-modules, so the cokernel of `𝒥 → 𝒪` in sheaves of `𝒪`-modules is not
-stated; it is proved in sheaves of abelian groups (`isColimit_cokernelCofork`) and the universal
-property of the quotient in sheaves of rings (`quotMap_universal`).
+So (v) is stated on `X`, with `U` an open set of `X` containing `y`.
 -/
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
@@ -962,6 +964,116 @@ noncomputable def isColimit_cokernelCofork :
   exact CokernelCofork.IsColimit.ofπ _ _ (fun g hg => ⟨descAb 𝒥 (hφ g hg)⟩)
     (fun g hg => Sheaf.hom_ext (descAb_fac 𝒥 (hφ g hg)))
     (fun g hg m hm => Sheaf.hom_ext (eq_descAb 𝒥 (hφ g hg) (congrArg (fun f => f.hom) hm)))
+
+/-! ### The cokernel of `𝒥 → 𝒪` in sheaves of `𝒪`-modules -/
+
+section Modules
+
+/-- `𝒪(U)` acts on `(𝒪/𝒥)(U)` through the quotient map. -/
+noncomputable instance instModuleQAb (U : (Opens Xsp)ᵒᵖ) :
+    Module ((Osheaf κ ε ι).obj.obj U) ((QAb 𝒥).obj U) :=
+  Module.compHom ((Qpre 𝒥).obj U) ((quotMap 𝒥).app U).hom
+
+theorem smul_QAb {U : (Opens Xsp)ᵒᵖ} (r : (Osheaf κ ε ι).obj.obj U) (σ : (QAb 𝒥).obj U) :
+    r • σ = ((quotMap 𝒥).app U r * (show (Qpre 𝒥).obj U from σ) : (Qpre 𝒥).obj U) := rfl
+
+theorem QAb_map_smul ⦃U V : (Opens Xsp)ᵒᵖ⦄ (f : U ⟶ V) (r : (Osheaf κ ε ι).obj.obj U)
+    (σ : (QAb 𝒥).obj U) :
+    (QAb 𝒥).map f (r • σ) = (Osheaf κ ε ι).obj.map f r • (QAb 𝒥).map f σ := by
+  change (Qpre 𝒥).map f ((quotMap 𝒥).app U r * (show (Qpre 𝒥).obj U from σ)) =
+    (quotMap 𝒥).app V ((Opre κ ε ι).map f r) * (Qpre 𝒥).map f σ
+  rw [map_mul]
+  rfl
+
+/-- **`𝒪/𝒥` as a presheaf of `𝒪`-modules.** -/
+noncomputable def QModPre (𝒥 : IdealO κ ε ι) : PresheafOfModules (Osheaf κ ε ι).obj :=
+  PresheafOfModules.ofPresheaf (QAb 𝒥) (QAb_map_smul 𝒥)
+
+/-- **`𝒪/𝒥` as a sheaf of `𝒪`-modules.** -/
+noncomputable def QMod (𝒥 : IdealO κ ε ι) : SheafOfModules (Osheaf κ ε ι) :=
+  ⟨QModPre 𝒥, (QAbSheaf 𝒥).2⟩
+
+/-- **The quotient map `𝒪 → 𝒪/𝒥` of sheaves of `𝒪`-modules.** -/
+noncomputable def πMod : SheafOfModules.unit (Osheaf κ ε ι) ⟶ QMod 𝒥 :=
+  ⟨PresheafOfModules.homMk (M₁ := (SheafOfModules.unit (Osheaf κ ε ι)).val) (M₂ := QModPre 𝒥)
+    (quotMapAb 𝒥) fun U r a => map_mul ((quotMap 𝒥).app U).hom r a⟩
+
+theorem ι_πMod : 𝒥.ι ≫ πMod 𝒥 = 0 := by
+  refine SheafOfModules.hom_ext (PresheafOfModules.hom_ext fun U => ?_)
+  obtain ⟨U⟩ := U
+  ext x
+  exact quotMap_app_eq_zero 𝒥 x.2
+
+variable (Z : SheafOfModules (Osheaf κ ε ι))
+
+/-- A sheaf of `𝒪`-modules, as a sheaf of abelian groups. -/
+noncomputable abbrev ZAb : TopCat.Sheaf AddCommGrpCat Xsp := (SheafOfModules.toSheaf _).obj Z
+
+variable {Z} (g : SheafOfModules.unit (Osheaf κ ε ι) ⟶ Z)
+
+/-- A morphism of sheaves of `𝒪`-modules out of `𝒪`, as a morphism of presheaves of abelian
+groups. -/
+noncomputable abbrev gAb : (OAb κ ε ι).obj ⟶ (ZAb Z).obj := ((SheafOfModules.toSheaf _).map g).hom
+
+theorem gAb_kills (hg : 𝒥.ι ≫ g = 0) (U : Opens Xsp) (a : (Opre κ ε ι).obj (op U))
+    (ha : a ∈ 𝒥.obj (op U)) : φA (gAb g) U a = 0 :=
+  congrArg (fun f : 𝒥.toSheafOfModules ⟶ Z => f.val.app (op U) ⟨a, ha⟩) hg
+
+variable {g} (hφ : ∀ (U : Opens Xsp) (a : (Opre κ ε ι).obj (op U)), a ∈ 𝒥.obj (op U) →
+  φA (gAb g) U a = 0)
+include hφ
+
+/-- **The factorisation is `𝒪`-linear.** -/
+theorem liftAb_smul {U : Opens Xsp} (r : (Opre κ ε ι).obj (op U)) (σ : (Qpre 𝒥).obj (op U)) :
+    (show Z.val.obj (op U) from liftAb 𝒥 hφ U ((quotMap 𝒥).app (op U) r * σ)) =
+      (show (Osheaf κ ε ι).obj.obj (op U) from r) •
+        (show Z.val.obj (op U) from liftAb 𝒥 hφ U σ) := by
+  refine (isLiftAb_liftAb 𝒥 hφ _).unique 𝒥 hφ fun x => ?_
+  obtain ⟨V, hVU, hxV, a, ha, hta⟩ := isLiftAb_liftAb 𝒥 hφ σ x
+  refine ⟨V, hVU, hxV, (Opre κ ε ι).map (homOfLE hVU).op r * a, fun y => ?_, ?_⟩
+  · rw [show ((quotMap 𝒥).app (op U) r * σ).1 ⟨y.1, hVU y.2⟩ =
+        cls 𝒥 ((Opre κ ε ι).map (homOfLE hVU).op r).2 y * σ.1 ⟨y.1, hVU y.2⟩ from rfl, ha y]
+    exact (map_mul (Ideal.Quotient.mk (Jst 𝒥 y.1)) _ _).symm
+  · have h1 := Z.val.map_smul (homOfLE hVU).op r (show Z.val.obj (op U) from liftAb 𝒥 hφ U σ)
+    have h2 := ((g.val.app (op V)).hom.map_smul ((Opre κ ε ι).map (homOfLE hVU).op r) a)
+    change Z.val.map (homOfLE hVU).op ((show (Osheaf κ ε ι).obj.obj (op U) from r) •
+        (show Z.val.obj (op U) from liftAb 𝒥 hφ U σ)) =
+      g.val.app (op V) ((Opre κ ε ι).map (homOfLE hVU).op r * a)
+    rw [h1]
+    refine Eq.trans ?_ h2.symm
+    exact congrArg (fun t : (ZAb Z).obj.obj (op V) =>
+      (show (Osheaf κ ε ι).obj.obj (op V) from (Opre κ ε ι).map (homOfLE hVU).op r) •
+        (show Z.val.obj (op V) from t)) hta
+
+/-- **The factorisation `𝒪/𝒥 → Z` of `g`, a morphism of sheaves of `𝒪`-modules.** -/
+noncomputable def descMod : QMod 𝒥 ⟶ Z :=
+  ⟨PresheafOfModules.homMk (M₁ := QModPre 𝒥) (M₂ := Z.val) (descAb 𝒥 hφ) fun U r σ => by
+    obtain ⟨U⟩ := U
+    exact liftAb_smul 𝒥 hφ r σ⟩
+
+theorem descMod_fac : πMod 𝒥 ≫ descMod 𝒥 hφ = g := by
+  refine SheafOfModules.hom_ext (PresheafOfModules.hom_ext fun U =>
+    ModuleCat.hom_ext (LinearMap.ext fun a => ?_))
+  exact ConcreteCategory.congr_hom (NatTrans.congr_app (descAb_fac 𝒥 hφ) U) a
+
+theorem eq_descMod {m : QMod 𝒥 ⟶ Z} (hm : πMod 𝒥 ≫ m = g) : m = descMod 𝒥 hφ := by
+  have hψ : quotMapAb 𝒥 ≫ ((SheafOfModules.toSheaf _).map m).hom = gAb g := by
+    ext U a
+    exact congrArg (fun f : SheafOfModules.unit (Osheaf κ ε ι) ⟶ Z => f.val.app U a) hm
+  refine SheafOfModules.hom_ext (PresheafOfModules.hom_ext fun U =>
+    ModuleCat.hom_ext (LinearMap.ext fun σ => ?_))
+  exact ConcreteCategory.congr_hom (NatTrans.congr_app (eq_descAb 𝒥 hφ hψ) U) σ
+
+omit hφ in
+/-- **`𝒪/𝒥` is the cokernel of `𝒥 → 𝒪` in the category of sheaves of `𝒪`-modules**, for every
+Ideal `𝒥`. -/
+noncomputable def isColimit_cokernelCofork_mod :
+    IsColimit (CokernelCofork.ofπ (πMod 𝒥) (ι_πMod 𝒥)) :=
+  CokernelCofork.IsColimit.ofπ _ _ (fun g hg => descMod 𝒥 (gAb_kills 𝒥 g hg))
+    (fun g hg => descMod_fac 𝒥 (gAb_kills 𝒥 g hg))
+    (fun g hg _ hm => eq_descMod 𝒥 (gAb_kills 𝒥 g hg) hm)
+
+end Modules
 
 /-! ### Points with a smallest neighbourhood -/
 
