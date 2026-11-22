@@ -5,6 +5,7 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Etale
 public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyInjective
 public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
 
 @[expose] public section
 
