@@ -18,10 +18,15 @@ public import Grothendieck.Folder118
 public import Grothendieck.Folder120
 public import Grothendieck.Folder121
 public import Grothendieck.Folder125
+public import Grothendieck.Folder126Descent
+public import Grothendieck.Folder126EtaleSplitting
+public import Grothendieck.Folder126Existence
 public import Grothendieck.Folder126GeometricPoints
+public import Grothendieck.Folder126Glue
 public import Grothendieck.Folder126NilpotentQuotient
 public import Grothendieck.Folder126RadicialEtale
 public import Grothendieck.Folder126RadicialEtaleGlobal
+public import Grothendieck.Folder126Sheets
 public import Grothendieck.Folder128
 public import Grothendieck.Folder13
 public import Grothendieck.Folder133
@@ -89,6 +94,7 @@ public import Grothendieck.Folder55Sheaf
 public import Grothendieck.Folder55Generation
 public import Grothendieck.Folder55Coherent
 public import Grothendieck.Folder55Ideals
+public import Grothendieck.Folder55Quotients
 public import Grothendieck.Folder58DepthComparison
 public import Grothendieck.Folder58LefPermanence
 public import Grothendieck.Folder62
@@ -171,6 +177,7 @@ public import Grothendieck.Folder94GenericFlatness
 public import Grothendieck.Folder128FlatBaseChange
 public import Grothendieck.Folder101Ext
 public import Grothendieck.Folder101LocalCohomology
+public import Grothendieck.Folder101Sheaf
 public import Grothendieck.Folder53GeometricIrreducibility
 public import Grothendieck.Folder19Topoi
 public import Grothendieck.Folder113Linear

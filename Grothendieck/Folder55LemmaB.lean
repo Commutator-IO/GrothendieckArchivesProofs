@@ -73,8 +73,13 @@ neighbourhoods on a Stein compact, where theorem A holds) also uses.
 `Stacks.SheafOfModules.IsCoherent`) of `𝒪` and of the `𝒢_j` and the noetherianity of the stalks,
 and gather the counterexample over `k⟦X⟧ ⊂ k⸨X⸩` (`lemmeB_counterexample`).
 
-**Not formalised.** (v) for coherent Ideals other than `0`: it needs the quotient sheaves
-`𝒪/𝒥` and their supports, which these files do not build.
+`Grothendieck/Folder55Quotients.lean` builds the quotient sheaves `𝒪/𝒥` and their supports, and
+proves (v) for every coherent Ideal `𝒥` (`identity_principle_quotient'`). So the counterexample
+satisfies (i), (ii), (iv) and (v) as stated (`lemmeB_counterexample_v`).
+
+**Not formalised.** `Y = Supp 𝒪/𝒥` is not built as a ringed space in its own right: (v) is
+stated on `X`, through the sheaf `𝒪/𝒥`, the direct image of `𝒪_Y`
+(see `Grothendieck/Folder55Quotients.lean`).
 -/
 
 open CategoryTheory TopologicalSpace Opposite
