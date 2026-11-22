@@ -25,6 +25,9 @@ theorem: nothing there is proved, and the build would reject a `sorry`. The docs
 question in our words, its source (folder and pages, or video and time), its status (open,
 settled, or false with the counterexample) and the choices made in writing it down; questions
 that the libraries cannot yet express are listed in each file's header with what is missing.
+`OpenProblems/TopoiStacksNoncoh.lean` is the exception: it proves, by Łoś's theorem, a
+first-order part of problem p:noncoh (the rings with prime nilradical, and the rings of
+dimension `≤ 0`, are not the models of a first-order theory).
 
 ## Versions
 
