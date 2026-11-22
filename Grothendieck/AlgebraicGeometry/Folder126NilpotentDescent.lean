@@ -4,6 +4,7 @@ public import Grothendieck.AlgebraicGeometry.Folder126NilpotentQuotient
 public import StacksFrontier.RingTheory.Descent.AmitsurComplex
 public import StacksFrontier.RingTheory.Descent.NilpotentEqualizerLift
 public import StacksFrontier.RingTheory.Descent.CechSquareZeroGenerators
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -65,9 +66,9 @@ elements of `J` are the elements of `I = J ∩ A'`, so the descended module is `
   `(Y₀, Ker(𝒪_X ⇉ 𝒪_R))` into a scheme, and the effectivity of `R` as an equivalence relation.
 * The construction of the nerve from `R ⇉ X`: `R ×_X R`, its three projections, and the
   identifications `R₀ = R ×_X X₀ ≅ X₀ ×_{Y₀} X₀` are the hypotheses of `IsThickenedNerve`.
-* For a nilpotent `J` only the exact sequence is proved; the descent of `J` and the flatness of
-  `X → Y` are proved for `J² = 0`, and the induction along `J ⊃ J² ⊃ ⋯` (which needs the nerve
-  hypotheses on each intermediate thickening) is not done.
+* Here, for a nilpotent `J`, only the exact sequence is proved; the descent of `J` and the
+  flatness of `X → Y` are proved for `J² = 0`. The nilpotent case of the flatness, by induction
+  along `X₀ = X_1 ⊂ X_2 ⊂ ⋯ ⊂ X`, `X_k = Spec (B' ⧸ J^k)`, is `Folder126NilpotentFlat`.
 * In `flat_and_bijective` the map `φ : B' ⊗_{A'} B' → C''` and its bijectivity modulo `I` are
   hypotheses: identifying `(A' ⧸ I) ⊗_{A'} φ` with `B ⊗_A B ≅ C' ⧸ J C'` (that is
   `R₀ ≅ X₀ ×_{Y₀} X₀`) is not done.
@@ -136,6 +137,7 @@ submodule of invariant elements, those `n` with `p₁ n = p₂ n`. The compariso
 `Module.Descent.exists_fin_invariant_span_ideal`, whose proof this follows up to the descent
 datum; the conclusion is effectivity of descent (`Module.Descent.Datum.isBaseChange`) instead of
 finite generation. -/
+@[montpellier "126, 5–7"]
 theorem exists_isBaseChange_invariant_ideal [Module.Flat A₁ B₁]
     {p₁ p₂ : B →+* C} {δ : C →+* B} {e₁₂ e₁₃ e₂₃ : C →+* D}
     (hδ₁ : ∀ β, δ (p₁ β) = β) (hδ₂ : ∀ β, δ (p₂ β) = β)
@@ -356,6 +358,7 @@ theorem mem_ker_toBase_iff [Module.FaithfullyFlat A B] (b : RingHom.eqLocus s t)
 
 /-- **The exact sequence `0 → 𝒥_Y → 𝒪_Y → 𝒪_{Y₀} → 0`** on the affine `Y₀`, for a nilpotent
 `J`: the kernel of the surjection `toBase : A' → A` is the ideal `J ∩ A'`. -/
+@[montpellier "126, 5–7"]
 theorem ker_toBase_eq_and_surjective [Module.FaithfullyFlat A B]
     (hnil : IsNilpotent (RingHom.ker πB)) :
     RingHom.ker H.toBase = (RingHom.ker πB).comap (RingHom.eqLocus s t).subtype ∧
@@ -366,6 +369,7 @@ theorem ker_toBase_eq_and_surjective [Module.FaithfullyFlat A B]
 `I ⊗_{A'} B → J`, `i ⊗ πB b ↦ i b`, is bijective, where `A' = Ker(B' ⇉ C')` is the ring of
 invariant functions on `X`, `I = J ∩ A'` the kernel of `toBase : A' → A`, and `B` an algebra over
 `A' ⧸ I ≅ A`. This is the hypothesis `hJ` of `Folder126NilpotentQuotient`, derived. -/
+@[montpellier "126, 5"]
 theorem bijective_fibreTensorSMulHomToKer [Module.FaithfullyFlat A B]
     (hJ2 : RingHom.ker πB ^ 2 = ⊥) :
     letI : Algebra B' B := πB.toAlgebra

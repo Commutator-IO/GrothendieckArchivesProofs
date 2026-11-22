@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.RingTheory.Folder22CohenAlgebras
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -263,6 +264,7 @@ omit [IsNoetherianRing B] [IsLocalHom (algebraMap A B)] in
 /-- **Existence of the comparison map.** If `B` is formally smooth over `A` for its `𝔪_B`-adic
 topology and `B'` is complete, every isomorphism `e₀` of special fibres lifts to an `A`-algebra
 map `φ : B → B'`. -/
+@[montpellier "22, 15–17"]
 theorem exists_algHom_lift
     (hB : RingHom.FormallySmoothNAdic.{v} (algebraMap A B) (maximalIdeal B))
     (e₀ : ResidueField A ⊗[A] B ≃ₐ[ResidueField A] ResidueField A ⊗[A] B') :
@@ -278,6 +280,7 @@ omit [IsAdicComplete (maximalIdeal B') B'] in
 /-- **The comparison map is an isomorphism.** If `B` is complete and `B'` flat over `A`, an
 `A`-algebra map `φ : B → B'` lifting an isomorphism of special fibres is bijective: surjective by
 completeness of `B`, injective by the local flatness criterion. -/
+@[montpellier "22, 15–17"]
 theorem bijective_of_lift [IsAdicComplete (maximalIdeal B) B] [Module.Flat A B']
     (e₀ : ResidueField A ⊗[A] B ≃ₐ[ResidueField A] ResidueField A ⊗[A] B')
     (φ : B →ₐ[A] B') (hφ : ∀ b : B, e₀ (1 ⊗ₜ b) = 1 ⊗ₜ φ b) :
@@ -332,6 +335,7 @@ theorem bijective_of_lift [IsAdicComplete (maximalIdeal B) B] [Module.Flat A B']
 local `A`-algebras (local structure maps), `B` formally smooth over `A` for its `𝔪_B`-adic
 topology and `B'` flat over `A`. Every isomorphism `e₀ : k ⊗_A B ≃ k ⊗_A B'` of special fibres
 lifts to an isomorphism `φ : B ≃ B'` of `A`-algebras. -/
+@[montpellier "22, 15–17"]
 theorem corollaire3_10_uniqueness [IsAdicComplete (maximalIdeal B) B] [Module.Flat A B']
     (hB : RingHom.FormallySmoothNAdic.{v} (algebraMap A B) (maximalIdeal B))
     (e₀ : ResidueField A ⊗[A] B ≃ₐ[ResidueField A] ResidueField A ⊗[A] B') :
@@ -343,6 +347,7 @@ theorem corollaire3_10_uniqueness [IsAdicComplete (maximalIdeal B) B] [Module.Fl
 Two complete noetherian local `A`-algebras `B`, `B'`, formally smooth and flat over `A`, whose
 special fibres are both isomorphic to the same `k`-algebra `K`, are isomorphic as `A`-algebras
 (by an isomorphism compatible with the two identifications of the special fibres). -/
+@[montpellier "22, 15–17"]
 theorem corollaire3_12_uniqueness {K : Type*} [CommRing K] [Algebra (ResidueField A) K]
     [IsAdicComplete (maximalIdeal B) B] [Module.Flat A B']
     (hB : RingHom.FormallySmoothNAdic.{v} (algebraMap A B) (maximalIdeal B))
@@ -412,6 +417,7 @@ noncomputable def specialFiberEquivResidueField {A : Type u} {B : Type v} [CommR
 rings with `𝔪_B = 𝔪_A B`. Then `B` is formally smooth over `A` for the `𝔪_B`-adic topology if
 and only if `B` is flat over `A` and the residue extension `K/k` is separable (in the sense of
 `Algebra.IsSeparableExtension`: every finitely generated subextension separably generated). -/
+@[montpellier "22, 15–17"]
 theorem corollaire3_12 {A : Type u} {B : Type v} [CommRing A] [IsNoetherianRing A]
     [IsLocalRing A] [CommRing B] [IsNoetherianRing B] [IsLocalRing B] (f : A →+* B)
     [IsLocalHom f]

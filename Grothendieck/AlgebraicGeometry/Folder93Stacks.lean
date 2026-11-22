@@ -8,10 +8,10 @@ public import Grothendieck.AlgebraicGeometry.Folder93
 /-!
 # Folder 93: Cartier descent in rank one on an algebra with Frobenius coordinates
 
-`Grothendieck/AlgebraicGeometry/Folder93.lean` proves Cartier's converse in rank one (`horizontal_generate`) for a
-derivation `D` with `Dᵖ = 0` and an element `x` with `D x = 1`, as `d/dx` on `𝔽_p[x]`; the
-passage to a smooth curve was left out (« la descente de Cartier n'est formalisée que sur le
-fibré trivial, quand l'anneau a une coordonnée »).
+`Grothendieck/AlgebraicGeometry/Folder93.lean` proves Cartier's converse in rank one
+(`horizontal_generate`) for a derivation `D` with `Dᵖ = 0` and an element `x` with `D x = 1`, as
+`d/dx` on `𝔽_p[x]`; the passage to a smooth curve was left out (« la descente de Cartier n'est
+formalisée que sur le fibré trivial, quand l'anneau a une coordonnée »).
 
 The vendored AxiomMath/Stacks file `StacksFrontier/RingTheory/DeRham/Cartier/Coordinates.lean`
 supplies the setting of a smooth algebra in characteristic `p` with coordinates: **Frobenius

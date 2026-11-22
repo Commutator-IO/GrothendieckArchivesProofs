@@ -1,4 +1,34 @@
 module
 
+public import Solution.BuffaloProblemThree
+public import Solution.Folder1
+public import Solution.Folder100
+public import Solution.Folder101
+public import Solution.Folder104
+public import Solution.Folder113
+public import Solution.Folder125
 public import Solution.Folder126
+public import Solution.Folder128
+public import Solution.Folder13
+public import Solution.Folder136
+public import Solution.Folder145
+public import Solution.Folder153
+public import Solution.Folder16
+public import Solution.Folder161_2
+public import Solution.Folder161_6
 public import Solution.Folder19
+public import Solution.Folder22
+public import Solution.Folder39
+public import Solution.Folder42
+public import Solution.Folder5
+public import Solution.Folder53
+public import Solution.Folder55
+public import Solution.Folder74
+public import Solution.Folder77
+public import Solution.Folder84
+public import Solution.Folder85
+public import Solution.Folder88
+public import Solution.Folder90
+public import Solution.Folder91
+public import Solution.Folder93
+public import Solution.Folder94

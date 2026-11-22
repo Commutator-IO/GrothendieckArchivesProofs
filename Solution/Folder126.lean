@@ -8,7 +8,8 @@ public import Grothendieck.AlgebraicGeometry.Folder126Glue
 # Folder 126, pages 17–23: the proof of the trusted statement
 
 `Challenge.Folder126.radicial_etale_factorisation`, proved by the untrusted
-`Grothendieck/AlgebraicGeometry/Folder126Glue.lean`, with the universal homeomorphism unfolded by Stacks 04DF.
+`Grothendieck/AlgebraicGeometry/Folder126Glue.lean`, with the universal homeomorphism unfolded by
+Stacks 04DF.
 -/
 
 open CategoryTheory AlgebraicGeometry

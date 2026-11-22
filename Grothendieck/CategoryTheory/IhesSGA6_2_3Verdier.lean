@@ -22,8 +22,8 @@ Verdier quotient is any localization functor `L : T ⥤ Q` for `P.trW` (morphism
 in `D`) which is a triangulated functor to a pretriangulated category; mathlib's
 `P.trW.Localization` is one (`exact_localization` below). `K₀ C` is `FreeAbelianGroup C`
 modulo the relations `[Y] − [X] − [Z]` of the distinguished triangles, as defined in
-`Grothendieck/CategoryTheory/IhesSGA6_2_3.lean`, which this file imports; mathlib has no `K₀` of a triangulated
-category.
+`Grothendieck/CategoryTheory/IhesSGA6_2_3.lean`, which this file imports; mathlib has no `K₀` of a
+triangulated category.
 
 **What is proved.**
 * `map_surjective`: `K(T) → K(T/D)` is surjective, every object of `T/D` being isomorphic to some

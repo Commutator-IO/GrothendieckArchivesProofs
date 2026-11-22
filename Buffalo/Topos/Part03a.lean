@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.Topos.Part01
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -98,6 +99,7 @@ theorem opensSheaf_subterminal {X : TopCat.{u}} (U : Opens X) :
 category: there is at most one arrow between two objects. (Every object of `Sh(X)` is covered by
 subterminal objects, the opens; transported to `Ĉ`, the representable `h_d` is covered by
 subterminal presheaves, so every `Hom(c, d)` has at most one element.) -/
+@[buffalo "PqCQM3Pcl6Q-9251"]
 theorem thin_of_presheaf_equiv_sheaf {X : TopCat.{u}} {C : Type w} [Category.{u} C]
     (e : (Cᵒᵖ ⥤ Type u) ≌ Sheaf (Opens.grothendieckTopology X) (Type u)) (c d : C) :
     Subsingleton (c ⟶ d) := by
@@ -161,6 +163,7 @@ theorem forget_end (η : Action.forget (Type u) G ⟶ Action.forget (Type u) G) 
 /-- URU5jgTvjhU-34130 (9:28:50) [cex] If `G ≠ 1`, the topos `B_G` is equivalent to no `Sh(X)`:
 by `thin_of_presheaf_equiv_sheaf`, the one-object category with endomorphisms `G` would be
 ordered. -/
+@[buffalo "URU5jgTvjhU-34130"]
 theorem classifying_not_spatial [Nontrivial G] (X : TopCat.{u}) :
     IsEmpty (Action (Type u) G ≌ Sheaf (Opens.grothendieckTopology X) (Type u)) := by
   refine ⟨fun e => ?_⟩
@@ -174,12 +177,14 @@ theorem classifying_not_spatial [Nontrivial G] (X : TopCat.{u}) :
 
 /-- URU5jgTvjhU-34201 (9:30:01) [ex] The forgetful functor `B_G → Set` is a fibre functor (it
 commutes with finite limits and all colimits)... -/
+@[buffalo "URU5jgTvjhU-34201"]
 theorem forget_isFibreFunctor :
     PreservesFiniteLimits (Action.forget (Type u) G) ∧ PreservesColimits (Action.forget (Type u) G) :=
   ⟨inferInstance, inferInstance⟩
 
 /-- URU5jgTvjhU-37075 (10:17:55) [prop] `Γ(X) = Hom(1, X)` is the set of `G`-invariant elements
 of `X`. -/
+@[buffalo "URU5jgTvjhU-37075"]
 def globalSectionsEquiv (A : Action (Type u) G) :
     (Action.trivial G (PUnit : Type u) ⟶ A) ≃ {x : A.V // ∀ g : G, A.ρ g x = x} where
   toFun f := ⟨f.hom PUnit.unit, fun g => by
@@ -200,6 +205,7 @@ def cohomology_classifying {k : Type u} [CommRing k] (M : Rep k G) (n : ℕ) :
 /-- PqCQM3Pcl6Q-3200 (0:53:20) [def] / PqCQM3Pcl6Q-10701 (2:58:21) [prop] For `f : G → G'`, the
 inverse image of `Bf : BG → BG'` restricts the action along `f`, and commutes with all limits and
 colimits. -/
+@[buffalo "PqCQM3Pcl6Q-3200"]
 theorem res_preserves {H : Type u} [Group H] (f : G →* H) :
     PreservesLimits (Action.res (Type u) f) ∧ PreservesColimits (Action.res (Type u) f) := by
   have : PreservesLimits (Action.res (Type u) f ⋙ Action.forget (Type u) G) :=
@@ -211,6 +217,7 @@ theorem res_preserves {H : Type u} [Group H] (f : G →* H) :
 
 /-- PqCQM3Pcl6Q-12172 (3:22:52) [rem] For `H ≠ G`, the localization object `G/H → 1` of `BG` is
 not a monomorphism. -/
+@[buffalo "PqCQM3Pcl6Q-12172"]
 theorem quotient_not_mono {H : Subgroup G} (hH : H ≠ ⊤)
     (f : Action.ofMulAction G (G ⧸ H) ⟶ Action.ofMulAction G PUnit.{u + 1}) : ¬ Mono f := by
   intro hf
@@ -383,6 +390,7 @@ theorem cofiniteGenericPoint_not_iso (x : CofiniteTopology ℕ) :
 
 /-- URU5jgTvjhU-34393 (9:33:13) [prop] Specialization `y ∈ closure {x}` (`x ⤳ y`) is a preorder,
 an order for `X` sober (T0), and induces `F_y → F_x`, functorial in `F`. -/
+@[buffalo "URU5jgTvjhU-34393"]
 theorem specialization_order [T0Space X] {x y : X} (h₁ : x ⤳ y) (h₂ : y ⤳ x) : x = y :=
   (h₁.antisymm h₂).eq
 
@@ -394,6 +402,7 @@ theorem stalkSpecializes_natural {Y : TopCat.{u}} {F G : Y.Presheaf (Type u)} (f
 
 /-- URU5jgTvjhU-34662 (9:37:42) / PqCQM3Pcl6Q-1445 (0:24:05) There is a morphism of fibre functors
 `ε_y → ε_x` (a morphism of points `x → y`) iff `x ⤳ y`, i.e. `y ∈ closure {x}`, and it is unique. -/
+@[buffalo "URU5jgTvjhU-34662"]
 theorem point_hom_iff (x y : X) :
     Nonempty (Opens.pointGrothendieckTopology x ⟶ Opens.pointGrothendieckTopology y) ↔ x ⤳ y ∧
       Subsingleton (Opens.pointGrothendieckTopology x ⟶ Opens.pointGrothendieckTopology y) :=
@@ -403,6 +412,7 @@ theorem point_hom_iff (x y : X) :
 /-- URU5jgTvjhU-39560 (10:59:20) [prop] For `Y` sober the category of points is `Y` ordered by
 specialization: every point is isomorphic to a unique `ε_y`, and `Hom(ε_x, ε_y)` is a singleton if
 `x ⤳ y`, empty otherwise. -/
+@[buffalo "URU5jgTvjhU-39560"]
 theorem points_category [QuasiSober X] [T0Space X] :
     (∀ Φ : Point.{u} (Opens.grothendieckTopology X),
       ∃! x : X, Nonempty (Φ ≅ Opens.pointGrothendieckTopology x)) ∧
@@ -413,6 +423,7 @@ theorem points_category [QuasiSober X] [T0Space X] :
 
 /-- URU5jgTvjhU-36756 (10:12:36) / PqCQM3Pcl6Q-2947 (0:49:07), case `G = 1`: the stalk functors
 form a conservative family of points of `Sh(X)` (`Sh(X)` has enough points). -/
+@[buffalo "URU5jgTvjhU-36756"]
 theorem stalks_conservative :
     (Opens.pointsGrothendieckTopology X).IsConservativeFamilyOfPoints :=
   Opens.isConservativeFamilyOfPoints_pointsGrothendieckTopology X
@@ -479,6 +490,7 @@ instance pushforward_hom_subsingleton (f g : X ⟶ Y) :
 
 /-- URU5jgTvjhU-39885 (11:04:45) [prop] If `Y` is separated (T1 suffices), the category
 `Homtop(Sh(X), Sh(Y))` is discrete: there is a 2-morphism `f_* → g_*` only if `f = g`. -/
+@[buffalo "URU5jgTvjhU-39885"]
 theorem pushforward_hom_iff_eq [T1Space Y] (f g : X ⟶ Y) :
     Nonempty (TopCat.Sheaf.pushforward (Type u) f ⟶ TopCat.Sheaf.pushforward (Type u) g) ↔
       f = g := by
@@ -489,6 +501,7 @@ theorem pushforward_hom_iff_eq [T1Space Y] (f g : X ⟶ Y) :
 
 /-- PqCQM3Pcl6Q-640 (0:10:40) [prop], uniqueness: for `Y` T0, a continuous map is determined by its
 morphism of topoi (isomorphic direct images force `f = g`). -/
+@[buffalo "PqCQM3Pcl6Q-640"]
 theorem eq_of_pushforward_iso [T0Space Y] (f g : X ⟶ Y)
     (e : TopCat.Sheaf.pushforward (Type u) f ≅ TopCat.Sheaf.pushforward (Type u) g) : f = g :=
   TopCat.ext fun x => (((pushforward_hom_iff f g).1 ⟨e.hom⟩ x).antisymm

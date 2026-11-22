@@ -5,6 +5,7 @@ public import StacksFrontier.RingTheory.Flat.ShortExact
 public import StacksFrontier.RingTheory.Coherent.Flat
 public import StacksFrontier.AlgebraicGeometry.Modules.RestrictStalkDepth
 public import Mathlib.AlgebraicGeometry.Noetherian
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -70,6 +71,7 @@ include A
 a finite `A`-module, `M x` flat `R`-modules and `u x : N → M x` `R`-linear maps such that an
 element of `N` whose images all lie in `𝔪 M x` lies in `𝔪 N`. Then `N` is flat over `R`, and
 `N → ∏ₓ M x` is injective. -/
+@[montpellier "49, 3"]
 theorem flat_of_fibre_injective_pi {ι : Type u} {M : ι → Type u} [∀ x, AddCommGroup (M x)]
     [∀ x, Module R (M x)] (hM : ∀ x, Module.Flat R (M x)) (u : ∀ x, N →ₗ[R] M x)
     (hu : ∀ n : N, (∀ x, u x n ∈ maximalIdeal R • (⊤ : Submodule R (M x))) →
@@ -105,6 +107,7 @@ theorem flat_of_fibre_injective_pi {ι : Type u} {M : ι → Type u} [∀ x, Add
 
 /-- **Folder 49, p. 3, one target.** The same with a single flat `R`-module `M`: if
 `u : N → M` is injective modulo `𝔪`, then `N` is flat over `R` and `u` is injective. -/
+@[montpellier "49, 3"]
 theorem flat_of_fibre_injective {M : Type u} [AddCommGroup M] [Module R M] [Module.Flat R M]
     (u : N →ₗ[R] M)
     (hu : ∀ n : N, u n ∈ maximalIdeal R • (⊤ : Submodule R M) →
@@ -163,6 +166,7 @@ variable {S : Scheme.{u}} (p : Y ⟶ S)
 `y`) through `φ^♯_x ∘ p^♯_y`. If every `F_x` is flat over `R` and an element of `G_y` whose images
 in all the `F_x` lie in `𝔪_R F_x` lies in `𝔪_R G_y`, then `G_y` is flat over `R` and
 `G_y → ∏ₓ F_x` is injective. -/
+@[montpellier "49, 3"]
 theorem flat_of_fibre_injective_scheme [AlgebraicGeometry.IsLocallyNoetherian S]
     [AlgebraicGeometry.IsLocallyNoetherian Y] (y : Y)
     [Module.Finite (Y.presheaf.stalk y) (G.presheaf.stalk y)] :

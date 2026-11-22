@@ -4,6 +4,7 @@ public import Grothendieck.AlgebraicGeometry.Folder126EtaleSplitting
 public import StacksFrontier.AlgebraicGeometry.Morphisms.SigmaMap
 public import StacksFrontier.AlgebraicGeometry.UniversalHomeomorphismLocal.Basic
 public import StacksFrontier.AlgebraicGeometry.Limits.DescendingMorphisms.Finite
+import Grothendieck.Attr
 
 @[expose] public noncomputable section
 
@@ -33,6 +34,7 @@ variable {X Y : Scheme.{u}}
 and universally open with exactly `n` geometric points in every geometric fibre. There is an étale
 surjective `w : W ⟶ Y` with `W` affine such that the base change of `f` along `w` (any pullback
 square) factors as a universal homeomorphism followed by a finite étale morphism. -/
+@[montpellier "126, 17–22"]
 theorem exists_etale_cover_factorisation [CompactSpace Y] (f : X ⟶ Y) [IsFinite f]
     [UniversallyOpen f] {n : ℕ} (hn : HasGeomDegree f n) :
     ∃ (W : Scheme.{u}) (w : W ⟶ Y), Etale w ∧ Surjective w ∧ IsAffine W ∧

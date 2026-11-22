@@ -1,15 +1,16 @@
 module
 
 public import Grothendieck.AlgebraicGeometry.Folder101
+import Grothendieck.Attr
 
 @[expose] public section
 
 /-!
 # Folder 101, page 11: `Ext¹_A(K, A)` as a cokernel, and completeness
 
-Finding `101-sheaf-duality-dim-one`. `Grothendieck/AlgebraicGeometry/Folder101.lean` proves the page's facts in
-the page's own terms: fact b), « every `A`-linear `K → K/A` lifts to `K` » when `A` is complete
-(`lift_K`), and its converse (`isAdicComplete_iff_lift`). The page writes fact b) as
+Finding `101-sheaf-duality-dim-one`. `Grothendieck/AlgebraicGeometry/Folder101.lean` proves the
+page's facts in the page's own terms: fact b), « every `A`-linear `K → K/A` lifts to `K` » when `A`
+is complete (`lift_K`), and its converse (`isAdicComplete_iff_lift`). The page writes fact b) as
 `Ext¹_A(K, A) = 0`; that identification was left out, mathlib's categorical `Ext` not being used.
 This file supplies it, for mathlib's `Ext` in `ModuleCat A` (`CategoryTheory.Abelian.Ext`, the
 morphisms in the derived category):
@@ -70,6 +71,7 @@ lemma ses_shortExact : (ses A K).ShortExact :=
 
 /-- **`Ext¹_A(K, A)` is the cokernel of `Hom_A(K, K) → Hom_A(K, K/A)`**, in the form: it vanishes
 if and only if that map is onto. -/
+@[montpellier "101, 11"]
 theorem ext_one_eq_zero_iff_lift :
     Subsingleton (Ext (ModuleCat.of A K) (ModuleCat.of A A) 1) ↔
       ∀ f : K →ₗ[A] KA A K, ∃ g : K →ₗ[A] K, ∀ x, Submodule.Quotient.mk (g x) = f x := by
@@ -102,6 +104,7 @@ theorem ext_one_eq_zero_iff_lift :
 
 /-- **Completeness is `Ext¹_A(K, A) = 0`.** For a discrete valuation ring `A` with fraction field
 `K`, `A` is complete if and only if `Ext¹_A(K, A) = 0` (mathlib's `Ext` in `ModuleCat A`). -/
+@[montpellier "101, 11"]
 theorem isAdicComplete_iff_ext_one : IsAdicComplete (maximalIdeal A) A ↔
     Subsingleton (Ext (ModuleCat.of A K) (ModuleCat.of A A) 1) :=
   isAdicComplete_iff_lift.trans ext_one_eq_zero_iff_lift.symm

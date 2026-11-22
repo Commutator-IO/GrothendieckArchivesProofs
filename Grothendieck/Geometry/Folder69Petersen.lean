@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.Geometry.Folder69
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -83,6 +84,7 @@ theorem lab_ne (x : ℕ × ℕ) {v : ℕ} (hv : v ≠ 7) : (lab x).getD v (0, 0)
   rcases v with _|_|_|_|_|_|_|_|_|_|_|_|_|_|_|v <;> simp at hv ⊢
 
 /-- The eighteen edges away from the uncertain vertex satisfy the rule as read. -/
+@[montpellier "69, 81"]
 theorem rule_read (x : ℕ × ℕ) : ∀ e ∈ edges, e.1 ≠ 7 → e.2.1 ≠ 7 → ruleAt x e = true := by
   intro e he h1 h2
   unfold ruleAt
@@ -92,6 +94,7 @@ theorem rule_read (x : ℕ × ℕ) : ∀ e ∈ edges, e.1 ≠ 7 → e.2.1 ≠ 7 
 
 /-- **The uncertain vertex is `ξ₂₄`.** Among all `ξ_{ab}`, `1 ≤ a, b ≤ 5`, the rule holds on
 both edges at vertex 7 (to `ξ₃₅`, numbered 1, and to `ξ₁₃`, numbered 5) only for `ξ₂₄`. -/
+@[montpellier "69, 81"]
 theorem forced : ∀ a ∈ [1, 2, 3, 4, 5], ∀ b ∈ [1, 2, 3, 4, 5], a < b →
     ((ruleAt (a, b) (6, 7, 1) && ruleAt (a, b) (7, 8, 5)) = true ↔ (a, b) = (2, 4)) := by
   decide +kernel
@@ -107,6 +110,7 @@ def num (u v : ℕ) : ℕ :=
 /-- With `x = ξ₂₄` all twenty edges satisfy the rule; the boundary decagon carries the same label
 and the same edge number at antipodal positions; and vertices `0 … 9` carry the ten labels
 `ξ_{ij}`, `1 ≤ i < j ≤ 5`, once each. -/
+@[montpellier "69, 81"]
 theorem antipodal : (∀ e ∈ edges, ruleAt (2, 4) e = true) ∧
     (∀ i < 5, lab24.getD (5 + i) (0, 0) = lab24.getD (10 + i) (0, 0)) ∧
     (∀ i < 5, num (5 + i) (6 + i) = num (10 + i) (if i = 4 then 5 else 11 + i) ∧
@@ -124,6 +128,7 @@ def qedges : List (ℕ × ℕ) := edges.map fun e => (prs.idxOf (lab24.getD e.1 
 
 /-- **The quotient is the Petersen graph.** Two labels are joined by a drawn edge iff their index
 pairs are disjoint, and the twenty drawn edges give fifteen edges. -/
+@[montpellier "69, 81"]
 theorem quotient_adj : (∀ i < 10, ∀ j < 10,
       (qedges.contains (i, j) || qedges.contains (j, i)) = disj (prs.getD i (0, 0)) (prs.getD j (0, 0))) ∧
     ((qedges.map fun e => (min e.1 e.2, max e.1 e.2)).dedup.length = 15) := by
@@ -148,6 +153,7 @@ theorem cLine_injective : Function.Injective cLine := by decide
 
 /-- **The ten lines `ξ_{ij}` of the figure induce the Petersen graph in the graph of the 27
 lines.** -/
+@[montpellier "69, 81"]
 theorem petersen_lines : ∀ i j : Fin 10, C.Adj (cLine i) (cLine j) ↔ petersen.Adj i j := by
   decide +kernel
 
@@ -169,6 +175,7 @@ def side (f : List ℕ) (u v : ℕ) : Bool :=
 /-- **A hemi-dodecahedron.** The six drawn pentagons become 5-cycles of the Petersen graph
 (five distinct vertices, consecutive ones joined); each of the 15 edges is a side of exactly two
 of them and each vertex lies on three; `V − E + F = 10 − 15 + 6 = 1`. -/
+@[montpellier "69, 81"]
 theorem hemi : qfaces.length = 6 ∧
     (∀ f ∈ qfaces, f.length = 5 ∧ f.Nodup ∧ ∀ k < 5,
       disj (prs.getD (f.getD k 0) (0, 0)) (prs.getD (f.getD ((k + 1) % 5) 0) (0, 0)) = true) ∧
@@ -201,6 +208,7 @@ def isPent (m : ℕ) : Bool :=
 /-- The pentagons of the Petersen graph. -/
 def pents : List ℕ := (List.range 1024).filter isPent
 
+@[montpellier "69, 81"]
 theorem pentagons_card : pents.length = 12 := by decide +kernel
 
 /-- The edges of the Petersen graph. -/
@@ -214,12 +222,14 @@ def isHemi (s : ℕ) : Bool :=
       (pents.getD k 0).testBit e.1 && (pents.getD k 0).testBit e.2).length == 2
 
 /-- **Exactly two** systems of six pentagons cover every edge twice. -/
+@[montpellier "69, 81"]
 theorem hemi_systems_card : ((List.range 4096).filter isHemi).length = 2 := by decide +kernel
 
 /-- The mask of a list of vertices. -/
 def mask (f : List ℕ) : ℕ := (f.map fun i => 2 ^ i).sum
 
 /-- The drawn face system is one of the two. -/
+@[montpellier "69, 81"]
 theorem drawn_is_system : ∃ s ∈ (List.range 4096).filter isHemi,
     ((List.range 12).filter s.testBit).map (pents.getD · 0) =
       (pents.filter fun m => (qfaces.map mask).contains m) ∧

@@ -1,14 +1,15 @@
 module
 
 public import StacksFrontier.AlgebraicGeometry.Crystalline.Differentials.DividedPowerPolynomialAlgebra
+import Grothendieck.Attr
 
 @[expose] public section
 
 /-!
 # Folder 136, pages 5 to 7: the differential of a divided power, in Stacks' divided power de Rham complex
 
-`Grothendieck/RingTheory/Folder136.lean` works in a coordinate model: a form on the `m`-simplex is the
-function `f a β I` of its coefficients on `T^{(a)} Y^{(β)} dY_I`, and its differential `pdD`
+`Grothendieck/RingTheory/Folder136.lean` works in a coordinate model: a form on the `m`-simplex is
+the function `f a β I` of its coefficients on `T^{(a)} Y^{(β)} dY_I`, and its differential `pdD`
 is defined by the rule of pages 5 to 7, `d(Y^{(n+1)}) = Y^{(n)} dY`. The identification of this
 model with an intrinsic divided power de Rham complex was left out there.
 
@@ -46,6 +47,7 @@ variable {A : Type uA} [CommRing A] (B : DividedPowerRing.{uB}) [Algebra A B] (W
 
 /-- `d(Y_w^{[n+1]}) = Y_w^{[n]} · dY_w` for the universal divided power differential of the
 divided power polynomial algebra `B⟨Y_w : w ∈ W⟩` (page 5). -/
+@[montpellier "136, 5"]
 theorem dividedPowerDifferential_variableMonomial (w : W) (n : ℕ) :
     dividedPowerDifferential (A := A) (setIndexedDividedPowerPolynomialDividedPowers B W)
         (dividedPowerPolynomialVariableMonomial (B : Type uB) w (n + 1)) =
@@ -60,6 +62,7 @@ theorem dividedPowerDifferential_variableMonomial (w : W) (n : ℕ) :
 /-- In the coordinates `Ω¹_{P/A,δ} ≅ (P ⊗_B Ω¹_{B/A,δ}) ⊕ ⨁_w P · dY_w` of Stacks tag 07HS,
 `d(Y_w^{[n+1]})` is `Y_w^{[n]}` times the basis vector `dY_w`, as in the coordinate model of
 `Folder136.lean`. -/
+@[montpellier "136, 5–7"]
 theorem dividedPowerDifferentialsEquiv_variableMonomial (w : W) (n : ℕ) :
     (dividedPowerDifferentialsDividedPowerPolynomialEquiv (A := A) B W).1
         (dividedPowerDifferential (A := A) (setIndexedDividedPowerPolynomialDividedPowers B W)

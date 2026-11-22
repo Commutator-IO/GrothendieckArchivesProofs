@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -35,6 +36,7 @@ namespace Grothendieck.Folder5
 open Nat
 
 /-- `qᵢ = (p^{i+1})! / ((p^i)!)^p`. -/
+@[montpellier "5, 4"]
 def q (p i : ℕ) : ℕ := (p ^ (i + 1))! / ((p ^ i)!) ^ p
 
 lemma multinomial_spec_pow (p i : ℕ) :
@@ -44,11 +46,13 @@ lemma multinomial_spec_pow (p i : ℕ) :
   rwa [← pow_succ'] at h
 
 /-- `qᵢ` is the multinomial coefficient of `p` blocks of size `p^i`. -/
+@[montpellier "5, 4"]
 theorem q_eq_multinomial (p i : ℕ) :
     q p i = Nat.multinomial (Finset.range p) (fun _ => p ^ i) := by
   rw [q, ← multinomial_spec_pow, Nat.mul_div_cancel_left _ (pow_pos (factorial_pos _) _)]
 
 /-- `((p^i)!)^p · qᵢ = (p^{i+1})!`: `qᵢ` is an integer. -/
+@[montpellier "5, 4"]
 theorem factorial_eq_mul_q (p i : ℕ) : (p ^ (i + 1))! = ((p ^ i)!) ^ p * q p i := by
   rw [q_eq_multinomial, multinomial_spec_pow]
 
@@ -67,6 +71,7 @@ theorem sub_one_mul_padicValNat_factorial_pow (p : ℕ) [hp : Fact p.Prime] (i :
     omega
 
 /-- **`v_p(qᵢ) = 1`.** -/
+@[montpellier "5, 4"]
 theorem padicValNat_q (p : ℕ) [hp : Fact p.Prime] (i : ℕ) : padicValNat p (q p i) = 1 := by
   have hA := sub_one_mul_padicValNat_factorial_pow p i
   have hB : padicValNat p (p ^ (i + 1))! = padicValNat p (p ^ i)! + p ^ i := by
@@ -94,6 +99,7 @@ theorem dpow_pow {A : Type*} [CommRing A] {I : Ideal A} (hI : DividedPowers I) {
   simpa [Finset.prod_const, Finset.sum_const] using this
 
 /-- **The relation of page 4**: `γ_{p^i}(x)^p = qᵢ γ_{p^{i+1}}(x)`. -/
+@[montpellier "5, 4"]
 theorem dpow_pow_eq_q {A : Type*} [CommRing A] {I : Ideal A} (hI : DividedPowers I) {x : A}
     (hx : x ∈ I) (p i : ℕ) : hI.dpow (p ^ i) x ^ p = (q p i : A) * hI.dpow (p ^ (i + 1)) x := by
   rw [dpow_pow hI hx, q_eq_multinomial, ← pow_succ']
@@ -626,9 +632,11 @@ theorem isSubDPIdeal_Kp : (dpIbar W p ν hW).IsSubDPIdeal (Kp W p ν ⊓ Ibar W 
     exact Ideal.mul_mem_left _ _ (Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _))
 
 /-- **`W^{(ν)} = A^{(ν)}/(Λ₀ − p) = W[Λ₀, …, Λ_ν]/(Λᵢ^p − qᵢΛᵢ₊₁, Λ_ν^p, Λ₀ − p)`.** -/
+@[montpellier "5, 4"]
 abbrev Wν := Aν W p ν ⧸ Kp W p ν
 
 /-- **The divided powers on `J = (Λ₀, …, Λ_ν) ⊂ W^{(ν)}`**, induced by those of `A^{(ν)}`. -/
+@[montpellier "5, 4"]
 noncomputable def dpWν : DividedPowers ((Ibar W p ν).map (Ideal.Quotient.mk (Kp W p ν))) :=
   DividedPowers.Quotient.dividedPowers (dpIbar W p ν hW) (isSubDPIdeal_Kp W p ν hW)
 
@@ -664,6 +672,7 @@ theorem Kp_eq_map : Kp W p ν = (Ideal.span {X 0 - (p : MvPolynomial (Fin (ν + 
 
 omit [IsDomain W] [CharZero W] [Fact p.Prime] in
 /-- **The presentation of page 4**: `W^{(ν)} ≃ W[Λ₀, …, Λ_ν]/(Λᵢ^p − qᵢΛᵢ₊₁, Λ_ν^p, Λ₀ − p)`. -/
+@[montpellier "5, 4"]
 noncomputable def presentation : Wν W p ν ≃ₐ[W] MvPolynomial (Fin (ν + 1)) W ⧸
     (rel W p ν ⊔ Ideal.span {X 0 - (p : MvPolynomial (Fin (ν + 1)) W)}) :=
   (Ideal.quotientEquivAlgOfEq W (Kp_eq_map W p ν)).trans
@@ -765,6 +774,7 @@ include hW in
 is initial among `W`-algebras `T` with a divided-power ideal `(I, γ)` such that `p ∈ I` and
 `γ_n(p) = 0` for `n ≥ p^{ν+1}`: there is exactly one `W`-algebra map `W^{(ν)} → T` compatible
 with the divided powers. -/
+@[montpellier "5, 4"]
 theorem universal {T : Type*} [CommRing T] [Algebra W T] {I : Ideal T} (hI : DividedPowers I)
     (hpI : (p : T) ∈ I) (hnil : ∀ n, p ^ (ν + 1) ≤ n → hI.dpow n (p : T) = 0) :
     ∃! f : Wν W p ν →ₐ[W] T,
@@ -813,6 +823,7 @@ theorem q_eq_p_mul (i : ℕ) : ∃ r : ℕ, ¬ p ∣ r ∧ q p i = p * r := by
 
 include hW hlam0 hlam in
 /-- **`p^i Θᵢ = 0` in `W^{(ν)}`** (page 6, by induction on `i`): `p^i Θᵢ ∈ (Λ₀ − p)`. -/
+@[montpellier "5, 6"]
 theorem p_pow_mul_Θ_mem (i : Fin (ν + 1)) :
     (p : Aν W p ν) ^ (i : ℕ) * Θ W p ν lam i ∈ Kp W p ν := by
   induction i using Fin.induction with
@@ -842,6 +853,7 @@ theorem p_pow_mul_Θ_mem (i : Fin (ν + 1)) :
 
 include hW hlam0 hlam in
 /-- **`p^ν λ_ν^p = 0` in `W^{(ν)}`** (page 6): `p^ν λ_ν^p ∈ (Λ₀ − p)`. -/
+@[montpellier "5, 6"]
 theorem p_pow_mul_lam_pow_mem :
     (p : Aν W p ν) ^ ν * algebraMap W (Aν W p ν) (lam ν) ^ p ∈ Kp W p ν := by
   obtain ⟨S, hS⟩ := sub_dvd_pow_sub_pow (Lam W p ν (Fin.last ν))
@@ -857,6 +869,7 @@ theorem p_pow_mul_lam_pow_mem :
 include hW hlam0 hlam in
 /-- If `λ_ν = p^m u`, `u` a unit, then `p^{ν + pm} = 0` in `W^{(ν)}`; for the usual
 `λ_ν = p^{p^ν}/(p^ν)!`, `m = p^ν − (p^ν − 1)/(p − 1)` and `ν + pm = c(ν)`. -/
+@[montpellier "5, 5"]
 theorem p_pow_mem_Kp {m : ℕ} {u : W} (hu : IsUnit u) (hm : lam ν = p ^ m * u) :
     (p : Aν W p ν) ^ (ν + p * m) ∈ Kp W p ν := by
   have h := p_pow_mul_lam_pow_mem W p ν hW lam hlam0 hlam
@@ -1299,6 +1312,7 @@ include hlam hm in
 /-- **The lemma of page 5** (both halves). For `w : box → W`, `Σ_a w_a Θ^a ∈ (Λ₀ − p)` iff
 `p^{ord a} ∣ w_a` for every `a`: `p^i ∣ w_a` when `aᵢ` is the first nonzero exponent, and
 `p^{c(ν)} ∣ w_0`, `c(ν) = ν + p m`, `λ_ν = p^m · unit`. -/
+@[montpellier "5, 5"]
 theorem normalForm [IsDomain W] [CharZero W] (hW : ∀ n : ℕ, ¬ p ∣ n → IsUnit (n : W))
     (hlam0 : lam 0 = p) (hu : IsUnit u) (w : (Fin (ν + 1) → Fin p) → W) :
     ∑ a, w a • tmono W p ν lam a ∈ Kp W p ν ↔
@@ -1323,6 +1337,7 @@ theorem normalForm [IsDomain W] [CharZero W] (hW : ∀ n : ℕ, ¬ p ∣ n → I
 include hlam hm in
 /-- **The exact order of `1`**: `p^k = 0` in `W^{(ν)}` iff `k ≥ c(ν) = ν + p m`, when `p` is not
 a unit of `W`. -/
+@[montpellier "5, 5"]
 theorem p_pow_eq_zero_iff [IsDomain W] [CharZero W] (hW : ∀ n : ℕ, ¬ p ∣ n → IsUnit (n : W))
     (hlam0 : lam 0 = p) (hu : IsUnit u) (hpu : ¬ IsUnit (p : W)) (k : ℕ) :
     (p : Wν W p ν) ^ k = 0 ↔ ν + p * m ≤ k := by
@@ -1373,6 +1388,7 @@ include hlam hm in
 `W^{(ν)} ≃ ⊕_a W/p^{ord a}`, `a` over the box `0 ≤ aᵢ < p`: every element is uniquely
 `Σ_a w_a Θ^a` with `w_a` taken mod `p^i` when `aᵢ` is the first nonzero exponent and `w_0` mod
 `p^{c(ν)}` (and `w_a = 0` when `a₀ ≠ 0`). -/
+@[montpellier "5, 6"]
 noncomputable def WνEquiv [IsDomain W] [CharZero W] (hW : ∀ n : ℕ, ¬ p ∣ n → IsUnit (n : W))
     (hlam0 : lam 0 = p) (hu : IsUnit u) :
     Wν W p ν ≃ₗ[W] ((a : Fin (ν + 1) → Fin p) → W ⧸ Ideal.span {(p : W) ^ ord p ν (ν + p * m) a}) :=
@@ -1384,6 +1400,7 @@ noncomputable def WνEquiv [IsDomain W] [CharZero W] (hW : ∀ n : ℕ, ¬ p ∣
 include hlam hm in
 /-- **The length of `W^{(ν)}`** over a discrete valuation ring `W` with uniformiser `p`
 (`W(k)`, `ℤ_p`): `Σ_a ord a`. -/
+@[montpellier "5, 5"]
 theorem length_Wν [IsDomain W] [IsDiscreteValuationRing W] [CharZero W]
     (hW : ∀ n : ℕ, ¬ p ∣ n → IsUnit (n : W)) (hlam0 : lam 0 = p) (hu : IsUnit u)
     (hmax : IsLocalRing.maximalIdeal W = Ideal.span {(p : W)}) :
@@ -1469,6 +1486,7 @@ end Count
 include hlam hm in
 /-- **The length of `W^{(ν)}`**: `p + p² + ⋯ + p^ν + p m`, i.e. `c(ν) + Σ_{i=1}^{ν} i(p−1)p^{ν−i}`
 with `c(ν) = ν + p m`, `m = v_p(λ_ν)`. -/
+@[montpellier "5, 5"]
 theorem length_Wν_eq [IsDomain W] [IsDiscreteValuationRing W] [CharZero W]
     (hW : ∀ n : ℕ, ¬ p ∣ n → IsUnit (n : W)) (hlam0 : lam 0 = p) (hu : IsUnit u)
     (hmax : IsLocalRing.maximalIdeal W = Ideal.span {(p : W)}) :
@@ -1533,6 +1551,7 @@ theorem exists_lamStd : ∃ lam : ℕ → W, lam 0 = p ∧ (∀ i, lam i ^ p = q
 include hW in
 /-- **The exact order of `1` in `W^{(ν)}` is `p^{c(ν)}`**, `c(ν) = ν + p(p^ν − v_p((p^ν)!))`
 (page 5), when `p` is not a unit of `W` (`W(k)`, `ℤ_p`). -/
+@[montpellier "5, 5"]
 theorem p_pow_eq_zero_iff_std (hpu : ¬ IsUnit (p : W)) (k : ℕ) :
     (p : Wν W p ν) ^ k = 0 ↔ ν + p * (p ^ ν - padicValNat p (p ^ ν)!) ≤ k := by
   obtain ⟨lam, h0, hrec, hlam⟩ := exists_lamStd W p hW
@@ -1542,6 +1561,7 @@ theorem p_pow_eq_zero_iff_std (hpu : ¬ IsUnit (p : W)) (k : ℕ) :
 include hW in
 /-- **The length of `W^{(ν)}`** over a discrete valuation ring with uniformiser `p`:
 `p + p² + ⋯ + p^ν + p(p^ν − v_p((p^ν)!))`. -/
+@[montpellier "5, 5"]
 theorem length_Wν_std [IsDiscreteValuationRing W]
     (hmax : IsLocalRing.maximalIdeal W = Ideal.span {(p : W)}) :
     Module.length W (Wν W p ν) = ((∑ j ∈ Finset.range ν, p ^ (j + 1) +
@@ -1554,6 +1574,7 @@ end Standard
 
 /-- **For `W = ℤ_p`**: in `ℤ_p^{(ν)}`, `p^k = 0` iff `k ≥ c(ν) = ν + p(p^ν − v_p((p^ν)!))`, and
 `ℤ_p^{(ν)}` has length `p + ⋯ + p^ν + p(p^ν − v_p((p^ν)!))`. -/
+@[montpellier "5, 5"]
 theorem padicInt_Wν (p ν : ℕ) [Fact p.Prime] :
     (∀ k, (p : Wν ℤ_[p] p ν) ^ k = 0 ↔ ν + p * (p ^ ν - padicValNat p (p ^ ν)!) ≤ k) ∧
       Module.length ℤ_[p] (Wν ℤ_[p] p ν) = ((∑ j ∈ Finset.range ν, p ^ (j + 1) +

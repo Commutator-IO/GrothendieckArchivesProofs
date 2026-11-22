@@ -2,6 +2,7 @@ module
 
 public import Grothendieck.AlgebraicGeometry.Folder53
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GaloisFixedComponentDescent
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -111,6 +112,7 @@ local notation "gS" => Spec.map (CommRingCat.ofHom (algebraMap k ksep))
 omit [IsSepClosure k ksep] in
 /-- For `g : Z → X` over `k` with `Z` geometrically irreducible, the inverse image of `g(Z)`
 in `X_{k^sep}` is irreducible: it is the image of `Z ×_X X_{k^sep} ≅ Z_{k^sep}`. -/
+@[montpellier "53, 9"]
 theorem isIrreducible_preimage_range [GeometricallyIrreducible (g ≫ f)] :
     IsIrreducible
       ((pullback.fst f (Spec.map (CommRingCat.ofHom (algebraMap k ksep)))) ⁻¹' Set.range g) := by
@@ -126,6 +128,7 @@ theorem isIrreducible_preimage_range [GeometricallyIrreducible (g ≫ f)] :
 `g : Z → X` a morphism over `k` with `Z` geometrically irreducible. If some point `s` of
 `X_{k^sep}` over a point of `g(Z)` lies on a single irreducible component of `X_{k^sep}`, then
 `X` is geometrically irreducible. -/
+@[montpellier "53, 9"]
 theorem geometricallyIrreducible_of_point [IrreducibleSpace X] [GeometricallyIrreducible (g ≫ f)]
     (s : ↥(pullback f (Spec.map (CommRingCat.ofHom (algebraMap k ksep)))))
     (hs : pullback.fst f (Spec.map (CommRingCat.ofHom (algebraMap k ksep))) s ∈ Set.range g)
@@ -184,6 +187,7 @@ extension of `k^sep` (an algebraic closure `k̄` on the page). If there is `z �
 point of `X_L` over `g(z)` lies on a single irreducible component of `X_L` (hypothesis b):
 `g(Z)` is not contained in the locus of points over which two components of `X_L` meet), then
 `X` is geometrically irreducible. -/
+@[montpellier "53, 9"]
 theorem geometricallyIrreducible_of_point_extension (L : Type u) [Field L] [Algebra k L]
     [Algebra ksep L] [IsScalarTower k ksep L] [IrreducibleSpace X]
     [GeometricallyIrreducible (g ≫ f)] (z : Z)

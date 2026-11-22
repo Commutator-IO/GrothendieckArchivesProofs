@@ -3,6 +3,7 @@ module
 public import Mordell.AbelianVariety.Ample.Sum
 public import Mordell.AlgebraicGeometry.VeryAmple.Twist
 public import StacksFrontier.AlgebraicGeometry.AmpleBridge.Basic
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -43,6 +44,7 @@ namespace Buffalo.AG.Part07
 
 /-- **Buffalo 26840, tensor clause** (Stacks 0890). On a scheme, the tensor product of two ample
 invertible sheaves is ample. -/
+@[buffalo "Oqhr-Gt66es-26840"]
 theorem prop_26840_tensor (X : Scheme.{u}) (L M : X.Modules)
     [Stacks.Ample.IsInvertibleModule X L] [Stacks.Ample.IsInvertibleModule X M]
     (hL : Scheme.Modules.IsAmple X L) (hM : Scheme.Modules.IsAmple X M) :
@@ -51,6 +53,7 @@ theorem prop_26840_tensor (X : Scheme.{u}) (L M : X.Modules)
     let ⟨n, hn, s, hs, _⟩ := hM.2 x; ⟨n, hn, s, hs⟩
 
 /-- **Buffalo 26840, tensor clause**, for the predicate `Stacks.Ample.IsAmple` of Stacks 01PS. -/
+@[buffalo "Oqhr-Gt66es-26840"]
 theorem prop_26840_tensor_stacks (X : Scheme.{u}) (L M : X.Modules)
     [Stacks.Ample.IsInvertibleModule X L] [Stacks.Ample.IsInvertibleModule X M]
     (hL : Stacks.Ample.IsAmple X L) (hM : Stacks.Ample.IsAmple X M) :
@@ -62,6 +65,7 @@ theorem prop_26840_tensor_stacks (X : Scheme.{u}) (L M : X.Modules)
 /-- **Buffalo 27219, very ample case over a field.** On a projective variety `X` over `k`, if `L`
 is very ample and `M` is any invertible sheaf, then `M ⊗ L^{⊗ a}` is very ample for all
 sufficiently large integers `a`. -/
+@[buffalo "Oqhr-Gt66es-27219"]
 theorem prop_27219_veryAmple {k : Type u} [Field k] {X : Scheme.{u}} (f : X ⟶ Spec (.of k))
     [IsProjectiveVariety k f] (L : X.Modules) [Stacks.Ample.IsInvertibleModule X L]
     (hL : Faltings.IsVeryAmple f L) (M : X.Modules) [Stacks.Ample.IsInvertibleModule X M] :

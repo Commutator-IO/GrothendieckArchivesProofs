@@ -2,14 +2,15 @@ module
 
 public import Grothendieck.RingTheory.Folder94
 public import StacksFrontier.RingTheory.Flat.GenericFlatness
+import Grothendieck.Attr
 
 @[expose] public section
 
 /-!
 # Folder 94, page 19 (Lemme 16): the dense open for `X` of finite type over `S`
 
-`Grothendieck/RingTheory/Folder94.lean` builds, for `S = Spec A` noetherian and `R` a finite `A`-module,
-the dense open `U ⊆ S` of Lemme 6 on which every `A_𝔭`-regular sequence is `R_𝔭`-regular
+`Grothendieck/RingTheory/Folder94.lean` builds, for `S = Spec A` noetherian and `R` a finite
+`A`-module, the dense open `U ⊆ S` of Lemme 6 on which every `A_𝔭`-regular sequence is `R_𝔭`-regular
 (`exists_isOpen_dense_isWeaklyRegular'`), and leaves out the case of Lemme 16, where `R` is a
 coherent module on an `X = Spec B` of finite type over `S`: there the layers `grᵏ_J(R)` are no
 longer finite over `A₀ = A/J`, and one needs generic flatness.
@@ -190,6 +191,7 @@ variable [IsNoetherianRing A]
 nilpotent ideal with `A/J` reduced (e.g. the nilradical), `B` an `A`-algebra of finite type and
 `R` a finite `B`-module. There is a dense open `U ⊆ Spec A` such that at every `𝔭 ∈ U` every
 sequence of `A` weakly regular on `A_𝔭` is weakly regular on `R_𝔭`. -/
+@[montpellier "94, 19"]
 theorem exists_isOpen_dense_isWeaklyRegular_of_finiteType {n : ℕ} (hn : J ^ n = ⊥)
     [IsReduced (A ⧸ J)] [Algebra.FiniteType A B] [Module.Finite B R] :
     ∃ U : Set (PrimeSpectrum A), IsOpen U ∧ Dense U ∧ ∀ 𝔭 ∈ U, ∀ rs : List A,
@@ -228,6 +230,7 @@ theorem exists_isOpen_dense_isWeaklyRegular_of_finiteType {n : ℕ} (hn : J ^ n 
 
 /-- **Lemme 16, as stated.** The same dense open `U`, for every `A_𝔭`-weakly regular sequence of
 `A_𝔭` (each term is a unit times the image of an element of `A`). -/
+@[montpellier "94, 19"]
 theorem exists_isOpen_dense_isWeaklyRegular_of_finiteType' {n : ℕ} (hn : J ^ n = ⊥)
     [IsReduced (A ⧸ J)] [Algebra.FiniteType A B] [Module.Finite B R] :
     ∃ U : Set (PrimeSpectrum A), IsOpen U ∧ Dense U ∧

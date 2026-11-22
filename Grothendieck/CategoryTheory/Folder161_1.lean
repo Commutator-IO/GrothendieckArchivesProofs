@@ -9,6 +9,7 @@ public import Mathlib.CategoryTheory.Adjunction.PartialAdjoint
 public import Grothendieck.Upstream.AdjunctionIdempotent
 public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
 public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -105,6 +106,7 @@ theorem map_bijective_iff (X Y : E) :
 /-- **(1).** For a full subcategory `E'` of `E` (given by the property `P`):
 `u` is fully faithful on `E'` and `vu` sends `E'` into its isomorphism closure
 if and only if `η_Y` is an isomorphism for every `Y ∈ E'`. -/
+@[montpellier "161-1, 3–7"]
 theorem condition1 (P : ObjectProperty E) :
     ((∀ X Y, P X → P Y → Function.Bijective (u.map : (X ⟶ Y) → (u.obj X ⟶ u.obj Y))) ∧
         ∀ Y, P Y → P.isoClosure (v.obj (u.obj Y))) ↔
@@ -145,6 +147,7 @@ def adjPoint : toPoint ⊣ fromPoint where
 /-- **The margin's example**, with `E'` reduced to one object, `∅`. `u` is fully
 faithful on `{∅}`, but `vu(∅)` is not isomorphic to `∅`, and `η_∅` is not an
 isomorphism: the second condition of (1) is not superfluous. -/
+@[montpellier "161-1, 3–7"]
 theorem condition1_non_surabondante :
     Function.Bijective (toPoint.map : (Empty ⟶ Empty) → (toPoint.obj Empty ⟶ toPoint.obj Empty)) ∧
       ¬ (ObjectProperty.isoClosure (· = Empty)) (fromPoint.obj (toPoint.obj Empty)) ∧
@@ -182,6 +185,7 @@ theorem uv_counit_eq (h : ∀ X, IsIso (adj.counit.app (u.obj X))) (P : F) :
 
 /-- **Idempotent adjunctions.** The four conditions `ηv`, `vε`, `εu`, `uη`
 invertible are equivalent. -/
+@[montpellier "161-1, 5"]
 theorem idempotent_tfae :
     List.TFAE [∀ P, IsIso (adj.unit.app (v.obj P)), ∀ P, IsIso (v.map (adj.counit.app P)),
       ∀ X, IsIso (adj.counit.app (u.obj X)), ∀ X, IsIso (u.map (adj.unit.app X))] :=
@@ -189,6 +193,7 @@ theorem idempotent_tfae :
 
 /-- The manuscript's condition 2, `ηv` and `εu` both invertible, is equivalent to
 its first half alone: the pair is redundant. -/
+@[montpellier "161-1, 5"]
 theorem condition2_iff :
     ((∀ P, IsIso (adj.unit.app (v.obj P))) ∧ ∀ X, IsIso (adj.counit.app (u.obj X))) ↔
       ∀ P, IsIso (adj.unit.app (v.obj P)) :=
@@ -212,6 +217,7 @@ theorem map_bijective_iff_counit (P Q : F) :
 /-- **(2).** For a full subcategory `F'` of `F` (given by the property `P`):
 `v` is fully faithful on `F'` and `uv` sends `F'` into its isomorphism closure
 if and only if `ε_P` is an isomorphism for every `P ∈ F'`. -/
+@[montpellier "161-1, 3–7"]
 theorem condition2 (P : ObjectProperty F) :
     ((∀ X Y, P X → P Y → Function.Bijective (v.map : (X ⟶ Y) → (v.obj X ⟶ v.obj Y))) ∧
         ∀ Y, P Y → P.isoClosure (u.obj (v.obj Y))) ↔
@@ -285,6 +291,7 @@ instance : (F0 adj).IsClosedUnderIsomorphisms where
     infer_instance
 
 /-- **Page 4.** `F₀ = \overline{u(E₀)}`. -/
+@[montpellier "161-1, 4"]
 theorem F0_iff (P : F) : F0 adj P ↔ ∃ Y, E0 adj Y ∧ Nonempty (u.obj Y ≅ P) := by
   refine ⟨fun h => ⟨v.obj P, v_mem_E0 adj h, ⟨(have : IsIso (adj.counit.app P) := h;
     asIso (adj.counit.app P))⟩⟩, ?_⟩
@@ -292,6 +299,7 @@ theorem F0_iff (P : F) : F0 adj P ↔ ∃ Y, E0 adj Y ∧ Nonempty (u.obj Y ≅ 
   exact (F0 adj).prop_of_iso e (u_mem_F0 adj hY)
 
 /-- **Page 4.** `E₀ = \overline{v(F₀)}`. -/
+@[montpellier "161-1, 4"]
 theorem E0_iff (Y : E) : E0 adj Y ↔ ∃ P, F0 adj P ∧ Nonempty (v.obj P ≅ Y) := by
   refine ⟨fun h => ⟨u.obj Y, u_mem_F0 adj h, ⟨(have : IsIso (adj.unit.app Y) := h;
     (asIso (adj.unit.app Y)).symm)⟩⟩, ?_⟩
@@ -322,6 +330,7 @@ def v0 : (F0 adj).FullSubcategory ⥤ (E0 adj).FullSubcategory :=
 
 /-- **Page 4.** `u` and `v` induce quasi-inverse equivalences `E₀ ≃ F₀`, with
 the unit and counit of the adjunction as the two isomorphisms. -/
+@[montpellier "161-1, 4"]
 noncomputable def fixedEquiv : (E0 adj).FullSubcategory ≌ (F0 adj).FullSubcategory :=
   CategoryTheory.Equivalence.mk (u0 adj) (v0 adj)
     (NatIso.ofComponents (fun Y => (E0 adj).isoMk (unitIso0 adj Y))
@@ -400,6 +409,7 @@ theorem corresp_of (hs : Stable (u := u) (v := v) E' F') (hη : ∀ Y, E' Y → 
 4. — and `v'` is an equivalence;
 are equivalent. The page's fifth condition, « —— et `u'` et `v'` pl. fid. »,
 repeats the second word for word. -/
+@[montpellier "161-1, 3"]
 theorem five_conditions_tfae :
     List.TFAE [Corresp adj E' F',
       Stable (u := u) (v := v) E' F' ∧ UFF (u := u) E' ∧ VFF (v := v) F',
@@ -429,6 +439,7 @@ theorem five_conditions_tfae :
 
 /-- **Page 3, c), the bijection.** For `E'` strictly full satisfying (1), the
 subcategory `α(E') = \overline{u(E')}` satisfies (2), and `β(α(E')) = E'`. -/
+@[montpellier "161-1, 3"]
 theorem beta_alpha (h : ∀ Y, E' Y → IsIso (adj.unit.app Y)) :
     (∀ P, (∃ Y, E' Y ∧ Nonempty (u.obj Y ≅ P)) → IsIso (adj.counit.app P)) ∧
       ∀ Y, E' Y ↔ ∃ P, (∃ Y', E' Y' ∧ Nonempty (u.obj Y' ≅ P)) ∧ Nonempty (v.obj P ≅ Y) := by
@@ -442,6 +453,7 @@ theorem beta_alpha (h : ∀ Y, E' Y → IsIso (adj.unit.app Y)) :
 
 /-- Dually, for `F'` strictly full satisfying (2), `β(F') = \overline{v(F')}`
 satisfies (1), and `α(β(F')) = F'`. -/
+@[montpellier "161-1, 3"]
 theorem alpha_beta (h : ∀ P, F' P → IsIso (adj.counit.app P)) :
     (∀ Y, (∃ P, F' P ∧ Nonempty (v.obj P ≅ Y)) → IsIso (adj.unit.app Y)) ∧
       ∀ P, F' P ↔ ∃ Y, (∃ P', F' P' ∧ Nonempty (v.obj P' ≅ Y)) ∧ Nonempty (u.obj Y ≅ P) := by
@@ -461,6 +473,7 @@ section Reflective
 
 /-- **Page 5, condition 1).** `Im v ⊂ E₀` and `Im u ⊂ F₀` is idempotency: it is
 equivalent to either half alone (`idempotent_tfae`). -/
+@[montpellier "161-1, 5"]
 theorem condition1_p5_iff :
     ((∀ P, E0 adj (v.obj P)) ∧ ∀ X, F0 adj (u.obj X)) ↔ ∀ P, IsIso (adj.unit.app (v.obj P)) :=
   condition2_iff adj
@@ -471,6 +484,7 @@ def reflector0 (hu : ∀ X, F0 adj (u.obj X)) : E ⥤ (E0 adj).FullSubcategory :
 
 /-- **Page 5.** If `Im u ⊂ F₀`, the inclusion `E₀ ⊂ E` has the left adjoint
 `v₀ ∘ u'`: `E₀` is reflective in `E`. -/
+@[montpellier "161-1, 5"]
 noncomputable def reflectorAdj (hu : ∀ X, F0 adj (u.obj X)) :
     reflector0 adj hu ⊣ (E0 adj).ι where
   unit := { app := adj.unit.app, naturality := fun _ _ f => adj.unit.naturality f }
@@ -491,16 +505,19 @@ noncomputable def reflectorAdj (hu : ∀ X, F0 adj (u.obj X)) :
 
 /-- **The preservation of colimits.** The reflector `E ⥤ E₀` preserves all
 colimits. -/
+@[montpellier "161-1, 4–5"]
 theorem reflector0_preservesColimits (hu : ∀ X, F0 adj (u.obj X)) :
     Limits.PreservesColimitsOfSize (reflector0 adj hu) :=
   (reflectorAdj adj hu).leftAdjoint_preservesColimits
 
 /-- The inclusion `E₀ ⊂ E` preserves all limits. -/
+@[montpellier "161-1, 4–5"]
 theorem E0_ι_preservesLimits (hu : ∀ X, F0 adj (u.obj X)) :
     Limits.PreservesLimitsOfSize (E0 adj).ι :=
   (reflectorAdj adj hu).rightAdjoint_preservesLimits
 
 /-- `E₀` has the colimits `E` has, computed by reflecting those of `E`. -/
+@[montpellier "161-1, 4–5"]
 theorem E0_hasColimits (hu : ∀ X, F0 adj (u.obj X)) [Limits.HasColimitsOfSize.{v₁, u₁} E] :
     Limits.HasColimitsOfSize.{v₁, u₁} (E0 adj).FullSubcategory :=
   let _ : Reflective (E0 adj).ι := { L := reflector0 adj hu, adj := reflectorAdj adj hu }
@@ -508,6 +525,7 @@ theorem E0_hasColimits (hu : ∀ X, F0 adj (u.obj X)) [Limits.HasColimitsOfSize.
 
 /-- **Page 5, condition 4), first half.** The reflector `u₁ : E ⥤ E₀` is a
 localization (« passage à catégorie des fractions »), at the arrows it inverts. -/
+@[montpellier "161-1, 5"]
 theorem reflector0_isLocalization (hu : ∀ X, F0 adj (u.obj X)) :
     (reflector0 adj hu).IsLocalization
       ((MorphismProperty.isomorphisms _).inverseImage (reflector0 adj hu)) :=
@@ -519,6 +537,7 @@ noncomputable def beta0FullyFaithful : (u0 adj ⋙ (F0 adj).ι).FullyFaithful :=
 
 /-- **Page 5, condition 4).** If `Im u ⊂ F₀`, then `u ≅ β ∘ u₁`, with `u₁` the
 localization `E ⥤ E₀` and `β : E₀ ⥤ F` fully faithful. -/
+@[montpellier "161-1, 5"]
 noncomputable def condition4 (hu : ∀ X, F0 adj (u.obj X)) :
     reflector0 adj hu ⋙ u0 adj ⋙ (F0 adj).ι ≅ u :=
   NatIso.ofComponents (fun X => @asIso _ _ _ _ (adj.counit.app (u.obj X)) (hu X))
@@ -530,6 +549,7 @@ def coreflector0 (hv : ∀ P, E0 adj (v.obj P)) : F ⥤ (F0 adj).FullSubcategory
 
 /-- **Page 4.** If `Im v ⊂ E₀`, the inclusion `F₀ ⊂ F` has the right adjoint
 `u₀ ∘ v'`: `F₀` is coreflective in `F`. -/
+@[montpellier "161-1, 4"]
 noncomputable def coreflectorAdj (hv : ∀ P, E0 adj (v.obj P)) :
     (F0 adj).ι ⊣ coreflector0 adj hv where
   unit :=
@@ -557,6 +577,7 @@ noncomputable def isoOfE0 {Y : E} (h : E0 adj Y) : Y ≅ v.obj (u.obj Y) :=
 /-- **Page 5, condition 4').** If `Im v ⊂ E₀`, then `v ≅ α ∘ v₁`, with `v₁` the
 coreflector `F ⥤ F₀` followed by `v₀`, and `α : E₀ ⊂ E`. With `condition4`, this
 is the page's `u = β u₀ α'`, `v = α v₀ β'` for an idempotent adjunction. -/
+@[montpellier "161-1, 5"]
 noncomputable def condition4' (hv : ∀ P, E0 adj (v.obj P)) :
     coreflector0 adj hv ⋙ v0 adj ⋙ (E0 adj).ι ≅ v :=
   NatIso.ofComponents (fun P => (isoOfE0 adj (hv P)).symm)
@@ -567,21 +588,25 @@ noncomputable def condition4' (hv : ∀ P, E0 adj (v.obj P)) :
 
 /-- **Page 5, condition 3).** For an idempotent adjunction (`Im v ⊂ E₀`), the
 inclusion `E₀ ⊂ E` has a left adjoint and `F₀ ⊂ F` a right adjoint. -/
+@[montpellier "161-1, 5"]
 theorem condition3_p5 (hv : ∀ P, E0 adj (v.obj P)) :
     (E0 adj).ι.IsRightAdjoint ∧ (F0 adj).ι.IsLeftAdjoint :=
   ⟨⟨_, ⟨reflectorAdj adj ((idempotent_tfae adj).out 1 3 |>.1 hv)⟩⟩, ⟨_, ⟨coreflectorAdj adj hv⟩⟩⟩
 
 /-- The coreflector `F ⥤ F₀` preserves all limits. -/
+@[montpellier "161-1, 4–5"]
 theorem coreflector0_preservesLimits (hv : ∀ P, E0 adj (v.obj P)) :
     Limits.PreservesLimitsOfSize (coreflector0 adj hv) :=
   (coreflectorAdj adj hv).rightAdjoint_preservesLimits
 
 /-- The inclusion `F₀ ⊂ F` preserves all colimits. -/
+@[montpellier "161-1, 4–5"]
 theorem F0_ι_preservesColimits (hv : ∀ P, E0 adj (v.obj P)) :
     Limits.PreservesColimitsOfSize (F0 adj).ι :=
   (coreflectorAdj adj hv).leftAdjoint_preservesColimits
 
 /-- `F₀` has the limits `F` has, computed by coreflecting those of `F`. -/
+@[montpellier "161-1, 4–5"]
 theorem F0_hasLimits (hv : ∀ P, E0 adj (v.obj P)) [Limits.HasLimitsOfSize.{v₂, u₂} F] :
     Limits.HasLimitsOfSize.{v₂, u₂} (F0 adj).FullSubcategory :=
   let _ : Coreflective (F0 adj).ι := { R := coreflector0 adj hv, adj := coreflectorAdj adj hv }
@@ -606,6 +631,7 @@ include adj'
 
 /-- **Page 7.** `f ∈ Σ` if and only if `Hom(Y, αZ₁) → Hom(X, αZ₁)` is bijective
 for every `Z₁ ∈ E₁`. (mathlib: `ObjectProperty.isLocal_iff_isIso_map`.) -/
+@[montpellier "161-1, 7"]
 theorem sigma_iff {X Y : E} (f : X ⟶ Y) :
     Sigma' (α' := α') f ↔
       ∀ Z₁ : E₁, Function.Bijective (fun g : Y ⟶ α.obj Z₁ => f ≫ g) := by
@@ -614,6 +640,7 @@ theorem sigma_iff {X Y : E} (f : X ⟶ Y) :
 
 /-- **« Or c'est vrai sauf erreur… »** A `Σ`-local object is in the essential
 image of `α`. -/
+@[montpellier "161-1, 6–7"]
 theorem local_mem_essImage {ξ : E} (hξ : (Sigma' (α' := α')).isLocal ξ) : α.essImage ξ := by
   let η := adj'.unit.app ξ
   have hη : Sigma' (α' := α') η :=
@@ -630,6 +657,7 @@ theorem local_mem_essImage {ξ : E} (hξ : (Sigma' (α' := α')).isLocal ξ) : �
   exact ⟨α'.obj ξ, ⟨{ hom := r, inv := η, hom_inv_id := hrη, inv_hom_id := hr' }⟩⟩
 
 /-- The `Σ`-local objects are exactly the essential image of `α`. -/
+@[montpellier "161-1, 6–7"]
 theorem local_iff_mem_essImage (ξ : E) :
     (Sigma' (α' := α')).isLocal ξ ↔ α.essImage ξ := by
   refine ⟨local_mem_essImage adj', ?_⟩
@@ -655,6 +683,7 @@ include adj'
 
 /-- **Page 6, the reduced question.** A presheaf `ψ` on `E₁` such that
 `ψ ∘ α'` is representable is representable. -/
+@[montpellier "161-1, 6"]
 theorem descent (ψ : E₁ᵒᵖ ⥤ Type v₁) [(α'.op ⋙ ψ).IsRepresentable] : ψ.IsRepresentable := by
   obtain ⟨ξ, ⟨R⟩⟩ := (inferInstance : (α'.op ⋙ ψ).IsRepresentable).has_representation
   have hloc : (Sigma' (α' := α')).isLocal ξ := fun X Y f hf => by
@@ -690,6 +719,7 @@ theorem descent (ψ : E₁ᵒᵖ ⥤ Type v₁) [(α'.op ⋙ ψ).IsRepresentable
 
 /-- **Page 6, the question.** If `β ∘ α'` has a right adjoint, so has `β`.
 The full faithfulness of `β`, which the page assumes, is not used. -/
+@[montpellier "161-1, 6"]
 theorem descent_isLeftAdjoint {G : Type*} [Category.{v₁} G] (β : E₁ ⥤ G)
     [(α' ⋙ β).IsLeftAdjoint] : β.IsLeftAdjoint := by
   apply Functor.isLeftAdjoint_of_rightAdjointObjIsDefined_eq_top
@@ -781,6 +811,7 @@ open BraidedCategory
 
 /-- `φ_{L',L} = φ_{L,L'} ∘ s_{L',L}`, the trivialisation of `L' ⊗ L` through the
 symmetry (page 12). -/
+@[montpellier "161-1, 12"]
 def phiSwap (φ : L ⊗ L' ≅ 𝟙_ C) : L' ⊗ L ≅ 𝟙_ C := β_ L' L ≪≫ φ
 
 /-- Tensoring with an invertible `L` is fully faithful. -/
@@ -793,17 +824,20 @@ def fullyFaithfulL' (φ : L ⊗ L' ≅ 𝟙_ C) : (tensorLeft L').FullyFaithful 
 
 /-- `ψ_{L',L} : L' ⊗ L ≅ 𝟙`, defined by the triangle identity
 `φ_{L,L'} ⊗ id_L = id_L ⊗ ψ_{L',L}` (page 12). -/
+@[montpellier "161-1, 12"]
 def psi (φ : L ⊗ L' ≅ 𝟙_ C) : L' ⊗ L ≅ 𝟙_ C :=
   (fullyFaithfulL φ).preimageIso
     ((α_ L L' L).symm ≪≫ whiskerRightIso φ L ≪≫ λ_ L ≪≫ (ρ_ L).symm)
 
 /-- The triangle identity defining `ψ_{L',L}`, with associator and unitors. -/
+@[montpellier "161-1, 11–12"]
 lemma psi_triangle (φ : L ⊗ L' ≅ 𝟙_ C) :
     φ.hom ▷ L ≫ (λ_ L).hom = (α_ L L' L).hom ≫ L ◁ (psi φ).hom ≫ (ρ_ L).hom := by
   simp [show L ◁ (psi φ).hom = (α_ L L' L).inv ≫ φ.hom ▷ L ≫ (λ_ L).hom ≫ (ρ_ L).inv from
     (fullyFaithfulL φ).map_preimage _]
 
 /-- `ψ_{L',L}` is the only morphism satisfying the triangle identity. -/
+@[montpellier "161-1, 11–12"]
 lemma psi_unique (φ : L ⊗ L' ≅ 𝟙_ C) (ψ' : L' ⊗ L ⟶ 𝟙_ C)
     (h : φ.hom ▷ L ≫ (λ_ L).hom = (α_ L L' L).hom ≫ L ◁ ψ' ≫ (ρ_ L).hom) :
     ψ' = (psi φ).hom := by
@@ -819,6 +853,7 @@ lemma whiskerRight_injective {Z : C} (hZ : (tensorLeft Z).FullyFaithful) {X Y : 
 
 /-- `ε := ψ_{L',L}⁻¹ ≫ φ_{L',L} ∈ Aut(𝟙)`; `braiding_self_eq_scalar` shows that
 it is the sign of the symmetry of `L ⊗ L`. -/
+@[montpellier "161-1, 11–12"]
 def epsilon (φ : L ⊗ L' ≅ 𝟙_ C) : 𝟙_ C ⟶ 𝟙_ C := (psi φ).inv ≫ (phiSwap φ).hom
 
 lemma whiskerLeft_scalar_rightUnitor (e : 𝟙_ C ⟶ 𝟙_ C) (X : C) :
@@ -832,6 +867,7 @@ lemma whiskerLeft_scalar_rightUnitor (e : 𝟙_ C ⟶ 𝟙_ C) (X : C) :
 symmetry `s_{L, L ⊗ L'}` is natural against `φ_{L,L'}`, the hexagon splits it as
 `(s_{L,L} ⊗ L') ; (L ⊗ s_{L,L'})`, the triangle identity replaces `φ ⊗ L` by
 `L ⊗ ψ`, and the isomorphism `L ⊗ (ψ ∘ s_{L,L'})` cancels. -/
+@[montpellier "161-1, 12"]
 theorem braiding_self_eq_scalar (φ : L ⊗ L' ≅ 𝟙_ C) :
     (β_ L L).hom = scalar (epsilon φ) (L ⊗ L) := by
   set ψ := psi φ
@@ -861,6 +897,7 @@ lemma scalar_injective (φ : L ⊗ L' ≅ 𝟙_ C) {e e' : 𝟙_ C ⟶ 𝟙_ C}
 
 /-- **Page 12, « Relations entre `φ_{L',L}` et `ψ_{L',L}` ? »** For a scalar `e`,
 `φ_{L',L} = e · ψ_{L',L}` if and only if the symmetry acts on `L ⊗ L` by `e`. -/
+@[montpellier "161-1, 12"]
 theorem phiSwap_eq_iff (φ : L ⊗ L' ≅ 𝟙_ C) (e : 𝟙_ C ⟶ 𝟙_ C) :
     (phiSwap φ).hom = (psi φ).hom ≫ e ↔ (β_ L L).hom = scalar e (L ⊗ L) := by
   constructor
@@ -872,17 +909,20 @@ theorem phiSwap_eq_iff (φ : L ⊗ L' ≅ 𝟙_ C) (e : 𝟙_ C ⟶ 𝟙_ C) :
     simp [epsilon]
 
 /-- `φ_{L',L} = ε(L) · ψ_{L',L}`, the scalar acting on `L' ⊗ L`. -/
+@[montpellier "161-1, 11–12"]
 theorem phiSwap_eq_scalar_comp (φ : L ⊗ L' ≅ 𝟙_ C) :
     (phiSwap φ).hom = scalar (epsilon φ) (L' ⊗ L) ≫ (psi φ).hom := by
   rw [← scalar_naturality, scalar_unit]
   simp [epsilon]
 
 /-- `ε(L)` does not depend on the inverse `(L', φ)` chosen. -/
+@[montpellier "161-1, 11–12"]
 theorem epsilon_eq_of_inverse {L₁ L₂ : C} (φ₁ : L ⊗ L₁ ≅ 𝟙_ C) (φ₂ : L ⊗ L₂ ≅ 𝟙_ C) :
     epsilon φ₁ = epsilon φ₂ :=
   scalar_injective φ₁ ((braiding_self_eq_scalar φ₁).symm.trans (braiding_self_eq_scalar φ₂))
 
 /-- `ε(L)² = 1`. -/
+@[montpellier "161-1, 11–12"]
 theorem epsilon_mul_self (φ : L ⊗ L' ≅ 𝟙_ C) : epsilon φ ≫ epsilon φ = 𝟙 _ :=
   scalar_injective φ (by
     rw [scalar_comp, ← braiding_self_eq_scalar, scalar_id]

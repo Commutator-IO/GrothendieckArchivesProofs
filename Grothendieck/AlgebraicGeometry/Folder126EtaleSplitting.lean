@@ -4,6 +4,7 @@ public import Grothendieck.AlgebraicGeometry.Folder126Sheets
 public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
 public import StacksFrontier.AlgebraicGeometry.MoreMorphisms.EtaleLocalizationQuasiFinite.PurelyInseparableDecomposition
 public import StacksFrontier.AlgebraicGeometry.Morphisms.Fibres.SingletonFibreGeometricPoint
+import Grothendieck.Attr
 
 @[expose] public noncomputable section
 
@@ -73,6 +74,7 @@ universally open, with exactly `n` geometric points in every geometric fibre. Ev
 `Y` has an affine étale neighbourhood `u : U ⟶ Y` such that the base change `T = X ×_Y U ⟶ U` (any
 pullback square) factors as a universal homeomorphism `T ⟶ Z` followed by a finite étale
 `Z ⟶ U`. -/
+@[montpellier "126, 17–22"]
 theorem exists_etale_local_factorisation (f : X ⟶ Y) [IsFinite f] [UniversallyOpen f] {n : ℕ}
     (hn : HasGeomDegree f n) (y : Y) :
     ∃ (U : Scheme.{u}) (u : U ⟶ Y), Etale u ∧ IsAffine U ∧ y ∈ Set.range u ∧

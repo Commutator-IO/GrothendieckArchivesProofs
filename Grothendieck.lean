@@ -16,6 +16,7 @@ public import Grothendieck.AlgebraicGeometry.Folder126Existence
 public import Grothendieck.AlgebraicGeometry.Folder126GeometricPoints
 public import Grothendieck.AlgebraicGeometry.Folder126Glue
 public import Grothendieck.AlgebraicGeometry.Folder126NilpotentDescent
+public import Grothendieck.AlgebraicGeometry.Folder126NilpotentFlat
 public import Grothendieck.AlgebraicGeometry.Folder126NilpotentQuotient
 public import Grothendieck.AlgebraicGeometry.Folder126RadicialEtale
 public import Grothendieck.AlgebraicGeometry.Folder126RadicialEtaleGlobal
@@ -60,6 +61,7 @@ public import Grothendieck.AlgebraicGeometry.Folder91HomUnramified
 public import Grothendieck.AlgebraicGeometry.Folder93
 public import Grothendieck.AlgebraicGeometry.Folder93Stacks
 public import Grothendieck.AlgebraicTopology.Folder68
+public import Grothendieck.Attr
 public import Grothendieck.CategoryTheory.Folder104
 public import Grothendieck.CategoryTheory.Folder106
 public import Grothendieck.CategoryTheory.Folder107

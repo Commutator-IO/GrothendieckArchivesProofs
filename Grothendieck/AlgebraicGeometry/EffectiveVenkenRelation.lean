@@ -9,9 +9,10 @@ public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GroupoidOfE
 /-!
 # Venken's relation as an equivalence relation of schemes
 
-`Grothendieck/AlgebraicGeometry/EffectiveVenken.lean` handles Venken's relation `R ⊂ Spec B × Spec B` through its
-ideal `I_V ⊂ B ⊗_K B`: it proves `I_V ⊆ ker(B ⊗ B → B)`, `σ(I_V) ⊆ I_V` for the exchange `σ`,
-and `pr₁₃*(I_V) ⊆ pr₁₂*(I_V) + pr₂₃*(I_V)`, and leaves the scheme-theoretic language out.
+`Grothendieck/AlgebraicGeometry/EffectiveVenken.lean` handles Venken's relation
+`R ⊂ Spec B × Spec B` through its ideal `I_V ⊂ B ⊗_K B`: it proves `I_V ⊆ ker(B ⊗ B → B)`,
+`σ(I_V) ⊆ I_V` for the exchange `σ`, and `pr₁₃*(I_V) ⊆ pr₁₂*(I_V) + pr₂₃*(I_V)`, and leaves the
+scheme-theoretic language out.
 
 This file supplies it with the vocabulary of the vendored AxiomMath/Stacks library: a
 pre-relation `j : R → U ×_S U` of `S`-schemes (`Stacks.Groupoids.PreRelation`, Stacks tag 022P,

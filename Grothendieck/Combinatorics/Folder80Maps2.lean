@@ -5,6 +5,7 @@ public import Mathlib.SetTheory.Cardinal.Finite
 public import Mathlib.Algebra.Group.Action.Defs
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Algebra.BigOperators.Ring.Finset
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -48,8 +49,8 @@ crossing, hence four lines in general position (`exists_gp4`); a further line th
 one of their six vertices gives `II_5` or `II′_{3,2}`, otherwise it is a diagonal (`diag_of`);
 two diagonals of different pairs give `III_6` (`iii6_of`), two of the same pair are equal
 (`diag_unique`), and a lone diagonal is bigonal (`not_bigonFree`). The numbering lemma of
-page 28 is proved in `Grothendieck/Combinatorics/Folder80Numbering.lean`. Not formalised: the passage from a
-topological arrangement to its map.
+page 28 is proved in `Grothendieck/Combinatorics/Folder80Numbering.lean`. Not formalised: the
+passage from a topological arrangement to its map.
 -/
 
 namespace Grothendieck.Folder80Maps2
@@ -285,6 +286,7 @@ theorem not_bigonFree {a b c d l : L} (two : ∀ p l, on p l → ∃ m, m ≠ l 
 
 /-- **The dichotomy** (incidence form): a bigon-free arrangement with a simple crossing is
 `II_4` or contains `II_5`, `II′_{3,2}` or `III_6`. -/
+@[montpellier "80, 20, 24"]
 theorem dichotomy (two : ∀ p l, on p l → ∃ m, m ≠ l ∧ on p m) (hbf : BigonFree on)
     (hsc : ∃ p a b, a ≠ b ∧ on p a ∧ on p b ∧ ∀ c, on p c → c = a ∨ c = b) :
     IsII4 on ∨ HasII5 on ∨ HasII32 on ∨ HasIII6 on := by
@@ -414,6 +416,7 @@ open GMap
 lines, constant on edges; a line through a vertex has there the four flags of two edge-ends
 (it passes once); each line is connected; every vertex is on two lines; two lines meet at
 exactly one vertex; the surface is a projective plane, `χ = 1`. -/
+@[montpellier "80, 60"]
 structure PseudolineMap (D L : Type*) where
   M : GMap D
   line : D → L
@@ -626,6 +629,7 @@ theorem melchior (hbf : BigonFree X.On) :
 /-- **The page's boxed statement** (pages 20, 24): every bigon-free combinatorial arrangement of
 pseudolines in the real projective plane is `II_4` or contains `II_5`, `II′_{3,2}` or
 `III_6`. -/
+@[montpellier "80, 20, 24"]
 theorem map_dichotomy (hbf : BigonFree X.On) :
     IsII4 X.On ∨ HasII5 X.On ∨ HasII32 X.On ∨ HasIII6 X.On :=
   dichotomy X.meet (fun _ _ ⟨d, hd, hl⟩ => by

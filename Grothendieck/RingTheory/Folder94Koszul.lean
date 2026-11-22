@@ -2,6 +2,7 @@ module
 
 public import Grothendieck.RingTheory.Folder94
 public import StacksFrontier.RingTheory.Koszul.Regular
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -46,6 +47,7 @@ variable {A : Type*} [CommRing A] [IsNoetherianRing A] {J : Ideal A}
 every sequence `t` of `A_𝔭` that is weakly regular on `A_𝔭` has an acyclic Koszul complex, and
 its Koszul complex on `R_𝔭` has no homology in positive degrees: `Tor_i(R_𝔭, A_𝔭/(t)) = 0` for
 `i > 0`, read through the Koszul resolution. -/
+@[montpellier "94, 8–9"]
 theorem exists_isOpen_dense_isKoszulRegularOn {n : ℕ} (hn : J ^ n = ⊥) [IsReduced (A ⧸ J)]
     (R : Type*) [AddCommGroup R] [Module A R] [Module.Finite A R] :
     ∃ U : Set (PrimeSpectrum A), IsOpen U ∧ Dense U ∧

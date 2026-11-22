@@ -125,18 +125,53 @@ jobs:
           GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP LeanPool
 
       # Issue #31, question 1: the definitions outside Mathlib that the statements are written
-      # with, the list a human review has to cover. Kept as an artifact of the run.
+      # with, the list a human review has to cover. Question 3: the theorems of Grothendieck/,
+      # Buffalo/ and OpenProblems/ stated with Mathlib alone, which Challenge/ can restate. Both
+      # kept as artifacts of the run.
       - name: List the definitions behind the statements
         run: >-
           lake env lean --run scripts/StatementDefs.lean GrothendieckArchivesProofs
-          statement-definitions.md GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems
-          Mordell MMP LeanPool
+          statement-definitions.md --mathlib-only mathlib-only-statements.md
+          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP LeanPool
 
       - name: Upload the list
         uses: actions/upload-artifact@v4
         with:
           name: statement-definitions
-          path: statement-definitions.md
+          path: |
+            statement-definitions.md
+            mathlib-only-statements.md
+
+      # Issue #39, step 1b: the theorems of this repository whose statement Mathlib or the
+      # imported Stacks modules already have, or that follow from a library theorem applied to
+      # some of their hypotheses. Kept as an artifact of the run (copy in docs/review/).
+      - name: Find what this repository re-proves
+        run: |
+          lake env lean --run scripts/FindDuplicates.lean GrothendieckArchivesProofs \
+            duplicates.md Grothendieck Buffalo OpenProblems
+          cat duplicates.md
+
+      - name: Upload the duplicates
+        uses: actions/upload-artifact@v4
+        with:
+          name: duplicates
+          path: duplicates.md
+
+      # Issue #39, step 3: the declarations by cote of the Montpellier notes, by entry of the
+      # Buffalo index and by EGA/SGA item, from the attributes of `Grothendieck/Attr.lean` and
+      # Stacks' `@[ega]`/`@[sga]`. Kept as an artifact and printed in the log; the copy in
+      # `docs/review/source-index.md` is refreshed by hand.
+      - name: List the declarations by source
+        run: |
+          lake env lean --run scripts/SourceIndex.lean GrothendieckArchivesProofs \
+            source-index.md GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems
+          cat source-index.md
+
+      - name: Upload the source index
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-index
+          path: source-index.md
 
       # Issue #31, question 3: each statement of Challenge/ (Mathlib alone, unproved) is proved
       # with exactly that statement by Solution/, through the libraries above, using only the

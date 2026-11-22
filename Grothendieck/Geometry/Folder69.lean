@@ -7,6 +7,7 @@ public import Mathlib.Data.Fintype.Perm
 public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.GroupTheory.SpecificGroups.Quaternion
 public import Mathlib.Tactic.Group
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -86,6 +87,7 @@ theorem degree_eq (v : Fin 27) : (Finset.univ.filter (C.Adj v)).card = 10 := by
   revert v; decide +kernel
 
 /-- `W_t`: the permutations preserving the graph and the triangle. -/
+@[montpellier "69, 26"]
 def Wt : Subgroup (Perm (Fin 27)) where
   carrier := {σ | (∀ u v, meets (σ u) (σ v) = meets u v) ∧ ∀ v, σ v ∈ t ↔ v ∈ t}
   mul_mem' := by
@@ -327,10 +329,12 @@ theorem K6_eq_bot : K6 = ⊥ := by
   exact hsep _ _ hv h
 
 /-- **Page 26.** `card W_t = 1152`. -/
+@[montpellier "69, 26"]
 theorem card_Wt : Nat.card Wt = 1152 := by
   rw [step0, step1, step2, step3, step4, step5, K6_eq_bot, Subgroup.card_bot]
 
 /-- **Page 25.** The automorphisms fixing `t` pointwise form a group of order `192`. -/
+@[montpellier "69, 25"]
 theorem card_pointwise :
     Nat.card {σ : Perm (Fin 27) // σ ∈ Wt ∧ ∀ v ∈ t, σ v = v} = 192 := by
   have e : Nat.card {σ : Perm (Fin 27) // σ ∈ Wt ∧ ∀ v ∈ t, σ v = v} = Nat.card K2 := by
@@ -350,6 +354,7 @@ theorem card_pointwise :
   rw [e, step2, step3, step4, step5, K6_eq_bot, Subgroup.card_bot]
 
 /-- The same count for the graph automorphisms `C ≃g C` that preserve `t`. -/
+@[montpellier "69, 26"]
 theorem card_aut : Nat.card {f : C ≃g C // ∀ v, f v ∈ t ↔ v ∈ t} = 1152 := by
   rw [← card_Wt]
   refine Nat.card_congr
@@ -387,6 +392,7 @@ abbrev Q8 := QuaternionGroup 2
 /-- Problem 18 (group part): there is a surjection `Wt → 𝔖₃ × 𝔖₃` whose kernel is the Baer
 product of the three pull-backs of `Q₈`, presented as the triples with central product
 modulo the central triples of product one. -/
+@[montpellier "69, 25–26"]
 def problem18 : Prop :=
   ∃ H : Subgroup (Q8 × Q8 × Q8),
     (∀ x : Q8 × Q8 × Q8, x ∈ H ↔ x.1 * x.2.1 * x.2.2 ∈ Subgroup.center Q8) ∧
@@ -746,6 +752,7 @@ theorem card_ker_f18 : Nat.card f18.ker = 4 := by
   decide +kernel
 
 /-- **Problem 18 (group part) holds.** -/
+@[montpellier "69, 25–26"]
 theorem problem18_holds : problem18 := by
   refine ⟨H18, mem_H18, phi, phi_surj, f18, ?_, f18_eq_one⟩
   have h := Subgroup.card_mul_index f18.ker

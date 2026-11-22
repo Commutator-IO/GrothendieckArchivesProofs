@@ -5,6 +5,7 @@ public import Mathlib.Data.Set.Lattice.Indexed
 public import Mathlib.Data.List.Chain
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Fin.VecNotation
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -53,14 +54,18 @@ variable {M : Type*} [PartialOrder M] (R : M → M → Prop)
 def Disj (X Y : M) : Prop := R X Y ∧ ∀ Z, ¬ (Z ≤ X ∧ Z ≤ Y)
 
 /-- The cosupport of `Φ`: the multistrates disjoint from every element of `Φ`. -/
+@[montpellier "156-4, 65–68"]
 def cosupp (Φ : Set M) : Set M := {X | ∀ Y ∈ Φ, Disj R X Y}
 
 /-- The support, cosupport of the cosupport. -/
+@[montpellier "156-4, 65–68"]
 def supp (Φ : Set M) : Set M := cosupp R (cosupp R Φ)
 
 /-- A part is saturated when it equals its support. -/
+@[montpellier "156-4, 65–68"]
 def IsSaturated (Φ : Set M) : Prop := supp R Φ = Φ
 
+@[montpellier "156-4, 65–68"]
 theorem cosupp_antitone {Φ Ψ : Set M} (h : Φ ⊆ Ψ) : cosupp R Ψ ⊆ cosupp R Φ :=
   fun _ hX Y hY => hX Y (h hY)
 
@@ -69,19 +74,23 @@ variable {R}
 theorem disj_symm (hR : ∀ {X Y : M}, R X Y → R Y X) {X Y : M} (h : Disj R X Y) : Disj R Y X :=
   ⟨hR h.1, fun Z hZ => h.2 Z ⟨hZ.2, hZ.1⟩⟩
 
+@[montpellier "156-4, 65–68"]
 theorem subset_supp (hR : ∀ {X Y : M}, R X Y → R Y X) (Φ : Set M) : Φ ⊆ supp R Φ :=
   fun _ hX _ hY => disj_symm hR (hY _ hX)
 
+@[montpellier "156-4, 65–68"]
 theorem cosupp_supp (hR : ∀ {X Y : M}, R X Y → R Y X) (Φ : Set M) :
     cosupp R (supp R Φ) = cosupp R Φ :=
   (cosupp_antitone R (subset_supp hR Φ)).antisymm (subset_supp hR _)
 
 /-- The cosupport of any part is saturated. -/
+@[montpellier "156-4, 65–68"]
 theorem isSaturated_cosupp (hR : ∀ {X Y : M}, R X Y → R Y X) (Φ : Set M) :
     IsSaturated R (cosupp R Φ) :=
   cosupp_supp hR Φ
 
 /-- Arbitrary intersections of saturated parts are saturated. -/
+@[montpellier "156-4, 65–68"]
 theorem isSaturated_iInter (hR : ∀ {X Y : M}, R X Y → R Y X) {ι : Type*} (S : ι → Set M)
     (hS : ∀ i, IsSaturated R (S i)) : IsSaturated R (⋂ i, S i) := by
   refine (Set.Subset.antisymm ?_ (subset_supp hR _))
@@ -90,10 +99,12 @@ theorem isSaturated_iInter (hR : ∀ {X Y : M}, R X Y → R Y X) {ι : Type*} (S
   exact cosupp_antitone R (cosupp_antitone R (Set.iInter_subset S i))
 
 /-- No multistrate is disjoint from itself, so `S ∩ cosupp S = ∅`. -/
+@[montpellier "156-4, 65–68"]
 theorem inter_cosupp_eq_empty (Φ : Set M) : Φ ∩ cosupp R Φ = ∅ :=
   Set.eq_empty_iff_forall_notMem.2 fun X hX => (hX.2 X hX.1).2 X ⟨le_rfl, le_rfl⟩
 
 /-- For `S` saturated, `S ∨ cosupp S = 𝓜`. -/
+@[montpellier "156-4, 65–68"]
 theorem supp_union_cosupp {Φ : Set M} (hΦ : IsSaturated R Φ) :
     supp R (Φ ∪ cosupp R Φ) = Set.univ := by
   have h : cosupp R (Φ ∪ cosupp R Φ) = ∅ := by
@@ -143,6 +154,7 @@ def suppH (Φ : Finset (Fin 7)) : Finset (Fin 7) := cosuppH (cosuppH Φ)
 /-- The model satisfies the hypotheses on `(𝓜, ≤, R)`: `≤` is a partial order, `R` is
 reflexive, symmetric, inherited downwards, every `𝓜_{≤v}` is pairwise compatible, and `𝓜` is
 connected (the chain `a, v_ab, b, v_bc, c, v_cd, d` of comparable elements runs through it). -/
+@[montpellier "156-4, 65–68"]
 theorem hexagon_hyp :
     (∀ x, le x x) ∧ (∀ x y, le x y → le y x → x = y) ∧
       (∀ x y z, le x y → le y z → le x z) ∧
@@ -154,6 +166,7 @@ theorem hexagon_hyp :
   decide
 
 /-- **The saturated parts of the model are `∅, {b}, {c}, {a, c}, {b, d}, 𝓜`.** -/
+@[montpellier "156-4, 68"]
 theorem hexagon_saturated :
     Finset.univ.filter (fun Φ : Finset (Fin 7) => suppH Φ = Φ) =
       {∅, {1}, {2}, {0, 2}, {1, 3}, Finset.univ} := by
@@ -162,6 +175,7 @@ theorem hexagon_saturated :
 /-- **The lattice of saturated parts is not distributive**: with meet the intersection and
 join the support of the union, `{b, d} ∧ ({b} ∨ {c}) = {b, d}` while
 `({b, d} ∧ {b}) ∨ ({b, d} ∧ {c}) = {b}`. -/
+@[montpellier "156-4, 68"]
 theorem hexagon_not_distrib :
     ({1, 3} : Finset (Fin 7)) ∩ suppH ({1} ∪ {2}) = {1, 3} ∧
       suppH (({1, 3} : Finset (Fin 7)) ∩ {1} ∪ {1, 3} ∩ {2}) = {1} := by

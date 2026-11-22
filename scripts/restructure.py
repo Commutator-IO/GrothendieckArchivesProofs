@@ -10,7 +10,8 @@ already moved are left alone, so the script can be run again after other pull re
 Only paths change: declaration names, and so the namespaces `Grothendieck.FolderN…`, stay as
 they are, and the cote and page of each statement is carried by its `@[montpellier]` attribute
 (step 3), not by the file name. `Grothendieck/Upstream/` (backports of Mathlib lemmas), `Buffalo/`
-(already in topic directories `AG`, `Groupes`, `Topos`) and `OpenProblems/` keep their layout.
+(already in topic directories `AG`, `Groupes`, `Topos`), `OpenProblems/` and the support files
+of `KEEP` (`Grothendieck/Attr.lean`) keep their layout.
 
 Usage, from the repository root:  python3 scripts/restructure.py [--dry-run]
 """
@@ -52,6 +53,10 @@ IHES = "CategoryTheory"  # IhesSGA6_*: pseudo-coherence, K-groups of triangulate
 FOLDER = re.compile(r"^Folder(\d+(?:_\d+)?)")
 
 
+# Support files that are not notes of a folder and stay in `Grothendieck/`.
+KEEP = {"Attr"}  # the source attributes of step 3
+
+
 def topic_of(stem: str):
     if stem in NAMED:
         return NAMED[stem]
@@ -64,10 +69,56 @@ def topic_of(stem: str):
     return TOPIC.get(m.group(1))
 
 
+WIDTH = 100
+CONT = re.compile(r"^\s*(?:[*+-] |#|-/|/-|```|$)")  # lines that start a new block
+
+
+def _cut(line: str) -> int:
+    """The last space at or before column `WIDTH` that is outside a code span, or -1."""
+    best, ticks = -1, 0
+    for i, ch in enumerate(line[: WIDTH + 1]):
+        if ch == "`":
+            ticks += 1
+        elif ch == " " and ticks % 2 == 0 and line[:i].strip():
+            best = i
+    return best
+
+
+def reflow(text: str, new_paths: set) -> str:
+    """Re-wrap the comment lines that a rewritten path made longer than `WIDTH`.
+
+    The overflow is carried to the next line of the same paragraph (or to a new line), and that
+    line is re-wrapped in turn. Lines without a new path are left alone unless they receive
+    overflow, so code and the rest of the file are unchanged."""
+    lines = text.split("\n")
+    dirty = {i for i, l in enumerate(lines) if len(l) > WIDTH and any(q in l for q in new_paths)}
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if i in dirty and len(line) > WIDTH and (c := _cut(line)) > 0:
+            body = line.lstrip()
+            ind = line[: len(line) - len(body)]
+            cont = ind + ("  " if re.match(r"[*+-] ", body) else "")
+            head, rest = line[:c].rstrip(), line[c + 1 :].strip()
+            lines[i] = head
+            nxt = lines[i + 1] if i + 1 < len(lines) else None
+            if ("-/" not in rest and nxt is not None and not CONT.match(nxt)
+                    and nxt.startswith(cont) and not nxt[len(cont):].startswith(" ")):
+                lines[i + 1] = cont + rest + " " + nxt.strip()
+            else:
+                lines.insert(i + 1, cont + rest)
+                dirty = {j + 1 if j > i else j for j in dirty}
+            dirty.add(i + 1)
+        i += 1
+    return "\n".join(lines)
+
+
 def main(dry: bool) -> None:
     root = Path(".")
     moves = {}  # old module -> new module
     for f in sorted((root / "Grothendieck").glob("*.lean")):
+        if f.stem in KEEP:
+            continue
         t = topic_of(f.stem)
         if t is None:
             sys.exit(f"no topic for {f}: add its cote to TOPIC")
@@ -103,7 +154,8 @@ def main(dry: bool) -> None:
                              check=True).stdout.split()
     for name in tracked:
         p = Path(name)
-        if p.suffix not in {".lean", ".md", ".yml", ".yaml", ".toml", ".py", ".json", ".txt"}:
+        if (p.suffix not in {".lean", ".md", ".yml", ".yaml", ".toml", ".py", ".json", ".txt"}
+                and p.name != "NOTICE"):
             continue
         if name == "docs/review/restructure-map.md":
             continue
@@ -112,6 +164,8 @@ def main(dry: bool) -> None:
         if p.suffix == ".lean":
             new = imp.sub(lambda m: m.group(1) + moves.get(m.group(2), m.group(2)), new)
         new = path_re.sub(lambda m: paths[m.group(0)], new)
+        if p.suffix == ".lean" and new != text:
+            new = reflow(new, set(paths.values()))
         if new != text:
             p.write_text(new, encoding="utf-8")
     # Keep the root module's imports sorted.

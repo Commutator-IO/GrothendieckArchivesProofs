@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -81,6 +82,7 @@ def R (v : ι → ℝ × ℝ) : Set (ι → Bool) := {s | ∃ f, Realises f v s}
 /-! ## The Minkowski sum and its central symmetry -/
 
 /-- The Minkowski sum of the segments `[pᵢ, qᵢ]` is the image of the cube. -/
+@[montpellier "154, 153"]
 theorem sum_segment_eq (p q : ι → ℝ × ℝ) :
     ∑ i, segment ℝ (p i) (q i) =
       zono (∑ i, (1 / 2 : ℝ) • (p i + q i)) (fun i => (1 / 2 : ℝ) • (q i - p i)) := by
@@ -108,6 +110,7 @@ lemma zono_symm_of_mem {c : ℝ × ℝ} {v : ι → ℝ × ℝ} {x : ℝ × ℝ}
   module
 
 /-- Central symmetry about `c`. -/
+@[montpellier "154, 153"]
 theorem zono_symm (c : ℝ × ℝ) (v : ι → ℝ × ℝ) (x : ℝ × ℝ) :
     x ∈ zono c v ↔ (2 : ℝ) • c - x ∈ zono c v :=
   ⟨zono_symm_of_mem, fun h => by simpa using zono_symm_of_mem h⟩
@@ -171,6 +174,7 @@ theorem vert_mem_extremePoints {f c : ℝ × ℝ} {v : ι → ℝ × ℝ} {s : �
   exact ⟨rfl, rfl⟩
 
 /-- Distinct realised sign vectors give distinct vertices. -/
+@[montpellier "154, 153"]
 theorem vert_injOn (c : ℝ × ℝ) (v : ι → ℝ × ℝ) : InjOn (vert c v) (R v) := by
   rintro s ⟨f, hf⟩ t - hst
   have h := (le_ev_vert (c := c) hf (fun i => sg (t i)) fun i => sg_mem _).2
@@ -248,6 +252,7 @@ lemma single_mem_simplex [DecidableEq ι] (i : ι) : Pi.single i (1 : ℝ) ∈ s
 
 /-- **Extreme points.** With nonzero `vᵢ`, the extreme points of the zonogon are its realised
 vertices. -/
+@[montpellier "154, 153"]
 theorem extremePoints_zono (c : ℝ × ℝ) (v : ι → ℝ × ℝ) (hv : ∀ i, v i ≠ 0) :
     (zono c v).extremePoints ℝ = vert c v '' R v := by
   classical
@@ -537,6 +542,7 @@ lemma ncard_eq_sum {m : ℕ} (S : Set (Fin m → Bool)) :
 
 /-- **Counting.** `ν ≥ 1` nonzero, pairwise non-parallel vectors of the plane realise exactly `2ν`
 sign vectors. -/
+@[montpellier "154, 153"]
 theorem card_R : ∀ (n : ℕ) (v : Fin (n + 1) → ℝ × ℝ), (∀ i, v i ≠ 0) →
     Pairwise (fun i j => cross (v i) (v j) ≠ 0) → (R v).ncard = 2 * (n + 1) := by
   intro n
@@ -574,6 +580,7 @@ theorem card_R : ∀ (n : ℕ) (v : Fin (n + 1) → ℝ × ℝ), (∀ i, v i ≠
 /-! ## The theorem -/
 
 /-- Central symmetry of a Minkowski sum of segments, about `∑ (pᵢ + qᵢ)/2`. -/
+@[montpellier "154, 153"]
 theorem sum_segment_symm (p q : ι → ℝ × ℝ) (x : ℝ × ℝ) :
     x ∈ ∑ i, segment ℝ (p i) (q i) ↔
       (2 : ℝ) • (∑ i, (1 / 2 : ℝ) • (p i + q i)) - x ∈ ∑ i, segment ℝ (p i) (q i) := by
@@ -582,6 +589,7 @@ theorem sum_segment_symm (p q : ι → ℝ × ℝ) (x : ℝ × ℝ) :
 
 /-- **The zonogon.** The Minkowski sum of `ν ≥ 1` nondegenerate segments of the plane with pairwise
 non-parallel directions is centrally symmetric and has exactly `2ν` extreme points. -/
+@[montpellier "154, 153"]
 theorem ncard_extremePoints_sum_segment {ν : ℕ} (hν : 0 < ν) (p q : Fin ν → ℝ × ℝ)
     (hpq : ∀ i, p i ≠ q i) (hpar : Pairwise fun i j => cross (q i - p i) (q j - p j) ≠ 0) :
     ((∑ i, segment ℝ (p i) (q i)).extremePoints ℝ).ncard = 2 * ν ∧

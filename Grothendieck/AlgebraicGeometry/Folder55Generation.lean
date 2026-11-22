@@ -12,7 +12,8 @@ public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 On the site `Opens X` sliced over `U`, local generation of a presheaf of modules by a finite
 family (`Stacks.SheafOfModules.GeneratesLocally`) and finite type in the sectionwise sense
 (`Stacks.SheafOfModules.IsFiniteTypeSections`) can be checked at each point: these are the
-forms used for the coherence of the structure sheaf in `Grothendieck/AlgebraicGeometry/Folder55Coherent.lean`.
+forms used for the coherence of the structure sheaf in
+`Grothendieck/AlgebraicGeometry/Folder55Coherent.lean`.
 -/
 
 open CategoryTheory TopologicalSpace Opposite Stacks.SheafOfModules

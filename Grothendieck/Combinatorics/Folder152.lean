@@ -2,6 +2,7 @@ module
 
 public import Mathlib.GroupTheory.Perm.Cycle.Basic
 public import Mathlib.Logic.Relation
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -73,6 +74,7 @@ theorem InvolutionSansPointFixe.mul_self (s : InvolutionSansPointFixe D) :
 /-- A combinatorial circularised graph without isolated vertex, on the set of
 arcs `D = Ā`: the reversal `σ_Γ` and the rotation `ρ_Γ` (next arc around the
 origin). Its vertices are the orbits of `ρ_Γ`. -/
+@[montpellier "152, 7, 9"]
 structure GrapheCircularise (D : Type*) where
   /-- The reversal of arcs `σ_Γ`. -/
   σ : InvolutionSansPointFixe D
@@ -81,6 +83,7 @@ structure GrapheCircularise (D : Type*) where
 
 /-- An oriented contour `(A(C), ρ_C)` with a fixed-point-free gluing involution
 `σ_C`; its polygons (faces) are the cycles of `ρ_C`. -/
+@[montpellier "152, 7, 9"]
 structure Contour (D : Type*) where
   /-- "Next edge" on the oriented contour, `ρ_C`. -/
   ρC : Perm D
@@ -98,6 +101,7 @@ def Contour.graphe (C : Contour D) : GrapheCircularise D :=
 /-- **Équivalence** (on objects). Circularised graphs without isolated vertex
 on `Ā` and contours with a fixed-point-free involution on the same set
 correspond, by `σ_C = σ_Γ`, `ρ_C = ρ_Γ σ_Γ` and `ρ_Γ = ρ_C σ_C`. -/
+@[montpellier "152, 7, 9"]
 def dictionnaire : GrapheCircularise D ≃ Contour D where
   toFun := GrapheCircularise.contour
   invFun := Contour.graphe
@@ -110,6 +114,7 @@ def dictionnaire : GrapheCircularise D ≃ Contour D where
 
 /-- The three formulas of the dictionary, all at once: `σ_C = σ_Γ`,
 `ρ_C = ρ_Γ σ_Γ`, `ρ_Γ = ρ_C σ_C`. -/
+@[montpellier "152, 7, 9"]
 theorem formules (Γ : GrapheCircularise D) :
     (dictionnaire Γ).σC = Γ.σ ∧ (dictionnaire Γ).ρC = Γ.ρ * Γ.σ.σ ∧
       Γ.ρ = (dictionnaire Γ).ρC * (dictionnaire Γ).σC.σ := by
@@ -118,12 +123,14 @@ theorem formules (Γ : GrapheCircularise D) :
   rw [mul_assoc, Γ.σ.mul_self, mul_one]
 
 /-- The vertices of `Γ` (orbits of `ρ_Γ`) are the orbits of `ρ_C σ_C`. -/
+@[montpellier "152, 7, 9"]
 theorem sommets (Γ : GrapheCircularise D) (a b : D) :
     ((dictionnaire Γ).ρC * (dictionnaire Γ).σC.σ).SameCycle a b ↔ Γ.ρ.SameCycle a b := by
   rw [← (formules Γ).2.2]
 
 /-- The page's head line « `σ_Γ = σ_C`, `ρ_Γ = ρ_C` » is incompatible with
 `ρ_C = ρ_Γ σ_Γ` as soon as there is an arc. -/
+@[montpellier "152, 9"]
 theorem tete_page9_incompatible (Γ : GrapheCircularise D) (a : D) :
     Γ.ρ ≠ Γ.ρ * Γ.σ.σ := by
   intro h
@@ -137,6 +144,7 @@ def GrapheCircularise.Connexe (Γ : GrapheCircularise D) : Prop :=
 
 /-- « `Γ` est connexe puisque `ρ_C` n'a qu'un cycle »: if the contour has a
 single polygon (`ρ_C` has one orbit), the graph is connected. -/
+@[montpellier "152, 9"]
 theorem connexe_of_une_face [Finite D] (Γ : GrapheCircularise D)
     (h : ∀ a b, (dictionnaire Γ).ρC.SameCycle a b) : Γ.Connexe := by
   intro a b

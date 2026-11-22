@@ -2,6 +2,7 @@ module
 
 public import Grothendieck.AlgebraicGeometry.Folder29
 public import StacksFrontier.RingTheory.DiscreteValuationRing.Abhyankar.AbhyankarLemma
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -15,10 +16,10 @@ and `Ē = Σ_{c' ∈ C'} Ē_{c'}`, `f*(Ē_{c'}) = Σ_c n_{c,c'} D̄_c`, the map 
 `∏_{ℓ ≠ p} ℤ_ℓ(1)^C → ∏_{ℓ ≠ p} ℤ_ℓ(1)^{C'}` is the matrix `N = (n_{c,c'})`, and `N` is an
 isomorphism iff `card C = card C'` and `det N = ± p^k`.
 
-`Grothendieck/AlgebraicGeometry/Folder29.lean` proved the criterion over each `ℤ_ℓ` (`Folder29.criterion`). This
-file adds, from AxiomMath/Stacks (Apache-2.0), the local algebraic core of the Kummer computation
-through Abhyankar's lemma, and the criterion on the finite quotients through which the tame
-inertia acts on Kummer covers.
+`Grothendieck/AlgebraicGeometry/Folder29.lean` proved the criterion over each `ℤ_ℓ`
+(`Folder29.criterion`). This file adds, from AxiomMath/Stacks (Apache-2.0), the local algebraic core
+of the Kummer computation through Abhyankar's lemma, and the criterion on the finite quotients
+through which the tame inertia acts on Kummer covers.
 
 **What is proved.**
 * `finiteInertiaMap N e`: the map `(ℤ/e)^C → (ℤ/e)^{C'}` of `N`, on the quotient
@@ -59,6 +60,7 @@ variable {C C' : Type*} [Fintype C] [Fintype C']
 
 /-- The map `(ℤ/e)^C → (ℤ/e)^{C'}` of an integer matrix with rows indexed by `C'` and columns by
 `C`: the map `N` of page 120 on the quotient `μ_e^C ≅ (ℤ/e)^C` of the tame inertia (3.1). -/
+@[montpellier "29, 120"]
 def finiteInertiaMap (N : Matrix C' C ℤ) (e : ℕ) : (C → ZMod e) → (C' → ZMod e) :=
   (N.map (Int.cast : ℤ → ZMod e)).mulVec
 
@@ -94,6 +96,7 @@ theorem isUnit_of_eq_pow {p e k : ℕ} (he : e.Coprime p) {d : ℤ}
 integer matrix `N` is bijective `(ℤ/e)^C → (ℤ/e)^{C'}` for every `e ≥ 1` prime to `p` iff
 `card C = card C'` and, the columns being matched with the rows by some bijection,
 `det N = ± p^k`. -/
+@[montpellier "29, 120"]
 theorem criterion_mod [DecidableEq C'] {p : ℕ} (hp : p = 1 ∨ p.Prime) (N : Matrix C' C ℤ) :
     (∀ e : ℕ, e ≠ 0 → e.Coprime p → Function.Bijective (finiteInertiaMap N e)) ↔
       Fintype.card C = Fintype.card C' ∧ ∃ σ : C' ≃ C, ∃ k : ℕ,
@@ -122,6 +125,7 @@ theorem criterion_mod [DecidableEq C'] {p : ℕ} (hp : p = 1 ∨ p.Prime) (N : M
 /-- **One branch.** For `C = C' = {*}` the matrix is the multiplicity `n` of the pull-back of the
 branch, and it kills the quotient `μ_e ≅ ℤ/e` of the tame inertia iff `e ∣ n`: this is the
 hypothesis of Abhyankar's lemma (`abhyankar` below). -/
+@[montpellier "29, 120"]
 theorem finiteInertiaMap_single_eq_zero_iff (n e : ℕ) :
     (∀ v, finiteInertiaMap (Matrix.of fun (_ : Unit) (_ : Unit) => (n : ℤ)) e v = 0) ↔ e ∣ n := by
   have key : ∀ v : Unit → ZMod e,
@@ -156,6 +160,7 @@ pull-back of the branch kills the quotient `μ_e ≅ ℤ/e` of the tame inertia 
 `L ⊗_K K₁` is a finite product of fields `E i`, and at every maximal ideal of the normalisation
 of `B` in each `E i` the local ring is formally smooth (for the adic topology) over the local ring
 of `A₁` below it: the tame ramification disappears. Stacks 0BRM. -/
+@[montpellier "29, 120"]
 theorem abhyankar
     (A : Type u) (B : Type v) (K : Type w) (L : Type x) (K₁ : Type y)
     [CommRing A] [CommRing B] [Field K] [Field L] [Field K₁]

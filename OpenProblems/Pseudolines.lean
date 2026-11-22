@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.Combinatorics.Folder80Maps2
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -12,13 +13,14 @@ Section « Pseudoline arrangements » of the note on the open problems of the Mo
 pp. 20, 24) and the numbering lemma of p. 28 have a short proof there (the proof is the
 edition's). The dichotomy is proved in Lean for combinatorial pseudoline maps, as
 `Grothendieck.Folder80Maps2.PseudolineMap.map_dichotomy`. The numbering lemma is stated below as
-a `Prop`, with the definitions of `Grothendieck/Combinatorics/Folder80Maps2.lean`, and proved in Lean as
-`Grothendieck.Folder80Numbering.numberingLemma` (`Grothendieck/Combinatorics/Folder80Numbering.lean`).
+a `Prop`, with the definitions of `Grothendieck/Combinatorics/Folder80Maps2.lean`, and proved in
+Lean as `Grothendieck.Folder80Numbering.numberingLemma`
+(`Grothendieck/Combinatorics/Folder80Numbering.lean`).
 
 Not formalised either, and not stated: the passage from a topological arrangement of
 pseudolines in the real projective plane to its combinatorial map (Mathlib has no pseudolines);
-folders 80 and 154 are otherwise covered by `Grothendieck/Folder80*.lean` and
-`Grothendieck/Folder154*.lean`.
+folders 80 and 154 are otherwise covered by `Grothendieck/Combinatorics/Folder80*.lean` and
+`Grothendieck/Combinatorics/Folder154*.lean`.
 -/
 
 namespace OpenProblems.Pseudolines
@@ -43,9 +45,10 @@ numbered `ℓ₀, ℓ₁, …` so that the first four form a `II_4` or the first
 
 Status: proved, as `Grothendieck.Folder80Numbering.numberingLemma`
 (`Grothendieck/Combinatorics/Folder80Numbering.lean`). Choices: the arrangement is a combinatorial
-`PseudolineMap` of `Grothendieck/Combinatorics/Folder80Maps2.lean` with finitely many flags and lines; the
-partial arrangements are read on the incidence (`PartialOn`), a vertex of the partial arrangement
-being a vertex of the map met by two of its lines. -/
+`PseudolineMap` of `Grothendieck/Combinatorics/Folder80Maps2.lean` with finitely many flags and
+lines; the partial arrangements are read on the incidence (`PartialOn`), a vertex of the partial
+arrangement being a vertex of the map met by two of its lines. -/
+@[montpellier "80, 28"]
 def NumberingLemma : Prop :=
   ∀ {D L : Type} [Fintype D] [Finite L] (X : PseudolineMap D L), BigonFree X.On →
     ∃ (n : ℕ) (e : Fin n ≃ L) (k₀ : ℕ),

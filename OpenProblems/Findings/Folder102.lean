@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.Limits.LimitPreservingFunctorOfPoints
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -106,6 +107,7 @@ thickenings of affine schemes; unramifiedness is automatic for a monomorphism); 
 hypothesis (i) is an uncertain reading, taken as the completions of noetherian local rings at
 their maximal ideals; « commuting with filtered colimits of rings » is Stacks' limit
 preservation along cofiltered systems of affine `S`-schemes. -/
+@[montpellier "102, 12"]
 def OpenImmersionCriterion : Prop :=
   ∀ (S : Scheme.{u}) [IsLocallyNoetherian S] (G F : (Over S)ᵒᵖ ⥤ Type u) (u : G ⟶ F),
     (∀ T, Function.Injective (u.app T)) → IsFormallyEtaleMap u →

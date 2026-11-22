@@ -6,6 +6,7 @@ public import StacksFrontier.RingTheory.Nagata.CompleteLocalRing
 public import StacksFrontier.RingTheory.Nagata.Examples
 public import StacksFrontier.RingTheory.Nagata.MonogenicN1
 public import StacksFrontier.RingTheory.Nagata.Universes
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -60,6 +61,7 @@ open IsLocalRing
 /-- Conditions a) and b) of the Remarque on page 88: the height-one primes `𝔮` of `A` with
 `A_𝔮` not regular form a finite set, and for each of them the normalisation of `A_𝔮` is finite
 over `A_𝔮` (`IsN1`, Stacks 032F). -/
+@[montpellier "23, 88"]
 def NormalisationCriterion (A : Type*) [CommRing A] : Prop :=
   {q : PrimeSpectrum A | q.asIdeal.height = 1 ∧
       ¬ IsRegularLocalRing (Localization.AtPrime q.asIdeal)}.Finite ∧
@@ -114,6 +116,7 @@ theorem exists_algebraMap_eq_smul_of_isIntegral {A : Type*} [CommRing A] [IsDoma
 /-- **The necessity in the Remarque of page 88.** If the integral closure of a Noetherian
 domain `A` is finite over `A` (`IsN1 A`), then the height-one primes `𝔮` with `A_𝔮` not regular
 are finitely many, and the normalisation of each `A_𝔮` is finite. -/
+@[montpellier "23, 88"]
 theorem normalisationCriterion_of_isN1 (A : Type*) [CommRing A] [IsDomain A]
     [IsNoetherianRing A] (h : IsN1 A) : NormalisationCriterion A := by
   have hfg : (Subalgebra.toSubmodule (integralClosure A (FractionRing A))).FG :=
@@ -179,6 +182,7 @@ theorem isN1_of_finiteType_of_isNagataRing {R A : Type*} [CommRing R] [CommRing 
 /-- **The Remarque of page 88 over a Nagata base.** For a domain `A` of finite type over a
 Nagata ring, the normalisation of `A` is finite if and only if conditions a) and b) hold
 (both sides are then true). -/
+@[montpellier "23, 88"]
 theorem isN1_iff_normalisationCriterion_of_isNagataRing {R A : Type*} [CommRing R] [CommRing A]
     [IsDomain A] [Algebra R A] [Algebra.FiniteType R A] (hR : IsNagataRing R) :
     IsN1 A ↔ NormalisationCriterion A := by
@@ -187,6 +191,7 @@ theorem isN1_iff_normalisationCriterion_of_isNagataRing {R A : Type*} [CommRing 
 
 /-- **The Remarque of page 88 over an excellent base** (Stacks 07QV: a quasi-excellent ring is
 Nagata). -/
+@[montpellier "23, 88"]
 theorem isN1_iff_normalisationCriterion_of_isExcellent {R A : Type*} [CommRing R] [CommRing A]
     [IsDomain A] [Algebra R A] [Algebra.FiniteType R A] (hR : IsExcellent R) :
     IsN1 A ↔ NormalisationCriterion A :=
@@ -194,17 +199,20 @@ theorem isN1_iff_normalisationCriterion_of_isExcellent {R A : Type*} [CommRing R
 
 /-- **The Remarque of page 88 for a domain quotient of an excellent ring**, e.g. of an excellent
 regular ring: `R ⧸ 𝔭` has a finite normalisation if and only if conditions a) and b) hold. -/
+@[montpellier "23, 88"]
 theorem isN1_iff_normalisationCriterion_quotient {R : Type*} [CommRing R] (hR : IsExcellent R)
     (p : Ideal R) [p.IsPrime] : IsN1 (R ⧸ p) ↔ NormalisationCriterion (R ⧸ p) :=
   isN1_iff_normalisationCriterion_of_isExcellent (R := R) hR
 
 /-- A domain of finite type over a field has a finite normalisation (Stacks 0335 (1)). -/
+@[montpellier "23, 88"]
 theorem isN1_of_finiteType_field (k A : Type*) [Field k] [CommRing A] [IsDomain A]
     [Algebra k A] [Algebra.FiniteType k A] : IsN1 A :=
   isN1_of_finiteType_of_isNagataRing (IsNagataRing.of_field (K := k))
 
 /-- A domain quotient of a complete Noetherian local ring has a finite normalisation (Stacks
 032W). -/
+@[montpellier "23, 88"]
 theorem isN1_quotient_of_isPrecomplete (R : Type*) [CommRing R] [IsNoetherianRing R]
     [IsLocalRing R] [IsPrecomplete (maximalIdeal R) R] (p : Ideal R) [p.IsPrime] :
     IsN1 (R ⧸ p) :=

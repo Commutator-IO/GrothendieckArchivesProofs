@@ -4,6 +4,7 @@ public import Grothendieck.RingTheory.Folder100
 public import Grothendieck.RingTheory.Folder100Baire
 public import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem
 public import StacksFrontier.RingTheory.NoetherNormalization.Basic
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -13,10 +14,10 @@ public import StacksFrontier.RingTheory.NoetherNormalization.Basic
 The modernised reading `transcripts/100/100.modern.tex` (« Un argument de Baire ») proves the
 Corollary of page 38 (finding `100-baire-dimension-one-points` of `src/content/findings.ts`):
 in `S = Spec R`, `R` a complete noetherian local domain, countably many nowhere-dense closed
-subsets miss some point of dimension one. `Grothendieck/RingTheory/Folder100.lean` proves it, and the
-Proposition of page 36, by countable prime avoidance, and the page's own route only for
-`Θ = V⟦T⟧`; `Grothendieck/RingTheory/Folder100Baire.lean` does Baire on `𝔪ⁿ` for `Θ = V⟦T₁, …, Tₙ⟧`. This
-file follows the page's route in every dimension, through Cohen's structure theorem.
+subsets miss some point of dimension one. `Grothendieck/RingTheory/Folder100.lean` proves it, and
+the Proposition of page 36, by countable prime avoidance, and the page's own route only for
+`Θ = V⟦T⟧`; `Grothendieck/RingTheory/Folder100Baire.lean` does Baire on `𝔪ⁿ` for `Θ = V⟦T₁, …, Tₙ⟧`.
+This file follows the page's route in every dimension, through Cohen's structure theorem.
 
 **What is proved.**
 * `exists_coheight_eq_one_of_cohen`: the Corollary of page 38. Let `R` be a complete noetherian
@@ -76,6 +77,7 @@ lemma Good.of_ringEquiv {B B' : Type*} [CommRing B] [CommRing B'] (e : B ≃+* B
   exact ⟨e x, by simp⟩
 
 /-- The kernel of the surjection is a point with `B ⧸ P ≃ V`, of dimension one. -/
+@[montpellier "100, 38"]
 theorem Good.exists_prime [IsDomain V] [IsDiscreteValuationRing V] {B : Type*} [CommRing B]
     (h : Good V B) (S : Set B) (hS : S.Countable) (h0 : (0 : B) ∉ S) :
     ∃ P : Ideal B, P.IsPrime ∧ ringKrullDim (B ⧸ P) = 1 ∧ ∀ s ∈ S, s ∉ P := by
@@ -89,6 +91,7 @@ variable [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal 
 /-- **The page's step on `Θ = V⟦T₁, …, Tₙ⟧`, by Baire on `𝔪ⁿ`**: countably many nonzero series
 stay nonzero under the evaluation `Θ → V` at some `a ∈ 𝔪ⁿ`
 (`Folder100Baire.exists_eval_ne_zero`). -/
+@[montpellier "100, 38"]
 theorem good_mvPowerSeries (n : ℕ) : Good V (MvPowerSeries (Fin n) V) := by
   intro S hS h0
   have := hS.to_subtype
@@ -152,6 +155,7 @@ which is not a field. Countably many proper closed subsets of `Spec R` miss some
 coheight one (`dim closure {x} = 1`). Through Cohen's structure theorem, `R` is finite over
 `A = Λ⟦T₁, …, T_d⟧`; a point of dimension one of `A` avoiding nonzero elements `aᵢ` of `A`
 under the `Zᵢ` is found variable by variable, and lifted to `R`. -/
+@[montpellier "100, 38"]
 theorem exists_coheight_eq_one_of_cohen (R : Type u) [CommRing R] [IsNoetherianRing R]
     [IsLocalRing R] [IsDomain R] [IsAdicComplete (maximalIdeal R) R] (hR : ¬ IsField R)
     {ι : Type*} [Countable ι] (Z : ι → Set (PrimeSpectrum R)) (hZ : ∀ i, IsClosed (Z i))

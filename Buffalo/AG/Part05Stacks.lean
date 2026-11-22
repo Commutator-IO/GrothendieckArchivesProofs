@@ -3,6 +3,7 @@ module
 public import Buffalo.AG.Part05b
 public import StacksFrontier.AlgebraicGeometry.RelativeSpec.Representability
 public import StacksFrontier.AlgebraicGeometry.RelativeSpecEssSurj.Basic
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -41,6 +42,7 @@ namespace Buffalo.AG.Part05
 /-- thSz9ZHDK9o-33684 (9:21:24) [def] For a quasi-coherent `𝒪_S`-algebra `𝒜`, the functor
 `Spec(𝒜) : S' ↦ {(f : S' ⟶ S, 𝒜 ⟶ f_*𝒪_{S'})}` (Stacks' `relativeSpecFunctor`); over an affine
 base it is the functor of points of `Spec A` (`def_33684`). -/
+@[buffalo "thSz9ZHDK9o-33684"]
 noncomputable abbrev def_33684_relative (s : RelativeSpecSituation.{u}) :
     Scheme.{u}ᵒᵖ ⥤ Type u :=
   relativeSpecFunctor s
@@ -50,6 +52,7 @@ noncomputable abbrev def_33684_relative (s : RelativeSpecSituation.{u}) :
 `U ⊆ S` the inverse image `π⁻¹(U)` is `Spec Γ(U, 𝒜)`: the chart `Spec Γ(U, 𝒜) ⟶ X` and the
 inclusion `U ⟶ S` form a cartesian square over `π`. Stacks tags 01LP, 01LU. (That the functor
 is a Zariski sheaf, which follows from representability, is not restated.) -/
+@[buffalo "thSz9ZHDK9o-33941"]
 theorem prop_33941_relative (s : RelativeSpecSituation.{u}) :
     (def_33684_relative s).IsRepresentable ∧
       Nonempty ((def_33684_relative s).RepresentableBy (gluedSpectrum s).scheme) ∧
@@ -63,6 +66,7 @@ open Stacks.AffineAlgebraEquivalence in
 /-- thSz9ZHDK9o-34520 (9:35:20) [prop] If `f : X ⟶ S` is affine, `f_*𝒪_X` is a quasi-coherent
 `𝒪_S`-algebra, and `X ↦ f_*𝒪_X` is an anti-equivalence from the schemes affine over `S` to the
 quasi-coherent `𝒪_S`-algebras (Stacks tag 01SA). -/
+@[buffalo "thSz9ZHDK9o-34520"]
 theorem prop_34520_relative (S : Scheme.{u}) :
     (∀ {X : Scheme.{u}} (f : X ⟶ S) [IsAffineHom f],
       AlgebraSheaf.IsQuasicoherent (pushforwardAlgebra f)) ∧
@@ -76,6 +80,7 @@ open Stacks.AffineAlgebraEquivalence in
 up to isomorphism, `f_*𝒪_X` for a scheme `f : X ⟶ S` affine over `S` (its relative spectrum):
 the functor `X ↦ f_*𝒪_X` on schemes affine over `S` is essentially surjective, so the essential
 image of `Spec` consists of the schemes affine over `S`. -/
+@[buffalo "thSz9ZHDK9o-34263"]
 theorem prop_34263_relative (S : Scheme.{u}) :
     (affineQuasicoherentPushforwardFunctor S).EssSurj :=
   inferInstance

@@ -3,6 +3,7 @@ module
 public import Grothendieck.AlgebraicGeometry.Folder126Existence
 public import Mathlib.AlgebraicGeometry.RelativeGluing
 public import Mathlib.AlgebraicGeometry.Sites.SmallAffineZariski
+import Grothendieck.Attr
 
 @[expose] public noncomputable section
 
@@ -70,6 +71,7 @@ theorem resX_comp (f : X ⟶ Y) {V'' V' V : Y.AffineZariskiSite} (i : V'' ⟶ V'
 `f : X ⟶ Y` be finite and universally open with exactly `n` geometric points in every geometric
 fibre. Then `f` factors as a universal homeomorphism `X ⟶ X^ét` followed by a finite étale
 morphism `X^ét ⟶ Y`. -/
+@[montpellier "126, 17–23"]
 theorem exists_radicial_etale_factorisation_of_hasGeomDegree (f : X ⟶ Y) [IsFinite f]
     [UniversallyOpen f] {n : ℕ} (hn : HasGeomDegree f n) :
     ∃ (E : Scheme.{u}) (g₀ : X ⟶ E) (h₀ : E ⟶ Y),
@@ -216,6 +218,7 @@ homeomorphism `X ⟶ X^ét` followed by a finite étale `X^ét ⟶ Y`, and every
 to an étale `Y`-scheme factors uniquely through `X ⟶ X^ét`. (The factorisation is unique up to
 unique isomorphism, `Grothendieck.Folder126RadicialEtaleGlobal.existsUnique_iso_of_factorisations`.)
 -/
+@[montpellier "126, 17–23"]
 theorem radicial_etale_factorisation (f : X ⟶ Y) [IsFinite f] [UniversallyOpen f] {n : ℕ}
     (hn : HasGeomDegree f n) :
     ∃ (E : Scheme.{u}) (g₀ : X ⟶ E) (h₀ : E ⟶ Y),

@@ -2,6 +2,7 @@ module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.HenselianRings.StrictlyHenselianFiniteAlgebras
 public import StacksFrontier.RingTheory.Henselian.Unramified
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -72,6 +73,7 @@ namespace Grothendieck.Folder126RadicialEtale
 /-- The geometric points over `φ : R → K` of `Spec A`: the ring maps `A → K` extending `φ`. When
 `K` is algebraically closed and `A` is finite over `R`, their number is the separable degree
 `d(y)` of the fibre over the point `y = ker φ` (folder 126, page 17). -/
+@[montpellier "126, 17"]
 abbrev GeomPoints (R A : Type*) [CommRing R] [CommRing A] [Algebra R A] {K : Type*} [CommRing K]
     (φ : R →+* K) : Type _ :=
   {ψ : A →+* K // ψ.comp (algebraMap R A) = φ}
@@ -293,6 +295,7 @@ theorem nonempty_geomPoints_of_isOpenMap {R : Type*} [CommRing R] [IsLocalRing R
 /-- The structure map `R^ι → A ≃ ∏ᵢ Bᵢ` of the étale part: `Spec A → ∐_ι Spec R`, the arrow
 `X → X^ét` of page 17 over a strictly henselian base, where `X^ét` is the trivial finite étale
 cover with one sheet for each local factor. -/
+@[montpellier "126, 17"]
 def etalePartMap {R A : Type*} [CommRing R] [CommRing A] [Algebra R A] {ι : Type*}
     {B : ι → Type*} [∀ i, CommRing (B i)] [∀ i, Algebra R (B i)] (e : A ≃ₐ[R] ∀ i, B i) :
     (ι → R) →ₐ[R] A :=
@@ -336,6 +339,7 @@ theorem exists_apply_eq_of_algHom_pi {R : Type*} [CommRing R] [IsLocalRing R] {�
 when `A ≃ ∏ᵢ Bᵢ` with `Bᵢ` local, every `R`-algebra map `R^J → A` factors uniquely through
 `etalePartMap e : R^ι → A` (page 23: a `Y`-morphism from `X` to an étale `Y`-scheme factors
 uniquely through `X^ét`). -/
+@[montpellier "126, 23"]
 theorem existsUnique_comp_etalePartMap_eq {R : Type*} [CommRing R] [IsLocalRing R]
     {A : Type*} [CommRing A] [Algebra R A] {ι : Type*} {B : ι → Type*} [∀ i, CommRing (B i)]
     [∀ i, Algebra R (B i)] [∀ i, IsLocalRing (B i)] (e : A ≃ₐ[R] ∀ i, B i) {J : Type*}
@@ -371,6 +375,7 @@ and such that every geometric fibre has the same number `n` of geometric points.
 each `Spec Bᵢ → Spec R` has exactly one geometric point over every geometric point (finite,
 surjective, radicial: the arrow `X → X^ét` sheet by sheet), and `R^ι → A` is the étale part:
 every `R`-algebra map `R^J → A` factors uniquely through it. -/
+@[montpellier "126, 17"]
 theorem radicial_etale_factorisation_of_strictlyHenselian
     (R : Type u) [CommRing R] [StrictlyHenselianLocalRing R]
     (A : Type u) [CommRing A] [Algebra R A] [Module.Finite R A] (n : ℕ)
@@ -496,6 +501,7 @@ theorem exists_algEquiv_pi_of_etale (R : Type u) [CommRing R] [StrictlyHenselian
 /-- **Folder 126, page 23, over a strictly henselian base, for every finite étale algebra.**
 When `A ≃ ∏ᵢ Bᵢ` with `Bᵢ` local over a strictly henselian `R`, every `R`-algebra map `T → A`
 from a finite étale `R`-algebra `T` factors uniquely through `etalePartMap e : R^ι → A`. -/
+@[montpellier "126, 23"]
 theorem existsUnique_comp_etalePartMap_eq_of_etale {R : Type u} [CommRing R]
     [StrictlyHenselianLocalRing R] {A : Type*} [CommRing A] [Algebra R A] {ι : Type*}
     {B : ι → Type*} [∀ i, CommRing (B i)] [∀ i, Algebra R (B i)] [∀ i, IsLocalRing (B i)]

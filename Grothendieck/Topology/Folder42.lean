@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Grothendieck.Upstream.NoetherianIsOpenOfStableUnderGeneralization
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -107,6 +108,7 @@ theorem exists_mul_eq_zero_of_ker [IsNoetherianRing A] :
 
 /-- **Lemme 2 (1).** Over a Noetherian ring, some `f ∉ 𝔭` makes `A_f → A_𝔭`
 injective. -/
+@[montpellier "42, 3–5"]
 theorem lemme2_1 [IsNoetherianRing A] :
     ∃ (f : A) (hf : f ∉ p), Function.Injective (awayToAtPrime p f hf) := by
   obtain ⟨f, hf, hJ⟩ := exists_mul_eq_zero_of_ker p
@@ -116,6 +118,7 @@ theorem lemme2_1 [IsNoetherianRing A] :
 
 /-- **Lemme 2 (2).** If `A → A_𝔭` is injective, so is `A_𝔮 → A_𝔭` for every
 prime `𝔮 ⊇ 𝔭`. No Noetherian hypothesis is needed. -/
+@[montpellier "42, 3–5"]
 theorem lemme2_2 (hinj : Function.Injective (algebraMap A (Localization.AtPrime p)))
     (q : Ideal A) [q.IsPrime] (hpq : p ≤ q) :
     Function.Injective (atPrimeToAtPrime p q hpq) :=
@@ -210,6 +213,7 @@ theorem isCoherent_algebraMap (a : A) :
 omit p in
 /-- **Lemme 1 (page 3), for the structure sheaf of `Spec A`, `A` Noetherian.** For a coherent
 family `ξ` and a fraction `a / s`, the locus `{𝔭 ∈ D(s) : ξ 𝔭 = a / s}` is open. -/
+@[montpellier "42, 3"]
 theorem lemme1 [IsNoetherianRing A] {ξ : ∀ P : PrimeSpectrum A, Localization.AtPrime P.asIdeal}
     (hξ : IsCoherent ξ) (a s : A) :
     IsOpen {P : PrimeSpectrum A | s ∉ P.asIdeal ∧
@@ -240,6 +244,7 @@ omit p in
 rings `A_𝔭` along specialization: `a ↦ (a/1)_𝔭` is a bijection onto the coherent families.
 Injectivity holds for every ring; surjectivity is Lemme 1 plus mathlib's description of the
 structure sheaf as the sheaf of locally-fraction families. -/
+@[montpellier "42, 4"]
 theorem corollaire1 [IsNoetherianRing A] :
     Function.Bijective (fun a : A =>
       (⟨fun P : PrimeSpectrum A => algebraMap A (Localization.AtPrime P.asIdeal) a,
@@ -285,12 +290,14 @@ def IsCoherentGerms (ξ : ∀ x : X, ToType (F.presheaf.stalk x)) : Prop :=
 /-- **Condition (H) (page 3).** Every point `x` has an open `W ∋ x` such that the generization
 maps `F_y → F_x` are injective for `y ∈ W ∩ closure {x}` — i.e. on a nonempty open of
 `closure {x}`. -/
+@[montpellier "42, 3"]
 def ConditionH : Prop :=
   ∀ x : X, ∃ W : Opens X, x ∈ W ∧ ∀ y ∈ (W : Set X) ∩ closure {x}, ∀ h : x ⤳ y,
     Function.Injective (fun t => F.presheaf.stalkSpecializes h t)
 
 /-- **Lemme 1 (page 3).** Under (H), on a Noetherian sober space, the locus where a section
 agrees with a coherent family of germs is open. -/
+@[montpellier "42, 3"]
 theorem lemme1_faisceau [NoetherianSpace X] [QuasiSober X] (hH : ConditionH F)
     {ξ : ∀ x : X, ToType (F.presheaf.stalk x)} (hξ : IsCoherentGerms F ξ)
     (U : Opens X) (s : ToType (F.1.obj (op U))) :
@@ -310,6 +317,7 @@ theorem lemme1_faisceau [NoetherianSpace X] [QuasiSober X] (hH : ConditionH F)
 
 /-- **Proposition (page 3).** On a Noetherian sober space, under (H), a global section is the
 same thing as a coherent family of germs. -/
+@[montpellier "42, 3"]
 theorem proposition [NoetherianSpace X] [QuasiSober X] (hH : ConditionH F) :
     Function.Bijective (fun s : ToType (F.1.obj (op ⊤)) =>
       (⟨fun x => F.presheaf.germ ⊤ x trivial s, fun _ _ h =>
@@ -409,6 +417,7 @@ gives `φ x ⤳ φ x'`), lying over `S`, with a local homomorphism `𝒪_{Y,φ(x
 point, compatible with the generisation maps, and compatible with the structure maps to the
 local rings of `S`. The localisation axiom of a réseau is a property of `p(X)` and `p(Y)`, which
 come from schemes, so it is not a field here. -/
+@[montpellier "42, 1"]
 structure ReseauHom where
   toFun : X → Y
   mono : ∀ {x x' : X}, x ⤳ x' → toFun x ⤳ toFun x'
@@ -672,6 +681,7 @@ theorem toReseau_surjective [IsLocallyNoetherian X] [LocallyOfFiniteType sY] [Is
 `Y` locally of finite type and separated over `S`, `f ↦ p(f)` is a bijection from the
 `S`-morphisms `X → Y` onto the homomorphisms of réseaux of local rings `p(X) → p(Y)` over
 `p(S)`. -/
+@[montpellier "42, 2"]
 theorem toReseau_bijective [IsLocallyNoetherian X] [LocallyOfFiniteType sY] [IsSeparated sY] :
     Function.Bijective (fun f : {f : X ⟶ Y // f ≫ sY = sX} => toReseau f.1 f.2) :=
   ⟨fun f g h => Subtype.ext (toReseau_injective f.2 g.2 h),
@@ -679,6 +689,7 @@ theorem toReseau_bijective [IsLocallyNoetherian X] [LocallyOfFiniteType sY] [IsS
 
 /-- **Corollaire 3 with the page's hypotheses** (`S` locally Noetherian, `X` and `Y` locally of
 finite type over `S`) and the edition's (`Y` separated over `S`). -/
+@[montpellier "42, 2"]
 theorem corollaire3 [IsLocallyNoetherian S] [LocallyOfFiniteType sX] [LocallyOfFiniteType sY]
     [IsSeparated sY] :
     Function.Bijective (fun f : {f : X ⟶ Y // f ≫ sY = sX} => toReseau f.1 f.2) :=
@@ -752,6 +763,7 @@ theorem isSheaf_homPresheaf : (homPresheaf sX sY).IsSheaf := by
 
 variable (sX sY) in
 /-- The sheaf `F : U ↦ Hom_S(U, Y)` of page 5. -/
+@[montpellier "42, 5"]
 noncomputable def homSheaf : TopCat.Sheaf (Type u) X.toTopCat :=
   ⟨homPresheaf sX sY, isSheaf_homPresheaf⟩
 
@@ -807,6 +819,7 @@ theorem germ_homSheaf_eq_iff [IsLocallyNoetherian X] {U V : X.Opens} {x : X} (hU
 
 /-- **Lemme 3, local form, on the sheaf.** If `𝒪_{X,y} → 𝒪_{X,x}` is injective, so is `F_y → F_x`,
 for `Y` separated over `S`. -/
+@[montpellier "42, 5"]
 theorem stalkSpecializes_homSheaf_injective [IsLocallyNoetherian X] [IsSeparated sY] {x y : X}
     (h : x ⤳ y) (hinj : Function.Injective (X.presheaf.stalkSpecializes h)) :
     Function.Injective ((homPresheaf sX sY).stalkSpecializes h) := by
@@ -824,6 +837,7 @@ theorem stalkSpecializes_homSheaf_injective [IsLocallyNoetherian X] [IsSeparated
 
 /-- **Lemme 3 (page 5), in the page's form.** For `X` locally Noetherian and `Y` separated over
 `S`, the sheaf `F : U ↦ Hom_S(U, Y)` satisfies (H). -/
+@[montpellier "42, 5"]
 theorem lemme3 [IsLocallyNoetherian X] [IsSeparated sY] : ConditionH (homSheaf sX sY) := by
   intro x
   obtain ⟨U, hxU, hU, hinj⟩ := X.exists_germ_injective x
@@ -833,6 +847,7 @@ theorem lemme3 [IsLocallyNoetherian X] [IsSeparated sY] : ConditionH (homSheaf s
 /-- **Corollaire 2 (page 5), through the proposition of page 3.** For `X` Noetherian and `Y`
 separated over `S`, an `S`-morphism `X → Y` is the same thing
 as a coherent family of germs of `F`. -/
+@[montpellier "42, 5"]
 theorem corollaire2 [IsNoetherian X] [IsSeparated sY] :
     Function.Bijective (fun s : ToType ((homSheaf sX sY).1.obj (op ⊤)) =>
       (⟨fun x => (homSheaf sX sY).presheaf.germ ⊤ x trivial s, fun _ _ h =>

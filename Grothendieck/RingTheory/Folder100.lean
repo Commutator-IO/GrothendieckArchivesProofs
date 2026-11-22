@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -27,8 +28,8 @@ part of finding `100-baire-dimension-one-points` of `src/content/findings.ts`.
   `a`, and `𝔪 = ϖV` is uncountable.
 
 Not formalised here: the case of several variables, where the bad set of one `f` is no longer
-finite and Baire is needed, is `Grothendieck/RingTheory/Folder100Baire.lean` (the parametrisation of the
-`V`-homomorphisms `V⟦T₁, …, Tₙ⟧ → V` by `𝔪ⁿ`, zero sets closed with empty interior, Baire,
+finite and Baire is needed, is `Grothendieck/RingTheory/Folder100Baire.lean` (the parametrisation of
+the `V`-homomorphisms `V⟦T₁, …, Tₙ⟧ → V` by `𝔪ⁿ`, zero sets closed with empty interior, Baire,
 `Folder100Baire.exists_avoid`, and the lifting of points along a finite extension of
 `V⟦T₁, …, Tₙ⟧`); the reduction of a complete local domain to such an extension (Cohen) is in
 `Grothendieck/RingTheory/Folder100Cohen.lean`; the Proposition of page 36 is proved below by another
@@ -59,6 +60,7 @@ lemma coe_X_sub_C (a : V) :
 variable [IsAdicComplete (maximalIdeal V) V]
 
 /-- `V⟦T⟧ ⧸ (T − a) ≃ V` for `a ∈ 𝔪`. -/
+@[montpellier "100, 36–38"]
 noncomputable def quotEquiv {a : V} (ha : a ∈ maximalIdeal V) :
     (V⟦X⟧ ⧸ Ideal.span {PowerSeries.X - PowerSeries.C a}) ≃ₐ[V] V :=
   (Ideal.quotientEquivAlgOfEq V (by rw [coe_X_sub_C])).trans
@@ -172,6 +174,7 @@ theorem uncountable : Uncountable V := by
 /-- The Corollary of page 38 for `Θ = V⟦T⟧`: for countably many nonzero `fᵢ ∈ V⟦T⟧` there is
 `a ∈ 𝔪` with `fᵢ ∉ (T − a)` for every `i`; `V⟦T⟧ ⧸ (T − a) ≃ V` by `quotEquiv`, so `(T − a)` is
 a point of dimension one outside every `V(fᵢ)`. -/
+@[montpellier "100, 38"]
 theorem exists_avoid {ι : Type*} [Countable ι] (f : ι → V⟦X⟧) (hf : ∀ i, f i ≠ 0) :
     ∃ a ∈ maximalIdeal V, ∀ i, f i ∉ Ideal.span {PowerSeries.X - PowerSeries.C a} := by
   by_contra! h
@@ -433,6 +436,7 @@ lemma coheight_lt_top (x : PrimeSpectrum R) : Order.coheight x < ⊤ := by
 complete noetherian local ring, countably many closed subsets whose union contains every point
 `x` with `dim closure {x} ≤ 1` — the coheight of `x` in `Spec R` — have a finite subfamily
 covering the spectrum. -/
+@[montpellier "100, 36"]
 theorem exists_finite_subcover (Z : ℕ → Set (PrimeSpectrum R)) (hZ : ∀ i, IsClosed (Z i))
     (hcov : ∀ x : PrimeSpectrum R, Order.coheight x ≤ 1 → x ∈ ⋃ i, Z i) :
     ∃ s : Finset ℕ, ⋃ i ∈ s, Z i = Set.univ := by
@@ -468,6 +472,7 @@ lemma coheight_eq_zero_iff (x : PrimeSpectrum R) :
   exact le_maximalIdeal y.2.ne_top
 
 /-- The Proposition of page 36 for any countable index set. -/
+@[montpellier "100, 36"]
 theorem exists_finite_subcover_of_countable {ι : Type*} [Countable ι]
     (Z : ι → Set (PrimeSpectrum R)) (hZ : ∀ i, IsClosed (Z i))
     (hcov : ∀ x : PrimeSpectrum R, Order.coheight x ≤ 1 → x ∈ ⋃ i, Z i) :
@@ -489,6 +494,7 @@ theorem exists_finite_subcover_of_countable {ι : Type*} [Countable ι]
 field. Countably many proper closed subsets of `Spec R` (in the irreducible space `Spec R`,
 the closed subsets with empty interior, the page's « fermés rares », are exactly the proper
 ones) miss some point `x` with `dim closure {x} = 1`. -/
+@[montpellier "100, 38"]
 theorem exists_coheight_eq_one [IsDomain R] (hR : ¬ IsField R) {ι : Type*} [Countable ι]
     (Z : ι → Set (PrimeSpectrum R)) (hZ : ∀ i, IsClosed (Z i)) (hZu : ∀ i, Z i ≠ Set.univ) :
     ∃ x : PrimeSpectrum R, Order.coheight x = 1 ∧ ∀ i, x ∉ Z i := by
@@ -546,6 +552,7 @@ variable {R : Type*} [CommRing R] [IsNoetherianRing R] [IsLocalRing R]
 /-- **Corollary of page 38, with `dim closure {x}` the topological dimension.** In `Spec R`,
 `R` a complete noetherian local domain not a field, countably many proper closed subsets miss
 some point `x` whose closure has topological Krull dimension `1`. -/
+@[montpellier "100, 38"]
 theorem exists_topologicalKrullDim_closure_eq_one [IsDomain R] (hR : ¬ IsField R)
     {ι : Type*} [Countable ι] (Z : ι → Set (PrimeSpectrum R)) (hZ : ∀ i, IsClosed (Z i))
     (hZu : ∀ i, Z i ≠ Set.univ) :

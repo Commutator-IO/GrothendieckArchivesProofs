@@ -2,15 +2,16 @@ module
 
 public import Grothendieck.AlgebraicGeometry.Folder11
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.Concrete.DiagonalExpansion
+import Grothendieck.Attr
 
 @[expose] public section
 
 /-!
 # Folder 11 (pages 33, 37, 41): push-forwards into a graded algebra with a diagonal class
 
-`Grothendieck/AlgebraicGeometry/Folder11.lean` proves the equivalence of pages 37 and 41 (special simplicial
-bivariant algebras ≃ Poincaré algebras) in the commutative case only, and leaves out the graded
-case with Koszul signs and p. 41's full faithfulness of `A ↦ (A(pt), Δ)`, whose axioms on `Δ`
+`Grothendieck/AlgebraicGeometry/Folder11.lean` proves the equivalence of pages 37 and 41 (special
+simplicial bivariant algebras ≃ Poincaré algebras) in the commutative case only, and leaves out the
+graded case with Koszul signs and p. 41's full faithfulness of `A ↦ (A(pt), Δ)`, whose axioms on `Δ`
 the page does not write. The step of the commutative proof that carries full faithfulness is
 page 33's: into a Poincaré algebra, the push-forward of a morphism `(f_*, f^*)` is the adjoint
 of its pull-back (`Folder11.Simplicial.adj`, `adj_unique`), so a morphism is determined by its
@@ -90,6 +91,7 @@ def sgn (a : ℤ) : F := ((Int.negOnePow a : ℤ) : F)
 variable (l) in
 /-- The push-forward along `h : A → E` into `A`, read off the diagonal class:
 `h_* x = ∑_t (-1)^{a_t} κ_E(h(e_t) x) f_t`. -/
+@[montpellier "11, 33"]
 def push (κE : E →ₗ[F] F) (h : A →ₐ[F] E) : E →ₗ[F] A where
   toFun x := (l.map fun t => (sgn t.1 * κE (h t.2.1 * x)) • t.2.2).sum
   map_add' x x' := by
@@ -121,6 +123,7 @@ theorem sgn_mul_trace (hD : DiagonalData 𝒜 ℬ p₁ p₂ n η lam l) {j : ℤ
   simp
 
 /-- **The push-forward is adjoint to the pull-back**: `λ(y · h_* x) = κ_E(h(y) · x)`. -/
+@[montpellier "11, 33"]
 theorem trace_mul_push (hD : DiagonalData 𝒜 ℬ p₁ p₂ n η lam l) (κE : E →ₗ[F] F)
     (h : A →ₐ[F] E) (x : E) (y : A) : lam (y * push l κE h x) = κE (h y * x) := by
   induction y using DirectSum.Decomposition.inductionOn 𝒜 with
@@ -154,18 +157,21 @@ theorem trace_mul_push (hD : DiagonalData 𝒜 ℬ p₁ p₂ n η lam l) (κE : 
       ring
 
 /-- The projection formula `h_*(h(y) x) = y h_*(x)`. -/
+@[montpellier "11, 33"]
 theorem push_proj (hD : DiagonalData 𝒜 ℬ p₁ p₂ n η lam l) (κE : E →ₗ[F] F) (h : A →ₐ[F] E)
     (y : A) (x : E) : push l κE h (h y * x) = y * push l κE h x :=
   eq_of_forall_trace_mul hD fun z => by
     rw [trace_mul_push hD, ← mul_assoc, ← map_mul, ← mul_assoc, trace_mul_push hD]
 
 /-- `λ ∘ h_* = κ_E`. -/
+@[montpellier "11, 33"]
 theorem push_gauge (hD : DiagonalData 𝒜 ℬ p₁ p₂ n η lam l) (κE : E →ₗ[F] F) (h : A →ₐ[F] E)
     (x : E) : lam (push l κE h x) = κE x := by
   simpa using trace_mul_push hD κE h x 1
 
 /-- **A morphism of gauged algebras into `A` is determined by its pull-back.** Any linear
 `f : E → A` with the projection formula and `λ ∘ f = κ_E` is the push-forward `h_*`. -/
+@[montpellier "11, 33"]
 theorem push_unique (hD : DiagonalData 𝒜 ℬ p₁ p₂ n η lam l) (κE : E →ₗ[F] F) (h : A →ₐ[F] E)
     (f : E →ₗ[F] A) (proj : ∀ y x, f (h y * x) = y * f x) (gauge : ∀ x, lam (f x) = κE x) :
     f = push l κE h :=

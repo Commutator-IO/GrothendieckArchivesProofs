@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -131,6 +132,7 @@ theorem der_mul (a b : Fin 6) {x : K} (hx : U x) :
 def h6 (x : K) : K := x ^ 4 * (1 - x) ^ 4
 
 /-- `L₄^{⊗6}` is equivariantly trivial: `g′(λ)⁶ = h(gλ)/h(λ)` with `h = λ⁴(1 − λ)⁴`. -/
+@[montpellier "146, 70"]
 theorem der_pow_six (a : Fin 6) {x : K} (hx : U x) : der a x ^ 6 = h6 (anh a x) / h6 x := by
   obtain ⟨h0, h1⟩ := hx
   have h1' : x - 1 ≠ 0 := sub_ne_zero.2 h1
@@ -167,6 +169,7 @@ lemma three_dvd_of_pow (h3 : (3 : K) ≠ 0) {ζ : K} (hζ : ζ ^ 2 - ζ + 1 = 0)
 `g′(λ)^m = h(gλ)/h(λ)` for all `g` and `λ`, then `6 ∣ m`. At `λ = −1`, fixed by `1/λ` with
 derivative `−1`, and at a root `ζ` of `ζ² − ζ + 1`, fixed by `1/(1 − λ)` with derivative `ζ²`,
 a primitive cube root of unity. -/
+@[montpellier "146, 70"]
 theorem six_dvd (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {ζ : K} (hζ : ζ ^ 2 - ζ + 1 = 0)
     (m : ℤ) (h : K → K) (hh : ∀ x, U x → h x ≠ 0)
     (hc : ∀ a x, U x → der a x ^ m = h (anh a x) / h x) : 6 ∣ m := by
@@ -210,6 +213,7 @@ lemma sgn_mul (a b : Fin 6) : sgn (K := K) (mul a b) = sgn a * sgn b := by
 def derL (a : Fin 6) (x : K) : K := sgn a * der a x
 
 /-- `derL` is a 1-cocycle. -/
+@[montpellier "146, 70"]
 theorem derL_mul (a b : Fin 6) {x : K} (hx : U x) :
     derL (mul a b) x = derL a (anh b x) * derL b x := by
   simp only [derL, sgn_mul, der_mul a b hx]; ring
@@ -218,6 +222,7 @@ theorem derL_mul (a b : Fin 6) {x : K} (hx : U x) :
 def h3 (x : K) : K := x ^ 2 * (1 - x) ^ 2
 
 /-- `L^{⊗3}` is equivariantly trivial: `(sgn g · g′(λ))³ = h(gλ)/h(λ)` with `h = λ²(1 − λ)²`. -/
+@[montpellier "146, 70"]
 theorem derL_pow_three (a : Fin 6) {x : K} (hx : U x) :
     derL a x ^ 3 = h3 (anh a x) / h3 x := by
   obtain ⟨h0, h1⟩ := hx
@@ -228,6 +233,7 @@ theorem derL_pow_three (a : Fin 6) {x : K} (hx : U x) :
 /-- The entry « 3 » of page 70 for `L`, `n = 4`: a power `m` of the cocycle of `L` is a
 coboundary of a nowhere-zero function on `U(K)` iff `3 ∣ m` (`3 ≠ 0`, `ζ² − ζ + 1 = 0`). At `ζ`,
 fixed by `1/(1 − λ)`, the factor is `ζ²`. -/
+@[montpellier "146, 70"]
 theorem coboundary_derL_iff (h3K : (3 : K) ≠ 0) {ζ : K} (hζ : ζ ^ 2 - ζ + 1 = 0) (m : ℤ) :
     (∃ h : K → K, (∀ x, U x → h x ≠ 0) ∧ ∀ a x, U x → derL a x ^ m = h (anh a x) / h x) ↔
       3 ∣ m := by
@@ -355,6 +361,7 @@ lemma h5_ne {p : K × K} (hp : U5 p) : h5 p ≠ 0 := by
 
 /-- `L^{⊗4}` is equivariantly trivial: `cL(s)⁴ = h(sx)/h(x)` on the generators, with
 `h = (λμ(1 − λ)(1 − μ)(λ − μ))²`. -/
+@[montpellier "146, 70"]
 theorem cL_pow_four (i : Fin 4) {p : K × K} (hp : U5 p) :
     cL i p ^ 4 = hL (act5 i p) / hL p := by
   obtain ⟨a0, a1, b0, b1, ab⟩ := hp
@@ -364,6 +371,7 @@ theorem cL_pow_four (i : Fin 4) {p : K × K} (hp : U5 p) :
 
 /-- `L₅^{⊗12}` is equivariantly trivial under `𝔖₄`: `c5(s)¹² = h(sx)/h(x)` on the generators,
 with `h = μ⁶(1 − μ)⁶(λ − μ)⁶/(λ²(1 − λ)²)`. -/
+@[montpellier "146, 70"]
 theorem c5_pow_twelve (i : Fin 3) {p : K × K} (hp : U5 p) :
     c5 i p ^ 12 = h5 (act4 i p) / h5 p := by
   obtain ⟨a0, a1, b0, b1, ab⟩ := hp
@@ -458,6 +466,7 @@ lemma fix_three (h3 : (3 : K) ≠ 0) {ζ : K} (hζ : ζ ^ 2 - ζ + 1 = 0) :
 /-- The entry « 12 ? » of page 70 for `L`, `n = 5`, does not check: a power `m` of the cocycle
 of `L` is the coboundary of a nowhere-zero function on `M_{0,5}(K)` iff `4 ∣ m` (`2 ≠ 0`,
 `i² = −1`). -/
+@[montpellier "146, 70"]
 theorem coboundary_cL_iff (h2 : (2 : K) ≠ 0) {ι : K} (hι : ι ^ 2 = -1) (m : ℤ) :
     (∃ h : K × K → K, (∀ p, U5 p → h p ≠ 0) ∧
       ∀ w p, U5 p → wCoc act5 cL w p ^ m = h (wAct act5 w p) / h p) ↔ 4 ∣ m := by
@@ -474,6 +483,7 @@ theorem coboundary_cL_iff (h2 : (2 : K) ≠ 0) {ι : K} (hι : ι ^ 2 = -1) (m :
 /-- The entry « 12 ? » of page 70 for `L_i`, `n = 5`, checks: a power `m` of the cocycle of
 `L₅` under `𝔖₄` is the coboundary of a nowhere-zero function on `M_{0,5}(K)` iff `12 ∣ m`
 (`2 ≠ 0`, `3 ≠ 0`, `i² = −1`, `ζ² − ζ + 1 = 0`). -/
+@[montpellier "146, 70"]
 theorem coboundary_c5_iff (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {ι : K} (hι : ι ^ 2 = -1)
     {ζ : K} (hζ : ζ ^ 2 - ζ + 1 = 0) (m : ℤ) :
     (∃ h : K × K → K, (∀ p, U5 p → h p ≠ 0) ∧
@@ -604,6 +614,7 @@ lemma g6_ne {p : K × K × K} (hp : U6 p) : g6 p ≠ 0 :=
 
 /-- `L^{⊗5}` is equivariantly trivial: `cL(s)⁵ = h(sx)/h(x)` on the generators, with `h` the
 square of the product of the nine units. -/
+@[montpellier "146, 70"]
 theorem cL6_pow_five (i : Fin 5) {p : K × K × K} (hp : U6 p) :
     cL6 i p ^ 5 = hL6 (act6 i p) / hL6 p := by
   obtain ⟨l, m, n⟩ := p
@@ -615,6 +626,7 @@ theorem cL6_pow_five (i : Fin 5) {p : K × K × K} (hp : U6 p) :
   fin_cases i <;> simp [cL6, act6, hL6] <;> field_simp <;> ring
 
 /-- On the generators, the factor `c` of `L₆` satisfies `c(s)¹⁰ = −g(sx)/g(x)`. -/
+@[montpellier "146, 70"]
 theorem c6_pow_ten (i : Fin 4) {p : K × K × K} (hp : U6 p) :
     c6 i p ^ 10 = -(g6 (act6s i p) / g6 p) := by
   have hq : U6 (act6s i p) := act6_U6 i.castSucc hp
@@ -777,6 +789,7 @@ lemma fix_four6 (h2 : (2 : K) ≠ 0) {ι : K} (hι : ι ^ 2 = -1) :
 /-- The entry « 20 ? » of page 70 for `L`, `n = 6`, does not check: a power `m` of the cocycle
 of `L` is the coboundary of a nowhere-zero function on `M_{0,6}(K)` iff `5 ∣ m` (`5 ≠ 0`, a root
 `ω` of `ω⁴ + ω³ + ω² + ω + 1`). -/
+@[montpellier "146, 70"]
 theorem coboundary_cL6_iff (h5 : (5 : K) ≠ 0) {ω : K} (hω : ω ^ 4 + ω ^ 3 + ω ^ 2 + ω + 1 = 0)
     (m : ℤ) : (∃ h : K × K × K → K, (∀ p, U6 p → h p ≠ 0) ∧
       ∀ w p, U6 p → wCoc act6 cL6 w p ^ m = h (wAct act6 w p) / h p) ↔ 5 ∣ m := by
@@ -793,6 +806,7 @@ theorem coboundary_cL6_iff (h5 : (5 : K) ≠ 0) {ω : K} (hω : ω ^ 4 + ω ^ 3 
 /-- The entry « 60 ? » of page 70 for `L_i`, `n = 6`, does not check: a power `m` of the cocycle
 of `L₆` under `𝔖₅` is the coboundary of a nowhere-zero function on `M_{0,6}(K)` iff `20 ∣ m`
 (`2 ≠ 0`, `5 ≠ 0`, `i² = −1`, `ω⁴ + ω³ + ω² + ω + 1 = 0`). -/
+@[montpellier "146, 70"]
 theorem coboundary_c6_iff (h2 : (2 : K) ≠ 0) (h5 : (5 : K) ≠ 0) {ι : K} (hι : ι ^ 2 = -1)
     {ω : K} (hω : ω ^ 4 + ω ^ 3 + ω ^ 2 + ω + 1 = 0) (m : ℤ) :
     (∃ h : K × K × K → K, (∀ p, U6 p → h p ≠ 0) ∧
@@ -935,6 +949,7 @@ lemma disc_ne {n : ℕ} {v : Fin n → K × K} (hv : Conf v) : disc v ≠ 0 :=
 
 /-- `L^{⊗(n−1)}` is equivariantly trivial on `M_{0,n}`, trivialised by `disc`, for every `n`
 and every field. -/
+@[montpellier "146, 70"]
 theorem trivL_of_dvd {n : ℕ} {m : ℤ} (h : ((n - 1 : ℕ) : ℤ) ∣ m) : TrivL K n m := by
   obtain ⟨q, rfl⟩ := h
   refine ⟨fun v => disc v ^ q, fun v hv => ⟨zpow_ne_zero _ (disc_ne hv), fun t ht => ?_,
@@ -946,6 +961,7 @@ theorem trivL_of_dvd {n : ℕ} {m : ℤ} (h : ((n - 1 : ℕ) : ℤ) ∣ m) : Tri
 
 /-- `Lₙ^{⊗(n−1)(n−2)}` is equivariantly trivial on `M_{0,n}`, `n = k + 1`, trivialised by
 `(∏ᵢ [vᵢ p])^{2(k−1)} / disc(v)`, for every `n` and every field. -/
+@[montpellier "146, 70"]
 theorem trivLi_of_dvd {k : ℕ} {m : ℤ} (h : ((k * (k - 1) : ℕ) : ℤ) ∣ m) : TrivLi K k m := by
   obtain ⟨q, rfl⟩ := h
   have hR (p : K × K) (v : Fin k → K × K) (hp : ∀ i, br p (v i) ≠ 0) : brp p v ≠ 0 :=
@@ -1083,6 +1099,7 @@ theorem dvd_of_trivLi {j : ℕ} {ω ζ : K} (hω : IsPrimitiveRoot ω (j + 2))
 
 /-- The general formula for `L`: over a field with a primitive `(n − 1)`-th root of unity, `n ≥ 2`,
 `L^{⊗m}` is equivariantly trivial on `M_{0,n}` iff `(n − 1) ∣ m` (énoncé de l'édition). -/
+@[montpellier "146, 70"]
 theorem trivL_iff {n : ℕ} (hn : 2 ≤ n) {ω : K} (hω : IsPrimitiveRoot ω (n - 1)) (m : ℤ) :
     TrivL K n m ↔ ((n - 1 : ℕ) : ℤ) ∣ m := by
   obtain ⟨j, rfl⟩ : ∃ j, n = j + 2 := ⟨n - 2, by omega⟩
@@ -1091,6 +1108,7 @@ theorem trivL_iff {n : ℕ} (hn : 2 ≤ n) {ω : K} (hω : IsPrimitiveRoot ω (n
 /-- The general formula for `L_i`: over a field with primitive roots of unity of orders `n − 1`
 and `n − 2`, `n ≥ 3`, `Lₙ^{⊗m}` is equivariantly trivial on `M_{0,n}` under the stabiliser of
 the `n`-th point iff `(n − 1)(n − 2) ∣ m` (énoncé de l'édition). -/
+@[montpellier "146, 70"]
 theorem trivLi_iff {n : ℕ} (hn : 3 ≤ n) {ω ζ : K} (hω : IsPrimitiveRoot ω (n - 1))
     (hζ : IsPrimitiveRoot ζ (n - 2)) (m : ℤ) :
     TrivLi K (n - 1) m ↔ (((n - 1) * (n - 2) : ℕ) : ℤ) ∣ m := by
@@ -1252,6 +1270,7 @@ lemma step5 (i : Fin 4) {p : K × K} (hp : U5 p) : ∃ (a b c d : K) (t : Fin 5 
 
 /-- **The two models agree for `L`, `n = 5`**: restricting a trivialisation of the homogeneous
 model to `0, 1, ∞, λ, μ` trivialises the normalised cocycle `cL`. -/
+@[montpellier "146, 70"]
 theorem coboundary_cL_of_trivL {m : ℤ} (h : TrivL K 5 m) :
     ∃ h : K × K → K, (∀ p, U5 p → h p ≠ 0) ∧
       ∀ w p, U5 p → wCoc act5 cL w p ^ m = h (wAct act5 w p) / h p := by
@@ -1259,6 +1278,7 @@ theorem coboundary_cL_of_trivL {m : ℤ} (h : TrivL K 5 m) :
     (fun p hp => conf_cfg5 hp) (fun i p hp => step5 i hp) h
   exact ⟨h, hh, wCoc_zpow (fun i p hp => act5_U5 i hp) hh hc⟩
 
+@[montpellier "146, 70"]
 theorem trivL_five_iff (h2 : (2 : K) ≠ 0) {ι : K} (hι : ι ^ 2 = -1) (m : ℤ) :
     TrivL K 5 m ↔ ∃ h : K × K → K, (∀ p, U5 p → h p ≠ 0) ∧
       ∀ w p, U5 p → wCoc act5 cL w p ^ m = h (wAct act5 w p) / h p :=
@@ -1313,6 +1333,7 @@ lemma step5i (i : Fin 3) {p : K × K} (hp : U5 p) : ∃ (a b c d s : K) (t : Fin
 
 /-- **The two models agree for `L₅`, `n = 5`**: restricting a trivialisation of `L₅^{⊗m}` in
 the homogeneous model trivialises the normalised cocycle `c5`. -/
+@[montpellier "146, 70"]
 theorem coboundary_c5_of_trivLi {m : ℤ} (h : TrivLi K 4 m) :
     ∃ h : K × K → K, (∀ p, U5 p → h p ≠ 0) ∧
       ∀ w p, U5 p → wCoc act4 c5 w p ^ m = h (wAct act4 w p) / h p := by
@@ -1321,6 +1342,7 @@ theorem coboundary_c5_of_trivLi {m : ℤ} (h : TrivLi K 4 m) :
     (fun p hp => (conf_pts4 hp).2) (fun i p hp => step5i i hp) h
   exact ⟨h, hh, wCoc_zpow (fun i p hp => act5_U5 i.castSucc hp) hh hc⟩
 
+@[montpellier "146, 70"]
 theorem trivLi_five_iff (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {ι : K} (hι : ι ^ 2 = -1)
     {ζ : K} (hζ : ζ ^ 2 - ζ + 1 = 0) (m : ℤ) :
     TrivLi K 4 m ↔ ∃ h : K × K → K, (∀ p, U5 p → h p ≠ 0) ∧
@@ -1442,6 +1464,7 @@ lemma step6i (i : Fin 4) {p : K × K × K} (hp : U6 p) : ∃ (a b c d s : K) (t 
     · simp [c6]
 
 /-- **The two models agree for `L`, `n = 6`.** -/
+@[montpellier "146, 70"]
 theorem coboundary_cL6_of_trivL {m : ℤ} (h : TrivL K 6 m) :
     ∃ h : K × K × K → K, (∀ p, U6 p → h p ≠ 0) ∧
       ∀ w p, U6 p → wCoc act6 cL6 w p ^ m = h (wAct act6 w p) / h p := by
@@ -1449,6 +1472,7 @@ theorem coboundary_cL6_of_trivL {m : ℤ} (h : TrivL K 6 m) :
     (fun p hp => (conf_cfg6 hp).1) (fun i p hp => step6 i hp) h
   exact ⟨h, hh, wCoc_zpow (fun i p hp => act6_U6 i hp) hh hc⟩
 
+@[montpellier "146, 70"]
 theorem trivL_six_iff (h5 : (5 : K) ≠ 0) {ω : K} (hω : ω ^ 4 + ω ^ 3 + ω ^ 2 + ω + 1 = 0)
     (m : ℤ) : TrivL K 6 m ↔ ∃ h : K × K × K → K, (∀ p, U6 p → h p ≠ 0) ∧
       ∀ w p, U6 p → wCoc act6 cL6 w p ^ m = h (wAct act6 w p) / h p :=
@@ -1456,6 +1480,7 @@ theorem trivL_six_iff (h5 : (5 : K) ≠ 0) {ω : K} (hω : ω ^ 4 + ω ^ 3 + ω 
     trivL_of_dvd (by simpa using (coboundary_cL6_iff h5 hω m).1 H)⟩
 
 /-- **The two models agree for `L₆`, `n = 6`.** -/
+@[montpellier "146, 70"]
 theorem coboundary_c6_of_trivLi {m : ℤ} (h : TrivLi K 5 m) :
     ∃ h : K × K × K → K, (∀ p, U6 p → h p ≠ 0) ∧
       ∀ w p, U6 p → wCoc act6s c6 w p ^ m = h (wAct act6s w p) / h p := by
@@ -1464,6 +1489,7 @@ theorem coboundary_c6_of_trivLi {m : ℤ} (h : TrivLi K 5 m) :
     (fun p hp => (conf_cfg6 hp).2.2) (fun i p hp => step6i i hp) h
   exact ⟨h, hh, wCoc_zpow (fun i p hp => act6_U6 i.castSucc hp) hh hc⟩
 
+@[montpellier "146, 70"]
 theorem trivLi_six_iff (h2 : (2 : K) ≠ 0) (h5 : (5 : K) ≠ 0) {ι : K} (hι : ι ^ 2 = -1)
     {ω : K} (hω : ω ^ 4 + ω ^ 3 + ω ^ 2 + ω + 1 = 0) (m : ℤ) :
     TrivLi K 5 m ↔ ∃ h : K × K × K → K, (∀ p, U6 p → h p ≠ 0) ∧
@@ -1536,12 +1562,14 @@ lemma step4 (a : Fin 6) {x : K} (hx : U x) :
 
 /-- **The two models agree for `L`, `n = 4`**: restricting a trivialisation of the homogeneous
 model to `0, 1, ∞, λ` trivialises the cocycle `derL` of the anharmonic group. -/
+@[montpellier "146, 70"]
 theorem coboundary_derL_of_trivL {m : ℤ} (h : TrivL K 4 m) :
     ∃ h : K → K, (∀ x, U x → h x ≠ 0) ∧ ∀ a x, U x → derL a x ^ m = h (anh a x) / h x :=
   cob_of_trivL cfg4 perm4 (fun x hx => (conf_cfg4 hx).1) (fun a x hx => by
     obtain ⟨hd, ht, hv, -, hL, -⟩ := step4 a hx
     exact ⟨_, _, _, _, _, hd, ht, hv, hL⟩) h
 
+@[montpellier "146, 70"]
 theorem trivL_four_iff (h3 : (3 : K) ≠ 0) {ζ : K} (hζ : ζ ^ 2 - ζ + 1 = 0) (m : ℤ) :
     TrivL K 4 m ↔
       ∃ h : K → K, (∀ x, U x → h x ≠ 0) ∧ ∀ a x, U x → derL a x ^ m = h (anh a x) / h x :=
@@ -1549,6 +1577,7 @@ theorem trivL_four_iff (h3 : (3 : K) ≠ 0) {ζ : K} (hζ : ζ ^ 2 - ζ + 1 = 0)
     trivL_of_dvd (by simpa using (coboundary_derL_iff h3 hζ m).1 H)⟩
 
 /-- **The two models agree for `L₄`, `n = 4`**: the cocycle `der` (`g ↦ g′(λ)`). -/
+@[montpellier "146, 70"]
 theorem coboundary_der_of_trivLi {m : ℤ} (h : TrivLi K 3 m) :
     ∃ h : K → K, (∀ x, U x → h x ≠ 0) ∧ ∀ a x, U x → der a x ^ m = h (anh a x) / h x :=
   cob_of_trivLi (fun x : K => (x, (1 : K))) (fun _ => pts3) perm4
@@ -1558,6 +1587,7 @@ theorem coboundary_der_of_trivLi {m : ℤ} (h : TrivLi K 3 m) :
       have h3 : perm4 a (3 : Fin 4) = 3 := by fin_cases a <;> rfl
       simpa [cfg4, h3] using congrFun hv 3) h
 
+@[montpellier "146, 70"]
 theorem trivLi_four_iff (h2 : (2 : K) ≠ 0) (h3 : (3 : K) ≠ 0) {ζ : K}
     (hζ : ζ ^ 2 - ζ + 1 = 0) (m : ℤ) : TrivLi K 3 m ↔
       ∃ h : K → K, (∀ x, U x → h x ≠ 0) ∧ ∀ a x, U x → der a x ^ m = h (anh a x) / h x :=
@@ -1723,6 +1753,7 @@ macro "cox_comm " act:ident hU:ident hne:ident : tactic => `(tactic| (
 /-- **The Coxeter relations of `𝔖₅`** for the substitutions `act5` and the factors `cL` of
 `L`, checked with the intermediate points as variables, clearing the denominators one level at
 a time. -/
+@[montpellier "146, 70"]
 theorem coxRel_cL : CoxRel 4 U5 (act5 (K := K)) cL where
   maps i _ := act5_U5 i
   sq i x hx := by cox_sq act5 act5_U5 U5_ne
@@ -1730,6 +1761,7 @@ theorem coxRel_cL : CoxRel 4 U5 (act5 (K := K)) cL where
   comm i j hij x hx := by cox_comm act5 act5_U5 U5_ne
 
 /-- **The Coxeter relations of `𝔖₄`** for `s₁, s₂, s₃` and the factors `c5` of `L₅`. -/
+@[montpellier "146, 70"]
 theorem coxRel_c5 : CoxRel 3 U5 (act4 (K := K)) c5 where
   maps i _ := act4_U5 i
   sq i x hx := by cox_sq act4 act4_U5 U5_ne
@@ -1737,6 +1769,7 @@ theorem coxRel_c5 : CoxRel 3 U5 (act4 (K := K)) c5 where
   comm i j hij x hx := by cox_comm act4 act4_U5 U5_ne
 
 /-- **The Coxeter relations of `𝔖₆`** for the substitutions `act6` and the factors `cL6`. -/
+@[montpellier "146, 70"]
 theorem coxRel_cL6 : CoxRel 5 U6 (act6 (K := K)) cL6 where
   maps i _ := act6_U6 i
   sq i x hx := by cox_sq act6 act6_U6 U6_ne
@@ -1745,6 +1778,7 @@ theorem coxRel_cL6 : CoxRel 5 U6 (act6 (K := K)) cL6 where
 
 /-- **The Coxeter relations of `𝔖₅`** for `s₁, …, s₄` on `M_{0,6}` and the factors `c6` of
 `L₆`. -/
+@[montpellier "146, 70"]
 theorem coxRel_c6 : CoxRel 4 U6 (act6s (K := K)) c6 where
   maps i _ := act6s_U6 i
   sq i x hx := by cox_sq act6s act6s_U6 U6_ne

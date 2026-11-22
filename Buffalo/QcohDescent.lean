@@ -2,6 +2,7 @@ module
 
 public import Mathlib.RingTheory.TensorProduct.Basic
 public import Mathlib.LinearAlgebra.Quotient.Basic
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -146,6 +147,7 @@ lemma ext_one_tmul {P : Type*} [AddCommGroup P] [Module B P] {g g' : B ⊗[A] M 
 
 /-- **Theorem A, affine case.** If `N → B ⊗ N ⇉ (B ⊗ B) ⊗ N` is an equalizer, base change
 `Hom_A(M, N) → Hom_{Des}(B ⊗ M, B ⊗ N)` is a bijection, for every `A`-module `M`. -/
+@[buffalo "3ULFIl_2Wis-23180"]
 theorem descend_bijective (hN : IsEqualizer A B N) :
     Function.Bijective (descend B : (M →ₗ[A] N) → _) := by
   obtain ⟨hinj, hex⟩ := hN
@@ -167,6 +169,7 @@ theorem descend_bijective (hN : IsEqualizer A B N) :
 
 /-- Conversely, bijectivity for `M = A` alone gives condition (c) for `N`: `A → B` is a descent
 morphism for modules (in the sense of full faithfulness) exactly when (c) holds. -/
+@[buffalo "3ULFIl_2Wis-23180"]
 theorem isEqualizer_iff_bijective :
     IsEqualizer A B N ↔ Function.Bijective (descend B : (A →ₗ[A] N) → _) := by
   refine ⟨descend_bijective, fun ⟨hinj, hsurj⟩ ↦ ⟨fun n n' h ↦ ?_, fun x hx ↦ ?_⟩⟩
@@ -236,12 +239,14 @@ def EqualizerCondition : Prop :=
 
 /-- Stacks 08WE: condition (c) holds iff `A → B` is pure (modules tested in a universe that
 contains `B`). -/
+@[buffalo "3ULFIl_2Wis-23180"]
 theorem equalizerCondition_iff_isPure :
     EqualizerCondition.{u, v, max u w} A B ↔ IsPure.{u, v, max u w} A B :=
   ⟨fun h P _ _ ↦ (h P).1, fun h P _ _ ↦ isEqualizer_of_injective (h P) (h _)⟩
 
 /-- **Theorem A, affine case**, for a pure map `A → B`: base change from `A`-modules to
 descent data along `A → B` is fully faithful. -/
+@[buffalo "3ULFIl_2Wis-23180"]
 theorem descend_bijective_of_isPure (h : IsPure.{u, v, max u w} A B)
     (M : Type*) [AddCommGroup M] [Module A M] (N : Type (max u w)) [AddCommGroup N]
     [Module A N] : Function.Bijective (descend B : (M →ₗ[A] N) → _) :=

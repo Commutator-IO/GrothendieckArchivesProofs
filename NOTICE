@@ -9,9 +9,16 @@ licensed under the Apache License, Version 2.0.
    (lakefile.toml); not copied. Its declarations are cited by Stacks tag only; no prose of the
    Stacks Project (GFDL) is reproduced here. One exception, in Lean code only: the proof of
    exists_isBaseChange_invariant_ideal and the lemma mem_of_map_eq' in
-   Grothendieck/Folder126NilpotentDescent.lean are adapted from the proof of
+   Grothendieck/AlgebraicGeometry/Folder126NilpotentDescent.lean are adapted from the proof of
    Module.Descent.exists_fin_invariant_span_ideal and the private lemma mem_of_map_eq of
-   StacksFrontier/RingTheory/Descent/CechSquareZeroGenerators.lean at that commit.
+   StacksFrontier/RingTheory/Descent/CechSquareZeroGenerators.lean at that commit; and, in
+   Grothendieck/AlgebraicGeometry/Folder126NilpotentFlat.lean, the proofs of
+   exists_isBaseChange_of_comparison,
+   IsThickenedNerve.exists_isBaseChange_grPiece and IsThickenedNerve.exists_mem_eqLocus_sub_mem
+   are adapted from those of Module.Descent.exists_sub_eq_of_cocycle
+   (StacksFrontier/RingTheory/Descent/CocycleOfComparisonMaps.lean),
+   Module.Descent.exists_grMap_sub_grMap_eq and Module.Descent.exists_eq_of_isNilpotent_ker
+   (StacksFrontier/RingTheory/Descent/NilpotentEqualizerLift.lean) at that commit.
 
 2. Mordell, https://github.com/AxiomMath/Mordell
    The files below are copied from commit 82a30cb7857f6e3cfdb1be91f5533c0ccb57d493,

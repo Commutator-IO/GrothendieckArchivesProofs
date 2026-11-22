@@ -40,6 +40,7 @@ Old path → new path of every moved file. Declaration names are unchanged.
 | `Grothendieck/Folder126GeometricPoints.lean` | `Grothendieck/AlgebraicGeometry/Folder126GeometricPoints.lean` |
 | `Grothendieck/Folder126Glue.lean` | `Grothendieck/AlgebraicGeometry/Folder126Glue.lean` |
 | `Grothendieck/Folder126NilpotentDescent.lean` | `Grothendieck/AlgebraicGeometry/Folder126NilpotentDescent.lean` |
+| `Grothendieck/Folder126NilpotentFlat.lean` | `Grothendieck/AlgebraicGeometry/Folder126NilpotentFlat.lean` |
 | `Grothendieck/Folder126NilpotentQuotient.lean` | `Grothendieck/AlgebraicGeometry/Folder126NilpotentQuotient.lean` |
 | `Grothendieck/Folder126RadicialEtale.lean` | `Grothendieck/AlgebraicGeometry/Folder126RadicialEtale.lean` |
 | `Grothendieck/Folder126RadicialEtaleGlobal.lean` | `Grothendieck/AlgebraicGeometry/Folder126RadicialEtaleGlobal.lean` |

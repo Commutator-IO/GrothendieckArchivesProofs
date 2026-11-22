@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.Topos.Part03b
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -26,6 +27,7 @@ noncomputable section
 
 /-- PqCQM3Pcl6Q-6937 (1:55:37) [def] Sober: every irreducible closed subset has exactly one generic
 point (Mathlib: `QuasiSober` and `T0Space`). -/
+@[buffalo "PqCQM3Pcl6Q-6937"]
 theorem sober_iff (X : Type*) [TopologicalSpace X] :
     (QuasiSober X ∧ T0Space X) ↔
       ∀ S : Set X, IsIrreducible S → IsClosed S → ∃! x, IsGenericPoint x S := by
@@ -42,6 +44,7 @@ theorem sober_iff (X : Type*) [TopologicalSpace X] :
     exact (hz x isGenericPoint_closure).trans (hz y hy).symm
 
 /-- PqCQM3Pcl6Q-7188 (1:59:48) [ex] Hausdorff spaces and schemes are sober. -/
+@[buffalo "PqCQM3Pcl6Q-7188"]
 theorem t2_sober (X : Type*) [TopologicalSpace X] [T2Space X] : QuasiSober X ∧ T0Space X :=
   ⟨inferInstance, inferInstance⟩
 
@@ -50,6 +53,7 @@ theorem scheme_sober (X : AlgebraicGeometry.Scheme) : QuasiSober X ∧ T0Space X
 
 /-- PqCQM3Pcl6Q-7248 (2:00:48) [ex] In a topological group the closure of a point is a translate
 of the closure of the unit. -/
+@[buffalo "PqCQM3Pcl6Q-7248"]
 theorem closure_singleton_eq (G : Type*) [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     (g : G) : closure {g} = (g * ·) '' closure {1} := by
   have := (Homeomorph.mulLeft g).image_closure {1}
@@ -63,6 +67,7 @@ theorem separationQuotient_sober (G : Type*) [TopologicalSpace G] [Group G] [IsT
 
 /-- PqCQM3Pcl6Q-5819 (1:36:59) [def] A map out of a sum of spaces is continuous iff its
 restrictions are; each summand is open. -/
+@[buffalo "PqCQM3Pcl6Q-5819"]
 theorem sigma_universal {ι : Type*} {X : ι → Type*} [∀ i, TopologicalSpace (X i)] {Y : Type*}
     [TopologicalSpace Y] (f : Sigma X → Y) :
     Continuous f ↔ ∀ i, Continuous fun a => f ⟨i, a⟩ := continuous_sigma_iff
@@ -72,6 +77,7 @@ theorem sigma_open {ι : Type*} {X : ι → Type*} [∀ i, TopologicalSpace (X i
 
 /-- PqCQM3Pcl6Q-5628 (1:33:48) [cex] The trivial group is initial and final in groups, yet a
 non-trivial group maps to it: strict initiality fails. -/
+@[buffalo "PqCQM3Pcl6Q-5628"]
 theorem grp_not_strict : IsZero (GrpCat.of PUnit.{1}) ∧
     ∃ f : GrpCat.of (Multiplicative (ZMod 2)) ⟶ GrpCat.of PUnit.{1}, ¬ IsIso f := by
   refine ⟨GrpCat.isZero_of_subsingleton _, ⟨GrpCat.ofHom 1, fun h => ?_⟩⟩
@@ -87,11 +93,13 @@ variable {R : Type*} [CommRing R]
 /-- PqCQM3Pcl6Q-7368 (2:02:48) [def] The Zariski-type topology on a set `T` of ideals: the basic
 closed sets are the `V(S) = {I ∈ T | S ⊆ I}`, the closed sets their finite unions' intersections
 (so the complements of the `V(S)` form a subbasis of opens). -/
-@[reducible] def zariskiType (T : Set (Ideal R)) : TopologicalSpace T :=
+@[buffalo "PqCQM3Pcl6Q-7368", reducible]
+def zariskiType (T : Set (Ideal R)) : TopologicalSpace T :=
   TopologicalSpace.generateFrom {U | ∃ S : Set R, U = {I : T | ¬ S ⊆ (I : Ideal R)}}
 
 /-- PqCQM3Pcl6Q-7431 (2:03:51) [rem] In such a space `J ∈ closure {I}` iff `I ⊆ J`: specialization
 is inclusion, an order. -/
+@[buffalo "PqCQM3Pcl6Q-7431"]
 theorem zariskiType_specializes (T : Set (Ideal R)) (I J : T) :
     @Specializes T (zariskiType T) I J ↔ (I : Ideal R) ≤ J := by
   let _ : TopologicalSpace T := zariskiType T
@@ -131,6 +139,7 @@ theorem mem_evalPoint (a : K) (p : K[X]) : p ∈ (evalPoint K a).asIdeal ↔ p.e
 
 /-- PqCQM3Pcl6Q-7063 (1:57:43) [ex] For `K` infinite, the maximal spectrum of `K[X]` (Serre's
 variety, the affine line) is irreducible... -/
+@[buffalo "PqCQM3Pcl6Q-7063"]
 theorem maxSpec_irreducible : IsIrreducible (Set.univ : Set (MaximalSpectrum K[X])) := by
   refine ⟨⟨evalPoint K 0, trivial⟩, fun u v hu hv ⟨x, _, hxu⟩ ⟨y, _, hyv⟩ => ?_⟩
   obtain ⟨t, ht, rfl⟩ := isOpen_induced_iff.1 hu
@@ -223,16 +232,19 @@ def basicOpen (x : P) : Opens (WithLowerSet P) :=
 variable {P}
 
 /-- PqCQM3Pcl6Q-9632 (2:40:32) [def] The open sets of `X_C` are the sieves (lower sets). -/
+@[buffalo "PqCQM3Pcl6Q-9632"]
 theorem isOpen_iff_sieve (O : Set (WithLowerSet P)) : IsOpen O ↔ IsLowerSet O :=
   IsLowerSet.isOpen_iff_isLowerSet
 
 /-- PqCQM3Pcl6Q-9820 (2:43:40) [prop] The smallest open set containing `x` is `{y ≤ x}`. -/
+@[buffalo "PqCQM3Pcl6Q-9820"]
 theorem basicOpen_smallest (x : P) :
     WithLowerSet.toLowerSet x ∈ basicOpen P x ∧
       ∀ V : Opens (WithLowerSet P), WithLowerSet.toLowerSet x ∈ V → basicOpen P x ≤ V :=
   ⟨le_refl _, fun V hV _ hy => ((IsLowerSet.isOpen_iff_isLowerSet).1 V.2) hy hV⟩
 
 /-- PqCQM3Pcl6Q-9878 (2:44:38) [prop] `O_x ⊆ O_y` iff `x ≤ y`, and the `O_x` form a basis. -/
+@[buffalo "PqCQM3Pcl6Q-9878"]
 theorem basicOpen_le_iff (x y : P) : basicOpen P x ≤ basicOpen P y ↔ x ≤ y :=
   Set.Iic_subset_Iic
 
@@ -257,6 +269,7 @@ instance : (basicOpenFunctor (P := P)).Faithful :=
 /-- PqCQM3Pcl6Q-10006 (2:46:46) [thm] / PqCQM3Pcl6Q-9505 (2:38:25) [prop] For an ordered category
 `C` (a preorder) with the space `X_C` (underlying set `Ob C`, opens the sieves),
 `Top(X_C) ≃ Ĉ`. -/
+@[buffalo "PqCQM3Pcl6Q-10006"]
 def alexandrovSheafEquiv : Sheaf (Opens.grothendieckTopology (WithLowerSet P)) (Type u) ≌
     (Pᵒᵖ ⥤ Type u) :=
   sheafEquivPresheafOfMinimalBasis basicOpenFunctor (fun x => WithLowerSet.toLowerSet x)
@@ -270,6 +283,7 @@ end Ordered
 
 /-- PqCQM3Pcl6Q-10259 (2:50:59) [def] `E ⊆ X` is very dense if every non-empty locally closed
 subset of `X` meets `E`. -/
+@[buffalo "PqCQM3Pcl6Q-10259"]
 def IsVeryDense (E : Set X) : Prop :=
   ∀ L : Set X, IsLocallyClosed L → L.Nonempty → (L ∩ E).Nonempty
 
@@ -329,6 +343,7 @@ abbrev EssCat := InducedCategory (Opens X) (minNbhd (X := X))
 
 /-- PqCQM3Pcl6Q-10388 (2:53:08) [thm], one direction: if the essential points of `X` are very
 dense, then `Top(X) ≃ Ĉ` for `C` the set of essential points ordered by specialization. -/
+@[buffalo "PqCQM3Pcl6Q-10388"]
 def sheafEquivOfVeryDense (h : IsVeryDense {x : X | HasMinNbhd x}) :
     Sheaf (Opens.grothendieckTopology X) (Type u) ≌ ((EssCat X)ᵒᵖ ⥤ Type u) :=
   sheafEquivPresheafOfMinimalBasis (inducedFunctor _) Subtype.val mem_minNbhd minNbhd_le
@@ -363,6 +378,7 @@ def stalkIsoEval {x : X} {U : Opens X} (hx : x ∈ U) (hU : ∀ V : Opens X, x �
 
 /-- PqCQM3Pcl6Q-10135 (2:48:55) [prop], one direction: a point with a smallest open neighbourhood
 is essential (its fibre functor commutes with arbitrary limits). -/
+@[buffalo "PqCQM3Pcl6Q-10135"]
 theorem stalk_preservesLimits {x : X} {U : Opens X} (hx : x ∈ U)
     (hU : ∀ V : Opens X, x ∈ V → U ≤ V) :
     PreservesLimits (TopCat.Presheaf.stalkFunctor (Type u) x) :=
@@ -389,6 +405,7 @@ theorem sierpinski_closed_point :
 /-- PqCQM3Pcl6Q-9126 (2:32:06) [prop], one direction: a pro-object of `C` (a cofiltered, initially
 small diagram `p : N → C`) defines a point of `Ĉ`, whose fibre functor is
 `F ↦ colim_N F(p(n))` (`Point.isColimitPresheafFiberOfIsCofilteredCocone`). -/
+@[buffalo "PqCQM3Pcl6Q-9126"]
 def proPoint {C : Type u} [SmallCategory C] {N : Type u} [SmallCategory N] [IsCofiltered N]
     [InitiallySmall.{u} N]
     (p : N ⥤ C) : Point.{u} (⊥ : GrothendieckTopology C) :=
@@ -402,6 +419,7 @@ section Equivariant
 
 /-- PqCQM3Pcl6Q-2361 (0:39:21) [def] An object of `Top(X, G)`: an étale space `p : E → X` with an
 action of the discrete group `G` by homeomorphisms making `p` equivariant. -/
+@[buffalo "PqCQM3Pcl6Q-2361"]
 structure EquivEtale (X : Type u) [TopologicalSpace X] (G : Type u) [Group G] [MulAction G X] where
   /-- The total space. -/
   E : Type u
@@ -415,6 +433,7 @@ structure EquivEtale (X : Type u) [TopologicalSpace X] (G : Type u) [Group G] [M
 
 /-- PqCQM3Pcl6Q-3136 (0:52:16) [rem] The opens of `X/G` (quotient topology) are the images of the
 `G`-invariant opens of `X`; the quotient map is open. -/
+@[buffalo "PqCQM3Pcl6Q-3136"]
 theorem quotient_opens (X : Type u) [TopologicalSpace X] (G : Type u) [Group G] [MulAction G X]
     [ContinuousConstSMul G X] :
     IsOpenQuotientMap (Quotient.mk (MulAction.orbitRel G X)) :=
@@ -425,18 +444,21 @@ end Equivariant
 /-! ## Tensor products and finiteness -/
 
 /-- PqCQM3Pcl6Q-7746 (2:09:06) [prop], sectionwise: `M ⊗_R R^n ≅ M^n`, naturally. -/
+@[buffalo "PqCQM3Pcl6Q-7746"]
 def tensor_free (R : Type u) [CommRing R] (M : Type u) [AddCommGroup M] [Module R M] (n : ℕ) :
     TensorProduct R M (Fin n → R) ≃ₗ[R] (Fin n → M) :=
   TensorProduct.piScalarRight R R M (Fin n)
 
 /-- PqCQM3Pcl6Q-8242 (2:17:22) [prop], the case of orders in number fields: the normalization of
 `ℤ` in a number field (its ring of integers) is a finite `ℤ`-module, hence of finite type. -/
+@[buffalo "PqCQM3Pcl6Q-8242"]
 theorem ringOfIntegers_finite (K : Type*) [Field K] [NumberField K] :
     Module.Finite ℤ (NumberField.RingOfIntegers K) ∧ Algebra.FiniteType ℤ (NumberField.RingOfIntegers K) :=
   ⟨inferInstance, inferInstance⟩
 
 /-- PqCQM3Pcl6Q-8368 (2:19:28) [prop], the first step: finitely many elements of `K` (the
 coefficients of a finite presentation) lie in a subalgebra of finite type over `ℤ`. -/
+@[buffalo "PqCQM3Pcl6Q-8368"]
 theorem coefficients_fg {K : Type*} [CommRing K] (s : Finset K) :
     (Algebra.adjoin ℤ (s : Set K)).FG :=
   ⟨s, rfl⟩

@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.RingTheory.Folder100
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -13,8 +14,8 @@ reducing to `Θ = V⟦T₁, …, Tₙ⟧`, `V` a complete discrete valuation rin
 `Θ → V` are parametrised by `𝔪ⁿ`, the zeros of a nonzero `f ∈ Θ` form a closed subset with
 empty interior of the complete metric space `𝔪ⁿ`, and Baire gives a point `a ∈ 𝔪ⁿ` where
 countably many nonzero `fᵢ` do not vanish. `Grothendieck/RingTheory/Folder100.lean` proves the case
-`n = 1` by countability, and `Grothendieck/RingTheory/Folder100Cohen.lean` chooses the point one variable
-at a time; this file follows the page's own route in every `n`.
+`n = 1` by countability, and `Grothendieck/RingTheory/Folder100Cohen.lean` chooses the point one
+variable at a time; this file follows the page's own route in every `n`.
 
 **What is proved.**
 * `eval`: for `a ∈ 𝔪ⁿ`, the evaluation `Θ → V`, `T ↦ a` (Mathlib's `MvPowerSeries.aeval`, `V`
@@ -288,6 +289,7 @@ theorem sub_C_eval_mem [IsNoetherianRing V] {a : Fin n → V} (ha : ∀ i, a i �
 variable [IsNoetherianRing V]
 
 /-- The kernel of the evaluation at `a` is `(T₁ − a₁, …, Tₙ − aₙ)`. -/
+@[montpellier "100, 36–38"]
 theorem ker_eval {a : Fin n → V} (ha : ∀ i, a i ∈ maximalIdeal V) :
     RingHom.ker (eval ha) = ker a := by
   refine le_antisymm (fun f hf => ?_) (ker_le ha)
@@ -306,6 +308,7 @@ noncomputable def quotEquiv {a : Fin n → V} (ha : ∀ i, a i ∈ maximalIdeal 
 
 /-- **The parametrisation.** A `V`-algebra homomorphism `φ : V⟦T₁, …, Tₙ⟧ → V` with
 `φ(Tᵢ) ∈ 𝔪` is the evaluation at `a = (φ(T₁), …, φ(Tₙ))`. -/
+@[montpellier "100, 36–38"]
 theorem eq_eval (φ : MvPowerSeries (Fin n) V →ₐ[V] V) (hφ : ∀ i, φ (X i) ∈ maximalIdeal V) :
     φ = eval hφ := by
   ext f
@@ -427,6 +430,7 @@ lemma eval_cons {c : V} (hc : c ∈ maximalIdeal V) {b : Fin n → V}
 /-- **The identity principle.** A series vanishing on a product of infinite subsets of `𝔪` is
 zero (induction on `n`, from the finiteness of the zeros of a one-variable series,
 `Folder100.finite_bad`). -/
+@[montpellier "100, 36–38"]
 theorem eq_zero_of_eval_eq_zero : ∀ {n : ℕ} (S : Fin n → Set V),
     (∀ i, S i ⊆ maximalIdeal V) → (∀ i, (S i).Infinite) → ∀ f : MvPowerSeries (Fin n) V,
     (∀ (a : Fin n → V) (ha : ∀ i, a i ∈ maximalIdeal V), (∀ i, a i ∈ S i) → eval ha f = 0) →
@@ -485,6 +489,7 @@ theorem isClosed_zeroSet (f : MvPowerSeries (Fin n) V) : IsClosed (zeroSet f) :=
     exact hi this
 
 /-- The zero set of `f ≠ 0` has empty interior in `Vⁿ`. -/
+@[montpellier "100, 36–38"]
 theorem interior_zeroSet {f : MvPowerSeries (Fin n) V} (hf : f ≠ 0) :
     interior (zeroSet f) = ∅ := by
   refine Set.eq_empty_iff_forall_notMem.2 fun a ha => hf ?_
@@ -508,6 +513,7 @@ theorem interior_zeroSet {f : MvPowerSeries (Fin n) V} (hf : f ≠ 0) :
 /-- **Baire.** Countably many nonzero `fᵢ ∈ V⟦T₁, …, Tₙ⟧` have a common non-zero point
 `a ∈ 𝔪ⁿ`: `Vⁿ` is complete metrisable, hence a Baire space, the zero sets are closed with empty
 interior, and `𝔪ⁿ` is a nonempty open subset. -/
+@[montpellier "100, 36–38"]
 theorem exists_eval_ne_zero {ι : Type*} [Countable ι] (f : ι → MvPowerSeries (Fin n) V)
     (hf : ∀ i, f i ≠ 0) :
     ∃ (a : Fin n → V) (ha : ∀ i, a i ∈ maximalIdeal V), ∀ i, eval ha (f i) ≠ 0 := by
@@ -585,6 +591,7 @@ theorem coheight_ker {a : Fin n → V} (ha : ∀ i, a i ∈ maximalIdeal V) :
 outside the kernel `𝔭` of the evaluation at some `a ∈ 𝔪ⁿ`: `𝔭` is a prime with
 `V⟦T₁, …, Tₙ⟧ ⧸ 𝔭 ≃ V`, a point of dimension one of `Spec V⟦T₁, …, Tₙ⟧` outside every
 `V(fᵢ)`. -/
+@[montpellier "100, 38"]
 theorem exists_avoid {ι : Type*} [Countable ι] (f : ι → MvPowerSeries (Fin n) V)
     (hf : ∀ i, f i ≠ 0) :
     ∃ (a : Fin n → V) (ha : ∀ i, a i ∈ maximalIdeal V),

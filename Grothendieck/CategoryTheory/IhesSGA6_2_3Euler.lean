@@ -14,8 +14,8 @@ public import Mathlib.Data.Int.SuccPred
 
 At view 3 the notes list, for an additive function `χ` on an abelian category `A` and a finite
 complex `X^•`, the Euler formula `Σ (−1)ⁱ χ(Xⁱ) = Σ (−1)ⁱ χ(Hⁱ(X^•))`. The edition's
-`Grothendieck/CategoryTheory/IhesSGA6_2_3.lean` proves it for `χ = dim` on finite-dimensional vector spaces
-(`sum_finrank_eq_sum_finrank_cohomology`). This file proves it for every additive function on
+`Grothendieck/CategoryTheory/IhesSGA6_2_3.lean` proves it for `χ = dim` on finite-dimensional vector
+spaces (`sum_finrank_eq_sum_finrank_cohomology`). This file proves it for every additive function on
 every abelian category, using the group `KZero A` of the vendored AxiomMath/Stacks file
 `StacksFrontier/CategoryTheory/Abelian/GrothendieckGroup.lean` (Stacks tag 02MU): the free
 abelian group on the objects of `A` modulo `[X₂] = [X₁] + [X₃]` for every short exact sequence.

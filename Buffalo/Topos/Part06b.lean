@@ -2,6 +2,7 @@ module
 
 public import Buffalo.Topos.Part06a
 public import Buffalo.Topos.Part03b
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -35,12 +36,14 @@ variable {C : Type*} [Category* C] {E : Type*} [Category* E]
 /-- 4gynb9uTEE4-20626 (5:43:46) [prop] For `i : C → E` full, every `X` is the colimit of the
 `i(Y)`, `(Y, u) ∈ C/X` (`i` dense), iff `E → Ĉ`, `X ↦ Hom(i(-), X)`, is fully faithful
 (Mathlib). -/
+@[buffalo "4gynb9uTEE4-20626"]
 theorem isDense_iff_fullyFaithful (i : C ⥤ E) [i.Full] :
     i.IsDense ↔ Nonempty (Presheaf.restrictedULiftYoneda.{w} i).FullyFaithful :=
   Functor.isDense_iff_fullyFaithful_restrictedULiftYoneda i
 
 /-- 4gynb9uTEE4-20819 (5:46:59) [prop] (partial: first half) If `i` is strictly generating, every
 `X` is the target of a strictly epimorphic family: all the arrows `u : i(Y) → X`. -/
+@[buffalo "4gynb9uTEE4-20819"]
 def effectiveEpiFamilyStructOfIsDense (i : C ⥤ E) [i.IsDense] (X : E) :
     EffectiveEpiFamilyStruct (fun a : CostructuredArrow i X => i.obj a.left)
       (fun a => a.hom) where
@@ -69,6 +72,7 @@ variable {C : Type v} [SmallCategory C] {E : Type u} [Category.{v} E] [HasColimi
 /-- 4gynb9uTEE4-21008 (5:50:08) [prop] (partial: direct half) `i` extends to
 `i_! : Ĉ → E`, left adjoint to `E → Ĉ`; if `i` is strictly generating, `i_!` is a localization,
 making `E` a category of fractions of `Ĉ`. -/
+@[buffalo "4gynb9uTEE4-21008"]
 theorem isLocalization_of_isDense (i : C ⥤ E) [i.IsDense] :
     (uliftYoneda.{v}.leftKanExtension i).IsLocalization
       ((MorphismProperty.isomorphisms E).inverseImage (uliftYoneda.{v}.leftKanExtension i)) :=
@@ -76,6 +80,7 @@ theorem isLocalization_of_isDense (i : C ⥤ E) [i.IsDense] :
 
 /-- 4gynb9uTEE4-21139 (5:52:19) [thm] (partial: direct half) If `i : C → E` (`C` small) is
 strictly generating, `E → Ĉ` is a reflective full embedding. -/
+@[buffalo "4gynb9uTEE4-21139"]
 theorem reflective_of_isDense (i : C ⥤ E) [i.IsDense] :
     Nonempty (Reflective (Presheaf.restrictedULiftYoneda.{v} i)) :=
   ⟨{ L := _, adj := Presheaf.uliftYonedaAdjunction.{0} _ (uliftYoneda.{v}.leftKanExtensionUnit i) }⟩
@@ -86,6 +91,7 @@ open Classical in
 /-- 4gynb9uTEE4-21464 (5:57:44) [cex] In compact spaces the point is not strictly generating:
 `Hom(pt, -)` is the underlying set, and a map of underlying sets of compact spaces need not be
 continuous (the indicator of `∞` on the one-point compactification of `ℕ`). -/
+@[buffalo "4gynb9uTEE4-21464"]
 theorem onePoint_indicator_not_continuous :
     ¬ Continuous (fun x : OnePoint ℕ => decide (x = OnePoint.infty)) := by
   intro h
@@ -105,6 +111,7 @@ theorem onePoint_compHaus : CompactSpace (OnePoint ℕ) ∧ T2Space (OnePoint �
 
 /-- 4gynb9uTEE4-21923 (6:05:23) [prop] (partial) `C` embeds fully in `Hom(C, Set)^op`
 (`C^op → Hom(C, Set)` is fully faithful: coYoneda). -/
+@[buffalo "4gynb9uTEE4-21923"]
 theorem coyoneda_fullyFaithful (C : Type u) [Category.{v} C] :
     (coyoneda : Cᵒᵖ ⥤ C ⥤ Type v).Full ∧ (coyoneda : Cᵒᵖ ⥤ C ⥤ Type v).Faithful :=
   ⟨inferInstance, inferInstance⟩
@@ -112,6 +119,7 @@ theorem coyoneda_fullyFaithful (C : Type u) [Category.{v} C] :
 /-- 4gynb9uTEE4-22244 (6:10:44) [prop] For finite diagrams, an algebraic theory is a small
 category `R₀` with finite limits, its realizations in `Set` the left exact functors `R₀ → Set`;
 dually `Σ₀ = R₀^op` has finite colimits. -/
+@[buffalo "4gynb9uTEE4-22244"]
 theorem sigma0_hasFiniteColimits (R₀ : Type u) [SmallCategory R₀] [HasFiniteLimits R₀] :
     HasFiniteColimits R₀ᵒᵖ := inferInstance
 
@@ -122,6 +130,7 @@ abbrev Realizations (R₀ : Type u) [SmallCategory R₀] : Type (u + 1) := LeftE
 
 /-- 4gynb9uTEE4-22374 (6:12:54) [def] `X` finitely presented: `Hom(X, -)` commutes with filtered
 colimits (Mathlib `IsFinitelyPresentable`, i.e. `ℵ₀`-presentable). -/
+@[buffalo "4gynb9uTEE4-22374"]
 theorem isFinitelyPresentable_iff {E : Type u} [Category.{v} E] (X : E) :
     IsFinitelyPresentable.{v} X ↔ PreservesFilteredColimitsOfSize.{v, v} (coyoneda.obj (op X)) :=
   isFinitelyPresentable_iff_preservesFilteredColimitsOfSize
@@ -129,6 +138,7 @@ theorem isFinitelyPresentable_iff {E : Type u} [Category.{v} E] (X : E) :
 /-- 4gynb9uTEE4-22438 (6:13:58) [prop] (partial) For `R₀` small with finite limits and
 `Σ₀ = R₀^op`, `S = Lex(R₀, Set) ≃ Ind(Σ₀)`: a functor `R₀ → Set` is an ind-object of `Σ₀` iff it
 is left exact (Mathlib) ... -/
+@[buffalo "4gynb9uTEE4-22438"]
 theorem lex_iff_isIndObject (R₀ : Type u) [SmallCategory R₀] [HasFiniteLimits R₀]
     (A : R₀ᵒᵖᵒᵖ ⥤ Type u) : IsIndObject A ↔ PreservesFiniteLimits A :=
   isIndObject_iff_preservesFiniteLimits A
@@ -141,6 +151,7 @@ theorem representable_isFinitelyPresentable (C : Type u) [SmallCategory C] (X : 
 "`Ind(Σ₀) → S` fully faithful ⇒ `Σ₀ ⊂ S_fp`": in `S = ℕ∞ = {0 < 1 < ⋯ < ∞}` (all small colimits),
 `Σ₀ = {∞}` has `Ind(Σ₀) = Σ₀` (one object, one arrow), so `Ind(Σ₀) → S` is fully faithful, but
 `∞ = colim n` is not finitely presented. -/
+@[buffalo "4gynb9uTEE4-22501"]
 theorem top_not_isFinitelyPresentable : ¬ IsFinitelyPresentable.{0} (⊤ : ℕ∞) := by
   intro h
   let F : ℕ ⥤ ℕ∞ := Monotone.functor (f := fun n : ℕ => (n : ℕ∞)) Nat.mono_cast
@@ -153,6 +164,7 @@ theorem top_not_isFinitelyPresentable : ¬ IsFinitelyPresentable.{0} (⊤ : ℕ�
 
 /-- 4gynb9uTEE4-22570 (6:16:10) [ex] (partial: commutative algebras, one direction) A finitely
 presented commutative `R`-algebra is a finitely presentable object of `R`-algebras (Mathlib). -/
+@[buffalo "4gynb9uTEE4-22570"]
 theorem commRing_fp {R : CommRingCat.{u}} (S : Under R) (hS : S.hom.hom.FinitePresentation) :
     IsFinitelyPresentable.{u} S :=
   CommRingCat.isFinitelyPresentable_under R S hS
@@ -163,6 +175,7 @@ instance fact_isRegular_aleph0 : Fact Cardinal.aleph0.{v}.IsRegular := ⟨Cardin
 presentable iff `S_fp` is essentially small and strictly generating (`κ = ℵ₀` in
 `locallyPresentable_iff_dense`); the identification with `T(Set)` for a finite-limit theory
 (Gabriel–Ulmer) is not in Mathlib. -/
+@[buffalo "4gynb9uTEE4-22638"]
 theorem locallyFinitelyPresentable_iff (S : Type u) [Category.{v} S] [HasColimitsOfSize.{v, v} S]
     [LocallySmall.{v} S] :
     IsCardinalLocallyPresentable S Cardinal.aleph0.{v} ↔
@@ -173,6 +186,7 @@ theorem locallyFinitelyPresentable_iff (S : Type u) [Category.{v} S] [HasColimit
 /-- 4gynb9uTEE4-22766 (6:19:26) [ex] In groups, with `C = {ℤ}`, `Ĉ` is the sets with an action of
 the monoid `(ℤ, ×)`, and `G ↦ (G, x ↦ x^n)` is not full: on `(ℤ/2)²` the map sending `0` to `0`
 and every other element to `1 ∈ ℤ/2` commutes with all the power maps but is not a homomorphism. -/
+@[buffalo "4gynb9uTEE4-22766"]
 theorem powers_not_full :
     ∃ f : ZMod 2 × ZMod 2 → ZMod 2, (∀ (n : ℤ) x, f (n • x) = n • f x) ∧
       ¬ ∀ x y, f (x + y) = f x + f y := by
@@ -194,6 +208,7 @@ theorem powers_not_full :
 
 /-- 4gynb9uTEE4-22960 (6:22:40) [rem] (partial) In a balanced category with equalizers (e.g. a
 topos), "conservative" (detecting) and "faithful" (separating) generation coincide (Mathlib). -/
+@[buffalo "4gynb9uTEE4-22960"]
 theorem isDetecting_iff_isSeparating' {E : Type*} [Category* E] [HasEqualizers E] [Balanced E]
     (P : ObjectProperty E) : P.IsDetecting ↔ P.IsSeparating :=
   ObjectProperty.isDetecting_iff_isSeparating (P := P)
@@ -201,6 +216,7 @@ theorem isDetecting_iff_isSeparating' {E : Type*} [Category* E] [HasEqualizers E
 /-- 4gynb9uTEE4-23147 (6:25:47) [prop] The free groups of finite rank strictly generate `Gr`: a
 family of maps `Hom(F_n, G) → Hom(F_n, H)` natural in the homomorphisms `F_m → F_n` comes from a
 unique homomorphism `G → H`. -/
+@[buffalo "4gynb9uTEE4-23147"]
 theorem freeGroup_strictly_generating {G H : Type u} [Group G] [Group H]
     (φ : ∀ n : ℕ, (FreeGroup (Fin n) →* G) → (FreeGroup (Fin n) →* H))
     (hφ : ∀ m n (k : FreeGroup (Fin m) →* FreeGroup (Fin n)) (x : FreeGroup (Fin n) →* G),
@@ -242,6 +258,7 @@ theorem freeGroup_strictly_generating {G H : Type u} [Group G] [Group H]
 
 /-- 4gynb9uTEE4-23662 (6:34:22) [def] A theory with one base object defined by finite products
 (Lawvere theory): a category with objects `ℕ` in which `n` is the `n`-th power of `1`. -/
+@[buffalo "4gynb9uTEE4-23662"]
 structure LawvereTheory where
   /-- The category structure (`H_n = Hom(n, 1)` and substitution). -/
   cat : Category.{0} ℕ
@@ -252,6 +269,7 @@ structure LawvereTheory where
 
 /-- 4gynb9uTEE4-23791 (6:36:31) [def] The realizations of a Lawvere theory in a category `E` with
 finite products: the functors commuting with finite products. -/
+@[buffalo "4gynb9uTEE4-23791"]
 def LawvereTheory.Model (T : LawvereTheory) (E : Type*) [Category* E] : Type _ :=
   letI := T.cat
   { F : ℕ ⥤ E // PreservesFiniteProducts F }
@@ -260,6 +278,7 @@ def LawvereTheory.Model (T : LawvereTheory) (E : Type*) [Category* E] : Type _ :
 
 /-- 4gynb9uTEE4-24671 (6:51:11) [prop] (special case) Abelian groups form a reflective full
 subcategory of groups: the reflection of `G` is its largest abelian quotient (Mathlib). -/
+@[buffalo "4gynb9uTEE4-24671"]
 theorem abelian_reflective : Nonempty (Reflective (forget₂ CommGrpCat.{u} GrpCat.{u})) :=
   ⟨{ L := GrpCat.abelianize, adj := GrpCat.abelianizeAdj }⟩
 
@@ -268,6 +287,7 @@ def TorsionFree (A : Type*) [AddCommGroup A] : Prop :=
   ∀ (n : ℕ) (a : A), n ≠ 0 → n • a = 0 → a = 0
 
 /-- 4gynb9uTEE4-24737 (6:52:17) [cex] Torsion-free abelian groups are stable under products ... -/
+@[buffalo "4gynb9uTEE4-24737"]
 theorem torsionFree_pi {ι : Type*} (A : ι → Type*) [∀ i, AddCommGroup (A i)]
     (h : ∀ i, TorsionFree (A i)) : TorsionFree (∀ i, A i) := fun n a hn ha => by
   funext i
@@ -287,6 +307,7 @@ theorem torsionFree_not_quotient :
 
 /-- 4gynb9uTEE4-25511 (7:05:11) [cex] Groups are the monoids in which the arrow
 `(x, y) ↦ (x, xy)` of `M × M` is invertible ... -/
+@[buffalo "4gynb9uTEE4-25511"]
 theorem isGroup_iff_shear_bijective (M : Type*) [Monoid M] :
     (∀ x : M, IsUnit x) ↔ Function.Bijective (fun p : M × M => (p.1, p.1 * p.2)) := by
   constructor
@@ -338,6 +359,7 @@ structure IsEquivRel {E : Type u} [Category.{v} E] {X R : E} (r₁ r₂ : R ⟶ 
 /-- 4gynb9uTEE4-25846 (7:10:46) [def] A pseudo-topos: Giraud's axioms a) small colimits and
 finite limits; b) small coproducts disjoint and universal; c) equivalence relations effective and
 universal. -/
+@[buffalo "4gynb9uTEE4-25846"]
 structure IsPseudoTopos : Prop where
   hasColimits : HasColimitsOfSize.{v, v} E
   hasFiniteLimits : HasFiniteLimits E
@@ -351,6 +373,7 @@ structure IsPseudoTopos : Prop where
 
 /-- 4gynb9uTEE4-25975 (7:12:55) [prop] (presheaf topoi) A functor `Ĉ → E` commuting with small
 colimits and finite limits is the inverse image `f^*` of a morphism of topoi `f : E → Ĉ`. -/
+@[buffalo "4gynb9uTEE4-25975"]
 def topMorOfLex {C : Type u} [SmallCategory C] {E : Type*} [Category.{u} E]
     [HasColimitsOfSize.{u, u} E] (L : (Cᵒᵖ ⥤ Type u) ⥤ E) [PreservesColimitsOfSize.{u, u} L]
     [PreservesFiniteLimits L] : Part03.TopMor E (Cᵒᵖ ⥤ Type u) :=
@@ -362,6 +385,7 @@ def topMorOfLex {C : Type u} [SmallCategory C] {E : Type*} [Category.{u} E]
 `Top(F, E)^op ≃ Lex(C, F)` for every `F`: essentially surjective onto the left exact functors and
 bijective on arrows (2-arrows `f → g` are direct-image transformations, sent to
 `g^* U → f^* U`). -/
+@[buffalo "4gynb9uTEE4-26048"]
 def Classifies {C : Type u} [SmallCategory C] {E : Type*} [Category* E] (U : C ⥤ E) : Prop :=
   ∀ (F : Type u) [Category.{u} F],
     (∀ G : C ⥤ F, PreservesFiniteLimits G → ∃ f : Part03.TopMor F E, Nonempty (U ⋙ f.inv ≅ G)) ∧
@@ -370,6 +394,7 @@ def Classifies {C : Type u} [SmallCategory C] {E : Type*} [Category* E] (U : C �
 
 /-- 4gynb9uTEE4-26376 (7:19:36) [prop] (partial) A morphism of topoi `f : E → Ĉ` gives the left
 exact functor `C → E`, `X ↦ f^*(yX)`, the restriction of `f^*` along the Yoneda embedding. -/
+@[buffalo "4gynb9uTEE4-26376"]
 theorem yoneda_comp_inv_lex {C : Type u} [SmallCategory C] {E : Type*} [Category* E]
     (f : Part03.TopMor E (Cᵒᵖ ⥤ Type u)) : PreservesFiniteLimits (yoneda ⋙ f.inv) := by
   have := f.lex

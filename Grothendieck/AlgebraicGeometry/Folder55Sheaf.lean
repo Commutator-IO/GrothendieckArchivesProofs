@@ -4,6 +4,7 @@ public import Grothendieck.AlgebraicGeometry.Folder55LemmaB
 public import Mathlib.Topology.Sheaves.LocalPredicate
 public import Mathlib.Topology.Sheaves.Forget
 public import Mathlib.Algebra.Category.Ring.Limits
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -12,7 +13,8 @@ public import Mathlib.Algebra.Category.Ring.Limits
 
 `Grothendieck.Folder55LemmaB.O` is a subsheaf of the sheaf of all functions; this file makes it
 a sheaf of rings on `Xsp`, `Grothendieck.Folder55LemmaB.Osheaf`, the input of the coherence
-statements of `Grothendieck/AlgebraicGeometry/Folder55Coherent.lean`. The ring data `κ`, `ε`, `ι` stay abstract.
+statements of `Grothendieck/AlgebraicGeometry/Folder55Coherent.lean`. The ring data `κ`, `ε`, `ι`
+stay abstract.
 -/
 
 open CategoryTheory TopologicalSpace Opposite
@@ -77,12 +79,14 @@ def Opre : TopCat.Presheaf RingCat Xsp where
       map_zero' := rfl
       map_add' _ _ := rfl }
 
+@[montpellier "55, 13"]
 theorem Opre_isSheaf : (Opre κ ε ι).IsSheaf := by
   refine (TopCat.Presheaf.isSheaf_iff_isSheaf_comp (forget RingCat) _).2 ?_
   refine TopCat.Presheaf.isSheaf_of_iso ?_ (TopCat.subpresheafToTypes.isSheaf (Olp κ ε ι))
   exact NatIso.ofComponents (fun U => Iso.refl _) (fun _ => rfl)
 
 /-- **The structure sheaf `𝒪` of the counterexample, as a sheaf of rings.** -/
+@[montpellier "55, 13"]
 def Osheaf : Sheaf (Opens.grothendieckTopology Xsp) RingCat := ⟨Opre κ ε ι, Opre_isSheaf κ ε ι⟩
 
 end Grothendieck.Folder55LemmaB

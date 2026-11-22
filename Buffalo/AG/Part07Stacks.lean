@@ -2,6 +2,7 @@ module
 
 public import Buffalo.AG.Part07a
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProduct
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -34,6 +35,7 @@ theorem universallyOpen_over_field : UniversallyOpen f := inferInstance
 /-- Oqhr-Gt66es-19493 (5:24:53) [prop] The product over `k` of two separable (geometrically
 reduced) `k`-schemes is separable, and the product of two geometrically irreducible `k`-schemes is
 geometrically irreducible (Stacks tag 035Z for the first). -/
+@[buffalo "Oqhr-Gt66es-19493"]
 theorem prop_19493_full :
     (∀ [GeometricallyReduced f] [GeometricallyReduced g],
       GeometricallyReduced (pullback.snd f g ≫ g)) ∧
@@ -45,12 +47,14 @@ theorem prop_19493_full :
 
 /-- Oqhr-Gt66es-19954 (5:32:34) [prop] (part) The product over `k` of a geometrically connected
 `k`-scheme and a connected one is connected (no openness hypothesis). -/
+@[buffalo "Oqhr-Gt66es-19954"]
 theorem prop_19954_general [GeometricallyConnected f] [ConnectedSpace Y] :
     ConnectedSpace ↥(pullback f g) :=
   prop_19954 f g
 
 /-- Oqhr-Gt66es-21315 (5:55:15) [prop] Geometric connectedness is stable under the product of two
 `k`-schemes and under extension of the base field (no openness hypothesis). -/
+@[buffalo "Oqhr-Gt66es-21315"]
 theorem prop_21315_general [GeometricallyConnected f] [GeometricallyConnected g] (K : Type u)
     [Field K] [Algebra k K] :
     GeometricallyConnected (pullback.snd f g ≫ g) ∧ GeometricallyConnected (baseChange f K) :=
@@ -59,6 +63,7 @@ theorem prop_21315_general [GeometricallyConnected f] [GeometricallyConnected g]
 /-- Oqhr-Gt66es-20993 (5:49:53) [prop] (part) Geometric connectedness is the connectedness of
 `X_{k'}` for every extension `k'/k`, and implies that `X ×_k Y` is connected for every connected
 `Y` (no openness hypothesis). -/
+@[buffalo "Oqhr-Gt66es-20993"]
 theorem prop_20993_general :
     (GeometricallyConnected f ↔ ∀ (K : Type u) [Field K] [Algebra k K],
       ConnectedSpace ↥(pullback f (Spec.map (CommRingCat.ofHom (algebraMap k K))))) ∧

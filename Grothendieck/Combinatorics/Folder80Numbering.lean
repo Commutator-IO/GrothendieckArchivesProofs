@@ -1,6 +1,7 @@
 module
 
 public import OpenProblems.Pseudolines
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -331,6 +332,7 @@ theorem numbering_ii4 [Fintype D] [Finite L] (hbf : BigonFree X.On) (n6 : ¬HasI
 numbered `ℓ₀, ℓ₁, …` so that the first four form a `II_4` or the first six a complete
 quadrangle `III_6`, and every partial arrangement `{ℓ₀, …, ℓ_{k-1}}` from there on is
 bigon-free. -/
+@[montpellier "80, 28"]
 theorem numberingLemma : NumberingLemma := by
   intro D L _ _ X hbf
   by_cases h6 : HasIII6 X.On

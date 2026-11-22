@@ -6,6 +6,7 @@ public import Mathlib.Topology.UniformSpace.DiscreteUniformity
 public import StacksFrontier.RingTheory.FormallySmooth.Topological
 public import StacksFrontier.RingTheory.MvPowerSeries.HomExt
 public import Grothendieck.RingTheory.Folder22
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -14,9 +15,10 @@ public import Grothendieck.RingTheory.Folder22
 
 Finding `22-power-series-discrete-obstruction`. For `k = ℚ(x_i : i ∈ I)`, `I` infinite, the
 page contrasts two topologies on `A = k[[t]]`: `A` is formally smooth over `k` for its `t`-adic
-topology, and not for the discrete one. The discrete half is in `Grothendieck/RingTheory/Folder22.lean`
-(`k[[t]]` is not `Algebra.FormallySmooth` over `k`). This file proves the `t`-adic half, which
-was left open there because mathlib has no formal smoothness for topological rings.
+topology, and not for the discrete one. The discrete half is in
+`Grothendieck/RingTheory/Folder22.lean` (`k[[t]]` is not `Algebra.FormallySmooth` over `k`). This
+file proves the `t`-adic half, which was left open there because mathlib has no formal smoothness
+for topological rings.
 
 The notion used is the one of the vendored AxiomMath/Stacks file
 `StacksFrontier/RingTheory/FormallySmooth/Topological.lean`: `RingHom.FormallySmoothNAdic φ n`
@@ -52,6 +54,7 @@ universe u v
 
 /-- `k → k[[t]]` is formally smooth for the adic topology of any ideal `M` of `k[[t]]`
 containing `t`. -/
+@[montpellier "22, 22, 24"]
 theorem formallySmoothNAdic_C_of_X_mem (k : Type v) [CommRing k] (M : Ideal (PowerSeries k))
     (hX : (X : PowerSeries k) ∈ M) :
     FormallySmoothNAdic.{u} (C : k →+* PowerSeries k) M := by
@@ -91,11 +94,13 @@ theorem formallySmoothNAdic_C_of_X_mem (k : Type v) [CommRing k] (M : Ideal (Pow
 
 /-- **The `t`-adic half of pages 22 and 24.** For every commutative ring `k`, the inclusion
 `k → k[[t]]` is formally smooth for the `t`-adic topology. -/
+@[montpellier "22, 22, 24"]
 theorem formallySmoothNAdic_C_X (k : Type v) [CommRing k] :
     FormallySmoothNAdic.{u} (C : k →+* PowerSeries k) (Ideal.span {X}) :=
   formallySmoothNAdic_C_of_X_mem k _ (Ideal.mem_span_singleton_self _)
 
 /-- Over a field, the same for the adic topology of the maximal ideal `(t)`. -/
+@[montpellier "22, 22, 24"]
 theorem formallySmoothNAdic_C_maximalIdeal (k : Type v) [Field k] :
     FormallySmoothNAdic.{u} (C : k →+* PowerSeries k)
       (IsLocalRing.maximalIdeal (PowerSeries k)) :=
@@ -106,6 +111,7 @@ theorem formallySmoothNAdic_C_maximalIdeal (k : Type v) [Field k] :
 /-- **The contrast of pages 22 and 24**, for `k = ℚ(x_i : i ∈ I)` with `I` infinite: `k[[t]]` is
 formally smooth over `k` for the `t`-adic topology, and not formally smooth for the discrete
 topology (`Grothendieck.Folder22.not_formallySmooth_discrete`). -/
+@[montpellier "22, 22, 24"]
 theorem adic_not_discrete (I : Type) [Infinite I] :
     FormallySmoothNAdic.{u} (C : Folder22.K I →+* PowerSeries (Folder22.K I)) (Ideal.span {X}) ∧
       ¬ Algebra.FormallySmooth (Folder22.K I) (PowerSeries (Folder22.K I)) :=
