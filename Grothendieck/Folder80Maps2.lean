@@ -47,8 +47,9 @@ The proof is the one of the problems paper (§ Pseudoline arrangements): Melchio
 crossing, hence four lines in general position (`exists_gp4`); a further line through none or
 one of their six vertices gives `II_5` or `II′_{3,2}`, otherwise it is a diagonal (`diag_of`);
 two diagonals of different pairs give `III_6` (`iii6_of`), two of the same pair are equal
-(`diag_unique`), and a lone diagonal is bigonal (`not_bigonFree`). Not formalised: the
-numbering lemma of page 28, and the passage from a topological arrangement to its map.
+(`diag_unique`), and a lone diagonal is bigonal (`not_bigonFree`). The numbering lemma of
+page 28 is proved in `Grothendieck/Folder80Numbering.lean`. Not formalised: the passage from a
+topological arrangement to its map.
 -/
 
 namespace Grothendieck.Folder80Maps2

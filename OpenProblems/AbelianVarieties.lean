@@ -14,7 +14,9 @@ proved; a `def … : Prop` asserts nothing.
 ## Stated
 
 * `KostantOppositeTypeA` (p:kostant): the question of general position, for the groups of type
-  `A_{n-1}` (`G = PGL_n(ℂ)`) only. A special case.
+  `A_{n-1}` (`G = PGL_n(ℂ)`) only. A special case. Proved for every `n`:
+  `Grothendieck.Folder123KostantOpposite.kostantOppositeTypeA`
+  (`Grothendieck/Folder123KostantOpposite.lean`).
 
 ## Not stated, and what is missing
 
@@ -58,12 +60,14 @@ regular semisimple, so the Borels through `T'` are the stabilisers of the comple
 are opposite: `V_k ∩ F_{n-k} = 0` for every `k`, which is the conclusion below (`F_{n-k}` is the
 set of vectors whose coordinates of index `≥ n - k` vanish).
 
-Status: open in general (the note found nothing on the general position); the note checks type
-`A₂` by hand (all 36 pairs opposite). Our remark, unchecked by a specialist: in type `A` the
-eigenvectors of `E'` are, up to a diagonal matrix, the columns of the Fourier matrix, and the
-condition asks that the minors of the Fourier matrix on `k` consecutive rows be nonzero; those
-minors are Vandermonde determinants in distinct roots of unity, so the type `A` case should hold.
-The question is open for the other types. A special case of the problem, not the problem. -/
+Status: proved in type `A`, for every `n`, by
+`Grothendieck.Folder123KostantOpposite.kostantOppositeTypeA`
+(`Grothendieck/Folder123KostantOpposite.lean`). The note checks type `A₂` by hand (all 36 pairs
+opposite). The proof: `E'` is invertible, its inverse a weighted shift of the coordinates up by
+one; a nonzero vector of an `E'`-stable `V_k` vanishing on the last `k` coordinates would give,
+by `k` applications of that shift, `k + 1` linearly independent vectors of `V_k`. The question is
+open for the other types (the note found nothing on the general position). A special case of the
+problem, not the problem. -/
 def KostantOppositeTypeA (n : ℕ) : Prop :=
   ∀ c : Fin n → ℂ, (∀ i, c i ≠ 0) →
     ∀ V : Fin (n + 1) → Submodule ℂ (Fin n → ℂ), Monotone V →
