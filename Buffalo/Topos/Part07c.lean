@@ -42,13 +42,10 @@ def collapseSeq (n : ℕ) (hn : 0 < n) : ℕ ⥤ Type where
   obj _ := Fin n
   map {i j} _ := ↾(fun x => if i = j then x else ⟨0, hn⟩)
   map_id i := ConcreteCategory.hom_ext _ _ fun x => by
-    change (if i = i then x else ⟨0, hn⟩) = x
     simp
   map_comp {i j k} f g := ConcreteCategory.hom_ext _ _ fun x => by
     have hij := leOfHom f
     have hjk := leOfHom g
-    change (if i = k then x else ⟨0, hn⟩) =
-      (if j = k then (if i = j then x else ⟨0, hn⟩) else ⟨0, hn⟩)
     split_ifs <;> first | rfl | omega
 
 /-- Its cocone to the point. -/
@@ -146,7 +143,6 @@ def ringCoconeIsColimit : IsColimit (ringCocone n hn) where
     simp only [ringSeq, CommRingCat.hom_comp, show j ≠ j + 1 by omega, ↓reduceIte,
       CommRingCat.hom_ofHom] at this
     refine Eq.trans ?_ this
-    change Fin n → ℤ at x
     have hx : diag0 n hn x = ((x ⟨0, hn⟩ : ℤ) : Fin n → ℤ) := by ext; rfl
     change ((x ⟨0, hn⟩ : ℤ) : s.pt) = (s.ι.app (j + 1)).hom (diag0 n hn x)
     rw [hx]

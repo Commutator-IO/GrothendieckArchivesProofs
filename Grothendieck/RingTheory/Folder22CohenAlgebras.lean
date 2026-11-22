@@ -116,8 +116,6 @@ private theorem geometricallyRegular_iff_of_charP
   let : TopologicalSpace C := (maximalIdeal C).adicTopology
   let : IsTopologicalRing C := (maximalIdeal C).ringFilterBasis.isTopologicalRing
   let : IsLinearTopology C C := (maximalIdeal C).isLinearTopology
-  change Algebra.IsGeometricallyRegular k C ↔
-    RingHom.FormallySmoothNAdic.{max u v} (algebraMap k C) (maximalIdeal C)
   rw [← isFormallySmooth_iff_formallySmoothNAdic
     (algebraMap k C) (maximalIdeal C) (by rfl)]
   exact ((formalSmoothness_maximalIdeal_characterizations k C).2 p).out 1 2
@@ -134,8 +132,6 @@ private theorem geometricallyRegular_iff_of_charZero
   let : TopologicalSpace C := (maximalIdeal C).adicTopology
   let : IsTopologicalRing C := (maximalIdeal C).ringFilterBasis.isTopologicalRing
   let : IsLinearTopology C C := (maximalIdeal C).isLinearTopology
-  change Algebra.IsGeometricallyRegular k C ↔
-    RingHom.FormallySmoothNAdic.{max u v} (algebraMap k C) (maximalIdeal C)
   rw [← isFormallySmooth_iff_formallySmoothNAdic
     (algebraMap k C) (maximalIdeal C) (by rfl)]
   rw [← (formalSmoothness_maximalIdeal_characterizations k C).1]

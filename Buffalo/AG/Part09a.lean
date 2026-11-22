@@ -110,7 +110,6 @@ theorem prop_16055 {φ : GluingDatum π X'} (hφ : φ.Cocycle) :
     | h a =>
       obtain ⟨t, y⟩ := a
       refine ⟨φ t s hq y, Subtype.ext (Quotient.sound ⟨hq.symm, ?_⟩)⟩
-      change φ s t hq.symm (φ t s hq y) = y
       rw [hφ t s t hq hq.symm y, hφ.self]
 
 /-- vuys5SNs2eQ-16510 (4:35:10) [prop] A subset `U` of `X'` is stable under the descent datum

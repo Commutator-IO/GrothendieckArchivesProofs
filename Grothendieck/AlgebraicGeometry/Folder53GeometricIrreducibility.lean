@@ -182,10 +182,8 @@ theorem geometricallyIrreducible_of_point [IrreducibleSpace X] [GeometricallyIrr
     have himg := (ConcreteCategory.hom
       ((galoisActionOnGeometricIrreducibleComponents k ksep (Over.mk f)).ρ σ).asHom Tbar).2
     rw [galoisActionOnGeometricIrreducibleComponents_ρ_apply_coe] at himg
-    change e '' C ∈ _ at himg
     apply Subtype.ext
     rw [galoisActionOnGeometricIrreducibleComponents_ρ_apply_coe]
-    change e '' C = C
     refine huniq _ himg _ hC ⟨e.symm s, hSC ?_, e.apply_symm_apply s⟩ (hSC hs)
     change pullback.fst f gS (e.symm s) ∈ Set.range g
     rw [← hpe, e.apply_symm_apply]

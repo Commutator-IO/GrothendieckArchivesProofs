@@ -340,7 +340,6 @@ def bmap {X Y : Triple.{v} k} (φ : X ⟶ Y) : X.N →ₗ[k] Y.N :=
 def buildMap {X Y : Triple.{v} k} (φ : X ⟶ Y) : buildObj X ⟶ buildObj Y where
   f := bmap φ
   comm z := by
-    change bmap φ (X.σN z) = Y.σN (bmap φ z)
     exact Subtype.ext (Prod.ext rfl (map_neg (Hom.g φ) _))
 
 end Triple
@@ -562,7 +561,6 @@ def toBuild : X.carrier →ₗ[k] X.Nx :=
       change (Submodule.Quotient.mk (⟨x + X.σ x, X.add_σ_mem_plus x⟩ : X.plus),
         Submodule.Quotient.mk (⟨x - X.σ x, X.sub_σ_mem_minus x⟩ : X.minus)) ∈ X.m
       rw [mk_mem_m_iff]
-      change (x + X.σ x) + (x - X.σ x) ∈ two k X.carrier
       rw [show (x + X.σ x) + (x - X.σ x) = 2 • x by rw [two_nsmul]; abel]
       exact two_smul_mem_two x)
 

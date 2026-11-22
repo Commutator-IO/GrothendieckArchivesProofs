@@ -161,7 +161,6 @@ theorem not_epi_from_prod (ψ : ∏ᶜ shrinkingSheaf ⟶ unitSheaf) : ¬ Epi ψ
     (y := Set.inclusion hball ⟨0, Metric.mem_ball_self hε⟩) ⟨_, rfl⟩ ⟨_, rfl⟩
   have h1 : f (Set.inclusion hball ⟨ε / 2, hyB⟩) = true := hconst.trans h0
   have := (hf _).1 h1
-  change |ε / 2| < _ at this
   rw [abs_of_pos (half_pos hε)] at this
   linarith
 

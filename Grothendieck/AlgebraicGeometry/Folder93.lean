@@ -1796,7 +1796,6 @@ theorem root_pow : AdjoinRoot.root (P p n α) ^ p ^ n = AdjoinRoot.mk (P p n α)
 
 theorem θ_P [Fact p.Prime] [CharP A p] : θ p n α (P p n α) = X ^ p ^ n := by
   have hr := root_pow p n α
-  change θ p n α (X ^ p ^ n - C α) = _
   rw [map_sub, map_pow, θ_X, θ_C, add_pow_char_pow, ← C_pow, hr]
   ring
 

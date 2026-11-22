@@ -334,7 +334,6 @@ lemma Z_eq_zero {c : ℕ} (h : m + 2 ≤ c) : Z (K := K) (m := m) c = 0 := by
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le h
   induction d with
   | zero =>
-    change Z (K := K) (m := m) (m + 2) = 0
     rw [Z, pow_succ', Module.End.mul_apply, ← Z, Z_eq_single (by omega), sX_single]
     simp
   | succ d ih =>

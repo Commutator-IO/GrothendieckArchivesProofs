@@ -1498,7 +1498,6 @@ abbrev tensorObj (X Y : ChiExt χ) : ChiExt χ := ⟨X.M ⊗ Y.M, X.L ⊗ Y.L, X
 def tensorHom {X X' Y Y' : ChiExt χ} (p : X ⟶ X') (q : Y ⟶ Y') :
     tensorObj X Y ⟶ tensorObj X' Y' :=
   ⟨p.f ⊗ₘ q.f, p.φ ⊗ₘ q.φ, (p.f ≫ X'.b) ⊗ₘ q.w + p.w ⊗ₘ (q.f ≫ Y'.b) + χ • (p.w ⊗ₘ q.w), by
-    change (X.b ⊗ₘ Y.b) ≫ _ = (p.f ⊗ₘ q.f) ≫ (X'.b ⊗ₘ Y'.b) + _
     rw [tensorHom_comp_tensorHom, tensorHom_comp_tensorHom, p.comm, q.comm]
     simp only [MonoidalPreadditive.add_tensor, MonoidalPreadditive.tensor_add,
       smul_tensorHom', tensorHom_smul', smul_add, smul_smul]

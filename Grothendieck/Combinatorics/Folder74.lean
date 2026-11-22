@@ -1182,7 +1182,6 @@ theorem ka_needed : ex.Star ∧ ex.Beta ∧ ¬ ex.Ka ∧ ¬ Axiom1 ex.graph := b
     rw [ex_star_aux a b α β h h1 h2]
   have hB : ex.Beta := by
     rintro ⟨α, s⟩ ⟨β, u⟩ h
-    change ex.Lk ⟨α, (s.1, !s.2)⟩ ⟨β, u⟩ ↔ ¬ ex.Lk ⟨α, s⟩ ⟨β, u⟩
     rw [ex_lk, ex_lk]
     exact ex_beta_aux α β s u h
   have hK : ¬ ex.Ka := by

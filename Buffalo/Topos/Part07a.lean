@@ -353,7 +353,6 @@ def freeCofanIsColimit : IsColimit freeCofan :=
       simp only [Function.comp_apply] at this
       have h2 : (zpowersHom (FreeGroup F2) (FreeGroup.of g)) gen1 = FreeGroup.of g :=
         zpowersHom_gen1 _
-      change m.hom (zpowersHom (FreeGroup F2) (FreeGroup.of g) gen1) = _ at this
       exact (congrArg _ h2.symm).trans (this.trans
         (FreeGroup.lift_apply_of (f := fun g => (s.inj g).hom gen1) (x := g)).symm))
 

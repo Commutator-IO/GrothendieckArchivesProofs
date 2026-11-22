@@ -386,7 +386,6 @@ lemma iSup_span (D : Set (Opens X × Opens Y)) :
 def lift : FrameHom (CIdeal X Y) L where
   toFun S := ⨆ p ∈ S.carrier, f p.1 ⊓ g p.2
   map_inf' S T := by
-    change ⨆ p ∈ (S ⊓ T).carrier, _ = (⨆ p ∈ S.carrier, _) ⊓ ⨆ p ∈ T.carrier, _
     rw [carrier_inf]
     refine le_antisymm (iSup₂_le fun p hp => le_inf (le_iSup₂_of_le p hp.1 le_rfl)
       (le_iSup₂_of_le p hp.2 le_rfl)) ?_
@@ -1063,7 +1062,6 @@ open Classical in
 def lift : FrameHom (PIdeal X) L where
   toFun S := ⨆ u ∈ S.carrier, ⨅ i, f i (u.1 i)
   map_inf' S T := by
-    change ⨆ u ∈ (S ⊓ T).carrier, _ = (⨆ u ∈ S.carrier, _) ⊓ ⨆ u ∈ T.carrier, _
     rw [carrier_inf]
     refine le_antisymm (iSup₂_le fun u hu => le_inf (le_iSup₂_of_le u hu.1 le_rfl)
       (le_iSup₂_of_le u hu.2 le_rfl)) ?_

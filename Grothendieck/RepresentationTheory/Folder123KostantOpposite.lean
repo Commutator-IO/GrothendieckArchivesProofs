@@ -148,7 +148,6 @@ theorem opposite (hc : ∀ i, c i ≠ 0) (W : Submodule ℂ (Fin (m + 1) → ℂ
         change w r (j - 1) / c (j - 1) = 0
         rw [ih1 _ (by rw [hsub j (by omega)]; omega), zero_div]
       · rw [hstep]
-        change w r (j - 1) / c (j - 1) ≠ 0
         exact div_ne_zero (ih2 _ (by rw [hsub j (by omega)]; omega)) (hc _)
   have hli : LinearIndependent ℂ (fun r : Fin (k + 1) => w r) := by
     rw [Fintype.linearIndependent_iff]

@@ -151,13 +151,10 @@ def restrictSingle {ι : Type*} [DecidableEq ι] {B : ι → Type*} [∀ i, Comm
   toFun b := F (Pi.single i b)
   map_one' := hi
   map_mul' a b := by
-    change F (Pi.single i (a * b)) = F (Pi.single i a) * F (Pi.single i b)
     rw [Pi.single_mul, map_mul]
   map_zero' := by
-    change F (Pi.single i 0) = 0
     rw [Pi.single_zero, map_zero]
   map_add' a b := by
-    change F (Pi.single i (a + b)) = F (Pi.single i a) + F (Pi.single i b)
     rw [Pi.single_add, map_add]
 
 /-- The geometric points of a finite product are the disjoint union of those of its factors. -/
@@ -194,7 +191,6 @@ noncomputable def geomPointsPiEquiv {R : Type*} [CommRing R] {ι : Type*} [Finty
         have hcomp : (restrictSingle F i hi).comp (algebraMap R (B i)) = φ := by
           refine RingHom.ext fun r => ?_
           rw [← hF]
-          change F (Pi.single i (algebraMap R (B i) r)) = F (algebraMap R (∀ j, B j) r)
           exact (map_eq_map_single_apply F hi (algebraMap R (∀ j, B j) r)).symm
         exact ⟨⟨i, ⟨restrictSingle F i hi, hcomp⟩⟩,
           Subtype.ext (RingHom.ext fun x => (map_eq_map_single_apply F hi x).symm)⟩)

@@ -1295,7 +1295,6 @@ theorem pinned_classification {n : ℕ} (hB : CondB n a a' s0) (h0 : a' 0 s0 = 1
   set b := bas hbas
   have hφ : ∀ j : Fin (n + 2), b.equivFun (av a s0 j) = (e n j : Fin (n + 2) → k) := by
     intro j
-    change (bas hbas).equivFun (av a s0 j) = _
     rw [← bas_apply hbas j]
     funext l
     rw [Basis.equivFun_self]
@@ -1424,7 +1423,6 @@ lemma e_mem_Vh {k : ℕ} (hk : k ≠ 0) : (e n k : Fin (n + 2) → K) ∈ Vh n :
 lemma e_zero_not_mem_Vh : (e n 0 : Fin (n + 2) → K) ∉ Vh n := by
   intro h
   have h1 := co_e_self (R := K) (n := n) 0 (by omega)
-  change co n 0 _ = 0 at h
   exact zero_ne_one (h ▸ h1)
 
 lemma ct_mem_Vh_iff : ct n μ' β' ∈ Vh n ↔ ρ n μ' β' = 0 := by

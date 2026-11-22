@@ -501,7 +501,6 @@ def F : Frame ℍ[ℤ, 0, 0, 0] ℤ 1 where
   star_ψ := fun η => QuaternionAlgebra.star_coe η
   pb := fun u x => u.re ^ 2 * x
   ψ_pb := fun u x => by
-    change ((u.re ^ 2 * x : ℤ) : ℍ[ℤ, 0, 0, 0]) = star u * (x : ℍ[ℤ, 0, 0, 0]) * u
     ext <;> simp [sq] <;> ring
   ξ := 1
   ψ_ξ := QuaternionAlgebra.coe_one
@@ -535,7 +534,6 @@ def P : Positivity F where
     change 0 ≤ u.re ^ 2 * x
     exact mul_nonneg (sq_nonneg _) hx
   Amp_pb := fun u hu x hx => by
-    change 0 < u.re ^ 2 * x
     have : 0 < u.re ^ 2 := lt_of_le_of_ne (sq_nonneg _) (Ne.symm hu)
     exact mul_pos this hx
 

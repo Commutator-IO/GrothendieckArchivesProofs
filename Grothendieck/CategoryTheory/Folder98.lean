@@ -281,7 +281,6 @@ theorem can_comp {u : X → Y} {v : Y → Z} {r s : ℕ} (hu : HasDeg u r) (hv :
   change Multiset.bind (((fib hv z).val.map (Can hu)).map (SymY.push v)) (fun q => q.2.1) =
     (fib (hasDeg_comp hu hv) z).val
   rw [Multiset.map_map, Multiset.bind_map]
-  change (fib hv z).val.bind (fun y => (fib hu y).val) = _
   have hnd : ((fib hv z).val.bind fun y => (fib hu y).val).Nodup := by
     refine Multiset.nodup_bind.2 ⟨fun y _ => (fib hu y).nodup, ?_⟩
     refine (fib hv z).nodup.pairwise fun y _ y' _ hyy' => ?_

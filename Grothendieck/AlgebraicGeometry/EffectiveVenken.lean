@@ -1054,7 +1054,6 @@ theorem map_comm_venkenRel_le :
     exacts [⟨0, by norm_num, rfl⟩, ⟨1, by norm_num, rfl⟩, ⟨2, by norm_num, rfl⟩,
       ⟨3, by norm_num, rfl⟩, ⟨4, by norm_num, rfl⟩, ⟨5, by norm_num, rfl⟩]
   rw [Ideal.mem_comap]
-  change Algebra.TensorProduct.comm K (B K) (B K) (interp K _) ∈ _
   rw [comm_interp]
   exact mem_venkenRel_of_check K (sym_check i hi)
 

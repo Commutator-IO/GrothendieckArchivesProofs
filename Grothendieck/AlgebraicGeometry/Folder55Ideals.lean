@@ -160,7 +160,6 @@ theorem Gmod_gen_node (T : D) [IsLocalization.Away T K]
     refine ⟨fun _ => odSec κ ε ι (oOpen n) (oOpen_c n) (oOpen_e n) (oOpen_i n) (β / ι T), ?_⟩
     rw [Fin.sum_univ_one]
     refine Subtype.ext (ext_oOpen κ ε ι ?_)
-    change β / ι T * ι T = β
     exact div_mul_cancel₀ β (IsLocalization.Away.algebraMap_isUnit T).ne_zero
   | d n' =>
     have hn : n' = n := hxc

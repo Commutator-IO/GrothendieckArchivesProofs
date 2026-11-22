@@ -316,7 +316,6 @@ def def_13111 (k A k' : Type u) [CommRing k] [CommRing A] [Algebra k A] [CommRin
   invFun φ := ⟨Spec.map (CommRingCat.ofHom φ.toRingHom), by
     rw [← Spec.map_comp]; congr 1; ext c; exact φ.commutes c⟩
   left_inv f := Subtype.ext (by
-    change Spec.map (CommRingCat.ofHom (Spec.preimage f.1).hom) = f.1
     exact Spec.map_preimage f.1)
   right_inv φ := by
     ext a

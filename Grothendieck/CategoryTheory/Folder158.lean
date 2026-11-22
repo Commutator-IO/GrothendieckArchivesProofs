@@ -1029,7 +1029,6 @@ theorem isCofiltered_of_H (H : HypH X) (hX : (Psh.terminal X).Connected) : IsCof
     obtain ⟨θ, hθ⟩ := hmin (End.of (j ≫ b))
     have hθ' : θ.asHom ≫ j ≫ b = p.asHom := by simpa using congrArg End.asHom hθ
     refine ⟨⟨p.asHom ≫ θ.asHom ≫ j ≫ a, by rw [← Category.assoc, hpp]⟩, Subtype.ext ?_⟩
-    change (p.asHom ≫ θ.asHom ≫ j ≫ a) ≫ k = f'.1
     calc (p.asHom ≫ θ.asHom ≫ j ≫ a) ≫ k = p.asHom ≫ θ.asHom ≫ j ≫ (a ≫ k) := by
           simp only [Category.assoc]
       _ = p.asHom ≫ (θ.asHom ≫ j ≫ b) ≫ f'.1 := by rw [hab]; simp only [Category.assoc]

@@ -608,7 +608,6 @@ theorem intervals_axioms [DenselyOrdered α] (hd : LocDirDown α) (hu : LocDirUp
         Or.inl rfl⟩
     · refine ⟨b, ⟨hab.le, le_rfl⟩, hab.ne', c, ⟨le_rfl, hcd.le⟩, hcd.ne, ⟨(_, b), hab⟩,
         ⟨(c, _), hcd⟩, ⟨subset_rfl, rfl⟩, ⟨subset_rfl, pair_comm _ _⟩, Or.inr ?_⟩
-      change Icc _ b ∩ Icc c _ = _
       rw [inter_comm]; exact Icc_inter_Icc_eq_singleton hcd.le hab.le
     · refine ⟨a, ⟨le_rfl, hab.le⟩, hab.ne, d, ⟨hcd.le, le_rfl⟩, hcd.ne', ⟨(a, _), hab⟩,
         ⟨(_, d), hcd⟩, ⟨subset_rfl, pair_comm _ _⟩, ⟨subset_rfl, rfl⟩, Or.inr ?_⟩

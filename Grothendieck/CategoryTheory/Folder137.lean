@@ -1342,8 +1342,6 @@ lemma Phi_ext {T : B} {L : ChainComplex (ModuleCat.{u} k) ℕ} {z z' : Phi C T L
 def PhiMap {T : B} {L L' : ChainComplex (ModuleCat.{u} k) ℕ} (g : L ⟶ L') :
     Phi C T L →ₗ[k] Phi C T L' where
   toFun z := ⟨fun n => (g.f n).hom.rTensor _ (z.1 n), fun n => by
-    change (Linear.rightComp k T (C.d n (n + 1))).lTensor _ ((g.f n).hom.rTensor _ (z.1 n)) =
-      (L'.d (n + 1) n).hom.rTensor _ ((g.f (n + 1)).hom.rTensor _ (z.1 (n + 1)))
     rw [lTensor_rTensor_apply, z.2 n, ← LinearMap.rTensor_comp_apply,
       ← LinearMap.rTensor_comp_apply, ← ModuleCat.hom_comp, ← ModuleCat.hom_comp,
       g.comm (n + 1) n]⟩
@@ -1384,9 +1382,6 @@ lemma PhiMap_sum {T : B} {L L' : ChainComplex (ModuleCat.{u} k) ℕ} {ι : Type*
 def PhiPre {T T' : B} {L : ChainComplex (ModuleCat.{u} k) ℕ} (h : T' ⟶ T) :
     Phi C T L →ₗ[k] Phi C T' L where
   toFun z := ⟨fun n => (Linear.leftComp k (C.X n) h).lTensor _ (z.1 n), fun n => by
-    change (Linear.rightComp k T' (C.d n (n + 1))).lTensor _
-        ((Linear.leftComp k (C.X n) h).lTensor _ (z.1 n)) =
-      (L.d (n + 1) n).hom.rTensor _ ((Linear.leftComp k (C.X (n + 1)) h).lTensor _ (z.1 (n + 1)))
     rw [← lTensor_rTensor_apply, ← z.2 n, ← LinearMap.lTensor_comp_apply,
       ← LinearMap.lTensor_comp_apply]
     congr 2
@@ -1633,8 +1628,6 @@ variable (k) in
 /-- `Hom(T, Cⁿ) ≃ Φ_T(ℂⁿ)`: a cycle of `ℂⁿ` is its component in degree `n`. -/
 def eDisc (T : B) : (T ⟶ C.X n) ≃ Phi C T (disc k n) where
   toFun x := ⟨fun j => gD n j ⊗ₜ wD n C x j, fun j => by
-    change (Linear.rightComp k T (C.d j (j + 1))).lTensor _ (gD n j ⊗ₜ wD n C x j) =
-      ((disc k n).d (j + 1) j).hom.rTensor _ (gD n (j + 1) ⊗ₜ wD n C x (j + 1))
     by_cases hj : j = n ∨ j = n + 1
     · apply evD_injective n hj
       rw [evD_lTensor, evD_tmul, evD_d, Linear.rightComp_apply, dv_gD, ite_eq_left hj, one_smul]
@@ -1676,7 +1669,6 @@ def discRep : Rep C (disc k n) (C.X n) := ⟨eDisc k n C, fun h x => eDisc_nat n
 lemma discRep_d : C.d n (n + 1) = (discRep k n C).map (discRep k (n + 1) C) (dmap k n) := by
   apply (discRep k (n + 1) C).ext'
   rw [Rep.e_map]
-  change eDisc k (n + 1) C _ _ = _
   rw [← Equiv.eq_symm_apply]
   change _ = evD (n + 1) (n + 1) _ (((dmap k n).f (n + 1)).hom.rTensor _ (gD n (n + 1) ⊗ₜ
     wD n C (𝟙 (C.X n)) (n + 1)))

@@ -1753,7 +1753,6 @@ theorem centralizer_iff {t₀ t₁ : Matrix (Fin 2) (Fin 2) K} (h : DRep t₀ t�
         rw [Hu]
       rw [Matrix.nonsing_inv_mul_cancel_left _ _ hgu, Matrix.mul_smul, Matrix.trace_smul,
         ← Matrix.mul_assoc, trace_conj hgu, smul_eq_mul] at e
-      change τ = c₀ * c₁ * τ at e
       exact mul_right_cancel₀ hτ (by linear_combination -e)
     rw [hc, one_smul] at Hu
     obtain ⟨p, q, hpq⟩ := commutant_eq ((nps_iff_not_isScalar _).2 hu) Hu

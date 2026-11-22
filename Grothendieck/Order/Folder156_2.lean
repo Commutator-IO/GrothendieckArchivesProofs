@@ -275,7 +275,6 @@ theorem toComp_injective : Function.Injective (toComp (A := A)) := by
   obtain ⟨g', hg'⟩ := ρ'
   obtain ⟨V', hV', f', hf', rfl⟩ := (mem_locSec A).1 hg'
   apply Subtype.ext
-  change (f : Germ (𝓝ˢ A ⊓ 𝓟 Aᶜ) (ZMod 2)) = (f' : Germ (𝓝ˢ A ⊓ 𝓟 Aᶜ) (ZMod 2))
   rw [Germ.coe_eq, EventuallyEq, Filter.Eventually, mem_inf_principal, mem_nhdsSet_iff_forall]
   intro x hx
   rw [← mem_inf_principal]

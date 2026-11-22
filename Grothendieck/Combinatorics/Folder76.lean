@@ -655,8 +655,6 @@ theorem isCompatible_ord : IsCompatible D.ord where
       obtain rfl := D.vert_inj e h2
       exact ⟨u i, u j, u.lt_iff_lt.2 hij, D.vert_face hu i, D.vert_face hu j⟩
     · rintro ⟨i', j', hij, h1, h2⟩
-      change D.vert e i = D.vert d i' at h1
-      change D.vert e j = D.vert d j' at h2
       rw [D.vert_face hu] at h1 h2
       obtain rfl := D.vert_inj d h1
       obtain rfl := D.vert_inj d h2
@@ -699,7 +697,6 @@ theorem edge_ord_iff (a b : Σ m, D.X m) :
     ext c
     constructor
     · rintro ⟨⟨k, hk⟩, rfl⟩
-      change k < 2 at hk
       interval_cases k
       · exact Or.inl rfl
       · exact Or.inr rfl

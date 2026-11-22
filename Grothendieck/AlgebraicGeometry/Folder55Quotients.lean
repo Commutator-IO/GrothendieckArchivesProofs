@@ -104,7 +104,6 @@ theorem O_eq_zero_near {U : Opens Xsp} {s : Sec k D K U} (hs : s ∈ (O κ ε ι
     refine ⟨basicOpen (max N M), le_trans (basic_anti (le_max_right N M)) hM, trivial,
       fun y => ?_⟩
     rw [hN ⟨y.1, _⟩ (inBasic_anti (le_max_left N M) y.1 y.2)]
-    change constHom κ ι y.1 (atInf s hx) = 0
     rw [show atInf s hx = 0 from h0, map_zero]
   | c n =>
     refine ⟨cOpen n, cOpen_le hx, c_mem_cOpen n, fun ⟨y, hy⟩ => ?_⟩
@@ -742,7 +741,6 @@ theorem quotMap_universal :
     ∃! ψ : Qpre 𝒥 ⟶ F.1, quotMap 𝒥 ≫ ψ = φ := by
   refine ⟨descQ 𝒥 hφ, ?_, fun ψ hψ => ?_⟩
   · ext U a
-    change liftQ 𝒥 hφ U ((quotMap 𝒥).app (op U) a) = φ.app (op U) a
     refine (isLiftQ_liftQ 𝒥 hφ _).unique 𝒥 hφ fun x => ⟨U, le_rfl, x.2, a, fun _ => rfl, ?_⟩
     rw [show (homOfLE (le_refl U)) = 𝟙 U from rfl, op_id, F.1.map_id]
     rfl
@@ -925,7 +923,6 @@ theorem isLiftAb_of_comp {ψ : QAb 𝒥 ⟶ F.obj} (hψ : quotMapAb 𝒥 ≫ ψ 
 theorem descAb_fac : quotMapAb 𝒥 ≫ descAb 𝒥 hφ = φ := by
   ext U a
   obtain ⟨U⟩ := U
-  change liftAb 𝒥 hφ U ((quotMap 𝒥).app (op U) a) = φA φ U a
   refine (isLiftAb_liftAb 𝒥 hφ _).unique 𝒥 hφ fun x => ⟨U, le_rfl, x.2, a, fun _ => rfl, ?_⟩
   rw [show (homOfLE (le_refl U)) = 𝟙 U from rfl, op_id, F.obj.map_id]
   rfl
@@ -1119,7 +1116,6 @@ theorem Jsec_infty_eq_zero (hy : (infty : Xsp) ∈ Supp 𝒥) {U : Opens Xsp}
   apply hy
   refine (Ideal.eq_top_iff_one _).2 ⟨U, h, _, Jsec_mul 𝒥 (constSec κ ε ι U (s ⟨infty, h⟩)⁻¹).2 hs,
     ?_⟩
-  change (s ⟨infty, h⟩)⁻¹ * s ⟨infty, h⟩ = 1
   exact inv_mul_cancel₀ ha
 
 /-- **An Ideal of finite type whose sections vanish at `infty` is `0` on some `B_M`.** Its

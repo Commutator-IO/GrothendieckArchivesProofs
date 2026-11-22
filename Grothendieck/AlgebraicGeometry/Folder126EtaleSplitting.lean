@@ -109,7 +109,6 @@ theorem exists_etale_local_factorisation (f : X ⟶ Y) [IsFinite f] [Universally
     simp only [Scheme.Hom.comp_apply] at hc
     have hfy : f (pullback.fst f E.toBase w) = y := by
       rw [hc]
-      change E.toBase (p w) = y
       rw [hwp, E.map_point]
     obtain ⟨z, hz⟩ : pullback.fst f E.toBase w ∈ Set.range (f.fiberι y) := by
       rw [Scheme.Hom.range_fiberι]; exact hfy
@@ -207,7 +206,6 @@ theorem exists_etale_local_factorisation (f : X ⟶ Y) [IsFinite f] [Universally
     have hq : ∀ (q : GeomFibre ((W k).ι ≫ b) p₀) (q' : Spec (.of L) ⟶ D (some k)),
         q' ≫ (D (some k)).ι = q.1 ≫ (W k).ι ≫ (p ⁻¹ᵁ O).ι → q' ≫ g = p₀ ≫ O.ι := by
       intro q q' hq'
-      change q' ≫ (D (some k)).ι ≫ p = p₀ ≫ O.ι
       rw [← Category.assoc, hq', Category.assoc, Category.assoc, ← hbι,
         ← Category.assoc ((W k).ι), ← Category.assoc, q.2]
     have := congrArg Subtype.val (hsub.elim ⟨q₁', hq q₁ q₁' h₁⟩ ⟨q₂', hq q₂ q₂' h₂⟩)

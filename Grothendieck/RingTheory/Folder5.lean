@@ -504,7 +504,6 @@ theorem exists_psi_eq_dpow_xb (hW : ∀ n : ℕ, ¬ p ∣ n → IsUnit (n : W)) 
       refine ⟨algebraMap W _ ↑v⁻¹ * (Lam W p ν ⟨e, by omega⟩ * z'),
         fun _ => Ideal.mul_mem_left _ _ (Ideal.mul_mem_right _ _ (Lam_mem_Ibar W p ν _)), ?_⟩
       rw [map_mul, map_mul, AlgHom.commutes, psi_Lam_eq_dpow, hz']
-      change _ * (hJ.dpow (p ^ e) _ * _) = _
       rw [← heq, ← map_natCast (algebraMap W (Bν p ν K)), ← hv, ← mul_assoc, ← map_mul,
         Units.inv_mul, map_one, one_mul]
     · refine ⟨0, fun _ => Ideal.zero_mem _, ?_⟩

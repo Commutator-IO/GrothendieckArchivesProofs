@@ -160,8 +160,6 @@ theorem exists_generatesLocally_of_isUnit
     R.map (g ≫ f).left.op ((Pi.single l (σ j) - Pi.single j (σ l) : Fin n → _) k) = t'.1 k
   simp only [Pi.sub_apply, map_sub, Pi.single_apply, apply_ite (R.map (g ≫ f).left.op),
     map_zero, hρ]
-  change ∑ l, ((u⁻¹ : (R.obj (op W.left))ˣ) * t'.1 l) *
-    ((if k = l then ρ j else 0) - (if k = j then ρ l else 0)) = t'.1 k
   simp only [mul_sub, Finset.sum_sub_distrib, mul_ite, mul_zero, Finset.sum_ite_eq,
     Finset.mem_univ, ite_true]
   have h0 : ∑ l, ((u⁻¹ : (R.obj (op W.left))ˣ) * t'.1 l) * ρ l = 0 := by

@@ -963,7 +963,6 @@ theorem choose_add_eq_sum (p q : ℕ) :
     ← Finset.sum_range_reflect (fun k => p.choose k * q.choose k)]
   refine Finset.sum_congr rfl fun j hj => ?_
   have hj : j ≤ p := Nat.lt_succ_iff.mp (Finset.mem_range.mp hj)
-  change _ = p.choose (p + 1 - 1 - j) * q.choose (p + 1 - 1 - j)
   rw [show p + 1 - 1 - j = p - j by omega, Nat.choose_symm hj]
 
 /-- The Pascal matrix `(binom(p + q, p))_{p, q < N}` has determinant `1`. -/

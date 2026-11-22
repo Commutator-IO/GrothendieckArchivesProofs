@@ -1804,7 +1804,6 @@ theorem det2_starPt (k : ZMod n) :
 /-- The point `(y + k x)˙` of the star of `ẋ` in `P_{M, ±e}`, `y = e y₀`. -/
 def starPt (k : ZMod n) : star (Adj (ZMod n) e) (vtx hx) :=
   ⟨vtx (det2_starPt e hx k), by
-    change det2 x _ = _ ∨ _
     left
     simp [det2_add_right, det2_smul_right, det2_self, hx]⟩
 

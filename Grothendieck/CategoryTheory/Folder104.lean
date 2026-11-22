@@ -768,7 +768,6 @@ def versPrefaisceau (K : Epingle M) : Mᵒᵖ ⥤ Type w where
     ⟨K.u ξ.1 ⟨V.unop, g.unop ≫ eqToHom ξ.2.symm⟩, K.τ_u _ _⟩
   map_id U := by
     ext ⟨ξ, h⟩
-    change K.u ξ ⟨U.unop, 𝟙 _ ≫ eqToHom h.symm⟩ = ξ
     obtain ⟨D⟩ := U
     dsimp at h ⊢
     subst h
@@ -1162,8 +1161,6 @@ def Epingle.pointe (K : Epingle M) (ξ : K.K) {D : M} (h : K.τ ξ = D) :
   u_f := by
     rintro ⟨E, a⟩ ⟨F, c⟩
     refine Eq.trans ?_ (K.u_u ξ ⟨E, (a : E ⟶ D) ≫ eqToHom h.symm⟩ ⟨F, c⟩).symm
-    change K.u ξ ⟨F, ((c : F ⟶ E) ≫ (a : E ⟶ D)) ≫ eqToHom h.symm⟩ =
-      K.u ξ ⟨F, (c : F ⟶ E) ≫ (a : E ⟶ D) ≫ eqToHom h.symm⟩
     exact congrArg (fun g => K.u ξ ⟨F, g⟩) (Category.assoc _ _ _)
 
 include hmono hend hsk in
@@ -1293,7 +1290,6 @@ noncomputable def recolle : Epingle M where
   u_u ξ y z := by
     refine (R.u_eq hA (ξ := R.u hA ξ y) (R.rep_mem hA ξ)
       ⟨y.1, y.2 ≫ eqToHom (R.τ_rep hA ξ) ≫ (R.rep hA ξ).2.2⟩ rfl _).trans ?_
-    change R.v _ _ = R.v _ _
     congr 1
     simp
 

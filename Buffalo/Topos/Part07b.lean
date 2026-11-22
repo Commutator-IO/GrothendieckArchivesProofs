@@ -358,7 +358,6 @@ def contractedRegular (X : Type u) [MulAction G X] : ContractedProduct G G X ≃
   left_inv := by
     rintro ⟨p, x⟩
     refine Quotient.sound ⟨p⁻¹, ?_⟩
-    change (p, x) = (MulOpposite.op p⁻¹⁻¹ • (1 : G), p⁻¹ • p • x)
     simp [MulOpposite.smul_eq_mul_unop]
   right_inv x := by simp
 

@@ -856,7 +856,6 @@ lemma psi_unique (φ : L ⊗ L' ≅ 𝟙_ C) (ψ' : L' ⊗ L ⟶ 𝟙_ C)
     (h : φ.hom ▷ L ≫ (λ_ L).hom = (α_ L L' L).hom ≫ L ◁ ψ' ≫ (ρ_ L).hom) :
     ψ' = (psi φ).hom := by
   apply (fullyFaithfulL φ).map_injective
-  change L ◁ ψ' = L ◁ (psi φ).hom
   simpa using h.symm.trans (psi_triangle φ)
 
 lemma whiskerRight_injective {Z : C} (hZ : (tensorLeft Z).FullyFaithful) {X Y : C}

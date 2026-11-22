@@ -275,7 +275,6 @@ def effectiveEpiFamilyStructOfSurjective {B : Type u} {α : Type*} (X : α → T
   uniq {W} e h m hm := by
     ext b
     have hb := (hπ b).choose_spec.choose_spec
-    change m b = e (hπ b).choose (hπ b).choose_spec.choose
     conv_lhs => rw [← hb]
     exact ConcreteCategory.congr_hom (hm _) _
 

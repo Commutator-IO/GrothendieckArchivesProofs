@@ -153,7 +153,6 @@ theorem faithfullyFlat_quotient_baseChange {I : Ideal A}
     { e.toLinearEquiv with
       map_smul' := fun c x => by
         obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective c
-        change e _ = _ • e x
         rw [RingHom.id_apply, ← Ideal.Quotient.algebraMap_eq, algebraMap_smul, algebraMap_smul]
         exact map_smul e b x }
   exact Module.FaithfullyFlat.of_linearEquiv _ _ e'.symm
@@ -216,13 +215,10 @@ variable (k)
 noncomputable def exA : Subalgebra k (ExS k) where
   carrier := {x | (pr₁ x).fst = (pr₂ x).fst}
   mul_mem' {x y} (hx : (pr₁ x).fst = (pr₂ x).fst) (hy : (pr₁ y).fst = (pr₂ y).fst) := by
-    change (pr₁ (x * y)).fst = (pr₂ (x * y)).fst
     simp [hx, hy]
   add_mem' {x y} (hx : (pr₁ x).fst = (pr₂ x).fst) (hy : (pr₁ y).fst = (pr₂ y).fst) := by
-    change (pr₁ (x + y)).fst = (pr₂ (x + y)).fst
     simp [hx, hy]
   algebraMap_mem' c := by
-    change (pr₁ (algebraMap k (ExS k) c)).fst = (pr₂ (algebraMap k (ExS k) c)).fst
     simp
 
 /-- The ring `A`, as a type with its commutative ring structure. -/

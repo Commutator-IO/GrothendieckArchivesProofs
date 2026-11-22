@@ -210,7 +210,6 @@ theorem Psi_mul (a b : Zfrak N N') (x : G ⧸ (N ⊔ N')) :
   induction b using QuotientGroup.induction_on with | H w => ?_
   induction x using QuotientGroup.induction_on with | H g => ?_
   apply Subtype.ext
-  change ⁅g, ((z * w : zbar N N') : G)⁆ = ⁅g, (z : G)⁆ * ⁅g, (w : G)⁆
   rw [coe_mul]
   have hw := comm_mem_center hN' w.2 g
   calc ⁅g, (z : G) * w⁆ = g * z * g⁻¹ * (⁅g, (w : G)⁆ * (z : G)⁻¹) := by
@@ -354,7 +353,6 @@ theorem lamG_swap (x y : G) : lamG hD y x = (lamG hD x y)⁻¹ := by
 @[montpellier "133, 51"]
 def lam (hN' : N' ≤ center G) : G ⧸ (N ⊔ N') → G ⧸ (N ⊔ N') → Dcal N :=
   fun a b => Quotient.liftOn₂' a b (fun x y => lamG hD y x) fun x y x' y' hx hy => by
-    show lamG hD y x = lamG hD y' x'
     rw [lamG_eq_of_rel hD hN' y (QuotientGroup.leftRel_apply.mp hx), lamG_swap hD x' y,
       lamG_eq_of_rel hD hN' x' (QuotientGroup.leftRel_apply.mp hy), ← lamG_swap hD x' y']
 

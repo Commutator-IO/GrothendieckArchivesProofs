@@ -119,7 +119,6 @@ theorem prop_4265 {A : Type u} [CommRing A] (J : Ideal A) :
   refine ⟨⟨(Ideal.relIsoOfSurjective (Ideal.Quotient.mk J) Ideal.Quotient.mk_surjective).trans
     (Set.orderIsoOfEq _ _ ?_)⟩, fun K hK => ⟨DoubleQuot.quotQuotEquivQuotOfLE hK⟩⟩
   ext K
-  change Ideal.comap _ ⊥ ≤ K ↔ J ≤ K
   rw [← RingHom.ker_eq_comap_bot, Ideal.mk_ker]
 
 /-- Oqhr-Gt66es-4328 (1:12:08) [prop] Closed immersions are stable under composition. -/

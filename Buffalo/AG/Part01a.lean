@@ -396,7 +396,6 @@ morphism `E^I → E^{I'}`. -/
 def polyMap {I' : Type u} (F : I' → MvPolynomial I k) : E k I ⟶ E k I' where
   app k' := ↾fun x i' => aeval x (F i')
   naturality k' k'' u := ConcreteCategory.hom_ext _ _ fun x => _root_.funext fun i' => by
-    change aeval (fun i => u (x i)) (F i') = u (aeval x (F i'))
     exact aeval_comp_algHom k u.hom x (F i')
 
 /-- 51wmmpHand0-4188 (1:09:48) [prop] The morphisms `V_A → V_{A'}` correspond bijectively to the
@@ -469,7 +468,6 @@ theorem prop_4837 (A : Type u) [CommRing A] [Algebra k A] :
     have h := NatTrans.naturality_apply φ (hm k (A := CommAlgCat.of k A) (B := k') u) idA
     have h2 : (V k A).map (hm k (A := CommAlgCat.of k A) (B := k') u) idA = u := rfl
     rw [h2] at h
-    change embFun k (φ.app (CommAlgCat.of k A) idA : I → A) k' u = φ.app k' u
     rw [h]
     rfl
 

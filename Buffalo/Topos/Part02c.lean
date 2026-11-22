@@ -473,7 +473,6 @@ theorem sob_universal {W : Type*} [TopologicalSpace W] [QuasiSober W] [T0Space W
       exact hY'.trans hYD
   refine ⟨⟨F, hFc⟩, ?_, ?_⟩
   · funext x
-    change F (sobMap x) = f x
     apply (hF (sobMap x)).eq
     have : closure (f '' closure {x}) = closure {f x} := by
       rw [closure_image_closure f.continuous, Set.image_singleton]

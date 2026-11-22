@@ -100,7 +100,6 @@ noncomputable def ofRing (φ : CommRingCat.of A ⟶ Γ(X, ⊤)) : X ⟶ Spec (.o
 
 theorem ringOf_ofRing (φ : CommRingCat.of A ⟶ Γ(X, ⊤)) : ringOf (ofRing φ) = φ := by
   rw [ofRing, ringOf_comp_Spec, ringOf]
-  change φ ≫ (Scheme.ΓSpecIso _).inv ≫ X.toSpecΓ.appTop = φ
   rw [Scheme.toSpecΓ_appTop, Iso.inv_hom_id, Category.comp_id]
 
 end Adjunction

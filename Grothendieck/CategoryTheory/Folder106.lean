@@ -431,7 +431,6 @@ lemma arrow_assoc (s : Span W cof x y) (t : Span W cof y z) (r : Span W cof z w)
     rw [← Category.assoc]; exact pushout.condition
   have hB : r.f ≫ (pushout.inl r.f t.i ≫ pushout.inl (t.comp r).f s.i) =
       (s.comp t).i ≫ pushout.desc _ _ hA := by
-    change _ = (t.i ≫ pushout.inl t.f s.i) ≫ _
     rw [Category.assoc, pushout.inl_desc, ← Category.assoc, pushout.condition,
       Category.assoc]
   refine ⟨pushout.desc _ (pushout.desc _ _ hA) hB, ?_, ?_⟩
@@ -632,20 +631,16 @@ noncomputable def phi (hcof : ∀ x : C, Cofibrant cof x) : C ⥤ Rect W cof whe
   map_comp {x y z} f g := by
     let Bf := Classical.choice (brown_nonempty (W := W) hcof f)
     let Bg := Classical.choice (brown_nonempty (W := W) hcof g)
-    change phiMap hcof (f ≫ g) = Quot.mk _ (Bf.span.comp Bg.span)
     have := hasPushout (W := W) (cof := cof) Bg.span.f Bf.span.i Bg.span.hf
     have hcond : Bg.span.f ≫ Bg.α = Bf.span.i ≫ Bf.α ≫ g := by
-      change (Bg.ιx ≫ Bg.c) ≫ _ = (Bf.ιz ≫ Bf.c) ≫ _
       rw [Category.assoc, Bg.hx, Category.assoc, ← Category.assoc Bf.c, ← Category.assoc,
         Bf.hz, Category.id_comp]
     refine phiMap_eq hcof _ (pushout.desc Bg.α (Bf.α ≫ g) hcond) ?_ ?_
     · change (Bg.span.i ≫ pushout.inl _ _) ≫ _ = _
       rw [Category.assoc, pushout.inl_desc]
-      change (Bg.ιz ≫ Bg.c) ≫ _ = _
       rw [Category.assoc, Bg.hz]
     · change (Bf.span.f ≫ pushout.inr _ _) ≫ _ = _
       rw [Category.assoc, pushout.inr_desc]
-      change (Bf.ιx ≫ Bf.c) ≫ _ = _
       have := Bf.hx
       simp only [Category.assoc] at this ⊢
       rw [reassoc_of% this]
@@ -695,7 +690,6 @@ noncomputable def qFunctor : Rect W cof ⥤ W.Localization where
   obj X := W.Q.obj X.as
   map φ := qbar φ
   map_id X := by
-    change frac (idSpan X.as) = _
     exact (frac_of_retraction _ (𝟙 X.as) (𝟙 X.as) (Category.comp_id _)
       (Category.comp_id _)).trans (W.Q.map_id _)
   map_comp {X Y Z} φ ψ := by
@@ -708,7 +702,6 @@ noncomputable def qFunctor : Rect W cof ⥤ W.Localization where
     unfold frac
     have := W.Q_inverts _ (s.comp t).hi
     rw [← cancel_mono (W.Q.map (s.comp t).i), Category.assoc, wInv_hom, Category.comp_id]
-    change W.Q.map (s.f ≫ pushout.inr t.f s.i) = _ ≫ W.Q.map (t.i ≫ pushout.inl t.f s.i)
     simp only [Category.assoc, Functor.map_comp, wInv_hom_assoc]
     rw [← W.Q.map_comp t.f, pushout.condition (f := t.f) (g := s.i), W.Q.map_comp,
       wInv_hom_assoc]
@@ -787,7 +780,6 @@ theorem qFunctor_iso (hcof : ∀ x : C, Cofibrant cof x) :
     intro x y F
     erw [eqToHom_refl, eqToHom_refl, Category.id_comp, Category.comp_id]
     let B := Classical.choice (brown_nonempty (W := W) hcof F)
-    change frac B.span = _
     exact frac_of_retraction _ B.α F (by change (B.ιz ≫ B.c) ≫ B.α = 𝟙 _; rw [Category.assoc, B.hz])
       (by change (B.ιx ≫ B.c) ≫ B.α = F; rw [Category.assoc, B.hx])
 

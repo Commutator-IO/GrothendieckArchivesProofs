@@ -132,7 +132,6 @@ theorem exists_isBaseChange_of_comparison [Module.Flat A B]
       coassoc := fun k => hP (by rw [hρco, hρmk, hco, hγα₁]) }
   refine ⟨d.descended, fun k => ?_, d.isBaseChange⟩
   rw [Datum.mem_descended_iff]
-  change co k = (1 : B) ⊗ₜ k ↔ _
   constructor
   · intro h
     have h' := congrArg θ h
@@ -690,7 +689,6 @@ theorem flat_levelMap_succ [Module.FaithfullyFlat A B] (hnil : IsNilpotent (Ring
   have hu : ∀ (a : RingHom.eqLocus s t) (ha : Ideal.Quotient.mk _ a ∈ RingHom.ker φR),
       (u ⟨_, ha⟩ : grPiece πB k) = Submodule.Quotient.mk ⟨(a : B'), (memI a).1 ha⟩ := by
     intro a ha
-    change (Submodule.Quotient.mk ⟨_, hrepI ⟨_, ha⟩⟩ : grPiece πB k) = _
     rw [← sub_eq_zero, ← Submodule.Quotient.mk_sub, grPiece_mk_eq_zero_iff]
     have h := hrep (Ideal.Quotient.mk _ a)
     rw [Ideal.Quotient.eq] at h
@@ -719,7 +717,6 @@ theorem flat_levelMap_succ [Module.FaithfullyFlat A B] (hnil : IsNilpotent (Ring
   have uinj : Function.Injective uAdd := by
     refine (injective_iff_map_eq_zero uAdd).2 fun x hx => ?_
     have hx' : (u x : grPiece πB k) = 0 := congrArg Subtype.val hx
-    change (Submodule.Quotient.mk ⟨_, hrepI x⟩ : grPiece πB k) = 0 at hx'
     rw [grPiece_mk_eq_zero_iff] at hx'
     apply Subtype.ext
     calc (x : LevelBase πB s t (k + 1)) = Ideal.Quotient.mk _ (rep x) := (hrep x).symm
@@ -797,7 +794,6 @@ theorem flat_levelMap_succ [Module.FaithfullyFlat A B] (hnil : IsNilpotent (Ring
           change Ideal.Quotient.mk ((J ^ (k + 1)).comap (RingHom.eqLocus s t).subtype) a *
             (eU.symm m : LevelBase πB s t (k + 1)) = 0
           rw [← hrep (eU.symm m), ← map_mul, Ideal.Quotient.eq_zero_iff_mem]
-          change (a : B') * ((rep (eU.symm m) : RingHom.eqLocus s t) : B') ∈ J ^ (k + 1)
           have hmem := Ideal.mul_mem_mul (Ideal.mem_comap.1 ha) (hrepI (eU.symm m))
           rw [← pow_succ'] at hmem
           exact hmem

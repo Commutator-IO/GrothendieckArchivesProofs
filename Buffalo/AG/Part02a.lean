@@ -623,7 +623,6 @@ theorem prop_20786 (A : Type u) [CommRing A] [Algebra k A] :
         ext x
         change m.unop.hom x = Φ.symm (f.unop.hom x, g.unop.hom x)
         rw [Φ.eq_symm_apply]
-        change (p (m.unop.hom x), q (m.unop.hom x)) = _
         rw [← h1, ← h2]
         rfl
     rcases h _ _ i' i'' ⟨hc⟩ with h1 | h1
@@ -743,7 +742,6 @@ theorem prop_21173 {ι : Type*} [Finite ι] (A : ι → Type*)
             by_cases hj : j = i
             · subst hj; simp
             · simp [Pi.single_eq_of_ne hj]
-          change φ (Pi.single i (algebraMap k (A i) c)) = _
           rw [this, map_mul, AlgHom.commutes, hi, mul_one] }
     refine ⟨⟨i, ψ⟩, AlgHom.ext fun a => ?_⟩
     change φ (Pi.single i (a i)) = φ a
@@ -905,7 +903,6 @@ theorem prop_21989 {A : Type*} [CommRing A] (P : Ideal A) [P.IsPrime] (K' : Type
       rw [injective_iff_map_eq_zero]
       intro x hx
       obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
-      change (u.1 : A →+* K') a = 0 at hx
       refine Ideal.Quotient.eq_zero_iff_mem.2 ?_
       rw [← u.2]; exact hx
   exact

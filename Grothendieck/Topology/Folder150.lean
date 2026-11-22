@@ -300,7 +300,6 @@ theorem aboveEquiv_eq_empty (e : {e // Above D m t e}) :
 @[montpellier "150, 45–47"]
 theorem aboveEquiv_subset (e e' : {e // Above D m t e}) :
     (aboveEquiv hD hm ht htop e).1 ⊆ (aboveEquiv hD hm ht htop e').1 ↔ e.1 ⊆ e'.1 := by
-  change e.1 \ D ⊆ e'.1 \ D ↔ _
   exact ⟨fun h x hx => if hxD : x ∈ D then e'.2.2.1 hxD else
     (Finset.mem_sdiff.1 (h (Finset.mem_sdiff.2 ⟨hx, hxD⟩))).1, (Finset.sdiff_subset_sdiff · le_rfl)⟩
 

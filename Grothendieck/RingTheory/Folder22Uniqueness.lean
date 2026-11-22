@@ -103,7 +103,6 @@ private theorem ideal_isClosed_maximal_adic
       Submodule.mem_map_of_mem hz'
     rw [Submodule.map_smul'', Submodule.map_top, Submodule.range_mkQ] at hzq
     have hsum : K.mkQ x + K.mkQ z = 0 := by
-      change K.mkQ (x + z) = 0
       exact (Submodule.Quotient.mk_eq_zero K).mpr hy
     have hxneg : K.mkQ x = -(K.mkQ z) := eq_neg_of_add_eq_zero_left hsum
     rw [hxneg]
@@ -127,7 +126,6 @@ private theorem quotient_isAdic_map {R : Type*} [CommRing R] (I K : Ideal R) :
     exact QuotientRing.isOpenMap_coe K ((I ^ n : Ideal R) : Set R)
       (I.openAddSubgroup n).isOpen'
   · intro U hU
-    change U ∈ nhds (Ideal.Quotient.mk K (0 : R)) at hU
     have hpre : (Ideal.Quotient.mk K) ⁻¹' U ∈ nhds (0 : R) :=
       continuous_quot_mk.continuousAt.tendsto hU
     obtain ⟨n, _, hn⟩ := I.hasBasis_nhds_zero_adic.mem_iff.mp hpre
@@ -158,8 +156,6 @@ private theorem continuous_quotient_maximal_adic_of_localHom
     IsLocalRing.map_maximalIdeal_of_surjective (Ideal.Quotient.mk K)
       Ideal.Quotient.mk_surjective
   rw [hmax] at htop
-  change (inferInstance : TopologicalSpace (S ⧸ K)) =
-    (maximalIdeal (S ⧸ K)).adicTopology at htop
   rw [htop]
   apply (RingHom.continuous_adic_iff _ _ _).mpr
   refine ⟨1, le_rfl, ?_⟩
@@ -426,9 +422,6 @@ theorem corollaire3_12 {A : Type u} {B : Type v} [CommRing A] [IsNoetherianRing 
     have hE : ¬ IsUnit (E x) := fun hu => hx ((isUnit_map_iff E x).mp hu)
     rw [isUnit_iff_ne_zero, not_not] at hE
     exact Ideal.mem_bot.mpr ((map_eq_zero_iff E E.injective).mp hE)
-  change RingHom.FormallySmoothNAdic.{max u v}
-    (algebraMap (ResidueField A) (ResidueField A ⊗[A] B))
-    (maximalIdeal (ResidueField A ⊗[A] B)) ↔ _
   rw [hbot, formallySmoothNAdic_bot_iff, ← Algebra.FormallySmooth.iff_isSeparableExtension]
   exact ⟨fun _ => .of_equiv E, fun _ => .of_equiv E.symm⟩
 

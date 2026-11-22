@@ -101,7 +101,6 @@ theorem exists_forall_mul_eq_self_of_finite [Finite M]
     rintro u x ⟨y, rfl⟩
     obtain ⟨v, hv⟩ := hp (u * p)
     refine ⟨p * (v * y), ⟨v * y, rfl⟩, ?_⟩
-    change u * (p * (v * y)) = p * y
     conv_rhs => rw [hv]
     simp only [mul_assoc]
   have heq : ∀ u : M, (u * ·) '' E = E := fun u ↦

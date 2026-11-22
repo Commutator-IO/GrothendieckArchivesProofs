@@ -618,7 +618,6 @@ theorem isOpen_matches [IsSeparated sY] {W : Scheme.{u}} [IsLocallyNoetherian W]
     exact ⟨U, hwU, noetherianSpace_of_isAffineOpen U hU⟩
   · intro a b hab hb
     change Φ.Matches ι h b
-    change Φ.Matches ι h a at hb
     unfold Matches at *
     rw [← Scheme.SpecMap_stalkSpecializes_fromSpecStalk hab, Category.assoc, hb,
       germ_along_specializes]

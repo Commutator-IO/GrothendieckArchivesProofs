@@ -100,7 +100,6 @@ def sectionsEquivTop {T : TopCat.{u}} (F : (Opens T)ᵒᵖ ⥤ Type u) :
     ext V
     exact s.2 _
   right_inv v := by
-    change F.map (𝟙 _) v = v
     simp
 
 /-- **`Ext⁰(X; j_!𝒪_U, 𝒪_X) = Γ(U, 𝒪_X)`**: maps `j_!𝒪_U ⟶ 𝒪_X` are the sections of

@@ -111,7 +111,6 @@ theorem prop_25035 {A : Type*} [CommRing A] (J : Ideal A) :
         ((PrimeSpectrum.pointsEquivIrreducibleCloseds A x).ofDual : Set (PrimeSpectrum A)) =
           zeroLocus (x.asIdeal : Set A) := by
   refine ⟨isIrreducible_zeroLocus_iff J, fun x => ?_⟩
-  change closure {x} = _
   exact closure_singleton x
 
 /-- 51wmmpHand0-25167 (6:59:27) [prop] This bijection is `x ↦ closure {x}`: `Spec A` is sober,

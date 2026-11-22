@@ -236,7 +236,6 @@ theorem flat_of_W_corep (h : (WF k M).IsCorepresentable) : Module.Flat k M := by
   obtain ⟨y, rfl⟩ := e.homEquiv (Y := CommAlgCat.of k A).surjective y
   have hx := e.homEquiv_comp (CommAlgCat.ofHom f) x
   have hy := e.homEquiv_comp (CommAlgCat.ofHom f) y
-  change LinearMap.rTensor M f.toLinearMap _ = _ at hxy
   have hx' : LinearMap.rTensor M f.toLinearMap (e.homEquiv x) =
       e.homEquiv (x ≫ CommAlgCat.ofHom f) := hx.symm
   have hy' : LinearMap.rTensor M f.toLinearMap (e.homEquiv y) =

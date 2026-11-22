@@ -151,7 +151,6 @@ theorem trace_mul_push (hD : DiagonalData 𝒜 ℬ p₁ p₂ n η lam l) (κE : 
   | add y y' hy hy' => rw [add_mul, map_add, hy, hy', map_add, add_mul, map_add]
   | @homogeneous j y =>
     obtain ⟨y, hy⟩ := y
-    change lam (y * push l κE h x) = κE (h y * x)
     have lhs : lam (y * push l κE h x) =
         (l.map fun t => sgn t.1 * κE (h t.2.1 * x) * lam (y * t.2.2)).sum := by
       rw [push_apply, ← List.sum_map_mul_left, map_list_sum, List.map_map]
