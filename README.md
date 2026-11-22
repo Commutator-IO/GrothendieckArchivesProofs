@@ -57,7 +57,15 @@ several thousand modules. A cold build took 3 h 50 on GitHub's hosted runner (4 
 RAM plus 12 GB of swap, without which it ran out of memory) and 34 minutes on 32 cores with 128 GB. Count about
 15 GB of disk for `.lake`. The axiom check takes about 5 minutes.
 
-The continuous integration (`.github/workflows/build.yml`) runs these three commands on every push
+**Statements against proofs.** `Challenge/` holds trusted statements, written with Mathlib alone
+and left unproved; `Solution/` proves the same statements through the libraries above.
+`lake comparator` (configured in `comparator.json`, sandboxed with
+[bubblewrap](https://github.com/containers/bubblewrap)) checks that each theorem of `Solution`
+has exactly the statement of `Challenge`, is accepted by the kernel and uses only the three
+axioms, so that no import of the proof can change what the statement means. One statement is
+there so far (folder 19, page 80).
+
+The continuous integration (`.github/workflows/build.yml`) runs these commands on every push
 to `main`, on a self-hosted runner that keeps `main`'s `.lake` between runs, and on a pull request
 when the label `ci` is added; `build-hosted.yml` is the same build on GitHub's runner, by hand.
 

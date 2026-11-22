@@ -138,6 +138,21 @@ jobs:
           name: statement-definitions
           path: statement-definitions.md
 
+      # Issue #31, question 3: each statement of Challenge/ (Mathlib alone, unproved) is proved
+      # with exactly that statement by Solution/, through the libraries above, using only the
+      # three axioms (comparator.json). lake comparator sandboxes the build with bubblewrap.
+      - name: Compare the trusted statements with their proofs
+        run: |
+          if ! command -v bwrap >/dev/null && sudo -n true 2>/dev/null; then
+            sudo apt-get install -y -q bubblewrap
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+          fi
+          if ! command -v bwrap >/dev/null; then
+            echo "::warning title=lake comparator not run::bubblewrap is not installed on this runner and cannot be installed without sudo; install it on the image (issue #31)."
+            exit 0
+          fi
+          lake comparator
+
       # Only main writes the store, after a green build. The new entry is written next to the old
       # one and swapped in under a lock, so a job reading the store never sees a half-written copy.
       - name: Save .lake to the machine
