@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Module.FinitePresentation
@@ -15,8 +20,6 @@ public import Mathlib.Algebra.Field.ZMod
 public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.LinearAlgebra.TensorProduct.Pi
 public import Mathlib.Algebra.FiveLemma
-
-@[expose] public section
 
 /-!
 # Folder 22, Lemme 3.3, Corollaires 3.4, 3.5, and the obstruction of pp. 22, 24
@@ -133,6 +136,9 @@ What is proved:
 What this certifies is that the reading holds together at these points, not
 that it is what the page says (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder22
 

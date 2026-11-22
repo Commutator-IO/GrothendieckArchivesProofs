@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianSchemeFirstCohomologyGenericPoint
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.Torsion
-
-@[expose] public section
 
 /-!
 # Folder 100: homomorphisms of abelian schemes, stated as propositions
@@ -35,6 +38,9 @@ immersion `U → S` is the functor `(Over.pullback U.ι).mapGrp` of Mathlib.
   `S_v` of the Lemma of p. 3, which the page does not prove and refers to « Invariants 1.2 »,
   unidentified.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry CategoryTheory.GrpObj
 

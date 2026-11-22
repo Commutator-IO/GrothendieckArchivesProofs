@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part09
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09: blackboard items
@@ -11,6 +14,9 @@ The board items of `vuys5SNs2eQ` (from 4:22:15) and `3ULFIl_2Wis` (5:30:39–6:5
 entry of part 09 covers. The status of every checked item is in
 `docs/buffalo-ag/lean/Part09-boards.json`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.Set.Card
@@ -10,8 +15,6 @@ public import Mathlib.CategoryTheory.Iso
 public import Mathlib.Topology.Covering.Basic
 public import Mathlib.Topology.Algebra.ConstMulAction
 public import Mathlib.Algebra.Group.Action.Sum
-
-@[expose] public section
 
 /-!
 # Folder 98: the axioms of a theory of norms in the model of G-sets (pages 10–12), and the
@@ -66,6 +69,9 @@ halves and the homogeneity of `K̃`.
 What this certifies is that the reading holds together at this point, not that it is what the
 pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder98
 

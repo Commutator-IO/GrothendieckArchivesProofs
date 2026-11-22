@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 133: the centre and the derived group seen from two crossed modules
@@ -63,6 +66,9 @@ identification of the two crossed modules of `G₁` with those of `G`, which
 would make these equalities of elements into equalities of maps on one and
 the same `ℨ`, is not formalised.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder133
 

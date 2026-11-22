@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 128, pages 12–13: the equivalence ideals of a rank-2 algebra over a field
@@ -38,6 +41,9 @@ which kills `p₁₂(J)` and `p₂₃(J)` (the case `k[ε]`, the edition's).
 Not formalised: the reduction to the field case (Prop. 3 and its Cor. 2, the artinian
 reduction modulo `𝔪`), nor the passage from ideals to closed subschemes.
 -/
+
+@[expose] public section
+
 
 open TensorProduct
 

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part07a
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProduct
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (a): products of separable and of connected `k`-schemes
@@ -19,6 +22,9 @@ universally open `k`-schemes only, and lacks the separable half of `19493`. Both
   AxiomMath/Stacks file `StacksFrontier/AlgebraicGeometry/Variety/Geometrically/ReducedProduct.lean`
   (Apache-2.0, see `lean/Stacks/NOTICE.md`).
 -/
+
+@[expose] public section
+
 
 open AlgebraicGeometry CategoryTheory Limits
 

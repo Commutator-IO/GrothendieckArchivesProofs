@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Order.Lattice
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Fin.Basic
-
-@[expose] public section
 
 /-!
 # Folder 156-9, pages 107–110: transposes, the orthomodular law, and two finite spatios
@@ -49,6 +52,9 @@ already met in folder 156-4 (`Grothendieck.Folder156_4.hexagon_saturated`): the 
 of that model's disjoint pairs is the disposition `O6` here. The answer to page 107 is the
 edition's; it needs neither the Sup nor any Boolean hypothesis.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_9
 

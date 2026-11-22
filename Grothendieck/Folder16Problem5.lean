@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.ClassicalTheory
-
-@[expose] public section
 
 /-!
 # Folder 16, page 49: `A⁰(X)`, `A′⁰(X)`, `A″⁰(X)` in a classical Weil cohomology theory
@@ -64,6 +67,9 @@ cohomology: the model of `odd_step_fails_without_splitting` is linear algebra, n
 `n` even the reading's `A″⁰` (at `2i = n − 2`) lies outside the range `2i ≥ n − 1` of `A″`, so
 `A″ ⇒ A″⁰` is only stated for `n` odd.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry Stacks.WeilCohomology
 

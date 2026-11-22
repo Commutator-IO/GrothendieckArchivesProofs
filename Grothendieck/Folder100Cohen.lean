@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder100
 public import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem
 public import StacksFrontier.RingTheory.NoetherNormalization.Basic
-
-@[expose] public section
 
 /-!
 # Folder 100, page 38: the Corollary through Cohen's structure theorem
@@ -49,6 +52,9 @@ are ring maps, not shown to be `V`-linear. The Proposition of page 36 is not ded
 Corollary here (it is proved in `Folder100.lean` by another route), nor is the application to
 the algebraisation of formal abelian schemes.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder100Cohen
 

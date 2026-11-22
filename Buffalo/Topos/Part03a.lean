@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3a: points, fibre functors, classifying topoi (11 May and 30 May 1973)
@@ -15,6 +18,9 @@ topos `B_G`, fibre functors on `Sh(X)` and the 2-cells between morphisms of topo
 Points of `Sh(X)` are modelled by Mathlib's points of the site `(Opens X, J)`
 (`GrothendieckTopology.Point`, the fibre functors of SGA 4 IV 6.3), and `B_G` by `Action (Type u) G`.
 -/
+
+@[expose] public section
+
 
 universe w u
 

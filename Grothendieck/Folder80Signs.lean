@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder80Maps3
-
-@[expose] public section
 
 /-!
 # Folder 80, pages 39–54: the sign algebra behind the three-pencil case
@@ -43,6 +46,9 @@ differ by a sign `s i` and a reorientation `ε i`:
 projective plane, and the fact that on an actual arrangement the separation relation along `i`
 is the one the cyclic order of the vertices of `L_i` records.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Signs
 

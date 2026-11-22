@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Polynomial.Eval.SMul
@@ -15,8 +20,6 @@ public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.Data.Nat.Choose.Vandermonde
 public import Mathlib.Algebra.Polynomial.Basis
-
-@[expose] public section
 
 /-!
 # Folder 153: integer-valued polynomials, co-operations, analyseurs
@@ -73,6 +76,9 @@ paragraph; the co-operations are formalised below without it.)
   `∑_{m ≥ 1} T^m` has no finite co-addition in `k[[T]]⁺`, stated on coefficients
   (`geom_not_finite_coaddition`, from `pascal_det`).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder153
 

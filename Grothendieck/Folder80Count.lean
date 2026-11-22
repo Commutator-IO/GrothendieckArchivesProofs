@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.List.Basic
 public import Mathlib.Logic.Function.Iterate
-
-@[expose] public section
 
 /-!
 # Folder 80, page 9: the regions of the arrangement of nine curves
@@ -60,6 +63,9 @@ of its two pieces (`projSides`).
 Not formalised: the passage from the drawing to the two lists (a script on the redraw), and
 that the data define a topological arrangement; the non-stretchability (a literature result).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Count
 

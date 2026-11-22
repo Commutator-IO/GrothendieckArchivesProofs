@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.RingTheory.TensorProduct.Basic
 public import Mathlib.LinearAlgebra.Quotient.Basic
-
-@[expose] public section
 
 /-!
 # Descent of morphisms of modules along a pure ring map (Buffalo 1973, Theorem A, affine core)
@@ -49,6 +52,9 @@ What is not proved.
   (Zariski-localisation on `Y` and the square-zero extension `Spec(𝒪_Y ⊕ F)` of the note).
 * Theorems B and C of the article.
 -/
+
+@[expose] public section
+
 
 open TensorProduct
 

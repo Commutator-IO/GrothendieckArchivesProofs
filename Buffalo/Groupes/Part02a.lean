@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part01
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (a): subcomodules, finiteness, embeddings
@@ -15,6 +18,9 @@ Conventions (as in Part 01). A right comodule over a `k`-coalgebra `A` is a `k`-
 `s • x = (id ⊗ s)(δ x)` (`act`); a submodule `N` is a subcomodule when `δ(N)` lies in the image of
 `N ⊗ A → M ⊗ A` (`IsSubcomodule`).
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part02
 

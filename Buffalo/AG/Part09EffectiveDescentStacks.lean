@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.Descent.AffineFpqcEffectivity
 public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.CanonicalInvariantOpen
 public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.DescendedScheme
 public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.OpenSubDatum
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09: effective descent of schemes along fpqc morphisms
@@ -37,6 +40,9 @@ arbitrary schemes along fpqc morphisms fails. The lecture's statements are local
 covering `X'`; the indexed family `X'_i` is rendered as « every point has a stable open
 neighbourhood with the property », which is equivalent.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory
 

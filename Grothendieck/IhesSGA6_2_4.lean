@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Homology.DerivedCategory.Ext.Map
 public import Mathlib.Algebra.Homology.DerivedCategory.Ext.EnoughInjectives
 public import Mathlib.Algebra.Homology.DerivedCategory.Ext.EnoughProjectives
 public import Mathlib.CategoryTheory.Abelian.Exact
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_4, views 1–2: Ext-bijectivity of an exact functor by effaceability
@@ -49,6 +52,9 @@ derived category, which mathlib does not single out); (i bis), (iii bis), (iv bi
 and cogenerators; the description of the essential image of `D^b(φ)`; the effaceability of Ext in
 an arbitrary abelian category; the rest of the item (quasi-coherent sheaves, views 3–11).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_2_4
 

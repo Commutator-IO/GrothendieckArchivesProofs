@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02b
 public import Buffalo.Topos.Part02c
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2d: definitions and first examples of topoi (25 May 1973)
@@ -16,6 +19,9 @@ Mathlib has no notion of Grothendieck topos as such; the definitions below state
 with Mathlib's notions, and the propositions are proved for the topoi `Sh(X)`, or for any category
 having the properties used.
 -/
+
+@[expose] public section
+
 
 universe v u
 

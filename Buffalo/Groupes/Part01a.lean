@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (a): functors of points, first examples, centers
@@ -17,6 +20,9 @@ and the affine schemes over `k` are `(CommAlgCat k)ᵒᵖ`, a cartesian monoidal
 Where only the value of a functor at one `k`-algebra `A` matters, the statement is made for an
 arbitrary `A`, which is the functor-of-points statement read pointwise.
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part01
 

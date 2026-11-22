@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.Flat.LocalCriteria.FibreCriteria
@@ -5,8 +10,6 @@ public import StacksFrontier.RingTheory.Flat.ShortExact
 public import StacksFrontier.RingTheory.Coherent.Flat
 public import StacksFrontier.AlgebraicGeometry.Modules.RestrictStalkDepth
 public import Mathlib.AlgebraicGeometry.Noetherian
-
-@[expose] public section
 
 /-!
 # Folder 49, page 3: a coherent sheaf that embeds fibrewise into flat stalks is flat
@@ -51,6 +54,9 @@ holds for `G` coherent). Flatness of `F` over `S` at `x` is read as flatness of 
 `𝒪_{S,p(y)}`. The page's own reading of clause c), with injectivity into `(φ_{s*} F_s)_y` rather than
 into the product of the stalks above `y`, is weaker when `φ` is not proper, and is not covered.
 -/
+
+@[expose] public section
+
 
 universe u v
 

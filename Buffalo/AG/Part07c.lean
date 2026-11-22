@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (c): 3 July 1973
@@ -15,6 +18,9 @@ Conventions. Quasi-affine schemes are mathlib's `Scheme.IsQuasiAffine`; quasi-af
 (`IsQuasiAffineHom`) are defined here by quasi-affine preimages of affine open sets. Radicial means
 universally injective (`UniversallyInjective`). Ample sheaves are not in mathlib.
 -/
+
+@[expose] public section
+
 
 open TensorProduct Polynomial AlgebraicGeometry CategoryTheory Limits PrimeSpectrum Topology
 

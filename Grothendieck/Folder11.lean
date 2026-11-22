@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 11 (pages 50–56): the tautological subalgebra of `H*(Xᵏ)`, an algebraic model
@@ -34,6 +37,9 @@ five identities which the diagonal class `Δ ∈ A ⊗ A` of a Poincaré-duality
   projection forgetting the last factor kills the classes not involving it and sends
   `x·y_∗` and `x·d_{i∗}` to `x`; the pull-back sends diagonals to diagonals.
 -/
+
+@[expose] public section
+
 
 namespace Folder11
 

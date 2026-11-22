@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.Flat
@@ -9,8 +14,6 @@ public import Mathlib.CategoryTheory.Sites.Limits
 public import Mathlib.CategoryTheory.Sites.Types
 public import Mathlib.RingTheory.TensorProduct.Maps
 public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
-
-@[expose] public section
 
 /-!
 # The questions of the Buffalo lectures (1973), stated as propositions
@@ -73,6 +76,9 @@ a specialist.
   retrocompactness) is stated loosely in the lecture; the same counterexample answers it, and
   it is not written separately.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TensorProduct
 

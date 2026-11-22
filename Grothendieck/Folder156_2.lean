@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Order.Filter.Germ.Basic
@@ -6,8 +11,6 @@ public import Mathlib.Topology.Sets.Closeds
 public import Mathlib.Topology.NhdsSet
 public import Mathlib.Data.ZMod.Defs
 public import Mathlib.Algebra.Ring.Subring.Basic
-
-@[expose] public section
 
 /-!
 # Folder 156-2, pages 14–15: the rives of a closed subset and the map `Riv(A, X) → Comp(Ã)`
@@ -53,6 +56,9 @@ does not specify), the image of each rive is clopen.
 What this certifies is that the reading holds together at this point, not that it is what the
 pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_2
 

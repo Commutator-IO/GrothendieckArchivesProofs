@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 03 (a): 11 June 1973, from 8:43:41
@@ -19,6 +22,9 @@ Conventions. Spectra are mathlib's `PrimeSpectrum` with the Zariski topology; `Y
 `M ⊗ A → M ⊗ A' → M ⊗ (A' ⊗ A')`, the second map being `M ⊗ (s ↦ s ⊗ 1 - 1 ⊗ s)`
 (mathlib's `Algebra.TensorProduct.includeLeftSubRight`).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TensorProduct Topology PrimeSpectrum
 

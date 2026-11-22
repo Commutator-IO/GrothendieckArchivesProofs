@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.DerivationLeibnizProd
-
-@[expose] public section
 
 /-!
 # Folder 2, pages 9 and 13: a nonzero class with trivial total Chern class
@@ -48,6 +51,9 @@ That the classes `i_!(O_Y)` and `i_!(x)` are nonzero in `K(X × P^r)`, which the
 asserts, and the restriction `r ≥ 3`, are geometric and not formalised. Page 21 states
 `n ≥ 3` for its example itself (« si n − 1 > 1 i.e. n ≥ 3, CK a de la torsion »).
 -/
+
+@[expose] public section
+
 
 open PowerSeries Finset
 

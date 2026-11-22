@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02
 public import Buffalo.Topos.Part03
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7b: classifying topoi, examples and special cases (12 July 1973)
@@ -14,6 +17,9 @@ rings, elementary topoi, flatness, hypertopoi and universes. Mathlib has no Grot
 such and no classifying topos; each entry is checked in a faithful special case (points, i.e.
 models in `Set`, or a presheaf or sheaf topos), as said in `docs/buffalo-topos/lean/Part07.json`.
 -/
+
+@[expose] public section
+
 
 universe u v w
 

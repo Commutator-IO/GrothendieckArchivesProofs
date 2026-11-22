@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 154, page 153: the cube of generisations
@@ -40,6 +43,9 @@ vertex, …): the statement holds for any such data. Not formalised: positions a
 pseudolines (that would need the topological representation theorem of Folkman–Lawrence), the
 surface `X*` of page 150 and the tension with it for `ν ≥ 3`, and the question of page 153.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder154
 

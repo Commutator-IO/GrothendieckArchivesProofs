@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Lie.Sl2
@@ -11,8 +16,6 @@ public import Mathlib.LinearAlgebra.Dual.Lemmas
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.LinearCombination
-
-@[expose] public section
 
 /-!
 # Folder 16: the `𝔰𝔩₂` side of hard Lefschetz, against the folder's pseudo-inverse `Λ`
@@ -112,6 +115,9 @@ everything geometric.
 What this certifies is that the reading holds together, not that it is what the
 pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder16
 

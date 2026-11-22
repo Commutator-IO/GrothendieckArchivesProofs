@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Field.ZMod
@@ -16,8 +21,6 @@ public import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
 public import Mathlib.FieldTheory.Relrank
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
-
-@[expose] public section
 
 /-!
 # Folder 70, pages 74–78 and 89–102: the icosahedron over `ℤ[α]` and modulo 5
@@ -73,6 +76,9 @@ What is formalised.
   `s₀s₁`, `s₀s''₃`, `s₀ι(s₀)` and the face plane `z = 0`, where a `2 × 2` minor is a unit
   of `ℤ[α]` (`base_line_1`, `base_line_5`, `base_line_6`) and `isUnit_z` applies.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder70
 

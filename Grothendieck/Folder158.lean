@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Group.End
@@ -11,8 +16,6 @@ public import Mathlib.CategoryTheory.Filtered.Basic
 public import Mathlib.CategoryTheory.Endomorphism
 public import Mathlib.Data.Fintype.Pigeonhole
 public import Mathlib.SetTheory.Cardinal.Finite
-
-@[expose] public section
 
 /-!
 # Folder 158, Proposition 1 (§5.1)
@@ -116,6 +119,9 @@ What the formalisation found: as read (« a finite category X such that every co
 presheaf… ») the statement is false for disconnected `X`; with `X` connected, as the page
 must intend, it holds, and the unargued step holds for every small category.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder158
 

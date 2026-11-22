@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 46, pages 90–92: lifting `H¹(Γ, A*)` through `A → A/𝔪A` when `p ∤ |Γ|`
@@ -55,6 +58,9 @@ Not formalised: injectivity in the Sylow form for noncommutative `A`, the semi-l
 decomposition and inertia groups (pages 84–89), and the passage from `𝔪ⁿA` to `A` by
 Artin–Rees (which the finite case here makes unnecessary).
 -/
+
+@[expose] public section
+
 
 open Finset IsLocalRing
 

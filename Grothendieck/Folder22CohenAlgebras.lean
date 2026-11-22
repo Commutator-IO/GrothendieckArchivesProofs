@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.GeometricallyRegular.FormalSmoothness
-
-@[expose] public section
 
 /-!
 # Folder 22, pages 12 to 18: formal smoothness and geometric regularity (3.9, 3.10, 3.12, 3.13)
@@ -73,6 +76,9 @@ with `C → C/J` kills `𝔪_Aⁿ` kills `𝔪_A^{2n}`, so it is continuous for 
 * Questions 3) and 4) of pages 19–20 (openness of the formally smooth and flat loci). Question 2)
   is answered negatively in characteristic 0 by `Grothendieck.Folder22Adic.adic_not_discrete`.
 -/
+
+@[expose] public section
+
 
 open IsLocalRing
 open scoped TensorProduct

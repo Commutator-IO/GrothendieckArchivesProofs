@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05 (b): 20 June 1973
@@ -16,6 +19,9 @@ Conventions. As in `Part05a`, mathlib has no projective bundle `𝐏(ℳ)` and n
 ring-theoretic content (`S = Spec K`, the absolute `Spec`, the `Γ ⊣ Spec` adjunction, and
 `Proj` of a graded algebra for the properness of projective bundles).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite AlgebraicGeometry TensorProduct Topology
 

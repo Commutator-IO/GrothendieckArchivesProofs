@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.Fintype.Basic
 public import Mathlib.Data.List.FinRange
 public import Mathlib.Algebra.Order.Group.End
 public import Mathlib.GroupTheory.SpecificGroups.Alternating
-
-@[expose] public section
 
 /-!
 # Folder 86, pages 18–32: the five trièdres of the icosahedron and the hemi-icosahedron
@@ -54,6 +57,9 @@ traces a vertex pentagon iff it is even (the dihedral group of the pentagon is e
 
 All finite checks use `decide +kernel`, which the kernel checks.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder86
 

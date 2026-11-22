@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04: board items not covered by the index
@@ -11,6 +14,9 @@ Claims on the reconstructed blackboards `public/buffalo-boards/thSz9ZHDK9o-*.jso
 (1:39:49–6:59:05) that no index entry of part 04 formalises, and the counterexamples behind the
 corrections of the boards. Status in `docs/buffalo-ag/lean/Part04-boards.json`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry
 

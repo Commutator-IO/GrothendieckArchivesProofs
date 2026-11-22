@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.GroupTheory.GroupAction.Quotient
@@ -12,8 +17,6 @@ public import Mathlib.RingTheory.Spectrum.Maximal.Defs
 public import Mathlib.RingTheory.Ideal.Nonunits
 public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 public import Grothendieck.Upstream.SemilocalStableRange
-
-@[expose] public section
 
 /-!
 # Folder 79: coset graphs with homotheties, and the polyhedra `P_{M,i}` of `(Z/n)²`
@@ -85,6 +88,9 @@ What is formalised:
   ring `commutant_dist_three` (distance exactly `3` for `λ ≠ 1, σ`), and over
   `Z/n`, `n ≥ 2`, `zmod_scal_dist_three` (units `μ ≠ ± 1`).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder79
 

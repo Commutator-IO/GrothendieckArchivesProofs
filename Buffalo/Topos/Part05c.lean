@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part05a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5c: exactness properties, envelopes, categories of fractions (2 July 1973)
@@ -18,6 +21,9 @@ limit-preserving functor inverting `Σ` (`saturation`). Its properties (isomorph
 two out of three, base change, diagonals, infinite fibre products, right calculus of fractions)
 are proved for an arbitrary category with the relevant limits.
 -/
+
+@[expose] public section
+
 
 universe w v u v' u' w' v'' u''
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part08b
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08 (c): 9 July 1973 (tape 3) and 10 July 1973 (to 4:14:24)
@@ -16,6 +19,9 @@ Statements about the closure of the image of a quasi-compact morphism are proved
 `Spec B → Spec A` (a quasi-compact morphism of affine schemes) and, abstractly, for any continuous
 map satisfying the conclusion of `prop_12865` (`SpecClosure`).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TensorProduct Topology PrimeSpectrum AlgebraicGeometry
 

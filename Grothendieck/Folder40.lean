@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 40, pages 26–27: regularity is not stable under the group law of `H¹(A, α_p)`
@@ -48,6 +51,9 @@ What is formalised.
 The isomorphism `C₁ ⊗_A C₂ ≃ C₁[T]/(T^p)` itself is not formalised, nor is the
 identification of the group law of `H¹(A, α_p)` with addition in `A/A^p`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder40
 

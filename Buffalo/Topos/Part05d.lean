@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5d: corrections, `Setᵒᵖ` and Boolean algebras (10 July 1973)
@@ -19,6 +22,9 @@ closed under the ternary `xor`, so no such limit has three elements (`no_limit_o
 two-element set is a strict cogenerator of `Set` only in the sense of SGA 4 (every set is an
 equalizer of two maps between powers of `2`).
 -/
+
+@[expose] public section
+
 
 universe u
 

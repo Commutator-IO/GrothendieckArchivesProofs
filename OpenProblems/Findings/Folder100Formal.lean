@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianSchemeFirstCohomologyGenericPoint
-
-@[expose] public section
 
 /-!
 # Folder 100, pages 30–38: the curve criterion for algebraising formal abelian schemes, stated
@@ -34,6 +37,9 @@ again a formal abelian scheme is not needed for the statement and is not proved.
 **Not stated.** The equivalent condition (iii) of page 30 (algebraizable after some proper
 surjective `S′ → Spec R`) and the Proposition of page 36 on `S_red`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing
 

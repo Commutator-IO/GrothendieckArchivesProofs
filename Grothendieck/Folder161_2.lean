@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Monad.Monadicity
@@ -6,8 +11,6 @@ public import Mathlib.CategoryTheory.Limits.Preserves.Finite
 public import Mathlib.CategoryTheory.Presentable.StrongGenerator
 public import Mathlib.CategoryTheory.Presentable.Dense
 public import Mathlib.CategoryTheory.Limits.Indization.Category
-
-@[expose] public section
 
 /-!
 # Folder 161-2: Lawvere theories, monadicity, and locally presentable categories
@@ -63,6 +66,9 @@ no `Ind_π`), and the page-77 corollary (a model is representable iff
 What this certifies is that the reading holds together, not that it is what the
 pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder161_2
 

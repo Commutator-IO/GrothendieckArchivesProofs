@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
 public import Mathlib.Topology.Sober
-
-@[expose] public section
 
 /-!
 # Folder 41, Proposition 1 (page 11): continuity of the generic section and openness
@@ -57,6 +60,9 @@ valuative criteria in the form used.
 What this certifies is that the reading holds together at this point, not that
 it is what the page says (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder41
 

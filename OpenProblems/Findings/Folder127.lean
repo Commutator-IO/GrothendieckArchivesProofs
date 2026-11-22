@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.RingTheory.GeometricallyNormal.Defs
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.Normal
-
-@[expose] public section
 
 /-!
 # Folder 127: flatness of a schematic closure, stated as propositions
@@ -43,6 +46,9 @@ relative to `Y` of the second row. These are special cases of the rows, not the 
   a sheaf of modules over a base, or universal schematic density relative to a base; the affine
   case keeps the commutative algebra the rows turn on.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Topology TensorProduct
 

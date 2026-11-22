@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.Nat.Totient
 public import Mathlib.Data.Nat.Factorial.Basic
 public import Mathlib.Tactic.NormNum
-
-@[expose] public section
 
 /-!
 # Folder 123: the number of Kostant rigidifications, `card(W)² / (h z φ(h))`, in small rank
@@ -18,6 +21,9 @@ nor the free action behind it; the reading checks by hand that the numbers are i
 for every simple type of rank at most 8 and for the exceptional types (#91, nv:87). It checks the
 arithmetic of the announced number, not the geometry.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder123Kostant
 

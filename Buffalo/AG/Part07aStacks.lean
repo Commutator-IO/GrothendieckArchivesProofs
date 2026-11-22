@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CoherentIffFinitePresentation
@@ -7,8 +12,6 @@ public import StacksFrontier.AlgebraicGeometry.Modules.QuasicoherentPullbackSche
 public import StacksFrontier.AlgebraicGeometry.Cohomology.Coherent.NoetherianCoherent
 public import StacksFrontier.AlgebraicGeometry.Cohomology.LocallyNoetherian.PushforwardSupport
 public import StacksFrontier.AlgebraicGeometry.CoherenceCriteria.Affine
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (a): coherent `𝒪_X`-modules on a scheme
@@ -49,6 +52,9 @@ the slice site of the opens of `X` contained in `U`; `def_22510_restrict` reads 
 (`isFiniteType_kernel_iff`). On a locally noetherian scheme coherence restricts to open
 subschemes (`isCoherent_restrict_22510`).
 -/
+
+@[expose] public section
+
 
 open AlgebraicGeometry CategoryTheory Limits TopologicalSpace
 

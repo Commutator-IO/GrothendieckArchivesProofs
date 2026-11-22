@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.AlgebraicTopology.ModelCategory.Basic
 public import Mathlib.AlgebraicTopology.ModelCategory.Cylinder
 public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
 public import Mathlib.CategoryTheory.Limits.Shapes.IsTerminal
-
-@[expose] public section
 
 /-!
 # Folder 107: rectification of a relative square (pages 20 and 22)
@@ -63,6 +66,9 @@ relative cylinders with a trivially cofibrant corner map in a general model
 category (which here is a hypothesis), and the edition's counterexample (the
 path fibration over `S¹`) showing that the condition can fail.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder107
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part03c
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3: the blackboards
@@ -11,6 +14,9 @@ Lean support for the checked items of the reconstructed blackboards `URU5jgTvjhU
 and `PqCQM3Pcl6Q-0000/2947/5910/6937/9878` in the time range of part 3 that no index entry covers,
 and for the corrections made to them. Status table: `docs/buffalo-topos/lean/Part03-boards.json`.
 -/
+
+@[expose] public section
+
 
 universe u
 

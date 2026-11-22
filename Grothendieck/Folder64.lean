@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 64, pages 48–51: the octahedral configuration in characteristic 5
@@ -38,6 +41,9 @@ page 51 and the two corollaries of page 52.
 
 The finite checks over `𝔽₅` use `decide +kernel`, which the kernel checks.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder64
 

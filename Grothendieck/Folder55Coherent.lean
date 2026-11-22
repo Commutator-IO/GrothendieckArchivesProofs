@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder55Sheaf
 public import Grothendieck.Folder55Generation
 public import Mathlib.Algebra.Category.Ring.FilteredColimits
-
-@[expose] public section
 
 /-!
 # Folder 55, page 13: the structure sheaf of the counterexample is coherent
@@ -32,6 +35,9 @@ finitely many of them (`exists_gen`).
 **The stalks** (`isNoetherianRing_stalk`) are images of `k` at `infty` and at `e n`, of the
 noetherian ring `𝒪({c n, o n, d n})` at `c n`, and of `K` at `o n` and `d n`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TopologicalSpace Opposite Stacks.SheafOfModules Grothendieck.Folder55Generation
 namespace Grothendieck.Folder55LemmaB

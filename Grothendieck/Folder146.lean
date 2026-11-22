@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 146, page 70: the trivialising exponents of `L_i` and `L` on `M_{0,n}`, `n = 4, 5, 6`
@@ -57,6 +60,9 @@ final section shows that, for `n = 4, 5, 6`, the two models agree: a trivialisat
 homogeneous model restricts to one of the normalised cocycles (`coboundary_cL_of_trivL` and
 its companions, `trivL_five_iff` and its companions).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder146
 

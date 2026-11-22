@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1e: colimits of sheaves and representability (4 April 1973)
@@ -12,6 +15,9 @@ Part01. The other entries of Part01 completed later are proved in Part02: URU5jg
 (`Part02.sheafPtEquiv`), -7768 (`Part02.product_of_epis_not_epi`), -13813
 (`Part02.pullback_preservesFiniteLimits`). Statuses in `docs/buffalo-topos/lean/Part01.json`.
 -/
+
+@[expose] public section
+
 
 universe w v u
 

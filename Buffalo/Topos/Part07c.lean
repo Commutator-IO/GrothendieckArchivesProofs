@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7c: what is not a theory, faithfulness, points (12 July 1973)
@@ -12,6 +15,9 @@ properties not stable under filtered colimits (rank-`n` coverings, rings with `n
 components; both corrected to `n ≥ 2`), faithfulness of actions, topoi without points. Statuses in
 `docs/buffalo-topos/lean/Part07.json`.
 -/
+
+@[expose] public section
+
 
 universe u v w
 

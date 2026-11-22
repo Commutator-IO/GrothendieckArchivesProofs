@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 148, pages 55–58: gluing two circles with `r` marked points is unique
@@ -37,6 +40,9 @@ Not formalised: the identification of the space of lifts with a space of homeomo
 circle `AddCircle 1`, the case `r = 0` (where `Marking 0` is empty; the reading says the space
 then has the homotopy type of a circle, the Dehn twist ambiguity), and the groupoid itself.
 -/
+
+@[expose] public section
+
 
 open Set Filter Topology
 

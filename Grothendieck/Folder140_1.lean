@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Folder146
-
-@[expose] public section
 
 /-!
 # Folder 140-1, pages 22 and 24: `H¹(U_{0,3}, 𝔖₃; 𝔾_m) ≃ ℤ/6`
@@ -49,6 +52,9 @@ Not formalised: that `O(U_{0,3})^*` is `Units3 k` (the units of `k[λ, 1/λ, 1/(
 `Pic(U_{0,3}) = 0` and the Hochschild–Serre sequence identifying `Pic` of the quotient stack with
 `H¹`, and the page's generator `O(1)` on `ℙ(V_J)`: the generator here is the tangent class.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder140_1
 

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.GroupTheory.Perm.Cycle.Basic
 public import Mathlib.Logic.Relation
-
-@[expose] public section
 
 /-!
 # Folder 152, the dictionary of pages 7 and 9 (partial)
@@ -52,6 +55,9 @@ It also confirms the reading's footnote that the page's own head line
 involution on a non-empty set of arcs (`tete_page9_incompatible`). The
 connectivity step holds as stated (`connexe_of_une_face`).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder152
 

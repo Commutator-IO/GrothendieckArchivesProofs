@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 101, pages 14–15: local duality with algebraic Matlis duals fails in dimension 2
@@ -44,6 +47,9 @@ The identification of `TelescopeSurj` with `Ext¹_A(A_y, -) = 0` for mathlib's `
 claim for every complete regular local ring of dimension 2 and every `f`; the identification of
 `k⟦x⟧⟦y⟧` with the two-variable `MvPowerSeries`; the page's topological-dual repair (page 15).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder101DimTwo
 

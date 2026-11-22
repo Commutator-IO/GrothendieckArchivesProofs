@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import LeanPool.ToposTheoreticBridges.ClassifyingTopoi.Examples.PresheafType
@@ -6,8 +11,6 @@ public import Mathlib.Tactic.Ring
 public import Mathlib.Algebra.Group.Idempotent
 public import Mathlib.Algebra.Field.IsField
 public import Mathlib.Algebra.GroupWithZero.Units.Basic
-
-@[expose] public section
 
 /-!
 # Folder 161-2, pages 42 and 94: the classifiers of von Neumann regular rings and of fields
@@ -77,6 +80,9 @@ exactly the fields, with their inverse (`isField_iff_exists_isSetModel`).
 * That every model of the theories in sets is a commutative ring: the converses are stated only
   for structures coming from a ring.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory FirstOrder FirstOrder.Language LeanPool.ClassifyingTopoi
 

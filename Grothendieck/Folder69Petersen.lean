@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder69
-
-@[expose] public section
 
 /-!
 # Folder 69, pages 77 and 81: the « dodécaèdre gauche » of page 81
@@ -42,6 +45,9 @@ Not formalised: the count `216 × 2 = 432` of hemi-dodecahedra in the 27-line gr
 a program on the `C(27, 10)` ten-element subsets; a proof would need the transitivity of
 `W(E₆)` on Petersen subgraphs, which is not proved here.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder69Petersen
 

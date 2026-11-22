@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Module.Injective
@@ -8,8 +13,6 @@ public import Mathlib.Topology.Sober
 public import Mathlib.Topology.Category.TopCat.Opens
 public import Mathlib.CategoryTheory.Category.Cat
 public import Grothendieck.Upstream.PrimaryComponentInjective
-
-@[expose] public section
 
 /-!
 # Folder 21, Proposition 2.15 and Corollaire 2.16: `I`-torsion and injectivity
@@ -67,6 +70,9 @@ only to invoke 2.15 (Artin–Rees).
 What this certifies is that the reading holds together at these points, not
 that it is what the pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder21
 

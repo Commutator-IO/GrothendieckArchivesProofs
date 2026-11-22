@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.HenselianRings.StrictlyHenselianFiniteAlgebras
 public import StacksFrontier.RingTheory.Henselian.Unramified
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 17–23: the radicial–étale factorisation, local core
@@ -65,6 +68,9 @@ fibre is its `finiteAlgHomCharsEquiv`.
   the page's remark that « `d` constant » may be dropped for connected `Y` is false (the
   reading's counterexample `y² = t` over `k[t]`) and is not stated.
 -/
+
+@[expose] public section
+
 
 open IsLocalRing
 

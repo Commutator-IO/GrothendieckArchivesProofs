@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part08a
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08 (b): 9 July 1973, tape 2
@@ -16,6 +19,9 @@ Conventions as in `Part08a`: `g : S' ⟶ S` is the base change, `f : X ⟶ S`,
 quasi-compact" is mathlib's `@Surjective ⊓ @Flat ⊓ @QuasiCompact`, along which mathlib proves
 fpqc descent of many properties (`Mathlib.AlgebraicGeometry.Morphisms.FlatDescent`).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TensorProduct Topology PrimeSpectrum AlgebraicGeometry
 

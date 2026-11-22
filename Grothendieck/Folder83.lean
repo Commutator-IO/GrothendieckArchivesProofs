@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 83, pages 126–143: the line of twists and its degenerate locus
@@ -73,6 +76,9 @@ determinant `−Q²`), and the identification `S̃ ≅ X ∧ X'` as the quotient
 of `σ ⊗ σ'` are `k[u * v]` iff `(2, b, b') = 1`) is
 `Grothendieck.Folder84.invariants_of_span_eq_top`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder83
 

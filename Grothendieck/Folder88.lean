@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.GroupTheory.OrderOfElement
@@ -9,8 +14,6 @@ public import Mathlib.Logic.Equiv.Fin.Basic
 public import Mathlib.Tactic.IntervalCases
 public import Mathlib.Tactic.Group
 public import Mathlib.Tactic.Linarith
-
-@[expose] public section
 
 /-!
 # Folder 88: the order `2ν` (pages 6–8) and the trichotomy of (6) (page 14)
@@ -68,6 +71,9 @@ What the formalisation found: nothing wrong. One hypothesis of the setting is
 superfluous for the Proposition (everything but a), `φ(r,i)² = 1` and the
 torsor structure), and so is finiteness.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder88
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1c: direct and inverse images, stalks (11 May 1973)
@@ -11,6 +14,9 @@ Entries of `docs/buffalo-topos/index.tex` from « Direct and inverse images » t
 epimorphisms » (video `URU5jgTvjhU`, 3:24:08–4:55:12). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
 -/
+
+@[expose] public section
+
 
 universe u
 

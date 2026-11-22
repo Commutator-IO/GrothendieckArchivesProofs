@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 80, page 26: the « cas latticiel » — a counterexample and the correct criterion
@@ -37,6 +40,9 @@ are the sign vectors of points (`cov`), and `lattice_iff_not_twoPencil` restates
 * `II32_no_bigon`, `II32_nondegenerate`, `II32_not_lattice`, `lattice_criterion_false`: the
   counterexample `x = 0, x = z, x = 2z, y = 0, y = z`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Maps1
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05 (c): 25 June 1973, to 0:57:01
@@ -12,6 +15,9 @@ localization at a point, local, noetherian and artinian schemes, finiteness cond
 morphisms. Almost everything here is in mathlib's `AlgebraicGeometry` library; the declarations
 below check that the statements match.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry Topology PrimeSpectrum
 

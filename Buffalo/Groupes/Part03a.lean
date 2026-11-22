@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03 (a): étale schemes, `π₀`, pro-étale schemes
@@ -18,6 +21,9 @@ Conventions. An affine étale `k`-scheme is `Spec A` with `A` an étale `k`-alge
 discrete `Gal(k_s/k)`-sets is not in Mathlib; statements made through it are proved on the algebra
 side only.
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part03
 

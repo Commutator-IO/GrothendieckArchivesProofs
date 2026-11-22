@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01c
 public import StacksFrontier.RingTheory.Koszul.Regular
 public import StacksFrontier.RingTheory.RegularRing.Defs
 public import StacksFrontier.RingTheory.AdicCompletion.NoetherianRing.PowerSeriesSurjection
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, parts 05–06: regular rings, Koszul complexes and completions
@@ -31,6 +34,9 @@ AxiomMath/Stacks vendored under `lean/Stacks/` (Apache-2.0, see `lean/Stacks/NOT
   PermanenceOfProperties.lean` (tags 07NV, 07NY), whose own import closure (230 files) is too
   large to vendor: only the noetherianity of the completion (tag 0316, two files) is imported.
 -/
+
+@[expose] public section
+
 
 open IsLocalRing
 

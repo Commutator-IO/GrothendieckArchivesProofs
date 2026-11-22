@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (b): the module functors `W(M)`, `V(M)`, endomorphisms
@@ -15,6 +18,9 @@ the beginning of 6 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.jso
 morphism of `𝒪`-modules `W(M) → W(N)` is written out as a family of `A`-linear maps natural in
 `A` (`WHom`).
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part01
 

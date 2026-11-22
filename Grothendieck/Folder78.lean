@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 78, pages 109–113: the closure criterion `u_α^n = id ⇔ F_n(α) = 0`
@@ -54,6 +57,9 @@ so the even vertices lie on `x + y = 0`, the odd ones on `x + y = 1`, `strip_lin
 `p` is odd). The claim that the improper polygon is the only non-unimodular finite regular
 polygon needs the classification and is not proved.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder78
 

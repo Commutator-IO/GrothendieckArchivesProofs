@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 91: Weil restriction and centralisers, stated as propositions
@@ -36,6 +39,9 @@ The number `ν(s)` of geometric points of `T_s` is the number of points of
   isomorphism is representable iff it commutes with adic limits): the row's claim is the
   corollary, and the theorem is the means.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 open scoped CategoryTheory.MonObj

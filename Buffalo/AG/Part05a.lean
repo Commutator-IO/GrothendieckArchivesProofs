@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02a
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05 (a): (undated session, from 7:04:25) – 19 June 1973
@@ -20,6 +23,9 @@ content, over `S' = Spec k'`: an invertible quotient of `M_{k'} = k' ⊗ M` is a
 `M_{k'} → L` with `L` an invertible module (locally free of rank `1`, mathlib's
 `Module.Invertible`), and on a local ring `k'` it is a surjection `M_{k'} → k'`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite AlgebraicGeometry TensorProduct
 

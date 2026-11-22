@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 73 (« Polygones », [from 1976]): ear areas of plane polygons
@@ -60,6 +63,9 @@ juxtaposition `u·v` of the page is read in `Sym² V`, here `k³` through
 * `symProd_proportional_iff`: for nonzero vectors of a plane, `c·d ∈ k·(a·b)` if and only if
   `{[a], [b]} = {[c], [d]}` — the factorisation fact the « pair of directions » rests on.
 -/
+
+@[expose] public section
+
 
 namespace Folder73
 

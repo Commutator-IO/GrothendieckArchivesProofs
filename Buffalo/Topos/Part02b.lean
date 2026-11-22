@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2b: infinite products, connectedness, torsors, stacks (18 May 1973)
@@ -11,6 +14,9 @@ Entries of `docs/buffalo-topos/index.tex` from « Stalks and infinite products �
 quotient topoi » (video `URU5jgTvjhU`, 6:51:54–7:52:11). The status of each entry is in
 `docs/buffalo-topos/lean/Part02.json`.
 -/
+
+@[expose] public section
+
 
 universe u
 

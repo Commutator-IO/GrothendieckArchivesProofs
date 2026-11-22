@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1b: torsors, generators, abelian sheaves (11 May 1973)
@@ -11,6 +14,9 @@ Entries of `docs/buffalo-topos/index.tex` from « Torsors and stalkwise checks �
 sheaves and injectives » (video `URU5jgTvjhU`, 2:33:33–3:21:12). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
 -/
+
+@[expose] public section
+
 
 universe u
 

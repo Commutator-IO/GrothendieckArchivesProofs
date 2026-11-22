@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import OpenProblems.Findings.Folder91
-
-@[expose] public section
 
 /-!
 # Folder 91, pages 24–28 and 31: representability of `Res_{X/S}(P)` by a scheme, stated
@@ -30,6 +33,9 @@ fibres are taken over the algebraic closures of the residue fields, as in `Folde
 quasi-compact parts) and Corollaries 2–9: their hypotheses carry the uncertain readings noted
 in the finding (« lisse », « ouverte »).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite IsLocalRing
 open OpenProblems.Findings.Folder91

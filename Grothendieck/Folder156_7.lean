@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Order.Hom.Basic
@@ -5,8 +10,6 @@ public import Mathlib.Order.Basic
 public import Mathlib.Data.Set.Lattice.Indexed
 public import Mathlib.Tactic.Order
 public import Mathlib.Data.Fintype.Powerset
-
-@[expose] public section
 
 /-!
 # Folder 156-7, pages 61–98: supports by points, the two-strand string, and the orthomodular law
@@ -50,6 +53,9 @@ refuted the presumption of a Boolean algebra in the first mouture is the one by 
 mouture refutes its own Lemme 3, which is the stronger failure — the lattice is not even
 orthomodular.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_7
 

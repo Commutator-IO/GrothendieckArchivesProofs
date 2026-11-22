@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 100, pages 36–38: points of dimension one avoiding countably many divisors
@@ -30,6 +33,9 @@ Not formalised: the case of several variables, where the bad set of one `f` is n
 finite and Baire is needed; the reduction of a complete local domain to a finite extension of
 `V⟦T₁, …, Tₙ⟧` (Cohen) and the lifting of points along it; the Proposition of page 36.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder100
 

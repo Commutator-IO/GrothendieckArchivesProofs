@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.GroupTheory.Index
@@ -7,8 +12,6 @@ public import Mathlib.Data.Fintype.Perm
 public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.GroupTheory.SpecificGroups.Quaternion
 public import Mathlib.Tactic.Group
-
-@[expose] public section
 
 /-!
 # Folder 69, pages 25–26: the automorphisms of the 27-line graph fixing a triangle
@@ -45,6 +48,9 @@ of vertices with the same incidences with the points already fixed, and exhauste
 explicit automorphisms (`g0_7`, …, `g5_5`), checked by the kernel; an automorphism
 fixing the base fixes everything, since the base separates the vertices.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder69
 

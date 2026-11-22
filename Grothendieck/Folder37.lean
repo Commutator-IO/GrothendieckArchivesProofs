@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 37, page 92: the counterexample to EGA I 10.10.5 b) ⇒ a), c)
@@ -51,6 +54,9 @@ What is formalised.
 
 Not formalised: formal schemes, the conditions a), b), c) of EGA I 10.10.5 themselves.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder37
 

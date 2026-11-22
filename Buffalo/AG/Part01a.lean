@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 01 (a): 29 and 30 May 1973
@@ -18,6 +21,9 @@ Conventions. `k` is a commutative ring, a `k`-algebra is an object of `CommAlgCa
 `E k I` it defines; `V k A` is the functor `k' ↦ Hom_k(A, k')` represented by `A`. "Representable"
 is mathlib's `Functor.IsCorepresentable` (a covariant functor `CommAlgCat k ⥤ Type u`).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory MvPolynomial
 

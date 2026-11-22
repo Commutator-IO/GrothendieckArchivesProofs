@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.IhesSGA6_2_3
 public import StacksFrontier.Algebra.Homology.DerivedCategory.KGroup
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, n° 2: `K(A) ≅ K(D^b(A))` for an abelian category `A`
@@ -34,6 +37,9 @@ The proof of the comparison is AxiomMath's (an Euler characteristic `K(D^b(A)) �
 `Σ (−1)ⁱ [Hⁱ(X)]`, inverse to `X ↦ X[0]`, surjectivity by induction on the length of the
 homology); this file only transports it to the edition's `K₀` and draws the corollaries.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_2_3Db
 

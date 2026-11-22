@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.DeRham.Cartier.Coordinates
 public import Grothendieck.Folder93
-
-@[expose] public section
 
 /-!
 # Folder 93: Cartier descent in rank one on an algebra with Frobenius coordinates
@@ -34,6 +37,9 @@ them.
 Not formalised: Cartier descent for a connection in several variables at once (integrable,
 all `p`-curvatures zero), for a nontrivial line bundle, and in higher rank on such an algebra.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder93.Frobenius
 

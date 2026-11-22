@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.Perfect.GrothendieckGroupCoherentNonzero
-
-@[expose] public section
 
 /-!
 # Folder 2, page 13: the class of a structure sheaf in the `K`-group of coherent sheaves
@@ -43,6 +46,9 @@ vanishes, and torsion classes do vanish affine-locally (`[ℤ/n] = 0` in `K'₀(
 formalised: the total Chern class on `K` (Stacks has none; its algebra is in
 `Grothendieck/Folder2.lean`) and the restriction `r ≥ 3`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder2KCoherent
 

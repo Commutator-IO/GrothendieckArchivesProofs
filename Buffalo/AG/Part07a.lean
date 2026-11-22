@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (a): 26 June 1973, from 5:24:53
@@ -18,6 +21,9 @@ Universal openness of a scheme over a field, which the lecture uses freely, is n
 general; it is assumed where needed, or deduced from flatness for schemes locally of finite
 presentation.
 -/
+
+@[expose] public section
+
 
 open TensorProduct Polynomial AlgebraicGeometry CategoryTheory Limits PrimeSpectrum Topology
 

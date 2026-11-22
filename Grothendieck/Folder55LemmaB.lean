@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder55
-
-@[expose] public section
 
 /-!
 # Folder 55, page 13: Lemme B does not hold as stated
@@ -76,6 +79,9 @@ and gather the counterexample over `k⟦X⟧ ⊂ k⸨X⸩` (`lemmeB_counterexamp
 **Not formalised.** (v) for coherent Ideals other than `0`: it needs the quotient sheaves
 `𝒪/𝒥` and their supports, which these files do not build.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TopologicalSpace Opposite
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Module.FinitePresentation
@@ -5,8 +10,6 @@ public import Mathlib.Algebra.Exact.Basic
 public import Mathlib.LinearAlgebra.Basis.Prod
 public import Mathlib.RingTheory.Finiteness.Prod
 public import Mathlib.RingTheory.Finiteness.Projective
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_1_5, views 1–5: modules with an `n`-presentation
@@ -60,6 +63,9 @@ projective modules: flat base change, localisation, finite resolutions, regular 
 relative `n`-presentation over an algebra, preschemes. Modules in a universe other than that of
 `R` are not covered.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_1_5
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part03b
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 03 (c): 12 June 1973, to 1:36:31
@@ -16,6 +19,9 @@ monomorphism `Y → S` of affine spaces is an epimorphism of rings `A → C`, st
 out of `C` that agree on `A` are equal. Statements about fibre products of spectra are made either
 at the level of rings or for mathlib's schemes.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TensorProduct Topology PrimeSpectrum
 

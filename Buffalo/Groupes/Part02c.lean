@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part02b
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (c): diagonalizable groups, constant groups, Cartier duality
@@ -14,6 +17,9 @@ Entries `_lTf_L0yvrU-28722` to `_lTf_L0yvrU-32249` of `docs/buffalo-groupes/inde
 `e^m ↦ e^m ⊗ e^m`); a representation of `D(M)` on `V` is a comodule `δ : V → V ⊗ k[M]`
 (`Part01.IsComodule`); its projectors are `p_m • x = (id ⊗ coord_m)(δ x)` (`proj`).
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part02
 

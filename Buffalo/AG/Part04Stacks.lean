@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04d
 public import StacksFrontier.Algebra.Module.Projective.Invertible
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04: invertible modules are the locally free modules of rank one
@@ -15,6 +18,9 @@ a Mathlib TODO at `715a03a`. It is completed here with the vendored AxiomMath/St
 `lean/Stacks/NOTICE.md`), whose `Module.finite_projective_rankAtStalk_one_tfae_invertible_exists_tensor_inverse`
 (Stacks tag 0B8I) states the equivalence with the rank read through Mathlib's `Module.rankAtStalk`.
 -/
+
+@[expose] public section
+
 
 open Module
 

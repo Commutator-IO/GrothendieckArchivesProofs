@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.TopologicalInvariance.MorphismDescent
 public import StacksFrontier.AlgebraicGeometry.Topologies.EtaleDescentIntegral
 public import StacksFrontier.AlgebraicGeometry.Morphisms.UniversalHomeomorphism.Defs.Integral
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 17–23: the radicial–étale factorisation, global universal property
@@ -40,6 +43,9 @@ strict henselisations to `Y` (SGA 1 IX §4) is not done. The full equivalence of
 (Stacks 04DZ, `Stacks.Etale.etalePullback_isEquivalence`) is not needed here: full faithfulness,
 which is what the universal property uses, suffices.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 

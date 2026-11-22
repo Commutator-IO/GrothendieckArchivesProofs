@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1a: presheaves and sheaves on a space (4 April 1973)
@@ -16,6 +19,9 @@ Presheaves of sets on a space `X` are Mathlib's `X.Presheaf (Type u)`, functors
 satisfying `TopCat.Presheaf.IsSheaf`. Most proofs below go through the unique-gluing form of the
 sheaf condition, `TopCat.Presheaf.isSheaf_iff_isSheafUniqueGluing_types`.
 -/
+
+@[expose] public section
+
 
 universe u
 

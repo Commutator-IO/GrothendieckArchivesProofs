@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 4b: exactness properties, 2-fibre products, algebraic theories
@@ -17,6 +20,9 @@ colimits of type `D''`, the functors preserving them (`IsDFunctor`), exactness p
 `(I, Σ)`, 2-sums, envelopes and localizations by their (2-)universal properties against one
 target category at a time.
 -/
+
+@[expose] public section
+
 
 universe w v u v₁ u₁ v₂ u₂
 

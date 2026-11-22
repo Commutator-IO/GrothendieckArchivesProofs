@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04b
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (c): 18 June 1973, schemes as Zariski sheaves
@@ -14,6 +17,9 @@ Zariski sheaves, open immersions of sheaves and the representability criterion.
 
 All statements are over `k = ℤ` (all schemes, all rings) unless said otherwise.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite IsLocalRing TopologicalSpace AlgebraicGeometry
 

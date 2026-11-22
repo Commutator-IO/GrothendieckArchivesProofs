@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 90, pages 7–9 and 13–15: the smallest subcomodule, over `X = S = Spec A`
@@ -56,6 +59,9 @@ projectivity. Not formalised: quasi-coherent sheaves on a scheme `X`
 statements 3) and 4), the equivalence `Cᵢ(G)_f ≃ Uᵢ-modules` of page 7, and the action of `G` on
 `X` of pages 17–23.
 -/
+
+@[expose] public section
+
 
 open TensorProduct LinearMap
 

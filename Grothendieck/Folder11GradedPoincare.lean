@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder11
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.Concrete.DiagonalExpansion
-
-@[expose] public section
 
 /-!
 # Folder 11 (pages 33, 37, 41): push-forwards into a graded algebra with a diagonal class
@@ -45,6 +48,9 @@ algebras with Koszul signs, the Künneth isomorphisms `A(I) ⊗ A(pt) ≅ A(I �
 graded equivalence of pages 37 and 41, and p. 41's full faithfulness of `A ↦ (A(pt), Δ)`
 as a functor: the axioms above are offered for its `Δ`, not read on the page.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder11.GradedPoincare
 

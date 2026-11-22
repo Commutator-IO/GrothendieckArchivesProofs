@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.RingTheory.Algebraic.Integral
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 public import Mathlib.Algebra.Group.Pointwise.Set.Basic
-
-@[expose] public section
 
 /-!
 # Folder 13, page 47: the « double niveau » question, and its Tate case
@@ -42,6 +45,9 @@ The identification of `ℚ(n)` with these two lines inside `ℂ`, and of `V^G` w
 the edition's model and is not formalised; the page writes neither. The general question of
 page 47, for motives that are not of Tate type, is open: it is the period conjecture.
 -/
+
+@[expose] public section
+
 
 open Complex Polynomial
 open scoped Pointwise

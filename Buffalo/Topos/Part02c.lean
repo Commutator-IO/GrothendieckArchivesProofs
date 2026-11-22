@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2c: sober spaces and fibre functors (18 and 25 May 1973)
@@ -16,6 +19,9 @@ The space `X̃` of irreducible closed subsets is `Sob X` (a type synonym of Math
 `Sh(X)` are Mathlib's points of the site `𝒪(X)` (`GrothendieckTopology.Point`, SGA 4 IV 6.3):
 `irrPoint Y` is the point `F ↦ F_Y` attached to an irreducible closed set `Y`.
 -/
+
+@[expose] public section
+
 
 universe u
 

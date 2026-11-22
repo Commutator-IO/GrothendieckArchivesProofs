@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 151, page 68: the gluing of tubes over covering pairs fails in depth 2
@@ -36,6 +39,9 @@ the neighbourhood of `0` in `ℝ²` is the tube `𝒱_{0,2}` of the non-covering
 Not formalised: the homotopy-colimit variant (its Euler characteristic is `−1`, so it is not
 contractible), the general stratified setting, and the depth-one case where the statement holds.
 -/
+
+@[expose] public section
+
 
 open Set Topology
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 76, pages 26–28: flags of type `H` in a set with operators
@@ -42,6 +45,9 @@ What is formalised.
 The `σᵢ` are not assumed to be involutions; the group, the set `X` and the
 action are arbitrary.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder76
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part05d
-
-@[expose] public section
 
 /-!
 # Problem three for all small limits: the counterexample `{2} → Set`
@@ -43,6 +46,9 @@ What is not formalised, and stays on paper.
   Proposition 2.4: only the finite stages are defined, which suffices since `I₂` is everything.
 * The dual statement, (G) for `{2} → Setᵒᵖ` under colimits, which is (G) above read in `Setᵒᵖ`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite
 

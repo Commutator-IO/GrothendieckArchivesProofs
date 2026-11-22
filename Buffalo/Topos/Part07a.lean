@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7a: generating subcategories, strict epimorphisms, subtopoi
@@ -20,6 +23,9 @@ condition (b) « every `X` is the colimit of `C/X` » is Mathlib's `ι.isDenseAt
 The counterexamples in groups use `F₂ = FreeGroup Bool` for `ℤ * ℤ` and the full subcategory
 `C = {ℤ}` of `GrpCat`, as the induced category on one object.
 -/
+
+@[expose] public section
+
 
 universe u v w
 

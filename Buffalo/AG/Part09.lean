@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part09a
 public import Buffalo.AG.Part09b
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09: 10 July 1973 (from 4:22:15) – 11 July 1973 (to 6:57:40)
@@ -29,3 +32,6 @@ extension principle, Galois descent of schemes, the affine group scheme `Γ_k` a
 algebraic spaces and complex analytic spaces, quotients of schemes by finite locally free or flat
 equivalence relations and of algebraic groups by subgroups.
 -/
+
+@[expose] public section
+

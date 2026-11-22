@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part03a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3b: morphisms of topoi, presheaf topoi, Giraud (1973)
@@ -17,6 +20,9 @@ modelled here by `TopMor` (an adjunction `f^* ⊣ f_*` with `f^*` left exact), b
 categories, and statements about « a topos » are proved for the categories of sheaves `Sh(C, J)`
 on a small site or of presheaves `Ĉ`.
 -/
+
+@[expose] public section
+
 
 universe w u v
 

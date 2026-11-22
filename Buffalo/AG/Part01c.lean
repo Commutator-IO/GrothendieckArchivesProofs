@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01b
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 01 (c): 4 June 1973
@@ -14,6 +17,9 @@ stabilizers of affine groups, inductive limits and quotients, and the first exam
 `GL_n / B`. Notation as in `Buffalo.AG.Part01a`; `𝒞` is `(CommAlgCat k)ᵒᵖ`, identified with the
 representable functors by `prop_6911`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory MvPolynomial
 

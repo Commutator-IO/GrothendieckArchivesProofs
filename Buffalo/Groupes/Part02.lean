@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part02a
 public import Buffalo.Groupes.Part02b
 public import Buffalo.Groupes.Part02c
 public import Buffalo.Groupes.Part02d
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02
@@ -17,3 +20,6 @@ linear embeddings, monomorphisms), `Part02b` (distributions, hyperalgebra, const
 `Part02d` (openness, étale schemes and Galois action, geometric irreducibility). The status of
 every entry is in `docs/buffalo-groupes/lean/Part02.json`.
 -/
+
+@[expose] public section
+

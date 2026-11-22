@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 57: rigid subgroups, stated as a proposition
@@ -37,6 +40,9 @@ infimum.
   in characteristic `p`; stating it before the facsimile is re-read would fix a reading the
   edition has not settled.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped CategoryTheory.MonObj

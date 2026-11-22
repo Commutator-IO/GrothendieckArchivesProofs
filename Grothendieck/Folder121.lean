@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Topology.Closure
@@ -5,8 +10,6 @@ public import Mathlib.Data.Finset.Powerset
 public import Mathlib.Order.WellFounded
 public import Mathlib.Order.CompleteLattice.Finset
 public import Mathlib.Topology.Connected.Basic
-
-@[expose] public section
 
 /-!
 # Folder 121, pages 3–16: the coarsest admissible cellular decomposition
@@ -43,6 +46,9 @@ What is formalised.
 The connected-cells version of page 16 (condition f)) is `page16`, below. Not formalised: the
 corollaries of page 15, the regular decompositions of page 17.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder121
 

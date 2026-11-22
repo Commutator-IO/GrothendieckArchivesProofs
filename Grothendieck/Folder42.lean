@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.NoetherianIsOpenOfStableUnderGeneralization
-
-@[expose] public section
 
 /-!
 # Folder 42: Lemme 1, the proposition of page 3, Lemme 2, Corollaire 1
@@ -41,6 +44,9 @@ which is where the reading's footnote bears: the kernel is the set of elements
 killed by *some* element outside `𝔭`, not by every one. Corollaire 1 needs, from
 Lemme 2, only that one `f ∉ 𝔭` kills that kernel.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder42
 

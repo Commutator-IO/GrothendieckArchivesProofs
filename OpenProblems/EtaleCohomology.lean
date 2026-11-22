@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.Colimits.CohomologyPullbackMap
 public import StacksFrontier.RingTheory.Catenary.Defs
 public import StacksFrontier.RingTheory.Nagata.Defs
-
-@[expose] public section
 
 /-!
 # Étale cohomology and Hodge theory: the open problems, stated as propositions
@@ -43,6 +46,9 @@ identification is not formalised, and the statements below are written on the é
   pieces of the fppf site and an fppf/étale comparison, but not that package in a form we could
   check without a local build; not stated rather than stated wrongly.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry Polynomial
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.Crystalline.Differentials.DividedPowerPolynomialAlgebra
-
-@[expose] public section
 
 /-!
 # Folder 136, pages 5 to 7: the differential of a divided power, in Stacks' divided power de Rham complex
@@ -35,6 +38,9 @@ monomials (the full isomorphism of the coordinate complex with
 `Crystalline.dividedPowerDeRhamComplex`). Proposition 1 (`Φ_* ≃ 0`) is in
 `Grothendieck/Folder136Prop1.lean`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder136
 

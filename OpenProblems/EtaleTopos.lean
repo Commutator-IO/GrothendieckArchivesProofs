@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.SpecializationStalkSets
-
-@[expose] public section
 
 /-!
 # Does the étale topos remember the scheme? (p:etrec), stated as a proposition
@@ -34,6 +37,9 @@ inverse image along `X → S`.
   topoi, and no notion of the points of a topos being closed; the pinned morphisms of Carlson,
   Haine and Wolf are not in either library.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry Stacks.EtaleCohomology
 

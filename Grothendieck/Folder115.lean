@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 115, pages 3–7: Isbell duality from the kernel transform
@@ -39,6 +42,9 @@ Holds as stated: the duality is literally the kernel adjunction at `K = Hom`. No
 formalised: the eleven-node wheel of page 5, the families `(Aᵢ)` and the uniqueness of
 `𝒪` and `Spec` from their restriction along `y`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder115
 

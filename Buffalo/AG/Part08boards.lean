@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part08
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08: blackboards
@@ -11,6 +14,9 @@ Counterexamples for the board items of `public/buffalo-boards/` (videos `Oqhr-Gt
 and `vuys5SNs2eQ` to 15735 s) that misstate mathematics; the status of every checked item is in
 `docs/buffalo-ag/lean/Part08-boards.json`.
 -/
+
+@[expose] public section
+
 
 open PrimeSpectrum
 

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.RatSmulMemIndivisible
-
-@[expose] public section
 
 /-!
 # Folder 44, page 4: integrality of the Cartan numbers from the axioms
@@ -36,6 +39,9 @@ What is formalised.
   reflection group is one only with rational coefficients, since
   `e₁ + e₂ = (2/3)·3e₁ + (e₂ - e₁)`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder44
 

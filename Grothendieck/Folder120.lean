@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 120, pages 20–23: collapsing a tame subset over a field
@@ -73,6 +76,9 @@ used only for the union `J₁(X₁) ∪ J₂(X₂)` and for the graph of the ind
 over a general `R`. The category `Σ` of abstract tame spaces and the NB for finite diagrams
 are not formalised.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder120
 

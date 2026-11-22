@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 public import StacksFrontier.AlgebraicGeometry.FormalGeometry.CompletionFunctor.FullyFaithfulComplete
-
-@[expose] public section
 
 /-!
 # Folder 58, pages 33 and 41–42: the conditions `(LG)ₙ` and their permanence
@@ -45,6 +48,9 @@ from `(X, Y)` to `(W, g⁻¹(Y))` for every `g : W ⟶ X` projective and flat. S
   cases of Corollaire 1. Théorème (iii), which the reading does not verify, is left out.
 * Page 43's suggestion that quasi-projectivity of `X` can be dropped.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder58LefPermanence
 

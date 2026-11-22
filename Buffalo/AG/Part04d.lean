@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04c
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (d): 18 June 1973, gluing, projective space
@@ -11,6 +14,9 @@ The entries of `docs/buffalo-ag/index.tex` lines 612–631 (video `thSz9ZHDK9o`,
 gluing schemes, lines and hyperplanes of a vector space, invertible modules and the functor
 `𝐏(V)` of invertible quotients, its charts `𝐏_e` and their representing algebras.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite AlgebraicGeometry TensorProduct Module
 

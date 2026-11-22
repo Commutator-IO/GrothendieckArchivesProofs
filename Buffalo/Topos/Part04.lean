@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part04a
 public import Buffalo.Topos.Part04b
 public import Buffalo.Topos.Part04boards
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 4 (6, 20 and 27 June 1973)
@@ -22,3 +25,6 @@ implies satisfying `(I, Σ)` (`satisfiesExactness_twoSum_of_forall`), but the co
 holds vacuously, as for `Set` when `D` contains the empty limit and colimit
 (`no_initial_terminal_set`).
 -/
+
+@[expose] public section
+

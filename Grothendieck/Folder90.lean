@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 90, page 9: a flat irreducible group whose components have non-empty fibres, and a
@@ -55,6 +58,9 @@ Kaplansky's theorem on projective modules, turn `d(A) = 0` into « `G` specially
 and « `R[G]` free over `R` », which gives the criterion of page 9 in the reduced case. The
 non-reduced case stays open.
 -/
+
+@[expose] public section
+
 
 open Polynomial TensorProduct
 

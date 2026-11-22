@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import OpenProblems.Pseudolines
-
-@[expose] public section
 
 /-!
 # Folder 80, page 28: the numbering lemma, for combinatorial pseudoline maps
@@ -34,6 +37,9 @@ all the lines (the map is bigon-free). Numbering: `x, y, z, w`, the other lines,
 (`exists_numbering`), so that a partial arrangement containing `δ` is the whole map. This covers
 the case where the map itself is `II_4` (`n = k₀ = 4`).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Numbering
 

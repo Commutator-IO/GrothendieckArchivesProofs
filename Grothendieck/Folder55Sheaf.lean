@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder55LemmaB
 public import Mathlib.Topology.Sheaves.LocalPredicate
 public import Mathlib.Topology.Sheaves.Forget
 public import Mathlib.Algebra.Category.Ring.Limits
-
-@[expose] public section
 
 /-!
 # Folder 55, page 13: the structure sheaf of the counterexample, as a sheaf of rings
@@ -14,6 +17,9 @@ public import Mathlib.Algebra.Category.Ring.Limits
 a sheaf of rings on `Xsp`, `Grothendieck.Folder55LemmaB.Osheaf`, the input of the coherence
 statements of `Grothendieck/Folder55Coherent.lean`. The ring data `κ`, `ε`, `ι` stay abstract.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TopologicalSpace Opposite
 

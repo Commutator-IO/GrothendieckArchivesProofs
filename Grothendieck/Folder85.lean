@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.LinearAlgebra.Matrix.Trace
@@ -11,8 +16,6 @@ public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Tactic.FinCases
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
-
-@[expose] public section
 
 /-!
 # Folder 85: the invariant of a rotation of order 5 (pages 10, 27, 30, 40)
@@ -128,6 +131,9 @@ invertible). Also, « `u_s² ≠ 1`, that is `α + 2` invertible » is not an eq
 `t₁ = t₀` gives `u = 1`, `α = 2` (`dinfty_add_two_not_iff`). Forms of `PGL₂`, local rings
 and torsors over `S` are not formalised.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder85
 

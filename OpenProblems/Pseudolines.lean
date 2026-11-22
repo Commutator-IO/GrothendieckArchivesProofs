@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder80Maps2
-
-@[expose] public section
 
 /-!
 # Pseudoline arrangements: the numbering lemma, stated as a proposition (proved)
@@ -20,6 +23,9 @@ pseudolines in the real projective plane to its combinatorial map (Mathlib has n
 folders 80 and 154 are otherwise covered by `Grothendieck/Folder80*.lean` and
 `Grothendieck/Folder154*.lean`.
 -/
+
+@[expose] public section
+
 
 namespace OpenProblems.Pseudolines
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
@@ -6,8 +11,6 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Flat
 public import Mathlib.AlgebraicGeometry.Morphisms.Finite
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import StacksFrontier.AlgebraicGeometry.Morphisms.UniversalHomeomorphism.Defs.Integral
-
-@[expose] public noncomputable section
 
 /-!
 # Folder 126, page 17: geometric points of the fibres
@@ -39,6 +42,9 @@ argument needs from it.
   the criterion that makes each sheet `W_k → U` of the étale-local splitting a universal
   homeomorphism, once the `n` sheets share the `n` geometric points of every fibre.
 -/
+
+@[expose] public noncomputable section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 

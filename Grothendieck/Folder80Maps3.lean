@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 80, pages 39–54: the skeleton of a bigon-free arrangement, in combinatorial maps
@@ -69,6 +72,9 @@ vertices, edges, incidence — with the line of each edge; `SkelIso` is an isomo
 vertices: (A6) and the complete quadrangle `III₆`. These are what remains of the page 54
 theorem.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Maps3
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.ConnectedComponents
@@ -7,8 +12,6 @@ public import Mathlib.CategoryTheory.PUnit
 public import Mathlib.CategoryTheory.Yoneda
 public import Mathlib.CategoryTheory.SingleObj
 public import Mathlib.Data.ZMod.Defs
-
-@[expose] public section
 
 /-!
 # Folder 114: fundamental localisers, `W₀`, and the minimal one
@@ -96,6 +99,9 @@ hypothesis to add.
 What this certifies is that the reading holds together where it does, not that
 it is what the page says (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder114
 

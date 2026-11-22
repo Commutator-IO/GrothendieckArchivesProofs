@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
 public import Mathlib.RingTheory.AlgebraicIndependent.Defs
 public import Mathlib.RingTheory.Algebraic.Defs
-
-@[expose] public section
 
 /-!
 # Folder 18, page 12: the elliptic case of the period conjecture (statement only)
@@ -35,6 +38,9 @@ multiplication the transcendence degree is `2` (Chudnovsky, 1976); in general it
 The same vocabulary, with the proved bounds as targets, is in the Tau Ceti roadmap
 EllipticPeriods (TauCetiProject/TauCetiRoadmap#1059), which does not state the conjecture.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder18
 

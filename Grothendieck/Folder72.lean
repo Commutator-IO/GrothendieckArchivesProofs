@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 72: regular polytopes and pseudo-reflections in any dimension
@@ -49,6 +52,9 @@ Not formalised: the group scheme, its smoothness, the projective statement over
 a base (automorphisms of `X` commuting with the projective `τᵢ`), the torsor of
 flags itself (page 87 C, the bijection flags ↔ start points).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder72
 

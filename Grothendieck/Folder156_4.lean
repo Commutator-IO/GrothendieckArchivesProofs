@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Order.Basic
@@ -5,8 +10,6 @@ public import Mathlib.Data.Set.Lattice.Indexed
 public import Mathlib.Data.List.Chain
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Fin.VecNotation
-
-@[expose] public section
 
 /-!
 # Folder 156-4, pages 65–68: supports, cosupports, and the presumed Boolean algebra
@@ -42,6 +45,9 @@ complete ortholattice, not in general a Boolean algebra, even under the hypothes
 `(𝓜, ≤, R)` that pages 58–64 impose; the figures themselves (C 1–C 3, stated for the set of
 figures) are not encoded.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_4
 

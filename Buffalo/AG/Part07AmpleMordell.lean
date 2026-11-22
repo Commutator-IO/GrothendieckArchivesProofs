@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mordell.AbelianVariety.Ample.Sum
 public import Mordell.AlgebraicGeometry.VeryAmple.Twist
 public import StacksFrontier.AlgebraicGeometry.AmpleBridge.Basic
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07: tensor products and twists of ample sheaves
@@ -31,6 +34,9 @@ the ample cone spans `Pic(X) ⊗ ℚ`. The convex cone of 27035. Stability of am
 change (the other clause of 26840). The Segre embedding `ℙ(E) × ℙ(F) → ℙ(E ⊗ F)` over a base
 (26511, 32732): Mordell has it only for `ℙʳ_S × ℙᵐ_S` with the twisting sheaves, not for `ℙ(E)`.
 -/
+
+@[expose] public section
+
 
 universe u
 

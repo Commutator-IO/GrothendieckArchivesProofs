@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
@@ -6,8 +11,6 @@ public import Mathlib.RingTheory.MvPowerSeries.Equiv
 public import Mathlib.RingTheory.AdicCompletion.Completeness
 public import Mathlib.RingTheory.Henselian
 public import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
-
-@[expose] public section
 
 /-!
 # Folder 39, the formal preparation theorem (pages 18–19): the adic and discrete cases
@@ -60,6 +63,9 @@ uses « de type fini » only to get `𝔪ʲA[[Z]] = 𝔪ʲ[[Z]]` inside its own 
 What this certifies is that the reading holds together at this point, not that
 it is what the pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder39
 

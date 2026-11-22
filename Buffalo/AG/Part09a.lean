@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09 (a): 10 July 1973, from 4:22:15
@@ -17,6 +20,9 @@ reading, `X''(Z) ⊂ X'(Z) × X'(Z)`): a scheme over `S'` is replaced by a famil
 over the points `s` of a set `S'` mapping to `S`, and `S'' = S' ×_S S'` by the pairs `(s, t)` with
 `π s = π t`. By Yoneda, the statements on points for every `Z` are the scheme statements.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Topology TensorProduct
 

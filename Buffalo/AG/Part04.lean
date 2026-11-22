@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04d
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04: 12–18 June 1973
@@ -22,3 +25,6 @@ Not formalised (no carrier in mathlib): the restriction of a big Zariski sheaf t
 of a scheme (17805), the functor `𝐏(V)` as a Zariski sheaf of invertible quotients of
 quasi-coherent sheaves and its representability (24233, 24492).
 -/
+
+@[expose] public section
+

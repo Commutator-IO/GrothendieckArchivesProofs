@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder101Ext
 public import StacksFrontier.RingTheory.LocalCohomology.CechModel
-
-@[expose] public section
 
 /-!
 # Folder 101, page 10: local cohomology on `Spec A` lives in degrees `0` and `1`
@@ -28,6 +31,9 @@ Not formalised: the identification of `H⁰_x(M)` and `H¹_x(M)` with the kernel
 `M → M_ϖ = K ⊗_A M` (the cohomology of the two-term Čech complex is not unfolded here), and
 local cohomology of `O_X`-modules that are not quasi-coherent, which the page also treats.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder101LocalCohomology
 

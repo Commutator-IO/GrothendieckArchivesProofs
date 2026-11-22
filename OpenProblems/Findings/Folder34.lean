@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.FundamentalGroup.SpecializationMap
 public import StacksFrontier.AlgebraicGeometry.MoreMorphisms.LocalCompleteIntersection.Defs
 public import StacksFrontier.AlgebraicGeometry.Variety.CompleteLocal.StrictlyHenselian
 public import StacksFrontier.Topology.Algebra.Group.PrimeToPQuotient
-
-@[expose] public section
 
 /-!
 # Folder 34, pages 153–155: local 1-asphericity of complete intersections, stated
@@ -42,6 +45,9 @@ smoothness by the two conditions on the closed fibre.
 **Not stated.** Local 1-asphericity itself (vanishing of the local prime-to-`p` `H¹` on the
 punctured strict localisations, 5.1–5.3) for `f` not proper: Stacks has no local asphericity.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing Stacks.FundamentalGroup
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (d): 26 June 1973, from 4:39:50
@@ -16,6 +19,9 @@ Conventions. A `k`-scheme is a morphism `X ⟶ Spec k`. Mathlib's `Geometrically
 is `not_isReduced_tensor`: for `k` of characteristic `p` and `k' = k[t]/(tᵖ - x)`, the element
 `α ⊗ 1 - 1 ⊗ α` of `k' ⊗_k k'` is a nonzero nilpotent.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Polynomial TensorProduct
 

@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part05b
 public import StacksFrontier.AlgebraicGeometry.RelativeSpec.Representability
 public import StacksFrontier.AlgebraicGeometry.RelativeSpecEssSurj.Basic
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05: the relative spectrum of a quasi-coherent algebra
@@ -31,6 +34,9 @@ algebras, which `Part05b.lean` proves over an affine base) follow from the same 
 02KG) and `affineQuasicoherentEquivalence` (tag 01SA), whose essential surjectivity sends `𝒜`
 to its relative spectrum, affine over `S`.
 -/
+
+@[expose] public section
+
 
 open AlgebraicGeometry CategoryTheory Limits Stacks.RelativeSpec
 

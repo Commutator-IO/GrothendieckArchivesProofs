@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 118, page 35: stability of `𝒲_A` under products without asphericity
@@ -34,6 +37,9 @@ proved; similarly `X//G` is aspherical iff it is connected with trivial automorp
   aspherical, nor is `a × a` for the representable `a` (the regular `G`-set).
 * `answer_page_35`: the three together.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder118
 

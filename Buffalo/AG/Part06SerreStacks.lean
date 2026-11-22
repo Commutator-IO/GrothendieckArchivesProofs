@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.RegularRing.GlobalDimension
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: Serre's characterisation of regular local rings
@@ -31,6 +34,9 @@ global dimension, hence is regular by Serre's criterion.
 of the global dimension with `dim_κ 𝔪/𝔪²` and the equivalence with `pd_R κ < ∞`, which Stacks
 00OC also gives, are not part of the entry and are not restated here.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory
 

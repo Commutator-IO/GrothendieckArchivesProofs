@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Order.Basic
@@ -5,8 +10,6 @@ public import Mathlib.Data.Fintype.Sum
 public import Mathlib.Data.Fintype.Prod
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.Data.Finset.Card
-
-@[expose] public section
 
 /-!
 # Folder 156-8: the axioms of a magasin, and the interior supports of the magasin of an ordered set
@@ -54,6 +57,9 @@ wrong: `supp° {P_a} = {P_a}` there too, although `L` violates H; what the examp
 that the interval case of Lemma 1 fails, `supp° (S̃_{a,b}) = 𝓜 ≠ Omb (S_{a,b})`. The axioms of a
 magasin are not checked for the magasin of an ordered set; the finite models check them.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_8
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
@@ -13,8 +18,6 @@ public import Mathlib.FieldTheory.Galois.Basic
 public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
 public import Mathlib.RingTheory.Polynomial.UniqueFactorization
 public import Mathlib.RingTheory.Polynomial.RationalRoot
-
-@[expose] public section
 
 /-!
 # Folder 160, pages 7–9 and 13–15: the Moore determinant and the Dickson coefficients
@@ -63,6 +66,9 @@ needed. Not formalised: the relative version for a non-trivial `(E, u)` (the red
 trivial local system is étale-local), the trivialisation `(ΛⁿĚ)^{⊗(p−1)} ≅ 𝒪_S` by `Λⁿǔ`,
 and Dickson's theorem (pages 9–12).
 -/
+
+@[expose] public section
+
 
 open Matrix Polynomial
 

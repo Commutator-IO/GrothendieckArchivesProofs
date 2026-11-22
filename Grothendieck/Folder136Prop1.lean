@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder136
 public import StacksFrontier.AlgebraicTopology.SimplicialObject.ChainHomotopy
-
-@[expose] public section
 
 /-!
 # Folder 136, page 226, Proposition 1: `Φ_* ≃ 0`, and `C^{p,q}_*` is contractible for `p ≥ 1`
@@ -53,6 +56,9 @@ identification of `dpGrade p` with the weight-`p` part of the basis `dpBasis` of
 cohomology of a simplicial set `X` with coefficients in `C^{p,q}_*`, hence
 `H^{p,q}_DRpd(X, k) ≅ H^q(X, k)`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder136Prop1
 

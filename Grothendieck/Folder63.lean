@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.RingTheory.AdjoinRoot
 public import Mathlib.Algebra.Polynomial.Div
 public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Tactic.FinCases
-
-@[expose] public section
 
 /-!
 # Folder 63, pages 97–99: the four components of `j = 0` at `p = 2` have distinct tangents
@@ -35,6 +38,9 @@ reading's conclusion. Where its argument breaks is the last item: the splitting 
 tangent space that page 99 asserts is not stable under the involution. Not formalised: that the
 Hesse family is the level-3 moduli space, and the formula for `c₄`.
 -/
+
+@[expose] public section
+
 
 open Polynomial
 

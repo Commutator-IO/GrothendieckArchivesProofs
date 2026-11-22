@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 53, page 21: a cancellative algebraic monoid is a group
@@ -34,6 +37,9 @@ injective map `φ : M → (ι → K)` (`ι` finite) whose image is the zero locu
 Not formalised: monoid schemes over a ring, scheme-theoretic monomorphisms, finite
 presentation (the page's generality), and the embedding into `M_n` of page 30.
 -/
+
+@[expose] public section
+
 
 open MvPolynomial
 

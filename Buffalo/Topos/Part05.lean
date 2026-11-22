@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part05a
@@ -5,8 +10,6 @@ public import Buffalo.Topos.Part05b
 public import Buffalo.Topos.Part05c
 public import Buffalo.Topos.Part05d
 public import Buffalo.Topos.Part05boards
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5 (late June, 2 July and 10 July 1973)
@@ -24,3 +27,6 @@ retracted it on 10 July), refuted in a five-element lattice (`not_transitive`). 
 imprecise: 4gynb9uTEE4-13448 (« `Setᵒᵖ` admits a strict generator, the two-element set »), true in
 the sense of SGA 4 but not in the course's sense of strict generation (`no_limit_of_bools`).
 -/
+
+@[expose] public section
+

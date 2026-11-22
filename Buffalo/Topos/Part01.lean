@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01a
@@ -6,8 +11,6 @@ public import Buffalo.Topos.Part01c
 public import Buffalo.Topos.Part01d
 public import Buffalo.Topos.Part01boards
 public import Buffalo.Topos.Part01e
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1 (4 April and 11 May 1973)
@@ -23,3 +26,6 @@ surjections iff `X` is totally disconnected ») fails for the Sierpiński space,
 connected, and on which `Γ` preserves epimorphisms (`sierpinski_counterexample`); the entry now
 reads « compact Hausdorff » (Bourbaki's « compact »).
 -/
+
+@[expose] public section
+

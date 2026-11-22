@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Monad.Comonadicity
@@ -11,8 +16,6 @@ public import Mathlib.CategoryTheory.Category.GaloisConnection
 public import Mathlib.CategoryTheory.Adjunction.Whiskering
 public import Mathlib.CategoryTheory.Adjunction.Opposites
 public import Mathlib.Order.Sum.Order
-
-@[expose] public section
 
 /-!
 # Folder 19: the comonadicity theorem (page 4), the comonad over a product base
@@ -120,6 +123,9 @@ generator are not formalised here.
 What this certifies is that the reading holds together, not that it is what the
 pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder19
 

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Tactic.NormNum
 public import Mathlib.Data.List.Basic
-
-@[expose] public section
 
 /-!
 # Folder 148, pages 30–32: the counts of the chart of special structures on five points
@@ -15,6 +18,9 @@ fourteen types in three groups. The folder states 542 vertices and 1620 arrows; 
 these counts from the orders of the groups and the arrow numbers as the reading tabulates them. It
 checks the arithmetic of the chart, not the classification of the structures (#91, nv:97).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder148Chart
 

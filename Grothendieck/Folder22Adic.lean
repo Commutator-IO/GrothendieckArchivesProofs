@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.RingTheory.PowerSeries.Evaluation
@@ -6,8 +11,6 @@ public import Mathlib.Topology.UniformSpace.DiscreteUniformity
 public import StacksFrontier.RingTheory.FormallySmooth.Topological
 public import StacksFrontier.RingTheory.MvPowerSeries.HomExt
 public import Grothendieck.Folder22
-
-@[expose] public section
 
 /-!
 # Folder 22, pages 22 and 24: the `t`-adic half of the obstruction
@@ -43,6 +46,9 @@ The argument is the one-variable case of `formallySmoothNAdic_C_mvPowerSeries` i
 `StacksFrontier/RingTheory/FormallySmooth/CompleteLocalTransfer.lean`, whose import closure (628
 files) is too large to vendor; it is redone here for `PowerSeries`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder22Adic
 

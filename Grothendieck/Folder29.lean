@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 29, page 120: the determinant criterion on tame inertia
@@ -36,6 +39,9 @@ the criterion itself, for any integer matrix, `ℤ_ℓ(1)` being free of rank on
 * `criterion` (the page's criterion): `N` is bijective over `ℤ_ℓ` for every prime `ℓ ≠ p`
   iff `card C = card C'` and the determinant is `± p^k`.
 -/
+
+@[expose] public section
+
 
 open Matrix
 

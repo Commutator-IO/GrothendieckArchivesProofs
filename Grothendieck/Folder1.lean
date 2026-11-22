@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.SingularValuesSigmaTwo
-
-@[expose] public section
 
 /-!
 # Folder 1: the system (16) of page 71 for `m ≤ 2`, and (16) ⟹ (15)
@@ -69,6 +72,9 @@ the Fredholm determinant to the subadditivity of `S_p`, `0 < p < 1`, in finite d
 Not proved: (15) for `n ≥ 3`, so the subadditivity in general; Weyl's inequality via Jensen's
 formula and the power trick; Hölder for all exponents.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder1
 

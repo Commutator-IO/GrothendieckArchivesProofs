@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02b
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 02 (c): 11 June 1973 (beginning)
@@ -16,6 +19,9 @@ Not formalised (no carrier in mathlib): smoothness of reduced affine algebraic g
 algebraically closed field and the rationality of connected ones (entry 29738), and the
 comparison of Zariski and complex-analytic connectedness of `X(ℂ)` (entry 26013, in `Part02b`).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TopologicalSpace PrimeSpectrum
 

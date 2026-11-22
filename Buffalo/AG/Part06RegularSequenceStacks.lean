@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part06b
 public import StacksFrontier.RingTheory.RegularLocalRing.Basic
 public import StacksFrontier.RingTheory.RegularLocalRing.Criteria
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: regular local rings and regular sequences
@@ -37,6 +40,9 @@ The length is Mathlib's `ringKrullDim_add_length_eq_ringKrullDim_of_isRegular`:
 **Not formalised.** Nothing of the entry. The further facts of Stacks 00NQ (each
 `A/(x₁, …, x_c)` regular of dimension `d - c`, `A` Cohen–Macaulay) are not part of it and are not restated here.
 -/
+
+@[expose] public section
+
 
 open IsLocalRing
 

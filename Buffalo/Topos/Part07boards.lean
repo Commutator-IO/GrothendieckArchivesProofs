@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part07a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7: blackboard items not covered by an index entry
@@ -10,6 +13,9 @@ public import Buffalo.Topos.Part07a
 Board items of video `ORG14LNb5gE` (20167–22980) on the canonical topology and the comparison
 lemma. Statuses in `docs/buffalo-topos/lean/Part07-boards.json`.
 -/
+
+@[expose] public section
+
 
 universe u v
 

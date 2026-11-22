@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Triangulated.Functor
@@ -6,8 +11,6 @@ public import Mathlib.GroupTheory.FreeAbelianGroup
 public import Mathlib.Tactic.Abel
 public import Mathlib.LinearAlgebra.Dimension.RankNullity
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, views 1–3: the group `K` of a triangulated category, and the Euler identity
@@ -53,6 +56,9 @@ isomorphism classes; `K(φ)` an isomorphism for an equivalence; the exact sequen
 quotient (marked « à vérifier » on view 3); § 2's comparison `K(C) ≅ K(D^b(C))` for an abelian
 category, and the Euler identity for an arbitrary additive function or for finite-length modules.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_2_3
 

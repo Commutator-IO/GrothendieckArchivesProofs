@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 156-1, the segment model is a biorder (pages 10–13)
@@ -48,6 +51,9 @@ What this certifies is that the reading holds together, not that it is what the
 page says (issue #26), and not that the statement is new: the finding stays
 open as a literature question.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_1
 

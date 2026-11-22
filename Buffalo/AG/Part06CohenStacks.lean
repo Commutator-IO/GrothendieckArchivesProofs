@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.CompleteLocalRing.Regular
 public import StacksFrontier.RingTheory.RegularLocalRing.Criteria
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: complete regular local rings are power series rings
@@ -38,6 +41,9 @@ complete local ring without a given coefficient field is a quotient of a power s
 field or a Cohen ring, Stacks 032A, and a complete regular local ring containing a field is a power
 series ring over its residue field, Stacks 0C0S (1)), is not restated here.
 -/
+
+@[expose] public section
+
 
 open IsLocalRing
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.Fintype.Card
@@ -5,8 +10,6 @@ public import Mathlib.SetTheory.Cardinal.Finite
 public import Mathlib.Algebra.Group.Action.Defs
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Algebra.BigOperators.Ring.Finset
-
-@[expose] public section
 
 /-!
 # Folder 80, pages 20, 24, 28: the bigon-free dichotomy, in combinatorial maps
@@ -51,6 +54,9 @@ two diagonals of different pairs give `III_6` (`iii6_of`), two of the same pair 
 page 28 is proved in `Grothendieck/Folder80Numbering.lean`. Not formalised: the passage from a
 topological arrangement to its map.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Maps2
 

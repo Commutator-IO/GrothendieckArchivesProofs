@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (a): 12–13 June 1973, stalks, localization, local rings
@@ -12,6 +15,9 @@ the stalks of `M^~` and of `𝒪_X` on `Spec A`, localization of modules and rin
 multiplicative subset and its universal properties, local rings and their characterisations,
 `M ↦ M^~` and infinite products, and the completion of a noetherian local ring.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory IsLocalRing TensorProduct
 

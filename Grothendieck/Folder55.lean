@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 55, page 13: Lemme B, the identity principle and noetherianity
@@ -40,6 +43,9 @@ Lemme B, which needs coherent sheaves, supports of `𝒪/𝒥` and a primary dec
 stalk); the page gives no proof of it, and it is not checked here that (i)–(v) suffice for an
 arbitrary ringed space.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TopologicalSpace Opposite
 

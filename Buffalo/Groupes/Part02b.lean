@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part02a
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (b): distributions, hyperalgebra, diagonalizable groups
@@ -15,6 +18,9 @@ Entries `_lTf_L0yvrU-25719` to `_lTf_L0yvrU-30490` of `docs/buffalo-groupes/inde
 transpose of the multiplication of `A` (`diag`); the law of `Dist(G)` for a monoid `G = Spec A`
 is Mathlib's convolution product on `WithConv (A →ₗ[k] k')`.
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part02
 

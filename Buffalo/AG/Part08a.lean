@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08 (a): 6 July 1973 (from 10:19:03) and 9 July 1973, tape 1
@@ -17,6 +20,9 @@ Conventions. Modules are mathlib's `Module.Flat` and `Module.FaithfullyFlat`; sp
 *maximal point* of a space is a point whose closure is an irreducible component; a map
 *dominates* a closed irreducible set `Y'` when its image is dense in `Y'`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TensorProduct Topology PrimeSpectrum AlgebraicGeometry
 

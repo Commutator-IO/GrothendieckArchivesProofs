@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Localization.Bousfield
@@ -9,8 +14,6 @@ public import Mathlib.CategoryTheory.Adjunction.PartialAdjoint
 public import Grothendieck.Upstream.AdjunctionIdempotent
 public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
 public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
-
-@[expose] public section
 
 /-!
 # Folder 161-1: the fixed part of an adjunction, idempotent adjunctions, local objects
@@ -82,6 +85,9 @@ formalised here.
 What this certifies is that the reading holds together, not that it is what the
 pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder161_1
 

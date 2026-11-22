@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (d): diagonalizable groups, Hopf algebras, comodules
@@ -14,6 +17,9 @@ A point of `Spec A` with values in `R` is a `k`-algebra map `A → R`; the produ
 spaces is `Spec (A ⊗ B)` (`tensorPoints`), and the law of a group `Spec A` on points is Mathlib's
 convolution product on `WithConv (A →ₐ[k] R)`.
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part01
 

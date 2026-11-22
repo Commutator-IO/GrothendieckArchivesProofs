@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 10, pages 191–197: the indecomposables of `𝔾_a ⋊ 𝔾_m`
@@ -36,6 +39,9 @@ Not formalised: that every indecomposable is a string (Lemmes 1 and 2), and the 
 `R(G) = Λ[ξ]` itself, which needs that classification and the Krull–Schmidt theorem,
 neither in mathlib; the algebraic-group packaging.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder10
 

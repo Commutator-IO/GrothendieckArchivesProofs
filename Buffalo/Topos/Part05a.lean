@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5a: adding arrows, combining theories, additive categories (late June 1973)
@@ -17,6 +20,9 @@ Mathlib has no 2-category `Cat_D` of categories with limits of type `D`, no `D`-
 it carries: `D = ∅` (bare categories, where envelopes are free categories, quotients and
 Gabriel–Zisman localizations), and the exactness facts behind each step.
 -/
+
+@[expose] public section
+
 
 universe w v u v' u'
 

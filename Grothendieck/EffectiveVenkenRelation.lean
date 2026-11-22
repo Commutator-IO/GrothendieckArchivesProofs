@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.EffectiveVenken
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.Relations.PreRelations
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GroupoidOfEquivalenceRelation
-
-@[expose] public section
 
 /-!
 # Venken's relation as an equivalence relation of schemes
@@ -49,6 +52,9 @@ Not formalised: the contrast with the finite locally free case (Stacks 03BM, who
 closure is out of reach here), and the identification of effectivity of `R` with the equality
 `J_{B^R} = I_V` in scheme-theoretic terms.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.EffectiveVenken.Relation
 

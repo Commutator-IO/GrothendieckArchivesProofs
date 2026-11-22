@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder128
 public import StacksFrontier.AlgebraicGeometry.Descent.Modules.EffectiveDescent
-
-@[expose] public section
 
 /-!
 # Folder 128, pages 7–9: Cor. 2 and 3 in the affine case, and why « flat » cannot be dropped
@@ -38,6 +41,9 @@ prescheme `X = Spec A`. This file proves the affine statements only, and adds:
 Not formalised: Cor. 2 and 3 for non-affine preschemes (gluing the affine statements along an
 open cover, which needs quasi-coherent descent data on schemes), which stay out of reach here.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder128FlatBaseChange
 

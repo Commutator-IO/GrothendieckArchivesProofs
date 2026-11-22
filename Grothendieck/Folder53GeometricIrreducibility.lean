@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder53
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GaloisFixedComponentDescent
-
-@[expose] public section
 
 /-!
 # Folder 53, page 9: the criterion of geometric irreducibility, at scheme level
@@ -57,6 +60,9 @@ Not formalised: the sufficient condition by a geometrically normal point of `X_r
 identification of `ℂ ⊗_ℝ ℝ[x,y]/(x² + y²)` used by the counterexample (done separately in
 `Folder53.lean`).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry
 

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.Algebraization.StrictDepthFullyFaithful
 public import StacksFrontier.AlgebraicGeometry.FormalGeometry.PrincipalFormalLocusDimensionCriterion
-
-@[expose] public section
 
 /-!
 # Folder 58, pages 45 to 51: comparison of Hom along `Y′ = V(t)`, depth asked only off `Y′`
@@ -32,6 +35,9 @@ through Tags 0AWY, 0AW6 and 0DX9). Without it the folder's statement is reduced 
 proved: `hstrict` is a condition at the points of `Y′`, the very points where the folder asks
 nothing, and page 47 leaves the corresponding `t`-regular step at « ? ».
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder58DepthComparison
 

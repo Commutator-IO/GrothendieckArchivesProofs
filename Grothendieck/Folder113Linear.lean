@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder113
 public import Mathlib.CategoryTheory.Linear.LinearFunctor
 public import StacksFrontier.AlgebraicGeometry.WeilCohomology.Motives.Category
-
-@[expose] public section
 
 /-!
 # Folder 113, page 3: Morita invariance in its `k`-linear form
@@ -36,6 +39,9 @@ Not formalised: the reading's remark that an additive functor `P° → Ab` is au
 `k`-module valued (so that `P^k` does not depend on the `k`-structure), and
 `Kar(P) ≃ Proj_tf(P^k)`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder113
 

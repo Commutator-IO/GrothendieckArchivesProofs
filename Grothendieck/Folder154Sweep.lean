@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 154, pages 142, 144, 145: one half-sweep of seven pseudolines, written twice
@@ -48,6 +51,9 @@ A state of the sweep is a permutation `st : Perm (Fin 7)`, `st p` being the stra
 The pairs listed by the finding are as stated; nothing in it needed correcting. Not formalised:
 the wiring diagram of page 144 (redraw 08-18), whose wires are not identified with letters.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder154Sweep
 

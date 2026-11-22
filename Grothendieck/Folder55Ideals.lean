@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder55Coherent
 public import Mathlib.RingTheory.LaurentSeries
 public import Mathlib.RingTheory.PowerSeries.Ideal
-
-@[expose] public section
 
 /-!
 # Folder 55, page 13: the Ideals `𝒢_j` are coherent, and Lemme B fails
@@ -21,6 +24,9 @@ public import Mathlib.RingTheory.PowerSeries.Ideal
   page's argument uses, (i), (ii), (iv), and (v) for `𝒪` at `infty`, and the increasing sequence
   of coherent Ideals `𝒢_j` is not stationary.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TopologicalSpace Opposite Stacks.SheafOfModules Grothendieck.Folder55Generation
 

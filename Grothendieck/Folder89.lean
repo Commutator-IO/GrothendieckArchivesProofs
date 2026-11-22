@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Group.Units.Basic
@@ -6,8 +11,6 @@ public import Mathlib.Tactic.Ring
 public import Mathlib.Tactic.FinCases
 public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.Data.Fintype.Fin
-
-@[expose] public section
 
 /-!
 # Folder 89: the « fundamental relation » of the 3-3 sets, pages 15–18
@@ -22,6 +25,9 @@ suite ». The proof below is the edition's: Cramer's identity
 `(v ∧ w) • u + (w ∧ u) • v + (u ∧ v) • w = 0` gives `d • (u + v + w) = 0` when all three wedges
 equal `d`, and `d` is a unit.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder89
 

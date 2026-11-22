@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part01a
 public import Buffalo.Groupes.Part01b
 public import Buffalo.Groupes.Part01c
 public import Buffalo.Groupes.Part01d
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01
@@ -16,3 +19,6 @@ first examples, centers), `Part01b` (`W(M)`, `V(M)`, endomorphisms), `Part01c` (
 `α_{p^i}`, Frobenius) and `Part01d` (diagonalizable groups, Hopf algebras, comodules). The status of
 every entry is in `docs/buffalo-groupes/lean/Part01.json`.
 -/
+
+@[expose] public section
+

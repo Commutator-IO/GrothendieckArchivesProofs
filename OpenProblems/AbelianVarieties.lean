@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Abelian varieties and reductive groups: the open problems, stated as propositions
@@ -35,6 +38,9 @@ proved; a `def … : Prop` asserts nothing.
   `Grothendieck/Folder123Kostant.lean`. The second question (a distinguished conjugacy class of
   quadruples, stable under the outer automorphisms) is not stated either.
 -/
+
+@[expose] public section
+
 
 namespace OpenProblems.AbelianVarieties
 

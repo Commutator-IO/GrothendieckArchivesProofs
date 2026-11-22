@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5: claims of the blackboards not covered by an index entry
@@ -12,6 +15,9 @@ and `public/buffalo-boards/4gynb9uTEE4-*.json` (0:00:01–4:14:00) that make a m
 already formalised by an entry of `docs/buffalo-topos/lean/Part05.json`. The status of every board
 item is in `docs/buffalo-topos/lean/Part05-boards.json`.
 -/
+
+@[expose] public section
+
 
 universe u
 

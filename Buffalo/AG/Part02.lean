@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02c
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 02: 5 – 11 June 1973
@@ -19,3 +22,6 @@ Not formalised (no carrier in mathlib): the comparison between the Zariski conne
 and the connectedness of `X(ℂ)` in the complex topology (entry 26013), and the smoothness and
 rationality of reduced affine algebraic groups (entry 29738).
 -/
+
+@[expose] public section
+

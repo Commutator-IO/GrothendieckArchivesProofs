@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02a
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 02 (b): 6 June 1973
@@ -13,6 +16,9 @@ components, closed points, noetherian spaces and rings, points with values in `k
 points of algebras of finite type, and very dense subsets (Jacobson spaces). Notation as in
 `Buffalo.AG.Part02a`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TopologicalSpace PrimeSpectrum
 

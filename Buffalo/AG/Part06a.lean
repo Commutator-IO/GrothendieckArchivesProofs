@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (a): 25 June 1973, open and closed immersions
@@ -15,6 +18,9 @@ of morphisms are mathlib's `IsOpenImmersion`, `IsClosedImmersion`, `IsImmersion`
 stability is stated with `MorphismProperty`. Statements about closed subschemes of an affine
 scheme `Spec A` are made on the rings (`A → A/J`).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Topology TensorProduct
 

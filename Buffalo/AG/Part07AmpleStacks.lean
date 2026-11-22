@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.AffineNonvanishing.Basis
@@ -10,8 +15,6 @@ public import StacksFrontier.AlgebraicGeometry.RelativeAmple.VeryAmple
 public import StacksFrontier.AlgebraicGeometry.RelativeAmpleAffineBase.Basic
 public import StacksFrontier.AlgebraicGeometry.RelativeProjSeparated.Basic
 public import StacksFrontier.AlgebraicGeometry.RelativelyAmple.Separated
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07: ℙ(E), ample and very ample invertible sheaves
@@ -81,6 +84,9 @@ Grothendieck's « coherent » scheme is a quasi-compact quasi-separated one.
 * Parts 08, 09: 13514, 14220, 15139, 15264, 18219, 18281, 18420, 18808, 18872, 19653, 24670, 24799,
   20037 [relative ampleness and descent data: not formalised].
 -/
+
+@[expose] public section
+
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
 

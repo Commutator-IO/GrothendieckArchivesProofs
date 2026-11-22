@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 50: the axiomatic trace formula (pages 6–10)
@@ -44,6 +47,9 @@ involution `α' = φ_ξ⁻¹ ᵗα φ_ξ` is a `StarRing` structure on `E`, and
 Not formalised: the category itself, Propriété fondamentale 1 on products, the
 first half of the folder (pages 2 and 4).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder50
 

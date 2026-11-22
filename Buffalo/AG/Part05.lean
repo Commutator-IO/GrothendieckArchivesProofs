@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part05a
 public import Buffalo.AG.Part05b
 public import Buffalo.AG.Part05c
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05: (undated session, from 7:04:25) – 25 June 1973 (to 0:57:01)
@@ -32,3 +35,6 @@ its representability and universal quotient, Grassmannian and flag bundles, quas
 algebras and the relative spectrum, the restriction of sheaves from the big to the small Zariski
 site and its commutation with colimits.
 -/
+
+@[expose] public section
+

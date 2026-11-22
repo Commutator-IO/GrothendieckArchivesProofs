@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Fin.VecNotation
-
-@[expose] public section
 
 /-!
 # Folder 80, page 24: the « crucial » arrangements and a counterexample to the Théorème
@@ -44,6 +47,9 @@ the counterexample contains `II′_{3,2}`, so the version with that extra hypoth
 (`II′_{3,2}` and `II_5` excluded, conclusion `II_4` or `III_6`) is untouched. Not
 formalised: pseudolines in general, bigons, and that version itself.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80
 

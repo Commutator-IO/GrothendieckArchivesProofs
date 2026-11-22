@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01b
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1d: algebraic structures on objects of a category (11 May 1973)
@@ -11,6 +14,9 @@ Entries of `docs/buffalo-topos/index.tex` of the section « Algebraic structures
 category » (video `URU5jgTvjhU`, 4:59:30–5:34:24). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
 -/
+
+@[expose] public section
+
 
 universe u
 

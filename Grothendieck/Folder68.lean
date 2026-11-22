@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.LinearAlgebra.Matrix.Transvection
@@ -6,9 +11,6 @@ public import Mathlib.LinearAlgebra.Dual.Lemmas
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Algebra.GroupWithZero.Units.Fintype
-
-@[expose] public section
-
 
 /-!
 # Folder 68: theories of orientation characterised by their Stokes maps (pages 49, 51)
@@ -58,6 +60,10 @@ uniqueness in b) use neither the axiom on opposite half-spaces nor the naturalit
 the bijectivity of `St`, the compatibilities of a morphism and `Ω(0) ≃ {±1}`; the axiom on
 opposite half-spaces is used only for existence, through the action of `diag(1, …, 1, −1)`.
 -/
+
+@[expose] public section
+
+
 
 open Module Pointwise
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.SectionRatioNoAmple.Pullback
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09: inverse image of ample sheaves
@@ -22,6 +25,9 @@ half; 18872), the uniform very ample power of 18420, the descent statements 1821
 20037, 24670, 24799 and the quasi-projectivity over a field extension 19653: AxiomMath/Stacks has
 no norm of invertible sheaves nor descent data of schemes.
 -/
+
+@[expose] public section
+
 
 open AlgebraicGeometry CategoryTheory
 

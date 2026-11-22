@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 02 (a): 5 June 1973
@@ -17,6 +20,9 @@ Notation as in `Buffalo.AG.Part01a`: `k` is a commutative ring (the lecture's `K
 functor `k' ↦ Hom_k(A, k')` represented by `A`, and `𝒞 = (CommAlgCat k)ᵒᵖ` is the category of
 affine spaces over `k`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits
 

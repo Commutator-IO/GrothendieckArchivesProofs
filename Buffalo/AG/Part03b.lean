@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part03a
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 03 (b): 11 June 1973, recorded on `_lTf_L0yvrU`
@@ -15,6 +18,9 @@ Conventions. `M_f` is mathlib's `LocalizedModule (Submonoid.powers f) M` and `A_
 `Localization.Away f`; the sheaf `M~` is `AlgebraicGeometry.tilde M`, a sheaf of modules over the
 structure sheaf of `Spec A`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TensorProduct Topology PrimeSpectrum
 

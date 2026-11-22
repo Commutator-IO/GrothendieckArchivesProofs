@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 5: the coefficients `qᵢ` of the universal divided-power algebra (page 4)
@@ -29,6 +32,9 @@ Not formalised: the universality of the presentation, the normal form in the
 coordinates `Θᵢ = Λᵢ − p^{p^i}/(p^i)!` (pages 5–7), the constant `c(ν)`, the
 quotients `W^{(ν,r)}`, the bound of page 8.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder5
 

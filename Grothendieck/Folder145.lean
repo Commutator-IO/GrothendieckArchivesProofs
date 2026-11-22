@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 145, pages 34–35: the unit-exponent exercise
@@ -39,6 +42,9 @@ So the exercise holds, more generally: only the oddness of `p` is used, not that
 a unit at the odd primes. The compatibility of the family is used only to pass from
 `p (2N)` to `p N` and to `p 2`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder145
 

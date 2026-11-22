@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.LinearAlgebra.TensorProduct.Quotient
 public import Mathlib.RingTheory.Flat.Equalizer
 public import StacksFrontier.RingTheory.Flat.SquareZeroConormal
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 4 to 7: deforming a flat equivalence relation across a nilpotent thickening
@@ -67,6 +70,9 @@ topoi; the affine statement used here is the module-level 063Y.
   concrete tensor products `B ⊗ B ⊗ M` is not available, and nothing here constructs `A'` from
   `B'` and `C'`. Here `A'` and `φ` are given.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder126NilpotentQuotient
 

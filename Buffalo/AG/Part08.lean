@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part08c
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08: 6 July 1973 (from 10:19:03) – 10 July 1973 (to 4:14:24)
@@ -26,3 +29,6 @@ Not formalised (no carrier in mathlib): quasi-coherent modules on schemes as a p
 descent data, fpqc descent of morphisms and of affine schemes, Cohen–Macaulay rings, projective
 morphisms, relative ampleness and `P(E)`.
 -/
+
+@[expose] public section
+

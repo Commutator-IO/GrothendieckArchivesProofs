@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.Set.Lattice.Indexed
 public import Mathlib.Logic.Relation
 public import Mathlib.Data.Fintype.Powerset
-
-@[expose] public section
 
 /-!
 # Folder 156-5: the set-theoretic model of the axioms, and the gluing of ultra-topologies
@@ -52,6 +55,9 @@ it as a sub-figure but itself. The figures themselves are encoded only in the fi
 the second and third parts work directly with preorders, which page 36 identifies with
 figures.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_5
 

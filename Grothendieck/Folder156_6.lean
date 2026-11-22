@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Order.UpperLower.CompleteLattice
 public import Mathlib.Order.UpperLower.Principal
 public import Mathlib.Data.Set.Finite.Basic
 public import Mathlib.Data.Set.Finite.Lattice
-
-@[expose] public section
 
 /-!
 # Folder 156-6, pages 40, 44 and 49–50: closed parts, the lemma on `φ ↦ φ⁻¹`, trivial ateliers
@@ -65,6 +68,9 @@ needed for the binary form. At 8 forces a trivial atelier to be discrete, as the
 footnote says: « des plus restrictives » understates it. The ateliers themselves (At 1–At 7,
 figures, `≪` on `𝔉`) are not encoded; only the ordered sets and their closed parts are.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_6
 

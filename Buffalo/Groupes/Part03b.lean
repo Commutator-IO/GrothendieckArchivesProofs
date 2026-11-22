@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03 (b): regularity, smoothness, normality
@@ -18,6 +21,9 @@ Mathlib's `AlgebraicGeometry.geometrically P` (every base change to a field has 
 presentation); its equivalence with "locally of finite type and geometrically regular" is not in
 Mathlib, so the statements below are made with whichever notion Mathlib carries.
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part03
 

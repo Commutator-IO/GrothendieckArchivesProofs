@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part01a
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (c): `μ_n`, `SL_n`, `PGL_n`, `α_{p^i}` and Frobenius
@@ -13,6 +16,9 @@ the beginning of 11 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.js
 Dual numbers `k[ε]` (Mathlib `DualNumber k`) serve as the test algebra on which the infinitesimal
 groups `μ_p`, `α_p` and the Frobenius kernels have non-trivial points.
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part01
 

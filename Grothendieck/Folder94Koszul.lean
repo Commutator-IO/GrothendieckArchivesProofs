@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder94
 public import StacksFrontier.RingTheory.Koszul.Regular
-
-@[expose] public section
 
 /-!
 # Folder 94, pages 8–9: the Koszul step of Lemme 6
@@ -35,6 +38,9 @@ vanishing, no higher homology, it is a free resolution of `A_𝔭/(t)`; the grou
 statement of the page. That last identification with mathlib's derived-functor `Tor` (and
 `H_0(K_•(t)) ≅ A_𝔭/(t)`) is not formalised here; the vanishing is stated for Koszul homology.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder94Koszul
 

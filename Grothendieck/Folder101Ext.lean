@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder101
-
-@[expose] public section
 
 /-!
 # Folder 101, page 11: `Ext¹_A(K, A)` as a cokernel, and completeness
@@ -27,6 +30,9 @@ morphisms in the derived category):
 The local cohomology half of the row (`H⁰_x`, `H¹_x` on `Spec A` as derived functors, and the
 equivalence between `O_X`-modules and the page's triples) is not formalised here.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder101Ext
 

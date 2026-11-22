@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.IhesSGA6_2_3
@@ -5,8 +10,6 @@ public import Mathlib.CategoryTheory.Localization.Triangulated
 public import Mathlib.CategoryTheory.Triangulated.Subcategory
 public import Mathlib.CategoryTheory.ObjectProperty.Retract
 public import Mathlib.Algebra.Exact.Basic
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, view 3: `K(D) → K(T) → K(T/D) → 0` for a Verdier quotient
@@ -47,6 +50,9 @@ but `K(D) → K(T) = ℤ` has image `2ℤ` (Thomason, Compositio 105, 1997, Th. 
 counter-example is not formalised here. Surjectivity and the vanishing of the composite hold for
 any triangulated `D`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_2_3
 

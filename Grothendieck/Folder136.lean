@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.ChoosePrimePowSubOne
-
-@[expose] public section
 
 /-!
 # Folder 136, pages 19–31: the binomial lemma behind the « ombres »
@@ -48,6 +51,9 @@ Not formalised: the full faithfulness of `ω_N` and the isomorphism
 `M ⊗_k S → φ_N τ_N (M ⊗_k S)` over the divided-power algebra `k{T}` as statements
 about graded modules; Lemma 2 of page 21 (the `ℤ_(p)`-local form with few indices).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder136
 

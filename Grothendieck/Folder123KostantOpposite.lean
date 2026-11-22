@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import OpenProblems.AbelianVarieties
-
-@[expose] public section
 
 /-!
 # Folder 123: Kostant's opposite Borels in type `A`
@@ -23,6 +26,9 @@ of index `≥ n - k`, let `p < n - k` be the largest index with `v_p ≠ 0`. For
 `p + k < n`), so the `k + 1` vectors `v, shiftInv v, …, shiftInv^k v` of `W` are linearly
 independent, which contradicts `dim W = k` (`opposite`).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder123KostantOpposite
 

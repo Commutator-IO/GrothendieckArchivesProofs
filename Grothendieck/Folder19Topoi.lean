@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder19
 public import Mathlib.CategoryTheory.Sites.Limits
 public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
-
-@[expose] public section
 
 /-!
 # Folder 19, after théorème 1.12: descent along a surjective morphism of topoi
@@ -39,6 +42,9 @@ image preserves finite limits, equalizers among them.
 The hypothesis is the conservativity of `u*`; the identification with surjective morphisms
 (`u*` faithful) and the criterion of page 34 of folder 161-2 are not formalised here.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder19
 

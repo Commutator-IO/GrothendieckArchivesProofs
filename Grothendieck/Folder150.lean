@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 150, page 19: without `Xᵢ ∩ Y = f(Ẋᵢ)`, the reconstruction is not faithful
@@ -31,6 +34,9 @@ when `C = I · (C ∩ Ṫ) ∪ (C ∩ Y)` (the NB of page 15, which contains sta
 Not formalised: the categories of page 19 and the functor `X = X* ⊔_Ẋ 𝒞(f)` for general
 spaces, transversality and equisingularity; only this example is treated.
 -/
+
+@[expose] public section
+
 
 open Set
 

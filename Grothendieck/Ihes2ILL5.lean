@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
 public import Mathlib.Algebra.Category.FGModuleCat.Basic
-
-@[expose] public section
 
 /-!
 # Grothendieck, plan « Motifs » (IHÉS 2ILL5), pp. 2–3: « serein » means dualizable
@@ -42,6 +45,9 @@ Not formalised: that 2ILL5's « ≅ » is the canonical map (an abstract isomorp
 these pages; finite free modules over an arbitrary commutative ring (only vector spaces of finite
 dimension, the case Mathlib supplies as a rigid category).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Ihes2ILL5
 

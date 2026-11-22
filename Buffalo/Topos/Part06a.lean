@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 6a: accessible categories, `Ind`, cardinal filtrations (10 July 1973)
@@ -17,6 +20,9 @@ cardinal `κ = π⁺` (families of cardinality `< κ`): an ordered set dominatin
 objects are Mathlib's `Functor.IsCardinalAccessible` and `IsCardinalPresentable`; his
 `π`-accessible categories with small colimits are Mathlib's `IsCardinalLocallyPresentable`.
 -/
+
+@[expose] public section
+
 
 universe w v u
 

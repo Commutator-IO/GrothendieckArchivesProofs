@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Tactic.Ring
 public import Mathlib.Data.Rat.Init
-
-@[expose] public section
 
 /-!
 # Folder 147, pages 62–64: the stratified class of `M₁,₁` over `ℤ`
@@ -22,6 +25,9 @@ computation (« il est juste »); this file checks the arithmetic, over any fiel
 zero, with `𝕃`, `ζ₂`, `ζ₃` as indeterminates. It checks the algebra of the strata,
 not the geometry that produces them.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder147
 

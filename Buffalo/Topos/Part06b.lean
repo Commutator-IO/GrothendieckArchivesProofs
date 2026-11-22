@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part06a
 public import Buffalo.Topos.Part03b
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 6b: strict generation, theories, Lawvere, Birkhoff (11 July 1973)
@@ -17,6 +20,9 @@ A strictly generating functor `i : C → E` is Mathlib's dense functor (`Functor
 strictly epimorphic family is Mathlib's `EffectiveEpiFamily`; morphisms of topoi are modelled by
 `Buffalo.Topos.Part03.TopMor` (an adjunction `f^* ⊣ f_*` with `f^*` left exact).
 -/
+
+@[expose] public section
+
 
 universe w v u
 

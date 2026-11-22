@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 62, pages 35–47: the invariant `j` of a conic with an étale trisection
@@ -38,6 +41,9 @@ trisection).
 
 The torsor and barycentre descriptions of pages 49–53, over a base, are not formalised.
 -/
+
+@[expose] public section
+
 
 namespace Folder62
 

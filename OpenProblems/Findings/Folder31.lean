@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.CohomologicalDimension.TorsionVanishingBound
 public import Mathlib.Algebra.Ring.IsFormallyReal
-
-@[expose] public section
 
 /-!
 # Folder 31, page 22: a lower bound for the cohomological dimension of a local domain, stated
@@ -34,6 +37,9 @@ because `−1` is not a square in an orderable field.
 
 **Not stated.** The refinement for catenary universally japanese `A` (« `k` itself real »).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry IsLocalRing Polynomial
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 67, page 90: modules with an involution and triples `(P, Q, m)`
@@ -47,6 +50,9 @@ A submodule of `P/2P × Q/2Q` over `k` is the same as one over `k/2k`, since
 `2` kills the product; the file works over `k`. A morphism of triples is a pair
 `(f, g)` with `(f̄ × ḡ)(m) ⊂ m'`, stated on representatives.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder67
 

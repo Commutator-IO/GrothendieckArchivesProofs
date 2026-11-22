@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part04a
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 04 (b): 13 June 1973, locally ringed spaces and schemes
@@ -12,6 +15,9 @@ the open sets `U_f` of a ringed space, morphisms of spectra, local homomorphisms
 locally ringed spaces, the counterexample of a discrete valuation ring, the full faithfulness of
 `Spec`, schemes and their functor of points.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite IsLocalRing TopologicalSpace AlgebraicGeometry
 

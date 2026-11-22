@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part01
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03 (c): group schemes over a field, height one, tori
@@ -16,6 +19,9 @@ Conventions. A group scheme over `S` is a group object `G` of `Over S` (Mathlib'
 are the multiplication, unit section and inverse, and morphisms `T ⟶ G` form a group
 (`open MonObj`). Affine group schemes over `k` are commutative Hopf algebras, as in Part 01.
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part03
 

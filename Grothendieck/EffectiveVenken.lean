@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Venken's non-effective equivalence relation (1971)
@@ -52,6 +55,9 @@ Not formalised: the dimension count `269 > 268` of `I_V` and `J_{B^R}` in degree
 separating form `φ` is), the flat-descent statements of Venken's note, and the scheme-theoretic
 language (`R` is handled through its ideal).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.EffectiveVenken
 

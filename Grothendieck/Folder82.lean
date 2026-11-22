@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 82, pages 77–78: the conic in characteristic 2 and Frobenius, split case
@@ -60,6 +63,9 @@ is `SL(V) ⋉ V`, of dimension 5. This is finding `82-char2-sl2-forms-affine`, i
 Not formalised: forms over a base (descent), `gp(1)`, the coupling of `E` with `E′`, and
 smoothness of the automorphism schemes (only their points and Lie algebras are computed).
 -/
+
+@[expose] public section
+
 
 open Matrix
 

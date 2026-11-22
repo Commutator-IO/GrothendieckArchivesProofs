@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part02c
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (d): connected components, étale schemes, irreducibility
@@ -13,6 +16,9 @@ Entries `3ULFIl_2Wis-119` to `3ULFIl_2Wis-5696` of `docs/buffalo-groupes/index.t
 Affine statements are made for algebras (`Spec A`); étale `k`-algebras are Mathlib's
 `Algebra.Etale`, Galois groups `Gal(L/k)` with the Krull topology.
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part02
 

@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part07a
 public import Buffalo.AG.Part07b
 public import Buffalo.AG.Part07c
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07: 26 June 1973 (from 5:24:53) – 3 July 1973 (to 10:16:56)
@@ -28,3 +31,6 @@ Not formalised (no carrier in mathlib): the projective bundle `ℙ(E)` of a quas
 ample and very ample invertible sheaves, the Picard group of a scheme, Chow's lemma, complex
 analytic spaces, the gluing of `ℤ` copies of a curve and the normalization of the nodal curve.
 -/
+
+@[expose] public section
+

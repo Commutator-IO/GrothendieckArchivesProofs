@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Topology.Sets.Opens
 public import Mathlib.Topology.LocallyClosed
 public import Mathlib.Topology.Sober
 public import Grothendieck.Upstream.QuasiSoberPiCoreCompact
-
-@[expose] public section
 
 /-!
 # Folder 161-3: the topos of a product, the converse on pages 10–11
@@ -82,6 +85,9 @@ sober spaces. Nor the rest of the folder (pages 3–8 on the
 What this certifies is that the reading holds together, not that it is what the
 pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder161_3
 

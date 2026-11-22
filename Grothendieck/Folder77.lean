@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 77, pages 65–71 and 87: the universal discriminant mod 2 and mod 4
@@ -64,6 +67,9 @@ pointwise is `x ↦ x - e π(x) a` with `e` idempotent; conversely `isometry_of_
 invertible), `canSym_char_two` (`2 = 0`), and `det_polar_one` (the example `M₂`, `det`, `1`
 of p. 124, where `π` is the trace).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder77
 

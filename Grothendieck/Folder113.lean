@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Idempotents.FunctorExtension
@@ -5,8 +10,6 @@ public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
 public import Mathlib.CategoryTheory.Preadditive.Opposite
 public import Mathlib.Algebra.Category.ModuleCat.Abelian
 public import Grothendieck.Upstream.KaroubiAdditiveFunctors
-
-@[expose] public section
 
 /-!
 # Folder 113, page 3: the Karoubi envelope and Morita invariance (partial)
@@ -48,6 +51,9 @@ What the formalisation found: nothing wrong in the part formalised. The
 smallness of `P` and abelianness of the target are not used — only that the
 target is preadditive and idempotent complete.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder113
 

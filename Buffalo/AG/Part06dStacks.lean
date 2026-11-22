@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part06d
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProduct
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedBaseChange
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (d): perfect fields and geometric reducedness, completed
@@ -26,6 +29,9 @@ schemes (Apache-2.0, see `lean/Stacks/NOTICE.md`):
 * `Oqhr-Gt66es-17970`: `prop_17970_iff` — `X` is separable over `k` iff `X_{k'}` is over `k'`
   (tag 0384).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry TensorProduct
 

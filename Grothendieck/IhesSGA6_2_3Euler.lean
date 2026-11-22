@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.CategoryTheory.Abelian.GrothendieckGroup
@@ -6,8 +11,6 @@ public import Mathlib.Algebra.Order.Interval.Finset.SuccPred
 public import Mathlib.Algebra.Ring.NegOnePow
 public import Mathlib.Data.Int.Interval
 public import Mathlib.Data.Int.SuccPred
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_2_3, view 3, item 5: the Euler formula for any additive function
@@ -34,6 +37,9 @@ property (`KZero.lift`, `KZero.universal`), which gives the formula for `χ`
   exact sequences;
 * `sum_negOnePow_eq_zero_of_exact`: an exact bounded complex has `Σ (−1)ⁱ χ(Xⁱ) = 0`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_2_3Euler
 

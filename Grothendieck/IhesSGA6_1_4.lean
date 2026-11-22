@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.IhesSGA6_1_5
 public import Mathlib.Algebra.Category.ModuleCat.Basic
 public import Mathlib.Data.ZMod.Basic
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_1_4 (with FG_IL_5_SGA6_1_3): pseudo-coherence relative to a class `C₀`
@@ -66,6 +69,9 @@ sequences of objects, Cor. 4, 6, 7 (complexes and their cohomology), the equival
 « Application aux K », the general abelian category (only modules are treated), and, in the example,
 the stronger statement that `2ℤ/4` is not quasi-isomorphic to a bounded complex of free modules.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_1_4
 

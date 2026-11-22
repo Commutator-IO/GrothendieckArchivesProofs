@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Subobject.Basic
@@ -22,8 +27,6 @@ public import Mathlib.CategoryTheory.Limits.MonoCoprod
 public import Mathlib.CategoryTheory.Extensive
 public import Mathlib.CategoryTheory.Adjunction.Limits
 public import Grothendieck.Upstream.SemiSimplexCategoryReedy
-
-@[expose] public section
 
 /-!
 # Folder 104: categories of models, their three examples, and the globular complex
@@ -107,6 +110,9 @@ Not formalised: the equivalence `M ≃ M₀` and its converse (pages 8–10), th
 sphericity claims a) b) of page 10 (geometric realisations), the
 question of page 11, the closed parts and gluing of pages 14–15, and the N.B. of page 16.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder104
 

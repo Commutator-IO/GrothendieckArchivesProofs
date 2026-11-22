@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.Set.Basic
@@ -5,8 +10,6 @@ public import Mathlib.Data.Finset.Image
 public import Mathlib.Data.Finset.Lattice.Fold
 public import Mathlib.Data.Fintype.Prod
 public import Mathlib.Order.Interval.Finset.Nat
-
-@[expose] public section
 
 /-!
 # Folder 81, pages 31–39 and 45–47: non-parallel decompositions and their ordered quartets
@@ -56,6 +59,9 @@ tripod — `C_{≥ c₁}` contains the incomparable `c₂'` and `c₃'`. What ho
 is a chain. The transitivity asked in the margin of page 38 holds, and the order of a
 non-parallel family is a quartet. The NB of page 47 is correct.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder81
 

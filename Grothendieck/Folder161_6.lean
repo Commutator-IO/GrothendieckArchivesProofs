@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
@@ -9,8 +14,6 @@ public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Tactic.FinCases
 public import Mathlib.Tactic.IntervalCases
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-
-@[expose] public section
 
 /-!
 # Folder 161-6, pages 3–6, 12, 14 and 21: the golden number and the six axes of the icosahedron
@@ -62,6 +65,9 @@ mutually equiangular lines with this constant do not exist. That the edge graph 
 `120` automorphisms, not the `60` rotations the page writes (pages 8–9), is `card_aut` of
 `Folder86.lean`; here `vert_neg` gives the orientation-reversing automorphism `−1`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder161_6
 

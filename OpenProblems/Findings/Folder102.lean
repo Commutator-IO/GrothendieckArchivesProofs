@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.Limits.LimitPreservingFunctorOfPoints
-
-@[expose] public section
 
 /-!
 # Folder 102: an open-immersion criterion for functors, stated as a proposition
@@ -27,6 +30,9 @@ out below.
 * Nothing else in the row; the struck third hypothesis (« `u` … épimorphisme ») is left out, as
   the page strikes it.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 

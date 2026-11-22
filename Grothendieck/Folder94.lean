@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 94, pages 8, 9 and 19: regular sequences over a non-reduced base
@@ -48,6 +51,9 @@ nonzero layers over the reduced ring `A₀` (generic freeness, open and containi
 primes), and for `X` of finite type it needs generic flatness, which Mathlib does not have;
 the compatibility of the layers with localisation is not written out either.
 -/
+
+@[expose] public section
+
 
 open RingTheory.Sequence Submodule Function
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (b): 25 June 1973, from 1:37:21
@@ -17,6 +20,9 @@ Conventions. Regularity is mathlib's `IsRegularLocalRing` (the maximal ideal is 
 morphisms is a `MorphismProperty` of a category with pullbacks; the graph of `f : X → Y` over `S`
 is `pullback.lift (𝟙 X) f : X → X ×_S Y`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Topology TensorProduct Polynomial
 

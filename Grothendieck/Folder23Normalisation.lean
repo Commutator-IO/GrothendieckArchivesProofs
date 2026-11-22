@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.Excellent.Basic
@@ -6,8 +11,6 @@ public import StacksFrontier.RingTheory.Nagata.CompleteLocalRing
 public import StacksFrontier.RingTheory.Nagata.Examples
 public import StacksFrontier.RingTheory.Nagata.MonogenicN1
 public import StacksFrontier.RingTheory.Nagata.Universes
-
-@[expose] public section
 
 /-!
 # Folder 23, pages 86 to 88: finiteness of the normalisation of a quotient of a regular ring
@@ -52,6 +55,9 @@ finite dimension and so a localisation first) do not yet give the `S₂`-ificati
 a finite extension, nor the coherence of `i_*` across codimension two. Nor is the lemma of leaf
 86 on `(S_k)` along finite morphisms formalised.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder23Normalisation
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Polynomial.HasseDeriv
@@ -27,8 +32,6 @@ public import Mathlib.RingTheory.Localization.Away.Basic
 public import Mathlib.RingTheory.FiniteType
 public import Mathlib.RingTheory.Algebraic.Defs
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-
-@[expose] public section
 
 /-!
 # Folder 93, pages 72, 115–123: the Schwarzian difference with divided derivatives
@@ -92,6 +95,9 @@ Not proved: the reduction from `T^(p^N) − α` to `T^(p^N)` for `α ≠ 0` (it 
 Proving these statements says only that they hold as stated; the literature question
 of the finding stays open.
 -/
+
+@[expose] public section
+
 
 open Polynomial
 open scoped Ring

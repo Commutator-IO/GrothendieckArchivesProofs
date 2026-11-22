@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part03c
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 03: 11 June 1973 (from 8:43:41) – 12 June 1973 (to 1:36:31)
@@ -23,3 +26,6 @@ the fibres of the plane over it (`ex_34080`, `ex_34212`, `ex_34277`, `ex_33562`)
 Not formalised (no carrier in mathlib): homotopies between Čech complexes of two coverings
 (`37068`), complex analytic spaces and `X^an` (`37782`, `37848`).
 -/
+
+@[expose] public section
+

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01a
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 01 (b): 30 May 1973
@@ -12,6 +15,9 @@ closed subspaces and ideals, radicals and the Nullstellensatz (tested on fields,
 extensions, on `k` when `k` is algebraically closed), the algebra of functions of an affine space,
 and products, sums and filtered limits. Notation as in `Buffalo.AG.Part01a`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory MvPolynomial
 

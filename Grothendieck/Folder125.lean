@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Module.FinitePresentation
 public import Mathlib.LinearAlgebra.Dual.Lemmas
-
-@[expose] public section
 
 /-!
 # Folder 125: the chain of equivalences of feuillet 2, and the lemma of feuillet 3
@@ -75,6 +78,9 @@ general form.
 What this certifies is that the reading holds together at these points, not
 that it is what the pages say (issue #26).
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder125
 

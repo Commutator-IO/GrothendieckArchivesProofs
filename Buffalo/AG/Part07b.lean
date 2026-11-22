@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (b): 2 July 1973
@@ -17,6 +20,9 @@ graded ring (`Proj.toSpecZero`), which is the affine-base case `ℙ(E) = Proj(Sy
 criteria are mathlib's, for all valuation rings (the lecture's discrete valuation rings need
 noetherian hypotheses).
 -/
+
+@[expose] public section
+
 
 open TensorProduct AlgebraicGeometry CategoryTheory Limits
 

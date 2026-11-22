@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02a
@@ -5,8 +10,6 @@ public import Buffalo.Topos.Part02b
 public import Buffalo.Topos.Part02c
 public import Buffalo.Topos.Part02d
 public import Buffalo.Topos.Part02boards
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2 (18 and 25 May 1973)
@@ -27,3 +30,6 @@ Corrections made to the index:
 * URU5jgTvjhU-25307 [disc]: a counterexample to products of epimorphisms *does* exist on the line
   (`product_of_epis_not_epi`); the entry said the lecturer found none there.
 -/
+
+@[expose] public section
+

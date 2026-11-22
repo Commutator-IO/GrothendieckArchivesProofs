@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 154, page 153: the shadow of the `ν`-cube is a `2ν`-gon
@@ -38,6 +41,9 @@ definition, the generic condition being that no two images of the basis vectors 
 identification of the outline's vertices with the straight-line perturbations of page 153, and the
 reading of the figure (octagon, `ν = 4`), which rests on the redraw.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder154Zonogon
 

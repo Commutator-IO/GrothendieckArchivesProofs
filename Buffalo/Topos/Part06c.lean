@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part06b
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 6c: morphisms of sites, classifying topoi, subtopoi (1973)
@@ -15,6 +18,9 @@ topos `Ĉ` of a finite-limit theory, subtopoi and localization. The status of ea
 Morphisms of topoi are `Buffalo.Topos.Part03.TopMor`; a subtopos (embedding) is a `TopMor` whose
 direct image is fully faithful.
 -/
+
+@[expose] public section
+
 
 universe w v u
 

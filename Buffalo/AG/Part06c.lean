@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part06b
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (c): 26 June 1973, to 4:35:38
@@ -17,6 +20,9 @@ quasi-separatedness. A scheme `X` is separated (quasi-separated, quasi-compact) 
 `X → Spec ℤ` is, that is mathlib's `X.IsSeparated` (`QuasiSeparatedSpace X`, `CompactSpace X`).
 A coherent morphism is a quasi-compact quasi-separated one.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Topology TensorProduct
 

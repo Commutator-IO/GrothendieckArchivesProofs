@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.Colimits.CohomologyPullbackMap
-
-@[expose] public section
 
 /-!
 # Folder 32: the kernel of a pullback is killed by the index, stated as propositions
@@ -34,6 +37,9 @@ is killed by `N` exactly when it is killed by every element of that subgroup.
   rests (`AlgebraicGeometry.unit_comp_abelianTrace_eq_nsmul`, Stacks 03SH, covers finite étale
   maps of constant degree only).
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry Stacks.EtaleCohomology
 

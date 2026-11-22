@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 101, pages 10–11: local duality in dimension one for every `O_X`-module
@@ -29,6 +32,9 @@ page's own model: the equivalence between `O_X`-modules and triples, and the com
 
 `Ext0` is the kernel and `Ext1` the cokernel (by `imD`) of `g ↦ g ∘ u mod A`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder101
 

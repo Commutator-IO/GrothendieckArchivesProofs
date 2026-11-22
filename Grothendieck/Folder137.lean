@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 137, pages 74–83: polynomial categories and `⊗`-pd-categories
@@ -49,6 +52,9 @@ multidegree decompositions and homogeneity under scalars (d)), f), g) and the ha
 says only that it holds as formalised; whether it is in the literature is a separate
 question.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder137
 

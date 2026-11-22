@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part03a
 public import Buffalo.Topos.Part03b
 public import Buffalo.Topos.Part03c
 public import Buffalo.Topos.Part03boards
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3 (11 May, 30 May and 4 June 1973)
@@ -26,3 +29,6 @@ Corrected entries:
 * PqCQM3Pcl6Q-6421: the localization morphism `E/X' → E` is the analogue of an étale map, of an open
   immersion only when `X'` is subterminal (`overForget_not_full`, `quotient_not_mono`).
 -/
+
+@[expose] public section
+

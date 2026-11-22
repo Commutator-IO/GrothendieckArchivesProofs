@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part07a
 public import Buffalo.Topos.Part07b
 public import Buffalo.Topos.Part07c
 public import Buffalo.Topos.Part07boards
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7 (12 July 1973)
@@ -25,3 +28,6 @@ Corrected entries:
   filtered colimits for `n ≥ 2` (`components_not_stable`); for `n = 1` it is connectedness, which
   defines a subtopos (entry 13957).
 -/
+
+@[expose] public section
+

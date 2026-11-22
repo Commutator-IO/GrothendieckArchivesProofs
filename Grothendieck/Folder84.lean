@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 84: the product of quadratic algebras, in split coordinates
@@ -70,6 +73,9 @@ by `2`:
   `push_pull_square` and `push_pull_unit_iff` (pages 125 to 169: the comparison
   of pushout and pullback needs and uses `γχ = 2`).
 -/
+
+@[expose] public section
+
 
 universe u
 

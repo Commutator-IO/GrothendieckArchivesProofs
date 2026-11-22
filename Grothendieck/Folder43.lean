@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.FieldTheory.PerfectClosure
@@ -5,8 +10,6 @@ public import Mathlib.Algebra.CharP.Frobenius
 public import Mathlib.Algebra.Polynomial.Eval.Defs
 public import Mathlib.Algebra.Polynomial.Basic
 public import Mathlib.LinearAlgebra.Finsupp.Defs
-
-@[expose] public section
 
 /-!
 # Folder 43, pages 165–169: additive polynomials modulo `F − 1` and the perfection
@@ -37,6 +40,9 @@ with some `x^{pᵏ} = 0`) is absorbed by `F − 1`. Not formalised: the lemma of
 identifying `Ext¹_{S-gr}(G, Γ)` with primitive classes in `H¹(G, Γ)`, the invariance under
 universal homeomorphisms, non-affine bases, and the representability by perfect pro-schemes.
 -/
+
+@[expose] public section
+
 
 open Polynomial
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 5b: strict cogeneration, accessibility, representability (2 July 1973)
@@ -20,6 +23,9 @@ One entry was found false as stated: 4gynb9uTEE4-648 (« strict cogeneration is 
 retracted by the lecturer himself on 10 July (3:39:45); `not_transitive` gives a five-element
 lattice where it fails.
 -/
+
+@[expose] public section
+
 
 universe w v u v' u'
 

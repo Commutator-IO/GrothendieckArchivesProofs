@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part06a
 public import Buffalo.AG.Part06c
 public import Buffalo.AG.Part06d
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06: 25 June 1973 (from 0:58:06) – 26 June 1973 (to 5:23:27)
@@ -37,3 +40,6 @@ lines with doubled origin as glued schemes (`10987`, `14219`, `14762`), quasi-co
 `𝒪_X`-modules and their (higher) direct images (`16474`, `16538`), and the irreducibility of
 `Spec(K ⊗_k L)` over a separably closed field (`18360`).
 -/
+
+@[expose] public section
+

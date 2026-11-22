@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 02: board items not covered by the index
@@ -11,6 +14,9 @@ Claims on the reconstructed blackboards `public/buffalo-boards/51wmmpHand0-*.jso
 (4:56:31–8:36:03) that no index entry of part 02 formalises, and the counterexamples behind the
 corrections of the boards. Status in `docs/buffalo-ag/lean/Part02-boards.json`.
 -/
+
+@[expose] public section
+
 
 open TopologicalSpace PrimeSpectrum
 

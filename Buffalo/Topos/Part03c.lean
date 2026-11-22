@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part03b
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3c: sober spaces, ordered categories, very dense subsets (4 June 1973)
@@ -13,6 +16,9 @@ points of presheaf topoi, the topoi of ordered categories, very dense subsets, t
 topoi `Top(X, G)`, and localization (video `PqCQM3Pcl6Q`, 0:39:21 and 1:55:37–3:22:52). The status of
 each entry is in `docs/buffalo-topos/lean/Part03.json`.
 -/
+
+@[expose] public section
+
 
 universe w u
 

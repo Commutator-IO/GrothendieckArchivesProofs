@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Field.ZMod
@@ -7,8 +12,6 @@ public import Mathlib.ModelTheory.Ultraproducts
 public import Mathlib.RingTheory.Jacobson.Ideal
 public import Mathlib.RingTheory.KrullDimension.Zero
 public import Mathlib.RingTheory.Nilpotent.Lemmas
-
-@[expose] public section
 
 /-!
 # p:noncoh: the first-order part, proved by Łoś's theorem
@@ -47,6 +50,9 @@ is a unit, coordinatewise) without being nilpotent, whereas in dimension `≤ 0`
 radical is the nilradical. (The family `k[x,y]/(xy, xⁿ, yⁿ)` would do as well; `Dₙ` is finite and
 needs no polynomial computation.)
 -/
+
+@[expose] public section
+
 
 universe u
 

@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Backport of the mathlib4 branch `mycaule/isAdicComplete-of-isNilpotent`
@@ -13,6 +16,9 @@ the fork mycaule/mathlib4, branch `mycaule/isAdicComplete-of-isNilpotent`, close
 `IsAdicComplete.of_isNilpotent_module` (the ring case of Stacks has the name); drop a
 declaration once Mathlib has it.
 -/
+
+@[expose] public section
+
 
 
 /-! ## From `Mathlib/RingTheory/AdicCompletion/Basic.lean` -/

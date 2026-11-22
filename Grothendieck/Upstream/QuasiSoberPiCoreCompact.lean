@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Topology.Sober
 public import Mathlib.Topology.Constructions
-
-@[expose] public section
 
 /-!
 # Way-below opens, core-compactness, scattered spaces, products of quasi-sober spaces
@@ -15,6 +18,9 @@ point) with their `T0Space` and `QuasiSober` instances, and the instance making 
 product of quasi-sober spaces quasi-sober. They keep the names the proof used; drop a
 declaration once Mathlib has it.
 -/
+
+@[expose] public section
+
 
 open Set Function
 

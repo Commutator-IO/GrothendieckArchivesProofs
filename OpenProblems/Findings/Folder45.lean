@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.Torsor
-
-@[expose] public section
 
 /-!
 # Folder 45: surjectivity of `H¹` over a field of dimension `≤ 1`, stated as a proposition
@@ -31,6 +34,9 @@ of that form exactly when there is a `G`-torsor `X` with a morphism `X → X'` e
   kernels, the dévissage of Lemma 5): Mathlib and Stacks have no maximal tori of group schemes or
   Cartan subalgebras of restricted Lie algebras.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry MonoidalCategory
 

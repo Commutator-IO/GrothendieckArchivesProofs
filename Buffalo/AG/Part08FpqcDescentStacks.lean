@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.Descent.Modules.FpqcFinitePresentation
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 08: fpqc descent of finite type and finite presentation
@@ -38,6 +41,9 @@ the rings, and the sheaf statement is for the pullback functor `Scheme.Modules.p
 Mathlib; the hypothesis "faithfully flat quasi-compact" is read as flat, surjective and
 quasi-compact, as in `Part08b`.
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry
 open scoped TensorProduct

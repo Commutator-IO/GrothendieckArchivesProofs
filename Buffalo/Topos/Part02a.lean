@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01d
 public import Buffalo.Topos.Part01c
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2a: étale morphisms, ring objects, internal Hom (18 May 1973)
@@ -15,6 +18,9 @@ each entry is in `docs/buffalo-topos/lean/Part02.json`.
 Conventions are those of `Part01`: sheaves of sets on a space `X` are
 `TopCat.Sheaf (Type u) X = Sheaf (Opens.grothendieckTopology X) (Type u)`.
 -/
+
+@[expose] public section
+
 
 universe u
 

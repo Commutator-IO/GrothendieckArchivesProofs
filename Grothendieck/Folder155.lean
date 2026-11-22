@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Folder 155: the Takeuchi product as an idealiser quotient (page 1)
@@ -31,6 +34,9 @@ Finding `155-takeuchi-idealiser` (`src/content/findings.ts`), on the reading
 Not formalised: the completed tensor products of pro-objects, the
 comultiplication itself, the isomorphism `𝕀(L)/L ≅ End_S(S/L)`.
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder155
 

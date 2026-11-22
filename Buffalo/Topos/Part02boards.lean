@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02a
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2: board items not covered by an index entry
@@ -11,6 +14,9 @@ Items of the reconstructed blackboards `public/buffalo-boards/URU5jgTvjhU-{20201
 29033,30214}.json` (18 and 25 May 1973) that make a claim not formalised by an index entry of
 Part02. The status of every board item is in `docs/buffalo-topos/lean/Part02-boards.json`.
 -/
+
+@[expose] public section
+
 
 universe u
 
