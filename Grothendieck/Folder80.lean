@@ -22,10 +22,13 @@ diagonals). Page 24:
 > l'un d'eux […]. Supposons de plus que K ne contienne pas de sous-arrangement du type II_5 ;
 > elle est de l'un des types suivants : III_6, IV_7.
 
-This is finding `80-crucial-arrangements-theorem`. A counterexample made of straight lines of
-the real projective plane is enough; the lines are written as integer triples `(u₀, u₁, u₂)`
-(the line `u₀x + u₁y + u₂z = 0`), and three lines are concurrent iff the determinant of their
-triples vanishes (`det3_eq_det`).
+This is finding `80-crucial-arrangements-theorem`.
+
+**What the formalisation finds.** The Théorème fails as written, already for straight lines:
+the counterexample contains `II′_{3,2}`, so the version with that extra hypothesis
+(`II′_{3,2}` and `II_5` excluded, conclusion `II_4` or `III_6`) is untouched.
+
+## Main results
 
 * `six`: the sides `AB`, `BC`, `CA` of the triangle `A = (0, 0)`, `B = (1, 0)`, `C = (0, 1)`,
   and the lines `a : y = 2x` through `A`, `b : y = 3x − 3` through `B`, `c : y = 5x + 1`
@@ -42,10 +45,20 @@ triples vanishes (`det3_eq_det`).
   (`AB, BC, CD, DA, AC, BD, EF` for the square `A, B, C, D`, `E, F` at infinity) the five lines
   `AB, AD, AC, BD, EF` have a single triple point.
 
-**What the formalisation finds.** The Théorème fails as written, already for straight lines:
-the counterexample contains `II′_{3,2}`, so the version with that extra hypothesis
-(`II′_{3,2}` and `II_5` excluded, conclusion `II_4` or `III_6`) is untouched. Not
-formalised: pseudolines in general, bigons, and that version itself.
+## Implementation notes
+
+A counterexample made of straight lines of the real projective plane is enough; the lines are
+written as integer triples `(u₀, u₁, u₂)` (the line `u₀x + u₁y + u₂z = 0`), and three lines are
+concurrent iff the determinant of their triples vanishes (`det3_eq_det`).
+
+## Not formalised
+
+Pseudolines in general, bigons, and the version of the Théorème with `II′_{3,2}` excluded.
+
+## References
+
+* A. Grothendieck, folder 80, p. 24 (finding `80-crucial-arrangements-theorem`); modernised
+  reading `transcripts/80/80.modern.tex`, § III
 -/
 
 @[expose] public section

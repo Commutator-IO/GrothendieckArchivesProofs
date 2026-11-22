@@ -15,14 +15,11 @@ Finding `80-skeleton-full-faithfulness`. Page 54 (« En résumé »):
 > Le foncteur canonique du groupoïde des arrangements de pseudo-droites sans bigone vers celui
 > des arrangements de dimension 1 de pseudo-droites sans bigone est pleinement fidèle.
 
-**Model.** As in `Folder80Maps2`, an arrangement is a generalised map (flags, three involutions
-`a0, a1, a2`) of Euler characteristic `1` whose flags are labelled by lines (page 60), and it is
-*bigon-free* when every line carries at least three vertices. Page 60's « aller tout droit » is
-the extra hypothesis `Straight`: with `φ = a2 a1` the rotation around a vertex of `ν` lines,
-`φ^ν` returns to the same line. The arrangement of dimension `1` (page 40) is the skeleton —
-vertices, edges, incidence — with the line of each edge; `SkelIso` is an isomorphism of these.
+The functor is proved faithful, and full away from `III₆` (whenever every triangle has a fourth
+line avoiding its vertices).
 
-**What is proved.**
+## Main results
+
 * `faithful`: two isomorphisms of arrangements inducing the same maps on vertices and edges are
   equal — the functor is faithful.
 * `lift`, `lift_iff`: page 41's « théorème général des cartes ». A skeleton isomorphism comes
@@ -68,9 +65,23 @@ vertices, edges, incidence — with the line of each edge; `SkelIso` is an isomo
   only two lines always has a fourth line, so fullness holds whenever every triangle has a
   double vertex (`SimpleCorner`): a triangle without a fourth line has three multiple vertices.
 
-**Not formalised.** The arrangements where some triangle has no fourth line avoiding its
-vertices: (A6) and the complete quadrangle `III₆`. These are what remains of the page 54
-theorem.
+## Implementation notes
+
+**Model.** As in `Folder80Maps2`, an arrangement is a generalised map (flags, three involutions
+`a0, a1, a2`) of Euler characteristic `1` whose flags are labelled by lines (page 60), and it is
+*bigon-free* when every line carries at least three vertices. Page 60's « aller tout droit » is
+the extra hypothesis `Straight`: with `φ = a2 a1` the rotation around a vertex of `ν` lines,
+`φ^ν` returns to the same line. The arrangement of dimension `1` (page 40) is the skeleton —
+vertices, edges, incidence — with the line of each edge; `SkelIso` is an isomorphism of these.
+
+## Not formalised
+
+The arrangements where some triangle has no fourth line avoiding its vertices: (A6) and the
+complete quadrangle `III₆`. These are what remains of the page 54 theorem.
+
+## References
+
+* A. Grothendieck, folder 80, pp. 35, 39–54, 60 (finding `80-skeleton-full-faithfulness`)
 -/
 
 @[expose] public section

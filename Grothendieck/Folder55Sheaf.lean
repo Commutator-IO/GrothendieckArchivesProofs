@@ -16,6 +16,10 @@ public import Mathlib.Algebra.Category.Ring.Limits
 `Grothendieck.Folder55LemmaB.O` is a subsheaf of the sheaf of all functions; this file makes it
 a sheaf of rings on `Xsp`, `Grothendieck.Folder55LemmaB.Osheaf`, the input of the coherence
 statements of `Grothendieck/Folder55Coherent.lean`. The ring data `κ`, `ε`, `ι` stay abstract.
+
+## References
+
+* A. Grothendieck, folder 55, p. 13 (Lemme B)
 -/
 
 @[expose] public section

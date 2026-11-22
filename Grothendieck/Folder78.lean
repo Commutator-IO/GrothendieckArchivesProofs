@@ -25,37 +25,64 @@ ring `k`:
 > **Théorème (p. 112).** For `n ∈ ℤ` the following are equivalent: a) `u_α^n = id`;
 > b) `s_n = s_0`; c) `u_α^n s_i = s_i` for one fixed `i`; d) `F_n(α) = 0`.
 
-This is finding `78-closure-criterion-over-rings` of `src/content/findings.ts`.
+This is finding `78-closure-criterion-over-rings` of `src/content/findings.ts`. The file also
+treats pages 84–85 and 94–99, the strip `2p`-gons (finding `78-strip-2p-gon`, existence half
+only).
 
-What is formalised. `F R n` is defined through mathlib's rescaled Chebyshev polynomials of
-the second kind (`Polynomial.Chebyshev.S`): `F_{2m} = S_{m−1}`, `F_{2m+1} = S_m + S_{m−1}`.
-That this is the reading's `F_n` is `F_even_closed` and `F_odd_closed` (the defining
-formulas, cleared of denominators, for `t` a unit of any commutative ring and `n ≥ 1`),
-together with `F_zero` and `F_neg`. Then `F_identity` (p. 109, every `n ∈ ℤ`, the step
-being mathlib's Cassini identity `S_sq_add_S_sq`), `F_bezout` and `isCoprime_F` (the reading's
-`A_n`), `page_A_four_fails` (the page's `A_n = F_{n−2} − U F_{n−1}` fails at `n = 4`),
-`u_zpow_apply` (`u^n (x, y) = (1 − x − y) s_n + x s_{n+1} + y s_{n−1}`, the matrix of p. 111,
-first version), `vertex` and the four conditions `zpow_eq_one_iff`, `vertex_eq_iff`,
-`zpow_fix_iff`. Also `inv_eq_conj` (`σ₁ u σ₁ = u⁻¹`, `σ₁ (x, y) = (y, x)`), `swap_vertex`
-(`σ₁ s_n = s_{−n}`), `conic_invariant` (`f_α = x² − x + y² − y − α x y` is `u_α`-invariant
-and vanishes on the vertices), and `affine_eq_of_frame` (an affinity of `k²` is determined
-by its values at `s_0, s_1, s_{−1} = (0, 0), (1, 0), (0, 1)`).
+## Main definitions
 
-# Folder 78, pages 84–85 and 94–99: the strip `2p`-gons (existence)
+* `F R n`, the reading's `F_n`, through mathlib's rescaled Chebyshev polynomials of the second
+  kind (see the implementation notes).
 
-Finding `78-strip-2p-gon`, existence half only. In characteristic `p` (`CharP k p`, `p`
-prime, `k` nontrivial), `α = −2`: `strip_vertex` (`s_{2m} = (−m, m)`, `s_{2m+1} = (1 + m, −m)`,
-so the even vertices lie on `x + y = 0`, the odd ones on `x + y = 1`, `strip_lines`),
-`strip_zpow_eq_one_iff` (`u^n = id ⇔ 2p ∣ n`), `strip_orderOf` (order `2p`),
-`strip_vertex_eq_iff` (`s_n = s_m ⇔ 2p ∣ n − m`, so `2p` distinct vertices), `strip_conic`
-(`f_{−2} = (x + y)(x + y − 1)`), `strip_F_eq_zero_iff` (`F_n(−2) = 0 ⇔ 2p ∣ n`),
-`strip_noncollinear` (three consecutive vertices span, determinant `1`), `linPart_det`
-(unimodular). The improper polygon `u (x, y) = (1 − y, −x)` of p. 85: `imp_zpow_apply`
-(`u^{2m}` is the translation by `m (1, −1)`), `imp_zpow_eq_one_iff`, `imp_orderOf`,
-`imp_vertex` (`(m, −m)`, `(m + 1, −m)`, the same two lines), `imp_vertex_eq_iff`,
-`imp_noncollinear`, `imp_inv_eq_conj`, and `imp_linPart_det` (`−1`, so not unimodular when
-`p` is odd). The claim that the improper polygon is the only non-unimodular finite regular
-polygon needs the classification and is not proved.
+## Main results
+
+### Pages 109–113: the closure criterion
+
+* `F_even_closed`, `F_odd_closed`, `F_zero`, `F_neg`: `F R n` is the reading's `F_n` (the
+  defining formulas, cleared of denominators, for `t` a unit of any commutative ring and
+  `n ≥ 1`).
+* `F_identity` (p. 109, every `n ∈ ℤ`, the step being mathlib's Cassini identity
+  `S_sq_add_S_sq`), `F_bezout` and `isCoprime_F` (the reading's `A_n`), `page_A_four_fails`
+  (the page's `A_n = F_{n−2} − U F_{n−1}` fails at `n = 4`).
+* `u_zpow_apply` (`u^n (x, y) = (1 − x − y) s_n + x s_{n+1} + y s_{n−1}`, the matrix of
+  p. 111, first version), `vertex` and the four conditions `zpow_eq_one_iff`,
+  `vertex_eq_iff`, `zpow_fix_iff`.
+* `inv_eq_conj` (`σ₁ u σ₁ = u⁻¹`, `σ₁ (x, y) = (y, x)`), `swap_vertex` (`σ₁ s_n = s_{−n}`),
+  `conic_invariant` (`f_α = x² − x + y² − y − α x y` is `u_α`-invariant and vanishes on the
+  vertices), and `affine_eq_of_frame` (an affinity of `k²` is determined by its values at
+  `s_0, s_1, s_{−1} = (0, 0), (1, 0), (0, 1)`).
+
+### Pages 84–85 and 94–99: the strip `2p`-gons (existence)
+
+In characteristic `p` (`CharP k p`, `p` prime, `k` nontrivial), `α = −2`:
+
+* `strip_vertex` (`s_{2m} = (−m, m)`, `s_{2m+1} = (1 + m, −m)`, so the even vertices lie on
+  `x + y = 0`, the odd ones on `x + y = 1`, `strip_lines`), `strip_zpow_eq_one_iff`
+  (`u^n = id ⇔ 2p ∣ n`), `strip_orderOf` (order `2p`), `strip_vertex_eq_iff`
+  (`s_n = s_m ⇔ 2p ∣ n − m`, so `2p` distinct vertices), `strip_conic`
+  (`f_{−2} = (x + y)(x + y − 1)`), `strip_F_eq_zero_iff` (`F_n(−2) = 0 ⇔ 2p ∣ n`),
+  `strip_noncollinear` (three consecutive vertices span, determinant `1`), `linPart_det`
+  (unimodular).
+* The improper polygon `u (x, y) = (1 − y, −x)` of p. 85: `imp_zpow_apply` (`u^{2m}` is the
+  translation by `m (1, −1)`), `imp_zpow_eq_one_iff`, `imp_orderOf`, `imp_vertex`
+  (`(m, −m)`, `(m + 1, −m)`, the same two lines), `imp_vertex_eq_iff`, `imp_noncollinear`,
+  `imp_inv_eq_conj`, and `imp_linPart_det` (`−1`, so not unimodular when `p` is odd).
+
+## Implementation notes
+
+`F R n` is defined through mathlib's rescaled Chebyshev polynomials of the second kind
+(`Polynomial.Chebyshev.S`): `F_{2m} = S_{m−1}`, `F_{2m+1} = S_m + S_{m−1}`.
+
+## Not formalised
+
+The claim that the improper polygon is the only non-unimodular finite regular polygon needs
+the classification and is not proved.
+
+## References
+
+* A. Grothendieck, folder 78, pp. 109–113 (finding `78-closure-criterion-over-rings`) and
+  pp. 84–85, 94–99 (finding `78-strip-2p-gon`); modernised reading
+  `transcripts/78/78.modern.tex`, § V
 -/
 
 @[expose] public section

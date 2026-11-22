@@ -26,15 +26,14 @@ traduction en théorie des groupes », pages 238 to 269; « Le commutant de
 `SL(M)` et de `SL(M)'` », pages 92 to 95; « Un sommet est-il déterminé par son
 étoile ? », pages 275 to 280; « Orientation et connexité », pages 17 to 20;
 « Lire `Z'_Λ` sur les étoiles » and « Le fait mirifique », pages 96 to 101 and
-136 to 140; « Points antipodiques et homothéties », pages 178 to 189) is the source of the findings `79-homothety-groups-as-subgroups`,
-`79-commutant-octahedral-exception`, `79-vertex-determined-by-star`,
-`79-semilocal-diameter-three`, `79-star-polygon-twist` and
-`79-homothety-distance-three` of
-`src/content/findings.ts`. Proving them says only that the claims hold as
-stated (or as corrected below); whether they stand in the literature is a
+136 to 140; « Points antipodiques et homothéties », pages 178 to 189) is the source of the
+findings `79-homothety-groups-as-subgroups`, `79-commutant-octahedral-exception`,
+`79-vertex-determined-by-star`, `79-semilocal-diameter-three`, `79-star-polygon-twist` and
+`79-homothety-distance-three` of `src/content/findings.ts`. Proving them says only that the
+claims hold as stated (or as corrected below); whether they stand in the literature is a
 separate question.
 
-What is formalised:
+## Main results
 
 * **(88)–(89), pages 242 to 247.** For a group `H`, a subgroup `U₀` and
   `σ ∈ H` with `σ² ∈ U₀` and `U₀ ∩ σU₀σ⁻¹ = 1` (the coset graph `H/U₀`, with
@@ -78,15 +77,28 @@ What is formalised:
   `homothety_adj` (if `λx` is a neighbour of `x`, it is the only one),
   `homothety_common_nbr` (a common neighbour of `x` and `λx` forces equal
   stars), hence `homothety_dist_ge_three`: if `x` has two neighbours and no
-  other vertex has its star, `λx` is at distance at least `3` from `x`. The
-  double-cone lemma of page 275 (equal stars only for the octahedron) is not
-  formalised; in the model it is replaced by `same_star_iff`. In the model
-  (`Adj`, edges of type `± e` on `M*/±1`), over any commutative ring:
-  `commutant_dist` (a map `λ ≠ 1` commuting with `SL(2, R)` fixes no vertex,
-  moves none to a neighbour, and moves one, equivalently all, to distance `2`
+  other vertex has its star, `λx` is at distance at least `3` from `x`. In the model,
+  over any commutative ring: `commutant_dist` (a map `λ ≠ 1` commuting with `SL(2, R)` fixes
+  no vertex, moves none to a neighbour, and moves one, equivalently all, to distance `2`
   iff `R` is exceptional and `λ = σ`), `sigma_common_nbr`; over a semi-local
   ring `commutant_dist_three` (distance exactly `3` for `λ ≠ 1, σ`), and over
   `Z/n`, `n ≥ 2`, `zmod_scal_dist_three` (units `μ ≠ ± 1`).
+
+## Implementation notes
+
+The model is `Adj`, edges of type `± e` on `M*/±1`. On page 188 the double-cone lemma of
+page 275 is replaced, in the model, by `same_star_iff`.
+
+## Not formalised
+
+The double-cone lemma of page 275 (equal stars only for the octahedron).
+
+## References
+
+* A. Grothendieck, folder 79, pp. 17–20, 67, 92–101, 136–140, 178–189, 238–269, 275–280
+  (findings `79-homothety-groups-as-subgroups`, `79-commutant-octahedral-exception`,
+  `79-vertex-determined-by-star`, `79-semilocal-diameter-three`, `79-star-polygon-twist`,
+  `79-homothety-distance-three`); modernised reading `transcripts/79/79.modern.tex`
 -/
 
 @[expose] public section

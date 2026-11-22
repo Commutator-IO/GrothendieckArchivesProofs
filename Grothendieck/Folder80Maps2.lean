@@ -22,6 +22,22 @@ Finding `80-bigon-free-five-line-dichotomy`. Page 24 (boxed, announced on page 2
 with `II′_{3,2}` the reading's name for the page's `I′_{3,2}` (a pencil of three and a pencil
 of two, without the line joining their centres).
 
+## Main definitions
+
+* `BigonFree`: every line carries at least three vertices.
+* `GMap`, `PseudolineMap`: generalised maps and pseudoline maps (see the implementation notes).
+
+## Main results
+
+* `dichotomy`: **the incidence core.** If a bigon-free incidence structure has a simple
+  crossing, it is `II_4` or contains `II_5`, `II′_{3,2}` or `III_6`.
+* `melchior`: a bigon-free pseudoline map has a simple crossing (Melchior's inequality
+  `Σ (3 − ν(v)) ≥ 3`, from `χ = 1`, `E = Σ ν(v)` and `2E ≥ 3F`; the faces have at least three
+  sides because the skeleton has no loop and no multiple edge, `face_six`);
+* `map_dichotomy`: **the page's boxed statement**, for every bigon-free pseudoline map.
+
+## Implementation notes
+
 **The incidence core** (`dichotomy`). Lines `L`, points `P`, a relation `on`; two distinct lines
 meet in exactly one point (`meet`), every point is on at least two lines (`two`: the points are
 the vertices). *Bigon-free* (`BigonFree`) means that every line carries at least three
@@ -41,18 +57,23 @@ two edge-ends (`pass`), each line is connected (`conn`), every vertex is on two 
 two lines meet at exactly one vertex (`meet`), and `χ = 1` (`euler`). Going straight is not
 used: the axioms are weaker than the page's, so the theorem is stronger.
 
-* `melchior`: a bigon-free pseudoline map has a simple crossing (Melchior's inequality
-  `Σ (3 − ν(v)) ≥ 3`, from `χ = 1`, `E = Σ ν(v)` and `2E ≥ 3F`; the faces have at least three
-  sides because the skeleton has no loop and no multiple edge, `face_six`);
-* `map_dichotomy`: **the page's boxed statement**, for every bigon-free pseudoline map.
+**The proof** is the one of the problems paper (§ Pseudoline arrangements): Melchior gives a
+simple crossing, hence four lines in general position (`exists_gp4`); a further line through
+none or one of their six vertices gives `II_5` or `II′_{3,2}`, otherwise it is a diagonal
+(`diag_of`); two diagonals of different pairs give `III_6` (`iii6_of`), two of the same pair are
+equal (`diag_unique`), and a lone diagonal is bigonal (`not_bigonFree`). The numbering lemma of
+page 28 is proved in `Grothendieck/Folder80Numbering.lean`.
 
-The proof is the one of the problems paper (§ Pseudoline arrangements): Melchior gives a simple
-crossing, hence four lines in general position (`exists_gp4`); a further line through none or
-one of their six vertices gives `II_5` or `II′_{3,2}`, otherwise it is a diagonal (`diag_of`);
-two diagonals of different pairs give `III_6` (`iii6_of`), two of the same pair are equal
-(`diag_unique`), and a lone diagonal is bigonal (`not_bigonFree`). The numbering lemma of
-page 28 is proved in `Grothendieck/Folder80Numbering.lean`. Not formalised: the passage from a
-topological arrangement to its map.
+## Not formalised
+
+The passage from a topological arrangement to its map.
+
+## References
+
+* A. Grothendieck, folder 80, pp. 20, 24, 28, 60 (finding
+  `80-bigon-free-five-line-dichotomy`)
+* the problems paper, § Pseudoline arrangements
+* Melchior's inequality
 -/
 
 @[expose] public section

@@ -20,6 +20,27 @@ and counts
 37 regions, whose side-sum `3·7 + 4·24 + 5·6 = 147` is odd (the reading, `80.modern.tex`,
 « Un arrangement de neuf courbes »). This is finding `80-p9-region-count-rim-arcs`.
 
+## Main results
+
+* `proj_count`: 37 faces, 10 triangles, 21 quadrilaterals, 6 pentagons, side-sum
+  `144 = 2 · 72`; `euler_proj`: `36 − 72 + 37 = 1`; `euler_disc`: `54 − 99 + 46 = 1`.
+* `inner_count`: the 28 regions away from the rim are 7 triangles (the central `D_A D_B D_C`,
+  `central_triangle`, and six others), 18 quadrilaterals, 3 pentagons; `rim_count`: the nine
+  faces across the rim are 3 triangles, 3 quadrilaterals and 3 pentagons.
+* `labels_rim`: the page's eighteen labels on the rim pieces (`pageRim`) are the projective side
+  numbers, the two pieces of a face carrying the same digit, one primed.
+* `page_count`: the page's rows are `7 = ` the inner triangles, `24 = ` the inner and rim
+  quadrilaterals **and the three rim triangles**, `6 = ` the inner and rim pentagons; so the
+  page's 7, 24, 6 is the projective count with the three rim triangles put among the
+  quadrilaterals, and `147 = 144 + 3`. Each rim triangle is the gluing of a piece with three
+  curve sides `Δ_X, Δ_X′, D` (four sides in the disc, the rim arc closing it) and a piece with
+  two (`rim_triangle_pieces`); the page labels both pieces `3` and `3′`.
+* `rim_arc_side`: counting the rim arc as a side of every face across the rim does not give the
+  page's count either (it gives 7, 21, 6 and three hexagons), and the regions of the disc, rim arc
+  counted, are 13 triangles, 24 quadrilaterals and 9 pentagons (`disc_count`).
+
+## Implementation notes
+
 **What is the page's, what is the redraw's, what is ours.** The count and the labels are the
 page's. The combinatorial data below are read off the machine redraw `80/drawings/01-3.tex`
 (overlay-checked, centre confirmed by the editor in #151, not checked by a reader) by a script
@@ -43,25 +64,16 @@ rim arc `k` is glued to the one on arc `k + 9`, and the two segments of each cur
 ends become one edge: a glued face has `a + b − 2` sides, `a`, `b` the numbers of curve segments
 of its two pieces (`projSides`).
 
-* `proj_count`: 37 faces, 10 triangles, 21 quadrilaterals, 6 pentagons, side-sum
-  `144 = 2 · 72`; `euler_proj`: `36 − 72 + 37 = 1`; `euler_disc`: `54 − 99 + 46 = 1`.
-* `inner_count`: the 28 regions away from the rim are 7 triangles (the central `D_A D_B D_C`,
-  `central_triangle`, and six others), 18 quadrilaterals, 3 pentagons; `rim_count`: the nine
-  faces across the rim are 3 triangles, 3 quadrilaterals and 3 pentagons.
-* `labels_rim`: the page's eighteen labels on the rim pieces (`pageRim`) are the projective side
-  numbers, the two pieces of a face carrying the same digit, one primed.
-* `page_count`: the page's rows are `7 = ` the inner triangles, `24 = ` the inner and rim
-  quadrilaterals **and the three rim triangles**, `6 = ` the inner and rim pentagons; so the
-  page's 7, 24, 6 is the projective count with the three rim triangles put among the
-  quadrilaterals, and `147 = 144 + 3`. Each rim triangle is the gluing of a piece with three
-  curve sides `Δ_X, Δ_X′, D` (four sides in the disc, the rim arc closing it) and a piece with
-  two (`rim_triangle_pieces`); the page labels both pieces `3` and `3′`.
-* `rim_arc_side`: counting the rim arc as a side of every face across the rim does not give the
-  page's count either (it gives 7, 21, 6 and three hexagons), and the regions of the disc, rim arc
-  counted, are 13 triangles, 24 quadrilaterals and 9 pentagons (`disc_count`).
+## Not formalised
 
-Not formalised: the passage from the drawing to the two lists (a script on the redraw), and
-that the data define a topological arrangement; the non-stretchability (a literature result).
+The passage from the drawing to the two lists (a script on the redraw), and that the data define
+a topological arrangement; the non-stretchability (a literature result).
+
+## References
+
+* A. Grothendieck, folder 80, p. 9 (finding `80-p9-region-count-rim-arcs`, issue #151); the
+  reading `80.modern.tex`, « Un arrangement de neuf courbes »; the redraw
+  `80/drawings/01-3.tex`
 -/
 
 @[expose] public section

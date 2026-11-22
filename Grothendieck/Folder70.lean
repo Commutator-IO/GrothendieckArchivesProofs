@@ -47,7 +47,7 @@ characteristic-5 case of `70-icosahedron-integral-faithful`. Proving them says o
 that the claims hold as stated; whether they stand in the literature is a separate
 question.
 
-What is formalised.
+## Main results
 
 * Over any commutative ring `R` with `α² + α − 1 = 0`: `q_vert` (the twelve vertices lie
   on `q = 0`), `sigma0_vert`, `sigma1_vert`, `sigma2_vert` (the three generators
@@ -71,10 +71,18 @@ What is formalised.
   incidence part), over any nonzero commutative ring with `α² + α − 1 = 0`:
   `vert_injective_any` (twelve distinct vertices), `not_collinear_any` (no three on a
   line), `not_in_face_plane_any` (no vertex in the plane of a face not containing it).
-  The proof is the page's « par homogénéité » made explicit: `sigmaOf_vert` and the
-  kernel-checked word tables `pairWord`, `faceWord` reduce every case to the lines
-  `s₀s₁`, `s₀s''₃`, `s₀ι(s₀)` and the face plane `z = 0`, where a `2 × 2` minor is a unit
-  of `ℤ[α]` (`base_line_1`, `base_line_5`, `base_line_6`) and `isUnit_z` applies.
+
+## Implementation notes
+
+The proof of faithfulness is the page's « par homogénéité » made explicit: `sigmaOf_vert` and
+the kernel-checked word tables `pairWord`, `faceWord` reduce every case to the lines
+`s₀s₁`, `s₀s''₃`, `s₀ι(s₀)` and the face plane `z = 0`, where a `2 × 2` minor is a unit
+of `ℤ[α]` (`base_line_1`, `base_line_5`, `base_line_6`) and `isUnit_z` applies.
+
+## References
+
+* A. Grothendieck, folder 70, pp. 74–78, 89–102 (findings `70-icosahedron-char5-conic`,
+  `70-icosahedron-integral-faithful`); modernised reading `transcripts/70/70.modern.tex`, § VII
 -/
 
 @[expose] public section

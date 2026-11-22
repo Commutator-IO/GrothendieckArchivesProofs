@@ -20,8 +20,9 @@ every increasing sequence of coherent subsheaves of a coherent sheaf is stationa
 `transcripts/55/55.modern.tex`, section « Le lemme B ».
 
 Mathlib has no coherent sheaves on a ringed space, so this file proves the two steps of the
-argument that do not depend on them, in a model where a subsheaf is a family of sets of
-sections, stable under restriction and local:
+argument that do not depend on them, with (v) replaced by a uniformity hypothesis.
+
+## Main results
 
 * `stationary_of_locally_stationary`: on a quasi-compact space, an increasing sequence of
   subsheaves which is eventually constant on some neighbourhood of every point is eventually
@@ -38,10 +39,21 @@ sections, stable under restriction and local:
   increasing sequence of subsheaves whose germs stabilise everywhere but which accumulates
   at `∞` is not stationary.
 
-Not formalised: that (v) implies the uniformity hypothesis of `stationary_of_germs` (the core of
-Lemme B, which needs coherent sheaves, supports of `𝒪/𝒥` and a primary decomposition at the
-stalk); the page gives no proof of it, and it is not checked here that (i)–(v) suffice for an
-arbitrary ringed space.
+## Implementation notes
+
+The model: a subsheaf is a family of sets of sections, stable under restriction and local.
+
+## Not formalised
+
+That (v) implies the uniformity hypothesis of `stationary_of_germs` (the core of Lemme B, which
+needs coherent sheaves, supports of `𝒪/𝒥` and a primary decomposition at the stalk); the page
+gives no proof of it, and it is not checked here that (i)–(v) suffice for an arbitrary ringed
+space.
+
+## References
+
+* A. Grothendieck, folder 55, p. 13 (Lemme B) and p. 5 (Lemme A); modernised reading
+  `transcripts/55/55.modern.tex`, section « Le lemme B »
 -/
 
 @[expose] public section

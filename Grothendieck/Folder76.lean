@@ -29,7 +29,7 @@ This is finding `76-flag-presheaf-gset-lemma` of `src/content/findings.ts`.
 Proving it says only that the claim holds as stated; whether it stands in the
 literature is a separate question.
 
-What is formalised.
+## Main results
 
 * `mem_mul_of_split`: if `K ∪ K'` splits at an index `i ∉ K ∪ K'` into a part
   below `i` contained in `K'` and a part above `i` contained in `K`, then every
@@ -42,8 +42,15 @@ What is formalised.
   `H' = {j, k}`); `prec_iff_pair` reduces the common majorant to one in
   `D({i, j})`; `prec_of_mem` and `not_prec_self` give (c) and irreflexivity.
 
+## Implementation notes
+
 The `σᵢ` are not assumed to be involutions; the group, the set `X` and the
 action are arbitrary.
+
+## References
+
+* A. Grothendieck, folder 76, pp. 26–29 (finding `76-flag-presheaf-gset-lemma`); modernised
+  reading `transcripts/76/76.modern.tex`
 -/
 
 @[expose] public section

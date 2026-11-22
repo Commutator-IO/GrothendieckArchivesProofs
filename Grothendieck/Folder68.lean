@@ -26,14 +26,13 @@ isomorphism, two theories are related by exactly one isomorphism, and the action
 
 All of the claim is proved here.
 
-Formalisation. The groupoid is that of finite-dimensional real vector spaces in `Type` and
-their linear isomorphisms; `Theory` carries `Ω`, its action `map` (functorial), `card`
-(`Nat.card (Ω V) = 2`), `zero : Ω(ℝ⁰) ≃ ℤˣ`, and `St W H` for `IsHalfSpace W H` (a nonzero
-linear form `f` with `ker f = W` and `H = {f ≥ 0}`; the opposite half-space is `-H`). The
-naturality of `St` is stated for every isomorphism `e : V ≃ V₂` carrying `(W, H)` to
-`(W₂, H₂)`, with the restriction `e.ofSubmodules`. The axiom `St_{-H} = τ ∘ St_H` is stated
-as `St_{-H} ω ≠ St_H ω`, which on a two-element set is the same. A morphism (`Hom`) is a
-natural transformation compatible with `zero` and `St`.
+What the formalisation found: the bijectivity of the Stokes maps is used as an axiom, as the
+reading says (the cardinality argument of page 49 would not give it). Theorem a) and the
+uniqueness in b) use neither the axiom on opposite half-spaces nor the naturality of `St`, only
+the bijectivity of `St`, the compatibilities of a morphism and `Ω(0) ≃ {±1}`; the axiom on
+opposite half-spaces is used only for existence, through the action of `diag(1, …, 1, −1)`.
+
+## Main results
 
 * `Hom.bijective`, `Hom.isIso`: Theorem a) — every morphism is an isomorphism, its inverse
   being a morphism (page 49; induction on the dimension through the Stokes maps).
@@ -43,6 +42,17 @@ natural transformation compatible with `zero` and `St`.
   page 51 — `g ∈ GL(n, ℝ)` fixes `Ω(ℝⁿ)` iff `det g > 0` and acts by `τ` iff `det g < 0`;
   `Theory.fixes_iff_det_pos'` on any `V`.
 
+## Implementation notes
+
+The groupoid is that of finite-dimensional real vector spaces in `Type` and their linear
+isomorphisms; `Theory` carries `Ω`, its action `map` (functorial), `card`
+(`Nat.card (Ω V) = 2`), `zero : Ω(ℝ⁰) ≃ ℤˣ`, and `St W H` for `IsHalfSpace W H` (a nonzero
+linear form `f` with `ker f = W` and `H = {f ≥ 0}`; the opposite half-space is `-H`). The
+naturality of `St` is stated for every isomorphism `e : V ≃ V₂` carrying `(W, H)` to
+`(W₂, H₂)`, with the restriction `e.ofSubmodules`. The axiom `St_{-H} = τ ∘ St_H` is stated
+as `St_{-H} ω ≠ St_H ω`, which on a two-element set is the same. A morphism (`Hom`) is a
+natural transformation compatible with `zero` and `St`.
+
 The step « de proche en proche » of page 51 is supplied by mathlib's induction principle for
 invertible matrices (`Matrix.diagonal_transvection_induction_of_det_ne_zero`): a transvection
 is the square of a transvection and a positive diagonal matrix is a square, so they act
@@ -51,14 +61,16 @@ half-spaces (`Theory.not_fixes_reflect`), and the other `diag(…, −1, …)` a
 permutations. The existence in b) follows the reduction of page 51: reference elements
 `r_n ∈ Ω(ℝⁿ)` with `s_{n+1}(r_{n+1}) = r_n` for the half-space `ℝⁿ × ℝ₊`, the bijection
 `ψ_n` with `r_n ↦ r′_n`, which commutes with `GL(n, ℝ)` because both actions are `sg ∘ det`,
-transported to every `V` by a chart (`phi_eq`: independent of the chart). Existence of a
-theory, c), is not part of the claim and is not proved.
+transported to every `V` by a chart (`phi_eq`: independent of the chart).
 
-What the formalisation found: the bijectivity of the Stokes maps is used as an axiom, as the
-reading says (the cardinality argument of page 49 would not give it). Theorem a) and the
-uniqueness in b) use neither the axiom on opposite half-spaces nor the naturality of `St`, only
-the bijectivity of `St`, the compatibilities of a morphism and `Ω(0) ≃ {±1}`; the axiom on
-opposite half-spaces is used only for existence, through the action of `diag(1, …, 1, −1)`.
+## Not formalised
+
+Existence of a theory, c), is not part of the claim and is not proved.
+
+## References
+
+* A. Grothendieck, folder 68, pp. 49, 51 (finding `68-orientation-stokes-axioms`); modernised
+  reading `transcripts/68/68.modern.tex`, section VI
 -/
 
 @[expose] public section

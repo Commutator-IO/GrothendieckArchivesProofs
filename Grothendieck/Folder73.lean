@@ -18,10 +18,9 @@ The modernised reading `transcripts/73/73.modern.tex` studies the map sending a 
 (pages 23–28, at the end of the file). Proving them says only that the claims hold as
 stated; whether they stand in the literature is a separate question.
 
-The plane is `k²` (`Fin 2 → k`) with the volume form `a ∧ b = a₀b₁ - a₁b₀`; an affine map
-acts on sides through its linear part, a `2 × 2` matrix.
+## Main results
 
-## Pages 5–6: closed quadrilaterals form a projective plane
+### Pages 5–6: closed quadrilaterals form a projective plane
 
 * `mu_relation`: `μ₀ + μ₂ = μ₁ + μ₃` for a closed quadrilateral, over any commutative ring,
   from `wedge_diag`: `u₀ ∧ u₂ = μ₀ - μ₁ = μ₃ - μ₂` and `u₁ ∧ u₃ = μ₁ - μ₂ = μ₀ - μ₃`. The
@@ -43,15 +42,12 @@ acts on sides through its linear part, a `2 × 2` matrix.
   the `i`-th basis vector going to `(-1)ⁱ p_i` — the plane is `P(k^A / k·(1,1,1,1))`. The
   sign is needed: `e_i ↦ p_i` has kernel `k·(1,-1,1,-1)`.
 
-Proved over a field (the identities over any commutative ring); the page's `P²_ℤ`, the
-statement over `Spec ℤ` as an isomorphism of schemes, is not formalised.
+These are proved over a field (the identities over any commutative ring).
 
-## Pages 15, 18, 28: the zero-multiplier criterion
+### Pages 15, 18, 28: the zero-multiplier criterion
 
 For `u : ZMod n → k²` with all `u_i ≠ 0`, the multipliers are the `λ` with
-`λ_i u_{i-1} - λ_{i+1}(u_i + u_{i+1}) + λ_{i+2} u_{i+2} = 0` for all `i` (`IsMult`). The
-juxtaposition `u·v` of the page is read in `Sym² V`, here `k³` through
-`a·b ↦ (a₀b₀, a₀b₁ + a₁b₀, a₁b₁)` (`symProd`).
+`λ_i u_{i-1} - λ_{i+1}(u_i + u_{i+1}) + λ_{i+2} u_{i+2} = 0` for all `i` (`IsMult`).
 
 * `zero_multiplier_criterion`: a multiplier with `λ₀ = 0`, `λ₁ = 1` exists if and only if
   `Σ u_i = 0` and, for `2 ≤ i ≤ n - 1`, either `s_i = s_0` (`u_{0i} = 0`) or the pair of
@@ -62,6 +58,24 @@ juxtaposition `u·v` of the page is read in `Sym² V`, here `k³` through
   which justifies the normalisation `λ₁ = 1`.
 * `symProd_proportional_iff`: for nonzero vectors of a plane, `c·d ∈ k·(a·b)` if and only if
   `{[a], [b]} = {[c], [d]}` — the factorisation fact the « pair of directions » rests on.
+
+## Implementation notes
+
+The plane is `k²` (`Fin 2 → k`) with the volume form `a ∧ b = a₀b₁ - a₁b₀`; an affine map
+acts on sides through its linear part, a `2 × 2` matrix.
+
+The juxtaposition `u·v` of the page is read in `Sym² V`, here `k³` through
+`a·b ↦ (a₀b₀, a₀b₁ + a₁b₀, a₁b₁)` (`symProd`).
+
+## Not formalised
+
+The page's `P²_ℤ`, the statement over `Spec ℤ` as an isomorphism of schemes.
+
+## References
+
+* A. Grothendieck, folder 73 (« Polygones », [from 1976]), pp. 5–6, 15, 18, 23–28 (findings
+  `73-quadrilateral-projective-frame`, `73-zero-multiplier-criterion`,
+  `73-ear-area-multiplier-classification`); modernised reading `transcripts/73/73.modern.tex`
 -/
 
 @[expose] public section

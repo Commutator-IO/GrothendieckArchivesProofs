@@ -10,8 +10,7 @@ public import Mathlib
 /-!
 # Folder 72: regular polytopes and pseudo-reflections in any dimension
 
-## The group `𝒰_ρ` and the automorphisms of a realisation (pages 37–38, 87–88)
-
+**The group `𝒰_ρ` and the automorphisms of a realisation (pages 37–38, 87–88).**
 Finding `72-automorphisms-deform-gm-to-ga` (`src/content/findings.ts`), on the
 reading `transcripts/72/72.modern.tex`, section IX and section XV D). Page 37
 defines `𝒰_ρ = Spec 𝒪_S[T]_{(1+ρT)}` with the law `λ * λ' = λ + λ' + ρλλ'`, and
@@ -20,14 +19,7 @@ its action `u_λ = id + λ π ⊗ c̃` on `E`; the « Théorème » of page 38 s
 `D₀ ∖ {c, d}` is a torsor under `𝒰_ρ`, trivialised by `s₀`. No proof is on the
 pages.
 
-**The coordinates.** Over a commutative ring `R`, take `E = R^{n+2}` with basis
-`e₀ = s₀, e₁ = a₀, …, e_{n+1} = aₙ` (the basis `(s₀, a₀, …, aₙ)` of condition
-(12) of page 96), and the pseudo-reflections `τᵢ = id + a'ᵢ ⊗ aᵢ` with
-`⟨a_{i−1}, a'ᵢ⟩ = 1`, `⟨aᵢ, a'ᵢ⟩ = μᵢ`, `⟨a_{i+1}, a'ᵢ⟩ = βᵢ`, all other
-pairings `0` (the conventions of the reading). Here `a'ᵢ = F i`, so
-`F i x = x_i + μᵢ x_{i+1} + βᵢ x_{i+2}`, and `π` is the coordinate `x₀`. By the theorem
-of pages 96–100 (`pinned_classification` below), every pinned non-degenerate
-realisation is isomorphic to this one.
+## Main results
 
 * `U ρ`: the `R`-points of `𝒰_ρ`, a commutative group; `toUnits : λ ↦ 1 + ρλ`
   is an isomorphism onto `Rˣ` when `ρ` is a unit (`toUnitsEquiv`), and
@@ -48,9 +40,28 @@ realisation is isomorphic to this one.
   normalised by `⟨s, a'₀⟩ = 1`, are exactly the `u_λ s₀ = s₀ + λ c̃`, each
   for one `λ`, and `u_μ (u_λ s₀) = u_{λ * μ} s₀`: a trivial torsor under `𝒰_ρ`.
 
-Not formalised: the group scheme, its smoothness, the projective statement over
-a base (automorphisms of `X` commuting with the projective `τᵢ`), the torsor of
-flags itself (page 87 C, the bijection flags ↔ start points).
+## Implementation notes
+
+**The coordinates.** Over a commutative ring `R`, take `E = R^{n+2}` with basis
+`e₀ = s₀, e₁ = a₀, …, e_{n+1} = aₙ` (the basis `(s₀, a₀, …, aₙ)` of condition
+(12) of page 96), and the pseudo-reflections `τᵢ = id + a'ᵢ ⊗ aᵢ` with
+`⟨a_{i−1}, a'ᵢ⟩ = 1`, `⟨aᵢ, a'ᵢ⟩ = μᵢ`, `⟨a_{i+1}, a'ᵢ⟩ = βᵢ`, all other
+pairings `0` (the conventions of the reading). Here `a'ᵢ = F i`, so
+`F i x = x_i + μᵢ x_{i+1} + βᵢ x_{i+2}`, and `π` is the coordinate `x₀`. By the theorem
+of pages 96–100 (`pinned_classification` below), every pinned non-degenerate
+realisation is isomorphic to this one.
+
+## Not formalised
+
+The group scheme, its smoothness, the projective statement over a base (automorphisms of `X`
+commuting with the projective `τᵢ`), the torsor of flags itself (page 87 C, the bijection
+flags ↔ start points).
+
+## References
+
+* A. Grothendieck, folder 72, pp. 37–38, 41, 87–88, 96–100 (finding
+  `72-automorphisms-deform-gm-to-ga`); modernised reading `transcripts/72/72.modern.tex`,
+  sections IX and XV D)
 -/
 
 @[expose] public section

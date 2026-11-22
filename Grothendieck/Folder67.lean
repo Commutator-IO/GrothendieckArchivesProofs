@@ -26,14 +26,17 @@ multiplication by `2` is injective and an involution `σ` of `M`, with
 
 This is finding `67-involution-modules-triples` of `src/content/findings.ts`.
 Proving it says only that the claim holds as stated; whether it stands in the
-literature is a separate question.
+literature is a separate question. It is formalised for any ring `k` (not
+necessarily commutative) and with no finiteness or projectivity hypothesis.
 
-What is formalised, for any ring `k` (not necessarily commutative) and with no
-finiteness or projectivity hypothesis:
+## Main definitions
 
 * the two categories, `InvMod k` and `Triple k`;
 * the reconstruction functor `build : Triple k ⥤ InvMod k`,
-  `(P, Q, m) ↦ (preimage of m in P × Q, id × (-id))`;
+  `(P, Q, m) ↦ (preimage of m in P × Q, id × (-id))`.
+
+## Main results
+
 * `build` is faithful, full and essentially surjective, hence an equivalence
   (`equivalence : Triple k ≌ InvMod k`);
 * `InvMod.essSurj_witness`: every `(M, σ)` is isomorphic to `build` of the
@@ -46,9 +49,16 @@ finiteness or projectivity hypothesis:
   `InvMod.mem_two_of_minus`), and the description of `m` by its preimage:
   `(p̄, q̄) ∈ m ↔ p + q ∈ 2M` (`InvMod.mk_mem_m_iff`).
 
+## Implementation notes
+
 A submodule of `P/2P × Q/2Q` over `k` is the same as one over `k/2k`, since
 `2` kills the product; the file works over `k`. A morphism of triples is a pair
 `(f, g)` with `(f̄ × ḡ)(m) ⊂ m'`, stated on representatives.
+
+## References
+
+* A. Grothendieck, folder 67, pp. 90, 91, 99 (finding `67-involution-modules-triples`);
+  modernised reading `transcripts/67/67.modern.tex`
 -/
 
 @[expose] public section

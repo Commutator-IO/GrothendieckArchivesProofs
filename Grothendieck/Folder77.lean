@@ -27,45 +27,59 @@ These are findings `77-odd-rank-half-discriminant` and
 Proving them says only that the claims hold as stated; whether they stand in the
 literature is a separate question.
 
-What is formalised.
+**Folder 77, pages 117–125: the canonical symmetry of a biregular affine quadric.** The
+reading (§ 1'' and § 2) attaches to `(T, q, a)`, `q(a) = 1`, `π = φ(a, ·)`, the map
+`σ = id - π ⊗ a` and states (marginal Proposition, p. 123) that it is the only reflection
+fixing the hyperplane at infinity and preserving the quadric; it is a symmetry of centre
+`a/2` if `2` is invertible and a transvection in characteristic `2` (finding
+`77-biregular-affine-quadric-symmetry`). This part is formalised over any commutative ring.
 
-* Odd rank, every odd `n` (`two_dvd_det_polar`): the variables are indexed by
-  `Sym2 (Fin n)`, `s(i, i)` for `Yᵢ` and `s(i, j)` for `Yᵢⱼ`. The proof does not
-  follow the graph expansion of the page: modulo `2` the polar matrix agrees with
-  the skew-symmetric matrix `K` (`Yᵢⱼ` above the diagonal, `-Yᵢⱼ` below, `0` on
-  it), and `det K = 0` over `ℤ[Y]` in odd size since `det Kᵀ = det (-K) = -det K`
-  and `ℤ[Y]` has no `2`-torsion. The quotient `halfDisc n` is unique, and its
-  value at the coefficients of a form over any commutative ring halves the
+## Main results
+
+### Pages 65–71 and 87: the universal discriminant
+
+* Odd rank, every odd `n` (`two_dvd_det_polar`): `2` divides `Δ`. The quotient `halfDisc n`
+  is unique, and its value at the coefficients of a form over any commutative ring halves the
   determinant there (`det_polarOf_eq`).
 * Even rank, ranks `2` and `4` (`disc_rank_two`, `disc_rank_four`): the identity
   `(-1)ⁿ Δ = B² - 4C` over any commutative ring, with `C` written out. In rank 2
   it is `-Δ = b² - 4ac`. The sign `-(-1)ⁿ` fails in both ranks
   (`not_dvd_rank_two`, `not_dvd_rank_four`).
 * Even rank, every `n` (`four_dvd_disc_sub_hafnian_sq`, `disc_even_rank`): `4` divides
-  `(-1)ⁿ Δ - B²` in `ℤ[Y]`, `B` the hafnian (`hafnian`). No Pfaffian is used. With `U`
-  the upper half of the polar matrix, `P = U + Uᵀ` and the skew matrix is
-  `K = U - Uᵀ = P - 2Uᵀ`; the first-order term of `det (P - t Uᵀ)`, computed in the
-  fraction field, gives `det K ≡ (1 - 2n) det P (mod 4)` (`det_skew_eq_first_order`).
-  Next `det K = r²` in `ℤ[Y]` (`det_skew_eq_sq`): over a field of characteristic `≠ 2` an
-  antisymmetric matrix of even size has a square determinant (Schur complement on a
-  `2 × 2` block), and `ℤ[Y]` is integrally closed. Modulo `2`, the determinant of a
-  symmetric matrix with zero diagonal is the square of its matching sum
-  (`det_eq_hafSum_sq`), so `r ≡ B (mod 2)` and `det K ≡ B² (mod 4)`. Finally
-  `(-1)ⁿ ≡ 1 - 2n (mod 4)`.
+  `(-1)ⁿ Δ - B²` in `ℤ[Y]`, `B` the hafnian (`hafnian`).
 
-# Folder 77, pages 117–125: the canonical symmetry of a biregular affine quadric
+### Pages 117–125: the canonical symmetry
 
-The reading (§ 1'' and § 2) attaches to `(T, q, a)`, `q(a) = 1`, `π = φ(a, ·)`, the map
-`σ = id - π ⊗ a` and states (marginal Proposition, p. 123) that it is the only reflection
-fixing the hyperplane at infinity and preserving the quadric; it is a symmetry of centre
-`a/2` if `2` is invertible and a transvection in characteristic `2` (finding
-`77-biregular-affine-quadric-symmetry`). Formalised over any commutative ring:
 `piForm_self` (`π(a) = 2`), `canSym_isometry`, `canSym_canSym` (`σ² = id`),
 `eq_of_isometry_fix` (with `φ` nondegenerate and `π` onto, a linear isometry fixing `ker π`
 pointwise is `x ↦ x - e π(x) a` with `e` idempotent; conversely `isometry_of_idem`),
 `eq_id_or_canSym` (no nontrivial idempotent: `id` or `σ`), `canSym_center` (`2`
 invertible), `canSym_char_two` (`2 = 0`), and `det_polar_one` (the example `M₂`, `det`, `1`
 of p. 124, where `π` is the trace).
+
+## Implementation notes
+
+**Odd rank.** The variables are indexed by `Sym2 (Fin n)`, `s(i, i)` for `Yᵢ` and `s(i, j)`
+for `Yᵢⱼ`. The proof does not follow the graph expansion of the page: modulo `2` the polar
+matrix agrees with the skew-symmetric matrix `K` (`Yᵢⱼ` above the diagonal, `-Yᵢⱼ` below, `0`
+on it), and `det K = 0` over `ℤ[Y]` in odd size since `det Kᵀ = det (-K) = -det K` and `ℤ[Y]`
+has no `2`-torsion.
+
+**Even rank, every `n`.** No Pfaffian is used. With `U` the upper half of the polar matrix,
+`P = U + Uᵀ` and the skew matrix is `K = U - Uᵀ = P - 2Uᵀ`; the first-order term of
+`det (P - t Uᵀ)`, computed in the fraction field, gives `det K ≡ (1 - 2n) det P (mod 4)`
+(`det_skew_eq_first_order`). Next `det K = r²` in `ℤ[Y]` (`det_skew_eq_sq`): over a field of
+characteristic `≠ 2` an antisymmetric matrix of even size has a square determinant (Schur
+complement on a `2 × 2` block), and `ℤ[Y]` is integrally closed. Modulo `2`, the determinant
+of a symmetric matrix with zero diagonal is the square of its matching sum
+(`det_eq_hafSum_sq`), so `r ≡ B (mod 2)` and `det K ≡ B² (mod 4)`. Finally
+`(-1)ⁿ ≡ 1 - 2n (mod 4)`.
+
+## References
+
+* A. Grothendieck, folder 77, pp. 64–87 (findings `77-odd-rank-half-discriminant`,
+  `77-universal-even-rank-discriminant-mod-4`) and pp. 117–125 (finding
+  `77-biregular-affine-quadric-symmetry`); modernised reading `transcripts/77/77.modern.tex`
 -/
 
 @[expose] public section

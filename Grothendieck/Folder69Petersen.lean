@@ -16,14 +16,7 @@ vertices labelled `ξ_{ij}` and twenty edges numbered `1 … 5`. This file prove
 explicit parts of finding `69-petersen-hemidodecahedra-432`, on the figure as encoded in
 `transcripts/69/drawings/05-1.json` (a machine redraw, not checked by a reader).
 
-**Labels.** In the folder, for a base (a sixer) `ξ₁, …, ξ₆`, `ξ_{ij}` is the line meeting `ξ_i`
-and `ξ′_j` (page 29: the triangle `(ξ₁, ξ′₂, ξ₁₂)`), the classical `c_{ij}`. The page writes
-`ξ₅₁`, `ξ₄₁`, `ξ₅₃`, `ξ₃₁`, `ξ₅₂` with the indices in either order; we write each label as the
-pair `(i, j)`, `i < j`. The vertex the transcription reads `ξ_{4,12}`, with `\uncertain{}`, is
-left as a parameter `x`.
-
-**The page's rule** (read off the figure by the edition, not stated on the page): an edge joins
-two `ξ` with disjoint index pairs and carries the fifth index (`rule`).
+## Main results
 
 * `rule_read`: the eighteen edges not at the uncertain vertex satisfy the rule as read;
   `forced`: at the uncertain vertex, the rule holds for its two edges (to `ξ₃₅`, numbered 1, and
@@ -41,9 +34,27 @@ two `ξ` with disjoint index pairs and carries the fifth index (`rule`).
 * `pentagons_card`, `hemi_systems_card`, `drawn_is_system`: the Petersen graph has 12 pentagons
   and exactly two sets of six of them covering every edge twice; the drawn one is one of them.
 
-Not formalised: the count `216 × 2 = 432` of hemi-dodecahedra in the 27-line graph, computed by
-a program on the `C(27, 10)` ten-element subsets; a proof would need the transitivity of
-`W(E₆)` on Petersen subgraphs, which is not proved here.
+## Implementation notes
+
+**Labels.** In the folder, for a base (a sixer) `ξ₁, …, ξ₆`, `ξ_{ij}` is the line meeting `ξ_i`
+and `ξ′_j` (page 29: the triangle `(ξ₁, ξ′₂, ξ₁₂)`), the classical `c_{ij}`. The page writes
+`ξ₅₁`, `ξ₄₁`, `ξ₅₃`, `ξ₃₁`, `ξ₅₂` with the indices in either order; we write each label as the
+pair `(i, j)`, `i < j`. The vertex the transcription reads `ξ_{4,12}`, with `\uncertain{}`, is
+left as a parameter `x`.
+
+**The page's rule** (read off the figure by the edition, not stated on the page): an edge joins
+two `ξ` with disjoint index pairs and carries the fifth index (`rule`).
+
+## Not formalised
+
+The count `216 × 2 = 432` of hemi-dodecahedra in the 27-line graph, computed by a program on the
+`C(27, 10)` ten-element subsets; a proof would need the transitivity of `W(E₆)` on Petersen
+subgraphs, which is not proved here.
+
+## References
+
+* A. Grothendieck, folder 69, pp. 29, 77, 81 (finding `69-petersen-hemidodecahedra-432`); the
+  figure as encoded in `transcripts/69/drawings/05-1.json`
 -/
 
 @[expose] public section

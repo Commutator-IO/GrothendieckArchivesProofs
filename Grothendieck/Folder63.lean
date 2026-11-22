@@ -19,10 +19,12 @@ The modernised reading `transcripts/63/63.modern.tex` studies the level-3 moduli
 « … aux composantes irréductibles sont égales », the reading concluding that they share one
 tangent. This is finding `63-level3-tangents-at-2`.
 
-In the Hesse model the parameter is `t`, and `c₄` is, up to units, `t(t³ + 8)`
-(Artebani–Dolgachev; taken as given here, the Hesse-to-Weierstrass computation is not
-formalised). Write `R = ℤ[ζ]` (`AdjoinRoot (X² + X + 1)`), `A = R[t]`, and `P = (2, t)`, the
-maximal ideal of the point `a` (`A/P = 𝔽₄`). Proved here:
+**What the formalisation finds.** The four tangents are pairwise distinct, contrary to the
+reading's conclusion. Where its argument breaks is the last item of the main results: the
+splitting `V₁ × V₂` of the tangent space that page 99 asserts is not stable under the
+involution.
+
+## Main results
 
 * `factor`: `t³ + 8 = (t + 2)(t + 2ζ)(t + 2ζ²)`, so `V(c₄)` is the four sections `t = 0, −2,
   −2ζ, −2ζ²`, all through `a` (`branch_mem`);
@@ -33,10 +35,22 @@ maximal ideal of the point `a` (`A/P = 𝔽₄`). Proved here:
   `(2, t) ↦ (2, t + 2)`, which permutes the four tangent lines — one orbit of size four, not a
   common tangent.
 
-**What the formalisation finds.** The four tangents are pairwise distinct, contrary to the
-reading's conclusion. Where its argument breaks is the last item: the splitting `V₁ × V₂` of the
-tangent space that page 99 asserts is not stable under the involution. Not formalised: that the
-Hesse family is the level-3 moduli space, and the formula for `c₄`.
+## Implementation notes
+
+In the Hesse model the parameter is `t`, and `c₄` is, up to units, `t(t³ + 8)`
+(Artebani–Dolgachev; taken as given here, the Hesse-to-Weierstrass computation is not
+formalised). Write `R = ℤ[ζ]` (`AdjoinRoot (X² + X + 1)`), `A = R[t]`, and `P = (2, t)`, the
+maximal ideal of the point `a` (`A/P = 𝔽₄`).
+
+## Not formalised
+
+That the Hesse family is the level-3 moduli space, and the formula for `c₄`.
+
+## References
+
+* A. Grothendieck, folder 63, pp. 97–99 (finding `63-level3-tangents-at-2`); modernised reading
+  `transcripts/63/63.modern.tex`
+* Artebani–Dolgachev (the formula for `c₄` in the Hesse model)
 -/
 
 @[expose] public section

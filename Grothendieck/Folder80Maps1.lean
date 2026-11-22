@@ -24,14 +24,7 @@ between them**, i.e. iff it is none of the two-pencil types `I_N`, `I_{p,q}`, `I
 the hypothesis of the Théorème of page 24. Direction (⇒) of the page survives: a bigonal line,
 or `II_4`, gives two such points.
 
-We work in the combinatorial model of the cell decomposition: the oriented-matroid covectors.
-A cell of the decomposition of the sphere `S²` (the double cover of `ℝP²`) is a sign vector
-`X : E → SignType`; the closed cell of `X` is the set of its conformal faces `Z ≤ X`
-(`closure_cell` checks this against the topology for straight lines), and a cell of `ℝP²` is a
-pair `±X`. The abstract theorem `lattice_iff` needs only that the set `L` of covectors is
-symmetric and closed under composition; it therefore covers every pseudoline arrangement through
-the Folkman–Lawrence representation (not formalised). For straight lines `ℓ i ∈ ℝ³` the covectors
-are the sign vectors of points (`cov`), and `lattice_iff_not_twoPencil` restates the criterion.
+## Main results
 
 * `lattice_iff`: `Lattice L ↔` no two nonzero covectors have disjoint supports;
 * `closure_cell`: the topological closure of a cone cell is its set of conformal faces;
@@ -39,6 +32,26 @@ are the sign vectors of points (`cov`), and `lattice_iff_not_twoPencil` restates
 * `not_lattice_of_bigonal`, `not_lattice_of_four`: conditions a), b) are necessary;
 * `II32_no_bigon`, `II32_nondegenerate`, `II32_not_lattice`, `lattice_criterion_false`: the
   counterexample `x = 0, x = z, x = 2z, y = 0, y = z`.
+
+## Implementation notes
+
+We work in the combinatorial model of the cell decomposition: the oriented-matroid covectors.
+A cell of the decomposition of the sphere `S²` (the double cover of `ℝP²`) is a sign vector
+`X : E → SignType`; the closed cell of `X` is the set of its conformal faces `Z ≤ X`
+(`closure_cell` checks this against the topology for straight lines), and a cell of `ℝP²` is a
+pair `±X`. The abstract theorem `lattice_iff` needs only that the set `L` of covectors is
+symmetric and closed under composition; it therefore covers every pseudoline arrangement through
+the Folkman–Lawrence representation. For straight lines `ℓ i ∈ ℝ³` the covectors are the sign
+vectors of points (`cov`), and `lattice_iff_not_twoPencil` restates the criterion.
+
+## Not formalised
+
+The Folkman–Lawrence representation, through which `lattice_iff` covers pseudoline arrangements.
+
+## References
+
+* A. Grothendieck, folder 80, pp. 24, 26 (finding `80-lattice-criterion`)
+* the Folkman–Lawrence representation theorem
 -/
 
 @[expose] public section
