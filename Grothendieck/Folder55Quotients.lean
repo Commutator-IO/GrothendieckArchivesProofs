@@ -38,7 +38,9 @@ classification of the coherent Ideals is needed.
   `Q_eq_zero_near`, `fibEquiv`).
 * `Supp 𝒥 = {x | 𝒥_x ≠ 𝒪_x}`, and `mem_Supp_iff_nontrivial_stalk` says this is where the
   stalk of `𝒪/𝒥` is nonzero. Off `Supp`, the stalks are zero (`subsingleton_of_not_mem_Supp`),
-  so a section of `𝒪/𝒥` is determined on `Supp` (`Q_ext_of_eqOn_Supp`).
+  so a section of `𝒪/𝒥` is determined on `Supp` (`Q_ext_of_eqOn_Supp`). `isClosed_Supp`: the
+  support is closed, for every Ideal (if `1 ∈ 𝒥_x`, a section of `𝒥` equal to `1` at `x` is `1`
+  near `x`).
 * `identity_principle_quotient_of_ne_infty`, `Jsec_infty_eq_zero`, `Jsec_eq_zero_basic`,
   `identity_principle_quotient_infty`; `identity_principle_quotient`,
   `identity_principle_quotient'`: **(v) for every Ideal of finite type.**
@@ -58,7 +60,7 @@ direct image of `𝒪_Y`, which `Q_ext_of_eqOn_Supp` and `subsingleton_of_not_me
 So (v) is stated on `X`, with `U` an open set of `X` containing `y`. The universal property of
 `𝒪/𝒥` as the cokernel of `𝒥 → 𝒪` (equivalently, that it is the sheafification of
 `U ↦ 𝒪(U)/𝒥(U)`) is not proved: `𝒪/𝒥` is defined by its sections, and what is proved is that its
-stalks are the quotients `𝒪_x/𝒥_x`. Nor is it proved that `Supp 𝒪/𝒥` is closed.
+stalks are the quotients `𝒪_x/𝒥_x`.
 -/
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
@@ -219,6 +221,20 @@ theorem mem_Supp {x : Xsp} : x ∈ Supp 𝒥 ↔ Nontrivial (Fib 𝒥 x) :=
 /-- Off the support the stalk of `𝒪/𝒥` is zero. -/
 theorem subsingleton_of_not_mem_Supp {x : Xsp} (hx : x ∉ Supp 𝒥) : Subsingleton (Fib 𝒥 x) :=
   Ideal.Quotient.subsingleton_iff.2 (not_not.1 hx)
+
+/-- **The support of `𝒪/𝒥` is closed**, for every Ideal `𝒥`. If `1 ∈ 𝒥_x`, a section `j` of `𝒥`
+near `x` takes the value `1` at `x`; then `j - 1`, a section of `𝒪`, vanishes near `x`
+(`O_eq_zero_near`), so `j = 1` near `x` and `1 ∈ 𝒥_y` for every `y` near `x`. -/
+theorem isClosed_Supp : IsClosed (Supp 𝒥) := by
+  refine isOpen_compl_iff.1 (isOpen_iff_forall_mem_open.2 fun x hx => ?_)
+  obtain ⟨U, hU, j, hj, hj1⟩ := (Ideal.eq_top_iff_one _).1 (not_not.1 hx)
+  have hd : j + -1 ∈ (O κ ε ι).sections U :=
+    O_add_mem κ ε ι (Jsec_le_O 𝒥 hj) (O_neg_mem κ ε ι (O_one_mem κ ε ι U))
+  obtain ⟨W, hWU, hxW, hz⟩ := O_eq_zero_near κ ε ι hd hU
+    (show j ⟨x, hU⟩ + -1 = 0 by rw [hj1]; exact add_neg_cancel _)
+  refine ⟨W, fun y hy hyS => hyS ?_, W.isOpen, hxW⟩
+  exact (Ideal.eq_top_iff_one _).2
+    ⟨U, hWU hy, j, hj, add_neg_eq_zero.1 (hz ⟨y, hy⟩)⟩
 
 /-! ### The sheaf `𝒪/𝒥` -/
 
