@@ -5,6 +5,11 @@ name: Build (GitHub-hosted fallback)
 on:
   workflow_dispatch:
 
+# Read-only token, as in build.yml (issue #34, Security). actions/cache uses the runner's own
+# token, not this one.
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
