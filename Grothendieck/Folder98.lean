@@ -214,8 +214,9 @@ theorem hasDeg_quotPow {u : X → Y} {r : ℕ} (hu : HasDeg u r) {n : ℕ}
   rw [← Nat.card_coe_set_eq, Nat.card_congr (Equiv.ofBijective g hg).symm]
 
 
-/-! ### The canonical sections `Con_{X/Y} : Y → Sym^r_Y(X)` (written « Con » on the page):
-(i ter)–(iv ter) -/
+/-! ### The canonical sections `Con_{X/Y} : Y → Sym^r_Y(X)`: (i ter)–(iv ter)
+
+Written « Con » on the page. -/
 
 /-- `Sym^r_Y(X) = (X^r_Y)/𝔖_r`: a point `y` and a multiset of `r` points of `u⁻¹(y)`. -/
 def SymY (u : X → Y) (r : ℕ) :=

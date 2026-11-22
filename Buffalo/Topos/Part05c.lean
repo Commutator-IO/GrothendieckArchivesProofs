@@ -8,8 +8,9 @@ module
 public import Buffalo.Topos.Part05a
 
 /-!
-# Buffalo, topos theory, part 5c: exactness properties, envelopes, categories of fractions
-(2 July 1973)
+# Buffalo, topos theory, part 5c: exactness, envelopes, categories of fractions
+
+2 July 1973.
 
 Entries of `docs/buffalo-topos/index.tex` lines 767–811 (video `4gynb9uTEE4`, 1:57:30–3:31:07):
 representability of theories, exactness properties (groupoids, preorders, discrete categories),

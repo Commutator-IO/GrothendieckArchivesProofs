@@ -309,8 +309,9 @@ theorem card_gen_substable (hD : A.IsPosition σD) :
 
 end Arrangement
 
-/-! ## Problem 17 of `docs/problems/article.tex`: an added pseudoline and its crossing order
-(statement only)
+/-! ## Problem 17: an added pseudoline and its crossing order (statement only)
+
+Problem 17 of `docs/problems/article.tex`.
 
 Page 18 asserts, « il ne devrait pas être difficile de montrer », that the position of an
 added pseudoline is determined by the antipody-compatible cyclic order in which its double

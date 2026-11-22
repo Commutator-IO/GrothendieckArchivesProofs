@@ -8,7 +8,9 @@ module
 public import StacksFrontier.AlgebraicGeometry.Crystalline.Differentials.DividedPowerPolynomialAlgebra
 
 /-!
-# Folder 136, pages 5 to 7: the differential of a divided power, in Stacks' divided power de Rham complex
+# Folder 136, pages 5 to 7: the differential of a divided power, Stacks version
+
+The setting is the divided power de Rham complex of the Stacks project.
 
 `Grothendieck/Folder136.lean` works in a coordinate model: a form on the `m`-simplex is the
 function `f a β I` of its coefficients on `T^{(a)} Y^{(β)} dY_I`, and its differential `pdD`
