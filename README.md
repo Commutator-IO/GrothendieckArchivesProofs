@@ -58,3 +58,9 @@ declaration proves an EGA or SGA item, and Mathlib's style options.
 [Apache 2.0](LICENSE). The same proofs are under CC0 in grothendieck-project. Short quotations of
 the manuscripts in comments, in « », are not covered: the rights in Grothendieck's manuscripts are
 held by his heirs.
+
+`Mordell/` holds files copied unchanged from [AxiomMath/Mordell](https://github.com/AxiomMath/Mordell)
+(Apache-2.0): abelian varieties (Pic⁰, φ_L, the theorem of the square) and ample sheaves over a
+field. `MMP/` holds files copied from [AxiomMath/MMP](https://github.com/AxiomMath/MMP)
+(Apache-2.0): nef divisors and numerical equivalence; one of them is ported to the pinned Stacks.
+They are listed in [`NOTICE`](NOTICE), with the commit they come from.

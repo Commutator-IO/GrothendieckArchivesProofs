@@ -4,6 +4,8 @@ module
 -- Buffalo lectures, built on Mathlib and AxiomMath's Stacks library, and the open problems of both,
 -- stated as propositions.
 public import Grothendieck
+public import Mordell
+public import MMP
 public import Buffalo
 public import OpenProblems
 

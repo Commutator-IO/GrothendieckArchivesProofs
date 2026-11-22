@@ -16,14 +16,18 @@ public import OpenProblems.Buffalo
 -- with the reasons in the module docstring where they cannot.
 public import OpenProblems.Findings.Folder16
 public import OpenProblems.Findings.Folder29
+public import OpenProblems.Findings.Folder31
 public import OpenProblems.Findings.Folder32
+public import OpenProblems.Findings.Folder34
 public import OpenProblems.Findings.Folder41
 public import OpenProblems.Findings.Folder45
 public import OpenProblems.Findings.Folder47
 public import OpenProblems.Findings.Folder57
 public import OpenProblems.Findings.Folder91
+public import OpenProblems.Findings.Folder91Res
 public import OpenProblems.Findings.Folder94
 public import OpenProblems.Findings.Folder100
+public import OpenProblems.Findings.Folder100Formal
 public import OpenProblems.Findings.Folder102
 public import OpenProblems.Findings.Folder126
 public import OpenProblems.Findings.Folder127
