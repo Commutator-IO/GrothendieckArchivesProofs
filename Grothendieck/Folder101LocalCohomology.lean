@@ -15,11 +15,9 @@ Finding `101-sheaf-duality-dim-one`. Page 10 describes an `O_X`-module on `X = S
 discrete valuation ring, by a triple `(M₀, M₁, u)` and computes its local cohomology at the
 closed point `x` as `H⁰_x = Ker u` and `H¹_x = Coker u`, with nothing in higher degrees. This
 file checks the last point for quasi-coherent sheaves, with local cohomology taken as a derived
-functor, using the vendored AxiomMath/Stacks files:
-`Dualizing.localCohomologyFunctor` is `RΓ_{V(𝔪)}` on `D(A)`, the right adjoint of the inclusion
-of the complexes with `𝔪`-power-torsion cohomology (Stacks tag 0A6Q), and
-`Stacks.LocalCohomology.CechModel` computes it on a module by the extended Čech complex of a
-generating family of `𝔪` (tag 0A6R at a module).
+functor, using the vendored AxiomMath/Stacks files.
+
+## Main results
 
 * `localCohomology`: `H^i_x(M) = H^i(RΓ_{V(𝔪)}(M))` for an `A`-module `M` (the quasi-coherent
   sheaf `M̃`);
@@ -27,9 +25,23 @@ generating family of `𝔪` (tag 0A6R at a module).
   extended Čech complex `M → M_ϖ` (in degrees `0` and `1`);
 * `isZero_localCohomology`: `H^i_x(M) = 0` for `i ∉ {0, 1}`, since `𝔪 = (ϖ)` has one generator.
 
-Not formalised: the identification of `H⁰_x(M)` and `H¹_x(M)` with the kernel and cokernel of
+## Implementation notes
+
+`Dualizing.localCohomologyFunctor` is `RΓ_{V(𝔪)}` on `D(A)`, the right adjoint of the inclusion
+of the complexes with `𝔪`-power-torsion cohomology (Stacks tag 0A6Q), and
+`Stacks.LocalCohomology.CechModel` computes it on a module by the extended Čech complex of a
+generating family of `𝔪` (tag 0A6R at a module).
+
+## Not formalised
+
+The identification of `H⁰_x(M)` and `H¹_x(M)` with the kernel and cokernel of
 `M → M_ϖ = K ⊗_A M` (the cohomology of the two-term Čech complex is not unfolded here), and
 local cohomology of `O_X`-modules that are not quasi-coherent, which the page also treats.
+
+## References
+
+* A. Grothendieck, cote 101, p. 10 (finding `101-sheaf-duality-dim-one`)
+* Stacks Project, tags 0A6Q, 0A6R
 -/
 
 @[expose] public section

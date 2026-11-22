@@ -19,19 +19,55 @@ states, for compact `u, v` and `0 ≤ m ≤ n`,
 where `σ_n^m(w)` is the elementary symmetric function of degree `m` of the first `n`
 singular values of `w` (17), and the product form
 
-> `∏_{i≤n} (1 + r s_i(u+v)) ≤ ∏_{i≤n} (1 + r s_i(u)) ∏_{i≤n} (1 + r s_i(v))`, `r ≥ 0`  (15).
+> `∏_{i≤n} (1 + r s_i(u+v)) ≤ ∏_{i≤n} (1 + r s_i(u)) ∏_{i≤n} (1 + r s_i(v))`,
+> `r ≥ 0`  (15).
 
-This is the finding `1-sigma-nm-system` of `src/content/findings.ts`. Proved here, for
-linear maps between finite-dimensional inner product spaces over `ℝ` or `ℂ`, with mathlib's
-`LinearMap.singularValues` (zero-indexed, so `s_0` is the largest):
+This is the finding `1-sigma-nm-system` of `src/content/findings.ts`. The file also covers
+pages 123–124 (finding `1-mixed-schwarz-fredholm-coefficients`, issue #54) and pages 126–139
+(finding `1-schatten-p-via-fredholm-determinant`, issue #54).
+
+## Main results
+
+### Pages 71–73
+
+Proved here, for linear maps between finite-dimensional inner product spaces over `ℝ` or `ℂ`,
+with mathlib's `LinearMap.singularValues` (zero-indexed, so `s_0` is the largest):
 
 * `sum_singularValues_add_le`: Ky Fan's inequality, the case `m = 1` of (16), for every `n`;
 * `sigma_system_of_le_one`: (16) for `m ≤ 1` and every `n`;
 * `prod_le_of_sigma_system`: (16) for all `m ≤ n` implies (15) for that `n`;
 * `one_add_singularValues_zero_le`: (15) for `n = 1`;
-* `sigma_two_add_le`: (16) for `m = 2`, `σ_n^2(u+v) ≤ σ_n^2(u) + σ_n^1(u) σ_n^1(v) + σ_n^2(v)`,
-  for every `n`; hence `sigma_system_of_le_two` ((16) for `m ≤ 2`) and `prod_le_of_le_two`
-  ((15) for `n ≤ 2`).
+* `sigma_two_add_le`: (16) for `m = 2`,
+  `σ_n^2(u+v) ≤ σ_n^2(u) + σ_n^1(u) σ_n^1(v) + σ_n^2(v)`, for every `n`; hence
+  `sigma_system_of_le_two` ((16) for `m ≤ 2`) and `prod_le_of_le_two` ((15) for `n ≤ 2`).
+
+### Pages 123–124
+
+Finding `1-mixed-schwarz-fredholm-coefficients`, issue #54, for complex square matrices, with
+`α_k(T)` the coefficient of `X^k` in `det(1 + X T)` (`alpha`; by mathlib, the sum of the
+principal `k × k` minors) and `|A| = (A*A)^{1/2}` mathlib's `CFC.abs`:
+
+* `corollaire2`: `|α_k(A + B)|² ≤ α_k(|A| + |B|) · α_k(|A*| + |B*|)` — Corollaire 2 holds;
+* `corollaire3`: `|det(1 + A + B)| ≤ ½[det(1 + |A| + |B|) + det(1 + |A*| + |B*|)]`
+  (Corollaire 3) and the geometric-mean form
+  `|det(1 + A + B)|² ≤ det(1 + |A| + |B|) det(1 + |A*| + |B*|)`.
+
+### Pages 126–139
+
+Finding `1-schatten-p-via-fredholm-determinant`, issue #54, the route from the Fredholm
+determinant to the subadditivity of `S_p`, `0 < p < 1`, in finite dimension:
+
+* `integral_kernel`: `s^p · K_p = ∫₀^∞ log(1 + v s) v^{−1−p} dv` for `s ≥ 0`, with
+  `K_p = ∫₀^∞ log(1 + t) t^{−1−p} dt > 0` (`K_pos`; its value `π/(p sin πp)` is not needed);
+* `sum_rpow_le_of_prod_le`: if `∏ (1 + r aᵢ) ≤ ∏ (1 + r bᵢ) ∏ (1 + r cᵢ)` for all `r ≥ 0`,
+  then `Σ aᵢ^p ≤ Σ bᵢ^p + Σ cᵢ^p` — page 129's deduction;
+* `sum_singularValues_rpow_add_le_of_prod`: hence `S_p(u + v) ≤ S_p(u) + S_p(v)` on the first
+  `n` singular values whenever (15) holds for that `n`, and unconditionally for `n ≤ 2`
+  (`sum_singularValues_rpow_add_le_of_le_two`).
+
+## Implementation notes
+
+### Pages 71–73
 
 Ky Fan's maximum principle (`norm_sum_inner_le`) is proved for families that are pairwise
 orthogonal of norm `≤ 1`, not only orthonormal. The case `m = 2` follows the page's route
@@ -40,37 +76,33 @@ through `Λ²` without building the Hilbert space `Λ² E`: the inner product
 Cauchy–Binet (`two_mul_sum_minor`) and Lagrange's inequality (`sum_sum_norm_sub_sq_le`); the
 mixed term `u ∧ v + v ∧ u` is bounded by `σ_n^1(u) σ_n^1(v)` (`norm_bform_le_mul`, the page's
 constant `p! q!/(p+q)! = 1/2`), the pure terms by `2 σ_n^2` (`norm_bform_self_le`, through the
-weight lemma `sum_sum_mul_le_of_weights`). Not proved: (16) for `3 ≤ m ≤ n`, Prop. 3 in
-general, and the passage to compact operators. A proof says only that the claim holds as stated; whether
-the system is in the literature stays open.
+weight lemma `sum_sum_mul_le_of_weights`).
 
-**Pages 123–124** (finding `1-mixed-schwarz-fredholm-coefficients`, issue #54), for complex
-square matrices, with `α_k(T)` the coefficient of `X^k` in `det(1 + X T)` (`alpha`; by mathlib,
-the sum of the principal `k × k` minors) and `|A| = (A*A)^{1/2}` mathlib's `CFC.abs`:
-
-* `corollaire2`: `|α_k(A + B)|² ≤ α_k(|A| + |B|) · α_k(|A*| + |B*|)` — Corollaire 2 holds;
-* `corollaire3`: `|det(1 + A + B)| ≤ ½[det(1 + |A| + |B|) + det(1 + |A*| + |B*|)]` (Corollaire 3)
-  and the geometric-mean form `|det(1 + A + B)|² ≤ det(1 + |A| + |B|) det(1 + |A*| + |B*|)`.
+### Pages 123–124
 
 The proof is not the page's multilinear expansion: `[[|A|, A*], [A, |A*|]]` is `|H| + H` for the
 self-adjoint `H = [[0, A*], [A, 0]]`, hence `≥ 0` (`block_posSemidef`); adding the blocks of `A`
 and `B` and restricting to `S ⊔ S`, each principal minor satisfies `|det T_S|² ≤ det P_S det Q_S`
 (`norm_det_sq_le`, by the Schur complement and the monotonicity of `det`, `det_le_det_add`), and
-Cauchy–Schwarz over the subsets `S` gives Corollaire 2. Trace-class operators are not formalised.
+Cauchy–Schwarz over the subsets `S` gives Corollaire 2.
 
-**Pages 126–139** (finding `1-schatten-p-via-fredholm-determinant`, issue #54), the route from
-the Fredholm determinant to the subadditivity of `S_p`, `0 < p < 1`, in finite dimension:
+## Not formalised
 
-* `integral_kernel`: `s^p · K_p = ∫₀^∞ log(1 + v s) v^{−1−p} dv` for `s ≥ 0`, with
-  `K_p = ∫₀^∞ log(1 + t) t^{−1−p} dt > 0` (`K_pos`; its value `π/(p sin πp)` is not needed);
-* `sum_rpow_le_of_prod_le`: if `∏ (1 + r aᵢ) ≤ ∏ (1 + r bᵢ) ∏ (1 + r cᵢ)` for all `r ≥ 0`, then
-  `Σ aᵢ^p ≤ Σ bᵢ^p + Σ cᵢ^p` — page 129's deduction;
-* `sum_singularValues_rpow_add_le_of_prod`: hence `S_p(u + v) ≤ S_p(u) + S_p(v)` on the first
-  `n` singular values whenever (15) holds for that `n`, and unconditionally for `n ≤ 2`
-  (`sum_singularValues_rpow_add_le_of_le_two`).
+* Pages 71–73: (16) for `3 ≤ m ≤ n`, Prop. 3 in general, and the passage to compact operators.
+  A proof says only that the claim holds as stated; whether the system is in the literature
+  stays open.
+* Pages 123–124: trace-class operators are not formalised.
+* Pages 126–139: (15) for `n ≥ 3`, so the subadditivity in general; Weyl's inequality via
+  Jensen's formula and the power trick; Hölder for all exponents.
 
-Not proved: (15) for `n ≥ 3`, so the subadditivity in general; Weyl's inequality via Jensen's
-formula and the power trick; Hölder for all exponents.
+## References
+
+* A. Grothendieck, cote 1, pp. 71–73, Théorème 2 (finding `1-sigma-nm-system`); modernised
+  reading `transcripts/1/1.modern.tex`
+* A. Grothendieck, cote 1, pp. 123–124 (finding `1-mixed-schwarz-fredholm-coefficients`, issue
+  #54)
+* A. Grothendieck, cote 1, pp. 126–139 (finding `1-schatten-p-via-fredholm-determinant`, issue
+  #54)
 -/
 
 @[expose] public section

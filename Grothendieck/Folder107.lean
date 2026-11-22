@@ -27,7 +27,7 @@ when `Y'` is the final object this is automatic. The reading turns this into a
 criterion: a diagonal `φ̄`, homotopic to `φ`, making both triangles commute
 strictly exists if and only if such compatible homotopies exist.
 
-## Setting
+## Main definitions
 
 Cylinders are mathlib's `Precylinder`s (an object `I` with two maps
 `i₀ i₁ : A ⟶ I`). A *relative cylinder* on `i : X ⟶ X'`
@@ -45,7 +45,7 @@ any model category it holds as soon as the corner map
 `X ⊗ J ⊔_X X' ⟶ X' ⊗ J` is a trivial cofibration
 (`coveringHomotopyExtension_of_trivialCofibration`, from mathlib's `cm4a`).
 
-## Results
+## Main results
 
 * `rectification` (page 22, sufficiency): compatible homotopies `k`, `h`
   give `φ̄` with `i ≫ φ̄ = g`, `φ̄ ≫ p = g'`, and a homotopy `φ ⟶ φ̄` on
@@ -60,11 +60,16 @@ any model category it holds as soon as the corner map
 * `rectification_modelCategory`: the same in a mathlib `ModelCategory`, with
   the corner map a trivial cofibration and `p` a fibration.
 
-Not formalised: the version « up to homotopy relative to the ends » of the
-margin of page 20 (which needs cylinders on cylinders), the existence of
-relative cylinders with a trivially cofibrant corner map in a general model
-category (which here is a hypothesis), and the edition's counterexample (the
-path fibration over `S¹`) showing that the condition can fail.
+## Not formalised
+
+The version « up to homotopy relative to the ends » of the margin of page 20 (which needs
+cylinders on cylinders), the existence of relative cylinders with a trivially cofibrant corner
+map in a general model category (which here is a hypothesis), and the edition's counterexample
+(the path fibration over `S¹`) showing that the condition can fail.
+
+## References
+
+* A. Grothendieck, cote 107, pp. 20–23; modernised reading `transcripts/107/107.modern.tex`
 -/
 
 @[expose] public section

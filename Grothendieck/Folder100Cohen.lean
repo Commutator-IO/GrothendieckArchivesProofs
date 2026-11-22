@@ -19,7 +19,8 @@ subsets miss some point of dimension one. `Grothendieck/Folder100.lean` proves i
 Proposition of page 36, by countable prime avoidance, and the page's own route only for
 `Θ = V⟦T⟧`. This file follows the page's route in every dimension.
 
-**What is proved.**
+## Main results
+
 * `exists_coheight_eq_one_of_cohen`: the Corollary of page 38. Let `R` be a complete noetherian
   local domain which is not a field, and `(Zᵢ)` a countable family of proper closed subsets of
   `Spec R` (the « fermés rares » of the irreducible `Spec R`). Some point `x` of coheight `1`
@@ -29,7 +30,9 @@ Proposition of page 36, by countable prime avoidance, and the page's own route o
   discrete valuation ring: countably many nonzero `fᵢ ∈ Θ` lie outside the kernel `P` of some
   surjection `Θ → V`, a point of `Spec Θ` with `Θ ⧸ P ≃ V`, of dimension one.
 
-**How.** The page's argument. By Cohen's structure theorem (Stacks 032D,
+## Implementation notes
+
+The page's argument. By Cohen's structure theorem (Stacks 032D,
 `IsLocalRing.exists_injective_finite_mvPowerSeries`, built on Stacks 0323 and 032A), `R` is
 finite over a subring `A = Λ⟦T₁, …, T_d⟧`, `Λ` a field or a Cohen ring; when `Λ` is a field,
 `A ≃ V⟦T₁, …, T_{d-1}⟧` with `V = Λ⟦T₀⟧` (`mvPowerSeriesEquiv`), as the reading's footnote says.
@@ -45,12 +48,20 @@ a prime `Q` of `R` over the point `P` of `A` (lying over) is outside every `Zᵢ
 `aᵢ ∉ P`, and `dim R ⧸ Q = dim A ⧸ P = 1`, `R ⧸ Q` being integral over `A ⧸ P`
 (`ringKrullDim_eq_of_injective_isIntegral`, Stacks).
 
-**Not formalised.** Baire's theorem itself: the zero set of a nonzero series is not shown to be
-nowhere dense in `𝔪ⁿ`, and no `V`-homomorphism `Θ → V` is parametrised by its values in `𝔪ⁿ`;
-the countable choice above, one variable at a time, does the work. The surjections `Θ → V`
-are ring maps, not shown to be `V`-linear. The Proposition of page 36 is not deduced from the
-Corollary here (it is proved in `Folder100.lean` by another route), nor is the application to
-the algebraisation of formal abelian schemes.
+## Not formalised
+
+Baire's theorem itself: the zero set of a nonzero series is not shown to be nowhere dense in
+`𝔪ⁿ`, and no `V`-homomorphism `Θ → V` is parametrised by its values in `𝔪ⁿ`; the countable
+choice above, one variable at a time, does the work. The surjections `Θ → V` are ring maps, not
+shown to be `V`-linear. The Proposition of page 36 is not deduced from the Corollary here (it is
+proved in `Folder100.lean` by another route), nor is the application to the algebraisation of
+formal abelian schemes.
+
+## References
+
+* A. Grothendieck, cote 100, p. 38, « Un argument de Baire » (finding
+  `100-baire-dimension-one-points`); modernised reading `transcripts/100/100.modern.tex`
+* Stacks Project, tags 032D, 0323, 032A
 -/
 
 @[expose] public section

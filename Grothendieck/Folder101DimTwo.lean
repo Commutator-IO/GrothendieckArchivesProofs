@@ -18,34 +18,45 @@ dimension 1 it holds (`Grothendieck/Folder101.lean`, `Folder101Ext.lean`,
 `φ : A_f → D(H²_x(F)) = Hom_A(H²_x(F), E(k))`, and concludes « φ est injection » and
 « φ n'est pas surjective »; no proof of the second assertion is on the page.
 
-**What is proved.** For `A = k⟦x⟧⟦y⟧` (that is `k[[x, y]]`) and `f = x`, the module `A_x` is not
-isomorphic, as an `A`-module, to any Matlis-type dual `Hom_A(H, E)` with `E` injective, whatever
-the module `H` (`not_nonempty_linearEquiv_dual`). Hence every injective `A`-linear map
-`A_x → Hom_A(H, E)` fails to be surjective (`not_surjective_of_injective`); applied to
-`H = H²_x(j_!O_U)`, `E = E(k)` and the page's injective map `φ`, this is the page's doubly
-underlined « φ n'est pas surjective ». The result is proved more generally for `A = R⟦y⟧`, `R` a
-domain, `x = r ∈ R` non-zero and not a unit (`not_telescopeSurj_away`,
-`not_nonempty_linearEquiv_dual_powerSeries`).
+## Main results
 
-**How.** The invariant is the property `TelescopeSurj y N`: every sequence `(aᵢ)` of `N` is of the
-form `aᵢ = nᵢ - y nᵢ₊₁` (i.e. `lim¹` of `⋯ →y N →y N` vanishes, a form of
-`Ext¹_A(A_y, N) = 0`: `Hom_A(H, E)` is « `y`-cotorsion »).
+For `A = k⟦x⟧⟦y⟧` (that is `k[[x, y]]`) and `f = x`, the module `A_x` is not isomorphic, as an
+`A`-module, to any Matlis-type dual `Hom_A(H, E)` with `E` injective, whatever the module `H`
+(`not_nonempty_linearEquiv_dual`). Hence every injective `A`-linear map `A_x → Hom_A(H, E)` fails
+to be surjective (`not_surjective_of_injective`); applied to `H = H²_x(j_!O_U)`, `E = E(k)` and
+the page's injective map `φ`, this is the page's doubly underlined « φ n'est pas surjective ».
+The result is proved more generally for `A = R⟦y⟧`, `R` a domain, `x = r ∈ R` non-zero and not a
+unit (`not_telescopeSurj_away`, `not_nonempty_linearEquiv_dual_powerSeries`).
+
+## Implementation notes
+
+The invariant is the property `TelescopeSurj y N`: every sequence `(aᵢ)` of `N` is of the form
+`aᵢ = nᵢ - y nᵢ₊₁` (i.e. `lim¹` of `⋯ →y N →y N` vanishes, a form of `Ext¹_A(A_y, N) = 0`:
+`Hom_A(H, E)` is « `y`-cotorsion »).
 * `telescopeSurj_dual`: `Hom_A(H, E)` has it for every `y`, every `H` and every injective `E`.
   The telescope `T : ⊕ᵢ H → ⊕ᵢ H`, `T(h)ᵢ = hᵢ - y hᵢ₋₁`, is injective (`telescope_injective`),
   and maps `⊕ᵢ H → E` extend along it; reading the extension on each summand gives `(nᵢ)`.
 * `not_telescopeSurj_away`: `A_x` fails it for `y` on the sequence `aᵢ = x⁻ⁱ`. A solution gives
-  `n₀ = ∑_{i<N} (y/x)ⁱ + y^N n_N` for every `N`; clearing denominators (`n₀ = b/x^m`) and reading
-  the coefficient of `y^{m+1}` with `N = m + 2` gives `b_{m+1} r = 1`, so `r` would be a unit.
-  This is the finding's sketch: `A_x` « is not complete in the `y`-direction », the
+  `n₀ = ∑_{i<N} (y/x)ⁱ + y^N n_N` for every `N`; clearing denominators (`n₀ = b/x^m`) and
+  reading the coefficient of `y^{m+1}` with `N = m + 2` gives `b_{m+1} r = 1`, so `r` would be a
+  unit. This is the finding's sketch: `A_x` « is not complete in the `y`-direction », the
   height-one localisation `A_(y)` (with `x ∉ (y)`) not being complete, whereas a Matlis dual is.
 
-**Not formalised.** The sheaf side: `O_X`-modules on `Spec A`, extension by zero `j_!O_U` (Stacks
-03DI), `Ext⁰(X; j_!O_U, O_X) = A_f`, the computation of `H^i_x(j_!O_U)` (cohomology with supports),
-the exact sequence `0 → A → ∏ O_{x_i} → H²_x(F) → E(k) → 0` and the map `φ` itself; hence also the
-page's injectivity of `φ` (only « injective ⇒ not surjective » is proved, for every injective map).
-The identification of `TelescopeSurj` with `Ext¹_A(A_y, -) = 0` for mathlib's `Ext`; the general
-claim for every complete regular local ring of dimension 2 and every `f`; the identification of
-`k⟦x⟧⟦y⟧` with the two-variable `MvPowerSeries`; the page's topological-dual repair (page 15).
+## Not formalised
+
+The sheaf side: `O_X`-modules on `Spec A`, extension by zero `j_!O_U` (Stacks 03DI),
+`Ext⁰(X; j_!O_U, O_X) = A_f`, the computation of `H^i_x(j_!O_U)` (cohomology with supports), the
+exact sequence `0 → A → ∏ O_{x_i} → H²_x(F) → E(k) → 0` and the map `φ` itself; hence also the
+page's injectivity of `φ` (only « injective ⇒ not surjective » is proved, for every injective
+map). The identification of `TelescopeSurj` with `Ext¹_A(A_y, -) = 0` for mathlib's `Ext`; the
+general claim for every complete regular local ring of dimension 2 and every `f`; the
+identification of `k⟦x⟧⟦y⟧` with the two-variable `MvPowerSeries`; the page's topological-dual
+repair (page 15).
+
+## References
+
+* A. Grothendieck, cote 101, pp. 10–15 (finding `101-sheaf-duality-dim-two-fails`)
+* Stacks Project, tag 03DI
 -/
 
 @[expose] public section

@@ -38,15 +38,7 @@ and argues Proposition 4 through the sandwich
 
 (its footnote says the identification of `W₀` is the edition's, not the page's).
 
-The reading's definition is loose, so `LocalisateurFondamental` takes the
-standard axioms (Grothendieck's LA–LC as Maltsiniotis states them — recalled,
-not checked against a text): LA weak saturation (identities, two-out-of-three,
-and `r ∘ i = 1`, `i ∘ r ∈ W` ⟹ `r ∈ W`), LB `A → e ∈ W` when `A` has a final
-object, LC Quillen's theorem A over a base (`u : A → B` over `C`, all
-`A/c → B/c` in `W` ⟹ `u ∈ W`). "Small category" means objects and arrows in
-`Type u`.
-
-## What is proved
+## Main results
 
 * `W₀_localisateurFondamental`: the functors inducing a bijection on `π₀` form a
   fundamental localiser — the reading's identification of `W₀` holds as far as
@@ -65,7 +57,7 @@ object, LC Quillen's theorem A over a base (`u : A → B` over `C`, all
   (`W_∞ ⊆ W`), and `proposition4_ii_iii`: (ii) ⇒ (iii) *under the hypothesis
   `W ⊆ W₀`*.
 
-## What the formalisation finds
+### What the formalisation finds
 
 **The right-hand inclusion `W ⊆ W₀` is false as the reading states it**, and
 `W₀` is *not* the coarsest fundamental localiser:
@@ -86,6 +78,16 @@ category is already a counterexample to (ii) ⇒ (iii).) The reading's argument
 goes through once `W ⊆ W₀` is assumed (`proposition4_ii_iii`), which is the
 hypothesis to add.
 
+## Implementation notes
+
+The reading's definition is loose, so `LocalisateurFondamental` takes the
+standard axioms (Grothendieck's LA–LC as Maltsiniotis states them — recalled,
+not checked against a text): LA weak saturation (identities, two-out-of-three,
+and `r ∘ i = 1`, `i ∘ r ∈ W` ⟹ `r ∈ W`), LB `A → e ∈ W` when `A` has a final
+object, LC Quillen's theorem A over a base (`u : A → B` over `C`, all
+`A/c → B/c` in `W` ⟹ `u ∈ W`). "Small category" means objects and arrows in
+`Type u`.
+
 ## Not formalised
 
 * That `W_∞` is the class of usual weak equivalences (Cisinski 2004), which the
@@ -98,6 +100,13 @@ hypothesis to add.
 
 What this certifies is that the reading holds together where it does, not that
 it is what the page says (issue #26).
+
+## References
+
+* A. Grothendieck, cote 114, page 3 (the typescript page 350 of *Pursuing Stacks*); modernised
+  reading `transcripts/114/114.modern.tex`
+* Maltsiniotis's statement of the axioms LA–LC (recalled, not checked against a text)
+* Cisinski (2004): `W_∞` is the class of usual weak equivalences
 -/
 
 @[expose] public section

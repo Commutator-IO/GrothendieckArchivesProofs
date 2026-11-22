@@ -15,7 +15,9 @@ the page's own terms: fact b), « every `A`-linear `K → K/A` lifts to `K` » w
 (`lift_K`), and its converse (`isAdicComplete_iff_lift`). The page writes fact b) as
 `Ext¹_A(K, A) = 0`; that identification was left out, mathlib's categorical `Ext` not being used.
 This file supplies it, for mathlib's `Ext` in `ModuleCat A` (`CategoryTheory.Abelian.Ext`, the
-morphisms in the derived category):
+morphisms in the derived category).
+
+## Main results
 
 * `baer_K`: `K` is an injective `A`-module (Baer's criterion, `A` principal), so
   `Ext¹_A(K, K) = 0`;
@@ -27,8 +29,14 @@ morphisms in the derived category):
   is complete if and only if `Ext¹_A(K, A) = 0`, the reading's footnote, now with mathlib's
   `Ext`.
 
+## Not formalised
+
 The local cohomology half of the row (`H⁰_x`, `H¹_x` on `Spec A` as derived functors, and the
 equivalence between `O_X`-modules and the page's triples) is not formalised here.
+
+## References
+
+* A. Grothendieck, cote 101, p. 11 (finding `101-sheaf-duality-dim-one`)
 -/
 
 @[expose] public section

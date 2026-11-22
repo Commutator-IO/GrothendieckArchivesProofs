@@ -37,7 +37,14 @@ considers a category `M` such that
 > (i) toute flèche de `M` est un monomorphisme ;
 > (ii) tout endomorphisme d'un objet de `M` est l'identité
 
-(a direct category all of whose arrows are monic), and states:
+(a direct category all of whose arrows are monic), and states the results listed below. All are
+proved as the reading states them, after its own two corrections; the formalisation found
+nothing wrong. Pages 12–16 (issue #54, finding `104-pinned-posets-nonsingular-presheaves`) are
+formalised too.
+
+## Main results
+
+### Pages 4 and 6–10
 
 * (*) `Hom_M(D', D) → D̃`, `u ↦ u(D')`, is injective (`etoile_injective`);
 * the preorder "there is an arrow" on isomorphism classes is an order: two
@@ -74,19 +81,10 @@ considers a category `M` such that
 * page 4: `ℤ[F_{n+1}] → ℤ[F_n] → ℤ[F_{n-1}]`, with differential `t - s`, is a
   complex by the globular identities (`globulaire_complexe`).
 
-All are proved as the reading states them, after its own two corrections
-(Example 3: `Δ_{n-1}`, not the leaf's `Δ_n`, and the order, not the chaotic
-preorder), which the formalisation confirms: with `Δ_n` the count is
-`2n + 3`, and the chaotic product is not antisymmetric.
+### Pages 12–16
 
-What the formalisation found: nothing wrong. Two remarks. Property (i) is not
-needed for the order on classes nor for `u_{d_n} = id`; (ii) alone gives them.
-And (i) is needed in (*) only to make `u ↦ u(D')` land in sub-objects at all.
-Well-foundedness is a genuine further hypothesis, as the reading's « dès
-que » says: `ℤ` is the counterexample.
-
-**Pages 12–16** (issue #54, finding `104-pinned-posets-nonsingular-presheaves`). For a
-skeletal `M` satisfying (i) and (ii):
+Issue #54, finding `104-pinned-posets-nonsingular-presheaves`. For a skeletal `M` satisfying (i)
+and (ii):
 
 * page 12's admissible objects (`Admissible`: `X` the supremum of its model sub-objects, and the
   intersection of two models the supremum of the models it contains) are exactly the
@@ -104,11 +102,34 @@ skeletal `M` satisfying (i) and (ii):
   `versEpingle_pushout`); a presheaf with a map to an admissible one is admissible
   (`nonSingulier_of_hom`), more than page 16's « sub-object ».
 
-So `X̃` is the category of elements of `X`, which (ii), skeletality and non-singularity make a
-poset; the equivalence is the restriction of presheaves ≃ discrete fibrations.
-Not formalised: the equivalence `M ≃ M₀` and its converse (pages 8–10), the
-sphericity claims a) b) of page 10 (geometric realisations), the
-question of page 11, the closed parts and gluing of pages 14–15, and the N.B. of page 16.
+## Implementation notes
+
+All the statements of pages 4 and 6–10 are proved as the reading states them, after its own two
+corrections (Example 3: `Δ_{n-1}`, not the leaf's `Δ_n`, and the order, not the chaotic
+preorder), which the formalisation confirms: with `Δ_n` the count is
+`2n + 3`, and the chaotic product is not antisymmetric.
+
+What the formalisation found: nothing wrong. Two remarks. Property (i) is not
+needed for the order on classes nor for `u_{d_n} = id`; (ii) alone gives them.
+And (i) is needed in (*) only to make `u ↦ u(D')` land in sub-objects at all.
+Well-foundedness is a genuine further hypothesis, as the reading's « dès
+que » says: `ℤ` is the counterexample.
+
+On pages 12–16: `X̃` is the category of elements of `X`, which (ii), skeletality and
+non-singularity make a poset; the equivalence is the restriction of presheaves ≃ discrete
+fibrations.
+
+## Not formalised
+
+The equivalence `M ≃ M₀` and its converse (pages 8–10), the sphericity claims a) b) of page 10
+(geometric realisations), the question of page 11, the closed parts and gluing of pages 14–15,
+and the N.B. of page 16.
+
+## References
+
+* A. Grothendieck, cote 104, pp. 4, 6–10 and 12–16 (finding
+  `104-pinned-posets-nonsingular-presheaves`); modernised reading
+  `transcripts/104/104.modern.tex`
 -/
 
 @[expose] public section
