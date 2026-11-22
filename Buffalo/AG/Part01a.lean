@@ -15,11 +15,18 @@ The entries of `docs/buffalo-ag/index.tex` for the sessions of 29 and 30 May 197
 `k`-algebras, the dictionary with ideals of polynomial rings, the Nullstellensatz, algebras of
 functions, and products and sums of affine spaces.
 
+## Implementation notes
+
 Conventions. `k` is a commutative ring, a `k`-algebra is an object of `CommAlgCat.{u} k`, and
 `P_I = MvPolynomial I k`. The functor `E k I` is the standard affine space `k' ↦ k'^I`;
 `Z S k'` is the set of solutions in `k'^I` of a system `S ⊆ P_I`, and `VS k S` the subfunctor of
 `E k I` it defines; `V k A` is the functor `k' ↦ Hom_k(A, k')` represented by `A`. "Representable"
 is mathlib's `Functor.IsCorepresentable` (a covariant functor `CommAlgCat k ⥤ Type u`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), sessions of 29 and 30 May 1973, video
+  `51wmmpHand0`, 0:00:00–3:07:15 (`docs/buffalo-ag/index.tex`)
 -/
 
 @[expose] public section

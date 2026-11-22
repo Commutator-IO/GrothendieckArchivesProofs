@@ -14,9 +14,20 @@ The entries of `docs/buffalo-ag/index.tex` lines 996–1053 (video `Oqhr-Gt66es`
 finite, proper and quasi-affine morphisms, ample sheaves, radicial morphisms, open and
 generalizing morphisms, flat and faithfully flat modules.
 
+## Implementation notes
+
 Conventions. Quasi-affine schemes are mathlib's `Scheme.IsQuasiAffine`; quasi-affine morphisms
 (`IsQuasiAffineHom`) are defined here by quasi-affine preimages of affine open sets. Radicial means
-universally injective (`UniversallyInjective`). Ample sheaves are not in mathlib.
+universally injective (`UniversallyInjective`).
+
+## Not formalised
+
+Ample sheaves are not in mathlib.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 3 July 1973, video `Oqhr-Gt66es`,
+  8:31:46–10:34:12 (`docs/buffalo-ag/index.tex`, lines 996–1053)
 -/
 
 @[expose] public section

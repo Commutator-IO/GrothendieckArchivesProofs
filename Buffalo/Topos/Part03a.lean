@@ -10,13 +10,22 @@ public import Buffalo.Topos.Part01
 /-!
 # Buffalo, topos theory, part 3a: points, fibre functors, classifying topoi (11 May and 30 May 1973)
 
-Entries of `docs/buffalo-topos/index.tex` lines 390–535 concerning points of topoi, the classifying
-topos `B_G`, fibre functors on `Sh(X)` and the 2-cells between morphisms of topoi of spaces (videos
-`URU5jgTvjhU` 9:27:02–11:04:45 and `PqCQM3Pcl6Q` 0:04:34–0:53:20). The status of each entry is in
-`docs/buffalo-topos/lean/Part03.json`.
+Entries of `docs/buffalo-topos/index.tex` lines 390–535 concerning points of topoi, the
+classifying topos `B_G`, fibre functors on `Sh(X)` and the 2-cells between morphisms of topoi of
+spaces (videos `URU5jgTvjhU` 9:27:02–11:04:45 and `PqCQM3Pcl6Q` 0:04:34–0:53:20). The status of
+each entry is in `docs/buffalo-topos/lean/Part03.json`.
+
+## Implementation notes
 
 Points of `Sh(X)` are modelled by Mathlib's points of the site `(Opens X, J)`
-(`GrothendieckTopology.Point`, the fibre functors of SGA 4 IV 6.3), and `B_G` by `Action (Type u) G`.
+(`GrothendieckTopology.Point`, the fibre functors of SGA 4 IV 6.3), and `B_G` by
+`Action (Type u) G`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), videos `URU5jgTvjhU`, 9:27:02–11:04:45, and
+  `PqCQM3Pcl6Q`, 0:04:34–0:53:20 (11 May and 30 May 1973)
+* [SGA 4] exposé IV, 6.3
 -/
 
 @[expose] public section

@@ -13,6 +13,11 @@ public import Buffalo.Topos.Part06c
 Lean support for the checked items of the reconstructed blackboards `4gynb9uTEE4-12717/16589/
 20493/24404` and `ORG14LNb5gE-0000` in the time range of part 6 that no index entry covers, and for
 the corrections made to them. Status table: `docs/buffalo-topos/lean/Part06-boards.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), boards `4gynb9uTEE4-12717/16589/20493/24404` and
+  `ORG14LNb5gE-0000`
 -/
 
 @[expose] public section

@@ -32,9 +32,14 @@ rank `n` with `u : E^{(p)} ⥲ E` (an étale `𝔽_p`-local system) and `ξ` a s
 > `A^E_i` uniquement déterminées. Comme dans le cas absolu, elles s'étendent à `V(E)` tout
 > entier, … et l'on a encore `A^E_0 = (±1)(Δₙ^E)^{p-1}`.
 
-This is finding `160-relative-moore-determinant`, in coordinates: `E` trivialised with `u` the
-identity, so that `ξ ∈ Sⁿ` for an `𝔽_p`-algebra `S` and `ξ^{(p^i)} = (ξ_k^{p^i})_k`; the
-Moore determinant is then `det(ξ_j^{p^i})` (pages 7–9, the absolute case).
+This is finding `160-relative-moore-determinant`, proved in coordinates. The Corollary of
+page 13 is refuted as stated and proved in a corrected form (finding
+`160-special-linear-structures-sign`).
+
+**What the formalisation finds.** The statement holds in coordinates, with the sign `(−1)ⁿ`
+that page and reading leave as `±`.
+
+## Main results
 
 * `moore_smul`, `moore_smul'`: `Δₙ(cξ) = c^{(pⁿ−1)/(p−1)} Δₙ(ξ)` over any commutative ring.
 * `D_eq_C_mul_P`, `roots_D`: over `K = 𝔽_p[X₁, …, Xₙ]`,
@@ -47,7 +52,6 @@ Moore determinant is then `det(ξ_j^{p^i})` (pages 7–9, the absolute case).
   `ξ ∈ Sⁿ` the relation holds with the `A_i(ξ)`, and where `Δₙ(ξ)` is invertible they are its
   only coefficients: the `A_i^E` extend from the complement of the zero divisor of `Δₙ` to
   all of `V(E)`, and `A₀ = (−1)ⁿ Δₙ^{p−1}` everywhere.
-
 * `corollaire_page13_faux` (finding `160-special-linear-structures-sign`): the Corollary of
   page 13, trivialisations of `ΛⁿM` « ↔ » `(p − 1)`-th roots of `a₀`, fails for `p` and `n`
   odd: over `𝔽₃`, `M = 𝔽₃ = Ker(x³ − x)`, `a₀ = −1` has no square root while `Λ¹M` has two
@@ -58,13 +62,27 @@ Moore determinant is then `det(ξ_j^{p^i})` (pages 7–9, the absolute case).
   `Δₙ(g · e) = Δₙ(h · e)` iff `det g = det h`: the trivialisations correspond to the roots of
   `(−1)ⁿ a₀`, with fibres the `SLₙ(𝔽_p)`-orbits.
 
-**What the formalisation finds.** The statement holds in coordinates, with the sign `(−1)ⁿ`
-that page and reading leave as `±`. The extension rests on the factorisation of `D(T)`, which
+## Implementation notes
+
+In coordinates: `E` trivialised with `u` the
+identity, so that `ξ ∈ Sⁿ` for an `𝔽_p`-algebra `S` and `ξ^{(p^i)} = (ξ_k^{p^i})_k`; the
+Moore determinant is then `det(ξ_j^{p^i})` (pages 7–9, the absolute case).
+
+The extension rests on the factorisation of `D(T)`, which
 needs only that the `p^n` forms `λ · X` are distinct roots of a polynomial of degree `pⁿ` with
 leading coefficient `±Δₙ ≠ 0`; the factorisation of page 7 with its constant `c` is not
-needed. Not formalised: the relative version for a non-trivial `(E, u)` (the reduction to the
+needed.
+
+## Not formalised
+
+The relative version for a non-trivial `(E, u)` (the reduction to the
 trivial local system is étale-local), the trivialisation `(ΛⁿĚ)^{⊗(p−1)} ≅ 𝒪_S` by `Λⁿǔ`,
 and Dickson's theorem (pages 9–12).
+
+## References
+
+* A. Grothendieck, Folder 160, pp. 7–15 (reading `transcripts/160/160.modern.tex`; findings
+  `160-relative-moore-determinant`, `160-special-linear-structures-sign`)
 -/
 
 @[expose] public section

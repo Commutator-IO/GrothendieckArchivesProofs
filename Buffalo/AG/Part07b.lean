@@ -14,11 +14,21 @@ The entries of `docs/buffalo-ag/index.tex` lines 941–995 (video `Oqhr-Gt66es`,
 finite presentation and limits, projective, ample and proper morphisms, valuative criteria,
 integral extensions, finite and integral morphisms.
 
-Conventions. Mathlib has no projective bundle `ℙ(E)`, no ample or very ample invertible sheaves and
-no Picard group of a scheme: the entries on them are not formalised, except through `Proj` of a
-graded ring (`Proj.toSpecZero`), which is the affine-base case `ℙ(E) = Proj(Sym E)`. The valuative
-criteria are mathlib's, for all valuation rings (the lecture's discrete valuation rings need
-noetherian hypotheses).
+## Implementation notes
+
+The valuative criteria are mathlib's, for all valuation rings (the lecture's discrete valuation
+rings need noetherian hypotheses).
+
+## Not formalised
+
+Mathlib has no projective bundle `ℙ(E)`, no ample or very ample invertible sheaves and no Picard
+group of a scheme: the entries on them are not formalised, except through `Proj` of a graded
+ring (`Proj.toSpecZero`), which is the affine-base case `ℙ(E) = Proj(Sym E)`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 2 July 1973, video `Oqhr-Gt66es`,
+  6:47:12–8:27:42 (`docs/buffalo-ag/index.tex`, lines 941–995)
 -/
 
 @[expose] public section

@@ -10,9 +10,15 @@ public import Buffalo.Topos.Part03c
 /-!
 # Buffalo, topos theory, part 3: the blackboards
 
-Lean support for the checked items of the reconstructed blackboards `URU5jgTvjhU-30214/34123/38022`
-and `PqCQM3Pcl6Q-0000/2947/5910/6937/9878` in the time range of part 3 that no index entry covers,
-and for the corrections made to them. Status table: `docs/buffalo-topos/lean/Part03-boards.json`.
+Lean support for the checked items of the reconstructed blackboards
+`URU5jgTvjhU-30214/34123/38022` and `PqCQM3Pcl6Q-0000/2947/5910/6937/9878` in the time range of
+part 3 that no index entry covers, and for the corrections made to them. Status table:
+`docs/buffalo-topos/lean/Part03-boards.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), boards `URU5jgTvjhU-30214/34123/38022` and
+  `PqCQM3Pcl6Q-0000/2947/5910/6937/9878`
 -/
 
 @[expose] public section

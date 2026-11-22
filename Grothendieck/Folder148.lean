@@ -18,14 +18,8 @@ homeomorphism once an anti-isomorphism of torsors `R_a → R_{a'}` is given. The
 gluing is then « bien déterminé »; the reading justifies it: the orientation-reversing
 homeomorphisms realising a given anti-isomorphism form a non-empty contractible space.
 
-What is modelled. A circle with `r` marked points is `ℝ/ℤ` (oriented by `ℝ`) with the lifted
-marked points `p : ℤ → ℝ`, strictly increasing with `p (k + r) = p k + 1` (`Marking r`); the
-torsor `R_a` is `ℤ/r` acting by `k ↦ k + 1` (next point along the orientation), so that an
-anti-isomorphism `ℤ/r → ℤ/r` is `k ↦ c - k` (`antiIso_eq`). An orientation-reversing
-homeomorphism of circles is described by its lifts: continuous strictly antitone `F : ℝ → ℝ`
-with `F (x + 1) = F x - 1`; two lifts of the same map differ by an integer, and the lift is
-normalised by asking `F (p k) = q (c - k)` for all `k` (`c ∈ ℤ` lifting the anti-isomorphism).
-The space `gluings P Q c ⊆ C(ℝ, ℝ)` carries the compact-open topology.
+## Main results
+
 * `gluings_nonempty`: the space is non-empty, for arbitrary positions of the marked points
   (piecewise-linear interpolation `Marking.interpHomeomorph`);
 * `convex_gluings`, `contractibleSpace_gluings`, `isPathConnected_gluings`: it is convex, hence
@@ -36,9 +30,27 @@ The space `gluings P Q c ⊆ C(ℝ, ℝ)` carries the compact-open topology.
   of `a` onto those of `a'` induces an anti-isomorphism `k ↦ c - k`, so the spaces `gluings P Q c`
   exhaust the gluings respecting the markings.
 
-Not formalised: the identification of the space of lifts with a space of homeomorphisms of the
-circle `AddCircle 1`, the case `r = 0` (where `Marking 0` is empty; the reading says the space
-then has the homotopy type of a circle, the Dehn twist ambiguity), and the groupoid itself.
+## Implementation notes
+
+What is modelled. A circle with `r` marked points is `ℝ/ℤ` (oriented by `ℝ`) with the lifted
+marked points `p : ℤ → ℝ`, strictly increasing with `p (k + r) = p k + 1` (`Marking r`); the
+torsor `R_a` is `ℤ/r` acting by `k ↦ k + 1` (next point along the orientation), so that an
+anti-isomorphism `ℤ/r → ℤ/r` is `k ↦ c - k` (`antiIso_eq`). An orientation-reversing
+homeomorphism of circles is described by its lifts: continuous strictly antitone `F : ℝ → ℝ`
+with `F (x + 1) = F x - 1`; two lifts of the same map differ by an integer, and the lift is
+normalised by asking `F (p k) = q (c - k)` for all `k` (`c ∈ ℤ` lifting the anti-isomorphism).
+The space `gluings P Q c ⊆ C(ℝ, ℝ)` carries the compact-open topology.
+
+## Not formalised
+
+The identification of the space of lifts with a space of homeomorphisms of the circle
+`AddCircle 1`, the case `r = 0` (where `Marking 0` is empty; the reading says the space then has
+the homotopy type of a circle, the Dehn twist ambiguity), and the groupoid itself.
+
+## References
+
+* A. Grothendieck, folder 148, « D) Recollement », pp. 49–60; transcription
+  `transcripts/148/batch-03.fr.tex`, modernised reading `transcripts/148/148.modern.tex`
 -/
 
 @[expose] public section

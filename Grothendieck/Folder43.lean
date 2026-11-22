@@ -22,23 +22,39 @@ characteristic `p`,
 the global sections of the perfection `colim(𝒪 → 𝒪 → ⋯, x ↦ xᵖ)`. This is finding
 `43-ext-ga-zp-perfection`. The reading explains the perfection by the algebraic core: an
 `Ext¹` class is an additive polynomial `Σ aᵢ t^{pⁱ}` modulo the image of `f ↦ fᵖ − f`, and
-modulo that image every additive polynomial reduces to a single term. Proved here, over any
-commutative `𝔽_p`-algebra `R` (the case `S = Spec R` affine):
+modulo that image every additive polynomial reduces to a single term. That core is proved
+here, over any commutative `𝔽_p`-algebra `R` (the case `S = Spec R` affine).
+
+## Main definitions
 
 * an additive polynomial `Σ aᵢ t^{pⁱ}` is a finitely supported sequence `a : ℕ →₀ R`
   (`toPoly`); `Fr` is left composition with `F`, `toPoly (Fr a) = (toPoly a)ᵖ` (`toPoly_Fr`),
   and `D = Fr − 1` is `f ↦ fᵖ − f`;
-* `Φ (a) = Σ [aᵢ]ᵢ ∈ PerfectClosure R p`, `[a]ᵢ` the class of `(i, a)`, i.e. `a^{p^{-i}}`;
+* `Φ (a) = Σ [aᵢ]ᵢ ∈ PerfectClosure R p`, `[a]ᵢ` the class of `(i, a)`, i.e. `a^{p^{-i}}`.
+
+## Main results
+
 * `Φ_D`: `Φ` kills the image of `D`; `Φ_surjective`; `exists_single`: modulo the image of `D`,
   every `a` is a single term `[c]` at any level `M` large enough; `ker_Φ`: the kernel of `Φ` is
   exactly the image of `D`;
 * `quotientEquiv`: `R{F} / (F − 1)R{F} ≃ PerfectClosure R p` as additive groups.
 
+## Implementation notes
+
 **What the formalisation finds.** The algebraic core of the formula holds over every affine
 base, reduced or not, with no noetherian hypothesis: the kernel of `R → R^{p^{-∞}}` (elements
-with some `x^{pᵏ} = 0`) is absorbed by `F − 1`. Not formalised: the lemma of pages 166–168
-identifying `Ext¹_{S-gr}(G, Γ)` with primitive classes in `H¹(G, Γ)`, the invariance under
-universal homeomorphisms, non-affine bases, and the representability by perfect pro-schemes.
+with some `x^{pᵏ} = 0`) is absorbed by `F − 1`.
+
+## Not formalised
+
+The lemma of pages 166–168 identifying `Ext¹_{S-gr}(G, Γ)` with primitive classes in
+`H¹(G, Γ)`, the invariance under universal homeomorphisms, non-affine bases, and the
+representability by perfect pro-schemes.
+
+## References
+
+* A. Grothendieck, folder 43, pp. 165–169 (reading `transcripts/43/43.modern.tex`; finding
+  `43-ext-ga-zp-perfection`)
 -/
 
 @[expose] public section

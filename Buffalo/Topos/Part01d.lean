@@ -13,6 +13,11 @@ public import Buffalo.Topos.Part01b
 Entries of `docs/buffalo-topos/index.tex` of the section « Algebraic structures on objects of a
 category » (video `URU5jgTvjhU`, 4:59:30–5:34:24). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 4:59:30–5:34:24
+  (11 May 1973)
 -/
 
 @[expose] public section

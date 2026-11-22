@@ -14,12 +14,19 @@ The entries of `docs/buffalo-ag/index.tex` lines 907–940 (video `Oqhr-Gt66es`,
 geometric integrality and connectedness (with the tensor squares of finite extensions of `k`),
 and complements on subschemes and coherence.
 
+## Implementation notes
+
 Conventions. A `k`-scheme is a morphism `f : X ⟶ Spec k`; `X_{k'}` is the pullback along
 `Spec k' → Spec k`. Mathlib's `GeometricallyIrreducible`, `GeometricallyConnected`,
 `GeometricallyReduced` ("separable") and `GeometricallyIntegral` are the notions of the lecture.
 Universal openness of a scheme over a field, which the lecture uses freely, is not in mathlib in
 general; it is assumed where needed, or deduced from flatness for schemes locally of finite
 presentation.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 26 June 1973, video `Oqhr-Gt66es`,
+  5:24:53–6:43:27 (`docs/buffalo-ag/index.tex`, lines 907–940)
 -/
 
 @[expose] public section

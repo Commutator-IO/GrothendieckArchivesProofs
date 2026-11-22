@@ -22,9 +22,10 @@ isomorphism iff `card C = card C'` and the ordinary integer `det N` is `± p^r`,
 characteristic exponent of the residue fields.
 
 This is the criterion of finding `29-inertia-matrix-determinant` of
-`src/content/findings.ts`. That the map on inertia is `N` (the Kummer computation of the
-page) is not formalised: mathlib has no tame inertia of regular schemes. What is proved is
-the criterion itself, for any integer matrix, `ℤ_ℓ(1)` being free of rank one over `ℤ_ℓ`.
+`src/content/findings.ts`. What is proved is the criterion itself, for any integer matrix,
+`ℤ_ℓ(1)` being free of rank one over `ℤ_ℓ`.
+
+## Main results
 
 * `inertiaMap N ℓ`: the map `ℤ_ℓ^C → ℤ_ℓ^{C'}` of an integer matrix `N` (rows `C'`,
   columns `C`).
@@ -38,6 +39,16 @@ the criterion itself, for any integer matrix, `ℤ_ℓ(1)` being free of rank on
   changes the determinant only by a sign.
 * `criterion` (the page's criterion): `N` is bijective over `ℤ_ℓ` for every prime `ℓ ≠ p`
   iff `card C = card C'` and the determinant is `± p^k`.
+
+## Not formalised
+
+That the map on inertia is `N` (the Kummer computation of the page) is not formalised:
+mathlib has no tame inertia of regular schemes.
+
+## References
+
+* A. Grothendieck, folder 29, page 120 (reading `transcripts/29/29.modern.tex`; finding
+  `29-inertia-matrix-determinant`)
 -/
 
 @[expose] public section

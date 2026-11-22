@@ -13,6 +13,11 @@ public import Buffalo.AG.Part08
 Counterexamples for the board items of `public/buffalo-boards/` (videos `Oqhr-Gt66es` from 37143 s
 and `vuys5SNs2eQ` to 15735 s) that misstate mathematics; the status of every checked item is in
 `docs/buffalo-ag/lean/Part08-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), videos `Oqhr-Gt66es` (from 37143 s) and
+  `vuys5SNs2eQ` (to 15735 s) (reconstructed blackboards `public/buffalo-boards/`)
 -/
 
 @[expose] public section

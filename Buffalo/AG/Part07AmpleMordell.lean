@@ -14,25 +14,41 @@ public import StacksFrontier.AlgebraicGeometry.AmpleBridge.Basic
 
 Two clauses of the « Ample sheaves » topic of the Buffalo index (part 07) that were left open:
 the stability of ampleness under tensor product (entry 26840), and the twist `L^{⊗ n} ⊗ M`
-(entry 27219). The ample predicates are those of AxiomMath/Stacks (Apache-2.0):
-`Stacks.Ample.IsAmple` and `AlgebraicGeometry.Scheme.Modules.IsAmple` (Stacks 01PS, EGA II 4.5.3),
-which agree by `Stacks.AmpleBridge.isAmple_iff_isAmple`. Very ampleness over a field is
-`Faltings.IsVeryAmple` (an embedding `φ : X ⟶ ℙⁿ_k` with `L ≅ φ^* 𝒪(1)`), from the files of
-AxiomMath/Mordell copied under `Mordell/` (see `NOTICE`).
+(entry 27219).
 
-**What is proved.**
+## Main results
+
 * `prop_26840_tensor`, `prop_26840_tensor_stacks`: the tensor product of two ample invertible
   sheaves on a scheme is ample (Stacks 0890), in both spellings of 01PS. This is the clause
   « ample sheaves are stable under tensor product » of 26840.
 * `prop_27219_veryAmple`: on a projective variety `X` over a field `k`, if `L` is very ample and
   `M` is any invertible sheaf, then `M ⊗ L^{⊗ a}` is very ample for all `a` large enough
-  (Hartshorne II.5.17, II Ex. 7.5; Mordell `Faltings.eventually_isVeryAmple_tensorModules_tensorPowModule`,
-  through the Segre embedding). This is 27219 for a very ample `L` over a field.
+  (Hartshorne II.5.17, II Ex. 7.5; Mordell
+  `Faltings.eventually_isVeryAmple_tensorModules_tensorPowModule`, through the Segre embedding).
+  This is 27219 for a very ample `L` over a field.
 
-**Not formalised.** 27219 for an ample `L` over a quasi-compact base `Y`, and its corollary that
-the ample cone spans `Pic(X) ⊗ ℚ`. The convex cone of 27035. Stability of ampleness under base
-change (the other clause of 26840). The Segre embedding `ℙ(E) × ℙ(F) → ℙ(E ⊗ F)` over a base
-(26511, 32732): Mordell has it only for `ℙʳ_S × ℙᵐ_S` with the twisting sheaves, not for `ℙ(E)`.
+## Implementation notes
+
+The ample predicates are those of AxiomMath/Stacks (Apache-2.0): `Stacks.Ample.IsAmple` and
+`AlgebraicGeometry.Scheme.Modules.IsAmple` (Stacks 01PS, EGA II 4.5.3), which agree by
+`Stacks.AmpleBridge.isAmple_iff_isAmple`. Very ampleness over a field is `Faltings.IsVeryAmple`
+(an embedding `φ : X ⟶ ℙⁿ_k` with `L ≅ φ^* 𝒪(1)`), from the files of AxiomMath/Mordell copied
+under `Mordell/` (see `NOTICE`).
+
+## Not formalised
+
+27219 for an ample `L` over a quasi-compact base `Y`, and its corollary that the ample cone spans
+`Pic(X) ⊗ ℚ`. The convex cone of 27035. Stability of ampleness under base change (the other
+clause of 26840). The Segre embedding `ℙ(E) × ℙ(F) → ℙ(E ⊗ F)` over a base (26511, 32732):
+Mordell has it only for `ℙʳ_S × ℙᵐ_S` with the twisting sheaves, not for `ℙ(E)`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), part 07, « Ample sheaves », entries 26840,
+  27219
+* [EGA II] 4.5.3
+* Hartshorne, II.5.17, II Ex. 7.5
+* Stacks Project, tags 01PS, 0890
 -/
 
 @[expose] public section

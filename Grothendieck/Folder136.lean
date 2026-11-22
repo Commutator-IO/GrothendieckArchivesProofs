@@ -31,25 +31,37 @@ form, `M T^{(i)} ≃ Hom^i(τ_{N−i} S, M ⊗_k S)`, written on coefficients. P
 says only that the claims hold as stated; whether they stand in the literature is a
 separate question.
 
-What is formalised.
+## Main results
 
-* The second theorem, for every `i` (the hypothesis `i ≤ N` is not used)
-  (`binomial_shadow_existsUnique`). The proof is not the page's: no localisation and
-  no `p`-adic digit shift. With `K = p^r − 1` above `k` and `k'`, every `binom(K, ·)`
-  is prime to `p` (`not_dvd_choose_pow_sub_one`, the « aucune retenue » of p. 31),
-  and the relations from `k` and `k'` up to `K`, with the identity
-  `binom(k+l, l) binom(k, i) = binom(k+l, i) binom(k+l−i, l)` (`choose_add_mul_choose`),
-  give that `binom(k, i) ξ_{k'} − binom(k', i) ξ_k` is killed by an integer prime to
-  `p`; for every `p` this forces it to vanish (`eq_zero_of_forall_prime_smul`, through
-  the additive order). The `binom(k, i)`, `k ≥ N`, generate the unit ideal of `ℤ`
-  (`span_choose_eq_top`), and a Bézout combination `∑ mₐ binom(kₐ, i) = 1` defines
-  `ξ = ∑ mₐ ξ_{kₐ}` and gives its uniqueness, as on page 27.
-* Théorème 1 (`binomial_constant`) is the case `i = 0`; the family of additive maps
-  of Corollary 1 is its instance in `M →+ M'` (`hom_family_constant`).
+* `binomial_shadow_existsUnique`: the second theorem, for every `i` (the hypothesis `i ≤ N` is
+  not used).
+* `binomial_constant`: Théorème 1, the case `i = 0`; the family of additive maps of
+  Corollary 1 is its instance in `M →+ M'` (`hom_family_constant`).
 
-Not formalised: the full faithfulness of `ω_N` and the isomorphism
-`M ⊗_k S → φ_N τ_N (M ⊗_k S)` over the divided-power algebra `k{T}` as statements
-about graded modules; Lemma 2 of page 21 (the `ℤ_(p)`-local form with few indices).
+## Implementation notes
+
+The proof of the second theorem is not the page's: no localisation and
+no `p`-adic digit shift. With `K = p^r − 1` above `k` and `k'`, every `binom(K, ·)`
+is prime to `p` (`not_dvd_choose_pow_sub_one`, the « aucune retenue » of p. 31),
+and the relations from `k` and `k'` up to `K`, with the identity
+`binom(k+l, l) binom(k, i) = binom(k+l, i) binom(k+l−i, l)` (`choose_add_mul_choose`),
+give that `binom(k, i) ξ_{k'} − binom(k', i) ξ_k` is killed by an integer prime to
+`p`; for every `p` this forces it to vanish (`eq_zero_of_forall_prime_smul`, through
+the additive order). The `binom(k, i)`, `k ≥ N`, generate the unit ideal of `ℤ`
+(`span_choose_eq_top`), and a Bézout combination `∑ mₐ binom(kₐ, i) = 1` defines
+`ξ = ∑ mₐ ξ_{kₐ}` and gives its uniqueness, as on page 27.
+
+## Not formalised
+
+The full faithfulness of `ω_N` and the isomorphism `M ⊗_k S → φ_N τ_N (M ⊗_k S)` over the
+divided-power algebra `k{T}` as statements about graded modules; Lemma 2 of page 21 (the
+`ℤ_(p)`-local form with few indices).
+
+## References
+
+* A. Grothendieck, cote 136, « Coefficients binomiaux modulo `p` », pp. 19–22, and « Le
+  théorème sur `M ⊗_k S` », pp. 26–34 (finding `136-shadow-full-faithfulness`); modernised
+  reading `transcripts/136/136.modern.tex`
 -/
 
 @[expose] public section

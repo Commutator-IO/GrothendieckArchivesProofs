@@ -26,13 +26,14 @@ every `A ∈ 𝓜₂`, tame sets of inverses. It states:
 > `X` which is the common zero set of finitely many tame functions is also that of a finite
 > family of tame functions separating the points of `X ∖ Y`; that is, `X/Y` is a tame space.
 
-The proof (pages 22–23): translate to `e_α = 0`, take tame `g_β` embedding `X`, and use the
-`f_α` and the `f_α g_β`; for `x ≠ y` off `Y` not separated by the `f_α`, some
-`λ = f_α(x) ≠ 0` and some `g_β(x) ≠ g_β(y)` give `λ g_β(x) ≠ λ g_β(y)`.
-This is finding `120-collapse-separation-over-a-field` of `src/content/findings.ts`.
+This is finding `120-collapse-separation-over-a-field` of `src/content/findings.ts`. The
+statement holds, more generally (see below). The file also treats pushouts along tame
+embeddings (pages 8 to 13), finding `120-axiomatic-pushouts-along-embeddings`: the Proposition
+there holds too, with the reading's restored conclusion.
 
-What is formalised. The axioms are those of the reading in the form (M′1)–(M′4) it uses
-(`TameModel`, index types finite), (M11) b) as `RingOps`, (M11) in full as `M11` for a field.
+## Main results
+
+### Collapsing a tame subset (pages 20–23)
 
 * `TameModel.isTameFun_mul`, `isTameFun_sub`, `isTameFun_const`, `isTameFun_coord`: the tame
   functions on a tame `X` are stable by `-` and `·`, contain the constants of `R₀` and the
@@ -47,16 +48,7 @@ What is formalised. The axioms are those of the reading in the form (M′1)–(M
   `X ∖ Y`. `exists_separating_family` and `exists_separating_family_of_field` state the
   Proposition as an existence, the second under (M11) for a field.
 
-The statement holds, more generally: neither (M3), (M5)–(M7), (M11) a), c), nor the
-finiteness of the families is used, and « field » can be weakened to « no zero divisors ».
-The reading's corrections `e_α ∈ R₀` (page 22) and `X ∖ Y` (page 23) are both needed: the
-first for the translation, the second because a family constant on `Y` cannot separate two
-points of `Y`.
-## Pushouts along tame embeddings (pages 8 to 13), finding `120-axiomatic-pushouts-along-embeddings`
-
-Axioms (M5′) `Unions` (∅ and binary unions), (M6) `M6` (a tame `Z ⊂ X` is a fibre `F⁻¹(e)`,
-`e ∈ R₀^A`, of a tame family injective off `Z`), (M7) `M7` (tame functions extend from tame
-subsets). Spaces are tame subsets `X ⊂ R^I`, maps are families with tame graph.
+### Pushouts along tame embeddings (pages 8 to 13)
 
 * `graph_mem_of_coords`, `isTameFun_of_graph`: a finite family has a tame graph iff its
   coordinates are tame functions ((M′1), (M′2), (M′4), induction on the index set).
@@ -68,13 +60,46 @@ subsets). Spaces are tame subsets `X ⊂ R^I`, maps are families with tame graph
   `Z ↪ X₁`, `Z ↪ X₂` have such a pushout, by diagram (*): `X₁` on the level `e₂`, `X₂` on the
   level `e₁` of `R^K × R^{A₁} × R^{A₂}`, the `R^K` coordinate extending `Z ⊂ R^K` by (M7).
 
+## Implementation notes
+
+### Collapsing a tame subset
+
+The proof (pages 22–23): translate to `e_α = 0`, take tame `g_β` embedding `X`, and use the
+`f_α` and the `f_α g_β`; for `x ≠ y` off `Y` not separated by the `f_α`, some
+`λ = f_α(x) ≠ 0` and some `g_β(x) ≠ g_β(y)` give `λ g_β(x) ≠ λ g_β(y)`.
+
+The axioms are those of the reading in the form (M′1)–(M′4) it uses (`TameModel`, index types
+finite), (M11) b) as `RingOps`, (M11) in full as `M11` for a field.
+
+The statement holds, more generally: neither (M3), (M5)–(M7), (M11) a), c), nor the
+finiteness of the families is used, and « field » can be weakened to « no zero divisors ».
+The reading's corrections `e_α ∈ R₀` (page 22) and `X ∖ Y` (page 23) are both needed: the
+first for the translation, the second because a family constant on `Y` cannot separate two
+points of `Y`.
+
+### Pushouts along tame embeddings
+
+Axioms (M5′) `Unions` (∅ and binary unions), (M6) `M6` (a tame `Z ⊂ X` is a fibre `F⁻¹(e)`,
+`e ∈ R₀^A`, of a tame family injective off `Z`), (M7) `M7` (tame functions extend from tame
+subsets). Spaces are tame subsets `X ⊂ R^I`, maps are families with tame graph.
+
 What the formalisation found: the Proposition holds, with the reading's restored
 conclusion (the two images meet exactly along `Z`). It needs `R` non-empty for the universal
 property, as a map into `R^L` must exist (the trivial cases of page 4 excluded); (M5′) is
 used only for the union `J₁(X₁) ∪ J₂(X₂)` and for the graph of the induced map; (M6) needs its
 « de plus » half (injectivity off `Z`), which the reading notes does not follow from the first
-over a general `R`. The category `Σ` of abstract tame spaces and the NB for finite diagrams
-are not formalised.
+over a general `R`.
+
+## Not formalised
+
+The category `Σ` of abstract tame spaces and the NB for finite diagrams.
+
+## References
+
+* A. Grothendieck, cote 120 (« Topologie modérée »), pp. 20–23 (finding
+  `120-collapse-separation-over-a-field`) and pp. 8–13 (finding
+  `120-axiomatic-pushouts-along-embeddings`); modernised reading
+  `transcripts/120/120.modern.tex`
 -/
 
 @[expose] public section

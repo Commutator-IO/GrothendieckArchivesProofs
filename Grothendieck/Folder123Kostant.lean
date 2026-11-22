@@ -12,14 +12,22 @@ public import Mathlib.Tactic.NormNum
 /-!
 # Folder 123: the number of Kostant rigidifications, `card(W)² / (h z φ(h))`, in small rank
 
-For `G` simple adjoint, the folder announces that the conjugacy classes of quadruples `(T, B, T', B')`
-(`T`, `T'` maximal tori « en apposition », `B ⊃ T`, `B' ⊃ T'` Borel subgroups) number
-`card(W)² / (h z φ(h))`, with `W` the Weyl group, `h` the Coxeter number, `z` the order of the
-centre of the simply connected group and `φ` Euler's function. The folder proves neither the count
-nor the free action behind it; the reading checks by hand that the numbers are integers for `A₁`,
-`A₂`, `B₂`, `G₂` (1, 2, 4, 12). This file checks that the formula gives an integer, and its value,
-for every simple type of rank at most 8 and for the exceptional types (#91, nv:87). It checks the
-arithmetic of the announced number, not the geometry.
+For `G` simple adjoint, the folder announces that the conjugacy classes of quadruples
+`(T, B, T', B')` (`T`, `T'` maximal tori « en apposition », `B ⊃ T`, `B' ⊃ T'` Borel subgroups)
+number `card(W)² / (h z φ(h))`, with `W` the Weyl group, `h` the Coxeter number, `z` the order of
+the centre of the simply connected group and `φ` Euler's function. The folder proves neither the
+count nor the free action behind it; the reading checks by hand that the numbers are integers for
+`A₁`, `A₂`, `B₂`, `G₂` (1, 2, 4, 12). This file checks that the formula gives an integer, and its
+value, for every simple type of rank at most 8 and for the exceptional types (#91, nv:87).
+
+## Not formalised
+
+It checks the arithmetic of the announced number, not the geometry: neither the count nor the
+free action behind it is proved.
+
+## References
+
+* A. Grothendieck, folder 123
 -/
 
 @[expose] public section

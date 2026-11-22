@@ -13,9 +13,16 @@ public import Mathlib
 Entries `_lTf_L0yvrU-8101` to `_lTf_L0yvrU-21055` of `docs/buffalo-groupes/index.tex` (11 and
 13 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.json`.
 
+## Implementation notes
+
 A point of `Spec A` with values in `R` is a `k`-algebra map `A → R`; the product of two affine
 spaces is `Spec (A ⊗ B)` (`tensorPoints`), and the law of a group `Spec A` on points is Mathlib's
 convolution product on `WithConv (A →ₐ[k] R)`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 8101–21055 (11
+  and 13 June 1973)
 -/
 
 @[expose] public section

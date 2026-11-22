@@ -15,6 +15,11 @@ groups course's video but belonging to the algebraic geometry course): Galois de
 profinite Galois group, descent for families of morphisms (mathlib's `Pseudofunctor.DescentData`),
 the fpqc, fppf, Zariski and étale topologies (mathlib's `Scheme.fpqcPrecoverage` and its
 neighbours), sheaves on a site, quotients and algebraic spaces.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 11 July 1973, video `3ULFIl_2Wis`,
+  5:30:39–6:57:40 (`docs/buffalo-ag/index.tex`, lines 1219–1290)
 -/
 
 @[expose] public section

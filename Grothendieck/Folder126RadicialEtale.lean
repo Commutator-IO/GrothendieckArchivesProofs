@@ -17,6 +17,33 @@ locally noetherian, whose fibres all have the same number `n` of geometric point
 factors as a finite surjective radicial `X → X^ét` followed by a finite étale cover `X^ét → Y`,
 and every `Y`-morphism from `X` to an étale `Y`-scheme factors uniquely through `X^ét`.*
 
+**Is it true as read?** Yes (see the implementation notes). This file formalises the argument in
+its local form, over a strictly henselian base.
+
+## Main results
+
+* `radicial_etale_factorisation_of_strictlyHenselian`: let `R` be a strictly henselian local
+  ring and `A` a module-finite `R`-algebra such that `Spec A → Spec R` is an open map and, for
+  every algebraically closed field `K` and every ring map `φ : R → K`, the number of `R`-maps
+  `A → K` over `φ` (the geometric points of the fibre over `φ`, `GeomPoints`) is a constant
+  `n`. Then there are a finite index type `ι` with `|ι| = n` and strictly henselian local
+  module-finite `R`-algebras `Bᵢ` with `A ≃ₐ[R] ∏ᵢ Bᵢ`, such that
+  * every `Spec Bᵢ → Spec R` has exactly one geometric point over every geometric point of
+    `Spec R` (it is surjective and universally injective, i.e. radicial — the first arrow `f₁`);
+  * `etalePartMap e : R^ι → A` (the trivial finite étale cover `∐_ι Spec R`, the second arrow
+    `f₂`) has the universal property: every `R`-algebra map `R^J → A` from a split finite étale
+    algebra factors uniquely through it (`existsUnique_comp_etalePartMap_eq`), and so does every
+    `R`-algebra map `T → A` from any finite étale `R`-algebra `T`
+    (`existsUnique_comp_etalePartMap_eq_of_etale`), since such a `T` is split
+    (`exists_algEquiv_pi_of_etale`, Stacks 04GL).
+* The general pieces: a ring map from a finite product into a local ring factors through exactly
+  one factor (`exists_map_single_eq_one`, `geomPointsPiEquiv`); a prime of an integral extension
+  over `ker φ` gives a geometric point over `φ` (`exists_ringHom_lift_of_prime`, Stacks 09GU via
+  `IsAlgClosed.lift`); openness gives a point of each factor over each prime
+  (`nonempty_geomPoints_of_isOpenMap`).
+
+## Implementation notes
+
 **The reading.** « Univ. ouvert » is an interlinear addition on page 17 whose reading is marked
 uncertain in the transcription (and « factorisation » in the heading is uncertain too). The
 statement is formalised here *as the reading gives it*, with universal openness as the
@@ -30,34 +57,17 @@ and closed in `Spec A`, so its image is an open set containing the closed point,
 fibre has exactly `|ι|` of them, and constancy of `d` forces exactly one over every point: each
 `Spec Bᵢ → Spec R` is radicial, and `Spec A → ∐_ι Spec R` is the factorisation. The global
 `X^ét` is obtained from these by étale descent, and its universal property is the topological
-invariance of the étale site. That argument is the one formalised below in its local form.
+invariance of the étale site. That argument is the one formalised here in its local form.
 
-**What is proved.** `radicial_etale_factorisation_of_strictlyHenselian`: let `R` be a strictly
-henselian local ring and `A` a module-finite `R`-algebra such that `Spec A → Spec R` is an open
-map and, for every algebraically closed field `K` and every ring map `φ : R → K`, the number of
-`R`-maps `A → K` over `φ` (the geometric points of the fibre over `φ`, `GeomPoints`) is a constant
-`n`. Then there are a finite index type `ι` with `|ι| = n` and strictly henselian local
-module-finite `R`-algebras `Bᵢ` with `A ≃ₐ[R] ∏ᵢ Bᵢ`, such that
-* every `Spec Bᵢ → Spec R` has exactly one geometric point over every geometric point of `Spec R`
-  (it is surjective and universally injective, i.e. radicial — the first arrow `f₁`);
-* `etalePartMap e : R^ι → A` (the trivial finite étale cover `∐_ι Spec R`, the second arrow `f₂`)
-  has the universal property: every `R`-algebra map `R^J → A` from a split finite étale algebra
-  factors uniquely through it (`existsUnique_comp_etalePartMap_eq`), and so does every `R`-algebra
-  map `T → A` from any finite étale `R`-algebra `T` (`existsUnique_comp_etalePartMap_eq_of_etale`),
-  since such a `T` is split (`exists_algEquiv_pi_of_etale`, Stacks 04GL).
-
-The general pieces: a ring map from a finite product into a local ring factors through exactly
-one factor (`exists_map_single_eq_one`, `geomPointsPiEquiv`); a prime of an integral extension
-over `ker φ` gives a geometric point over `φ` (`exists_ringHom_lift_of_prime`, Stacks 09GU via
-`IsAlgClosed.lift`); openness gives a point of each factor over each prime
-(`nonempty_geomPoints_of_isOpenMap`). The splitting itself is the AxiomMath/Stacks
+The splitting itself is the AxiomMath/Stacks
 `exists_algEquiv_pi_strictHenselian_of_module_finite` (from 04GJ), and the count on the closed
 fibre is its `finiteAlgHomCharsEquiv`.
 
-**Not formalised.**
-* Existence of the global factorisation over a locally noetherian `Y`: the base change to the strict
-  henselisations, and the construction of `X^ét` by descent of étale covers (SGA 1 IX §4, the
-  draft's Stacks 02L5), are not done; Mathlib has no finite étale part `π₀(X/Y)` of a finite
+## Not formalised
+
+* Existence of the global factorisation over a locally noetherian `Y`: the base change to the
+  strict henselisations, and the construction of `X^ét` by descent of étale covers (SGA 1 IX §4,
+  the draft's Stacks 02L5), are not done; Mathlib has no finite étale part `π₀(X/Y)` of a finite
   morphism.
 * The global universal property of page 23 (every `Y`-morphism from `X` to an étale `Y`-scheme
   factors uniquely through `X^ét`, over any `Y`) and the uniqueness of the factorisation up to
@@ -67,6 +77,13 @@ fibre is its `finiteAlgHomCharsEquiv`.
 * Universal openness enters only through the openness of `Spec A → Spec R` after base change;
   the page's remark that « `d` constant » may be dropped for connected `Y` is false (the
   reading's counterexample `y² = t` over `k[t]`) and is not stated.
+
+## References
+
+* A. Grothendieck, folder 126 (« Descente fidèlement plate »), pp. 17–23 (finding
+  `126-radicial-etale-factorisation`)
+* [SGA 1] exposé IX, §4
+* Stacks Project, tags 04GJ, 04GL, 09GU, 02L5, 0BTY
 -/
 
 @[expose] public section

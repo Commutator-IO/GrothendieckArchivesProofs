@@ -13,8 +13,13 @@ public import Buffalo.Topos.Part03b
 Entries of `docs/buffalo-topos/index.tex` lines 390–535 on sober spaces and generic points, the
 Zariski-type topologies, tensor products of sheaves of modules, algebras of finite presentation,
 points of presheaf topoi, the topoi of ordered categories, very dense subsets, the equivariant
-topoi `Top(X, G)`, and localization (video `PqCQM3Pcl6Q`, 0:39:21 and 1:55:37–3:22:52). The status of
-each entry is in `docs/buffalo-topos/lean/Part03.json`.
+topoi `Top(X, G)`, and localization (video `PqCQM3Pcl6Q`, 0:39:21 and 1:55:37–3:22:52). The
+status of each entry is in `docs/buffalo-topos/lean/Part03.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 0:39:21 and
+  1:55:37–3:22:52 (4 June 1973)
 -/
 
 @[expose] public section

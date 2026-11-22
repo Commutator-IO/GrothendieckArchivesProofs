@@ -14,12 +14,22 @@ Entries `3ULFIl_2Wis-6157` to `3ULFIl_2Wis-8898` of `docs/buffalo-groupes/index.
 2 July 1973, from "Étale schemes, torsors and Galois extensions" to the end of "Pro-étale and
 locally profinite schemes"). Statuses in `docs/buffalo-groupes/lean/Part03.json`.
 
+## Implementation notes
+
 Conventions. An affine étale `k`-scheme is `Spec A` with `A` an étale `k`-algebra
 (`Algebra.Etale k A`); its points over a separable closure are read through Mathlib's
 `Algebra.Etale.iff_exists_algEquiv_prod` (a finite product of finite separable extensions) and
-`Algebra.FormallyEtale.equivPiOfIsSepClosed`. The equivalence between étale `k`-schemes and
-discrete `Gal(k_s/k)`-sets is not in Mathlib; statements made through it are proved on the algebra
-side only.
+`Algebra.FormallyEtale.equivPiOfIsSepClosed`.
+
+## Not formalised
+
+The equivalence between étale `k`-schemes and discrete `Gal(k_s/k)`-sets is not in Mathlib;
+statements made through it are proved on the algebra side only.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `3ULFIl_2Wis`, entries 6157–8898
+  (session of 2 July 1973)
 -/
 
 @[expose] public section

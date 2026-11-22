@@ -18,7 +18,8 @@ open-problems article) shows that
 for `D` all small limits the converse fails, with `{2} → Set`. The counterexample is the
 edition's, not the lecturer's. This file checks its two concrete halves, with `Set = Type`.
 
-What is proved.
+## Main results
+
 * `equivEqualizer` (Proposition 7.1): every set `X` is in bijection with the equalizer of the two
   maps `f, g : 2^{P(X)} ⇉ 2^{P(P(X)) ⊔ P(X)}` of the article (`eqLeft`, `eqRight`), the
   complete Boolean homomorphisms `P(X) → 2`, through `x ↦ [x ∈ -]`.
@@ -36,15 +37,25 @@ What is proved.
   set (`tailCoconeIsColimit`); the constant maps to `true` and to `false` agree on the colimit and
   at no stage.
 
-What is not formalised, and stays on paper.
-* Proposition 7.4 and Theorem 7.5: an algebraic category, in the 2-category of cocomplete categories, has all its
-  objects presentable. It rests on Kelly's sketches (Thms 5.56, 6.5, 6.11, 6.23 of his book) and
-  on a coherence for chains argued there at the level of universal properties. Hence the conclusions « `Setᵒᵖ` is
-  not algebraic » and « `{2} → Set` satisfies (G) without being basic » are not checked here.
+## Not formalised
+
+What is not formalised stays on paper.
+
+* Proposition 7.4 and Theorem 7.5: an algebraic category, in the 2-category of cocomplete
+  categories, has all its objects presentable. It rests on Kelly's sketches (Thms 5.56, 6.5,
+  6.11, 6.23 of his book) and on a coherence for chains argued there at the level of universal
+  properties. Hence the conclusions « `Setᵒᵖ` is not algebraic » and « `{2} → Set` satisfies (G)
+  without being basic » are not checked here.
 * The notions « basic » and « algebraic » themselves, the hypothesis (H) (envelopes,
   localisations, adjunction of arrows in `Cat_D`), and the transfinite saturation of
   Proposition 2.4: only the finite stages are defined, which suffices since `I₂` is everything.
 * The dual statement, (G) for `{2} → Setᵒᵖ` under colimits, which is (G) above read in `Setᵒᵖ`.
+
+## References
+
+* the Buffalo lectures (1973), problem three, video `4gynb9uTEE4`, 2:03:54 and 2:10:23
+* the companion article on problem three, `docs/problem-three/article.tex`, §7
+* Kelly's book on sketches, Thms 5.56, 6.5, 6.11, 6.23
 -/
 
 @[expose] public section

@@ -20,10 +20,8 @@ on `[0, 1]`: `Y = {0}`, `T = [0, 1/2]`, and `X₁ = {0}`, `X₁ = ∅`. The read
 « strictement compatible » the condition `Xᵢ ∩ Y = f(Ẋᵢ)`, `Ẋᵢ = Xᵢ ∩ Ṫ` (the conic part
 `Xᵢ ∩ T` is *strict*, the circled `T' ∩ Y = 0 · Ṫ'` of page 16).
 
-What is modelled. Everything is the concrete example, inside `ℝ`: `X = [0, 1]`, `Y = {0}`,
-`T = [0, 1/2]` with the action `(λ, t) ↦ λ t` of `I = [0, 1]`, `Ṫ = {1/2}`, `X* = [1/2, 1]`,
-and the collar `E = [1/2, 3/4] ≃ Ṫ × [0, 1]`, `(1/2, s) ↦ 1/2 + s/4`. A part `C ⊂ T` is conic
-when `C = I · (C ∩ Ṫ) ∪ (C ∩ Y)` (the NB of page 15, which contains stability under `I`).
+## Main results
+
 * `isConic_T`, `T_eq_half_smul`: `T` is conic, and strict (`T = ½ · X`);
 * `compatible_not_determined` (the edition's counterexample): `{0}` and `∅` are both compatible
   with `T` and with the collar, have the same trace on `X*`, and `{0}` is nonempty — so no
@@ -31,8 +29,22 @@ when `C = I · (C ∩ Ṫ) ∪ (C ∩ Y)` (the NB of page 15, which contains sta
 * `not_strictlyCompatible_singleton_zero`: `{0}` fails `X₁ ∩ Y = f(Ẋ₁)`;
 * `eq_of_strictlyCompatible`: with that condition, `X₁` is determined by `X₁ ∩ X*`.
 
-Not formalised: the categories of page 19 and the functor `X = X* ⊔_Ẋ 𝒞(f)` for general
-spaces, transversality and equisingularity; only this example is treated.
+## Implementation notes
+
+What is modelled. Everything is the concrete example, inside `ℝ`: `X = [0, 1]`, `Y = {0}`,
+`T = [0, 1/2]` with the action `(λ, t) ↦ λ t` of `I = [0, 1]`, `Ṫ = {1/2}`, `X* = [1/2, 1]`,
+and the collar `E = [1/2, 3/4] ≃ Ṫ × [0, 1]`, `(1/2, s) ↦ 1/2 + s/4`. A part `C ⊂ T` is conic
+when `C = I · (C ∩ Ṫ) ∪ (C ∩ Y)` (the NB of page 15, which contains stability under `I`).
+
+## Not formalised
+
+The categories of page 19 and the functor `X = X* ⊔_Ẋ 𝒞(f)` for general spaces, transversality
+and equisingularity; only this example is treated.
+
+## References
+
+* A. Grothendieck, folder 150, pp. 15–19; transcription `transcripts/150/batch-01.fr.tex`,
+  modernised reading `transcripts/150/150.modern.tex`
 -/
 
 @[expose] public section

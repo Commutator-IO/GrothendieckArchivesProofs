@@ -23,20 +23,32 @@ This file supplies that step with the vendored AxiomMath/Stacks files
 `K_•(t)` of a finite sequence `t : Fin r → B` (with `K_i = ⋀ⁱ Bʳ`), the notions
 `Koszul.IsKoszulRegularOn t M` (`H_i(K_•(t) ⊗ M) = 0` for `i ≠ 0`, Stacks tag 062E (1)) and
 `Koszul.IsKoszulRegular t` (`H_i(K_•(t)) = 0` for `i ≠ 0`, tag 062E (3)), and the theorem that an
-`M`-weakly regular sequence is `M`-Koszul-regular (`isKoszulRegularOn_and_isKoszulRegular_of_regular`,
-tag 062F).
+`M`-weakly regular sequence is `M`-Koszul-regular
+(`isKoszulRegularOn_and_isKoszulRegular_of_regular`, tag 062F).
 
-**What is proved.**
+## Main results
+
 * `exists_isOpen_dense_isKoszulRegularOn` (Lemme 6, Koszul form): for `A` noetherian, `J`
   nilpotent with `A/J` reduced and `R` a finite `A`-module, there is a dense open `U ⊆ Spec A`
   such that for `𝔭 ∈ U` and every sequence `t` of `A_𝔭` weakly regular on `A_𝔭`, both
   `H_i(K_•(t)) = 0` and `H_i(K_•(t) ⊗ R_𝔭) = 0` for all `i > 0`.
 
+## Implementation notes
+
 Since `K_•(t)` is a complex of finite free `A_𝔭`-modules with `H_0 = A_𝔭/(t)` and, by the first
 vanishing, no higher homology, it is a free resolution of `A_𝔭/(t)`; the groups
 `H_i(K_•(t) ⊗ R_𝔭)` are therefore `Tor_i^{A_𝔭}(R_𝔭, A_𝔭/(t))`, and the second vanishing is the
-statement of the page. That last identification with mathlib's derived-functor `Tor` (and
+statement of the page.
+
+## Not formalised
+
+That last identification with mathlib's derived-functor `Tor` (and
 `H_0(K_•(t)) ≅ A_𝔭/(t)`) is not formalised here; the vanishing is stated for Koszul homology.
+
+## References
+
+* A. Grothendieck, Folder 94, pages 8–9 (Lemme 6; finding `94-generic-tor-regular-sequences`)
+* Stacks Project, tags 062E, 062F
 -/
 
 @[expose] public section

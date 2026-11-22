@@ -13,10 +13,21 @@ public import StacksFrontier.Algebra.Module.Projective.Invertible
 
 Entry `thSz9ZHDK9o-23907` of `docs/buffalo-ag/index.tex`, of which `Part04d.lean` proves only the
 direction « invertible ⇒ finite projective and free of rank one at every prime »: the converse was
-a Mathlib TODO at `715a03a`. It is completed here with the vendored AxiomMath/Stacks file
+a Mathlib TODO at `715a03a`. It is completed here.
+
+## Implementation notes
+
+The converse comes from the vendored AxiomMath/Stacks file
 `StacksFrontier/Algebra/Module/Projective/Invertible.lean` (Apache-2.0, see
-`lean/Stacks/NOTICE.md`), whose `Module.finite_projective_rankAtStalk_one_tfae_invertible_exists_tensor_inverse`
+`lean/Stacks/NOTICE.md`), whose
+`Module.finite_projective_rankAtStalk_one_tfae_invertible_exists_tensor_inverse`
 (Stacks tag 0B8I) states the equivalence with the rank read through Mathlib's `Module.rankAtStalk`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), entry `thSz9ZHDK9o-23907`
+  (`docs/buffalo-ag/index.tex`)
+* Stacks Project, tag 0B8I
 -/
 
 @[expose] public section

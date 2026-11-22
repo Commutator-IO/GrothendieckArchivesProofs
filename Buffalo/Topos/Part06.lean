@@ -32,6 +32,12 @@ Corrected entries:
   class of measurable cardinals (Isbell): not a theorem of ZFC.
 * 4gynb9uTEE4-22501: `Ind(Σ₀) → S` is fully faithful if `Σ₀ ⊂ S_fp`, not only if
   (`top_not_isFinitelyPresentable`).
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 4:14:44–7:34:39, and video
+  `ORG14LNb5gE`, 0:00:05–0:23:02 (10–12 July 1973), `docs/buffalo-topos/index.tex`
+  lines 831–964
 -/
 
 @[expose] public section

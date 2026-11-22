@@ -13,10 +13,17 @@ public import Mathlib
 The entries of `docs/buffalo-ag/index.tex` lines 770–800 (video `Oqhr-Gt66es`, 0:58:06–1:34:42):
 open immersions, closed immersions, closed subschemes and quasi-coherent ideals, immersions.
 
+## Implementation notes
+
 Conventions. Schemes and their morphisms are mathlib's (`AlgebraicGeometry.Scheme`); the classes
 of morphisms are mathlib's `IsOpenImmersion`, `IsClosedImmersion`, `IsImmersion`, and their
 stability is stated with `MorphismProperty`. Statements about closed subschemes of an affine
 scheme `Spec A` are made on the rings (`A → A/J`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 25 June 1973, video `Oqhr-Gt66es`,
+  0:58:06–1:34:42 (`docs/buffalo-ag/index.tex`, lines 770–800)
 -/
 
 @[expose] public section

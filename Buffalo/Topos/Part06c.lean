@@ -10,13 +10,20 @@ public import Buffalo.Topos.Part06b
 /-!
 # Buffalo, topos theory, part 6c: morphisms of sites, classifying topoi, subtopoi (1973)
 
-Entries of `docs/buffalo-topos/index.tex` lines 932–964 (video `4gynb9uTEE4`, 7:21:48–7:34:39, and
-video `ORG14LNb5gE`, 0:00:05–0:23:02): continuous functors and morphisms of sites, the classifying
-topos `Ĉ` of a finite-limit theory, subtopoi and localization. The status of each entry is in
-`docs/buffalo-topos/lean/Part06.json`.
+Entries of `docs/buffalo-topos/index.tex` lines 932–964 (video `4gynb9uTEE4`, 7:21:48–7:34:39,
+and video `ORG14LNb5gE`, 0:00:05–0:23:02): continuous functors and morphisms of sites, the
+classifying topos `Ĉ` of a finite-limit theory, subtopoi and localization. The status of each
+entry is in `docs/buffalo-topos/lean/Part06.json`.
+
+## Implementation notes
 
 Morphisms of topoi are `Buffalo.Topos.Part03.TopMor`; a subtopos (embedding) is a `TopMor` whose
 direct image is fully faithful.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 7:21:48–7:34:39, and video
+  `ORG14LNb5gE`, 0:00:05–0:23:02
 -/
 
 @[expose] public section

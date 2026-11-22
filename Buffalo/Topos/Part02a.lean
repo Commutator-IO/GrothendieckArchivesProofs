@@ -15,8 +15,15 @@ Entries of `docs/buffalo-topos/index.tex` from « Étale morphisms and slice cat
 « Internal Hom and the subobject sheaf » (video `URU5jgTvjhU`, 5:39:20–6:50:49). The status of
 each entry is in `docs/buffalo-topos/lean/Part02.json`.
 
+## Implementation notes
+
 Conventions are those of `Part01`: sheaves of sets on a space `X` are
 `TopCat.Sheaf (Type u) X = Sheaf (Opens.grothendieckTopology X) (Type u)`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 5:39:20–6:50:49
+  (18 May 1973)
 -/
 
 @[expose] public section

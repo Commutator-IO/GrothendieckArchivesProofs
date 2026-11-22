@@ -14,11 +14,17 @@ Entries of `docs/buffalo-topos/index.tex` from « Algebraic structures and exact
 to « Theories as 2-fibred categories over `Cat_D` » (video `PqCQM3Pcl6Q`, 5:14:17–8:58:56). The
 status of each entry is in `docs/buffalo-topos/lean/Part04.json`.
 
+## Implementation notes
+
 The 2-category `Cat_D` is not in Mathlib. We model the part of it the entries use: a pair
 `D = (D', D'')` of families of small diagram shapes, the categories having limits of type `D'` and
 colimits of type `D''`, the functors preserving them (`IsDFunctor`), exactness properties
 `(I, Σ)`, 2-sums, envelopes and localizations by their (2-)universal properties against one
 target category at a time.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 5:14:17–8:58:56
 -/
 
 @[expose] public section

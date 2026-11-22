@@ -22,8 +22,15 @@ automorphisms `ℤ/6`), which meet only over `𝔽₂` and `𝔽₃`, where the 
 and the page's formula (80) is `[M₁,₁] = ½(𝕃 − 1) − 1/12 + ⅛ ζ₂ + ⅙ ζ₃`; adding the cusp, with
 weight ½, gives `[M̄₁,₁] = ½ 𝕃 − 1/12 + ⅛ ζ₂ + ⅙ ζ₃`. The modernised reading says it redid the
 computation (« il est juste »); this file checks the arithmetic, over any field of characteristic
-zero, with `𝕃`, `ζ₂`, `ζ₃` as indeterminates. It checks the algebra of the strata,
-not the geometry that produces them.
+zero, with `𝕃`, `ζ₂`, `ζ₃` as indeterminates.
+
+## Not formalised
+
+It checks the algebra of the strata, not the geometry that produces them.
+
+## References
+
+* A. Grothendieck, folder 147, pp. 62–64, formula (80)
 -/
 
 @[expose] public section

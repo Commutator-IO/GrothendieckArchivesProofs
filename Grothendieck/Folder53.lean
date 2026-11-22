@@ -21,21 +21,40 @@ edition's reconstruction, not the page's. The statement over an algebraically cl
 classical (Putcha, *Linear algebraic monoids*, 1988; Brion's survey, 2014).
 
 This file proves the case of `K`-points, `K` algebraically closed, by the route the reading
-proposes: a left translation is an injective polynomial self-map of a Zariski-closed set,
-hence surjective by Ax–Grothendieck (`MvPolynomial.ax_grothendieck_zeroLocus`).
+proposes.
 
-What is modelled. A *monoid of `K`-points with a polynomial law* is a monoid `M` with an
-injective map `φ : M → (ι → K)` (`ι` finite) whose image is the zero locus of an ideal of
-`K[X_i]`, and polynomials `m i` in two sets of variables with `φ (x * y) = law m (φ x) (φ y)`.
-* `law`, `translation`, `eval_translation`: the law and its left translations as polynomials;
-* `isUnit_of_isLeftCancelMul`: in such a monoid, if left multiplications are injective, every
-  element is a unit (only left cancellation is used);
+## Main definitions
+
+* `law`, `translation`, `eval_translation`: the law and its left translations as polynomials.
+
+## Main results
+
+* `isUnit_of_isLeftCancelMul`: in a monoid of `K`-points with a polynomial law, if left
+  multiplications are injective, every element is a unit (only left cancellation is used);
 * `inv_mem_of_isClosed`: a submonoid of `GL_n(K)` which is closed in `GL_n` — cut out by
   polynomials in the entries and in `det⁻¹` — is a subgroup (the special case on page 21:
   a closed submonoid of `GL_n` is a group, the reason for `M_n`).
 
-Not formalised: monoid schemes over a ring, scheme-theoretic monomorphisms, finite
+## Implementation notes
+
+What is modelled. A *monoid of `K`-points with a polynomial law* is a monoid `M` with an
+injective map `φ : M → (ι → K)` (`ι` finite) whose image is the zero locus of an ideal of
+`K[X_i]`, and polynomials `m i` in two sets of variables with `φ (x * y) = law m (φ x) (φ y)`.
+
+The proof: a left translation is an injective polynomial self-map of a Zariski-closed set,
+hence surjective by Ax–Grothendieck (`MvPolynomial.ax_grothendieck_zeroLocus`).
+
+## Not formalised
+
+Monoid schemes over a ring, scheme-theoretic monomorphisms, finite
 presentation (the page's generality), and the embedding into `M_n` of page 30.
+
+## References
+
+* A. Grothendieck, folder 53, pp. 21 and 30 (transcription `transcripts/53/batch-02.fr.tex`,
+  reading `transcripts/53/53.modern.tex`)
+* Putcha, *Linear algebraic monoids*, 1988
+* Brion's survey (2014)
 -/
 
 @[expose] public section

@@ -14,17 +14,10 @@ Finding `154-generisation-cube` (`src/content/findings.ts`), on the reading
 `transcripts/154/154.modern.tex` (« Le cube des générisations »). Page 153: for a position `D`
 of an added pseudoline passing through `ν ≥ 2` vertices of the arrangement `Σ`, « les
 générisations stables de `D` correspondent aux sommets d'un cube de dimension `ν`, dont les
-arêtes sont les générisations sous-stables », with the counts `2^ν` and `ν 2^(ν−1)`.
+arêtes sont les générisations sous-stables », with the counts `2^ν` and `ν 2^(ν−1)`. Proved, in
+the combinatorial model below.
 
-**The model** (the edition's precise statement, mathlib having no oriented matroids). A position
-of an added pseudoline is a single-element extension of the rank-3 oriented matroid of `Σ`,
-given by Las Vergnas's signature on the cocircuits (the vertices); since `σ(−Y) = −σ(Y)`, it is
-a map `σ : V → SignType` on one chosen representative of each vertex. A line `ℓ` of `Σ` is the
-sequence of the vertices it carries, read along its double cover from a base point, each with a
-sign `ori ℓ i = ±1` comparing the chosen representative with the orientation of `ℓ`
-(`Arrangement`). Las Vergnas's criterion, checked line by line (`ValidSeq`, `IsPosition`): along
-each line the signs `ori ℓ i · σ(vᵢ)` read `+ … + (0) − … −` up to reversal, at most one `0`,
-not all zero. `σ` is a specialisation of `τ` (`Spec σ τ`) when `τ = σ` wherever `σ ≠ 0`.
+## Main results
 
 * `ValidSeq.eq_of_eq_zero`, `IsPosition.eq_of_zero_on_line`: a line carries at most one zero of
   a position — two vertices of `D` never lie on a common line of `Σ`;
@@ -38,10 +31,31 @@ not all zero. `σ` is a specialisation of `τ` (`Spec σ τ`) when `τ = σ` whe
 * `card_gen`, `card_gen_stable`, `card_gen_substable`: there are `3^ν` generisations of `D`,
   `2^ν` stable ones (no zero) and `ν · 2^(ν−1)` sub-stable ones (exactly one zero).
 
+## Implementation notes
+
+**The model** (the edition's precise statement, mathlib having no oriented matroids). A position
+of an added pseudoline is a single-element extension of the rank-3 oriented matroid of `Σ`,
+given by Las Vergnas's signature on the cocircuits (the vertices); since `σ(−Y) = −σ(Y)`, it is
+a map `σ : V → SignType` on one chosen representative of each vertex. A line `ℓ` of `Σ` is the
+sequence of the vertices it carries, read along its double cover from a base point, each with a
+sign `ori ℓ i = ±1` comparing the chosen representative with the orientation of `ℓ`
+(`Arrangement`). Las Vergnas's criterion, checked line by line (`ValidSeq`, `IsPosition`): along
+each line the signs `ori ℓ i · σ(vᵢ)` read `+ … + (0) − … −` up to reversal, at most one `0`,
+not all zero. `σ` is a specialisation of `τ` (`Spec σ τ`) when `τ = σ` wherever `σ ≠ 0`.
+
 The hypothesis `ν ≥ 2` is not needed, nor the axioms of an arrangement (two lines meet in one
-vertex, …): the statement holds for any such data. Not formalised: positions as topological
-pseudolines (that would need the topological representation theorem of Folkman–Lawrence), the
-surface `X*` of page 150 and the tension with it for `ν ≥ 3`, and the question of page 153.
+vertex, …): the statement holds for any such data.
+
+## Not formalised
+
+Positions as topological pseudolines (that would need the topological representation theorem of
+Folkman–Lawrence), the surface `X*` of page 150 and the tension with it for `ν ≥ 3`, and the
+question of page 153.
+
+## References
+
+* A. Grothendieck, Folder 154, p. 153 (reading `transcripts/154/154.modern.tex`; finding
+  `154-generisation-cube`)
 -/
 
 @[expose] public section

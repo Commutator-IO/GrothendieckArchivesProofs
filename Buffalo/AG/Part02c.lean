@@ -13,11 +13,22 @@ public import Buffalo.AG.Part02b
 The entries of `docs/buffalo-ag/index.tex` for the session of 11 June 1973 up to 8:34:57 (video
 `51wmmpHand0`): group objects in a category embedded in functors, group structures on affine
 spaces as Hopf algebras, and complements on the spectrum (noetherian spaces, irreducible
-components of open sets, connected components). Notation as in `Buffalo.AG.Part02a`.
+components of open sets, connected components).
 
-Not formalised (no carrier in mathlib): smoothness of reduced affine algebraic groups over an
-algebraically closed field and the rationality of connected ones (entry 29738), and the
-comparison of Zariski and complex-analytic connectedness of `X(ℂ)` (entry 26013, in `Part02b`).
+## Implementation notes
+
+Notation as in `Buffalo.AG.Part02a`.
+
+## Not formalised
+
+No carrier in mathlib: smoothness of reduced affine algebraic groups over an algebraically closed
+field and the rationality of connected ones (entry 29738), and the comparison of Zariski and
+complex-analytic connectedness of `X(ℂ)` (entry 26013, in `Part02b`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 11 June 1973 up to 8:34:57,
+  video `51wmmpHand0` (`docs/buffalo-ag/index.tex`)
 -/
 
 @[expose] public section

@@ -13,10 +13,17 @@ public import Buffalo.Groupes.Part02a
 Entries `_lTf_L0yvrU-25719` to `_lTf_L0yvrU-30490` of `docs/buffalo-groupes/index.tex` (19 and
 20 June 1973). Statuses in `docs/buffalo-groupes/lean/Part02.json`.
 
+## Implementation notes
+
 `Dist(X)(k') = V(A)(k') = Hom_k(A, k')` for `X = Spec A` (`Part01.V`). The pairing
 `u ⊠ v : A ⊗ B → k'` is `a ⊗ b ↦ u(a) v(b)` (`boxtimes`); the diagonal of `Dist(X)` is the
 transpose of the multiplication of `A` (`diag`); the law of `Dist(G)` for a monoid `G = Spec A`
 is Mathlib's convolution product on `WithConv (A →ₗ[k] k')`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 25719–30490 (19
+  and 20 June 1973)
 -/
 
 @[expose] public section

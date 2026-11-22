@@ -26,6 +26,13 @@ One entry was found false: 4gynb9uTEE4-648 (« strict cogeneration is transitive
 retracted it on 10 July), refuted in a five-element lattice (`not_transitive`). One was found
 imprecise: 4gynb9uTEE4-13448 (« `Setᵒᵖ` admits a strict generator, the two-element set »), true in
 the sense of SGA 4 but not in the course's sense of strict generation (`no_limit_of_bools`).
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 9:02:23–10:12:40, and video
+  `4gynb9uTEE4`, 0:04:18–4:11:21 (late June, 2 July and 10 July 1973),
+  `docs/buffalo-topos/index.tex` lines 679–830
+* [SGA 4]
 -/
 
 @[expose] public section

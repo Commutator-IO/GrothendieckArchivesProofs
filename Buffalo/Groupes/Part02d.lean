@@ -13,8 +13,15 @@ public import Buffalo.Groupes.Part02c
 Entries `3ULFIl_2Wis-119` to `3ULFIl_2Wis-5696` of `docs/buffalo-groupes/index.tex` (27 June and
 2 July 1973). Statuses in `docs/buffalo-groupes/lean/Part02.json`.
 
+## Implementation notes
+
 Affine statements are made for algebras (`Spec A`); étale `k`-algebras are Mathlib's
 `Algebra.Etale`, Galois groups `Gal(L/k)` with the Krull topology.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `3ULFIl_2Wis`, entries 119–5696 (27 June
+  and 2 July 1973)
 -/
 
 @[expose] public section

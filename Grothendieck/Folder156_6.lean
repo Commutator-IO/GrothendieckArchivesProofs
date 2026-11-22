@@ -18,7 +18,18 @@ The modernised reading `transcripts/156-6/156-6.modern.tex` (chapter VI, « Anal
 (= down-closed) parts, the closed sets of the Alexandrov topology of the order. Three statements
 of the folder are proved here.
 
-**Page 49, the Lemma.** For two ordered sets `I`, `I'`, the map `φ ↦ φ⁻¹` from increasing maps
+**What the formalisation finds.** The Lemma of page 49 holds as the reading states it, for
+ordered sets, and only for them: the struck « pré » is confirmed, and the hypothesis on
+arbitrary unions cannot be weakened to finite ones. Existence needs no antisymmetry on `I'`;
+only uniqueness does. The Example of page 40 holds, and its restriction to a finite `I` is
+needed for the binary form. At 8 forces a trivial atelier to be discrete, as the reading's
+footnote says: « des plus restrictives » understates it.
+
+## Main results
+
+### Page 49, the Lemma
+
+For two ordered sets `I`, `I'`, the map `φ ↦ φ⁻¹` from increasing maps
 `I → I'` to maps `𝔓_f(I') → 𝔓_f(I)` between closed parts is injective, and its image is formed
 of the maps commuting with arbitrary unions and intersections. The page first wrote
 « préordonnés » and struck the « pré ».
@@ -36,7 +47,9 @@ of the maps commuting with arbitrary unions and intersections. The page first wr
   weakened to finite ones without passing, as the page's margin does, to the sobrification of
   `I'`: the closed part `ℕ` is irreducible without a generic point.
 
-**Page 40, the Example.** In `𝔉 = 𝔓(I)` ordered by inclusion, a closed part is a family of parts
+### Page 40, the Example
+
+In `𝔉 = 𝔓(I)` ordered by inclusion, a closed part is a family of parts
 stable under passing to parts — an abstract simplicial complex — and it is *spécieuse* (stable
 under the unions of families bounded in `𝔉`, i.e. of all families) iff it is `𝔓(I')` for a part
 `I'` of `I`.
@@ -48,7 +61,9 @@ under the unions of families bounded in `𝔉`, i.e. of all families) iff it is 
   under binary unions without being any `𝔓(I')`. The page's restriction « du moins si `I` est
   fini » is needed.
 
-**Pages 44 and 49–50, the trivial ateliers.** Page 44 builds an atelier from any ordered set
+### Pages 44 and 49–50, the trivial ateliers
+
+Page 44 builds an atelier from any ordered set
 `(𝓜, ≤)` by taking `≪ := ≤`; its lieux are then the minimal elements, and the small shadow of a
 multistrate `Y` is `omb Y = {x minimal | x ≤ Y}`. The axiom of lieux At 8 (page 45) asks that
 every `X` have a lieu `x ∈ omb X` lying in no `omb Y`, `Y < X`. Page 49 renders it as « `x`
@@ -60,13 +75,16 @@ minimal, `x ≤ X`, `∄ Y` with `x ≤ Y < X` » and calls it « des plus restr
   `x < Y < X`), which the page's parenthesis seems to intend, is strictly weaker; the chain
   `false < true` satisfies it and not At 8.
 
-**What the formalisation finds.** The Lemma of page 49 holds as the reading states it, for
-ordered sets, and only for them: the struck « pré » is confirmed, and the hypothesis on
-arbitrary unions cannot be weakened to finite ones. Existence needs no antisymmetry on `I'`;
-only uniqueness does. The Example of page 40 holds, and its restriction to a finite `I` is
-needed for the binary form. At 8 forces a trivial atelier to be discrete, as the reading's
-footnote says: « des plus restrictives » understates it. The ateliers themselves (At 1–At 7,
-figures, `≪` on `𝔉`) are not encoded; only the ordered sets and their closed parts are.
+## Not formalised
+
+The ateliers themselves (At 1–At 7, figures, `≪` on `𝔉`) are not encoded; only the ordered sets
+and their closed parts are.
+
+## References
+
+* A. Grothendieck, *Vers une géométrie des formes*, chapter VI, « Analysis situs (deuxième
+  mouture) » (18–22 June 1986), Folder 156-6, pp. 40, 44–45, 49–50 (reading
+  `transcripts/156-6/156-6.modern.tex`)
 -/
 
 @[expose] public section

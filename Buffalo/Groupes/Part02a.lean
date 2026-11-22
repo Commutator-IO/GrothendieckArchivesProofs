@@ -13,10 +13,17 @@ public import Buffalo.Groupes.Part01
 Entries `_lTf_L0yvrU-21300` to `_lTf_L0yvrU-25194` of `docs/buffalo-groupes/index.tex` (end of
 13 June and beginning of 19 June 1973). Statuses in `docs/buffalo-groupes/lean/Part02.json`.
 
+## Implementation notes
+
 Conventions (as in Part 01). A right comodule over a `k`-coalgebra `A` is a `k`-module `M` with
 `δ : M → M ⊗ A` (`Part01.IsComodule`). The algebra `H = A^∨` acts on `M` by
 `s • x = (id ⊗ s)(δ x)` (`act`); a submodule `N` is a subcomodule when `δ(N)` lies in the image of
 `N ⊗ A → M ⊗ A` (`IsSubcomodule`).
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 21300–25194 (end
+  of 13 June and beginning of 19 June 1973)
 -/
 
 @[expose] public section

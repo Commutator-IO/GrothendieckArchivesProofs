@@ -26,10 +26,18 @@ rank `2`, treats `k × k` and stops after « `A' ≃ k[ε]` ».
 
 This file proves that field case, for any field `k` (not only algebraically closed) and any
 commutative `k`-algebra `A` with `finrank k A = 2` — so `k × k`, `k[ε]` and quadratic field
-extensions alike, without classifying them first:
-* `IsEquivalenceIdeal`: the three conditions above;
+extensions alike, without classifying them first.
+
+## Main definitions
+
+* `IsEquivalenceIdeal`: the three conditions above.
+
+## Main results
+
 * `eq_bot_or_eq_ker`: an equivalence ideal of `A ⊗[k] A` is `0` or `Δ`;
 * `isEquivalenceIdeal_bot`, `isEquivalenceIdeal_ker`: both are equivalence ideals.
+
+## Implementation notes
 
 The proof. For `x ∉ k`, `Δ = A · (1 ⊗ x − x ⊗ 1)` (from `1 ⊗ s − s ⊗ 1` spanning `Δ`). If `A`
 is a field, a nonzero element of `J` is `a • δ` with `a` a unit, so `δ ∈ J`. Otherwise a
@@ -38,8 +46,15 @@ gives `δ ∈ J` (the case `k × k`); if `e² = 0`, `J ⊂ k (e ⊗ e)` unless `
 fails transitivity, as `e ⊗ 1 ⊗ e` survives the map `a ⊗ b ⊗ c ↦ χ(b) a ⊗ c` (`χ(e) = 0`)
 which kills `p₁₂(J)` and `p₂₃(J)` (the case `k[ε]`, the edition's).
 
-Not formalised: the reduction to the field case (Prop. 3 and its Cor. 2, the artinian
-reduction modulo `𝔪`), nor the passage from ideals to closed subschemes.
+## Not formalised
+
+The reduction to the field case (Prop. 3 and its Cor. 2, the artinian reduction modulo `𝔪`),
+nor the passage from ideals to closed subschemes.
+
+## References
+
+* A. Grothendieck, cote 128 (« Résultats auxiliaires sur les relations d'équivalence »),
+  pp. 9–13; modernised reading `transcripts/128/128.modern.tex`
 -/
 
 @[expose] public section

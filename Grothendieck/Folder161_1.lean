@@ -40,7 +40,18 @@ states, for an adjunction `u ⊣ v` between `E` and `F`, unit `η`, counit `ε`:
 > conclut « Or c'est vrai sauf erreur… » : un objet `Σ`-local est dans l'image
 > essentielle de `α`.
 
-What is proved here, all as the reading states it:
+**What the formalisation finds.** Nothing false. The equivalence (1) needs
+nothing beyond the adjunction; the idempotence conditions are redundant exactly
+as the footnote says; the local-object statement holds for an arbitrary
+reflective subcategory. The fifth condition of page 3 is the second one again.
+Page 6's descent of adjoints holds, and does not need `β` fully faithful.
+
+What this certifies is that the reading holds together, not that it is what the
+pages say (issue #26).
+
+## Main results
+
+All as the reading states it:
 
 * `condition1` — the equivalence (1), for any full subcategory given by an
   `ObjectProperty`, with `Ē'` its closure under isomorphism.
@@ -73,17 +84,14 @@ What is proved here, all as the reading states it:
   `ψ ∘ α'` representable is representable; hence if `β ∘ α'` has a right
   adjoint, so has `β` — without the full faithfulness of `β` the page assumes.
 
-**What the formalisation finds.** Nothing false. The equivalence (1) needs
-nothing beyond the adjunction; the idempotence conditions are redundant exactly
-as the footnote says; the local-object statement holds for an arbitrary
-reflective subcategory. The fifth condition of page 3 is the second one again.
-Page 6's descent of adjoints holds, and does not need `β` fully faithful. The
-rest of the folder (the free symmetric monoidal category, the sign `ε(L)` of
-Picard categories, the Kan-extension and Giraud material of pages 15–19) is not
-formalised here.
+## Not formalised
 
-What this certifies is that the reading holds together, not that it is what the
-pages say (issue #26).
+The rest of the folder (the free symmetric monoidal category, the sign `ε(L)` of
+Picard categories, the Kan-extension and Giraud material of pages 15–19).
+
+## References
+
+* A. Grothendieck, Folder 161-1, pp. 3–7 (reading `transcripts/161-1/161-1.modern.tex`)
 -/
 
 @[expose] public section

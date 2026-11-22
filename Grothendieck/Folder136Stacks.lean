@@ -15,15 +15,11 @@ function `f a β I` of its coefficients on `T^{(a)} Y^{(β)} dY_I`, and its diff
 is defined by the rule of pages 5 to 7, `d(Y^{(n+1)}) = Y^{(n)} dY`. The identification of this
 model with an intrinsic divided power de Rham complex was left out there.
 
-The vendored AxiomMath/Stacks files supply the intrinsic side: the module `Ω¹_{P/A,δ}` of divided
-power differentials of a divided power ring (Stacks tag 07HZ, file
-`StacksFrontier/AlgebraicGeometry/Crystalline/Differentials/DeRham.lean`), and, for the divided
-power polynomial algebra `P = B⟨Y_w : w ∈ W⟩`, its decomposition
-`Ω¹_{P/A,δ} ≅ (P ⊗_B Ω¹_{B/A,δ}) ⊕ ⨁_w P · dY_w` (tag 07HS, file
-`…/Differentials/DividedPowerPolynomialAlgebra.lean`).
+## Main results
 
-**What is proved.** Let `(B, I, δ)` be a divided power ring over `A` and `P = B⟨Y_w⟩`, with its
-divided powers on `IP + P₊` (Stacks tag 07H6).
+Let `(B, I, δ)` be a divided power ring over `A` and `P = B⟨Y_w⟩`, with its divided powers on
+`IP + P₊` (Stacks tag 07H6).
+
 * `dividedPowerDifferential_variableMonomial`: `d(Y_w^{[n+1]}) = Y_w^{[n]} · dY_w` in
   `Ω¹_{P/A,δ}`, the rule of page 5, here a theorem about the universal divided power
   differential rather than a definition;
@@ -33,10 +29,25 @@ divided powers on `IP + P₊` (Stacks tag 07H6).
   `dY_w` in `d(Y_w^{(n+1)})` is `Y_w^{(n)}`, which is what `pdD f (a, β, {w}) = f (a, β + e_w, ∅)`
   says on a one-variable monomial.
 
-Not formalised: the same identification in every exterior degree and for products of
-monomials (the full isomorphism of the coordinate complex with
-`Crystalline.dividedPowerDeRhamComplex`). Proposition 1 (`Φ_* ≃ 0`) is in
-`Grothendieck/Folder136Prop1.lean`.
+## Implementation notes
+
+The vendored AxiomMath/Stacks files supply the intrinsic side: the module `Ω¹_{P/A,δ}` of divided
+power differentials of a divided power ring (Stacks tag 07HZ, file
+`StacksFrontier/AlgebraicGeometry/Crystalline/Differentials/DeRham.lean`), and, for the divided
+power polynomial algebra `P = B⟨Y_w : w ∈ W⟩`, its decomposition
+`Ω¹_{P/A,δ} ≅ (P ⊗_B Ω¹_{B/A,δ}) ⊕ ⨁_w P · dY_w` (tag 07HS, file
+`…/Differentials/DividedPowerPolynomialAlgebra.lean`).
+
+## Not formalised
+
+The same identification in every exterior degree and for products of monomials (the full
+isomorphism of the coordinate complex with `Crystalline.dividedPowerDeRhamComplex`).
+Proposition 1 (`Φ_* ≃ 0`) is in `Grothendieck/Folder136Prop1.lean`.
+
+## References
+
+* A. Grothendieck, cote 136, pp. 5–7
+* Stacks Project, tags 07HZ, 07HS, 07H6
 -/
 
 @[expose] public section

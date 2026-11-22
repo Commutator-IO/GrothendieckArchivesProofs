@@ -14,11 +14,19 @@ The entries of `docs/buffalo-ag/index.tex` lines 1054–1068 (video `Oqhr-Gt66es
 and 1072–1098 (video `vuys5SNs2eQ`, 0:00:02–0:45:50): flat and faithfully flat modules and
 morphisms, flatness criteria over Dedekind rings, faithfully flat base change.
 
+## Implementation notes
+
 Conventions. Modules are mathlib's `Module.Flat` and `Module.FaithfullyFlat`; spectra are
 `PrimeSpectrum` with `PrimeSpectrum.comap`; schemes and their morphism properties are those of
 `Mathlib.AlgebraicGeometry` (`Flat`, `Surjective`, `QuasiCompact`, `UniversallyInjective`…). A
 *maximal point* of a space is a point whose closure is an irreducible component; a map
 *dominates* a closed irreducible set `Y'` when its image is dense in `Y'`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 6 July 1973, video `Oqhr-Gt66es`,
+  10:19:03–10:52:45, and 9 July 1973, video `vuys5SNs2eQ`, 0:00:02–0:45:50
+  (`docs/buffalo-ag/index.tex`, lines 1054–1068 and 1072–1098)
 -/
 
 @[expose] public section

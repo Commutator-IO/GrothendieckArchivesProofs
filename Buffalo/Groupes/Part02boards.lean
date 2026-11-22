@@ -13,6 +13,11 @@ public import Buffalo.Groupes.Part02
 Board items of `public/buffalo-boards/` in the time range of Part 02 (videos `_lTf_L0yvrU` from
 5:51 and `3ULFIl_2Wis` up to 1:42) that make a claim no index entry of the part formalises, or
 that were corrected. Statuses in `docs/buffalo-groupes/lean/Part02-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), videos `_lTf_L0yvrU` (from 5:51) and
+  `3ULFIl_2Wis` (up to 1:42) (reconstructed blackboards `public/buffalo-boards/`)
 -/
 
 @[expose] public section

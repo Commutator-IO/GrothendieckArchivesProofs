@@ -17,20 +17,34 @@ local `W(k)`-algebra whose maximal ideal carries divided powers killed in degree
 `qᵢ = (p^{i+1})!/((p^i)!)^p`; the relation is `γ_{p^i}(x)^p = qᵢ γ_{p^{i+1}}(x)`.
 
 **Partial.** What is proved is the arithmetic of the `qᵢ`, the « Tier 1 piece »
-of issue #54:
+of issue #54.
+
+## Main results
 
 * `factorial_eq_mul_q`, `q_eq_multinomial`: `((p^i)!)^p · qᵢ = (p^{i+1})!`, so
   `qᵢ` is an integer, the multinomial coefficient of `p` blocks of size `p^i`;
-* `padicValNat_q`: for `p` prime, `v_p(qᵢ) = 1`, by Legendre in the form
-  `v_p((pm)!) = v_p(m!) + m` and `(p − 1) v_p((p^i)!) = p^i − 1`
-  (`sub_one_mul_padicValNat_factorial_pow`);
+* `padicValNat_q`: for `p` prime, `v_p(qᵢ) = 1`;
 * `dpow_pow_eq_q`: in any ring with a divided-power ideal (mathlib's
   `DividedPowers`), `γ_{p^i}(x)^p = qᵢ γ_{p^{i+1}}(x)`, the relation of the
-  presentation (a specialisation of mathlib's `DividedPowers.prod_dpow`).
+  presentation.
 
-Not formalised: the universality of the presentation, the normal form in the
+## Implementation notes
+
+* `padicValNat_q` is proved by Legendre in the form `v_p((pm)!) = v_p(m!) + m` and
+  `(p − 1) v_p((p^i)!) = p^i − 1` (`sub_one_mul_padicValNat_factorial_pow`).
+* `dpow_pow_eq_q` is a specialisation of mathlib's `DividedPowers.prod_dpow`.
+
+## Not formalised
+
+The universality of the presentation, the normal form in the
 coordinates `Θᵢ = Λᵢ − p^{p^i}/(p^i)!` (pages 5–7), the constant `c(ν)`, the
 quotients `W^{(ν,r)}`, the bound of page 8.
+
+## References
+
+* A. Grothendieck, folder 5, pp. 4–8 (reading `transcripts/5/5.modern.tex`; finding
+  `5-universal-artinian-pd-normal-form`)
+* Issue #54
 -/
 
 @[expose] public section

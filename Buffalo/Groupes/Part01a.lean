@@ -13,12 +13,19 @@ public import Mathlib
 Entries `_lTf_L0yvrU-3` to `_lTf_L0yvrU-2769` of `docs/buffalo-groupes/index.tex` (the undated
 side and the first half of 4 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.json`.
 
+## Implementation notes
+
 Conventions. The base ring is `k : Type u`, a commutative ring; the category of commutative
 `k`-algebras is Mathlib's `CommAlgCat k`, and a "space over `k`" is a functor
 `CommAlgCat k ⥤ Type u`. Affine spaces are the corepresentable ones (`Functor.IsCorepresentable`),
 and the affine schemes over `k` are `(CommAlgCat k)ᵒᵖ`, a cartesian monoidal category in Mathlib.
 Where only the value of a functor at one `k`-algebra `A` matters, the statement is made for an
 arbitrary `A`, which is the functor-of-points statement read pointwise.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 3–2769 (the
+  undated side and the first half of 4 June 1973)
 -/
 
 @[expose] public section

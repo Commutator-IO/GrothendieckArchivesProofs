@@ -23,11 +23,23 @@ quasi-coherent `G`-module `E` on an `S`-scheme `X` with trivial action:
 
 The page gives no proof; the reading supplies `F' = Σᵢ Uᵢ · (F ∩ Eᵢ)`, `Uᵢ = Bᵢ*`, from the
 `Uᵢ`-module description of pages 7–9. This is finding `90-equivariant-resolution-general-base`;
-here is its ring case, `X = S = Spec A`. Mathlib has coalgebras but no comodules, so the file
+here is its ring case, `X = S = Spec A`.
+
+**What the formalisation finds.** Statement 1) holds over any commutative ring as the reading
+completes it, with base change in a stronger form: the compatibility holds for every `A'` once
+stated with images, flatness of `A'` serving only to identify the image with `A' ⊗ F′`.
+
+## Main definitions
+
+Mathlib has coalgebras but no comodules, so the file
 defines them (`Comodule`: a coaction `δ : E → B ⊗ E`, counital and coassociative) and
 subcomodules (`IsSubcomodule B N`: `δ N ⊆ B ⊗ N`, i.e. inside the image of `B ⊗ N → B ⊗ E`).
 The hypothesis is `Exhaustion A B ι`: `B = ⋃ Bᵢ` directed, `Bᵢ` finite projective,
-`B ⧸ Bᵢ` flat, `Δ Bᵢ` in the image of `Bᵢ ⊗ Bᵢ`. Proved here, for any commutative ring `A`:
+`B ⧸ Bᵢ` flat, `Δ Bᵢ` in the image of `Bᵢ ⊗ Bᵢ`.
+
+## Main results
+
+Proved here, for any commutative ring `A`:
 
 * `Exhaustion.closure`: `F′`, the span of the `(u ⊗ id) y` with `y ∈ Bᵢ ⊗ E` lifting `δ f`,
   `f ∈ F`, `u ∈ Uᵢ` — the reading's formula;
@@ -44,20 +56,28 @@ The hypothesis is `Exhaustion A B ι`: `B = ⋃ Bᵢ` directed, `Bᵢ` finite pr
   `baseChange_closure_injective`: when `A'` is flat, that image is `A' ⊗ F′` itself, which is
   the page's « sa formation commute à tout changement de base plat ».
 
+## Implementation notes
+
 The steps: the page's flatness step `(Bᵢ ⊗ E) ∩ (B ⊗ N) = Bᵢ ⊗ N`
 (`mem_range_lTensor_of_rTensor_mem`, from `B ⧸ Bᵢ` flat by Mathlib's
 `lTensor_injective_of_exact_of_flat`) gives minimality; coassociativity and a dual basis of
 `Bᵢ` give `δ(u · y) = Σₖ bₖ ⊗ (u * bₖ*) · y` (`coact_coeff`), whence stability and finiteness.
 
-**What the formalisation finds.** Statement 1) holds over any commutative ring as the reading
-completes it, with base change in a stronger form: the compatibility holds for every `A'` once
-stated with images, flatness of `A'` serving only to identify the image with `A' ⊗ F′`. The
-flatness of `B ⧸ Bᵢ` enters only through the injectivity of `Bᵢ ⊗ M → B ⊗ M` (for
+The flatness of `B ⧸ Bᵢ` enters only through the injectivity of `Bᵢ ⊗ M → B ⊗ M` (for
 minimality, and in `coact_coeff` with `M = B ⊗ E`); `Δᵢ : Bᵢ → Bᵢ ⊗ Bᵢ` is lifted by
-projectivity. Not formalised: quasi-coherent sheaves on a scheme `X`
+projectivity.
+
+## Not formalised
+
+Quasi-coherent sheaves on a scheme `X`
 (the page's general case, its gluing and the quasi-compact quasi-separated hypothesis of 2)),
 statements 3) and 4), the equivalence `Cᵢ(G)_f ≃ Uᵢ-modules` of page 7, and the action of `G` on
 `X` of pages 17–23.
+
+## References
+
+* A. Grothendieck, Folder 90, pages 7–9, 13–15 and 17–23 (modernised reading
+  `transcripts/90/90.modern.tex`; finding `90-equivariant-resolution-general-base`)
 -/
 
 @[expose] public section

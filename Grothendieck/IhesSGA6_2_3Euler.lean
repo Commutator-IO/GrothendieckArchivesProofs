@@ -23,6 +23,17 @@ every abelian category, using the group `KZero A` of the vendored AxiomMath/Stac
 `StacksFrontier/CategoryTheory/Abelian/GrothendieckGroup.lean` (Stacks tag 02MU): the free
 abelian group on the objects of `A` modulo `[X₂] = [X₁] + [X₃]` for every short exact sequence.
 
+## Main results
+
+For `X : CochainComplex A ℤ` with `Xⁱ = 0` for `i ∉ [a, b]`:
+
+* `sum_negOnePow_mk_X_eq`: `Σ_{a ≤ i ≤ b} (−1)ⁱ [Xⁱ] = Σ_{a ≤ i ≤ b} (−1)ⁱ [Hⁱ(X)]` in `KZero A`;
+* `sum_negOnePow_eq_sum_negOnePow_homology`: the same for any `χ : A → G` additive on short
+  exact sequences;
+* `sum_negOnePow_eq_zero_of_exact`: an exact bounded complex has `Σ (−1)ⁱ χ(Xⁱ) = 0`.
+
+## Implementation notes
+
 The identity is first proved once in `KZero A` (`sum_negOnePow_mk_X_eq`), where the class of each
 term splits along two short exact sequences: `0 → Zⁱ → Xⁱ → Bⁱ⁺¹ → 0` (cycles, then the image of
 the differential) and `0 → Bⁱ → Zⁱ → Hⁱ → 0`. The alternating sum of the boundary classes
@@ -31,11 +42,10 @@ function `χ` with values in an abelian group `G` factors through `KZero A` by i
 property (`KZero.lift`, `KZero.universal`), which gives the formula for `χ`
 (`sum_negOnePow_eq_sum_negOnePow_homology`).
 
-**What is proved.** For `X : CochainComplex A ℤ` with `Xⁱ = 0` for `i ∉ [a, b]`:
-* `sum_negOnePow_mk_X_eq`: `Σ_{a ≤ i ≤ b} (−1)ⁱ [Xⁱ] = Σ_{a ≤ i ≤ b} (−1)ⁱ [Hⁱ(X)]` in `KZero A`;
-* `sum_negOnePow_eq_sum_negOnePow_homology`: the same for any `χ : A → G` additive on short
-  exact sequences;
-* `sum_negOnePow_eq_zero_of_exact`: an exact bounded complex has `Σ (−1)ⁱ χ(Xⁱ) = 0`.
+## References
+
+* A. Grothendieck, Fonds Grothendieck–Illusie (IHÉS), FG_IL_5_SGA6_2_3, view 3, item 5
+* Stacks Project, tag 02MU
 -/
 
 @[expose] public section

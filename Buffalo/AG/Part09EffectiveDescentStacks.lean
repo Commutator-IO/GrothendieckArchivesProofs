@@ -20,8 +20,11 @@ AxiomMath/Stacks (Apache-2.0), where a descent datum relative to `g` is
 `X' ×_S S' ≅ S' ×_S X'` over `S' ×_S S'` satisfying the cocycle condition (Stacks 023V); it is
 effective when it is isomorphic to the canonical datum of a scheme over `S`.
 
-**What is proved.** Throughout `g : S' ⟶ S` is surjective, flat and quasi-compact (faithfully flat
-quasi-compact, as in the lecture).
+## Main results
+
+Throughout `g : S' ⟶ S` is surjective, flat and quasi-compact (faithfully flat quasi-compact, as
+in the lecture).
+
 * `prop_16640` (16640, 4:37:20): if `X'` is covered by stable opens `X'_i`, the datum on `X'` is
   effective if and only if the induced data on the `X'_i` are. « If » is Stacks 0AP4
   (`isEffective_of_forall_exists_restrictOpen`); « only if » transports a stable open along an
@@ -32,13 +35,26 @@ quasi-compact, as in the lecture).
   (`isEffective_of_isAffineHom`), and one concludes by `prop_16640`. The case of `X'` itself
   affine over `S'` (descent of quasi-coherent algebras) is `prop_17552_affine`.
 
-**Not formalised.** 18219 (5:03:39): for a separable quadratic extension `k'/k`, a proper smooth
-non-projective threefold over `k'` (Hironaka's example) with a non-effective descent datum. The
-statement is correct (SGA 1 VIII 7.7), but neither Mathlib nor Stacks has Hironaka's construction;
-it shows that the affineness hypothesis of `prop_17552` cannot be dropped, so effective descent of
-arbitrary schemes along fpqc morphisms fails. The lecture's statements are local on stable opens
-covering `X'`; the indexed family `X'_i` is rendered as « every point has a stable open
-neighbourhood with the property », which is equivalent.
+## Implementation notes
+
+The lecture's statements are local on stable opens covering `X'`; the indexed family `X'_i` is
+rendered as « every point has a stable open neighbourhood with the property », which is
+equivalent.
+
+## Not formalised
+
+18219 (5:03:39): for a separable quadratic extension `k'/k`, a proper smooth non-projective
+threefold over `k'` (Hironaka's example) with a non-effective descent datum. The statement is
+correct (SGA 1 VIII 7.7), but neither Mathlib nor Stacks has Hironaka's construction; it shows
+that the affineness hypothesis of `prop_17552` cannot be dropped, so effective descent of
+arbitrary schemes along fpqc morphisms fails.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 10 July 1973, video `vuys5SNs2eQ`, entries
+  16640 (4:37:20), 17552 (4:52:32), 18219 (5:03:39)
+* [SGA 1] exposé VIII, 7.7
+* Stacks Project, tags 023V, 0AP4, 0245
 -/
 
 @[expose] public section

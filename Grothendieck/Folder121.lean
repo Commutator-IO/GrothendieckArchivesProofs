@@ -33,18 +33,28 @@ proves existence by induction, removing the union of the boundaries and stopping
 `src/content/findings.ts`; proving it says only that the statement holds, not whether it is in
 the literature.
 
-What is formalised.
+## Main definitions
 
 * `Tame`: conditions a) to e), with d) read relative to the closure, as the reading does.
+
+## Main results
+
 * `Tame.rare_bd`: page 8, the boundary `Ā ∩ cl(Z ∖ A)` of a member is rare (relative to a closed
   member `Z`).
 * `page14`: the proposition, existence and coarsest, for `X`; `exists_coarsest` for every closed
   member `Z` in place of `X`, which is what the induction on e) needs.
 * `subset_bd`: the edition's argument for « la plus grossière »: in a decomposition for which `Y`
   is a union of cells, a cell meeting the boundary of `Y` lies in it.
+* `page16`, below: the connected-cells version of page 16 (condition f)).
 
-The connected-cells version of page 16 (condition f)) is `page16`, below. Not formalised: the
-corollaries of page 15, the regular decompositions of page 17.
+## Not formalised
+
+The corollaries of page 15, the regular decompositions of page 17.
+
+## References
+
+* A. Grothendieck, cote 121, §§ 1–3, pp. 3–16 (finding `121-coarsest-cell-decomposition`);
+  modernised reading `transcripts/121/121.modern.tex`
 -/
 
 @[expose] public section

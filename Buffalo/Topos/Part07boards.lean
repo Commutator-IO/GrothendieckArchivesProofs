@@ -12,6 +12,10 @@ public import Buffalo.Topos.Part07a
 
 Board items of video `ORG14LNb5gE` (20167–22980) on the canonical topology and the comparison
 lemma. Statuses in `docs/buffalo-topos/lean/Part07-boards.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `ORG14LNb5gE`, board items 20167–22980
 -/
 
 @[expose] public section

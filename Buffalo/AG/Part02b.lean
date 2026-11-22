@@ -13,8 +13,16 @@ public import Buffalo.AG.Part02a
 The entries of `docs/buffalo-ag/index.tex` for the session of 6 June 1973 (video `51wmmpHand0`,
 6:38:51–8:10:17): the Zariski topology, irreducible closed sets and generic points, irreducible
 components, closed points, noetherian spaces and rings, points with values in `k` and closed
-points of algebras of finite type, and very dense subsets (Jacobson spaces). Notation as in
-`Buffalo.AG.Part02a`.
+points of algebras of finite type, and very dense subsets (Jacobson spaces).
+
+## Implementation notes
+
+Notation as in `Buffalo.AG.Part02a`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 6 June 1973, video
+  `51wmmpHand0`, 6:38:51–8:10:17 (`docs/buffalo-ag/index.tex`)
 -/
 
 @[expose] public section

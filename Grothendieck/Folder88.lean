@@ -22,14 +22,17 @@ public import Mathlib.Tactic.Linarith
 presentation of the cartographic group". In the reading
 (`transcripts/88/88.modern.tex`, page 10) that presentation,
 `Γ̂ = ⟨σ₀, σ₁, σ₂ | σᵢ², (σ₀σ₂)²⟩`, is a *definition* taken from the *Esquisse*,
-not a statement — there is nothing to prove about it. The run 2 statements
-about it ((1)–(7), `Aut(C_{p,q}) ≃ Γ_{p,q}`, finiteness of `Γ_{p,q}` in the
-spherical case, free subgroups in the hyperbolic case) are marked
-« à prouver » on the leaf and need maps on surfaces, which mathlib lacks. What
+not a statement — there is nothing to prove about it. What
 this file formalises is the two crisp statements of the reading that are
 reachable.
 
-## 1. The Proposition of page 8
+What the formalisation found: nothing wrong. One hypothesis of the setting is
+superfluous for the Proposition (everything but a), `φ(r,i)² = 1` and the
+torsor structure), and so is finiteness.
+
+## Main results
+
+### 1. The Proposition of page 8
 
 The reading attaches to a root system the quadruple `(W, R, I, φ)` — `W` the
 Weyl group, `R` its bases, a `W`-torsor, `φ(r, i)` the simple reflection of
@@ -42,17 +45,11 @@ operations on repères `R × Rep'(I)`, `Rep'(I) = Bij([1, ℓ], I)`:
 > **Proposition.** L'ordre de `σ_{ℓ-2} σ_{ℓ-1}` sur `R × Rep'(I)` est `2ν`, où
 > `ν` est le plus petit commun multiple des `n_{ij}`, `i ≠ j`.
 
-This is `proposition_ordre`. It is proved for any group `W`, any `W`-torsor
-`R` and any `φ` satisfying a) and `φ(r, i)² = 1` (half of c)), which is what
-makes `σ_{ℓ-1}` an involution. The rest of the hypotheses — that `W` is a Weyl
-group, b), the presentation c), the Coxeter graph d) — are not used. Nor is
-finiteness: with mathlib's convention that `orderOf` is `0` for an element of
-infinite order, the formula `2ν` holds also when some `n_{ij}` is infinite.
-The reading's footnote that `σ_{ℓ-2}σ_{ℓ-1}` is the inverse of the `π` it
-computes with is confirmed (`sigmaAvant_mul_sigmaDernier`). The relation
+This is `proposition_ordre`. The reading's footnote that `σ_{ℓ-2}σ_{ℓ-1}` is the inverse of
+the `π` it computes with is confirmed (`sigmaAvant_mul_sigmaDernier`). The relation
 `σ_{ℓ-1}² = 1` is `sigmaDernier_involutive`.
 
-## 2. The trichotomy of (6)
+### 2. The trichotomy of (6)
 
 > `C_{p,q}` est sphérique exactement pour `p = 2` ; `q = 2` ; et `(3,3)`,
 > `(3,4)`, `(4,3)`, `(3,5)`, `(5,3)` ; euclidienne exactement pour `(4,4)`,
@@ -60,16 +57,33 @@ computes with is confirmed (`sigmaAvant_mul_sigmaDernier`). The relation
 > `(p,q) ≠ (3,6), (6,3)`. Les trois cas sont ceux où `1/p + 1/q` est supérieur,
 > égal ou inférieur à `1/2`.
 
-The geometric content (which surface carries `C_{p,q}`) is out of reach; the
-arithmetic the reading uses to sort the cases is not, and it is checked for
+The arithmetic the reading uses to sort the cases is checked for
 finite types `(p, q)`, `p, q ≥ 1`, excluding the types `(1, p)`, `(p, 1)`,
 `p ≠ 2`, which (2) says are not attained (`spherique_iff`, `euclidien_iff`,
 `hyperbolique_iff`). It holds as the reading states it — including its
 corrected form of the page's `(c₂)`.
 
-What the formalisation found: nothing wrong. One hypothesis of the setting is
-superfluous for the Proposition (everything but a), `φ(r,i)² = 1` and the
-torsor structure), and so is finiteness.
+## Implementation notes
+
+`proposition_ordre` is proved for any group `W`, any `W`-torsor
+`R` and any `φ` satisfying a) and `φ(r, i)² = 1` (half of c)), which is what
+makes `σ_{ℓ-1}` an involution. The rest of the hypotheses — that `W` is a Weyl
+group, b), the presentation c), the Coxeter graph d) — are not used. Nor is
+finiteness: with mathlib's convention that `orderOf` is `0` for an element of
+infinite order, the formula `2ν` holds also when some `n_{ij}` is infinite.
+
+## Not formalised
+
+The run 2 statements about the Coxeter presentation ((1)–(7), `Aut(C_{p,q}) ≃ Γ_{p,q}`,
+finiteness of `Γ_{p,q}` in the spherical case, free subgroups in the hyperbolic case) are
+marked « à prouver » on the leaf and need maps on surfaces, which mathlib lacks. The geometric
+content of (6) (which surface carries `C_{p,q}`) is out of reach.
+
+## References
+
+* A. Grothendieck, Folder 88, pages 6–8, 10 and 14 (reading `transcripts/88/88.modern.tex`;
+  issue #26)
+* the *Esquisse* (the Coxeter presentation of the cartographic group)
 -/
 
 @[expose] public section

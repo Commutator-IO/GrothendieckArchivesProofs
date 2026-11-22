@@ -18,16 +18,8 @@ universal effective epimorphisms. Theorem A of the open-problems article
 a descent morphism for quasi-coherent sheaves: pullback is fully faithful into descent data.
 This file proves its affine core.
 
-Setting. `A → B` is a map of commutative rings; tensor products are over `A`, with `B` on the
-left. For an `A`-module `N`, condition (c) (`IsEqualizer A B N`) says that
-`N → B ⊗ N ⇉ (B ⊗ B) ⊗ N`, `n ↦ 1 ⊗ n`, with the two arrows `b ⊗ n ↦ (b ⊗ 1) ⊗ n` and
-`b ⊗ n ↦ (1 ⊗ b) ⊗ n` (`coface₁`, `coface₂`), is an equalizer. A morphism of descent data
-`B ⊗ M → B ⊗ N` (for the canonical descent data) is a `B`-linear `g` whose two base changes to
-`B ⊗ B`, along `b ↦ b ⊗ 1` and `b ↦ 1 ⊗ b`, agree as maps `(B ⊗ B) ⊗ M → (B ⊗ B) ⊗ N`
-(`pullLeft g = pullRight g`, `Compatible g`); the canonical descent isomorphisms are the
-identity in this description.
+## Main results
 
-What is proved.
 * `descend_bijective`: under (c) for `N`, base change `f ↦ f.baseChange B` is a bijection from
   `M →ₗ[A] N` onto the compatible `g : B ⊗ M →ₗ[B] B ⊗ N`, for every `A`-module `M`
   (Theorem A for `Spec B → Spec A`).
@@ -38,11 +30,23 @@ What is proved.
   homotopy `(b₁ ⊗ b₂) ⊗ n ↦ b₂ ⊗ [b₁ ⊗ n]` to `B ⊗ coker(N → B ⊗ N)`, as in Stacks 08WE.
 * `descend_bijective_of_isPure`: the same full faithfulness for a pure map `A → B`.
 
+## Implementation notes
+
+Setting. `A → B` is a map of commutative rings; tensor products are over `A`, with `B` on the
+left. For an `A`-module `N`, condition (c) (`IsEqualizer A B N`) says that
+`N → B ⊗ N ⇉ (B ⊗ B) ⊗ N`, `n ↦ 1 ⊗ n`, with the two arrows `b ⊗ n ↦ (b ⊗ 1) ⊗ n` and
+`b ⊗ n ↦ (1 ⊗ b) ⊗ n` (`coface₁`, `coface₂`), is an equalizer. A morphism of descent data
+`B ⊗ M → B ⊗ N` (for the canonical descent data) is a `B`-linear `g` whose two base changes to
+`B ⊗ B`, along `b ↦ b ⊗ 1` and `b ↦ 1 ⊗ b`, agree as maps `(B ⊗ B) ⊗ M → (B ⊗ B) ⊗ N`
+(`pullLeft g = pullRight g`, `Compatible g`); the canonical descent isomorphisms are the
+identity in this description.
+
 The proof is shorter than the note's: a `B`-linear `g` is determined by the `A`-linear
 `m ↦ g (1 ⊗ m)`, and `g` is compatible exactly when this map lands in the equalizer of
 `B ⊗ N ⇉ (B ⊗ B) ⊗ N`, which is `N` by (c). The presentation of `M` is not needed.
 
-What is not proved.
+## Not formalised
+
 * The equivalence of (c) with « `Spec B → Spec A` is a universal effective epimorphism » (Stacks,
   Lemma 0EUA): schemes, effective epimorphisms and the test object `𝔸¹` are not modelled.
 * Effectivity of descent along a pure map (Stacks, Theorem 08XA; Joyal–Tierney; B. Mesablishvili,
@@ -51,6 +55,16 @@ What is not proved.
 * The scheme-level statement for a non-affine universal effective epimorphism `X → Y`
   (Zariski-localisation on `Y` and the square-zero extension `Spec(𝒪_Y ⊕ F)` of the note).
 * Theorems B and C of the article.
+
+## References
+
+* the Buffalo lectures (1973), video `3ULFIl_2Wis`, 6:26:20 (`docs/buffalo-groupes/index.tex`,
+  line 504; `docs/buffalo-ag/index.tex`, line 1254)
+* the open-problems article, `docs/buffalo-open/article.tex`, Theorem A
+* Stacks Project, tags 08WE, 0EUA, 08XA
+* Joyal–Tierney
+* B. Mesablishvili, « Pure morphisms of commutative rings are effective descent morphisms for
+  modules », TAC 7 (2000)
 -/
 
 @[expose] public section

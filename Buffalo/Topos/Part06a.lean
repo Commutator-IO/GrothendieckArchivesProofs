@@ -14,11 +14,18 @@ Entries of `docs/buffalo-topos/index.tex` lines 831–879 (video `4gynb9uTEE4`, 
 accessible functors, objects and categories, the examples `Set^op` and topoi, `Ind`-categories and
 cardinal filtrations. The status of each entry is in `docs/buffalo-topos/lean/Part06.json`.
 
+## Implementation notes
+
 Grothendieck's cardinal `π` (families of cardinality `≤ π`) corresponds to Mathlib's regular
 cardinal `κ = π⁺` (families of cardinality `< κ`): an ordered set dominating `π` is a
 `κ`-filtered ordered set (`dominates_iff_isCardinalFiltered`). His `π`-accessible functors and
 objects are Mathlib's `Functor.IsCardinalAccessible` and `IsCardinalPresentable`; his
 `π`-accessible categories with small colimits are Mathlib's `IsCardinalLocallyPresentable`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 4:14:44–5:32:58
+  (10 July 1973)
 -/
 
 @[expose] public section

@@ -14,10 +14,17 @@ Entries `3ULFIl_2Wis-14121` to `3ULFIl_2Wis-25487` of `docs/buffalo-groupes/inde
 11 July 1973 and tape 3). Statuses in `docs/buffalo-groupes/lean/Part03.json`. The last section
 settles the open question of Part 01 on the counit of a bialgebra (entry `_lTf_L0yvrU-10811`).
 
+## Implementation notes
+
 Conventions. A group scheme over `S` is a group object `G` of `Over S` (Mathlib's `GrpObj`,
 `Over S` being cartesian monoidal through fibre products): `G ⊗ G` is `G ×_S G`, `μ`, `η`, `ι`
 are the multiplication, unit section and inverse, and morphisms `T ⟶ G` form a group
 (`open MonObj`). Affine group schemes over `k` are commutative Hopf algebras, as in Part 01.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `3ULFIl_2Wis`, entries 14121–25487
+  (session of 11 July 1973 and tape 3), and entry `_lTf_L0yvrU-10811`
 -/
 
 @[expose] public section

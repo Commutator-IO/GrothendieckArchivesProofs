@@ -13,12 +13,19 @@ public import Buffalo.AG.Part06b
 The entries of `docs/buffalo-ag/index.tex` lines 847–879 (video `Oqhr-Gt66es`, 3:23:46–4:35:38):
 diagonals, separated, quasi-separated and coherent morphisms.
 
+## Implementation notes
+
 Conventions. The kernel of a pair `u, v : X → Y` of `S`-morphisms is the base change of the
 diagonal `Δ : Y → Y ×_S Y` along `(u, v)`, and the graph of `f` is `pullback.lift (𝟙 X) f`, as in
 `Part06b` (`prop_10536`, `prop_10860`), which gives the equivalent forms of separatedness and
 quasi-separatedness. A scheme `X` is separated (quasi-separated, quasi-compact) when
 `X → Spec ℤ` is, that is mathlib's `X.IsSeparated` (`QuasiSeparatedSpace X`, `CompactSpace X`).
 A coherent morphism is a quasi-compact quasi-separated one.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 26 June 1973, video `Oqhr-Gt66es`,
+  3:23:46–4:35:38 (`docs/buffalo-ag/index.tex`, lines 847–879)
 -/
 
 @[expose] public section

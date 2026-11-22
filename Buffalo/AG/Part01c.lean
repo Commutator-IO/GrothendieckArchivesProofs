@@ -14,8 +14,17 @@ The session of 4 June 1973 (video `51wmmpHand0`, 3:07:15–4:55:19): projective 
 category `𝒞` of affine spaces (products, final object, fibre products, base change, kernels of
 pairs of arrows), filtered limits, finite presentation and noetherian rings, kernels and
 stabilizers of affine groups, inductive limits and quotients, and the first example of
-`GL_n / B`. Notation as in `Buffalo.AG.Part01a`; `𝒞` is `(CommAlgCat k)ᵒᵖ`, identified with the
+`GL_n / B`.
+
+## Implementation notes
+
+Notation as in `Buffalo.AG.Part01a`; `𝒞` is `(CommAlgCat k)ᵒᵖ`, identified with the
 representable functors by `prop_6911`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 4 June 1973, video
+  `51wmmpHand0`, 3:07:15–4:55:19
 -/
 
 @[expose] public section

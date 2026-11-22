@@ -29,20 +29,32 @@ states:
 >
 > **Corollaire 1.** For `X` locally Noetherian, `Γ(X, 𝒪_X) ≅ lim_x 𝒪_{X,x}`.
 
-All are proved here, Corollaire 1 for `X = Spec A` with `A` Noetherian (the
-affine case, to which the reading reduces it). What this certifies is that the
-reading holds together, not that it is what the page says (issue #26): that is
-for a reader with the leaf in front of them.
+## Main results
+
+All are proved here: Lemme 1, the proposition of page 3, Lemme 2 (1) and (2), and
+Corollaire 1 for `X = Spec A` with `A` Noetherian (the affine case, to which the reading
+reduces it).
+
+* `isOpen_of_stableUnderGeneralization`: a set stable under generization that contains, with
+  each point `x`, a nonempty open of `closure {x}`, is open in a Noetherian sober space.
+
+## Implementation notes
 
 What the proofs make plain. The step « constructible and stable under
 generization, hence open » is used only in the form proved here as
-`isOpen_of_stableUnderGeneralization`: a set stable under generization that
-contains, with each point `x`, a nonempty open of `closure {x}`, is open in a
-Noetherian sober space. Lemme 2 (2) does not use the Noetherian hypothesis.
+`isOpen_of_stableUnderGeneralization`. Lemme 2 (2) does not use the Noetherian hypothesis.
 Lemme 2 (1) uses it only to make the kernel of `A → A_𝔭` finitely generated —
 which is where the reading's footnote bears: the kernel is the set of elements
 killed by *some* element outside `𝔭`, not by every one. Corollaire 1 needs, from
 Lemme 2, only that one `f ∉ 𝔭` kills that kernel.
+
+What this certifies is that the reading holds together, not that it is what the page says
+(issue #26): that is for a reader with the leaf in front of them.
+
+## References
+
+* A. Grothendieck, folder 42, pp. 3–5 (reading `transcripts/42/42.modern.tex`)
+* Issue #26
 -/
 
 @[expose] public section

@@ -27,13 +27,8 @@ regular*, and the statement is Stacks 07NQ (EGA 0_IV 19.7.1, SGA 1 III 1.7). It 
 from AxiomMath/Stacks (Apache-2.0), `StacksFrontier/RingTheory/GeometricallyRegular/
 FormalSmoothness.lean`.
 
-Formal smoothness is `RingHom.FormallySmoothNAdic f 𝔪_B` (Stacks 07NI, in the elementary form of
-07EC (2)(b), as in `Grothendieck/Folder22Adic.lean`): square-zero lifting for maps `B → C/J` that
-kill a power of `𝔪_B`, the source carrying the discrete topology. For a local homomorphism this is
-formal smoothness for the two « topologies habituelles » of the page: a map `A → C` whose composite
-with `C → C/J` kills `𝔪_Aⁿ` kills `𝔪_A^{2n}`, so it is continuous for the `𝔪_A`-adic topology.
+## Main results
 
-**What is proved.**
 * `corollaire3_13`: for every local homomorphism `f : A → B` of noetherian local rings, `f` is
   formally smooth for the `𝔪_B`-adic topology if and only if `B` is flat over `A` and the special
   fibre `k ⊗_A B` is geometrically regular over `k = A/𝔪_A` (Stacks 07NQ). *No hypothesis on the
@@ -58,11 +53,22 @@ with `C → C/J` kills `𝔪_Aⁿ` kills `𝔪_A^{2n}`, so it is continuous for 
   separable extension `K` of the residue field `k` of a complete noetherian local ring `A`, there
   is a complete noetherian local `A`-algebra `B`, flat and formally smooth, with `k ⊗_A B ≃ K` —
   a « Cohen ring » of `K` over `A` (EGA 0_III 10.3.1 for the flat local extension, which the
-  proof of 3.10 quotes). Separability is Stacks' `Algebra.IsSeparableExtension` (every finitely
-  generated subextension separably generated); it gives formal smoothness of `K` over `k`
-  (`Algebra.FormallySmooth.iff_isSeparableExtension`, EGA 0_IV 19.6.1).
+  proof of 3.10 quotes).
 
-**Not formalised.**
+## Implementation notes
+
+Formal smoothness is `RingHom.FormallySmoothNAdic f 𝔪_B` (Stacks 07NI, in the elementary form of
+07EC (2)(b), as in `Grothendieck/Folder22Adic.lean`): square-zero lifting for maps `B → C/J` that
+kill a power of `𝔪_B`, the source carrying the discrete topology. For a local homomorphism this is
+formal smoothness for the two « topologies habituelles » of the page: a map `A → C` whose composite
+with `C → C/J` kills `𝔪_Aⁿ` kills `𝔪_A^{2n}`, so it is continuous for the `𝔪_A`-adic topology.
+
+In `corollaire3_12_existence`, separability is Stacks' `Algebra.IsSeparableExtension` (every
+finitely generated subextension separably generated); it gives formal smoothness of `K` over `k`
+(`Algebra.FormallySmooth.iff_isSeparableExtension`, EGA 0_IV 19.6.1).
+
+## Not formalised
+
 * Cohen algebras themselves (Déf. 3.7) and the condition P (a strict countable projective system
   of projective modules), hence Lemme 3.2, Théorème 3.6, Cor. 3.8 (uniqueness of the Cohen algebra
   with a given special fibre, and the five equivalent forms), the identification of Cohen algebra
@@ -75,6 +81,13 @@ with `C → C/J` kills `𝔪_Aⁿ` kills `𝔪_A^{2n}`, so it is continuous for 
   `Â`).
 * Questions 3) and 4) of pages 19–20 (openness of the formally smooth and flat loci). Question 2)
   is answered negatively in characteristic 0 by `Grothendieck.Folder22Adic.adic_not_discrete`.
+
+## References
+
+* A. Grothendieck, folder 22, typescript pp. 12–20 (`transcripts/22/22.modern.tex`)
+* [EGA 0_III] 10.3.1; [EGA 0_IV] 19.6.1, 19.7.1, 19.7.2, 22.5.8
+* [SGA 1] III 1.7
+* Stacks Project, tags 07NQ, 07NI, 07EC, 07EL, 07EI, 07NR
 -/
 
 @[expose] public section

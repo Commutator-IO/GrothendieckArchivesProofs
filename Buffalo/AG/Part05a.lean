@@ -15,13 +15,23 @@ Zariski sheaves on `Sch/S` and their restrictions to the small sites, limits and
 Zariski sheaves, local representability, projective bundles `𝐏(ℳ)`, the vector bundle `𝐕(ℳ)` and
 the presentation of `𝐏(ℳ)` as the quotient of `𝐕*` by `𝔾_m`.
 
+## Implementation notes
+
 Conventions. The big Zariski site is mathlib's `Scheme.zariskiTopology` (on all schemes, the case
-`S = Spec ℤ`) or `S.overGrothendieckTopology @IsOpenImmersion` (on `Sch/S`). Mathlib has no
-projective bundle `𝐏(ℳ)` (the functor of invertible quotients on `Sch/S`, or `Proj Sym ℳ`
-with its functor of points): the entries on `𝐏(ℳ)` are formalised in their ring-theoretic
-content, over `S' = Spec k'`: an invertible quotient of `M_{k'} = k' ⊗ M` is a surjection
-`M_{k'} → L` with `L` an invertible module (locally free of rank `1`, mathlib's
+`S = Spec ℤ`) or `S.overGrothendieckTopology @IsOpenImmersion` (on `Sch/S`).
+
+## Not formalised
+
+Mathlib has no projective bundle `𝐏(ℳ)` (the functor of invertible quotients on `Sch/S`, or
+`Proj Sym ℳ` with its functor of points): the entries on `𝐏(ℳ)` are formalised in their
+ring-theoretic content, over `S' = Spec k'`: an invertible quotient of `M_{k'} = k' ⊗ M` is a
+surjection `M_{k'} → L` with `L` an invertible module (locally free of rank `1`, mathlib's
 `Module.Invertible`), and on a local ring `k'` it is a surjection `M_{k'} → k'`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), undated session (from 7:04:25) – 19 June
+  1973, video `thSz9ZHDK9o`, 7:04:25–8:54:39 (`docs/buffalo-ag/index.tex`, lines 632–683)
 -/
 
 @[expose] public section

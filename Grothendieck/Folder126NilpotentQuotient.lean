@@ -25,7 +25,8 @@ nilpotent ideal `𝒥_Y`, is an isomorphism.
 
 This file formalises those two closing steps of page 7, in the affine case.
 
-**What is proved.**
+## Main results
+
 * `subsingleton_of_nilpotent_smul_top_eq_top`: Nakayama's lemma for a nilpotent ideal, with no
   finiteness: if `I ^ n = 0` and `I • Q = Q`, then `Q = 0`.
 * `surjective_of_lTensor_quotient_nilpotent`: an `A`-linear map `u : M → N` which is surjective
@@ -44,7 +45,9 @@ This file formalises those two closing steps of page 7, in the affine case.
   `R → X ×_Y X` modulo `𝒥_Y`, which the page identifies with `R₀ ≅ X₀ ×_{Y₀} X₀`). Then `B'`
   is flat over `A'` (`X → Y` flat) and `φ` is bijective (`R ≅ X ×_Y X`).
 
-**How.** Nakayama for a nilpotent ideal is the induction `Iᵏ • Q = Q`. Surjectivity: the cokernel
+## Implementation notes
+
+Nakayama for a nilpotent ideal is the induction `Iᵏ • Q = Q`. Surjectivity: the cokernel
 `Q` of `u` satisfies `(A ⧸ I) ⊗ Q = 0` by right exactness, that is `Q = I • Q`
 (`TensorProduct.quotTensorEquivQuotSMul`). Injectivity: with `u` surjective and `N` flat, the
 sequence `0 → (A ⧸ I) ⊗ Ker u → (A ⧸ I) ⊗ M → (A ⧸ I) ⊗ N` stays exact
@@ -55,7 +58,8 @@ the Tor criterion for flatness across a nilpotent ideal), and flatness of `C'` o
 `Module.Flat.trans`. The draft pointed to Stacks 08VU, whose vendored form is stated for ringed
 topoi; the affine statement used here is the module-level 063Y.
 
-**Not formalised.**
+## Not formalised
+
 * The scheme-level statement: effectivity of `R`, the construction of `Y` as the ringed space
   `(Y₀, Ker(𝒪_X ⇉ 𝒪_R))` and the gluing of its affine pieces into a scheme, the reduction from a
   nilpotent `𝒥_X` to `𝒥_X² = 0`, and the identification `R₀ = R ×_X X₀`.
@@ -69,6 +73,11 @@ topoi; the affine statement used here is the module-level 063Y.
   (Stacks 023M) only in the abstract form of a Čech conerve; its degree-one exactness on the
   concrete tensor products `B ⊗ B ⊗ M` is not available, and nothing here constructs `A'` from
   `B'` and `C'`. Here `A'` and `φ` are given.
+
+## References
+
+* A. Grothendieck, folder 126, pp. 3–7 (finding `126-nilpotent-deformation-quotient`)
+* Stacks Project, tags 063Y, 051C, 08VU, 023N, 023M
 -/
 
 @[expose] public section

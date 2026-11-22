@@ -13,6 +13,11 @@ public import Buffalo.Groupes.Part03
 Items of the reconstructed blackboards `public/buffalo-boards/3ULFIl_2Wis-*.json` in the time
 range of Part 03 that no index entry formalises. Statuses in
 `docs/buffalo-groupes/lean/Part03-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `3ULFIl_2Wis` (reconstructed
+  blackboards `public/buffalo-boards/3ULFIl_2Wis-*.json`)
 -/
 
 @[expose] public section

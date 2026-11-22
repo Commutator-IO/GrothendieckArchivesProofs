@@ -32,23 +32,19 @@ fixes a pair of commutative rings `k₀ ⊂ K₀` and
 > `F ∈ K₀[T] ⊗_{k₀} M` tels que `F(x) ∈ M` pour tout `x ∈ k₀` s'identifie à
 > `Ω ⊗_{k₀} M` — coordonnée par coordonnée dans une base de `M`.
 
-Here `F(x)` is the image of `F` under `ev_x ⊗ id : K₀[T] ⊗ M → K₀ ⊗ M`, and
-"`F(x) ∈ M`" means that it lies in the image of `M → K₀ ⊗ M`, `m ↦ 1 ⊗ m`.
-"S'identifie à" is read as: the canonical map `Ω ⊗ M → K₀[T] ⊗ M` is injective
-(`lemme_injective`) and its image is exactly that set (`lemme_range`). The
-reading's "coordinate by coordinate" is `lemme_coordonnees`: in a basis of `M`,
-`F` satisfies the condition iff each of its coordinates lies in `Ω`.
-
 What the formalisation found. The Lemme holds as stated, and one hypothesis
-is not used: that `k₀ → K₀` is an inclusion. The proof works for any
-`k₀`-algebra `K₀`, `Int(k₀)` being then the polynomials sending `k₀` into the
-image of `k₀`. Freeness of `M` is used twice, as the reading says it is: for
-the injectivity (a free module is flat, `Module.Flat.of_free`) and for the
-coordinates. (The reading's footnote on the co-operations — that
-`K₀[X] ⊗_{k₀} K₀[Y] = K₀[X,Y]` needs `K₀ ⊗_{k₀} K₀ = K₀` — concerns the next
-paragraph; the co-operations are formalised below without it.)
+is not used: that `k₀ → K₀` is an inclusion. The rest of the folder (pages 2, 3, 5, 7) is
+formalised as well: co-operations of `Ω`, Pólya's basis of `Int(ℤ)`, compositions and
+analyseurs.
 
-## The rest of the folder
+## Main results
+
+* `lemme_injective`, `lemme_range`: the canonical map `Ω ⊗ M → K₀[T] ⊗ M` is injective and its
+  image is exactly the set of the Lemme;
+* `lemme_coordonnees`: in a basis of `M`, `F` satisfies the condition iff each of its
+  coordinates lies in `Ω`.
+
+### The rest of the folder
 
 * Page 3: `Ω` is stable under composition (`comp_mem_Omega`); for `K₀ = S⁻¹k₀` and
   `Ω` free, `Φ : Ω ⊗ Ω → K₀[X, Y]`, `G ⊗ H ↦ G(X) H(Y)`, is injective
@@ -60,8 +56,7 @@ paragraph; the co-operations are formalised below without it.)
   that `K₀ ⊗_{k₀} Ω → K₀[T]` be injective (`..._of_injective`); it is always
   surjective (`omegaBaseChange_surjective`), and injective for `K₀` a localisation
   (`omegaBaseChange_injective`) and for `K₀` flat over `k₀` with `K₀ ⊗ K₀ = K₀`
-  (`omegaBaseChange_injective_of_flat`). Whether `K₀ ⊗ K₀ = K₀` alone suffices is
-  left open.
+  (`omegaBaseChange_injective_of_flat`).
 * Page 2: Pólya's basis of `Int(ℤ)` by forward differences (`polya`, `polyaBasis`),
   Vandermonde in `ℚ[X, Y]` from mathlib's `Ring.add_choose_eq` (`vandermonde`), and
   the co-operations of `Int(ℤ)` (`coaddition_binom`, `comultiplication_binom`).
@@ -75,6 +70,32 @@ paragraph; the co-operations are formalised below without it.)
   `Ω → Ω_{Ω₀}` is injective (`poly_toAppl_injective`, `eq_of_comp_intCast`);
   `∑_{m ≥ 1} T^m` has no finite co-addition in `k[[T]]⁺`, stated on coefficients
   (`geom_not_finite_coaddition`, from `pascal_det`).
+
+## Implementation notes
+
+Here `F(x)` is the image of `F` under `ev_x ⊗ id : K₀[T] ⊗ M → K₀ ⊗ M`, and
+"`F(x) ∈ M`" means that it lies in the image of `M → K₀ ⊗ M`, `m ↦ 1 ⊗ m`.
+"S'identifie à" is read as: the canonical map `Ω ⊗ M → K₀[T] ⊗ M` is injective
+(`lemme_injective`) and its image is exactly that set (`lemme_range`). The
+reading's "coordinate by coordinate" is `lemme_coordonnees`: in a basis of `M`,
+`F` satisfies the condition iff each of its coordinates lies in `Ω`.
+
+The proof works for any `k₀`-algebra `K₀`, `Int(k₀)` being then the polynomials sending `k₀`
+into the image of `k₀`. Freeness of `M` is used twice, as the reading says it is: for
+the injectivity (a free module is flat, `Module.Flat.of_free`) and for the
+coordinates. (The reading's footnote on the co-operations — that
+`K₀[X] ⊗_{k₀} K₀[Y] = K₀[X,Y]` needs `K₀ ⊗_{k₀} K₀ = K₀` — concerns the next
+paragraph; the co-operations are formalised below without it.)
+
+## Not formalised
+
+Whether `K₀ ⊗ K₀ = K₀` alone suffices for the injectivity of `K₀ ⊗_{k₀} Ω → K₀[T]` (page 3) is
+left open.
+
+## References
+
+* A. Grothendieck, Folder 153, manuscript pp. 2, 3, 5, 7 (reading
+  `transcripts/153/153.modern.tex`)
 -/
 
 @[expose] public section

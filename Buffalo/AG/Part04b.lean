@@ -14,6 +14,11 @@ The entries of `docs/buffalo-ag/index.tex` lines 519–548 (video `thSz9ZHDK9o`,
 the open sets `U_f` of a ringed space, morphisms of spectra, local homomorphisms and morphisms of
 locally ringed spaces, the counterexample of a discrete valuation ring, the full faithfulness of
 `Spec`, schemes and their functor of points.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 13 June 1973, video `thSz9ZHDK9o`,
+  2:26:42–3:57:31 (`docs/buffalo-ag/index.tex`, lines 519–548)
 -/
 
 @[expose] public section

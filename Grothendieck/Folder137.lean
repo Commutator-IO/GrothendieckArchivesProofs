@@ -24,16 +24,21 @@ sets `𝐏_p(X, Y) = Hom(Γ^p X, Y)` with `g ∘ f = g ∘ Γ^q(f) ∘ α_{q,p}`
 
 What is formalised is the core of that equivalence, the part that carries the inverse
 `𝐏_p(X, Y) = Hom(Γ^p X, Y)` and the composition rule, for any degree-one category `C`
-(no additivity, no tensor product needed):
+(no additivity, no tensor product needed). Proving the statement says only that it holds as
+formalised; whether it is in the literature is a separate question.
+
+## Main definitions
 
 * `PDCategory C`: functors `Γⁿ : C ⥤ C`, natural `α_{p,q} : Γ^{pq} → Γ^p ∘ Γ^q`, an
   isomorphism `ε : Γ¹ ≅ id` (the page's `Γ¹ = id`), the unit conditions (**) and the
-  associativity square of p. 80 — a comonad graded by the monoid `(ℕ, ·)`. Indices are
-  carried with an equation `p * q = n`, so that no cast appears.
+  associativity square of p. 80 — a comonad graded by the monoid `(ℕ, ·)`.
 * `PolynomialCategory C`: sets `𝐏ₙ(X, Y)`, composition of degree `q * p`, identities of
   degree one, associativity, and an identification `ι : (X ⟶ Y) ≃ 𝐏₁(X, Y)` compatible
   with composition; `Representation`: objects `Γⁿ X` and `γₙ` representing `𝐏ₙ(X, -)`
   on `C`.
+
+## Main results
+
 * `PDCategory.toPoly` (pp. 81–82): the composition `g ∘ Γ^q(f) ∘ α_{q,p}` is
   associative and unital, additive in `g` when `C` is preadditive (`toPoly_comp_add`),
   and `PDCategory.representation`: `𝐏ₙ(X, -)` is represented by `Γⁿ X`, `γₙ = id`.
@@ -45,12 +50,22 @@ What is formalised is the core of that equivalence, the part that carries the in
   isomorphism of polynomial categories `𝐏_p(X, Y) ≃ Hom(Γ^p X, Y)`, `φ ↦ φ ∘ γ_p`,
   compatible with composition, identities and degree-one maps.
 
-Not formalised: the products and the additivity of `𝐏` (axioms a)–c)), the
-multidegree decompositions and homogeneity under scalars (d)), f), g) and the half
-`𝟏 ≅ Γ^q(𝟏)` of (***), the tensor product, strictness, the exponential formula
-`Γ*(X ⊕ Y) ≅ Γ*X ⊗ Γ*Y`, and the example of `k`-modules (Roby). Proving the statement
-says only that it holds as formalised; whether it is in the literature is a separate
-question.
+## Implementation notes
+
+In `PDCategory C`, indices are carried with an equation `p * q = n`, so that no cast appears.
+
+## Not formalised
+
+The products and the additivity of `𝐏` (axioms a)–c)), the multidegree decompositions and
+homogeneity under scalars (d)), f), g) and the half `𝟏 ≅ Γ^q(𝟏)` of (***), the tensor product,
+strictness, the exponential formula `Γ*(X ⊕ Y) ≅ Γ*X ⊗ Γ*Y`, and the example of `k`-modules
+(Roby).
+
+## References
+
+* A. Grothendieck, cote 137 (« Catégories polynomiales »), pp. 74–85 (finding
+  `137-polynomial-categories-pd-tensor-categories`); modernised reading
+  `transcripts/137/137.modern.tex`
 -/
 
 @[expose] public section

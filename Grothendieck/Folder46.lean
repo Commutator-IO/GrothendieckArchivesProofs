@@ -22,14 +22,18 @@ step modulo `𝔪ⁿA`, using that `[Γ : Λ]` is invertible on each `𝔪ⁱA/�
 surjectivity of `A^Γ → A/𝔪A` to make the correcting element a unit.
 
 This file proves the case `p ∤ |Γ|` of the kernel statement (the modernised reading's
-« en particulier »; forme reconstituée par l'édition d'après les pages 90–92), by a one-shot
-average in place of the induction: for a cocycle `c` and any `w`, `b = Σ_σ c(σ) σ(w)`
-satisfies `c(γ) γ(b) = b` (the averaging of Hilbert's Theorem 90), and `b` is a unit when `w`
-lifts `v⁻¹`, `v` trivialising `c` modulo `𝔪A`, since then `b ≡ |Γ| w`. Neither the
-triviality of `Γ` on `A/𝔪A` nor the surjectivity of `A^Γ → A/𝔪A` is used, nor any action of
-`Γ` on `𝒪`.
+« en particulier »; forme reconstituée par l'édition d'après les pages 90–92), injectivity
+itself in that case, and the Sylow form at the level of the kernel.
+
+## Main definitions
+
 * `IsCocycle`, `IsCoboundary`: nonabelian 1-cocycles `Γ → Aˣ`, `c(gh) = c(g) · g(c(h))`, and
-  those cohomologous to `1`, `c(g) = u⁻¹ g(u)`;
+  those cohomologous to `1`, `c(g) = u⁻¹ g(u)`.
+
+## Main results
+
+### The kernel, when `p ∤ |Γ|`
+
 * `mul_smul_sum`, `isCoboundary_of_isUnit_sum`: the averaging identity, and its consequence;
 * `isCoboundary_of_sub_one_mem`: a cocycle congruent to `1` modulo an ideal `I` with
   `1 + I ⊂ Aˣ` is a coboundary when `|Γ|` is invertible in `A`;
@@ -43,10 +47,12 @@ triviality of `Γ` on `A/𝔪A` nor the surjectivity of `A^Γ → A/𝔪A` is us
   `Γ = C₂` acting trivially on `ℤ/4` (`𝔪 = (2)`, `𝔪² = 0`, `p = 2 = |Γ|`), `γ ↦ ±1` is a
   cocycle trivial modulo `𝔪` and not a coboundary: `p ∤ |Γ|` cannot be dropped.
 
+### Injectivity
+
 * `mul_smul_sum_twist`, `isCohomologous_of_map`, `injective`: injectivity itself, not only
-  the trivial kernel: two cocycles with cohomologous images are cohomologous. The average
-  `u = Σ_σ c'(σ) σ(w) c(σ)⁻¹` satisfies `c'(γ) γ(u) = u c(γ)`; this is the averaging for the
-  action twisted by `c'` (pages 86–89), written without changing the action.
+  the trivial kernel: two cocycles with cohomologous images are cohomologous.
+
+### The Sylow form
 
 * `mul_smul_sum_cosets`, `isCoboundary_of_restrict`, `ker_trivial_restrict`,
   `ker_trivial_sylow`: the Sylow form, the page's full statement at the level of the kernel:
@@ -54,9 +60,28 @@ triviality of `Γ` on `A/𝔪A` nor the surjectivity of `A^Γ → A/𝔪A` is us
   surjectivity `A^Λ → A/𝔪A` (implied by `A^Γ → A/𝔪A`), a cocycle trivial modulo `𝔪A` and on
   `Λ` is a coboundary — the average over `Γ/Λ`.
 
-Not formalised: injectivity in the Sylow form for noncommutative `A`, the semi-local base with its
+## Implementation notes
+
+The case `p ∤ |Γ|` is proved by a one-shot average in place of the induction: for a cocycle
+`c` and any `w`, `b = Σ_σ c(σ) σ(w)` satisfies `c(γ) γ(b) = b` (the averaging of Hilbert's
+Theorem 90), and `b` is a unit when `w` lifts `v⁻¹`, `v` trivialising `c` modulo `𝔪A`, since
+then `b ≡ |Γ| w`. Neither the triviality of `Γ` on `A/𝔪A` nor the surjectivity of
+`A^Γ → A/𝔪A` is used, nor any action of `Γ` on `𝒪`.
+
+For injectivity, the average `u = Σ_σ c'(σ) σ(w) c(σ)⁻¹` satisfies `c'(γ) γ(u) = u c(γ)`;
+this is the averaging for the action twisted by `c'` (pages 86–89), written without changing
+the action.
+
+## Not formalised
+
+Injectivity in the Sylow form for noncommutative `A`, the semi-local base with its
 decomposition and inertia groups (pages 84–89), and the passage from `𝔪ⁿA` to `A` by
 Artin–Rees (which the finite case here makes unnecessary).
+
+## References
+
+* A. Grothendieck, folder 46, « Petits fourbis cohomologiques », pp. 84–92 (transcription
+  `transcripts/46/batch-05.fr.tex`)
 -/
 
 @[expose] public section

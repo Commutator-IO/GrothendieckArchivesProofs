@@ -35,6 +35,8 @@ This is finding `83-twist-line-degenerate-locus-is-product` of
 `src/content/findings.ts`. Proving it says only that the claims hold as stated
 in coordinates; whether they stand in the literature is a separate question.
 
+## Main results
+
 What is formalised, over an arbitrary commutative ring `k`, without dividing by
 `2`, with `H`, `H'` free (`L`, `L'` trivialised, so `(L ⊗ L')^∨ = k`):
 
@@ -62,19 +64,27 @@ What is formalised, over an arbitrary commutative ring `k`, without dividing by
   `Q(u * v) = 0` (`star_root`, from `Q(w) = (2V − b')²(U² − bU + c) + δ(V² − b'V + c')`,
   `Q_star_identity`), whence the algebra map `starHom : k[t]/(Q) → H ⊗ H'`,
   `t ↦ u * v`; the conjugations of `H` and `H'` both send `u * v` to `bb' − u * v`
-  (`conjL_star`, `conjR_star`, `conjL_star_eq_conjR_star`); for characters `φ`, `φ'` with values in any
-  commutative `k`-algebra, `(φ ⊗ φ')(u * v) = b'φ(u) + bφ'(v) − 2φ(u)φ'(v)`
+  (`conjL_star`, `conjR_star`, `conjL_star_eq_conjR_star`); for characters `φ`, `φ'` with
+  values in any commutative `k`-algebra, `(φ ⊗ φ')(u * v) = b'φ(u) + bφ'(v) − 2φ(u)φ'(v)`
   (`productMap_star`), which is `t_{φ,φ'}(u, v)` (`twist_eq_productMap`), a root of
   `Q` (`twist_root`, `productMap_star_root`), and `t_{φ,φ'}` is a twist (`twist_one_right`,
   `twist_one_left`); conjugating `φ` sends it to `bb' − t` (`twist_conj`).
 
-Not formalised: the intrinsic torsors for `H`, `H'` locally free (only the free,
+## Not formalised
+
+The intrinsic torsors for `H`, `H'` locally free (only the free,
 trivialised case), the chain of isomorphisms `AZ_P → Q_P → … → L_P`, the
 criterion « Azumaya iff `Q` invertible » of page 98 (only the trace-form
 determinant `−Q²`), and the identification `S̃ ≅ X ∧ X'` as the quotient of
 `X × X'` by `σ × σ'` when `(2, δ, δ') = 1`, whose algebraic core (the invariants
 of `σ ⊗ σ'` are `k[u * v]` iff `(2, b, b') = 1`) is
 `Grothendieck.Folder84.invariants_of_span_eq_top`.
+
+## References
+
+* A. Grothendieck, Folder 83, pages 92, 98 and 126–143 (modernised reading
+  `transcripts/83/83.modern.tex`, station X; finding
+  `83-twist-line-degenerate-locus-is-product`)
 -/
 
 @[expose] public section

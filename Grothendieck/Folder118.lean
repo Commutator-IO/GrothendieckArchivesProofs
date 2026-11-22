@@ -19,14 +19,7 @@ equivalences), hence is stable under finite products, while `A` is not aspherica
 reading takes `A = BG` connected with `G ≠ 1`. This is the reachable part of finding
 `118-groupoid-products-not-totally-aspherical` of `src/content/findings.ts`.
 
-What is formalised, in a 1-truncated model. Presheaves on `BG` are `G`-sets, and for a
-`G`-set `X` the category `A/X` is the action groupoid `X//G`. A functor between groupoids
-is a weak equivalence (of nerves) iff it is bijective on connected components and an
-isomorphism on automorphism groups; for the functor `X//G → Y//G` induced by a map `f` of
-`G`-sets, this says that `f` is bijective on orbits and `Stab(f x) = Stab(x)`. That
-characterisation of weak equivalences of groupoids is taken as the definition (`IsWeq`), not
-proved; similarly `X//G` is aspherical iff it is connected with trivial automorphism groups
-(`Aspherical`).
+## Main results
 
 * `isWeq_iff_bijective`: `f ∈ 𝒲_A` iff `f` is bijective — the reading's reason
   (« a map of `G`-sets bijective on orbits and an isomorphism on stabilisers is an
@@ -36,6 +29,28 @@ proved; similarly `X//G` is aspherical iff it is connected with trivial automorp
 * `not_aspherical_point`, `not_aspherical_regular_prod`: for `G ≠ 1`, `A = A/e` is not
   aspherical, nor is `a × a` for the representable `a` (the regular `G`-set).
 * `answer_page_35`: the three together.
+
+## Implementation notes
+
+Everything is formalised in a 1-truncated model. Presheaves on `BG` are `G`-sets, and for a
+`G`-set `X` the category `A/X` is the action groupoid `X//G`. A functor between groupoids
+is a weak equivalence (of nerves) iff it is bijective on connected components and an
+isomorphism on automorphism groups; for the functor `X//G → Y//G` induced by a map `f` of
+`G`-sets, this says that `f` is bijective on orbits and `Stab(f x) = Stab(x)`. That
+characterisation of weak equivalences of groupoids is taken as the definition (`IsWeq`), not
+proved; similarly `X//G` is aspherical iff it is connected with trivial automorphism groups
+(`Aspherical`).
+
+## Not formalised
+
+The characterisation of weak equivalences of groupoids through nerves is not proved: it is
+the definition `IsWeq` (and `Aspherical`) of the model.
+
+## References
+
+* A. Grothendieck, cote 118, pp. 32–35 (finding
+  `118-groupoid-products-not-totally-aspherical`); modernised reading
+  `transcripts/118/118.modern.tex`
 -/
 
 @[expose] public section
@@ -133,8 +148,8 @@ equivalent, among them (c): for presheaves `X`, `Y` on `A`, the canonical functo
 products. For `A = BG`, `G ≠ 1`, (g)
 holds (`condition_g_holds`) and (c) fails (`not_condition_c`; witnesses
 `not_isWeqOver_regular`, `not_isWeqOver_point`), so (g) does not imply (c) (`g_not_imp_c`).
-Cisinski confirmed on MathOverflow (https://mathoverflow.net/questions/516223, answer of
-21 October 2026) that (g) ⇒ (c) needs a further assumption, e.g. that `A` be a test category.
+The implication (g) ⇒ (c) thus needs a further assumption, e.g. that `A` be a test
+category.
 
 Same 1-truncated model as above. A functor of action groupoids `X//G → Y//H` is given by a
 group morphism `φ : G →* H` and a map `f : X → Y` with `f (g • x) = φ g • f x`; it is a weak

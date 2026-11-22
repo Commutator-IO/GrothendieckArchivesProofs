@@ -13,10 +13,17 @@ public import Mathlib
 Entries `_lTf_L0yvrU-2834` to `_lTf_L0yvrU-6070` of `docs/buffalo-groupes/index.tex` (4 June and
 the beginning of 6 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.json`.
 
+## Implementation notes
+
 `W(M)(A) = A ⊗[k] M` and `V(M)(A) = Hom_k(M, A)`, for a `k`-module `M` and a commutative
 `k`-algebra `A`; both are `A`-modules, that is modules over the ring functor `𝒪 : A ↦ A`. A
 morphism of `𝒪`-modules `W(M) → W(N)` is written out as a family of `A`-linear maps natural in
 `A` (`WHom`).
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 2834–6070 (4 June
+  and the beginning of 6 June 1973)
 -/
 
 @[expose] public section

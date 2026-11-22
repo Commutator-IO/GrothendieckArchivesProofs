@@ -15,10 +15,16 @@ of topoi, the initial and final topoi, presheaf topoi and the functors `u^*`, `u
 topoi, and the topos-theoretic structure of `Sh(C, J)` (Giraud's theorem, elementary topoi). The
 status of each entry is in `docs/buffalo-topos/lean/Part03.json`.
 
+## Implementation notes
+
 Mathlib has no notion of Grothendieck topos or of geometric morphism; a morphism of topoi is
 modelled here by `TopMor` (an adjunction `f^* ⊣ f_*` with `f^*` left exact), between arbitrary
 categories, and statements about « a topos » are proved for the categories of sheaves `Sh(C, J)`
 on a small site or of presheaves `Ĉ`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), `docs/buffalo-topos/index.tex` lines 390–535
 -/
 
 @[expose] public section

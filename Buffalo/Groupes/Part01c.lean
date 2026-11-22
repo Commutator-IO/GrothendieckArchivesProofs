@@ -13,8 +13,15 @@ public import Buffalo.Groupes.Part01a
 Entries `_lTf_L0yvrU-6199` to `_lTf_L0yvrU-8015` of `docs/buffalo-groupes/index.tex` (6 June and
 the beginning of 11 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.json`.
 
+## Implementation notes
+
 Dual numbers `k[ε]` (Mathlib `DualNumber k`) serve as the test algebra on which the infinitesimal
 groups `μ_p`, `α_p` and the Frobenius kernels have non-trivial points.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 6199–8015 (6 June
+  and the beginning of 11 June 1973)
 -/
 
 @[expose] public section

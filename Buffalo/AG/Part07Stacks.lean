@@ -12,15 +12,23 @@ public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.ReducedProd
 # Buffalo, algebraic geometry, part 07 (a): products of separable and of connected `k`-schemes
 
 `Part07a.lean` proves the product statements `19493`, `19954`, `20993` and `21315` for
-universally open `k`-schemes only, and lacks the separable half of `19493`. Both gaps close:
+universally open `k`-schemes only, and lacks the separable half of `19493`. Both gaps close here.
+
+## Main results
 
 * every `k`-scheme is universally open over `Spec k` (Stacks tag 0383): Mathlib's instance
   `UniversallyOpen` for morphisms to the spectrum of a field already gives it at `715a03a`, so the
   hypothesis is dropped below;
 * the product over `k` of two geometrically reduced (separable) `k`-schemes is geometrically
   reduced: `geometricallyReduced_pullback_over_field` (Stacks tag 035Z) of the vendored
-  AxiomMath/Stacks file `StacksFrontier/AlgebraicGeometry/Variety/Geometrically/ReducedProduct.lean`
+  AxiomMath/Stacks file
+  `StacksFrontier/AlgebraicGeometry/Variety/Geometrically/ReducedProduct.lean`
   (Apache-2.0, see `lean/Stacks/NOTICE.md`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), entries `19493`, `19954`, `20993`, `21315`
+* Stacks Project, tags 0383, 035Z
 -/
 
 @[expose] public section

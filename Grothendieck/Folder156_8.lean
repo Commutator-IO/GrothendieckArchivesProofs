@@ -17,15 +17,18 @@ public import Mathlib.Data.Finset.Card
 The modernised reading `transcripts/156-8/156-8.modern.tex` (chapter VIII of *Vers une
 géométrie des formes*, « Analysis situs (quatrième mouture) », 26 June – 4 July 1986) starts from
 a *magasin*: a set `𝓜` with an incidence `≤`, a refinement `≪` and an interior disjointness
-`|∘|`, subject to Mag 1 – Mag 4 (page 7). Mag 2 asks that, for `X ≪ Y`, the faces `Z ≤ Y` with
-`X ≪ Z` have a least element; `X ≪̊ Y` (interior incidence) means that this least element is `Y`.
-Compatibility `X ≶ Y` asks `X' |∘| Y'` for all faces `X'` of `X` not under `Y` and `Y'` of `Y`
-not under `X`. Pages 9 and 10 draw the first consequences; pages 89 to 102 compute everything
-for the magasin of an ordered set `L` (points `P_x`, intervals `S_{a,b}`, `a < b`), whose
-interior support of a part `Φ` is `supp° Φ = cosupp° (cosupp° Φ)`, `cosupp° Φ` the elements
-interiorly disjoint from all of `Φ`.
+`|∘|`, subject to Mag 1 – Mag 4 (page 7). Pages 9 and 10 draw the first consequences; pages 89
+to 102 compute everything for the magasin of an ordered set `L` (points `P_x`, intervals
+`S_{a,b}`, `a < b`).
 
-Proved here:
+**What the formalisation finds.** The first consequences of Mag 1 – Mag 4 all hold, with two
+corrections the reading had made and that the models confirm: the margin's equivalence
+« `X |∘| Y ⇔ X ≶ Y` » is only an implication, and Corollary 3 holds with `≪`, not with `≪̊`.
+On page 102 Grothendieck's own computation `supp° {P_a} = {P_a, P_b}` (margin « Canular ») is
+wrong: `supp° {P_a} = {P_a}` there too, although `L` violates H; what the example does show is
+that the interval case of Lemma 1 fails, `supp° (S̃_{a,b}) = 𝓜 ≠ Omb (S_{a,b})`.
+
+## Main results
 
 * `IsMagasin`: Mag 1 – Mag 4 as on page 7. `intLe_refl`, `exists_intLe`: `≪̊` is reflexive and
   `X ≪ Y` gives a face `Y' ≤ Y` with `X ≪̊ Y'`. `compat_refl`, `compat_symm`, `compat_mono`:
@@ -49,13 +52,24 @@ Proved here:
 * `Anti`: a two-element antichain, where `supp° {P_a} = {P_a, P_c}`: Hypothesis H cannot simply
   be dropped from Corollary 1.
 
-**What the formalisation finds.** The first consequences of Mag 1 – Mag 4 all hold, with two
-corrections the reading had made and that the models confirm: the margin's equivalence
-« `X |∘| Y ⇔ X ≶ Y` » is only an implication, and Corollary 3 holds with `≪`, not with `≪̊`.
-On page 102 Grothendieck's own computation `supp° {P_a} = {P_a, P_b}` (margin « Canular ») is
-wrong: `supp° {P_a} = {P_a}` there too, although `L` violates H; what the example does show is
-that the interval case of Lemma 1 fails, `supp° (S̃_{a,b}) = 𝓜 ≠ Omb (S_{a,b})`. The axioms of a
-magasin are not checked for the magasin of an ordered set; the finite models check them.
+## Implementation notes
+
+Mag 2 asks that, for `X ≪ Y`, the faces `Z ≤ Y` with
+`X ≪ Z` have a least element; `X ≪̊ Y` (interior incidence) means that this least element is `Y`.
+Compatibility `X ≶ Y` asks `X' |∘| Y'` for all faces `X'` of `X` not under `Y` and `Y'` of `Y`
+not under `X`. In the magasin of an ordered set `L`, the interior support of a part `Φ` is
+`supp° Φ = cosupp° (cosupp° Φ)`, `cosupp° Φ` the elements interiorly disjoint from all of `Φ`.
+
+## Not formalised
+
+The axioms of a magasin are not checked for the magasin of an ordered set; the finite models
+check them.
+
+## References
+
+* A. Grothendieck, *Vers une géométrie des formes*, chapter VIII, « Analysis situs (quatrième
+  mouture) » (26 June – 4 July 1986), Folder 156-8, pp. 7, 9–10, 89–102 (reading
+  `transcripts/156-8/156-8.modern.tex`)
 -/
 
 @[expose] public section

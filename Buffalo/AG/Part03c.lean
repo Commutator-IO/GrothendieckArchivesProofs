@@ -14,10 +14,17 @@ The entries of `docs/buffalo-ag/index.tex` lines 442–491 (video `thSz9ZHDK9o`,
 disjoint and universal sums, constant objects, monomorphisms and the spectrum, the structure sheaf
 and quasi-coherent modules, gluing and descent.
 
+## Implementation notes
+
 Conventions. An affine algebraic space over `K` is a `K`-algebra read in the opposite category; a
 monomorphism `Y → S` of affine spaces is an epimorphism of rings `A → C`, stated as: two ring maps
 out of `C` that agree on `A` are equal. Statements about fibre products of spectra are made either
 at the level of rings or for mathlib's schemes.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 12 June 1973, video `thSz9ZHDK9o`,
+  0:01:06–1:36:31 (`docs/buffalo-ag/index.tex`, lines 442–491)
 -/
 
 @[expose] public section

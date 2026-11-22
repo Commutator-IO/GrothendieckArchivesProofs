@@ -42,11 +42,25 @@ from the `𝔰𝔩₂` (Hodge) normalisation, and a fourth about the manuscript'
 > l'unité, qui est primitive de degré `0`, `Λ₀ L₀ (1) = ⟨ξ₀*, ξ₀⟩ = n`, alors que
 > `(6.15)` exige `1` … l'identification ne vaut donc que pour `n = 1`.
 
+**What the formalisation finds.** The reading's comparison of the two normalisations holds
+as stated, and its correction of the manuscript (the two `Λ₀` differ as soon as `n ≥ 2`) is
+confirmed by `Λ₀ L₀ (1) = n`; the `𝔰𝔩₂` facts themselves are already in mathlib. The
+Cayley–Hamilton argument of page 47 and the projector argument of no. 5 hold as stated.
+But the reading's repair of page 13 — keep `Φ₀ = ℤ[L₀, Λ₀] ⊂ End(Λ M₀)` with `Λ₀` in the
+sense of `(6.15)` — fails over `ℤ` for `n ≥ 2`: `L₀ⁿ : Λ⁰ → Λ^{2n}` is multiplication by
+`n!` (here: by an even number), so the exterior model over `ℤ` does not satisfy the
+Lefschetz conditions. Over `ℚ` the obstruction disappears. The Hodge algebras of order 2 hold
+as the reading states them.
+
+What this certifies is that the reading holds together, not that it is what the
+pages say (issue #26).
+
+## Main results
+
 * `sl2_normalisation` — in any representation with an `𝔰𝔩₂`-triple, on a
   primitive vector of weight `μ` (`= n - i` in degree `i`): `ΛLx = μx`,
   `Λ L^{k+1} x = (k+1)(μ-k) L^k x`, `⁅H, L^k x⁆ = (μ-2k) L^k x`. From mathlib
-  (`IsSl2Triple.HasPrimitiveVectorWith`). mathlib's `H = ⁅Λ, L⁆` is minus the
-  reading's `[L, Λ]`.
+  (`IsSl2Triple.HasPrimitiveVectorWith`).
 * `identification_seulement_si` — if the `𝔰𝔩₂` `Λ` also satisfied `ΛLx = x` on a
   primitive class, as `(6.7)` asks at the bottom of a chain, then `μ = 1`
   (over a domain acting without torsion).
@@ -55,12 +69,10 @@ from the `𝔰𝔩₂` (Hodge) normalisation, and a fourth about the manuscript'
   `M₀ = R^{2n}`, `ξ₀ = ∑ e_{2k-1} ∧ e_{2k}`: `Λ₀ L₀ (1) = n`, hence `≠ 1` for
   `n ≠ 1` in characteristic `0`. This is the reading's correction of page 13,
   where the manuscript identifies the contraction `Λ₀` with the `Λ₀` of `(6.15)`.
-
 * `inverse_mem_of_charpoly`, `inverse_Lefschetz_algebrique` — pages 47–48 (finding
   `16-algebraic-iso-suffices`): under `D(X)` (characteristic polynomials of algebraic
   endomorphisms with coefficients in `F`), any algebraic isomorphism `u : H^{2n-i} → H^i`
-  makes the inverse of the isomorphism `v` induced by `L^{n-i}` algebraic. « Algebraic » is
-  membership in given sets of maps, stable under composition and `F`-scalars.
+  makes the inverse of the isomorphism `v` induced by `L^{n-i}` algebraic.
 * `projecteurs_mem`, `projecteurs_mem_lefschetz` — pages 6–8 (no. 5 and `(6.3)ᵢ`, the first
   part of finding `16-graded-ring-lefschetz-criterion`): in a ring with grading idempotents,
   one-sided inverses `wᵢ ∈ ℰ` of `L^{n-i}` put every `πᵢ` in the subring `ℰ`, over `ℤ`.
@@ -70,32 +82,32 @@ from the `𝔰𝔩₂` (Hodge) normalisation, and a fourth about the manuscript'
   in the sense of `(6.15)` exists in `End_ℤ(Λ M₀)`.
 * `pseudo_inverse_unique` — a pseudo-inverse with `ΛLΛ = Λ` is determined by `ΛL` and `LΛ`.
 
-* Pages 24–28, the « algèbres de Hodge d'ordre 2 » (finding `16-hodge-algebras-order-2`).
-  `DonneesHodge` holds `(φ, ψ, Q)`: `φ` alternating on `V`, `ψ : Λ²V → W`, `Q` symmetric on `W`;
-  `AlgHodge` is `k ⊕ V ⊕ (kξ ⊕ W) ⊕ V̌ ⊕ kξ²` and `DonneesHodge.mul` the product of page 24.
-  `produits`, `produit_force` — the products of the reading, and the `H¹ × H²` one is the only
-  one compatible with associativity and the pairing `H¹ × H³`; `one_mul`, `mul_one`, `mulₗ`,
-  `mul_comm_of_pair`, `mul_anticomm_of_impair`, `mul_self_of_impair` — whatever `φ, ψ, Q`, a
-  bilinear unital graded-anticommutative law; `assoc_iff` — associative iff
-  `φ(x,y)φ(t,z) + Q(ψ(x,y), ψ(t,z)) = φ(t,x)φ(y,z) + Q(ψ(t,x), ψ(y,z))`; `lefschetz_iff` —
-  `ξ² : H⁰ → H⁴` is always bijective and `ξ : H¹ → H³` is iff `φ` is non-degenerate
-  (`V` finite-dimensional); `poincare_iff` — `H⁰ × H⁴`, `H¹ × H³` always perfect, `H² × H²`
-  non-degenerate iff `Q` is (no finiteness). Page 26: `chi_eq` (`xyzt = χ(x,y,z,t)ξ²`),
-  `chi_alt`, `identite_iff_chi` (associativity ⇔ `χ` alternating ⇔ `χ(x,y,y,t) = 0`), and
-  `reformulation`, `reformulation_spec`: from `(W̃, Q̃, α, ξ)` with `Q̃(ξ,ξ) = 1`, `W = ξ^⊥`,
-  `φ = Q̃(α(·), ξ)`, `ψ = α - φξ`, `Q = Q̃|_W`, associativity is `Q̃(α(x∧y), α(y∧t)) = 0`,
-  Lefschetz is « `φ` non dégénérée » and Poincaré is « `Q̃` non dégénérée ».
+### Pages 24–28, the « algèbres de Hodge d'ordre 2 » (finding `16-hodge-algebras-order-2`)
 
-**What the formalisation finds.** The reading's comparison of the two normalisations holds
-as stated, and its correction of the manuscript (the two `Λ₀` differ as soon as `n ≥ 2`) is
-confirmed by `Λ₀ L₀ (1) = n`; the `𝔰𝔩₂` facts themselves are already in mathlib. The
-Cayley–Hamilton argument of page 47 and the projector argument of no. 5 hold as stated.
-But the reading's repair of page 13 — keep `Φ₀ = ℤ[L₀, Λ₀] ⊂ End(Λ M₀)` with `Λ₀` in the
-sense of `(6.15)` — fails over `ℤ` for `n ≥ 2`: `L₀ⁿ : Λ⁰ → Λ^{2n}` is multiplication by
-`n!` (here: by an even number), so the exterior model over `ℤ` does not satisfy the
-Lefschetz conditions. Over `ℚ` the obstruction disappears.
+* `produits`, `produit_force` — the products of the reading, and the `H¹ × H²` one is the only
+  one compatible with associativity and the pairing `H¹ × H³`;
+* `one_mul`, `mul_one`, `mulₗ`, `mul_comm_of_pair`, `mul_anticomm_of_impair`,
+  `mul_self_of_impair` — whatever `φ, ψ, Q`, a bilinear unital graded-anticommutative law;
+* `assoc_iff` — associative iff
+  `φ(x,y)φ(t,z) + Q(ψ(x,y), ψ(t,z)) = φ(t,x)φ(y,z) + Q(ψ(t,x), ψ(y,z))`;
+* `lefschetz_iff` — `ξ² : H⁰ → H⁴` is always bijective and `ξ : H¹ → H³` is iff `φ` is
+  non-degenerate (`V` finite-dimensional);
+* `poincare_iff` — `H⁰ × H⁴`, `H¹ × H³` always perfect, `H² × H²` non-degenerate iff `Q` is
+  (no finiteness);
+* page 26: `chi_eq` (`xyzt = χ(x,y,z,t)ξ²`), `chi_alt`, `identite_iff_chi` (associativity ⇔
+  `χ` alternating ⇔ `χ(x,y,y,t) = 0`), and `reformulation`, `reformulation_spec`: from
+  `(W̃, Q̃, α, ξ)` with `Q̃(ξ,ξ) = 1`, `W = ξ^⊥`, `φ = Q̃(α(·), ξ)`, `ψ = α - φξ`, `Q = Q̃|_W`,
+  associativity is `Q̃(α(x∧y), α(y∧t)) = 0`, Lefschetz is « `φ` non dégénérée » and Poincaré
+  is « `Q̃` non dégénérée ».
 
-The Hodge algebras of order 2 hold as the reading states them, over any commutative ring for the
+## Implementation notes
+
+mathlib's `H = ⁅Λ, L⁆` is minus the reading's `[L, Λ]`. In `inverse_Lefschetz_algebrique`,
+« Algebraic » is membership in given sets of maps, stable under composition and `F`-scalars.
+
+`DonneesHodge` holds `(φ, ψ, Q)`: `φ` alternating on `V`, `ψ : Λ²V → W`, `Q` symmetric on `W`;
+`AlgHodge` is `k ⊕ V ⊕ (kξ ⊕ W) ⊕ V̌ ⊕ kξ²` and `DonneesHodge.mul` the product of page 24.
+The Hodge algebras of order 2 hold over any commutative ring for the
 construction and associativity, over a field for the two conditions: associativity reduces to
 the single triple `H¹ × H¹ × H¹` (the triples with one factor in `H²` hold by the definition of
 `x · h`, using only that `φ`, `ψ` are alternating and `Q` symmetric), and each condition reads
@@ -103,7 +115,9 @@ on one datum. Finite dimension is used once, for Lefschetz (`ξ : V → V̌` inj
 Poincaré needs none. The quadrilinear identity is exactly the alternance of `χ`, and in the
 reformulation `Q̃` is non-degenerate iff its restriction to `ξ^⊥` is, because `Q̃(ξ,ξ) = 1`.
 
-**Not formalised.** That `(L₀, Λ₀)` generate an `𝔰𝔩₂`-representation on all of
+## Not formalised
+
+That `(L₀, Λ₀)` generate an `𝔰𝔩₂`-representation on all of
 `Λ M₀` (only its value on `1` is computed); the derivation of hard Lefschetz from
 `𝔰𝔩₂` (the folder takes the primitive decomposition as known); in the theorem of no. 6,
 that `Λ` and the projectors `π_{i,α}` given by the formulas of pages 10–12 satisfy `(6.7)`
@@ -112,8 +126,12 @@ homomorphism `Φ₀ → ℰ`; the Corollary of page 48; the dimension-6 countere
 21; the finiteness question of page 28 on the orbit under `u` (an unreconstructible sketch);
 everything geometric.
 
-What this certifies is that the reading holds together, not that it is what the
-pages say (issue #26).
+## References
+
+* A. Grothendieck, Folder 16, pp. 6–13, 16, 21, 24–28, 47–48 (reading
+  `transcripts/16/16.modern.tex`; findings `16-algebraic-iso-suffices`,
+  `16-graded-ring-lefschetz-criterion`, `16-universal-lefschetz-ring`,
+  `16-hodge-algebras-order-2`)
 -/
 
 @[expose] public section

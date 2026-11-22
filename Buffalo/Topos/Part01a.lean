@@ -14,10 +14,17 @@ Entries of `docs/buffalo-topos/index.tex` from « Presheaves and sheaves on a sp
 and colimits » (video `URU5jgTvjhU`, 0:03:26–1:54:21). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
 
+## Implementation notes
+
 Presheaves of sets on a space `X` are Mathlib's `X.Presheaf (Type u)`, functors
 `(Opens X)ᵒᵖ ⥤ Type u`; sheaves are `TopCat.Sheaf (Type u) X`, the full subcategory of those
 satisfying `TopCat.Presheaf.IsSheaf`. Most proofs below go through the unique-gluing form of the
 sheaf condition, `TopCat.Presheaf.isSheaf_iff_isSheafUniqueGluing_types`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 0:03:26–1:54:21
+  (4 April 1973)
 -/
 
 @[expose] public section

@@ -12,6 +12,11 @@ public import Buffalo.AG.Part01
 
 Claims on the reconstructed blackboards `public/buffalo-boards/51wmmpHand0-*.json` (0:00:00–4:55:19)
 that no index entry of part 01 formalises. Status in `docs/buffalo-ag/lean/Part01-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), video `51wmmpHand0`, 0:00:00–4:55:19
+  (reconstructed blackboards `public/buffalo-boards/51wmmpHand0-*.json`)
 -/
 
 @[expose] public section

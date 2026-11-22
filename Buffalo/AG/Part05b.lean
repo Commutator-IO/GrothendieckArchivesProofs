@@ -14,10 +14,17 @@ The entries of `docs/buffalo-ag/index.tex` lines 684–733 (video `thSz9ZHDK9o`,
 fibres and base change for projective bundles, the relative spectrum and affine morphisms, fibre
 products of schemes, Grassmannians and automorphism groups, localization at a point.
 
-Conventions. As in `Part05a`, mathlib has no projective bundle `𝐏(ℳ)` and no relative spectrum
-`Spec 𝒜` of a quasi-coherent algebra; the entries on them are formalised in their affine or
-ring-theoretic content (`S = Spec K`, the absolute `Spec`, the `Γ ⊣ Spec` adjunction, and
-`Proj` of a graded algebra for the properness of projective bundles).
+## Not formalised
+
+As in `Part05a`, mathlib has no projective bundle `𝐏(ℳ)` and no relative spectrum `Spec 𝒜` of a
+quasi-coherent algebra; the entries on them are formalised in their affine or ring-theoretic
+content (`S = Spec K`, the absolute `Spec`, the `Γ ⊣ Spec` adjunction, and `Proj` of a graded
+algebra for the properness of projective bundles).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 20 June 1973, video `thSz9ZHDK9o`,
+  8:56:26–10:31:34 (`docs/buffalo-ag/index.tex`, lines 684–733)
 -/
 
 @[expose] public section

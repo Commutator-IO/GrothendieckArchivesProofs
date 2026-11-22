@@ -15,12 +15,17 @@ regular if and only if its global dimension is finite; the localization of a reg
 a prime is therefore regular) unformalised, Mathlib having no notion of global dimension. It is
 proved here from AxiomMath/Stacks (Apache-2.0).
 
-**What is proved.** `thm_8121`: for a noetherian local ring `R`,
-* `R` is regular (Mathlib's `IsRegularLocalRing`) if and only if its global dimension is finite;
-* if `R` is regular, its global dimension equals its Krull dimension `dim R`;
-* if `R` is regular, then `R_𝔭` is a regular local ring for every prime `𝔭` of `R`.
+## Main results
 
-**How.** The global dimension is the supremum `⨆ M : ModuleCat.{u} R, projectiveDimension M` of
+* `thm_8121`: for a noetherian local ring `R`,
+  * `R` is regular (Mathlib's `IsRegularLocalRing`) if and only if its global dimension is
+    finite;
+  * if `R` is regular, its global dimension equals its Krull dimension `dim R`;
+  * if `R` is regular, then `R_𝔭` is a regular local ring for every prime `𝔭` of `R`.
+
+## Implementation notes
+
+The global dimension is the supremum `⨆ M : ModuleCat.{u} R, projectiveDimension M` of
 the projective dimensions of all `R`-modules, in `WithBot ℕ∞`, and "finite" is `≠ ⊤`, as in
 Stacks 00O6 and 00OC. The first two items are items (2), (3), (4) of Stacks 00OC
 (`isRegularLocalRing_tfae`, `StacksFrontier/RingTheory/RegularLocalRing/GlobalDimension.lean`);
@@ -29,10 +34,18 @@ the third is Stacks 0AFS (`IsLocalRing.isRegularRing_tfae`,
 lecture: global dimension does not grow under localization (Stacks 00O8), so `R_𝔭` has finite
 global dimension, hence is regular by Serre's criterion.
 
-**Not formalised.** The global dimension is that of modules in the universe of `R` (by Stacks
-065T this is no restriction, the cyclic modules `R ⧸ I` already bounding it); the further equality
-of the global dimension with `dim_κ 𝔪/𝔪²` and the equivalence with `pd_R κ < ∞`, which Stacks
-00OC also gives, are not part of the entry and are not restated here.
+The global dimension is that of modules in the universe of `R` (by Stacks 065T this is no
+restriction, the cyclic modules `R ⧸ I` already bounding it).
+
+## Not formalised
+
+The further equality of the global dimension with `dim_κ 𝔪/𝔪²` and the equivalence with
+`pd_R κ < ∞`, which Stacks 00OC also gives, are not part of the entry and are not restated here.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), entry `Oqhr-Gt66es-8121` (2:15:21)
+* Stacks Project, tags 00O6, 00OC, 0AFS, 00O8, 065T
 -/
 
 @[expose] public section

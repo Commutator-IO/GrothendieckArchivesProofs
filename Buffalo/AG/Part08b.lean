@@ -14,10 +14,17 @@ The entries of `docs/buffalo-ag/index.tex` lines 1099–1138 (video `vuys5SNs2eQ
 descent of properties of morphisms, of modules and of topological properties along faithfully
 flat morphisms.
 
+## Implementation notes
+
 Conventions as in `Part08a`: `g : S' ⟶ S` is the base change, `f : X ⟶ S`,
 `f' = pullback.snd f g : X ×_S S' ⟶ S'` and `g' = pullback.fst f g`. "Faithfully flat
 quasi-compact" is mathlib's `@Surjective ⊓ @Flat ⊓ @QuasiCompact`, along which mathlib proves
 fpqc descent of many properties (`Mathlib.AlgebraicGeometry.Morphisms.FlatDescent`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 9 July 1973, video `vuys5SNs2eQ`,
+  0:48:33–2:26:00 (`docs/buffalo-ag/index.tex`, lines 1099–1138)
 -/
 
 @[expose] public section

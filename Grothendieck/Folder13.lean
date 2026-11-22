@@ -22,7 +22,9 @@ de Rham lattice, `T_DR(M) = g(V_ℚ̄)` inside `V ⊗ ℂ`, the question becomes
 says of the rank-one case: « c'est une puissance de Tate, et ça marche ».
 
 This file proves the two things the page states and does not argue, in models of the edition's
-choosing:
+choosing.
+
+## Main results
 
 * `invariants_subset_inter_smul` (Grothendieck, page 47, the inclusion « `V^G ⊂ V ∩ g(V̄)` »):
   for a group acting on a set, an element of `B ⊆ Λ` fixed by the whole group lies in
@@ -35,15 +37,26 @@ choosing:
   otherwise. The theorem says that `ℚ ∩ (2πi)ⁿ ℚ̄` is exactly that: all of `ℚ` for `n = 0`,
   `{0}` for `n ≠ 0`. The equality `V^G = V ∩ g(V̄)` thus holds in rank one.
 
+## Implementation notes
+
 **Hypothesis, not proved here.** For `n ≠ 0` the argument needs the transcendence of `π`
 (Lindemann, 1882), which Mathlib does not have at the pinned revision (it has the analytic part
 of Lindemann–Weierstrass, `Mathlib/NumberTheory/Transcendental/Lindemann/AnalyticalPart.lean`,
 and `irrational_pi`). It is taken as the explicit hypothesis `hπ`. Everything else, that `i`
 is algebraic and that `z` is algebraic when a nonzero integer power of it is, is proved.
 
-The identification of `ℚ(n)` with these two lines inside `ℂ`, and of `V^G` with `ℚ` or `0`, is
-the edition's model and is not formalised; the page writes neither. The general question of
-page 47, for motives that are not of Tate type, is open: it is the period conjecture.
+## Not formalised
+
+The transcendence of `π` (the hypothesis `hπ` above). The identification of `ℚ(n)` with these
+two lines inside `ℂ`, and of `V^G` with `ℚ` or `0`, is the edition's model and is not
+formalised; the page writes neither. The general question of page 47, for motives that are not
+of Tate type, is open: it is the period conjecture.
+
+## References
+
+* A. Grothendieck, « Groupe de Galois motivique » (1965), folder 13, pp. 33, 47; transcription
+  `transcripts/13/batch-03.fr.tex`, modernised reading `transcripts/13/13.modern.tex`
+* F. Lindemann (1882), transcendence of `π`
 -/
 
 @[expose] public section

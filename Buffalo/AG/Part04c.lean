@@ -15,7 +15,14 @@ morphisms into an affine scheme and the adjunction `Γ ⊣ Spec`, schemes as she
 Zariski topology and the comparison with affine schemes, sums of schemes, epimorphisms of
 Zariski sheaves, open immersions of sheaves and the representability criterion.
 
+## Implementation notes
+
 All statements are over `k = ℤ` (all schemes, all rings) unless said otherwise.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 18 June 1973, video `thSz9ZHDK9o`,
+  4:04:17–5:58:36 (`docs/buffalo-ag/index.tex`, lines 552–611)
 -/
 
 @[expose] public section

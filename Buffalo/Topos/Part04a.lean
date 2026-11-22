@@ -10,9 +10,13 @@ public import Mathlib
 /-!
 # Buffalo, topos theory, part 4a: coverings, `f_!` and `f^!`, sites and sheaves on a site
 
-Entries of `docs/buffalo-topos/index.tex` from « Galois theory of coverings and classifying topoi »
-to « The associated sheaf on a site » (video `PqCQM3Pcl6Q`, 3:23:52–5:09:50). The status of each
-entry is in `docs/buffalo-topos/lean/Part04.json`.
+Entries of `docs/buffalo-topos/index.tex` from « Galois theory of coverings and classifying
+topoi » to « The associated sheaf on a site » (video `PqCQM3Pcl6Q`, 3:23:52–5:09:50). The status
+of each entry is in `docs/buffalo-topos/lean/Part04.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 3:23:52–5:09:50
 -/
 
 @[expose] public section

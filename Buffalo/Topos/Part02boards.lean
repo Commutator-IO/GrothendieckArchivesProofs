@@ -13,6 +13,11 @@ public import Buffalo.Topos.Part02a
 Items of the reconstructed blackboards `public/buffalo-boards/URU5jgTvjhU-{20201,23160,26072,
 29033,30214}.json` (18 and 25 May 1973) that make a claim not formalised by an index entry of
 Part02. The status of every board item is in `docs/buffalo-topos/lean/Part02-boards.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, boards 20201, 23160, 26072,
+  29033, 30214 (18 and 25 May 1973)
 -/
 
 @[expose] public section

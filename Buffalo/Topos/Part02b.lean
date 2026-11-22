@@ -13,6 +13,11 @@ public import Buffalo.Topos.Part02a
 Entries of `docs/buffalo-topos/index.tex` from « Stalks and infinite products » to « Gluing and
 quotient topoi » (video `URU5jgTvjhU`, 6:51:54–7:52:11). The status of each entry is in
 `docs/buffalo-topos/lean/Part02.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 6:51:54–7:52:11
+  (18 May 1973)
 -/
 
 @[expose] public section

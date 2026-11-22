@@ -16,23 +16,33 @@ Entries `thSz9ZHDK9o-33684` and `thSz9ZHDK9o-33941` of `docs/buffalo-ag/index.te
 `Part05b.lean` treats over an affine base only, Mathlib (at `715a03a`) having no quasi-coherent
 algebras and no relative spectrum. They are completed here with the vendored AxiomMath/Stacks
 files of `StacksFrontier/AlgebraicGeometry/RelativeSpec/` and their imports (Apache-2.0, see
-`lean/Stacks/NOTICE.md`):
+`lean/Stacks/NOTICE.md`).
+
+## Main definitions
 
 * a *relative spectrum situation* `s` (`Stacks.RelativeSpec.RelativeSpecSituation`, tag 01LM) is
   a scheme `S = s.base` with a quasi-coherent sheaf `𝒜 = s.algebra` of commutative
   `𝒪_S`-algebras;
 * `Stacks.RelativeSpec.relativeSpecFunctor s` sends `T` to the pairs `(f : T ⟶ S, 𝒜 ⟶ f_*𝒪_T)`
   of a morphism and a map of `𝒪_S`-algebras, which by adjunction are the `𝒪_T`-algebra maps
-  `f^*𝒜 ⟶ 𝒪_T` of the lecture;
+  `f^*𝒜 ⟶ 𝒪_T` of the lecture.
+
+## Main results
+
 * the scheme `(gluedSpectrum s).scheme`, glued from the `Spec Γ(U, 𝒜)` over the affine opens
   `U ⊆ S`, represents it (tags 01LU, 01LV), and its restriction over every affine open `U` is
   `Spec Γ(U, 𝒜)` (the cartesian squares of the gluing, tag 01LP).
+* Entries `34263` and `34520` (schemes affine over `S` and the anti-equivalence with
+  quasi-coherent algebras, which `Part05b.lean` proves over an affine base) follow from the same
+  files: `isQuasicoherent_pushforwardAlgebra` (`f_*𝒪_X` is quasi-coherent for `f` affine, half of
+  tag 02KG) and `affineQuasicoherentEquivalence` (tag 01SA), whose essential surjectivity sends
+  `𝒜` to its relative spectrum, affine over `S`.
 
-Entries `34263` and `34520` (schemes affine over `S` and the anti-equivalence with quasi-coherent
-algebras, which `Part05b.lean` proves over an affine base) follow from the same files:
-`isQuasicoherent_pushforwardAlgebra` (`f_*𝒪_X` is quasi-coherent for `f` affine, half of tag
-02KG) and `affineQuasicoherentEquivalence` (tag 01SA), whose essential surjectivity sends `𝒜`
-to its relative spectrum, affine over `S`.
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), entries `thSz9ZHDK9o-33684`,
+  `thSz9ZHDK9o-33941`, `34263`, `34520` (`docs/buffalo-ag/index.tex`)
+* Stacks Project, tags 01LM, 01LU, 01LV, 01LP, 02KG, 01SA
 -/
 
 @[expose] public section

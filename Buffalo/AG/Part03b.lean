@@ -14,9 +14,16 @@ The entries of `docs/buffalo-ag/index.tex` lines 403–439 (video `_lTf_L0yvrU`,
 recorded on the groups course's video but belonging to the algebraic geometry course): sheaves on a
 spectrum, the localizations `M_f` and the sheaf `M~`, flat and faithfully flat modules.
 
+## Implementation notes
+
 Conventions. `M_f` is mathlib's `LocalizedModule (Submonoid.powers f) M` and `A_f` is
 `Localization.Away f`; the sheaf `M~` is `AlgebraicGeometry.tilde M`, a sheaf of modules over the
 structure sheaf of `Spec A`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 11 June 1973, video `_lTf_L0yvrU`,
+  3:45:53–4:59:18 (`docs/buffalo-ag/index.tex`, lines 403–439)
 -/
 
 @[expose] public section

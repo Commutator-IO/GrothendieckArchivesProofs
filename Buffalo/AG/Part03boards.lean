@@ -12,6 +12,11 @@ public import Buffalo.AG.Part03
 
 The board items of `public/buffalo-boards/` in the time range of part 03 that no index entry
 formalises (`docs/buffalo-ag/lean/Part03-boards.json`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), part 03 (reconstructed blackboards
+  `public/buffalo-boards/`)
 -/
 
 @[expose] public section

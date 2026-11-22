@@ -13,6 +13,11 @@ public import Buffalo.AG.Part04c
 The entries of `docs/buffalo-ag/index.tex` lines 612–631 (video `thSz9ZHDK9o`, 6:01:54–6:59:05):
 gluing schemes, lines and hyperplanes of a vector space, invertible modules and the functor
 `𝐏(V)` of invertible quotients, its charts `𝐏_e` and their representing algebras.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 18 June 1973, video `thSz9ZHDK9o`,
+  6:01:54–6:59:05 (`docs/buffalo-ag/index.tex`, lines 612–631)
 -/
 
 @[expose] public section

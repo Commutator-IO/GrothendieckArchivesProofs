@@ -14,6 +14,11 @@ Entries of `docs/buffalo-topos/index.tex` lines 965–1114 (video `ORG14LNb5gE`,
 properties not stable under filtered colimits (rank-`n` coverings, rings with `n` connected
 components; both corrected to `n ≥ 2`), faithfulness of actions, topoi without points. Statuses in
 `docs/buffalo-topos/lean/Part07.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `ORG14LNb5gE`, 3:48:16–4:36:27
+  (12 July 1973)
 -/
 
 @[expose] public section

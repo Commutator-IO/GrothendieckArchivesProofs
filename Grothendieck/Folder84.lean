@@ -32,6 +32,8 @@ These are findings `84-product-quadratic-algebras-formula` and
 says only that the claims hold as stated in coordinates; whether they stand in
 the literature is a separate question.
 
+## Main results
+
 What is formalised, over an arbitrary commutative ring `R`, without dividing
 by `2`:
 
@@ -72,6 +74,13 @@ by `2`:
   `span_eq_top_iff_isUnit` (page 79, `L = 𝒪`), `push_pull`,
   `push_pull_square` and `push_pull_unit_iff` (pages 125 to 169: the comparison
   of pushout and pullback needs and uses `γχ = 2`).
+
+## References
+
+* A. Grothendieck, Folder 84, pages 48, 62–65, 79–87, 98–106 and 125–169 (modernised reading
+  `transcripts/84/84.modern.tex`; findings `84-product-quadratic-algebras-formula`,
+  `84-product-coinvariants-one-etale`, `84-two-regular-triplet-classification`,
+  `84-chi-trivialised-extension-product`)
 -/
 
 @[expose] public section

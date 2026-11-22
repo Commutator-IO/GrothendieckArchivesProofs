@@ -21,6 +21,15 @@ it, and every member `A` has a non-empty open stratum `A° = A ∖ ⋃ {B ∈ F 
 « ultra-topologie » — an Alexandrov topology, that is a preorder, the members being the
 closures of the points.
 
+**What the formalisation finds.** The gluing lemma and the closing characterisation of
+page 48 hold for arbitrary preorders, without finiteness; the three-point model refutes e)
+exactly as page 48 says. The connectedness of `𝓜` asserted on pages 12–14 is false for every
+`L` with at least two points, already with finite figures, and with it the claimed vacuity
+of C 4: the multiplicity `{L}` has no sub-figure but itself and `∅`, and no figure containing
+it as a sub-figure but itself.
+
+## Main results
+
 Proved here, in three parts.
 
 * **Pages 12–14, the components of `𝓜`.** `Mult`: the multiplicities (figures with a greatest
@@ -31,9 +40,7 @@ Proved here, in three parts.
   components are compatible) fails, and `𝓜` is not connected — against the « Prop. » of
   page 13, which asserts connectedness and the vacuity of C 4, for finite figures in
   particular.
-* **Pages 38–40, 45 and 48, the glued topology.** Ultra-topologies are encoded by their
-  specialisation preorders `x ≤ y ⇔ x ∈ closure {y}`; closed sets are down-closed sets
-  (`DownClosed`), and a finer topology has a smaller preorder. For `T` closed in `(S, τ)` and
+* **Pages 38–40, 45 and 48, the glued topology.** For `T` closed in `(S, τ)` and
   `τ'₀` finer than `τ` on `T`, `glue` is the preorder of point (d) of the lemma of
   pages 40–41. `glue_isPreorder`, `glue_admits`: it is a preorder, finer than `τ`, inducing
   `τ'₀`. `le_glue`: every such topology `τ''` is finer than it, so `τ'` is the least fine one
@@ -46,14 +53,18 @@ Proved here, in three parts.
   competitor `τ''` with `a < b` only. `threePoint_e_false`: `τ''` satisfies (i)–(iv) of the
   characterisation e) of pages 41–42 and differs from `τ'`.
 
-**What the formalisation finds.** The gluing lemma and the closing characterisation of
-page 48 hold for arbitrary preorders, without finiteness; the three-point model refutes e)
-exactly as page 48 says. The connectedness of `𝓜` asserted on pages 12–14 is false for every
-`L` with at least two points, already with finite figures, and with it the claimed vacuity
-of C 4: the multiplicity `{L}` has no sub-figure but itself and `∅`, and no figure containing
-it as a sub-figure but itself. The figures themselves are encoded only in the first part;
-the second and third parts work directly with preorders, which page 36 identifies with
-figures.
+## Implementation notes
+
+Ultra-topologies are encoded by their specialisation preorders `x ≤ y ⇔ x ∈ closure {y}`;
+closed sets are down-closed sets (`DownClosed`), and a finer topology has a smaller preorder.
+The figures themselves are encoded only in the first part; the second and third parts work
+directly with preorders, which page 36 identifies with figures.
+
+## References
+
+* A. Grothendieck, *Vers une géométrie des formes*, chapter V, « Algèbre des figures »
+  (14–18 June 1986), Folder 156-5, pp. 12–14, 36, 38–42, 45, 48 (reading
+  `transcripts/156-5/156-5.modern.tex`)
 -/
 
 @[expose] public section

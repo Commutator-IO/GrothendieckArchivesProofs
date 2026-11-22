@@ -16,9 +16,16 @@ algebras through the dual numbers `D_K(N)`, finite sums of affine spaces and ide
 connected and `0`-connected objects, points with values in fields and the prime spectrum, the
 Zariski topology and irreducible spaces.
 
+## Implementation notes
+
 Notation as in `Buffalo.AG.Part01a`: `k` is a commutative ring (the lecture's `K`), `V k A` is the
 functor `k' ↦ Hom_k(A, k')` represented by `A`, and `𝒞 = (CommAlgCat k)ᵒᵖ` is the category of
 affine spaces over `k`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 5 June 1973, video
+  `51wmmpHand0`, 4:55:19–6:38:51 (`docs/buffalo-ag/index.tex`)
 -/
 
 @[expose] public section

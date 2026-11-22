@@ -16,6 +16,15 @@ bigon-free `PseudolineMap` can be numbered `ℓ₀, ℓ₁, …` so that the fir
 the first six a complete quadrangle `III_6`, and every partial arrangement `{ℓ₀, …, ℓ_{k-1}}`
 from there on is bigon-free.
 
+## Main results
+
+* `exists_numbering`: the numbering of the lemma.
+* `bigonFree_of`, `Good.mono`: the reduction to good lines.
+* `good_of_pencil`, `good_iii6`: every line is good for the six sides of a `III_6`.
+* `good_gp4`, `diag_of_not_good`, `diag_unique`, `iii6_of`: the case without `III_6`.
+
+## Implementation notes
+
 **Reduction** (`bigonFree_of`, `Good.mono`). A line `l` is *good* for a set `S` of lines
 (`Good`) when it carries three distinct vertices, each on a line of `S` other than `l`. Every
 such vertex is a vertex of the partial arrangement of any set of lines containing `S` and `l`,
@@ -36,6 +45,10 @@ them meets them in two vertices only, two opposite vertices of the quadrilateral
 all the lines (the map is bigon-free). Numbering: `x, y, z, w`, the other lines, and `δ` last
 (`exists_numbering`), so that a partial arrangement containing `δ` is the whole map. This covers
 the case where the map itself is `II_4` (`n = k₀ = 4`).
+
+## References
+
+* A. Grothendieck, Folder 80, page 28
 -/
 
 @[expose] public section

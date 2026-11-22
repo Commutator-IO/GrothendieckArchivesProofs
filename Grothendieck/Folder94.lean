@@ -16,12 +16,7 @@ noetherian and `R` coherent, there is a dense open `U ⊆ S` such that
 `Tor_i^A(R, A_𝔭/(t)) = 0` for `i > 0`, `𝔭 ∈ U` and every `A_𝔭`-regular sequence `t`. This is
 finding `94-generic-tor-regular-sequences`.
 
-The argument of the reading (Lemme 6 b), with the flatness variant of Lemme 16): let `J` be a
-nilpotent ideal of `A` (the nilradical, localised at `𝔭`), `A₀ = A/J`, and suppose that the
-layers `grᵏ_J(A) = JᵏA/Jᵏ⁺¹A` are free `A₀`-modules and the layers `grᵏ_J(R) = JᵏR/Jᵏ⁺¹R`
-flat `A₀`-modules. Then every `A`-regular sequence is `R`-regular; since the Koszul complex
-of an `A`-regular sequence `t` resolves `A/(t)`, its homology after `⊗ R` is
-`Tor_•^A(R, A/(t))`, which vanishes in positive degrees once `t` is `R`-regular.
+## Main results
 
 Proved here, for any commutative ring `A`, any nilpotent ideal `J` and any `A`-module `R`
 (no noetherian or finiteness hypothesis on `R`, so that the case of Lemme 16, `R` coherent on
@@ -43,13 +38,29 @@ an `X` of finite type over `S`, is covered):
   `isRegular_of_gr_flat_of_isLocalRing` gives a regular sequence for a nonzero finite `R` and
   `t` in the maximal ideal.
 
-**What is not formalised.** The step « `t` is `R`-regular ⟹ `Tor_i^A(R, A/(t)) = 0` for
+## Implementation notes
+
+The argument of the reading (Lemme 6 b), with the flatness variant of Lemme 16): let `J` be a
+nilpotent ideal of `A` (the nilradical, localised at `𝔭`), `A₀ = A/J`, and suppose that the
+layers `grᵏ_J(A) = JᵏA/Jᵏ⁺¹A` are free `A₀`-modules and the layers `grᵏ_J(R) = JᵏR/Jᵏ⁺¹R`
+flat `A₀`-modules. Then every `A`-regular sequence is `R`-regular; since the Koszul complex
+of an `A`-regular sequence `t` resolves `A/(t)`, its homology after `⊗ R` is
+`Tor_•^A(R, A/(t))`, which vanishes in positive degrees once `t` is `R`-regular.
+
+## Not formalised
+
+The step « `t` is `R`-regular ⟹ `Tor_i^A(R, A/(t)) = 0` for
 `i > 0` » (Koszul complex; Mathlib has neither Koszul resolutions nor the long exact sequence of
 `Tor`) is cited, not proved; only its `Tor₁`-type consequence `injective_mapQ_of_exact` is.
 The dense open `U` is not constructed: for `X = S` it is the free locus of the finitely many
 nonzero layers over the reduced ring `A₀` (generic freeness, open and containing the minimal
 primes), and for `X` of finite type it needs generic flatness, which Mathlib does not have;
 the compatibility of the layers with localisation is not written out either.
+
+## References
+
+* A. Grothendieck, Folder 94, pages 8, 9 and 19 (modernised reading
+  `transcripts/94/94.modern.tex`, Lemmes 6 and 16; finding `94-generic-tor-regular-sequences`)
 -/
 
 @[expose] public section

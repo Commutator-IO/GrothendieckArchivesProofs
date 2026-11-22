@@ -20,31 +20,46 @@ public import Mathlib.Tactic.Linarith
 /-!
 # Folder 85: the invariant of a rotation of order 5 (pages 10, 27, 30, 40)
 
-**Partial, and chosen.** The finding `85-a5-pgl2-moduli-spec-z-phi`
-(`src/content/findings.ts`) states the theorem of page 40 of the reading
-(`transcripts/85/85.modern.tex`):
+Three findings of `src/content/findings.ts`, all partial, on the reading
+(`transcripts/85/85.modern.tex`).
+
+**The rotation of order 5: partial, and chosen.** The finding
+`85-a5-pgl2-moduli-spec-z-phi` (`src/content/findings.ts`) states the theorem of page 40 of
+the reading (`transcripts/85/85.modern.tex`):
 
 > For any scheme `S`, the groupoid of pairs `(G, φ)`, `G` a form of `PGL₂` over
 > `S` and `φ : 𝔄₅ → G` a monomorphism, is rigid, and `φ ↦ A(φ(π))` (`π` a
 > standard 5-cycle) makes its functor of isomorphism classes representable by
 > `Spec ℤ[T]/(T² + T − 1)`.
 
-Rigidity, representability and the passage to forms of `PGL₂` are out of
-reach here. What this file proves is the computation under the statement:
+What this file proves is the computation under the statement:
 the value `A(φ(π))` is a root of `T² + T − 1`, and, conversely, a root is
 attained.
 
-The invariant. For `PGL₂` the reading (pages 23 and 27) takes
-`A(v) = (Tr v)² / det v − 2` for a lift `v ∈ GL₂`. Here `invA g` is this
-expression for a `2 × 2` matrix `g` over a commutative ring `R`, with
-`Ring.inverse` for the division; it is used only when `det g` is a unit. It
-does not depend on the lift (`invA_smul`).
+What the formalisation found: the computation holds over every base, in
+characteristics 2, 3 and 5 included; in characteristic 5 the model gives the
+unipotent `p` (`ζ = 1`, `A = 2`). The model lives in the split `PGL₂` over
+`ℤ[ζ₅]`, not over `ℤ[T]/(T² + T − 1)`: over `ℚ(√5)`, a real field, the split
+`PGL₂` contains no `𝔄₅` (the criterion the reading cites from memory), so a
+model over `ℤ[φ]` needs a non-split form, which is why the theorem speaks of
+forms of `PGL₂`.
 
-Order 5 on every fibre. For a matrix with invertible determinant, "the image
-of `g` in `PGL₂(k(s))` is not `1`, for every point `s`" says that `g 0 1`,
-`g 1 0` and `g 0 0 − g 1 1` do not all vanish in any residue field, that is,
-that they generate the unit ideal (`NullePartScalaire`). Since 5 is prime,
-"of order 5 on every fibre" is then `g⁵` scalar.
+**Representations of `G₂` (pages 4 to 10), finding `85-g2-pgl2-moduli-over-z`: partial, and
+chosen.**
+
+**Representations of `𝔻_∞` (pages 16 to 20), finding `85-dinfty-torsor-classification`:
+partial, the split group over a field.** What the formalisation found: the equivalence of
+page 17 as read, with `R` a torsor under `𝒰_{2−α}`, is false. Over `ℚ`, `H¹(ℚ, 𝔾_m) = 0`
+would leave one class for `α = −6`, and automorphisms of `PGL₂` over a field are inner, so
+`dinfty_not_conj_rat` gives two; and the automorphism group of an object of `C′` is
+`𝒰_ρ(S)`, against `₂𝒰_ρ` of page 19, which `centralizer_iff` confirms. The classes match
+torsors under `₂𝒰_ρ` (`μ₂` for `ρ` invertible). Also, « `u_s² ≠ 1`, that is `α + 2`
+invertible » is not an equivalence: `t₁ = t₀` gives `u = 1`, `α = 2`
+(`dinfty_add_two_not_iff`).
+
+## Main results
+
+### The rotation of order 5 (pages 10, 27, 30, 40)
 
 * `pow_five_eq`: `g⁵ = x₅ g + y₅` with `x₅ = t⁴ − 3dt² + d²` (Cayley–Hamilton,
   iterated), `t = Tr g`, `d = det g`; `coeff_eq`: `x₅ = d² (A² + A − 1)`.
@@ -61,17 +76,9 @@ that they generate the unit ideal (`NullePartScalaire`). Since 5 is prime,
   are the relations of the (2, 3, 5) triangle group, which is `𝔄₅`; the
   homomorphism from `𝔄₅` and its injectivity are not formalised.
 
-What the formalisation found: the computation holds over every base, in
-characteristics 2, 3 and 5 included; in characteristic 5 the model gives the
-unipotent `p` (`ζ = 1`, `A = 2`). The model lives in the split `PGL₂` over
-`ℤ[ζ₅]`, not over `ℤ[T]/(T² + T − 1)`: over `ℚ(√5)`, a real field, the split
-`PGL₂` contains no `𝔄₅` (the criterion the reading cites from memory), so a
-model over `ℤ[φ]` needs a non-split form, which is why the theorem speaks of
-forms of `PGL₂`.
+### Representations of `G₂` (pages 4 to 10)
 
-## Representations of `G₂` (pages 4 to 10), finding `85-g2-pgl2-moduli-over-z`
-
-**Partial, and chosen.** `G₂ = ⟨τ₀, τ₁, τ₂ | τᵢ², (τ₀τ₂)²⟩`, `ρ₀ = τ₀τ₁`,
+`G₂ = ⟨τ₀, τ₁, τ₂ | τᵢ², (τ₀τ₂)²⟩`, `ρ₀ = τ₀τ₁`,
 `ρ₁ = τ₁τ₂`, `α₀ = A(ρ₀)`, `α₁ = A(ρ₁)`. A homomorphism to `PGL₂(R)` is given by
 `τᵢ ∈ GL₂(R)` with `τᵢ²` and `(τ₀τ₂)²` scalar. Condition (*) of page 4 at a
 point (`ρ₀² ≠ 1`, `ρ₁² ≠ 1`, `ρ₀ρ₁ ≠ ρ₁ρ₀` in `PGL₂(k)`) is `Star`;
@@ -98,14 +105,9 @@ point (`ρ₀² ≠ 1`, `ρ₁² ≠ 1`, `ρ₀ρ₁ ≠ ρ₁ρ₀` in `PGL₂(
   `isScalar_pow_three_iff`, `order_four_iff` (needs `2` invertible),
   `order_six_iff` (needs `6` invertible), condition c) of the corollary.
 
-Not formalised: forms of `PGL₂` and descent from `R[ℓ]` to `R` (the realisation
-over `R` itself lives in a form, not in the split group in general); conjugacy
-over a general base or over a field without `ℓ`; the identification of `Pₙ` with
-`Fₙ = ∏_{d ∣ n, d ≥ 3} Ψ_d` for general `n`.
+### Representations of `𝔻_∞` (pages 16 to 20)
 
-## Representations of `𝔻_∞` (pages 16 to 20), finding `85-dinfty-torsor-classification`
-
-**Partial: the split group over a field.** A homomorphism `𝔻_∞ → PGL₂(K)` with `u² ≠ 1`,
+A homomorphism `𝔻_∞ → PGL₂(K)` with `u² ≠ 1`,
 `u = φ(τ₀τ₁)`, is given by `t₀, t₁ ∈ GL₂(K)` with `t₀²`, `t₁²` scalar and `(t₀t₁)²` not
 scalar (`DRep`); conjugacy in `PGL₂(K)` is `PConj`.
 
@@ -122,14 +124,35 @@ scalar (`DRep`); conjugacy in `PGL₂(K)` is `PConj`.
 * `dinfty_not_conj_rat`: over `ℚ`, `α = −6` (`ρ = 8`, `𝒰_ρ ≅ 𝔾_m`) is carried by two
   representations that are not conjugate, `det t₀ = −1` and `det s₀ = 1`.
 
-What the formalisation found: the equivalence of page 17 as read, with `R` a torsor under
-`𝒰_{2−α}`, is false. Over `ℚ`, `H¹(ℚ, 𝔾_m) = 0` would leave one class for `α = −6`, and
-automorphisms of `PGL₂` over a field are inner, so `dinfty_not_conj_rat` gives two; and the
-automorphism group of an object of `C′` is `𝒰_ρ(S)`, against `₂𝒰_ρ` of page 19, which
-`centralizer_iff` confirms. The classes match torsors under `₂𝒰_ρ` (`μ₂` for `ρ`
-invertible). Also, « `u_s² ≠ 1`, that is `α + 2` invertible » is not an equivalence:
-`t₁ = t₀` gives `u = 1`, `α = 2` (`dinfty_add_two_not_iff`). Forms of `PGL₂`, local rings
-and torsors over `S` are not formalised.
+## Implementation notes
+
+The invariant. For `PGL₂` the reading (pages 23 and 27) takes
+`A(v) = (Tr v)² / det v − 2` for a lift `v ∈ GL₂`. Here `invA g` is this
+expression for a `2 × 2` matrix `g` over a commutative ring `R`, with
+`Ring.inverse` for the division; it is used only when `det g` is a unit. It
+does not depend on the lift (`invA_smul`).
+
+Order 5 on every fibre. For a matrix with invertible determinant, "the image
+of `g` in `PGL₂(k(s))` is not `1`, for every point `s`" says that `g 0 1`,
+`g 1 0` and `g 0 0 − g 1 1` do not all vanish in any residue field, that is,
+that they generate the unit ideal (`NullePartScalaire`). Since 5 is prime,
+"of order 5 on every fibre" is then `g⁵` scalar.
+
+## Not formalised
+
+* Order 5: rigidity, representability and the passage to forms of `PGL₂` are out of
+  reach here; the homomorphism from `𝔄₅` and its injectivity.
+* `G₂`: forms of `PGL₂` and descent from `R[ℓ]` to `R` (the realisation
+  over `R` itself lives in a form, not in the split group in general); conjugacy
+  over a general base or over a field without `ℓ`; the identification of `Pₙ` with
+  `Fₙ = ∏_{d ∣ n, d ≥ 3} Ψ_d` for general `n`.
+* `𝔻_∞`: forms of `PGL₂`, local rings and torsors over `S` are not formalised.
+
+## References
+
+* A. Grothendieck, Folder 85, pages 4–10, 16–20, 23, 27, 29–31 and 40 (reading
+  `transcripts/85/85.modern.tex`; findings `85-a5-pgl2-moduli-spec-z-phi`,
+  `85-g2-pgl2-moduli-over-z`, `85-dinfty-torsor-classification`)
 -/
 
 @[expose] public section

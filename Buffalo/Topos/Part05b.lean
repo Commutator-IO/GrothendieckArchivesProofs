@@ -15,13 +15,22 @@ algebraic theories and strict cogeneration, accessible functors, representabilit
 accessible categories, morphisms of algebraic theories. The status of each entry is in
 `docs/buffalo-topos/lean/Part05.json`.
 
-Accessible categories and functors are Mathlib's `IsAccessibleCategory` and `Functor.IsAccessible`
-(Adámek–Rosický, with regular cardinals `κ`); Grothendieck's `π`-accessibility (SGA 4 I 9, filtered
-preorders « dominating `π` ») is the `κ = π⁺` case.
-
 One entry was found false as stated: 4gynb9uTEE4-648 (« strict cogeneration is transitive »),
 retracted by the lecturer himself on 10 July (3:39:45); `not_transitive` gives a five-element
 lattice where it fails.
+
+## Implementation notes
+
+Accessible categories and functors are Mathlib's `IsAccessibleCategory` and `Functor.IsAccessible`
+(Adámek–Rosický, with regular cardinals `κ`); Grothendieck's `π`-accessibility (SGA 4 I 9,
+filtered preorders « dominating `π` ») is the `κ = π⁺` case.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 0:04:18–1:51:31
+  (2 July 1973)
+* [SGA 4] exposé I, 9
+* Adámek–Rosický (accessible categories)
 -/
 
 @[expose] public section

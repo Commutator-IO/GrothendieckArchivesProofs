@@ -13,9 +13,18 @@ public import Buffalo.Topos.Part03
 
 Entries of `docs/buffalo-topos/index.tex` lines 965–1114 (video `ORG14LNb5gE`, 2:28:03–5:16:37)
 on the classifying topos of objects and its subtopoi, flat functors, `B_G`, torsors, connected
-rings, elementary topoi, flatness, hypertopoi and universes. Mathlib has no Grothendieck topos as
-such and no classifying topos; each entry is checked in a faithful special case (points, i.e.
-models in `Set`, or a presheaf or sheaf topos), as said in `docs/buffalo-topos/lean/Part07.json`.
+rings, elementary topoi, flatness, hypertopoi and universes.
+
+## Implementation notes
+
+Mathlib has no Grothendieck topos as such and no classifying topos; each entry is checked in a
+faithful special case (points, i.e. models in `Set`, or a presheaf or sheaf topos), as said in
+`docs/buffalo-topos/lean/Part07.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `ORG14LNb5gE`, 2:28:03–5:16:37
+  (12 July 1973)
 -/
 
 @[expose] public section

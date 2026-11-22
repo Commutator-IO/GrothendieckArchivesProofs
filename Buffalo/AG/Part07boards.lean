@@ -12,6 +12,11 @@ public import Buffalo.AG.Part07
 
 The board items of `public/buffalo-boards/` in the time range of part 07 (video `Oqhr-Gt66es`,
 5:24:53–10:19:03) that no index entry formalises (`docs/buffalo-ag/lean/Part07-boards.json`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), video `Oqhr-Gt66es`, 5:24:53–10:19:03
+  (reconstructed blackboards `public/buffalo-boards/`)
 -/
 
 @[expose] public section

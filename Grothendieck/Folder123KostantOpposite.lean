@@ -17,6 +17,14 @@ general position. Problem p:kostant of the note on the open problems (`docs/prob
 states it for `PGL_n(ℂ)` as `OpenProblems.AbelianVarieties.KostantOppositeTypeA`; this file proves
 that proposition for every `n` (`kostantOppositeTypeA`). The other types stay open.
 
+## Main results
+
+* `kostantOppositeTypeA`: the proposition `OpenProblems.AbelianVarieties.KostantOppositeTypeA`,
+  for every `n`.
+* `shiftInv_mem`, `opposite`: the steps of the proof below.
+
+## Implementation notes
+
 The proof uses no eigenvectors. Let `E' = cyclicElement n c`, all `cᵢ ≠ 0`, and let `W` be an
 `E'`-stable subspace of dimension `k`. The weighted shift `x ↦ (x_{j-1} / c_{j-1})_j` (indices mod
 `n`, `shiftInv`) is a left inverse of `E'`, so `E'` is injective, hence bijective on `W`, and `W`
@@ -25,6 +33,15 @@ of index `≥ n - k`, let `p < n - k` be the largest index with `v_p ≠ 0`. For
 `shiftInv^r v` vanishes above `p + r` and not at `p + r` (no index wraps around, since
 `p + k < n`), so the `k + 1` vectors `v, shiftInv v, …, shiftInv^k v` of `W` are linearly
 independent, which contradicts `dim W = k` (`opposite`).
+
+## Not formalised
+
+The types other than `A` stay open.
+
+## References
+
+* A. Grothendieck, letter to Kostant of 22 October 1969, folder 123, pp. 21–22
+* problem p:kostant of `docs/problems/article.tex`
 -/
 
 @[expose] public section

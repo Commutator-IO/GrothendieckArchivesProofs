@@ -23,13 +23,11 @@ findings `86-combinatorial-five-triedres` and `86-hemi-icosahedron-five-set-mode
 `src/content/findings.ts`. Proving them says only that the statements hold as written here;
 whether they stand in the literature is a separate question.
 
-The model. Vertices are `Fin 12` with an explicit neighbour list (`nbrs`); `Adj` is the
-adjacency, `other x y z` the third vertex of the other face on `{x, y}`, `anti` the vertex at
-distance `3` (`anti_iff`). `G` is the group of adjacency-preserving bijections (`Aut`), with
-no model-specific input: every automorphism is determined by the image of the flag `(0, 1, 2)`
-(`eq_ext`), every flag is such an image (`mkAut`), so `Nat.card G = 120` (`card_aut`).
+## Main results
 
-Trièdres. `rho0 (s, t)` is computed from adjacency only. `rho_cube`: `ρ³ = id` without fixed
+### Trièdres
+
+`rho0 (s, t)` is computed from adjacency only. `rho_cube`: `ρ³ = id` without fixed
 point on directions; `rho_sq`: `ρ²(\bar a) = \overline{\{u, ι v\}}`. The table `colTab` labels
 edges by `Fin 5`, and `col_eq_iff` shows that two edges carry the same label exactly when their
 directions lie in the same `ρ`-orbit, so the labels are the trièdres. `col_inj_at`,
@@ -38,12 +36,16 @@ a perfect matching, and orthogonal edges are disjoint (`orthogonal_disjoint`). P
 `face_triedres`, with the page's first direction `{u, v}` corrected to `{u, v₁}`
 (`face_triedre_page_reading`).
 
-The action. `permT : G →* Perm (Fin 5)` is defined from the action on edges and is a
+### The action
+
+`permT : G →* Perm (Fin 5)` is defined from the action on edges and is a
 homomorphism because automorphisms commute with `ρ` and `ι`. `permT_mem_alternating`: the
 image is even; `permT_surjective`: it is all of `Alt_T`; `permT_eq_one_iff`: the kernel is
 `{1, ι}` (page 25).
 
-The hemi-icosahedron. `numb p` is the numbering of `T` given by a flag `p = (s, t, u)` (the
+### The hemi-icosahedron
+
+`numb p` is the numbering of `T` given by a flag `p = (s, t, u)` (the
 trièdres of the edges at `s`, read from `t` away from `u`; page 30). `numb_even`,
 `numb_surjective`, `numb_eq_iff`: the numberings are the 60 even numberings, and two flags have
 the same one iff they are equal or antipodal. `numb_sigma`: the flag involutions act by the
@@ -55,7 +57,20 @@ pentagon, same `(2, 2, 1)` partition, same three-element set. `vertex_pentagons`
 traces a vertex pentagon iff it is even (the dihedral group of the pentagon is even,
 `dihedral_even`); `counts`: 6 pentagons, 15 partitions, all 10 three-element subsets.
 
+## Implementation notes
+
+The model. Vertices are `Fin 12` with an explicit neighbour list (`nbrs`); `Adj` is the
+adjacency, `other x y z` the third vertex of the other face on `{x, y}`, `anti` the vertex at
+distance `3` (`anti_iff`). `G` is the group of adjacency-preserving bijections (`Aut`), with
+no model-specific input: every automorphism is determined by the image of the flag `(0, 1, 2)`
+(`eq_ext`), every flag is such an image (`mkAut`), so `Nat.card G = 120` (`card_aut`).
+
 All finite checks use `decide +kernel`, which the kernel checks.
+
+## References
+
+* A. Grothendieck, Folder 86, pages 18–32 (modernised reading `transcripts/86/86.modern.tex`;
+  findings `86-combinatorial-five-triedres`, `86-hemi-icosahedron-five-set-model`)
 -/
 
 @[expose] public section

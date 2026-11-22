@@ -30,16 +30,10 @@ kernels of epimorphisms between objects of `C₀` lie in `C₀`, instead of (C).
 `D₀ᵇ ≠ Dᵇ ∩ D₀⁻` in general, for a noetherian non-regular ring and `C₀` the free modules of finite
 type.
 
-**The setting here.** `C` is the category of left modules over a ring `R` (`ModuleCat.{v} R`),
-`C₀` an arbitrary predicate on it: no projectivity, which is the difference with
-`IhesSGA6_1_5` (there `C₀` is the free modules of finite type). The formalisation stays at the
-level of objects: an object `A` is put in degree `0`, and its pseudo-coherence in degrees `≥ -n`
-is taken in the form of Cor. 3, `PC C₀ n A`, by recursion (`A` is a quotient of an object of
-`C₀`; for `n + 1`, some surjection from an object of `C₀` has a kernel in `PC C₀ n`). An exact
-triangle of objects is a short exact sequence `0 → A' → A → A'' → 0` (`IsSES`). Hypothesis (C) is
-stated with the iterated kernels `Syz C₀ k` of exact sequences `L_k → ⋯ → L₀ → 0`.
+## Main results
 
-**What is proved,** under (A), (B), (C):
+Under (A), (B), (C):
+
 * `pc_iff_of_isSES`: **the Theorem** for short exact sequences: if `A'` is in `PC n`, then `A` is
   iff `A''` is;
 * `pc_succ_iff_of_isSES_middle`: **Cor. 1**: if `A ∈ PC (n+1)`, then `A'' ∈ PC (n+1)` iff
@@ -57,17 +51,36 @@ stated with the iterated kernels `Syz C₀ k` of exact sequences `L_k → ⋯ �
   `ℤ/4` with `C₀` the free modules of finite type: the ideal `2ℤ/4` is pseudo-coherent but has no
   finite resolution by free modules of finite type (its order, 2, is not a power of 4).
 
+## Implementation notes
+
+**The setting here.** `C` is the category of left modules over a ring `R` (`ModuleCat.{v} R`),
+`C₀` an arbitrary predicate on it: no projectivity, which is the difference with
+`IhesSGA6_1_5` (there `C₀` is the free modules of finite type). The formalisation stays at the
+level of objects: an object `A` is put in degree `0`, and its pseudo-coherence in degrees `≥ -n`
+is taken in the form of Cor. 3, `PC C₀ n A`, by recursion (`A` is a quotient of an object of
+`C₀`; for `n + 1`, some surjection from an object of `C₀` has a kernel in `PC C₀ n`). An exact
+triangle of objects is a short exact sequence `0 → A' → A → A'' → 0` (`IsSES`). Hypothesis (C) is
+stated with the iterated kernels `Syz C₀ k` of exact sequences `L_k → ⋯ → L₀ → 0`.
+
 The proof is the edition's: one simultaneous induction on `n` for the two halves of the Theorem,
 with the kernel statement (`ker_pc`) as the bridge; (B) replaces the lifting property of
 projectives by covering a fibre product, and (C) enters only through the kernels of surjections
 between objects of `C₀` and their iterates.
 
-**Not formalised.** Complexes and the derived category: Lemme 1 (the four equivalent definitions)
+## Not formalised
+
+Complexes and the derived category: Lemme 1 (the four equivalent definitions)
 and Lemme 1.1–1.4, the Theorem and Cor. 1–2 for triangles that do not come from short exact
 sequences of objects, Cor. 4, 6, 7 (complexes and their cohomology), the equivalences
 `D₀⁻ → D₁⁻ → D⁻` of Cor. 8, Cor. 9 and (C bis) (finite resolutions, `D₀ᵇ ≃ D₁ᵇ`), the
-« Application aux K », the general abelian category (only modules are treated), and, in the example,
-the stronger statement that `2ℤ/4` is not quasi-isomorphic to a bounded complex of free modules.
+« Application aux K », the general abelian category (only modules are treated), and, in the
+example, the stronger statement that `2ℤ/4` is not quasi-isomorphic to a bounded complex of free
+modules.
+
+## References
+
+* A. Grothendieck, Fonds Grothendieck–Illusie (IHÉS), FG_IL_5_SGA6_1_3 (views 1–9) and
+  FG_IL_5_SGA6_1_4 (views 1–8)
 -/
 
 @[expose] public section

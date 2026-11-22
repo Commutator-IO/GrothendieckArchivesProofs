@@ -19,7 +19,12 @@ of the map that is *formal*, and one lemma of the annotated typescript. This
 file is therefore a **partial** formalisation, and says so statement by
 statement.
 
-## 1. Premier étage ⇔ deuxième étage (feuillet 2)
+What this certifies is that the reading holds together at these points, not
+that it is what the pages say (issue #26).
+
+## Main results
+
+### 1. Premier étage ⇔ deuxième étage (feuillet 2)
 
 The reading states, from the long exact sequence of local cohomology
 `⋯ → H^p_Y(X,F) → H^p(X,F) → H^p(X-Y,F) → H^{p+1}_Y(X,F) → ⋯`:
@@ -29,15 +34,38 @@ The reading states, from the long exact sequence of local cohomology
 > **Deuxième étage.** `H^p_Y(X,F) → H^p(X,F)` bijectif pour `p > m`,
 > surjectif pour `p = m`. C'est le premier étage lu à travers la suite exacte.
 
-`etage1_iff_etage2` proves that the two are equivalent for **any** long exact
-sequence indexed by `ℕ`, with exactly these bounds. Nothing about `X`, `Y` or
-`F` is used: "lu à travers la suite exacte" is literally true.
+* `etage1_iff_etage2`: the two are equivalent for **any** long exact
+  sequence indexed by `ℕ`, with exactly these bounds.
 
-## 2. Deuxième étage ⇔ troisième étage (the arrow marked « dualité »)
+### 2. Deuxième étage ⇔ troisième étage (the arrow marked « dualité »)
 
 > **Troisième étage.** `Ext^q(F̂, Ω̂^r) ← Ext^q(F, Ω^r)` bijectif pour `q < r - m`,
 > injectif pour `q = r - m`. … Les bornes se répondent comme il faut :
 > `p ⩾ m` d'un côté, `q < r - m` de l'autre, et `p + q = r`.
+
+* `etage2_iff_etage3`: taking Serre duality as given, the correspondence of
+  bounds over any field.
+
+### 3. The lemma of feuillet 3 (typescript III-18)
+
+> si un homomorphisme de faisceaux cohérents induit un isomorphisme sur les
+> germes en un point, il en induit un sur tout un voisinage. … `u : A^n → B` …
+> il existe un voisinage ouvert `V` de `y` tel que la restriction `u|V` soit un
+> isomorphisme … puisque `Y` est noethérien et `B` de type fini par hypothèse.
+
+* `lemme_III18`: the affine form: `Y = Spec R`, `R` Noetherian, `B` a finite
+  `R`-module, `u : Rⁿ → B` bijective at the prime `𝔭`; then `u` is bijective over
+  a basic open `D(f) ∋ 𝔭`.
+* `lemme_III18_general`: the general form (see below).
+
+## Implementation notes
+
+### 1. Premier étage ⇔ deuxième étage
+
+Nothing about `X`, `Y` or `F` is used in `etage1_iff_etage2`: "lu à travers la
+suite exacte" is literally true.
+
+### 2. Deuxième étage ⇔ troisième étage
 
 Serre duality itself is out of reach. Taking it as given — the Ext map in
 degree `q = r - p` is the transpose of `H^p_Y → H^p` — `etage2_iff_etage3`
@@ -53,18 +81,10 @@ with its injective boundary `q = r - m`. The displayed statements of the three
 étages are consistent with each other; only the sentence about them is off by
 the boundary case.
 
-## 3. The lemma of feuillet 3 (typescript III-18)
+### 3. The lemma of feuillet 3
 
-> si un homomorphisme de faisceaux cohérents induit un isomorphisme sur les
-> germes en un point, il en induit un sur tout un voisinage. … `u : A^n → B` …
-> il existe un voisinage ouvert `V` de `y` tel que la restriction `u|V` soit un
-> isomorphisme … puisque `Y` est noethérien et `B` de type fini par hypothèse.
-
-`lemme_III18` is the affine form: `Y = Spec R`, `R` Noetherian, `B` a finite
-`R`-module, `u : Rⁿ → B` bijective at the prime `𝔭`; then `u` is bijective over
-a basic open `D(f) ∋ 𝔭`. This is the statement on an affine neighbourhood of
-`y`, which is where the typescript's argument takes place. The passage from
-there to a sheaf on a Noetherian scheme is not formalised.
+`lemme_III18` is the statement on an affine neighbourhood of `y`, which is
+where the typescript's argument takes place.
 
 **What this finds.** The lemma is already in mathlib, as
 `Module.FinitePresentation.exists_notMem_bijective`, in a more general form:
@@ -75,8 +95,17 @@ Noetherian plus finite type is what makes `B` finitely presented
 coherent — and it is used for nothing else. `lemme_III18_general` records the
 general form.
 
-What this certifies is that the reading holds together at these points, not
-that it is what the pages say (issue #26).
+## Not formalised
+
+The cohomology of projective varieties, their formal completions and Serre
+duality (none of which mathlib has); Serre duality is taken as given in § 2.
+The passage from the affine form of the lemma of feuillet 3 to a sheaf on a
+Noetherian scheme is not formalised.
+
+## References
+
+* A. Grothendieck, cote 125, feuillets 2 and 3 (typescript III-18); modernised
+  reading `transcripts/125/125.modern.tex`
 -/
 
 @[expose] public section

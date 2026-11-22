@@ -22,12 +22,15 @@ kernel (page 7) gives `𝒪 ⊣ Spec : Â ⇄ (A^∨)^op` with `𝒪(Φ)(a) = Ho
 `115-isbell-duality-derived-from-kernels` of `src/content/findings.ts` (the finding's
 question, whether this derivation is in print, is not a mathematical one).
 
-What is formalised. The kernel is written `K : Aᵒᵖ ⥤ C ⥤ Type u`, `A`, `C` small; the
-page's kernel on `A × B` is the case `C = Bᵒᵖ`, and the hom of `A` is `K = coyoneda`
-(`C = A`).
+Holds as stated: the duality is literally the kernel adjunction at `K = Hom`.
+
+## Main definitions
 
 * `kernelS K : (Aᵒᵖ ⥤ Type u)ᵒᵖ ⥤ C ⥤ Type u`, `ˢK(L)(c) = Hom(L, K(-, c))`, and
   `kernelD K : (C ⥤ Type u)ᵒᵖ ⥤ Aᵒᵖ ⥤ Type u`, `ᵈK(M)(a) = Hom(M, K(a, -))`.
+
+## Main results
+
 * `kernelEquiv`: `Hom(M, ˢK(L)) ≃ Hom(L, ᵈK(M))`, both sides being the families
   `L(a) × M(c) → K(a, c)` natural in `a` and `c`; `kernelAdj`: `(ˢK)ʳᵒᵖ ⊣ ᵈK`, the dual
   adjunction of pages 3–5, for every kernel.
@@ -38,9 +41,20 @@ page's kernel on `A × B` is the case `C = Bᵒᵖ`, and the hom of `A` is `K = 
   `Spec(Hom_A(a, -)) ≅ y a` (Yoneda); `isbellO_preservesColimits`: `𝒪` sends colimits of
   `Â` to limits of `A^∨`, being a left adjoint into `(A^∨)^op`.
 
-Holds as stated: the duality is literally the kernel adjunction at `K = Hom`. Not
-formalised: the eleven-node wheel of page 5, the families `(Aᵢ)` and the uniqueness of
-`𝒪` and `Spec` from their restriction along `y`.
+## Implementation notes
+
+The kernel is written `K : Aᵒᵖ ⥤ C ⥤ Type u`, `A`, `C` small; the page's kernel on
+`A × B` is the case `C = Bᵒᵖ`, and the hom of `A` is `K = coyoneda` (`C = A`).
+
+## Not formalised
+
+The eleven-node wheel of page 5, the families `(Aᵢ)` and the uniqueness of `𝒪` and `Spec`
+from their restriction along `y`.
+
+## References
+
+* A. Grothendieck, cote 115, pp. 3–7 (finding `115-isbell-duality-derived-from-kernels`);
+  modernised reading `transcripts/115/115.modern.tex`
 -/
 
 @[expose] public section

@@ -13,9 +13,16 @@ public import Buffalo.Groupes.Part02b
 Entries `_lTf_L0yvrU-28722` to `_lTf_L0yvrU-32249` of `docs/buffalo-groupes/index.tex` (20 June
 1973). Statuses in `docs/buffalo-groupes/lean/Part02.json`.
 
+## Implementation notes
+
 `D(M) = Spec k[M]` (Mathlib `AddMonoidAlgebra k M`, with its bialgebra structure
 `e^m ↦ e^m ⊗ e^m`); a representation of `D(M)` on `V` is a comodule `δ : V → V ⊗ k[M]`
 (`Part01.IsComodule`); its projectors are `p_m • x = (id ⊗ coord_m)(δ x)` (`proj`).
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 28722–32249 (20
+  June 1973)
 -/
 
 @[expose] public section

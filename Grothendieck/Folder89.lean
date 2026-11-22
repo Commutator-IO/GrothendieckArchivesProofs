@@ -21,9 +21,17 @@ states, for `u` and `v` spanning (here: `u ∧ v` a unit),
   `u ∧ v = v ∧ w = w ∧ u  ⟺  u + v + w = 0`,
 
 and notes that the statement holds over any commutative ring, the page saying only « on vérifie de
-suite ». The proof below is the edition's: Cramer's identity
+suite ».
+
+## Implementation notes
+
+The proof below is the edition's: Cramer's identity
 `(v ∧ w) • u + (w ∧ u) • v + (u ∧ v) • w = 0` gives `d • (u + v + w) = 0` when all three wedges
 equal `d`, and `d` is a unit.
+
+## References
+
+* A. Grothendieck, Folder 89, pages 15–18
 -/
 
 @[expose] public section

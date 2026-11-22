@@ -13,6 +13,11 @@ public import Buffalo.Groupes.Part01
 Items of the reconstructed blackboards `public/buffalo-boards/_lTf_L0yvrU-*.json` in the time
 range of Part 01 that no index entry formalises. Statuses in
 `docs/buffalo-groupes/lean/Part01-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU` (reconstructed
+  blackboards `public/buffalo-boards/_lTf_L0yvrU-*.json`)
 -/
 
 @[expose] public section

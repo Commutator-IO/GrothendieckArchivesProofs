@@ -17,7 +17,18 @@ public import Mathlib.AlgebraicGeometry.Noetherian
 Finding `49-flatness-lemma-pushforward`. The Lemme of page 3: for `φ : X → Y` of finite type over
 a locally noetherian `S`, `F` quasi-coherent on `X` and flat over `S`, `G` coherent on `Y`, and a
 map `G → φ_* F` whose restriction to the fibre over `s` is injective at the points above `y`,
-`G` is flat over `S` at `y`.
+`G` is flat over `S` at `y`. It is proved, locally and for schemes.
+
+## Main results
+
+* `flat_of_fibre_injective_pi`: under these hypotheses, `N` is flat over `R`, and the map
+  `N → ∏ₓ M x` is injective. No finiteness of `φ` at the points above `y` is needed: the target
+  `∏ₓ F_x` is not finite over `A`, but the local criterion only asks that the source be finite.
+* `flat_of_fibre_injective`: the case of one flat target, for instance `(φ_* F)_y` itself when it
+  is flat over `R`.
+* `flat_of_fibre_injective_scheme`: the statement for a morphism of schemes (see below).
+
+## Implementation notes
 
 The statement is local at `y`. Write `R = 𝒪_{S,s}` (noetherian local), `A = 𝒪_{Y,y}` (noetherian
 local, `R → A` local), `N = G_y` (a finite `A`-module), and for each point `x` of `X` above `y`
@@ -25,13 +36,6 @@ let `M x = F_x` (flat over `R`) and `u x : G_y → (φ_* F)_y → F_x` (`R`-line
 is reduction modulo the maximal ideal `𝔪` of `R`, and « injective on the fibre at the points above
 `y` » is read as: an element of `G_y` whose images in all the `F_x / 𝔪 F_x` vanish lies in
 `𝔪 G_y`. That is, `G_y ⊗ k(s) → ∏ₓ F_x ⊗ k(s)` is injective.
-
-**What is proved.**
-* `flat_of_fibre_injective_pi`: under these hypotheses, `N` is flat over `R`, and the map
-  `N → ∏ₓ M x` is injective. No finiteness of `φ` at the points above `y` is needed: the target
-  `∏ₓ F_x` is not finite over `A`, but the local criterion only asks that the source be finite.
-* `flat_of_fibre_injective`: the case of one flat target, for instance `(φ_* F)_y` itself when it
-  is flat over `R`.
 
 **How.** A product of flat modules over a noetherian ring is flat (Chase's theorem, Stacks 05CZ
 `IsCoherentRing.tfae_flat_pi`, a noetherian ring being coherent, 05CY). The local flatness
@@ -49,10 +53,19 @@ germ map of the direct image (Stacks' `pushforwardStalkHom`), semilinear over
 `φ^♯_x : 𝒪_{Y,y} → 𝒪_{X,x}` (`mapAbove_smul`). `R = 𝒪_{S,p(y)}` acts through `p^♯_y`, a local
 homomorphism of noetherian local rings when `S` and `Y` are locally noetherian.
 
-**Not formalised.** Finiteness of `G_y` over `𝒪_{Y,y}` is a hypothesis of the scheme form (it
+## Not formalised
+
+Finiteness of `G_y` over `𝒪_{Y,y}` is a hypothesis of the scheme form (it
 holds for `G` coherent). Flatness of `F` over `S` at `x` is read as flatness of `F_x` over
 `𝒪_{S,p(y)}`. The page's own reading of clause c), with injectivity into `(φ_{s*} F_s)_y` rather than
 into the product of the stalks above `y`, is weaker when `φ` is not proper, and is not covered.
+
+## References
+
+* A. Grothendieck, folder 49, page 3 (finding `49-flatness-lemma-pushforward`)
+* [EGA III] 4.6.7.1
+* Chase's theorem
+* Stacks Project, tags 05CZ, 05CY, 00ME, 00HM
 -/
 
 @[expose] public section

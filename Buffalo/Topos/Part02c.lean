@@ -14,10 +14,18 @@ Entries of `docs/buffalo-topos/index.tex` from « Irreducible closed sets and so
 « Points and morphisms of sober spaces » (video `URU5jgTvjhU`, 7:54:19–8:33:13). The status of
 each entry is in `docs/buffalo-topos/lean/Part02.json`.
 
+## Implementation notes
+
 The space `X̃` of irreducible closed subsets is `Sob X` (a type synonym of Mathlib's
 `IrreducibleCloseds X`) with the topology of the sets `Ũ = {Y | Y ∩ U ≠ ∅}`. Fibre functors on
 `Sh(X)` are Mathlib's points of the site `𝒪(X)` (`GrothendieckTopology.Point`, SGA 4 IV 6.3):
 `irrPoint Y` is the point `F ↦ F_Y` attached to an irreducible closed set `Y`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 7:54:19–8:33:13
+  (18 and 25 May 1973)
+* [SGA 4] exposé IV, 6.3
 -/
 
 @[expose] public section

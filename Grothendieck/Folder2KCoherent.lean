@@ -16,15 +16,13 @@ for a constant section `i : X → X × P^r` and a divisor `Y ⊂ X` whose class 
 nonzero but killed by `(r−1)!`, `i_!(𝒪_Y)` is a **nonzero** class of `K(X × P^r)` whose total
 Chern class is `1`. The Chern class computation of pages 9 and 13 is proved in
 `Grothendieck/Folder2.lean`; this file is about the other half, the nonvanishing of a class in
-the Grothendieck group of coherent sheaves.
+the Grothendieck group of coherent sheaves. It proves the nonvanishing of `[𝒪_Y]` on an affine
+`Y`, not of `i_!(𝒪_Y)`.
 
-The vendored AxiomMath/Stacks files supply that group: `KPrime0 R`, the Grothendieck group of
-finite `R`-modules (`FinModule R`, classes `FinModule.cls`, universal property
-`KPrime0.universalProperty_existence`), `AlgebraicGeometry.CoherentKZero X = K'₀(X)`, and for a
-noetherian ring the identification `affineCoherentKZeroEquiv : K'₀(Spec R) ≃+ K'₀(R)`
-(Stacks tag 0FDH), which sends the class of `M~` to `[M]`.
+## Main results
 
-**What is proved.** Let `A` be a noetherian ring and `𝔭` a minimal prime of `A`.
+Let `A` be a noetherian ring and `𝔭` a minimal prime of `A`.
+
 * `exists_lengthAtPrimeHom`: `[M] ↦ ℓ_{A_𝔭}(M_𝔭)` is a homomorphism `K'₀(A) →+ ℤ` (the
   multiplicity of `M` at the generic point `𝔭` of `Spec A`; for a domain and `𝔭 = 0` it is the
   generic rank).
@@ -33,18 +31,33 @@ noetherian ring the identification `affineCoherentKZeroEquiv : K'₀(Spec R) ≃
   (pushed forward to `Spec A`). With `A` the coordinate ring of an affine `Y` and `I = 0`,
   `[𝒪_Y] ≠ 0` in `K'₀(Y)`, whether or not `Y` is reduced or irreducible.
 
-**How.** `A_𝔭` is noetherian of dimension `0`, hence artinian (Hopkins–Levitzki), so every
+## Implementation notes
+
+The vendored AxiomMath/Stacks files supply the group: `KPrime0 R`, the Grothendieck group of
+finite `R`-modules (`FinModule R`, classes `FinModule.cls`, universal property
+`KPrime0.universalProperty_existence`), `AlgebraicGeometry.CoherentKZero X = K'₀(X)`, and for a
+noetherian ring the identification `affineCoherentKZeroEquiv : K'₀(Spec R) ≃+ K'₀(R)`
+(Stacks tag 0FDH), which sends the class of `M~` to `[M]`.
+
+`A_𝔭` is noetherian of dimension `0`, hence artinian (Hopkins–Levitzki), so every
 finite `A_𝔭`-module has finite length; `A_𝔭 ⊗_A −` is exact (localisation is flat) and length is
 additive, which gives the homomorphism. `A_𝔭 ⊗_A A/I ≅ A_𝔭/IA_𝔭` is nonzero since
 `IA_𝔭 ⊆ 𝔭A_𝔭`, so the invariant is positive on `[A/I]`.
 
-**Not formalised.** The class lives on `X × P^r`, not on `Y`: that `i_!(𝒪_Y) = [𝒪_Y] ⊠ [pt]`
+## Not formalised
+
+The class lives on `X × P^r`, not on `Y`: that `i_!(𝒪_Y) = [𝒪_Y] ⊠ [pt]`
 is nonzero in `K(X × P^r)` needs the projective bundle formula `K(X × P^r) = K(X)[ξ]/(ξ^{r+1})`
 and `[𝒪_Y] = 1 − [𝒪(−Y)] ≠ 0` in `K(X)`, neither of which Stacks has. The invariant here
 cannot replace it: `i_!(𝒪_Y)` is supported in codimension `r + 1`, where every local invariant
 vanishes, and torsion classes do vanish affine-locally (`[ℤ/n] = 0` in `K'₀(ℤ)`). Also not
 formalised: the total Chern class on `K` (Stacks has none; its algebra is in
 `Grothendieck/Folder2.lean`) and the restriction `r ≥ 3`.
+
+## References
+
+* A. Grothendieck, folder 2, pp. 9, 11, 13 (finding `2-trivial-total-chern-class`)
+* Stacks Project, tag 0FDH
 -/
 
 @[expose] public section

@@ -29,7 +29,15 @@ not, and `σ` reverses the order), and page 39 states:
 > Proposition. Soit (C, σ, <) un quartette ordonné. Alors pour tout x ∈ C, C_{≥ x} et C_{≤ x}
 > sont *totalement* ordonnés.
 
-The proof on the page stops mid-sentence. Proved here:
+The proof on the page stops mid-sentence.
+
+**What the formalisation finds.** The proposition of page 39 is false as stated: in the quartet
+of three chords around a triangle — the configuration whose graph page 11 draws as a heavy
+tripod — `C_{≥ c₁}` contains the incomparable `c₂'` and `c₃'`. What holds is that every interval
+is a chain. The transitivity asked in the margin of page 38 holds, and the order of a
+non-parallel family is a quartet. The NB of page 47 is correct.
+
+## Main results
 
 * `disjoint_unique` (proposition of page 34): two non-parallel decompositions have exactly one
   pair of disjoint hemispheres.
@@ -53,11 +61,10 @@ The proof on the page stops mid-sentence. Proved here:
   the same partition into cores `{a₁, a₁'}, {b, b'}, {a₂, a₂'}`: the family is not recovered from
   the partition, as the page says.
 
-**What the formalisation finds.** The proposition of page 39 is false as stated: in the quartet
-of three chords around a triangle — the configuration whose graph page 11 draws as a heavy
-tripod — `C_{≥ c₁}` contains the incomparable `c₂'` and `c₃'`. What holds is that every interval
-is a chain. The transitivity asked in the margin of page 38 holds, and the order of a
-non-parallel family is a quartet. The NB of page 47 is correct.
+## References
+
+* A. Grothendieck, Folder 81, pages 11, 31–39 and 45–47 (modernised reading
+  `transcripts/81/81.modern.tex`, § V and § VI)
 -/
 
 @[expose] public section

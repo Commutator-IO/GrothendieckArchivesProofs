@@ -21,7 +21,8 @@ coherent modules are stable under finite sums, kernels, cokernels, images and ex
 module form, over a ring. Here they are stated for sheaves of modules on a scheme `X`, that is for
 Mathlib's `X.Modules`.
 
-**What is proved.**
+## Main results
+
 * `def_22510_scheme`: an `𝒪_X`-module `M` is coherent (Stacks tag 01BV, EGA 0 5.3.7) if and only
   if it is of finite type and, for every open `U` and every finite free module `𝒪_U^I`, the
   kernel of every morphism `𝒪_U^I → M|_U` is of finite type.
@@ -34,7 +35,9 @@ Mathlib's `X.Modules`.
   `isCoherent_iff_isFinitePresentation_22510`: whenever `𝒪_X` is coherent, coherent means of
   finite presentation (Stacks 01BZ).
 
-**How.** Mathlib defines `X.Modules` as `SheafOfModules X.ringCatSheaf`, where
+## Implementation notes
+
+Mathlib defines `X.Modules` as `SheafOfModules X.ringCatSheaf`, where
 `X.ringCatSheaf` is a sheaf of rings on the site of opens of `X`; this is exactly the ringed
 space on which the vendored AxiomMath/Stacks files
 `StacksFrontier/Algebra/Category/ModuleCat/Sheaf/{Coherent, CoherentWeakSerre, CoherenceClosure,
@@ -44,13 +47,19 @@ Basic.lean` (Apache-2.0, see `lean/Stacks/NOTICE.md`) state coherence
 abelian structure of `X.Modules` is that of `SheafOfModules X.ringCatSheaf`, so kernels,
 cokernels and images below are those of `X.Modules`. The image is the kernel of the cokernel.
 
-**The two readings of `M|_U`.** `def_22510_scheme` reads `M|_U` as the restriction `M.over U` to
+The two readings of `M|_U`. `def_22510_scheme` reads `M|_U` as the restriction `M.over U` to
 the slice site of the opens of `X` contained in `U`; `def_22510_restrict` reads it as Mathlib's
 `M.restrict U.ι` on the open subscheme `U`. They are matched by `Scheme.Modules.overEquiv` and
 `Scheme.Modules.overFunctorEquiv`: finite type transports both ways
 (`isFiniteType_over_iff_restrict`), free modules go to free modules, and kernels to kernels
 (`isFiniteType_kernel_iff`). On a locally noetherian scheme coherence restricts to open
 subschemes (`isCoherent_restrict_22510`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), entries `22510`, `22572`
+* [EGA 0] 5.3.7
+* Stacks Project, tags 01BV, 01BY, 01XZ, 01BZ
 -/
 
 @[expose] public section

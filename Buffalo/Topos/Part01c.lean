@@ -13,6 +13,11 @@ public import Buffalo.Topos.Part01a
 Entries of `docs/buffalo-topos/index.tex` from « Direct and inverse images » to « Stalks and
 epimorphisms » (video `URU5jgTvjhU`, 3:24:08–4:55:12). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 3:24:08–4:55:12
+  (11 May 1973)
 -/
 
 @[expose] public section

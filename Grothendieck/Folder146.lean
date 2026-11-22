@@ -17,15 +17,12 @@ smallest exponent that makes the line bundles `L_i` (attached to the marked poin
 gives `3` for `L` and `6` for `L_i`. The reading does not verify the table. This file settles the
 two entries for `n = 4`; it is the reachable part of finding
 `146-equivariant-trivialising-exponents` of `src/content/findings.ts`, which drops if the
-`n = 4` values do not check.
+`n = 4` values do not check. It also settles the columns `n = 5` and `n = 6`, and proves the
+general formula for every `n` in a homogeneous model.
 
-The model. `M_{0,4} = U = ℙ¹ ∖ {0, 1, ∞}` with coordinate `λ`, the fourth point moving;
-`𝔖_{I∖{4}} = 𝔖₃` permutes `0, 1, ∞` and acts on `U` by the six anharmonic substitutions
-(`anh`, composition table `mul`, `mul_group`, `anh_mul`), and on the tangent line `L₄` at the
-moving point through the derivative `g′(λ)` (`der`). By the chain rule (`der_mul`),
-`g ↦ g′(λ)` is a 1-cocycle of `𝔖₃` with values in the units of `O(U)`; as `Pic(U) = 0`, the
-equivariant structures on `L₄^{⊗m}` up to isomorphism are classified by the class of its
-`m`-th power, and the exponent of the table is the order of that class.
+## Main results
+
+### `n = 4`, the bundle `L₄`
 
 * `der_pow_six`: `g′(λ)⁶ = h(gλ)/h(λ)` with `h = λ⁴(1 − λ)⁴`, so `L₄^{⊗6}` is equivariantly
   trivial.
@@ -36,16 +33,19 @@ equivariant structures on `L₄^{⊗m}` up to isomorphism are classified by the 
 
 So the class of `L₄` has order exactly `6`, the value of the table.
 
+### `n = 4`, the bundle `L`
+
 The entry `3` for `L = L₁ ⊗ L₂ ⊗ L₃ ⊗ L₄` under `𝔖₄`, page 70, also checks, for the cocycle
 `derL g = sgn g · g′(λ)` of `L` (the Klein group acting trivially, see the section on `L`):
+
 * `derL_mul`: it is a 1-cocycle; `derL_pow_three`: its cube is the coboundary of
   `λ²(1 − λ)²`;
 * `coboundary_derL_iff`: its `m`-th power is the coboundary of a nowhere-zero function on
   `U(K)` iff `3 ∣ m` (`3 ≠ 0`, a root `ζ` of `ζ² − ζ + 1`, where the factor is `ζ²`).
+
 Page 72 only claims `L^{⊗6} ≃ 1`.
 
-Not formalised: the identification of the equivariant Picard group with `H¹(𝔖₃, O(U)^*)`, the
-reduction from `𝔖₄` to `𝔖₃` and the formula `sgn g · g′(λ)` for the action on `L`.
+### `n = 5` and `n = 6`
 
 The column `n = 5`, queried on the page (« 12 ? » for `L` and for `L_i`), is settled at the
 end of the file at the level of cocycles: `L` has order `4` (`coboundary_cL_iff`), `L₅` has
@@ -53,12 +53,35 @@ order `12` (`coboundary_c5_iff`). The column `n = 6` (« 20 ? » for `L`, « 60 
 settled after it: `L` has order `5` (`coboundary_cL6_iff`), `L₆` has order `20`
 (`coboundary_c6_iff`).
 
+### Every `n`
+
 The last section proves the general formula, for every `n`, in a homogeneous model of
 `M_{0,n}` (configurations of vectors of `K²`, functions of weight instead of cocycles): `L`
 has order `n − 1` (`trivL_iff`) and `L_i` has order `(n − 1)(n − 2)` (`trivLi_iff`). The
 final section shows that, for `n = 4, 5, 6`, the two models agree: a trivialisation in the
 homogeneous model restricts to one of the normalised cocycles (`coboundary_cL_of_trivL` and
 its companions, `trivL_five_iff` and its companions).
+
+## Implementation notes
+
+The model. `M_{0,4} = U = ℙ¹ ∖ {0, 1, ∞}` with coordinate `λ`, the fourth point moving;
+`𝔖_{I∖{4}} = 𝔖₃` permutes `0, 1, ∞` and acts on `U` by the six anharmonic substitutions
+(`anh`, composition table `mul`, `mul_group`, `anh_mul`), and on the tangent line `L₄` at the
+moving point through the derivative `g′(λ)` (`der`). By the chain rule (`der_mul`),
+`g ↦ g′(λ)` is a 1-cocycle of `𝔖₃` with values in the units of `O(U)`; as `Pic(U) = 0`, the
+equivariant structures on `L₄^{⊗m}` up to isomorphism are classified by the class of its
+`m`-th power, and the exponent of the table is the order of that class.
+
+## Not formalised
+
+The identification of the equivariant Picard group with `H¹(𝔖₃, O(U)^*)`, the reduction from
+`𝔖₄` to `𝔖₃` and the formula `sgn g · g′(λ)` for the action on `L`.
+
+## References
+
+* A. Grothendieck, cote 146 (« Les fibrés `L_i` et le groupe de Picard équivariant »),
+  pp. 70–73 (finding `146-equivariant-trivialising-exponents`); modernised reading
+  `transcripts/146/146.modern.tex`
 -/
 
 @[expose] public section

@@ -19,10 +19,10 @@ between proper flat `S`-schemes and `Y` separated of finite type, page 15 cuts o
 subfunctor `Hom_S(X, Y; φ)` of the `u` at which composition with `φ` is unramified
 (`M_v → M_u` surjective, EGA III 7.7.6), and page 16 states that
 `φ^♯ : Hom_S(X, Y; φ) → Hom_S(Z, Y)`, `u ↦ u φ`, is representable by unramified morphisms.
+We prove the infinitesimal and module-theoretic content of the pages on the affine (algebraic)
+core.
 
-What is formalised. The functor `Mor_S(X, Y)` as an algebraic space (Stacks 0D1C, 0DPN) has an
-import closure of some 18,000 modules, so it is not imported; we prove the infinitesimal and
-module-theoretic content of the pages on the affine (algebraic) core.
+## Main results
 
 * `eq_of_comp_eq_of_rigid` (formal unramifiedness of `φ^♯`, the rigidity form of page 21):
   `u, u' : B → C'` are `R`-algebra maps (points of `Hom(X, Y)` with values in a first-order
@@ -36,8 +36,24 @@ module-theoretic content of the pages on the affine (algebraic) core.
   `c : Hom(M_u, J)`.
 * `obstruction_vanishes_of_admitted` (condition 7°, pages 19–20): the two steps the page
   « admet » are taken as the hypotheses `hadmis₁` (`η''` is the image of `ξ''`) and `hadmis₂`
-  (`η' = ξ'''`); they are not proved, as on the page. Under them the obstruction `ξ''` to
-  extending `u₀` vanishes.
+  (`η' = ξ'''`). Under them the obstruction `ξ''` to extending `u₀` vanishes.
+
+## Implementation notes
+
+The functor `Mor_S(X, Y)` as an algebraic space (Stacks 0D1C, 0DPN) has an
+import closure of some 18,000 modules, so it is not imported; we work on the affine
+(algebraic) core.
+
+## Not formalised
+
+The two steps of condition 7° that the page « admet » (`hadmis₁`, `hadmis₂`) are not proved,
+as on the page. The functor `Mor_S(X, Y)` itself, as an algebraic space, is not used.
+
+## References
+
+* A. Grothendieck, Folder 91, pages 15–24 (finding `91-hom-unramified-rigidification`)
+* [EGA III] 7.7.6
+* Stacks Project, tags 0D1C, 0DPN
 -/
 
 namespace Grothendieck.Folder91HomUnramified

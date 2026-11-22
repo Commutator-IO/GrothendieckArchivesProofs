@@ -14,6 +14,11 @@ The entries of `docs/buffalo-ag/index.tex` lines 492–516 (video `thSz9ZHDK9o`,
 the stalks of `M^~` and of `𝒪_X` on `Spec A`, localization of modules and rings at a
 multiplicative subset and its universal properties, local rings and their characterisations,
 `M ↦ M^~` and infinite products, and the completion of a noetherian local ring.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 12–13 June 1973, video `thSz9ZHDK9o`,
+  1:39:49–2:23:44 (`docs/buffalo-ag/index.tex`, lines 492–516)
 -/
 
 @[expose] public section

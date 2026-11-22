@@ -12,8 +12,17 @@ public import Mathlib
 
 The entries of `docs/buffalo-ag/index.tex` lines 736–769 (video `Oqhr-Gt66es`, 0:00:01–0:57:01):
 localization at a point, local, noetherian and artinian schemes, finiteness conditions on
-morphisms. Almost everything here is in mathlib's `AlgebraicGeometry` library; the declarations
-below check that the statements match.
+morphisms.
+
+## Implementation notes
+
+Almost everything here is in mathlib's `AlgebraicGeometry` library; the declarations below check
+that the statements match.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 25 June 1973, video `Oqhr-Gt66es`,
+  0:00:01–0:57:01 (`docs/buffalo-ag/index.tex`, lines 736–769)
 -/
 
 @[expose] public section

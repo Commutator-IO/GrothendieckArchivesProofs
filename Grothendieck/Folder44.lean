@@ -22,22 +22,28 @@ Writing `S_α x = x - ⟨γ_α, x⟩ α` with `γ_α ∈ (P')^ℚ`, the leaf sta
 `γ_α ∈ P'`, i.e. the Cartan numbers `⟨γ_α, β⟩` are integers, because `α` is
 indivisible in `P`, « pouvant faire partie d'un système fondamental de racines ».
 This is finding `44-cartan-integrality-from-axioms` of `src/content/findings.ts`.
+The step « indivisible ⇒ integral » is proved; the axioms a)–c) alone do not give it.
 
-What is formalised.
+## Main results
 
 * `cartan_int_of_indivisible`: if `α` is indivisible in a subgroup `P` of a
   `ℚ`-vector space and `x - f x • α ∈ P` for `x ∈ P`, then `f x ∈ ℤ`. The step
   « indivisible ⇒ integral » holds in this generality (no freeness, no finiteness).
 * The axioms a)–c) do not give it. In `P = ℤ²`,
   `Δ = {±3e₁, ±3e₂, ±(e₁ + e₂), ±(e₁ - e₂)}` satisfies a) (`generates`), b)
-  (`neg_mem`, `reduced`, and `reduced_rat` with `n ∈ ℚ` as on the page) and c) (`symmetries`, the four reflections of the Weyl
-  group of type `B₂`); the symmetry of `3e₁` of the form `x ↦ x - f(x)·3e₁` is
-  unique and `f(e₁ + e₂) = 2/3` (`cartan_eq_two_thirds`, `cartan_not_int`),
-  while `3e₁ = 3 • e₁` is divisible in `P` (`divisible`).
+  (`neg_mem`, `reduced`, and `reduced_rat` with `n ∈ ℚ` as on the page) and c)
+  (`symmetries`, the four reflections of the Weyl group of type `B₂`); the symmetry of `3e₁`
+  of the form `x ↦ x - f(x)·3e₁` is unique and `f(e₁ + e₂) = 2/3` (`cartan_eq_two_thirds`,
+  `cartan_not_int`), while `3e₁ = 3 • e₁` is divisible in `P` (`divisible`).
 * In that example `3e₁` is in no integral fundamental system containing
   `e₂ - e₁` (`not_integral_base`): the simple system `{3e₁, e₂ - e₁}` of the
   reflection group is one only with rational coefficients, since
   `e₁ + e₂ = (2/3)·3e₁ + (e₂ - e₁)`.
+
+## References
+
+* A. Grothendieck, folder 44, Appendice II, page 4 (reading `transcripts/44/44.modern.tex`;
+  finding `44-cartan-integrality-from-axioms`)
 -/
 
 @[expose] public section

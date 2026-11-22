@@ -12,8 +12,8 @@ public import Mathlib
 
 Entries of `docs/buffalo-topos/index.tex` lines 812–830 (video `4gynb9uTEE4`, 3:35:28–4:11:21):
 the lecturer's corrections to the previous lecture (strict cogeneration, two-step constructions),
-the example of `Setᵒᵖ`, complete atomic Boolean algebras, and the reduction to `Δ_π`. The status of
-each entry is in `docs/buffalo-topos/lean/Part05.json`.
+the example of `Setᵒᵖ`, complete atomic Boolean algebras, and the reduction to `Δ_π`. The status
+of each entry is in `docs/buffalo-topos/lean/Part05.json`.
 
 One entry was found imprecise: 4gynb9uTEE4-13448 (« `Setᵒᵖ` admits a strict generator, the
 two-element set »). In the course's sense of strict generation (0:06:26, every object a limit of a
@@ -21,6 +21,12 @@ diagram of copies of the given object) it fails: limits of diagrams of copies of
 closed under the ternary `xor`, so no such limit has three elements (`no_limit_of_bools`). The
 two-element set is a strict cogenerator of `Set` only in the sense of SGA 4 (every set is an
 equalizer of two maps between powers of `2`).
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 3:35:28–4:11:21
+  (10 July 1973)
+* [SGA 4]
 -/
 
 @[expose] public section

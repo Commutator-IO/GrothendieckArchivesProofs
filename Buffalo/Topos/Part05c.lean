@@ -16,10 +16,17 @@ limits in `T(C)`, change of `Δ`, the envelope `Ĵ` and the saturated categories
 `C[Σ'⁻¹]` in `Δ` = categories with small limits. The status of each entry is in
 `docs/buffalo-topos/lean/Part05.json`.
 
+## Implementation notes
+
 The saturation `Σ'` of a class `Σ` of arrows is formalised literally: the arrows inverted by every
 limit-preserving functor inverting `Σ` (`saturation`). Its properties (isomorphisms, composition,
 two out of three, base change, diagonals, infinite fibre products, right calculus of fractions)
 are proved for an arbitrary category with the relevant limits.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 1:57:30–3:31:07
+  (2 July 1973)
 -/
 
 @[expose] public section

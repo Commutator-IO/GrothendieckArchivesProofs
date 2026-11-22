@@ -29,7 +29,15 @@ for every pair `b ≤ c` — the orthomodular law — and page 110 asks whether 
 (« J'en doute fort ! »), whether it holds when `Σ` is finite (« J'en doute également »), and
 whether, when it holds, `Σ` must be a Boolean algebra.
 
-Proved here:
+**What the formalisation finds.** Both doubts of page 110 are right, and the third question has
+a negative answer: a spatios with six elements, the spatios of a four-point disposition, is not
+orthomodular, and another, also of a four-point disposition, is orthomodular without being
+distributive, hence without being a Boolean algebra. The non-orthomodular one is the hexagon
+already met in folder 156-4 (`Grothendieck.Folder156_4.hexagon_saturated`): the path `a - b - c - d`
+of that model's disjoint pairs is the disposition `O6` here. The answer to page 107 is the
+edition's; it needs neither the Sup nor any Boolean hypothesis.
+
+## Main results
 
 * `lemme1`, `lemme1_max`: Lemme 1 of page 108, in any lattice with an antitone map `∁`.
 * `transpose_inverse`: the answer to the question of page 107 is yes. If `β` is a transpose of
@@ -44,13 +52,10 @@ Proved here:
   orthomodular law holds for every pair of supports; `mo2_not_distrib`:
   `{0} ∧ ({2} ∨ {3}) = {0}` while `({0} ∧ {2}) ∨ ({0} ∧ {3}) = ∅`.
 
-**What the formalisation finds.** Both doubts of page 110 are right, and the third question has
-a negative answer: a spatios with six elements, the spatios of a four-point disposition, is not
-orthomodular, and another, also of a four-point disposition, is orthomodular without being
-distributive, hence without being a Boolean algebra. The non-orthomodular one is the hexagon
-already met in folder 156-4 (`Grothendieck.Folder156_4.hexagon_saturated`): the path `a - b - c - d`
-of that model's disjoint pairs is the disposition `O6` here. The answer to page 107 is the
-edition's; it needs neither the Sup nor any Boolean hypothesis.
+## References
+
+* A. Grothendieck, *Vers une géométrie des formes*, chapter IX (July 1986), Folder 156-9,
+  pp. 79, 107–110 (reading `transcripts/156-9/156-9.modern.tex`)
 -/
 
 @[expose] public section

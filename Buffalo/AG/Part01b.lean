@@ -13,7 +13,16 @@ public import Buffalo.AG.Part01a
 The session of 30 May 1973 (video `51wmmpHand0`, 1:34:31–3:07:15): the dictionary between
 closed subspaces and ideals, radicals and the Nullstellensatz (tested on fields, on finite
 extensions, on `k` when `k` is algebraically closed), the algebra of functions of an affine space,
-and products, sums and filtered limits. Notation as in `Buffalo.AG.Part01a`.
+and products, sums and filtered limits.
+
+## Implementation notes
+
+Notation as in `Buffalo.AG.Part01a`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 30 May 1973, video
+  `51wmmpHand0`, 1:34:31–3:07:15
 -/
 
 @[expose] public section

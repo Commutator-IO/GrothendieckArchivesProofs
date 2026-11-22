@@ -16,7 +16,10 @@ its example: for `I` a nilpotent ideal of `A` mapped injectively onto an ideal o
 (`IsConductorIdeal`), if `S/IS` is faithfully flat over `A/I` then `Spec S → Spec A` is an
 effective descent morphism for flat modules
 (`Descent.isEffectiveDescentFlat_of_quotient_faithfullyFlat`). That is Cor. 2 for an affine
-prescheme `X = Spec A`. This file proves the affine statements only, and adds:
+prescheme `X = Spec A`. This file proves the affine statements only, and adds Cor. 3 in the
+affine case and the proof that the restriction to flat modules is needed.
+
+## Main results
 
 * **Cor. 3, affine case** (`cor3_affine`): under the same hypotheses, for every *flat* ring map
   `A → B`, `Spec (B ⊗_A S) → Spec B` is again an effective descent morphism for flat modules.
@@ -31,15 +34,26 @@ prescheme `X = Spec A`. This file proves the affine statements only, and adds:
   hold, so `Spec S → Spec A` is an effective descent morphism for flat modules; but it is not
   one for all modules in the sense of AxiomMath/Stacks: base extension from `A`-modules to
   descent data is not an equivalence (`ModuleCat.IsEffectiveDescentMorphismForModules`, Stacks
-  tag 08WY). The proof uses Stacks tag 08XA, vendored under `lean/Stacks/`
-  (`ModuleCat.isEffectiveDescentMorphismForModules_iff_universallyInjective`: effective descent
-  for all modules is universal injectivity). Here `A → S` is not universally injective: for
-  `Q = A/(u − v)`, `u = (ε, 0)`, `v = (0, ε)`, the element `u ⊗ 1` is nonzero in `A ⊗_A Q`, but
-  in `S ⊗_A Q` it is `(1, 0) ⊗ ū = (1, 0) ⊗ v̄ = 0` (`not_injective_rTensor`). The same `A`, `S`
-  and `Q` are the reading's counterexample to Cor. 3 for a non-flat `Y = Spec A/(u − v)`.
+  tag 08WY).
 
-Not formalised: Cor. 2 and 3 for non-affine preschemes (gluing the affine statements along an
-open cover, which needs quasi-coherent descent data on schemes), which stay out of reach here.
+## Implementation notes
+
+The proof of the second item uses Stacks tag 08XA, vendored under `lean/Stacks/`
+(`ModuleCat.isEffectiveDescentMorphismForModules_iff_universallyInjective`: effective descent
+for all modules is universal injectivity). Here `A → S` is not universally injective: for
+`Q = A/(u − v)`, `u = (ε, 0)`, `v = (0, ε)`, the element `u ⊗ 1` is nonzero in `A ⊗_A Q`, but
+in `S ⊗_A Q` it is `(1, 0) ⊗ ū = (1, 0) ⊗ v̄ = 0` (`not_injective_rTensor`). The same `A`, `S`
+and `Q` are the reading's counterexample to Cor. 3 for a non-flat `Y = Spec A/(u − v)`.
+
+## Not formalised
+
+Cor. 2 and 3 for non-affine preschemes (gluing the affine statements along an open cover, which
+needs quasi-coherent descent data on schemes), which stay out of reach here.
+
+## References
+
+* A. Grothendieck, cote 128, pp. 7–9 (finding `128-nilpotent-conductor-flat-descent`)
+* Stacks Project, tags 08WY, 08XA
 -/
 
 @[expose] public section

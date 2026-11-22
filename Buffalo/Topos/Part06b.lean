@@ -16,9 +16,16 @@ strictly generating functors, theories defined by finite limits, finitely presen
 Lawvere theories, Birkhoff's theorem, pseudo-topoi and classifying topoi. The status of each entry
 is in `docs/buffalo-topos/lean/Part06.json`.
 
+## Implementation notes
+
 A strictly generating functor `i : C → E` is Mathlib's dense functor (`Functor.IsDense`); a
 strictly epimorphic family is Mathlib's `EffectiveEpiFamily`; morphisms of topoi are modelled by
 `Buffalo.Topos.Part03.TopMor` (an adjunction `f^* ⊣ f_*` with `f^*` left exact).
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 5:43:46–7:19:36
+  (11 July 1973)
 -/
 
 @[expose] public section

@@ -15,6 +15,8 @@ generating subcategories of a topos and strictly epimorphic families (0:32:47–
 subtopoi of `Sh(C, τ)` (1:19:23). The status of each entry is in
 `docs/buffalo-topos/lean/Part07.json`.
 
+## Implementation notes
+
 A strictly epimorphic family in the sense of SGA 4 (I 10.3) is Mathlib's `EffectiveEpiFamily`;
 « strictly and universally epimorphic » is « the generated sieve covers for the canonical
 topology » (SGA 4 II 2.5), `IsUniversalStrictEpi` below. For a full subcategory `ι : C ⥤ E`,
@@ -22,6 +24,12 @@ condition (b) « every `X` is the colimit of `C/X` » is Mathlib's `ι.isDenseAt
 
 The counterexamples in groups use `F₂ = FreeGroup Bool` for `ℤ * ℤ` and the full subcategory
 `C = {ℤ}` of `GrpCat`, as the induced category on one object.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `ORG14LNb5gE`, 0:32:47–0:50:01 and 1:19:23
+  (12 July 1973)
+* [SGA 4] exposé I, 10.3; exposé II, 2.5
 -/
 
 @[expose] public section

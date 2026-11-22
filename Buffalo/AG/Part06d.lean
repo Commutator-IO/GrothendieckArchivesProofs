@@ -13,11 +13,21 @@ public import Mathlib
 The entries of `docs/buffalo-ag/index.tex` lines 880–906 (video `Oqhr-Gt66es`, 4:39:50–5:23:27):
 perfect fields and geometric reducedness, separably closed fields and geometric irreducibility.
 
+## Main results
+
+* `not_isReduced_tensor`: the key computation: for `k` of characteristic `p` and
+  `k' = k[t]/(tᵖ - x)`, the element `α ⊗ 1 - 1 ⊗ α` of `k' ⊗_k k'` is a nonzero nilpotent.
+
+## Implementation notes
+
 Conventions. A `k`-scheme is a morphism `X ⟶ Spec k`. Mathlib's `GeometricallyReduced` and
 `GeometricallyIrreducible` are defined by base change to every field, and
-`Algebra.IsGeometricallyReduced k A` by base change to an algebraic closure. The key computation
-is `not_isReduced_tensor`: for `k` of characteristic `p` and `k' = k[t]/(tᵖ - x)`, the element
-`α ⊗ 1 - 1 ⊗ α` of `k' ⊗_k k'` is a nonzero nilpotent.
+`Algebra.IsGeometricallyReduced k A` by base change to an algebraic closure.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 26 June 1973, video `Oqhr-Gt66es`,
+  4:39:50–5:23:27 (`docs/buffalo-ag/index.tex`, lines 880–906)
 -/
 
 @[expose] public section

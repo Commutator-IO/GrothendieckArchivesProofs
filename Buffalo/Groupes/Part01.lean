@@ -18,6 +18,11 @@ sessions of 4, 6, 11 and 13 June 1973), split for build time into `Part01a` (fun
 first examples, centers), `Part01b` (`W(M)`, `V(M)`, endomorphisms), `Part01c` (`μ_n`, `SL_n`,
 `α_{p^i}`, Frobenius) and `Part01d` (diagonalizable groups, Hopf algebras, comodules). The status of
 every entry is in `docs/buffalo-groupes/lean/Part01.json`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), the undated side and the sessions of 4, 6, 11
+  and 13 June 1973 (`docs/buffalo-groupes/index.tex`, lines 87–238)
 -/
 
 @[expose] public section

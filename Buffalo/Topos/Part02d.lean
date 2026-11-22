@@ -15,9 +15,16 @@ Entries of `docs/buffalo-topos/index.tex` from « Points and morphisms of sober 
 uniqueness statement 8:29:59) to « Basic examples of topoi » (video `URU5jgTvjhU`,
 8:29:59–9:25:54). The status of each entry is in `docs/buffalo-topos/lean/Part02.json`.
 
+## Implementation notes
+
 Mathlib has no notion of Grothendieck topos as such; the definitions below state Giraud's axioms
 with Mathlib's notions, and the propositions are proved for the topoi `Sh(X)`, or for any category
 having the properties used.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 8:29:59–9:25:54
+  (25 May 1973)
 -/
 
 @[expose] public section

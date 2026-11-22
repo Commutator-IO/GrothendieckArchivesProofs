@@ -46,8 +46,10 @@ public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 > at Frobenius level `p` for `p > 3` but only at level `p²` for `p = 2, 3`.
 
 This file proves the algebraic core, in the local model `R[X]` over an arbitrary
-commutative ring `R` (`X` playing the uniformisant `t`, `D k = Polynomial.hasseDeriv k`
-the divided derivative `D⁽ᵏ⁾ = (1/k!) dᵏ/dtᵏ`, defined without dividing by `k!`):
+commutative ring `R`. Proving these statements says only that they hold as stated; the
+literature question of the finding stays open.
+
+## Main results
 
 * `N f = (D⁽²⁾f)² − D⁽³⁾f · D⁽¹⁾f` and `G0 f = N f / (D⁽¹⁾f)²` (with `Ring.inverse`),
   over any `R`, characteristics 2 and 3 included.
@@ -89,11 +91,22 @@ the divided derivative `D⁽ᵏ⁾ = (1/k!) dᵏ/dtᵏ`, defined without dividin
   page 121 fails: in `𝔽₅[T]/(T^5)`, `s = 2t` has `G₀ = 0` but is no homography of
   determinant `1`. The determinant `s₁` is a unit, not a square in general.
 
+## Implementation notes
+
+In the local model `R[X]`, `X` plays the uniformisant `t`, and `D k = Polynomial.hasseDeriv k`
+is the divided derivative `D⁽ᵏ⁾ = (1/k!) dᵏ/dtᵏ`, defined without dividing by `k!`.
+
+## Not formalised
+
 Not proved: the reduction from `T^(p^N) − α` to `T^(p^N)` for `α ≠ 0` (it is where
 `Pic(A) = 0` would enter), the torsor `Conn₀`, uniqueness of `G₀` up to sign over `ℤ`
 (page 72), and the passage from the local model to a smooth curve.
-Proving these statements says only that they hold as stated; the literature question
-of the finding stays open.
+
+## References
+
+* A. Grothendieck, Folder 93, pages 72 and 115–123 (modernised reading
+  `transcripts/93/93.modern.tex`, stations III and IX; finding
+  `93-integral-schwarzian-level-p2`)
 -/
 
 @[expose] public section

@@ -14,6 +14,10 @@ Entry URU5jgTvjhU-6861 of `docs/buffalo-topos/index.tex`, left unattempted in th
 Part01. The other entries of Part01 completed later are proved in Part02: URU5jgTvjhU-2745
 (`Part02.sheafPtEquiv`), -7768 (`Part02.product_of_epis_not_epi`), -13813
 (`Part02.pullback_preservesFiniteLimits`). Statuses in `docs/buffalo-topos/lean/Part01.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, entry 6861 (4 April 1973)
 -/
 
 @[expose] public section

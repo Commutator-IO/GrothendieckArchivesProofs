@@ -13,6 +13,11 @@ public import Buffalo.AG.Part09
 The board items of `vuys5SNs2eQ` (from 4:22:15) and `3ULFIl_2Wis` (5:30:39–6:57:40) that no index
 entry of part 09 covers. The status of every checked item is in
 `docs/buffalo-ag/lean/Part09-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), videos `vuys5SNs2eQ` (from 4:22:15) and
+  `3ULFIl_2Wis` (5:30:39–6:57:40), blackboards
 -/
 
 @[expose] public section

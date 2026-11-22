@@ -20,7 +20,27 @@ treats the commutative rings in which every `f` splits the ring, `A ≅ A_f × A
 (« pseudo-corps », absolutely flat or von Neumann regular rings): « ∃(!) e ∈ A(U), e² = e,
 e f inv., e(1 − f) = 0 », and concludes that their classifying topos is a presheaf topos,
 `X_{ps.corps} ≅ R̂_cons`. The reading explains this by the theory being cartesian: the
-idempotent, hence the splitting, exists *uniquely*.
+idempotent, hence the splitting, exists *uniquely*. Proved: `vnrTheory_isOfPresheafType`,
+**the theory of commutative von Neumann regular rings is of presheaf type**, which is the
+page's conclusion; and the field classifier of page 94 (finding
+`161-2-field-classifier-absolutely-flat-site`).
+
+## Main results
+
+* `vnrTheory_isHorn`, `vnrTheory_isOfPresheafType`: the theory is Horn, hence classified by a
+  presheaf topos on a small category.
+* `isSetModel_ofCommRing_iff`: a commutative ring with an operation `q` is a model of the theory
+  iff `q` is a quasi-inverse.
+* `existsUnique_quasiInverse_iff`: a commutative ring has a quasi-inverse operation, then a unique
+  one, iff it is von Neumann regular.
+* `mul_quasiInverse_idempotent`: `e = a q(a)` is idempotent with `e a = a`: the idempotent
+  « e » of page 42.
+* `fieldTheory_classifyingSite`: the field classifier is a topos of sheaves on the classifying
+  category of von Neumann regular rings, for a topology finer than the trivial one.
+* `isSetModel_fieldTheory_iff`, `isField_iff_exists_isSetModel`: the models among rings are the
+  fields, with their inverse.
+
+## Implementation notes
 
 **The theory.** Uniqueness is what lets the existential be replaced by an operation. A
 commutative ring is von Neumann regular when every `a` has some `b` with `a² b = a`; it then
@@ -53,21 +73,6 @@ for a topology finer than the trivial one with the sheafified structure (lean-po
 axioms hold, which is what « imposing the covering condition » means. In sets, the models are
 exactly the fields, with their inverse (`isField_iff_exists_isSetModel`).
 
-## Main results
-
-* `vnrTheory_isHorn`, `vnrTheory_isOfPresheafType`: the theory is Horn, hence classified by a
-  presheaf topos on a small category.
-* `isSetModel_ofCommRing_iff`: a commutative ring with an operation `q` is a model of the theory
-  iff `q` is a quasi-inverse.
-* `existsUnique_quasiInverse_iff`: a commutative ring has a quasi-inverse operation, then a unique
-  one, iff it is von Neumann regular.
-* `mul_quasiInverse_idempotent`: `e = a q(a)` is idempotent with `e a = a`: the idempotent
-  « e » of page 42.
-* `fieldTheory_classifyingSite`: the field classifier is a topos of sheaves on the classifying
-  category of von Neumann regular rings, for a topology finer than the trivial one.
-* `isSetModel_fieldTheory_iff`, `isField_iff_exists_isSetModel`: the models among rings are the
-  fields, with their inverse.
-
 ## Not formalised
 
 * The identification of the classifying category with the opposite of the finitely presented
@@ -79,6 +84,12 @@ exactly the fields, with their inverse (`isField_iff_exists_isSetModel`).
   which the two axioms hold after sheafification.
 * That every model of the theories in sets is a commutative ring: the converses are stated only
   for structures coming from a ring.
+
+## References
+
+* A. Grothendieck, Folder 161-2, p. 42 (article 13) and p. 94 (findings
+  `161-2-vn-regular-cartesian-presheaf-classifier`,
+  `161-2-field-classifier-absolutely-flat-site`)
 -/
 
 @[expose] public section

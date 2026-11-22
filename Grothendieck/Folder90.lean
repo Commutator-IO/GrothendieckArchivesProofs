@@ -20,7 +20,17 @@ flat affine group `G` over a Dedekind ring `A`, whose parenthesis says:
 namely that the algebra `B` of `G` satisfies the conditions of Lemma 1 (the saturation of a
 finitely generated submodule is finitely generated) exactly when every irreducible component of
 `G` has non-empty fibres. This is finding `90-components-criterion`. Without finite type it
-fails. Over a discrete valuation ring `R` with fraction field `K` and uniformiser `ϖ`, let
+fails.
+
+**What the formalisation finds.** The parenthesis fails without finite type: `Spec B` is
+irreducible, flat, with both fibres non-empty, and still the saturation of a cyclic submodule
+is not finitely generated.
+
+## Main results
+
+### The counterexample
+
+Over a discrete valuation ring `R` with fraction field `K` and uniformiser `ϖ`, let
 
   `B = {f ∈ K[T] : f(0) ∈ R}`,
 
@@ -36,13 +46,9 @@ the union of the dilatations `R[T/ϖⁿ]` of `𝔾_a` at the origin. Proved here
 * `saturation_eq`, `not_fg_saturation`: the saturation of `R · T` in `B` is `K · T`, which is
   not a finitely generated `R`-module.
 
-**What the formalisation finds.** The parenthesis fails without finite type: `Spec B` is
-irreducible, flat, with both fibres non-empty, and still the saturation of a cyclic submodule
-is not finitely generated. That `B` is a Hopf algebra is checked only through the
-comultiplication identity, pointwise on `K` (an infinite field, so the identity is one of
-polynomials); the antipode and counit are not written out.
+### The edition's argument in finite type, reduced case
 
-**The edition's argument in finite type, reduced case.** For `π` in a commutative ring `A`,
+For `π` in a commutative ring `A`,
 write `d(A) = ⋂ₙ πⁿA`. Proved here, as a statement of the edition (not of the page):
 
 * `iInf_pow_ne_bot_of_minimalPrime`: if a minimal prime `𝔭` satisfies `𝔭 + πA = A` (the
@@ -52,11 +58,28 @@ write `d(A) = ⋂ₙ πⁿA`. Proved here, as a statement of the edition (not of
 * `iInf_pow_eq_bot_iff`: hence, for `A` Noetherian and reduced, `d(A) = 0` if and only if every
   irreducible component of `Spec A` meets the special fibre.
 
+## Implementation notes
+
+That `B` is a Hopf algebra is checked only through the
+comultiplication identity, pointwise on `K` (an infinite field, so the identity is one of
+polynomials).
+
+## Not formalised
+
+The antipode and counit of `B` are not written out.
+
 Remark, not formalised: for `A = R[G]` with `G` flat affine of finite type over a complete
 discrete valuation ring, Hai–dos Santos II (arXiv:1802.06377), Prop. 6.19, together with
 Kaplansky's theorem on projective modules, turn `d(A) = 0` into « `G` specially locally finite »
 and « `R[G]` free over `R` », which gives the criterion of page 9 in the reduced case. The
 non-reduced case stays open.
+
+## References
+
+* A. Grothendieck, Folder 90, pages 1 and 9 (modernised reading `transcripts/90/90.modern.tex`;
+  finding `90-components-criterion`)
+* Hai–dos Santos II (arXiv:1802.06377), Prop. 6.19
+* Kaplansky's theorem on projective modules
 -/
 
 @[expose] public section

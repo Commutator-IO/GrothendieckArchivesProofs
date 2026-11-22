@@ -23,20 +23,35 @@ th. de Schneider » for curves without complex multiplication.
 This file **states, without proof,** the elliptic case in today's form (Bost and Charles 2016,
 Conjecture 2.12, specialised to `H¹` of an elliptic curve): for a lattice with algebraic
 invariants `g₂`, `g₃` and no complex multiplication, the periods `ω₁, ω₂` and the
-quasi-periods `η₁, η₂` are algebraically independent over `ℚ`. It is open. With complex
-multiplication the transcendence degree is `2` (Chudnovsky, 1976); in general it is at least
-`2` (Chudnovsky). Neither is proved here.
+quasi-periods `η₁, η₂` are algebraically independent over `ℚ`. It is open.
+
+## Main definitions
 
 * `weierstrassZeta`: `ζ(z) = ∑' (1/(z - l) + 1/l + z/l²)`, written as mathlib writes `℘`, the
-  term `l = 0` giving `1/z` because `1/0 = 0` in Lean. That this sum converges, that `ζ' = -℘`
-  and that `ζ(z + l) - ζ(z)` is independent of `z` are classical and not proved here.
+  term `l = 0` giving `1/z` because `1/0 = 0` in Lean.
 * `eta₁`, `eta₂`: the quasi-periods `ηᵢ = 2 ζ(ωᵢ/2)`, the value of `ζ(z + ωᵢ) - ζ(z)` by the
   oddness of `ζ` (Silverman, *Advanced topics*, I.5).
 * `HasCM`: some `α ∈ ℂ ∖ ℤ` maps the lattice into itself.
 * `EllipticPeriodConjecture`: the statement. A `Prop`, not an axiom; nothing depends on it.
 
+## Not formalised
+
+* That the sum defining `weierstrassZeta` converges, that `ζ' = -℘` and that `ζ(z + l) - ζ(z)`
+  is independent of `z` are classical and not proved here.
+* With complex multiplication the transcendence degree is `2` (Chudnovsky, 1976); in general
+  it is at least `2` (Chudnovsky). Neither is proved here.
+
 The same vocabulary, with the proved bounds as targets, is in the Tau Ceti roadmap
 EllipticPeriods (TauCetiProject/TauCetiRoadmap#1059), which does not state the conjecture.
+
+## References
+
+* A. Grothendieck, folder 18, pp. 10–12 (transcription `transcripts/18/batch-01.fr.tex`,
+  reading `transcripts/18/18.modern.tex`)
+* Bost and Charles (2016), Conjecture 2.12
+* Silverman, *Advanced topics*, I.5
+* Chudnovsky (1976)
+* Tau Ceti roadmap EllipticPeriods (TauCetiProject/TauCetiRoadmap#1059)
 -/
 
 @[expose] public section

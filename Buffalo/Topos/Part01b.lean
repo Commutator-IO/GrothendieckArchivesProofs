@@ -13,6 +13,11 @@ public import Mathlib
 Entries of `docs/buffalo-topos/index.tex` from « Torsors and stalkwise checks » to « Abelian
 sheaves and injectives » (video `URU5jgTvjhU`, 2:33:33–3:21:12). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 2:33:33–3:21:12
+  (11 May 1973)
 -/
 
 @[expose] public section

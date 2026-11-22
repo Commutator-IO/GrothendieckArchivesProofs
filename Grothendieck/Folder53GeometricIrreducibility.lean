@@ -15,7 +15,29 @@ public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GaloisFixed
 (`irreducibleSpace_of_stable`, `irreducibleSpace_of_map`) and leaves out the scheme-level
 statement with Mathlib's `AlgebraicGeometry.GeometricallyIrreducible`: the Galois action on
 `X_{k'}`, the reduction from all extensions of `k` to separable ones, and the radicial step.
-This file supplies it with three results of the vendored AxiomMath/Stacks library:
+This file supplies it with three results of the vendored AxiomMath/Stacks library (see the
+implementation notes), and proves the criterion of page 9 as stated.
+
+## Main results
+
+* `isIrreducible_preimage_range`: for `g : Z → X` over `k` with `Z` geometrically irreducible,
+  `p⁻¹(g(Z)) ⊆ X_{k^sep}` is irreducible;
+* `geometricallyIrreducible_of_point` (the criterion of page 9 over `k^sep`): if `X` is
+  irreducible, `Z` geometrically irreducible, and some point of `X_{k^sep}` over a point of
+  `g(Z)` lies on a single irreducible component of `X_{k^sep}`, then `X` is geometrically
+  irreducible;
+* `unique_component_map`: for a continuous generalizing map `q : Y' → Y` of spaces with `Y`
+  quasi-sober, a point of `Y'` lying on a single irreducible component maps to a point lying on
+  a single irreducible component;
+* `geometricallyIrreducible_of_point_extension` (the criterion as page 9 states it, with
+  hypothesis b) over any extension `L ⊇ k^sep`, for instance an algebraic closure `k̄`): if `X`
+  is irreducible, `Z` geometrically irreducible, and there is `z ∈ Z` such that every point of
+  `X_L` over `g(z)` lies on a single irreducible component of `X_L`, then `X` is geometrically
+  irreducible.
+
+## Implementation notes
+
+The three results of the vendored AxiomMath/Stacks library:
 
 * `AlgebraicGeometry.geometricallyIrreducible_tfae_of_isSepClosure` (Stacks tag 038I, file
   `StacksFrontier/AlgebraicGeometry/Variety/Geometrically/IrreducibleSeparableClosure.lean`):
@@ -35,30 +57,24 @@ whole inverse image `p⁻¹(g(Z))` in `X_{k^sep}` of the image of `g : Z → X`,
 automorphism preserves because it commutes with the projection `p : X_{k^sep} → X`, and that
 set is irreducible because it is the image of `Z ×_X X_{k^sep} ≅ Z_{k^sep}`.
 
-**What is proved.**
-* `isIrreducible_preimage_range`: for `g : Z → X` over `k` with `Z` geometrically irreducible,
-  `p⁻¹(g(Z)) ⊆ X_{k^sep}` is irreducible;
-* `geometricallyIrreducible_of_point` (the criterion of page 9 over `k^sep`): if `X` is
-  irreducible, `Z` geometrically irreducible, and some point of `X_{k^sep}` over a point of
-  `g(Z)` lies on a single irreducible component of `X_{k^sep}`, then `X` is geometrically
-  irreducible;
-* `unique_component_map`: for a continuous generalizing map `q : Y' → Y` of spaces with `Y`
-  quasi-sober, a point of `Y'` lying on a single irreducible component maps to a point lying on
-  a single irreducible component;
-* `geometricallyIrreducible_of_point_extension` (the criterion as page 9 states it, with
-  hypothesis b) over any extension `L ⊇ k^sep`, for instance an algebraic closure `k̄`): if `X`
-  is irreducible, `Z` geometrically irreducible, and there is `z ∈ Z` such that every point of
-  `X_L` over `g(z)` lies on a single irreducible component of `X_L`, then `X` is geometrically
-  irreducible. Hypothesis b) is passed from `L` to `k^sep` by `unique_component_map` applied to
-  the flat, surjective comparison map `X_L → X_{k^sep}` (`AlgebraicGeometry.baseChangeComparison`).
+In `geometricallyIrreducible_of_point_extension`, hypothesis b) is passed from `L` to `k^sep`
+by `unique_component_map` applied to the flat, surjective comparison map `X_L → X_{k^sep}`
+(`AlgebraicGeometry.baseChangeComparison`).
 
 The page's hypothesis b) asks that `g(Z)` not be contained in the locus of points of `X` over
 which two components of `X_k̄` meet; the hypothesis used here is that it contains one point
 outside that locus, which is the same thing.
 
-Not formalised: the sufficient condition by a geometrically normal point of `X_red`, and the
+## Not formalised
+
+The sufficient condition by a geometrically normal point of `X_red`, and the
 identification of `ℂ ⊗_ℝ ℝ[x,y]/(x² + y²)` used by the counterexample (done separately in
 `Folder53.lean`).
+
+## References
+
+* A. Grothendieck, folder 53, page 9
+* Stacks Project, tags 038I, 038J, 04KY
 -/
 
 @[expose] public section

@@ -18,9 +18,16 @@ connectedness, points with values in fields, the Zariski topology, irreducible s
 all in the namespace `Buffalo.AG.Part02`. The status of each entry is in
 `docs/buffalo-ag/lean/Part02.json`.
 
-Not formalised (no carrier in mathlib): the comparison between the Zariski connectedness of `X`
-and the connectedness of `X(ℂ)` in the complex topology (entry 26013), and the smoothness and
+## Not formalised
+
+No carrier in mathlib: the comparison between the Zariski connectedness of `X` and the
+connectedness of `X(ℂ)` in the complex topology (entry 26013), and the smoothness and
 rationality of reduced affine algebraic groups (entry 29738).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 5 – 11 June 1973, video `51wmmpHand0`,
+  4:56:31–8:34:57 (`docs/buffalo-ag/index.tex`, lines 218–355)
 -/
 
 @[expose] public section

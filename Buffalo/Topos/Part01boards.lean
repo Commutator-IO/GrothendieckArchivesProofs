@@ -13,6 +13,11 @@ public import Buffalo.Topos.Part01a
 Items of `public/buffalo-boards/URU5jgTvjhU-*.json` (0:03:26–5:34:24) that make a mathematical
 claim not already formalised by an entry of `docs/buffalo-topos/lean/Part01.json`. The status of
 every board item is in `docs/buffalo-topos/lean/Part01-boards.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 0:03:26–5:34:24, the
+  reconstructed blackboards `public/buffalo-boards/URU5jgTvjhU-*.json`
 -/
 
 @[expose] public section

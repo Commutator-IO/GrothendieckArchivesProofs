@@ -21,6 +21,18 @@ multistrates `𝓜`, the cosupport of `A ⊂ 𝓜` is the set of elements disjoi
 of `A`, the support is the cosupport of the cosupport, and a *support* is a part equal to its
 support (pp. 61–63). Three passages are formalised.
 
+**What the formalisation finds.** The Proposition of page 80 holds as stated, for any relation
+whatever (symmetry follows from `Supp¹_P`); the surjectivity onto `𝔓(P)`, which the page does
+not write, comes from `Supp²_P`. The two-strand string needs no density and no extremities: it
+suffices that the strands have no least element, and then each `{z}` is a support. The graph of
+page 98 is the disjointness graph of the edition's seven-element model of folder 156-4
+(`Grothendieck.Folder156_4.Hexagon`), and its supports form the same hexagon: the lattice that
+refuted the presumption of a Boolean algebra in the first mouture is the one by which the third
+mouture refutes its own Lemme 3, which is the stronger failure — the lattice is not even
+orthomodular.
+
+## Main results
+
 * **Page 80, Proposition.** A map `X ↦ |X| : 𝓜 → 𝔓(P)` with
   `Supp¹_P : X ∥ Y ↔ |X| ∩ |Y| = ∅` and `Supp²_P : every point is some |X|`. With
   `|A| = ⋃_{X ∈ A} |X|`: `img_cosupp` (`|cosupp A| = P ∖ |A|`), `img_supp` (`|supp A| = |A|`),
@@ -28,11 +40,9 @@ support (pp. 61–63). Three passages are formalised.
   (`A ∥ B ↔ |A| ∩ |B| = ∅`, from `Supp¹_P` alone), and `supportsIso`: `A ↦ |A|` is an order
   isomorphism from the supports onto `𝔓(P)`, `supportsIso_cosupp`: it carries the cosupport to
   the complement; the supports are therefore a complete atomic Boolean algebra.
-* **Pages 81–83, the « ficelle à deux brins ».** Lieux `J = I × I'`, `I`, `I'` linear orders
-  without least element (the open strands `]0, 1[`), two lieux disjoint when they are nested,
-  `z < z'` or `z' < z` in the product order, and `|(x, x')| = {x, x'} ⊂ I ⊕ I'`.
-  `ficelle_supp_singleton`: every `{z}` is a support (`ficelle_finite_not_supp`: not so without
-  the hypothesis, already for two three-element chains). For `z₁ = (x₁, x'₁)`, `z₂ = (x₂, x'₂)`
+* **Pages 81–83, the « ficelle à deux brins ».** `ficelle_supp_singleton`: every `{z}` is a
+  support (`ficelle_finite_not_supp`: not so without the hypothesis, already for two
+  three-element chains). For `z₁ = (x₁, x'₁)`, `z₂ = (x₂, x'₂)`
   crossing (`x₁ < x₂`, `x'₂ < x'₁`) and `z₃` strictly between them on both strands:
   `ficelle_mem_supp` (`z₃ ∈ supp {z₁, z₂}`), `ficelle_not_distrib`
   (`{z₃} ∧ ({z₁} ∨ {z₂}) = {z₃}` while `({z₃} ∧ {z₁}) ∨ ({z₃} ∧ {z₂}) = ∅`),
@@ -43,15 +53,18 @@ support (pp. 61–63). Three passages are formalised.
   `{A}` and `{B}` are disjoint supports, `{A} ∨ {B} = 𝓜`, and `(S ∨ S') ∩ ∁ S = {A', B} ≠ {B}`.
   `path_supports`: the supports are `∅, {A}, {B}, {A', B}, {A, B'}, 𝓜`.
 
-**What the formalisation finds.** The Proposition of page 80 holds as stated, for any relation
-whatever (symmetry follows from `Supp¹_P`); the surjectivity onto `𝔓(P)`, which the page does
-not write, comes from `Supp²_P`. The two-strand string needs no density and no extremities: it
-suffices that the strands have no least element, and then each `{z}` is a support. The graph of
-page 98 is the disjointness graph of the edition's seven-element model of folder 156-4
-(`Grothendieck.Folder156_4.Hexagon`), and its supports form the same hexagon: the lattice that
-refuted the presumption of a Boolean algebra in the first mouture is the one by which the third
-mouture refutes its own Lemme 3, which is the stronger failure — the lattice is not even
-orthomodular.
+## Implementation notes
+
+The two-strand string of pages 81–83: lieux `J = I × I'`, `I`, `I'` linear orders
+without least element (the open strands `]0, 1[`), two lieux disjoint when they are nested,
+`z < z'` or `z' < z` in the product order, and `|(x, x')| = {x, x'} ⊂ I ⊕ I'`.
+
+## References
+
+* A. Grothendieck, *Vers une géométrie des formes*, chapter VII, « Analysis situs (troisième
+  mouture) » (23–26 June 1986), Folder 156-7, pp. 61–63, 80–83, 97–98 (reading
+  `transcripts/156-7/156-7.modern.tex`)
+* A. Grothendieck, Folder 156-4, pp. 65–68 (the first mouture)
 -/
 
 @[expose] public section

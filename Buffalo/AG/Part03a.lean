@@ -14,6 +14,8 @@ The entries of `docs/buffalo-ag/index.tex` lines 356–402 (video `51wmmpHand0`,
 functoriality of `Spec` and the basic open sets, `Spec` and fibre products, faithfully flat
 descent and Čech cohomology.
 
+## Implementation notes
+
 Conventions. Spectra are mathlib's `PrimeSpectrum` with the Zariski topology; `Y_f` is
 `PrimeSpectrum.basicOpen f`, `V(J)` is `PrimeSpectrum.zeroLocus J`, and the map
 `Spec(u) : Spec B → Spec A` of `u : A → B` is `PrimeSpectrum.comap u`. The canonical map
@@ -21,6 +23,11 @@ Conventions. Spectra are mathlib's `PrimeSpectrum` with the Zariski topology; `Y
 `0 → M → M ⊗_A A' ⇉ M ⊗_A A' ⊗_A A'` is written as the exactness of
 `M ⊗ A → M ⊗ A' → M ⊗ (A' ⊗ A')`, the second map being `M ⊗ (s ↦ s ⊗ 1 - 1 ⊗ s)`
 (mathlib's `Algebra.TensorProduct.includeLeftSubRight`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 11 June 1973, video `51wmmpHand0`,
+  8:43:41–10:30:48 (`docs/buffalo-ag/index.tex`, lines 356–402)
 -/
 
 @[expose] public section
