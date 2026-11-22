@@ -7,6 +7,7 @@ public import StacksFrontier.AlgebraicGeometry.Descent.SeparatedQuasiFiniteSchem
 public import StacksFrontier.AlgebraicGeometry.Descent.EffectiveEtaleDescent
 public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.DescentTransport
 public import StacksFrontier.AlgebraicGeometry.Spaces.IntegralFiniteEtaleLocal
+import Grothendieck.Attr
 
 @[expose] public noncomputable section
 
@@ -242,6 +243,7 @@ theorem nonempty_geomFibre_of_surjective_of_locallyOfFiniteType (f : X ⟶ Y)
 quasi-compact and quasi-separated and `f : X ⟶ Y` finite and universally open, with exactly `n`
 geometric points in every geometric fibre. Then `f` factors as a universal homeomorphism `X ⟶ X^ét`
 followed by a finite étale morphism `X^ét ⟶ Y`. -/
+@[montpellier "126, 17–22"]
 theorem exists_radicial_etale_factorisation [CompactSpace Y] [QuasiSeparatedSpace Y]
     (f : X ⟶ Y) [IsFinite f]
     [UniversallyOpen f] {n : ℕ} (hn : HasGeomDegree f n) :

@@ -3,6 +3,7 @@ module
 public import Grothendieck.Folder126GeometricPoints
 public import StacksFrontier.AlgebraicGeometry.Morphisms.Misc.FiniteCoproduct
 public import StacksFrontier.AlgebraicGeometry.Limits.SigmaDescent
+import Grothendieck.Attr
 
 @[expose] public noncomputable section
 
@@ -82,6 +83,7 @@ def sigmaGeomFibreEquiv (hdisj : ∀ k l, k ≠ l → Disjoint (W k) (W l))
 /-- **The counting argument.** If `b` has exactly `n` geometric points over every geometric point,
 every sheet is finite and surjective, and at one geometric point `p₀` every sheet has at most one
 geometric point, then every sheet has exactly one geometric point over every geometric point. -/
+@[montpellier "126, 17–22"]
 theorem hasGeomDegree_one_of_sheets [Fintype κ] (hdisj : ∀ k l, k ≠ l → Disjoint (W k) (W l))
     (hcov : ∀ x : T, ∃ k, x ∈ W k) {n : ℕ} (hn : HasGeomDegree b n)
     [hfin : ∀ k, IsFinite ((W k).ι ≫ b)] [hsurj : ∀ k, Surjective ((W k).ι ≫ b)]
@@ -133,6 +135,7 @@ theorem eq_of_comp_sigmaι_eq {K : Type u} [Field K] {k l : κ} (a c : Spec (.of
 /-- **The factorisation of a split finite morphism.** Under the hypotheses of the counting
 argument, `b` factors as a universal homeomorphism followed by the fold map `∐_κ O ⟶ O`, which
 is finite and étale. -/
+@[montpellier "126, 17–22"]
 theorem exists_factorisation_of_sheets [Fintype κ] (hdisj : ∀ k l, k ≠ l → Disjoint (W k) (W l))
     (hcov : ∀ x : T, ∃ k, x ∈ W k) {n : ℕ} (hn : HasGeomDegree b n) [IsFinite b]
     [hfin : ∀ k, IsFinite ((W k).ι ≫ b)] [hsurj : ∀ k, Surjective ((W k).ι ≫ b)]
