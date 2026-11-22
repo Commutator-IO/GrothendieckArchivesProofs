@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -52,6 +53,7 @@ open Polynomial Finset
 /-- The frame of pages 6–10 at one object and one class `ξ` with `φ_ξ` a
 `ℚ`-isomorphism, transported to `E = End(A)` by `ψ(η) = φ_ξ⁻¹ φ_η`; the star is
 the Rosati involution. -/
+@[montpellier "50, 6–10"]
 structure Frame (E N : Type*) [Ring E] [StarRing E] [AddCommGroup N] (r : ℕ) where
   /-- `η ↦ φ_ξ⁻¹ φ_η`. -/
   ψ : N →+ E
@@ -81,6 +83,7 @@ def D (α β : E) : N := F.pb (α + β) F.ξ - F.pb α F.ξ - F.pb β F.ξ
 /-- `D_ξ(α) = D_ξ(α, 1)`. -/
 def Dξ (α : E) : N := F.D α 1
 
+@[montpellier "50, 9"]
 theorem ψ_D (α β : E) : F.ψ (F.D α β) = star α * β + star β * α := by
   simp only [D, map_sub, ψ_pb, ψ_ξ, mul_one, star_add]
   noncomm_ring
@@ -88,18 +91,23 @@ theorem ψ_D (α β : E) : F.ψ (F.D α β) = star α * β + star β * α := by
 theorem ψ_Dξ (α : E) : F.ψ (F.Dξ α) = α + star α := by
   simp [Dξ, ψ_D, add_comm]
 
+@[montpellier "50, 9"]
 theorem D_eq_Dξ_star_mul (α β : E) : F.D α β = F.Dξ (star α * β) :=
   F.ψ_injective (by rw [ψ_D, ψ_Dξ, star_mul, star_star])
 
+@[montpellier "50, 9"]
 theorem D_eq_Dξ_star_mul' (α β : E) : F.D α β = F.Dξ (star β * α) :=
   F.ψ_injective (by rw [ψ_D, ψ_Dξ, star_mul, star_star, add_comm])
 
+@[montpellier "50, 9"]
 theorem Dξ_star (α : E) : F.Dξ (star α) = F.Dξ α :=
   F.ψ_injective (by rw [ψ_Dξ, ψ_Dξ, star_star, add_comm])
 
+@[montpellier "50, 6–10"]
 theorem pb_mul (u v : E) (η : N) : F.pb (u * v) η = F.pb v (F.pb u η) :=
   F.ψ_injective (by rw [ψ_pb, ψ_pb, ψ_pb, star_mul]; noncomm_ring)
 
+@[montpellier "50, 6–10"]
 theorem nu_mul (u v : E) : F.ν (u * v) = F.ν u * F.ν v := by
   have h1 := F.I_pb (u * v) (fun _ => F.ξ)
   have h2 := F.I_pb v (fun _ => F.pb u F.ξ)
@@ -147,6 +155,7 @@ noncomputable def tr (α : E) : ℚ := F.σ 1 α
 
 theorem I_ξ_cast : ((F.I fun _ => F.ξ : ℤ) : ℚ) ≠ 0 := by exact_mod_cast F.I_ξ
 
+@[montpellier "50, 8"]
 theorem eval_charPoly (α : E) (n : ℤ) : (F.charPoly α).eval (n : ℚ) = F.ν (α + n) := by
   have h := congrArg (Int.cast : ℤ → ℚ) (F.I_pb (α + n) (fun _ => F.ξ))
   rw [I_pb_add_intCast] at h
@@ -156,6 +165,7 @@ theorem eval_charPoly (α : E) (n : ℤ) : (F.charPoly α).eval (n : ℚ) = F.ν
   exact Finset.sum_congr rfl fun f _ => mul_comm _ _
 
 /-- The `σᵢ` are well defined: `ν(α + n)`, `n ∈ ℤ`, determines the polynomial. -/
+@[montpellier "50, 8"]
 theorem charPoly_unique (α : E) (Q : ℚ[X]) (hQ : ∀ n : ℤ, Q.eval (n : ℚ) = F.ν (α + n)) :
     Q = F.charPoly α := by
   apply Polynomial.eq_of_infinite_eval_eq
@@ -198,14 +208,17 @@ theorem coeff_two_mul_charPoly (α : E) : (F.charPoly α).coeff (2 * r) = 1 := b
   simp only [sel, Matrix.cons_val_zero]
   exact inv_mul_cancel₀ F.I_ξ_cast
 
+@[montpellier "50, 8"]
 theorem charPoly_monic (α : E) : (F.charPoly α).Monic :=
   monic_of_natDegree_le_of_coeff_eq_one _ (F.natDegree_charPoly_le α) (F.coeff_two_mul_charPoly α)
 
+@[montpellier "50, 8"]
 theorem natDegree_charPoly (α : E) : (F.charPoly α).natDegree = 2 * r :=
   natDegree_eq_of_le_of_coeff_ne_zero (F.natDegree_charPoly_le α)
     (by rw [coeff_two_mul_charPoly]; exact one_ne_zero)
 
 /-- `σ_{2r}(α) = ν(α)`. -/
+@[montpellier "50, 8"]
 theorem coeff_zero_charPoly (α : E) : (F.charPoly α).coeff 0 = F.ν α := by
   rw [coeff_zero_eq_eval_zero, ← Int.cast_zero, eval_charPoly, Int.cast_zero, add_zero]
 
@@ -253,6 +266,7 @@ theorem two_mul_add_one_eq_sum_wt_iff {m : ℕ} (f : Fin (m + 1) → Fin 3) :
 
 /-- **The trace formula** (head of page 8), for a symmetric intersection form:
 `tr(α) · I(ξ^r) = r · I(ξ^{r−1}, D_ξ(α))`. -/
+@[montpellier "50, 8"]
 theorem tr_mul_I {m : ℕ} (F : Frame E N (m + 1))
     (hsym : ∀ (σ : Equiv.Perm (Fin (m + 1))) (v : Fin (m + 1) → N), F.I (v ∘ σ) = F.I v)
     (α : E) :
@@ -292,6 +306,7 @@ theorem Dξ_star_mul_self (α : E) : F.Dξ (star α * α) = (2 : ℤ) • F.pb �
   F.ψ_injective (by rw [ψ_Dξ, map_zsmul, ψ_pb, ψ_ξ, mul_one, star_mul, star_star, two_zsmul])
 
 /-- Page 6: `tr(α'α) · I(ξ^r) = 2r · I(ξ^{r−1}, α*ξ)`. -/
+@[montpellier "50, 6"]
 theorem tr_star_mul_self_mul_I {m : ℕ} (F : Frame E N (m + 1))
     (hsym : ∀ (σ : Equiv.Perm (Fin (m + 1))) (v : Fin (m + 1) → N), F.I (v ∘ σ) = F.I v)
     (α : E) :
@@ -302,6 +317,7 @@ theorem tr_star_mul_self_mul_I {m : ℕ} (F : Frame E N (m + 1))
   ring
 
 /-- Page 6 as written, with `αα'`: the axioms give `α'*ξ` in the last slot. -/
+@[montpellier "50, 6"]
 theorem tr_mul_star_self_mul_I {m : ℕ} (F : Frame E N (m + 1))
     (hsym : ∀ (σ : Equiv.Perm (Fin (m + 1))) (v : Fin (m + 1) → N), F.I (v ∘ σ) = F.I v)
     (α : E) :
@@ -334,6 +350,7 @@ structure Positivity {E N : Type*} [Ring E] [StarRing E] [AddCommGroup N] {r : �
 
 /-- The Corollaire of page 6 (Rosati positivity) under two added axioms:
 `I(ξ^{r−1}, η) > 0` for every nonzero `η ∈ N⁺`, and `α ≠ 0 ⇒ α*ξ ≠ 0`. -/
+@[montpellier "50, 6"]
 theorem tr_star_mul_self_pos {E N : Type*} [Ring E] [StarRing E] [AddCommGroup N] {m : ℕ}
     {F : Frame E N (m + 1)} (P : Positivity F)
     (hsym : ∀ (σ : Equiv.Perm (Fin (m + 1))) (v : Fin (m + 1) → N), F.I (v ∘ σ) = F.I v)
@@ -429,6 +446,7 @@ theorem Dξ_one_zero : F.Dξ (1, 0) = (2, 0) := by
 /-- In this model of all the axioms, with `I` not symmetric, the trace formula
 `tr(α) I(ξ²) = 2 I(ξ, D_ξ(α))` fails for `α = (1, 0)`, whichever slot holds
 `D_ξ(α)`: the two sides are `2` and `4`, or `2` and `0`. -/
+@[montpellier "50, 8"]
 theorem not_trace_formula :
     F.tr (1, 0) * ((F.I fun _ => F.ξ : ℤ) : ℚ) ≠
         2 * ((F.I (Function.update (fun _ => F.ξ) 0 (F.Dξ (1, 0)))) : ℚ) ∧
@@ -508,6 +526,7 @@ theorem star_i_mul_i : star i * i = 0 := by ext <;> simp [i]
 theorem pb_i : F.pb i F.ξ = 0 := by simp [F, i]
 
 /-- The extra axiom `I(ξ^{r−1}, η) > 0` for every nonzero `η ∈ N⁺` holds. -/
+@[montpellier "50, 6"]
 theorem nef_pos : ∀ η ∈ P.Pos, η ≠ 0 → 0 < F.I (Function.update (fun _ => F.ξ) 0 η) := by
   intro η hη h0
   have hη' : 0 ≤ η := hη
@@ -518,6 +537,7 @@ theorem nef_pos : ∀ η ∈ P.Pos, η ≠ 0 → 0 < F.I (Function.update (fun _
   exact lt_of_le_of_ne hη' (Ne.symm h0)
 
 /-- **The Corollaire fails**: `i ≠ 0` and `tr(i'i) = 0`. -/
+@[montpellier "50, 6"]
 theorem tr_star_i_mul_i : F.tr (star i * i) = 0 := by
   have h : (X ^ 2 : ℚ[X]) = F.charPoly (star i * i) := by
     refine F.charPoly_unique _ _ fun n => ?_

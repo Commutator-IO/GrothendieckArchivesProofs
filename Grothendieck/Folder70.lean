@@ -16,6 +16,7 @@ public import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
 public import Mathlib.FieldTheory.Relrank
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -140,25 +141,30 @@ def face : Fin 20 → Fin 12 × Fin 12 × Fin 12 :=
 variable {α}
 
 /-- The twelve vertices lie on the quadric `q = 0` (page 101). -/
+@[montpellier "70, 101"]
 theorem q_vert (h : α ^ 2 + α - 1 = 0) (i : Fin 12) : q α (vert α i) = 0 := by
   fin_cases i <;> simp only [q, vert, iota, Fin.reduceFinMk, Matrix.cons_val] <;>
     first | ring1 | linear_combination (-2 - α) * h | linear_combination (-1 - α) * h
 
+@[montpellier "70, 74–75"]
 theorem sigma0_vert (i : Fin 12) : sigma0 (vert α i) = vert α (perm0 i) := by
   fin_cases i <;> refine Prod.ext ?_ (Prod.ext ?_ ?_) <;>
     simp [sigma0, vert, iota, perm0] <;> ring1
 
+@[montpellier "70, 74–75"]
 theorem sigma1_vert (h : α ^ 2 + α - 1 = 0) (i : Fin 12) :
     sigma1 α (vert α i) = vert α (perm1 i) := by
   fin_cases i <;> refine Prod.ext ?_ (Prod.ext ?_ ?_) <;>
     simp only [sigma1, vert, iota, perm1, Fin.reduceFinMk, Fin.isValue, Matrix.cons_val] <;>
     first | ring1 | linear_combination (-1 : R) * h | linear_combination h
 
+@[montpellier "70, 74–75"]
 theorem sigma2_vert (i : Fin 12) : sigma2 (vert α i) = vert α (perm2 i) := by
   fin_cases i <;> refine Prod.ext ?_ (Prod.ext ?_ ?_) <;>
     simp [sigma2, vert, iota, perm2] <;> ring1
 
 /-- The thirty edges have `q₀ = 1` (the normalisation of page 75). -/
+@[montpellier "70, 75"]
 theorem q0_edge (h : α ^ 2 + α - 1 = 0) (e : Fin 30) :
     q0 α (vert α (edge e).2 - vert α (edge e).1) = 1 := by
   fin_cases e <;> simp only [q0, vert, iota, edge, Fin.reduceFinMk, Fin.isValue, Matrix.cons_val,
@@ -167,6 +173,7 @@ theorem q0_edge (h : α ^ 2 + α - 1 = 0) (e : Fin 30) :
 
 /-- Page 94: the nine vertices off the face `(s₀, s₁, s₂)` have a unit `z`-coordinate,
 so none lies in its plane `z = 0`, over any base. -/
+@[montpellier "70, 94"]
 theorem isUnit_z (h : α ^ 2 + α - 1 = 0) (i : Fin 12) (hi : 3 ≤ i.val) :
     IsUnit (vert α i).2.2 := by
   have u1 : IsUnit (2 + α) := ⟨⟨2 + α, 1 - α, by linear_combination -h, by
@@ -178,6 +185,7 @@ theorem isUnit_z (h : α ^ 2 + α - 1 = 0) (i : Fin 12) (hi : 3 ≤ i.val) :
 
 /-- Page 91, (17): in characteristic `2` the antipodism is the translation by
 `(α', α, α)` (the page reads « `(α', 1, 1)` »). No hypothesis on `α` is needed. -/
+@[montpellier "70, 91"]
 theorem iota_char_two (h2 : (2 : R) = 0) (p : R × R × R) :
     iota α p = p + (-1 - α, α, α) := by
   refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> simp only [iota, Prod.fst_add, Prod.snd_add]
@@ -412,6 +420,7 @@ theorem base_line (h : α ^ 2 + α - 1 = 0) {j k : Fin 12} (hj : j = 1 ∨ j = 5
   · exact base_line_6 h k hk0 hkj a
 
 /-- The twelve vertices are distinct, over any nonzero ring with `α² + α = 1`. -/
+@[montpellier "70, 93–94"]
 theorem vert_injective_any (h : α ^ 2 + α - 1 = 0) : Function.Injective (vert α) := by
   intro i j hij
   by_contra hne
@@ -427,6 +436,7 @@ theorem vert_injective_any (h : α ^ 2 + α - 1 = 0) : Function.Injective (vert 
 
 /-- Page 93, a)–c) « par homogénéité »: no three distinct vertices are collinear, over
 any nonzero ring with `α² + α = 1` (over a field, `OnLine` is collinearity). -/
+@[montpellier "70, 93"]
 theorem not_collinear_any (h : α ^ 2 + α - 1 = 0) {i j k : Fin 12} (hij : i ≠ j) (hik : i ≠ k)
     (hjk : j ≠ k) : ¬ OnLine (vert α k) (vert α i) (vert α j) := by
   intro H
@@ -439,6 +449,7 @@ theorem not_collinear_any (h : α ^ 2 + α - 1 = 0) {i j k : Fin 12} (hij : i �
 
 /-- Page 94 « par homogénéité »: no vertex is in the plane of a face not containing it,
 over any nonzero ring with `α² + α = 1`. -/
+@[montpellier "70, 94"]
 theorem not_in_face_plane_any (h : α ^ 2 + α - 1 = 0) (f : Fin 20) {m : Fin 12}
     (h1 : m ≠ (face f).1) (h2 : m ≠ (face f).2.1) (h3 : m ≠ (face f).2.2) :
     ¬ InPlane (vert α m) (vert α (face f).1) (vert α (face f).2.1) (vert α (face f).2.2) := by
@@ -475,6 +486,7 @@ instance : Fact (Nat.Prime 5) := ⟨by norm_num⟩
 abbrev V5 := ZMod 5 × ZMod 5 × ZMod 5
 
 /-- In `𝔽₅`, `α² + α − 1 = (α − 2)²`: the only root is `2` (page 78). -/
+@[montpellier "70, 78"]
 theorem alpha_eq_two (a : ZMod 5) : a ^ 2 + a - 1 = 0 ↔ a = 2 := by
   revert a; decide +kernel
 
@@ -492,6 +504,7 @@ theorem centre_fixed :
 def cv (i : Fin 12) : V5 := vert (2 : ZMod 5) i - o
 
 /-- Page 78: in characteristic 5 the vertices are isotropic for `q₀` centred at `o`. -/
+@[montpellier "70, 78"]
 theorem vert_isotropic (i : Fin 12) : q0 (2 : ZMod 5) (cv i) = 0 := by
   revert i; decide +kernel
 
@@ -499,6 +512,7 @@ theorem vert_isotropic (i : Fin 12) : q0 (2 : ZMod 5) (cv i) = 0 := by
 theorem q_centre : q (2 : ZMod 5) o = 0 := by decide +kernel
 
 /-- The nonzero isotropic vectors are the twelve centred vertices and their doubles. -/
+@[montpellier "70, 78"]
 theorem isotropic_iff (v : V5) :
     (v ≠ 0 ∧ q0 (2 : ZMod 5) v = 0) ↔ ∃ i, v = cv i ∨ v = (2 : ZMod 5) • cv i := by
   revert v; decide +kernel
@@ -511,15 +525,18 @@ def twoIcos : Fin 12 ⊕ Fin 12 → V5
 theorem twoIcos_injective : Function.Injective twoIcos := by
   unfold Function.Injective; decide +kernel
 
+@[montpellier "70, 78"]
 theorem isotropic_card :
     (Finset.univ.filter fun v : V5 => v ≠ 0 ∧ q0 (2 : ZMod 5) v = 0).card = 24 := by
   decide +kernel
 
+@[montpellier "70, 78"]
 theorem card_square :
     (Finset.univ.filter fun v : V5 => q0 (2 : ZMod 5) v = 1 ∨ q0 (2 : ZMod 5) v = 4).card
       = 60 := by
   decide +kernel
 
+@[montpellier "70, 78"]
 theorem card_nonsquare :
     (Finset.univ.filter fun v : V5 => q0 (2 : ZMod 5) v = 2 ∨ q0 (2 : ZMod 5) v = 3).card
       = 40 := by
@@ -559,6 +576,7 @@ theorem rep_cover : ∀ v : V5, v ≠ 0 → ∃ x, ∃ a : ZMod 5, a • rep x =
 
 /-- Page 78: the 6 + 15 + 10 vertex, edge and face directions are the 31 points of
 `ℙ²(𝔽₅)`, each once. -/
+@[montpellier "70, 78"]
 theorem point_bijective : Function.Bijective point := by
   refine ⟨fun x y hxy => ?_, fun p => ?_⟩
   · unfold point at hxy
@@ -572,6 +590,7 @@ theorem point_bijective : Function.Bijective point := by
     exact ⟨a⁻¹, by rw [← ha, smul_smul, inv_mul_cancel₀]; · simp
                    rintro rfl; exact p.rep_nonzero (by rw [← ha, zero_smul])⟩
 
+@[montpellier "70, 78"]
 theorem card_proj : Nat.card (Projectivization (ZMod 5) V5) = 31 := by
   rw [← Nat.card_eq_of_bijective point point_bijective]
   simp
@@ -599,6 +618,7 @@ theorem face_orth : ∀ f : Fin 20,
 
 /-- Page 78: a point of `ℙ²(𝔽₅)` lies on the conic `q₀ = 0` iff it is a vertex
 direction. -/
+@[montpellier "70, 78"]
 theorem conic_iff (v : V5) (hv : v ≠ 0) :
     q0 (2 : ZMod 5) v = 0 ↔ Projectivization.mk (ZMod 5) v hv ∈ Set.range (point ∘ .inl) := by
   have key : ∀ v : V5, v ≠ 0 →
@@ -629,11 +649,13 @@ instance (k : Fin 6) (x : Fin 6 ⊕ Fin 15 ⊕ Fin 10) : Decidable (onTangent k 
   unfold onTangent; infer_instance
 
 /-- An edge direction lies on exactly two tangents of the conic (an exterior point). -/
+@[montpellier "70, 78"]
 theorem edge_tangents :
     ∀ k : Fin 15, (Finset.univ.filter fun j => onTangent j (.inr (.inl k))).card = 2 := by
   decide +kernel
 
 /-- A face direction lies on no tangent of the conic (an interior point). -/
+@[montpellier "70, 78"]
 theorem face_tangents :
     ∀ k : Fin 10, (Finset.univ.filter fun j => onTangent j (.inr (.inr k))).card = 0 := by
   decide +kernel
@@ -685,6 +707,7 @@ def ell (i : ℕ) : (ℕ → R) →ₗ[R] R :=
 def wv (i : ℕ) : ℕ → R := sv (i + 1) - sv i
 
 /-- The universal reflection `σᵢ = id + ℓᵢ ⊗ (s_{i+1} − sᵢ)` of pages 23–25. -/
+@[montpellier "70, 23–25"]
 def usig (i : ℕ) : Module.End R (ℕ → R) := 1 + (ell n α i).smulRight (wv i)
 
 variable {n α}
@@ -717,6 +740,7 @@ theorem usig_wv_self (i : ℕ) : usig n α i (wv i) = -wv i := by
   rw [usig_apply, ell_wv_self]; module
 
 /-- `σᵢ² = 1`, whatever the `αⱼ` (page 19). -/
+@[montpellier "70, 19"]
 theorem usig_mul_self (i : ℕ) : usig n α i * usig n α i = 1 := by
   refine LinearMap.ext fun x => ?_
   rw [Module.End.mul_apply, Module.End.one_apply, usig_apply (x := x), map_add, map_smul,
@@ -724,6 +748,7 @@ theorem usig_mul_self (i : ℕ) : usig n α i * usig n α i = 1 := by
   module
 
 /-- `σᵢ σⱼ = σⱼ σᵢ` for `j ≥ i + 2`, whatever the `αₖ` (page 19). -/
+@[montpellier "70, 19"]
 theorem usig_comm {i j : ℕ} (hij : i + 2 ≤ j) (hj : j ≤ n) :
     usig n α i * usig n α j = usig n α j * usig n α i := by
   refine LinearMap.ext fun x => ?_
@@ -740,18 +765,22 @@ theorem sum_usig (i : ℕ) (hi : i ≤ n) (x : ℕ → R) :
     show i < n + 2 by omega]
 
 /-- The table of page 25: `σᵢ sⱼ = sⱼ` for `j < i`. -/
+@[montpellier "70, 25"]
 theorem usig_sv_of_lt {i j : ℕ} (h : j < i) : usig n α i (sv j) = sv j := by
   rw [usig_apply, ell_sv, wv]; split_ifs <;> (try omega); simp
 
 /-- `σᵢ sᵢ = sᵢ₊₁`. -/
+@[montpellier "70, 25"]
 theorem usig_sv_self (i : ℕ) : usig n α i (sv i) = sv (i + 1) := by
   rw [usig_apply, ell_sv, wv]; split_ifs <;> (try omega); simp
 
 /-- `σᵢ sᵢ₊₁ = sᵢ`. -/
+@[montpellier "70, 25"]
 theorem usig_sv_succ (i : ℕ) : usig n α i (sv (i + 1)) = sv i := by
   rw [usig_apply, ell_sv, wv]; split_ifs <;> (try omega); simp
 
 /-- `σᵢ sⱼ = −(1 + αᵢ) sᵢ + (1 + αᵢ) sᵢ₊₁ + sⱼ` for `i + 2 ≤ j ≤ n + 1` (page 25). -/
+@[montpellier "70, 25"]
 theorem usig_sv_of_le {i j : ℕ} (h1 : i + 2 ≤ j) (h2 : j ≤ n + 1) :
     usig n α i (sv j) = sv j + (1 + α i) • wv i := by
   rw [usig_apply, ell_sv, wv]; split_ifs <;> (try omega); simp
@@ -880,6 +909,7 @@ theorem rho_cubic {k : ℕ} (hk : k + 1 ≤ n) (x : ℕ → R) :
   simp only [pl]
   module
 
+@[montpellier "70, 67"]
 theorem orderOf_rho_eq_three [Nontrivial R] {k : ℕ} (hk : k + 1 ≤ n) :
     orderOf (rho (n := n) (α := α) k) = 3 ↔ α k = -1 := by
   rw [orderOf_eq_iff (by norm_num)]
@@ -899,6 +929,7 @@ theorem orderOf_rho_eq_three [Nontrivial R] {k : ℕ} (hk : k + 1 ≤ n) :
     · obtain rfl | rfl : m = 1 ∨ m = 2 := by omega
       all_goals simp [step, Function.iterate_succ_apply', Prod.ext_iff]
 
+@[montpellier "70, 67"]
 theorem orderOf_rho_eq_four [Nontrivial R] {k : ℕ} (hk : k + 1 ≤ n) :
     orderOf (rho (n := n) (α := α) k) = 4 ↔ α k = 0 := by
   rw [orderOf_eq_iff (by norm_num)]
@@ -923,6 +954,7 @@ theorem orderOf_rho_eq_four [Nontrivial R] {k : ℕ} (hk : k + 1 ≤ n) :
       · linear_combination e.2.2
       · linear_combination e.2.2 - h
 
+@[montpellier "70, 67"]
 theorem orderOf_rho_eq_five [Nontrivial R] {k : ℕ} (hk : k + 1 ≤ n) :
     orderOf (rho (n := n) (α := α) k) = 5 ↔ α k ^ 2 + α k - 1 = 0 := by
   rw [orderOf_eq_iff (by norm_num)]
@@ -972,6 +1004,7 @@ theorem usig_emb (a : R) (p : R × R × R) :
 
 /-- The icosahedron's rotations have orders `3` and `5` exactly, over every nonzero ring
 with `α² + α − 1 = 0`. -/
+@[montpellier "70, 74–75"]
 theorem ico_orderOf [Nontrivial R] {a : R} (h : a ^ 2 + a - 1 = 0) :
     orderOf (rho (n := 2) (α := icoα a) 0) = 3 ∧ orderOf (rho (n := 2) (α := icoα a) 1) = 5 :=
   ⟨(orderOf_rho_eq_three (by norm_num)).2 (by simp [icoα]),
@@ -1021,6 +1054,7 @@ theorem eval_qFn (p : R × R × R) : (qFn α).eval p = q α p := by
   simp only [QuadFn.eval, qFn, q]; ring
 
 /-- `q` is invariant under the three generators (page 95), for any `α`. -/
+@[montpellier "70, 95"]
 theorem q_sigma (p : R × R × R) :
     q α (sigma0 p) = q α p ∧ q α (sigma1 α p) = q α p ∧ q α (sigma2 p) = q α p := by
   obtain ⟨x, y, z⟩ := p
@@ -1030,6 +1064,7 @@ theorem q_sigma (p : R × R × R) :
 a quadratic function vanishing at the nine vertices `s₀, s₁, s₂, s₃, s'₃, s''₃, ι s₀, ι s₁,
 ι s₂` is `a · q`, `a` its coefficient of `x²`: the `9 × 9` minor of the linear system is
 `13α + 21`, a unit of `ℤ[α]` (of inverse `13α − 8`). -/
+@[montpellier "70, 101"]
 theorem quadric_unique (h : α ^ 2 + α - 1 = 0) (Q : QuadFn R)
     (hQ : ∀ i : Fin 12, i.val < 9 → Q.eval (vert α i) = 0) : Q = QuadFn.smul Q.a (qFn α) := by
   have h0 := hQ 0 (by decide); have h1 := hQ 1 (by decide); have h2 := hQ 2 (by decide)
@@ -1064,6 +1099,7 @@ theorem QuadFn.det_polarMat (Q : QuadFn R) : Q.polarMat.det = 2 * Q.halfDisc := 
 /-- **Pages 101–102: `δ'(q₀) = 1`** (« merveille ! »), over any commutative ring with
 `α² + α − 1 = 0`, characteristic 2 included; the polar matrix
 `[[2, 1, 1], [1, 2, −α], [1, −α, 2]]` has determinant `2`. -/
+@[montpellier "70, 101–102"]
 theorem halfDisc_q (h : α ^ 2 + α - 1 = 0) :
     (qFn α).halfDisc = 1 ∧ (qFn α).polarMat.det = 2 := by
   have e : (qFn α).halfDisc = 1 := by
@@ -1091,6 +1127,7 @@ theorem dot_qMat4 (v : Fin 4 → R) : v ⬝ᵥ (qMat4 α *ᵥ v) = 2 * qHom α v
   rw [qMat4_mulVec]; simp [dotProduct, Fin.sum_univ_four, qHom, q0]; ring
 
 /-- **Page 102: the discriminant is `−α − 3`** (« sauf erreur de calcul » — there is none). -/
+@[montpellier "70, 102"]
 theorem det_qMat4 (h : α ^ 2 + α - 1 = 0) : (qMat4 α).det = -α - 3 := by
   rw [qMat4, Matrix.det_succ_row_zero]
   simp [Fin.sum_univ_succ, Matrix.det_fin_three, Fin.succAbove]
@@ -1112,6 +1149,7 @@ theorem isUnit_det_qMat4_iff (h : α ^ 2 + α - 1 = 0) :
 /-- **Page 102: the quadric is smooth when `5` is invertible.** Over any commutative ring with
 `α² + α − 1 = 0` in which `5` is a unit, the only common zero of the four partial derivatives
 of `Q` (the rows of `qMat4`) is `0`; characteristic 2 included. -/
+@[montpellier "70, 102"]
 theorem qHom_smooth (h : α ^ 2 + α - 1 = 0) (h5 : IsUnit (5 : R)) {v : Fin 4 → R}
     (hv : qMat4 α *ᵥ v = 0) : v = 0 :=
   Matrix.eq_zero_of_det_mem_nonZeroDivisors_of_mulVec_eq_zero
@@ -1120,6 +1158,7 @@ theorem qHom_smooth (h : α ^ 2 + α - 1 = 0) (h5 : IsUnit (5 : R)) {v : Fin 4 �
 /-- **Pages 102 and 106: in characteristic 5 the quadric is a cone.** If `5 = 0` and `α = 2`
 (the only root over a field of characteristic 5), the singular points are the multiples of
 `(1, 2, 2, 1)`, the centre `o = (1, 2, 2)` of the icosahedron, which lies on the quadric. -/
+@[montpellier "70, 102, 106"]
 theorem qMat4_ker_char_five (h5 : (5 : R) = 0) (hα : α = 2) (v : Fin 4 → R) :
     qMat4 α *ᵥ v = 0 ↔ v = v 3 • ![1, 2, 2, 1] := by
   subst hα
@@ -1143,6 +1182,7 @@ theorem qHom_centre : qHom 2 ![(1 : R), 2, 2, 1] = 0 := by
 
 /-- **Pages 102 and 106, over a field.** The projective quadric `Q = 0` has a singular point
 if and only if the characteristic is `5`. -/
+@[montpellier "70, 102, 106"]
 theorem qHom_singular_iff {K : Type*} [Field K] {α : K} (h : α ^ 2 + α - 1 = 0) :
     (∃ v : Fin 4 → K, v ≠ 0 ∧ qHom α v = 0 ∧ qMat4 α *ᵥ v = 0) ↔ (5 : K) = 0 := by
   constructor
@@ -1262,6 +1302,7 @@ theorem genPerm_inv (k : Fin 3) : (genPerm k)⁻¹ = genPerm k := by
 /-- **The order 120 of the group** (pages 75 and 87, « si nous admettons que `G` est
 d'ordre 120 »): the permutations of the twelve vertices generated by `σ₀, σ₁, σ₂` form a
 group of order `120`. -/
+@[montpellier "70, 75, 87"]
 theorem card_icoPermGroup : Nat.card icoPermGroup = 120 := by
   have hmem (i : Fin 120) : elt120 i ∈ icoPermGroup :=
     Subgroup.list_prod_mem _ fun g hg => by
@@ -1310,6 +1351,7 @@ theorem isAff_sigmaOf (k : Fin 3) : IsAff (sigmaOf α k) := fun p => by
 commutative ring with `α² + α − 1 = 0`, characteristics 2 and 5 included, the group of
 permutations of `R³` generated by `σ₀, σ₁, σ₂` has order `120`; it acts faithfully on the
 twelve vertices. -/
+@[montpellier "70, 75, 87"]
 theorem card_icoGroup [Nontrivial R] (h : α ^ 2 + α - 1 = 0) :
     Nat.card (Subgroup.closure (Set.range (sigPerm α))) = 120 := by
   set f₁ := FreeGroup.lift (sigPerm α)
@@ -1524,6 +1566,7 @@ theorem recip_minpoly_cos {p : ℕ} (hp : 3 ≤ p) :
 /-- **Page 67's criterion for every `p ≥ 3`.** Over a field of characteristic `0`, for every
 `n` and `k + 1 ≤ n`, `σₖσₖ₊₁` has order exactly `p` iff `αₖ` is a root of the minimal
 polynomial (over `ℤ`) of `2cos(2π/p)`. -/
+@[montpellier "70, 67"]
 theorem orderOf_rho_eq_iff {K : Type*} [Field K] [CharZero K] {α : ℕ → K} {k : ℕ}
     (hk : k + 1 ≤ n) {p : ℕ} (hp : 3 ≤ p) :
     orderOf (rho (n := n) (α := α) k) = p ↔

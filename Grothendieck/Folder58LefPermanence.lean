@@ -2,6 +2,7 @@ module
 
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 public import StacksFrontier.AlgebraicGeometry.FormalGeometry.CompletionFunctor.FullyFaithfulComplete
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -55,6 +56,7 @@ universe u
 /-- **The condition `(LG)ₙ` of page 33** for the pair `(X, V(I))`: for every coherent locally
 free `F` on `X`, the comparison map `Hⁱ(X, F) ⟶ limₖ Hⁱ(X, F / Iᵏ⁺¹ F)` is bijective for
 `i ≤ n` and injective for `i = n + 1`. -/
+@[montpellier "58, 33"]
 def LGn {X : Scheme.{u}} [IsLocallyNoetherian X] (I : X.IdealSheafData) (n : ℕ) : Prop :=
   ∀ F : AlgebraicGeometry.SheafOfModules.CoherentModules X.ringCatSheaf,
     _root_.SheafOfModules.IsLocallyFree F.obj →
@@ -78,6 +80,7 @@ theorem lgN_of_isProper_of_isAdicComplete (A : Type u) [CommRing A] [IsNoetheria
 `J`-adically complete, `f : X ⟶ Spec A` proper and `Y = V(J 𝒪_X)`. For every proper
 `g : W ⟶ X` (in particular every projective flat one), the pair `(W, g⁻¹(Y))`, with `g⁻¹(Y)`
 cut out by `J 𝒪_W`, satisfies `(LG)ₙ`, as `(X, Y)` does. -/
+@[montpellier "58, 42"]
 theorem lgN_permanence_of_isProper_of_isAdicComplete (A : Type u) [CommRing A]
     [IsNoetherianRing A] (J : Ideal A) [IsAdicComplete J A] {X W : Scheme.{u}}
     (f : X ⟶ Spec (.of A)) [IsProper f] (g : W ⟶ X) [IsProper g] (n : ℕ) :

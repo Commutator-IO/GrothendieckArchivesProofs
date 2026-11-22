@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Grothendieck.Upstream.RatSmulMemIndivisible
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -42,6 +43,7 @@ namespace Grothendieck.Folder44
 /-! ## Indivisible roots have integral Cartan numbers -/
 
 /-- `α` is indivisible in `P`: whenever `α = m • y` with `y ∈ P`, `m` is a unit. -/
+@[montpellier "44, 4"]
 def Indivisible {V : Type*} [AddCommGroup V] (P : AddSubgroup V) (α : V) : Prop :=
   ∀ y ∈ P, ∀ m : ℤ, α = m • y → IsUnit m
 
@@ -55,6 +57,7 @@ theorem int_of_smul_mem {V : Type*} [AddCommGroup V] [Module ℚ V]
 /-- **The step the leaf takes.** If `α ∈ P` is indivisible in `P` and the symmetry
 `x ↦ x - f x • α` maps `P` into `P`, then every Cartan number `f x`, `x ∈ P`, is an
 integer. -/
+@[montpellier "44, 4"]
 theorem cartan_int_of_indivisible {V : Type*} [AddCommGroup V] [Module ℚ V]
     {P : AddSubgroup V} {α : V} (hα : α ∈ P) (hind : Indivisible P α) (f : V → ℚ)
     (hS : ∀ x ∈ P, x - f x • α ∈ P) {x : V} (hx : x ∈ P) : ∃ n : ℤ, f x = n :=
@@ -67,6 +70,7 @@ def roots : Finset (ℤ × ℤ) :=
   {(3, 0), (-3, 0), (0, 3), (0, -3), (1, 1), (-1, -1), (1, -1), (-1, 1)}
 
 /-- Axiom a): `Δ` generates `ℤ²`. -/
+@[montpellier "44, 4"]
 theorem generates : AddSubgroup.closure (roots : Set (ℤ × ℤ)) = ⊤ := by
   set H := AddSubgroup.closure (roots : Set (ℤ × ℤ))
   have mem : ∀ p ∈ roots, p ∈ H := fun p hp => AddSubgroup.subset_closure hp
@@ -77,9 +81,11 @@ theorem generates : AddSubgroup.closure (roots : Set (ℤ × ℤ)) = ⊤ := by
   exact eq_top_iff.2 fun ⟨a, b⟩ _ => by simpa using H.add_mem (H.zsmul_mem e1 a) (H.zsmul_mem e2 b)
 
 /-- Axiom b), first half: `Δ = -Δ`. -/
+@[montpellier "44, 4"]
 theorem neg_mem : ∀ a ∈ roots, -a ∈ roots := by decide
 
 /-- Axiom b), second half: `Δ` is reduced. -/
+@[montpellier "44, 4"]
 theorem reduced : ∀ a ∈ roots, ∀ n : ℤ, n • a ∈ roots → n = 1 ∨ n = -1 := by
   intro a ha n hn
   simp only [roots, Finset.mem_insert, Finset.mem_singleton] at ha
@@ -88,6 +94,7 @@ theorem reduced : ∀ a ∈ roots, ∀ n : ℤ, n • a ∈ roots → n = 1 ∨ 
 
 /-- Axiom b) as the page writes it, with `n ∈ ℚ`: no root is a rational multiple
 `q a`, `q ≠ ±1`, of a root `a`. -/
+@[montpellier "44, 4"]
 theorem reduced_rat : ∀ a ∈ roots, ∀ b ∈ roots, ∀ q : ℚ,
     (b.1 : ℚ) = q * a.1 ∧ (b.2 : ℚ) = q * a.2 → q = 1 ∨ q = -1 := by
   intro a ha b hb q h
@@ -117,6 +124,7 @@ def refl : Fin 4 → (ℤ × ℤ) ≃+ (ℤ × ℤ)
 
 /-- Axiom c): for each root `a` there is an automorphism `S` of `ℤ²` with
 `S a = -a` and `S Δ ⊆ Δ` (so `S Δ = Δ`, `Δ` being finite). -/
+@[montpellier "44, 4"]
 theorem symmetries : ∀ a ∈ roots, ∃ S : (ℤ × ℤ) ≃+ (ℤ × ℤ), S a = -a ∧ ∀ x ∈ roots, S x ∈ roots := by
   intro a ha
   simp only [roots, Finset.mem_insert, Finset.mem_singleton] at ha
@@ -139,6 +147,7 @@ theorem refl_zero_eq (p : ℤ × ℤ) :
 /-- **Uniqueness and the Cartan number.** Let `f : ℤ² → ℚ` be additive and such that
 `x ↦ x - f(x) · 3e₁` (computed in `ℚ²`) sends every root to a root. Then
 `f(e₁ + e₂) = 2/3`. -/
+@[montpellier "44, 4"]
 theorem cartan_eq_two_thirds (f : ℤ × ℤ →+ ℚ)
     (hS : ∀ x ∈ roots, ∃ y ∈ roots, (x.1 : ℚ) - f x * 3 = y.1 ∧ (x.2 : ℚ) = y.2)
     (ha : f (3, 0) = 2) : f (1, 1) = 2 / 3 := by
@@ -176,12 +185,14 @@ where
   symmetries' : ∀ x ∈ roots, refl 0 x ∈ roots := by simp [refl, roots]
 
 /-- The Cartan number `⟨(3e₁)^∨, e₁ + e₂⟩ = 2/3` is not an integer. -/
+@[montpellier "44, 4"]
 theorem cartan_not_int : ¬ ∃ n : ℤ, (2 / 3 : ℚ) = n := by
   rintro ⟨n, hn⟩
   have : (2 : ℤ) = 3 * n := by exact_mod_cast (by linarith : (2 : ℚ) = 3 * n)
   omega
 
 /-- The root `3e₁` is divisible in `P = ℤ²`. -/
+@[montpellier "44, 4"]
 theorem divisible : ¬ Indivisible (⊤ : AddSubgroup (ℤ × ℤ)) (3, 0) := by
   intro h
   have := h (1, 0) trivial 3 (by decide)
@@ -190,6 +201,7 @@ theorem divisible : ¬ Indivisible (⊤ : AddSubgroup (ℤ × ℤ)) (3, 0) := by
 
 /-- `{3e₁, e₂ - e₁}` is not an integral fundamental system:
 `e₁ + e₂ = (2/3) · 3e₁ + (e₂ - e₁)` is no integral combination. -/
+@[montpellier "44, 4"]
 theorem not_integral_base :
     ¬ ∃ m n : ℤ, ((1 : ℤ), (1 : ℤ)) = m • ((3 : ℤ), (0 : ℤ)) + n • ((-1 : ℤ), (1 : ℤ)) := by
   rintro ⟨m, n, h⟩
@@ -199,6 +211,7 @@ theorem not_integral_base :
 /-- **The three axioms do not give integrality.** There is a finite reduced `Δ`
 generating `ℤ²`, with a symmetry for each root, whose (unique) symmetry of the form
 `x ↦ x - f(x) a` has a non-integral Cartan number. -/
+@[montpellier "44, 4"]
 theorem axioms_not_integral :
     AddSubgroup.closure (roots : Set (ℤ × ℤ)) = ⊤ ∧
     (∀ a ∈ roots, -a ∈ roots) ∧

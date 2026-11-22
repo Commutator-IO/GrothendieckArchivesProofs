@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -121,6 +122,7 @@ variable {B : Type*} [Ring B] [MulSemiringAction Γ B]
 
 /-- The kernel of `H¹(Γ, A*) → H¹(Γ, B*)` is trivial for a surjective `Γ`-equivariant ring
 map `π : A → B` with `1 + Ker π ⊂ Aˣ`, when `|Γ|` is invertible in `A`. -/
+@[montpellier "46, 90–92"]
 theorem isCoboundary_of_map_isCoboundary (π : A →+* B) (hπ : Function.Surjective π)
     (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
     (hker : ∀ x, π x = 0 → IsUnit (1 + x)) (hn : IsUnit (Fintype.card Γ : A))
@@ -177,6 +179,7 @@ theorem isCohomologous_of_isUnit_sum {c c' : Γ → Aˣ} (hc : IsCocycle c) (hc'
 /-- **`H¹(Γ, A*) → H¹(Γ, B*)` is injective** (not only of trivial kernel) for a surjective
 `Γ`-equivariant ring map `π : A → B` with `1 + Ker π ⊂ Aˣ`, when `|Γ|` is invertible in `A`:
 two cocycles whose images are cohomologous are cohomologous. -/
+@[montpellier "46, 86–90"]
 theorem isCohomologous_of_map (π : A →+* B) (hπ : Function.Surjective π)
     (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
     (hker : ∀ x, π x = 0 → IsUnit (1 + x)) (hn : IsUnit (Fintype.card Γ : A))
@@ -272,6 +275,7 @@ theorem isUnit_card (hp : ¬ ringChar (ResidueField O) ∣ Fintype.card Γ) :
 /-- Pages 90–92, case `𝔪ᴺA = 0` and `p ∤ |Γ|`: for `π : A → B` a surjective equivariant ring
 map with kernel in `𝔪A` (e.g. `B = A/𝔪A`), the kernel of `H¹(Γ, A*) → H¹(Γ, B*)` is trivial
 (d'après les pages 90–92, forme reconstituée par l'édition). -/
+@[montpellier "46, 90–92"]
 theorem ker_trivial_of_pow_smul_eq_bot {N : ℕ}
     (hN : maximalIdeal O ^ N • (⊤ : Submodule O A) = ⊥)
     (hp : ¬ ringChar (ResidueField O) ∣ Fintype.card Γ) (π : A →+* B)
@@ -287,6 +291,7 @@ theorem ker_trivial_of_pow_smul_eq_bot {N : ℕ}
 `B = A/𝔪A` or any surjective equivariant image with kernel in `𝔪A`, is trivial, without
 `𝔪` nilpotent and without Artin–Rees (d'après les pages 90–92, forme reconstituée par
 l'édition). -/
+@[montpellier "46, 90–92"]
 theorem ker_trivial [Module.Finite O A] (hp : ¬ ringChar (ResidueField O) ∣ Fintype.card Γ)
     (π : A →+* B) (hπ : Function.Surjective π) (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
     (hker : ∀ x, π x = 0 → x ∈ maximalIdeal O • (⊤ : Submodule O A)) {c : Γ → Aˣ}
@@ -298,6 +303,7 @@ theorem ker_trivial [Module.Finite O A] (hp : ¬ ringChar (ResidueField O) ∣ F
 /-- **Page 90, injectivity**, `A` finite over `𝒪` and `p ∤ |Γ|`: two cocycles `Γ → A*` whose
 images in `B = A/𝔪A` (or any surjective equivariant image with kernel in `𝔪A`) are cohomologous
 are cohomologous. -/
+@[montpellier "46, 90"]
 theorem injective [Module.Finite O A] (hp : ¬ ringChar (ResidueField O) ∣ Fintype.card Γ)
     (π : A →+* B) (hπ : Function.Surjective π) (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
     (hker : ∀ x, π x = 0 → x ∈ maximalIdeal O • (⊤ : Submodule O A)) {c c' : Γ → Aˣ}
@@ -339,6 +345,7 @@ theorem signCocycle_sub_one_mem (g : Multiplicative (ZMod 2)) :
 
 /-- The edition's counterexample: for `p = 2 = |Γ|`, a cocycle trivial modulo `𝔪` need not be
 a coboundary, so `p ∤ |Γ|` cannot be dropped. -/
+@[montpellier "46, 90–92"]
 theorem not_isCoboundary_signCocycle : ¬ IsCoboundary signCocycle := by
   rintro ⟨u, hu⟩
   have h : _ = ↑u⁻¹ * (u : ZMod 4) := hu (Multiplicative.ofAdd 1)
@@ -400,6 +407,7 @@ open scoped Classical in
 /-- **The Sylow form, at the level of rings.** For a surjective equivariant `π : A → B` with
 `1 + Ker π ⊂ Aˣ`, a subgroup `Λ` of index invertible in `A` and `A^Λ → B` onto (the margin of
 page 90), a cocycle `c` that is a coboundary modulo `Ker π` and on `Λ` is a coboundary. -/
+@[montpellier "46, 90"]
 theorem isCoboundary_of_restrict (π : A →+* B) (hπ : Function.Surjective π)
     (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
     (hker : ∀ x, π x = 0 → IsUnit (1 + x)) (Λ : Subgroup Γ) (hn : IsUnit (Λ.index : A))
@@ -451,6 +459,7 @@ theorem isUnit_index (Λ : Subgroup Γ) (hp : ¬ ringChar (ResidueField O) ∣ �
 /-- **Pages 90–92, the Sylow form** (forme reconstituée par l'édition): `A` finite over `𝒪`,
 `π : A → B` onto with kernel in `𝔪A`, `Λ` of index prime to `p` and `A^Λ → B` onto. The kernel
 of `H¹(Γ, A*) → H¹(Γ, B*) × H¹(Λ, A*)` is trivial. -/
+@[montpellier "46, 90"]
 theorem ker_trivial_restrict [Module.Finite O A] (Λ : Subgroup Γ)
     (hp : ¬ ringChar (ResidueField O) ∣ Λ.index) (π : A →+* B) (hπ : Function.Surjective π)
     (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
@@ -462,6 +471,7 @@ theorem ker_trivial_restrict [Module.Finite O A] (Λ : Subgroup Γ)
     Λ (isUnit_index Λ hp) hlift hc hΛ hπc
 
 /-- The statement of page 90 with `Λ` a Sylow `p`-subgroup, `p` the residue characteristic. -/
+@[montpellier "46, 90"]
 theorem ker_trivial_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Prime]
     (Λ : Sylow (ringChar (ResidueField O)) Γ) (π : A →+* B) (hπ : Function.Surjective π)
     (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
@@ -621,6 +631,7 @@ theorem isUnit_of_det_mulLeft_ne_zero [FiniteDimensional k B] {x : B}
 /-- **Hilbert 90 for finite algebras over an infinite field, relative to the inertia** (the field
 case of pages 82–83 used on page 88): two cocycles `Γ → B*` that agree on the inertia are
 cohomologous, when `|Γ_i|` is invertible in `k`. With `Γ` faithful on `k`, `H¹(Γ, B*) = 1`. -/
+@[montpellier "46, 82–83, 88"]
 theorem isCohomologous_of_eqOn_inertia [Infinite k] [FiniteDimensional k B]
     (hB : ∀ (g : Γ) (μ : k), g • algebraMap k B μ = algebraMap k B (g • μ))
     (hN : ((inertia Γ k).card : k) ≠ 0) {c c' : Γ → Bˣ} (hc : IsCocycle c) (hc' : IsCocycle c')
@@ -767,6 +778,7 @@ with `|Γ_i|` invertible in `k`, `A` a finite `𝒪`-algebra, not necessarily co
 semilinear `Γ`-action, and `π : A → B` onto `B = A/𝔪A` (any surjective equivariant map to a
 finite-dimensional `k`-algebra with semilinear action, with kernel in `𝔪A`). Two cocycles
 `Γ → A*` cohomologous on `Γ_i` are cohomologous on `Γ`. -/
+@[montpellier "46, 86–89"]
 theorem isCohomologous_of_restrict_inertia [Module.Finite O A] [Infinite (ResidueField O)]
     [FiniteDimensional (ResidueField O) B]
     (hO : ∀ (g : Γ) (a : O), g • algebraMap O A a = algebraMap O A (g • a))
@@ -797,6 +809,7 @@ theorem isCohomologous_of_restrict_inertia [Module.Finite O A] [Infinite (Residu
 /-- **The case `Γ_i = {e}` (page 88): `H¹(Γ, A*) = 1`.** If `Γ` acts faithfully on the infinite
 residue field `k`, any two cocycles `Γ → A*` are cohomologous. No dévissage along `𝔪ⁿ` and no
 Artin–Rees: an element of trace one in `𝒪` lifts the field case in one average. -/
+@[montpellier "46, 88"]
 theorem isCohomologous_of_faithful [Module.Finite O A] [Infinite (ResidueField O)]
     [FaithfulSMul Γ (ResidueField O)] [FiniteDimensional (ResidueField O) B]
     (hO : ∀ (g : Γ) (a : O), g • algebraMap O A a = algebraMap O A (g • a))
@@ -968,6 +981,7 @@ variable {O A : Type*} [CommRing O] [Ring A] [Algebra O A] [IsLocalRing O]
 over `𝒪`, not necessarily commutative, `π : A → B` onto with kernel in `𝔪A`, `Λ` of index prime
 to `p`. Two cocycles cohomologous modulo `𝔪A` and on `Λ` are cohomologous, provided `B` lifts to
 the elements fixed by `Λ` for the action twisted by `c'`. -/
+@[montpellier "46, 90"]
 theorem injective_restrict [Module.Finite O A] (Λ : Subgroup Γ)
     (hp : ¬ ringChar (ResidueField O) ∣ Λ.index) (π : A →+* B) (hπ : Function.Surjective π)
     (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
@@ -981,6 +995,7 @@ theorem injective_restrict [Module.Finite O A] (Λ : Subgroup Γ)
     Λ (isUnit_index Λ hp) hc hc' hlift hΛ hπc
 
 /-- `injective_restrict` with `Λ` a Sylow `p`-subgroup, `p` the residue characteristic. -/
+@[montpellier "46, 90"]
 theorem injective_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Prime]
     (Λ : Sylow (ringChar (ResidueField O)) Γ) (π : A →+* B) (hπ : Function.Surjective π)
     (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
@@ -994,6 +1009,7 @@ theorem injective_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Pr
 
 /-- The Sylow form with the margin's untwisted hypothesis `A^Λ → B` onto, when `c'` is a
 coboundary on `Λ` (with `c' = 1`: `ker_trivial_sylow`). -/
+@[montpellier "46, 90"]
 theorem injective_sylow_of_isCoboundary [Module.Finite O A]
     [Fact (ringChar (ResidueField O)).Prime]
     (Λ : Sylow (ringChar (ResidueField O)) Γ) (π : A →+* B) (hπ : Function.Surjective π)
@@ -1017,6 +1033,7 @@ variable {O A : Type*} [CommRing O] [CommRing A] [Algebra O A] [IsLocalRing O]
 
 /-- **Page 90 for `A` commutative: `H¹(Γ, A*) → H¹(Γ, B*) × H¹(Λ, A*)` is injective** under the
 margin's hypothesis `A^Λ → B` onto, `Λ` a Sylow `p`-subgroup. -/
+@[montpellier "46, 90"]
 theorem injective_sylow_comm [Module.Finite O A] [Fact (ringChar (ResidueField O)).Prime]
     (Λ : Sylow (ringChar (ResidueField O)) Γ) (π : A →+* B) (hπ : Function.Surjective π)
     (hequiv : ∀ (g : Γ) (a : A), π (g • a) = g • π a)
@@ -1119,6 +1136,7 @@ decomposition group `Γ_d`), `L ∈ 𝒪` with `σ(L) ∈ 𝔪` for `σ ∉ D` a
 `A` a finite `𝒪`-algebra, not necessarily commutative, with semilinear `Γ`-action. Two cocycles
 `c, c' : Γ → A*` whose restrictions to `D` are cohomologous modulo `𝔪A` — by `w` invertible
 modulo `𝔪A` with `c'(δ) δ(w) ≡ w c(δ)` — are cohomologous in `A*`. -/
+@[montpellier "46, 84–89"]
 theorem isCohomologous_of_semilocal
     (hO : ∀ (g : Γ) (a : O), g • algebraMap O A a = algebraMap O A (g • a)) (𝔪 : Ideal O)
     (htrans : ∀ 𝔫 : Ideal O, 𝔫.IsMaximal → ∃ σ : Γ, 𝔫 = 𝔪.comap (MulSemiringAction.toRingHom Γ O σ))
@@ -1225,6 +1243,7 @@ with kernel in `𝔪`, equivariant for `D`), `|Γ_i|` invertible in `k`, and `π
 surjective `D`-equivariant map to a finite-dimensional `k`-algebra with semilinear action, with
 kernel in `𝔪A`): two cocycles `Γ → A*` whose images are cohomologous in `B*` on `Γ_i` — a
 fortiori if they are cohomologous on `Γ_i` in `A_𝔪*` — are cohomologous in `A*`. -/
+@[montpellier "46, 84–89"]
 theorem isCohomologous_of_restrict_inertia_semilocal
     (hO : ∀ (g : Γ) (a : O), g • algebraMap O A a = algebraMap O A (g • a)) (𝔪 : Ideal O)
     [𝔪.IsMaximal]
@@ -1278,6 +1297,7 @@ conjugates `σ(e)` are central, pairwise orthogonal when distinct, and sum to `1
 `(eA)*`, as for the completion `Â = Π_𝔫 Â_𝔫` of the page. Two cocycles `c, c' : Γ → A*` whose
 restrictions to `Γ_d` are cohomologous in `(eA)*` (by `z ∈ eA` with inverse `z'` in `eA`) are
 cohomologous in `A*`, by `b = Σ_{gΓ_d} c'(g) g(z) c(g)⁻¹`. No hypothesis on `|Γ|`. -/
+@[montpellier "46, 85–86"]
 theorem isCohomologous_of_shapiro {e : A} (hcen : ∀ (g : Γ) (a : A), g • e * a = a * g • e)
     (horth : ∀ g h : Γ, g • e ≠ h • e → g • e * h • e = 0)
     (hsum : ∑ q : Γ ⧸ MulAction.stabilizer Γ e, q.out • e = 1)

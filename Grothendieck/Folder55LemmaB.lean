@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.Folder55
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -149,6 +150,7 @@ instance : TopologicalSpace Pt where
 theorem isOpenPt_iff {U : Set Pt} : IsOpen U ↔ IsOpenPt U := Iff.rfl
 
 /-- **(i)**: the space is quasi-compact. -/
+@[montpellier "55, 13"]
 instance instCompactSpacePt : CompactSpace Pt := by
   refine ⟨isCompact_iff_finite_subcover.2 fun {ι} U hU hcov => ?_⟩
   classical
@@ -473,6 +475,7 @@ theorem rigid (hεκ : ∀ a, ε (κ a) = a) (hι : Function.Injective ι) {U : 
 
 /-- **(v) for `𝒪` at `infty`, on every basic neighbourhood**: a section of `𝒪` over `B_M` which
 vanishes on some open neighbourhood `W ⊆ B_M` of `infty` vanishes on `B_M`. -/
+@[montpellier "55, 13"]
 theorem identity_principle (hεκ : ∀ a, ε (κ a) = a) (hι : Function.Injective ι) (M : ℕ)
     {s : Sec k D K (basicOpen M)} (hs : s ∈ (O κ ε ι).sections (basicOpen M))
     {W : Opens Xsp} (hW : (infty : Xsp) ∈ W) (hWM : W ≤ basicOpen M)
@@ -547,6 +550,7 @@ theorem G_agreeOn_piece {n j : ℕ} (hj : n + 1 ≤ j) :
     exact ⟨hsO, fun y hy => hs0 y ((inBasic_iff_of_inPiece hj y.1 (hV y.2)).1 hy)⟩
 
 /-- **The germs of the `𝒢_j` stabilise at every point.** -/
+@[montpellier "55, 13"]
 theorem G_germs_stabilize (x : Xsp) :
     ∃ j₀, ∀ j ≥ j₀, (G κ ε ι j).germs x = (G κ ε ι j₀).germs x := by
   cases x with
@@ -590,6 +594,7 @@ theorem one_not_mem_G [Nontrivial k] (j : ℕ) :
   exact one_ne_zero (h1 : (1 : k) = 0)
 
 /-- **The sequence `𝒢_j` is not stationary** — Lemme B fails for `F = 𝒪`. -/
+@[montpellier "55, 13"]
 theorem G_not_stationary [Nontrivial k] : ¬ ∃ j₀, ∀ j ≥ j₀, G κ ε ι j = G κ ε ι j₀ := by
   rintro ⟨j₀, hj₀⟩
   have hmem := one_mem_G_succ κ ε ι j₀
@@ -598,6 +603,7 @@ theorem G_not_stationary [Nontrivial k] : ¬ ∃ j₀, ∀ j ≥ j₀, G κ ε �
 
 /-- **The uniformity hypothesis of `Folder55.stationary_of_germs` fails**: at `infty` the germs of
 all the `𝒢_j` agree, but on no neighbourhood of `infty` do the `𝒢_j` agree with `𝒢_0`. -/
+@[montpellier "55, 13"]
 theorem G_not_uniform [Nontrivial k] :
     ¬ ∀ (x : Xsp) (j : ℕ), ∃ W : Opens Xsp, x ∈ W ∧
       ∀ l ≥ j, (G κ ε ι l).germs x = (G κ ε ι j).germs x → (G κ ε ι l).AgreeOn (G κ ε ι j) W := by
@@ -614,6 +620,7 @@ theorem G_not_uniform [Nontrivial k] :
 `infty` on the fundamental system `B_M` (`identity_principle`), the increasing sequence of
 Ideals `𝒢_j` has stabilising germs everywhere, fails the uniformity hypothesis of
 `Folder55.stationary_of_germs`, and is not stationary. -/
+@[montpellier "55, 13"]
 theorem identity_principle_not_enough [Nontrivial k] :
     CompactSpace Xsp ∧ Monotone (G κ ε ι) ∧
       (∀ x : Xsp, ∃ j₀, ∀ j ≥ j₀, (G κ ε ι j).germs x = (G κ ε ι j₀).germs x) ∧

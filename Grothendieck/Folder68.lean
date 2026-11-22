@@ -6,6 +6,7 @@ public import Mathlib.LinearAlgebra.Dual.Lemmas
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Algebra.GroupWithZero.Units.Fintype
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -125,6 +126,7 @@ identification `Ω(0) ≃ {±1}` (b), and for every hyperplane `W ⊂ V` and clo
 bounded by `W` a Stokes map `St_H : Ω(V) → Ω(W)` (c), natural in `(V, H)`, subject to the two
 axioms: `St_H` is bijective, and `St_{-H} = τ ∘ St_H`, which on a two-element set says
 `St_{-H} ω ≠ St_H ω`. -/
+@[montpellier "68, 49"]
 structure Theory where
   /-- The two-element set `Ω(V)`. -/
   Ω : (V : Type) → [AddCommGroup V] → [Module ℝ V] → [FiniteDimensional ℝ V] → Type
@@ -156,6 +158,7 @@ structure Theory where
     (ω : Ω V), St W (-H) hH' ω ≠ St W H hH ω
 
 /-- A morphism of theories: a natural transformation compatible with b) and c). -/
+@[montpellier "68, 49"]
 structure Hom (T T' : Theory) where
   app : ∀ (V : Type) [AddCommGroup V] [Module ℝ V] [FiniteDimensional ℝ V], T.Ω V → T'.Ω V
   natural : ∀ {V V₂ : Type} [AddCommGroup V] [Module ℝ V] [FiniteDimensional ℝ V]
@@ -481,6 +484,7 @@ theorem good_of_det_ne {M : Matrix (Fin n) (Fin n) ℝ} (hM : M.det ≠ 0) : T.G
     T.good_transvection (fun _ _ hA hB => T.good_mul hA hB)
 
 /-- **Page 51.** `g ∈ GL(n, ℝ)` acts trivially on `Ω(ℝⁿ)` iff `det g > 0`. -/
+@[montpellier "68, 51"]
 theorem fixes_iff_det_pos (g : E n ≃ₗ[ℝ] E n) :
     T.Fixes g ↔ 0 < LinearMap.det (g : E n →ₗ[ℝ] E n) := by
   have h0 : LinearMap.det (g : E n →ₗ[ℝ] E n) ≠ 0 := g.isUnit_det'.ne_zero
@@ -489,11 +493,13 @@ theorem fixes_iff_det_pos (g : E n ≃ₗ[ℝ] E n) :
 
 /-- **Page 51, the action is `sg ∘ det`**: for every `ω ∈ Ω(ℝⁿ)`, `g ω = ω` if `det g > 0` and
 `g ω = τ ω` (that is, `g ω ≠ ω`) if `det g < 0`. -/
+@[montpellier "68, 51"]
 theorem map_eq_iff_det_pos (g : E n ≃ₗ[ℝ] E n) (ω : T.Ω (E n)) :
     T.map g ω = ω ↔ 0 < LinearMap.det (g : E n →ₗ[ℝ] E n) := by
   rw [← T.fixes_iff_det_pos]
   exact ⟨fun h => (T.fixes_or g).resolve_right fun hf => hf ω h, fun h => h ω⟩
 
+@[montpellier "68, 51"]
 theorem map_ne_iff_det_neg (g : E n ≃ₗ[ℝ] E n) (ω : T.Ω (E n)) :
     T.map g ω ≠ ω ↔ LinearMap.det (g : E n →ₗ[ℝ] E n) < 0 := by
   have h0 : LinearMap.det (g : E n →ₗ[ℝ] E n) ≠ 0 := g.isUnit_det'.ne_zero
@@ -502,6 +508,7 @@ theorem map_ne_iff_det_neg (g : E n ≃ₗ[ℝ] E n) (ω : T.Ω (E n)) :
 
 /-- The same on any finite-dimensional `V`: an automorphism acts trivially on `Ω(V)` iff its
 determinant is positive. -/
+@[montpellier "68, 51"]
 theorem fixes_iff_det_pos' {V : Type} [AddCommGroup V] [Module ℝ V] [FiniteDimensional ℝ V]
     (g : V ≃ₗ[ℝ] V) : T.Fixes g ↔ 0 < LinearMap.det (g : V →ₗ[ℝ] V) := by
   let c : V ≃ₗ[ℝ] E (finrank ℝ V) := (Module.finBasis ℝ V).equivFun
@@ -610,12 +617,14 @@ theorem injective (φ : Hom T T') : ∀ (n : ℕ) (V : Type) [AddCommGroup V] [M
     exact (T.St_bijective W H hH).1 (ih W hW this)
 
 /-- **Theorem a)** (page 49): every component of a morphism of theories is bijective. -/
+@[montpellier "68, 49"]
 theorem bijective (φ : Hom T T') (V : Type) [AddCommGroup V] [Module ℝ V]
     [FiniteDimensional ℝ V] : Function.Bijective (φ.app V) := by
   have : Finite (T'.Ω V) := Nat.finite_of_card_ne_zero (by rw [T'.card]; norm_num)
   exact (φ.injective _ V rfl).bijective_of_nat_card_le (by rw [T.card, T'.card])
 
 /-- **Uniqueness in b)** (page 49): two morphisms of theories are equal. -/
+@[montpellier "68, 49"]
 theorem ext_app (φ ψ : Hom T T') : ∀ (n : ℕ) (V : Type) [AddCommGroup V] [Module ℝ V]
     [FiniteDimensional ℝ V], finrank ℝ V = n → φ.app V = ψ.app V := by
   intro n
@@ -729,6 +738,7 @@ theorem phi_eq {V : Type} [AddCommGroup V] [Module ℝ V] [FiniteDimensional ℝ
 variable (T T')
 
 /-- **Existence in b)**: the comparison morphism. -/
+@[montpellier "68, 49"]
 noncomputable def canonical : Hom T T' where
   app V _ _ _ := phi T T' V
   natural {V V₂} _ _ _ _ _ _ e ω := by
@@ -767,6 +777,7 @@ end Construction
 
 /-- **Theorem b)** (page 49): between two theories of orientation there is exactly one
 morphism, and its components are bijective. -/
+@[montpellier "68, 49"]
 theorem exists_unique_hom (T T' : Theory) :
     ∃ φ : Hom T T', (∀ (V : Type) [AddCommGroup V] [Module ℝ V] [FiniteDimensional ℝ V],
       Function.Bijective (φ.app V)) ∧
@@ -777,6 +788,7 @@ theorem exists_unique_hom (T T' : Theory) :
 
 /-- **Theorem a)** (page 49), categorically: every morphism of theories is an isomorphism; its
 inverse is a morphism of theories. -/
+@[montpellier "68, 49"]
 theorem Hom.isIso {T T' : Theory} (φ : Hom T T') :
     ∃ ψ : Hom T' T, (∀ (V : Type) [AddCommGroup V] [Module ℝ V] [FiniteDimensional ℝ V]
       (ω : T.Ω V), ψ.app V (φ.app V ω) = ω) ∧
