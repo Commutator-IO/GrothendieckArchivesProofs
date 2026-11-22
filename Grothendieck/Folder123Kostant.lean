@@ -46,16 +46,11 @@ theorem small_cases :
     number (dataA 1) = 1 ∧ number (dataA 2) = 2 ∧ number (dataB 2) = 4 ∧ number dataG2 = 12 := by
   decide
 
-@[montpellier "123, n.p."]
 theorem integral_A : ∀ n ∈ Finset.Icc 1 8, integral (dataA n) := by decide
-@[montpellier "123, n.p."]
 theorem integral_B : ∀ n ∈ Finset.Icc 2 8, integral (dataB n) := by decide
-@[montpellier "123, n.p."]
 theorem integral_C : ∀ n ∈ Finset.Icc 3 8, integral (dataC n) := by decide
-@[montpellier "123, n.p."]
 theorem integral_D : ∀ n ∈ Finset.Icc 4 8, integral (dataD n) := by decide
 
-@[montpellier "123, n.p."]
 theorem integral_exceptional :
     integral dataE6 ∧ integral dataE7 ∧ integral dataE8 ∧ integral dataF4 ∧ integral dataG2 := by
   decide
