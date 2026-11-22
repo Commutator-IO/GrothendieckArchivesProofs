@@ -5,6 +5,11 @@ name: Build (GitHub-hosted fallback)
 on:
   workflow_dispatch:
 
+# Read-only token, as in build.yml (issue #34, Security). actions/cache uses the runner's own
+# token, not this one.
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -53,7 +58,7 @@ jobs:
       - name: Check axioms
         run: >-
           lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs
-          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP
+          GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP LeanPool
       - name: Save .lake
         if: always()
         uses: actions/cache/save@v4
