@@ -1,13 +1,13 @@
 module
 
-public import Grothendieck.Folder19
+public import Grothendieck.CategoryTheory.Folder19
 
 @[expose] public section
 
 /-!
 # Folder 19, page 80: the proof of the trusted statement
 
-`Challenge.Folder19.proposition_page80`, proved by the untrusted `Grothendieck/Folder19.lean`.
+`Challenge.Folder19.proposition_page80`, proved by the untrusted `Grothendieck/CategoryTheory/Folder19.lean`.
 -/
 
 open CategoryTheory

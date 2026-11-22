@@ -247,7 +247,7 @@ and the quotient `X/R = Spec B^R` exists, so effectivity is `I = J_{B^R}`.
 
 Status: false over every field, by Venken (C. R. Acad. Sci. Paris 272 (1971), Corollary 3.1), on
 a local Artin algebra of dimension 33. The repository checks Venken's example in
-`Grothendieck/EffectiveVenken.lean` (`venken_not_effective`, there for the specific algebra
+`Grothendieck/AlgebraicGeometry/EffectiveVenken.lean` (`venken_not_effective`, there for the specific algebra
 `B K` and its ideal `venkenRel K`, with the same projections and invariants as here); the
 deduction of `¬ FiniteEquivalenceRelationsEffective` from it, which needs `B K` finite over `K`,
 is not written. A second example, of length 15, is in the edition's note on effectivity. -/

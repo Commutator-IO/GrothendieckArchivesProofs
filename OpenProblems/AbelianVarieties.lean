@@ -16,7 +16,7 @@ proved; a `def … : Prop` asserts nothing.
 * `KostantOppositeTypeA` (p:kostant): the question of general position, for the groups of type
   `A_{n-1}` (`G = PGL_n(ℂ)`) only. A special case. Proved for every `n`:
   `Grothendieck.Folder123KostantOpposite.kostantOppositeTypeA`
-  (`Grothendieck/Folder123KostantOpposite.lean`).
+  (`Grothendieck/RepresentationTheory/Folder123KostantOpposite.lean`).
 
 ## Not stated, and what is missing
 
@@ -32,7 +32,7 @@ proved; a `def … : Prop` asserts nothing.
   and root systems, but no reductive groups, Borel subgroups, principal elements `ρ^∨(e^{2πi/h})`
   or Kostant's cyclic elements in that generality, and no Bruhat decomposition. The count of the
   quadruples, `|W|²/(h z φ(h))`, is checked as arithmetic in
-  `Grothendieck/Folder123Kostant.lean`. The second question (a distinguished conjugacy class of
+  `Grothendieck/RepresentationTheory/Folder123Kostant.lean`. The second question (a distinguished conjugacy class of
   quadruples, stable under the outer automorphisms) is not stated either.
 -/
 
@@ -62,7 +62,7 @@ set of vectors whose coordinates of index `≥ n - k` vanish).
 
 Status: proved in type `A`, for every `n`, by
 `Grothendieck.Folder123KostantOpposite.kostantOppositeTypeA`
-(`Grothendieck/Folder123KostantOpposite.lean`). The note checks type `A₂` by hand (all 36 pairs
+(`Grothendieck/RepresentationTheory/Folder123KostantOpposite.lean`). The note checks type `A₂` by hand (all 36 pairs
 opposite). The proof: `E'` is invertible, its inverse a weighted shift of the coordinates up by
 one; a nonzero vector of an `E'`-stable `V_k` vanishing on the last `k` coordinates would give,
 by `k` applications of that shift, `k + 1` linearly independent vectors of `V_k`. The question is
