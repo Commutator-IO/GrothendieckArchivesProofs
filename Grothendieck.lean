@@ -58,6 +58,7 @@ public import Grothendieck.Folder16
 public import Grothendieck.Folder160
 public import Grothendieck.Folder161_1
 public import Grothendieck.Folder161_2
+public import Grothendieck.Folder161_2Classifying
 public import Grothendieck.Folder161_3
 public import Grothendieck.Folder161_6
 public import Grothendieck.Folder16Problem5
@@ -112,6 +113,7 @@ public import Grothendieck.Folder80Count
 public import Grothendieck.Folder80Maps1
 public import Grothendieck.Folder80Maps2
 public import Grothendieck.Folder80Maps3
+public import Grothendieck.Folder80Numbering
 public import Grothendieck.Folder80Signs
 public import Grothendieck.Folder81
 public import Grothendieck.Folder82
@@ -130,6 +132,7 @@ public import Grothendieck.Folder94
 public import Grothendieck.Folder94Koszul
 public import Grothendieck.Folder98
 public import Grothendieck.Folder123Kostant
+public import Grothendieck.Folder123KostantOpposite
 public import Grothendieck.Folder147
 public import Grothendieck.IhesSGA6_1_4
 public import Grothendieck.IhesSGA6_1_5

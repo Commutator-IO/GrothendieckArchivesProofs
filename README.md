@@ -25,6 +25,9 @@ theorem: nothing there is proved, and the build would reject a `sorry`. The docs
 question in our words, its source (folder and pages, or video and time), its status (open,
 settled, or false with the counterexample) and the choices made in writing it down; questions
 that the libraries cannot yet express are listed in each file's header with what is missing.
+`OpenProblems/TopoiStacksNoncoh.lean` is the exception: it proves, by Łoś's theorem, a
+first-order part of problem p:noncoh (the rings with prime nilradical, and the rings of
+dimension `≤ 0`, are not the models of a first-order theory).
 
 ## Versions
 
@@ -89,4 +92,8 @@ held by his heirs.
 (Apache-2.0): abelian varieties (Pic⁰, φ_L, the theorem of the square) and ample sheaves over a
 field. `MMP/` holds files copied from [AxiomMath/MMP](https://github.com/AxiomMath/MMP)
 (Apache-2.0): nef divisors and numerical equivalence; one of them is ported to the pinned Stacks.
-They are listed in [`NOTICE`](NOTICE), with the commit they come from.
+`LeanPool/` holds files copied from [lean-pool](https://github.com/LeanPool/lean-pool)
+(Apache-2.0), from Michel Hua's pull requests there: classifying topoi of geometric theories,
+Diaconescu's theorem, theories of presheaf type, Morita equivalence, Boolean and De Morgan
+presheaf topoi, subtopoi and essential points; twelve of them are ported from Lean v4.36 to the
+pinned Lean and Mathlib. They are listed in [`NOTICE`](NOTICE), with the commit they come from.
