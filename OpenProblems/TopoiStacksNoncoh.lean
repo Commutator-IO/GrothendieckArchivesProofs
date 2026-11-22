@@ -20,18 +20,22 @@ Problem p:noncoh of the note on the open problems (`docs/problems/article.tex`; 
 pp. 39, 41–42, *Algèbre universelle*): the classifying topoi of the geometric theories of rings
 with irreducible spectrum (nilradical prime) and of rings with zero-dimensional spectrum are not
 coherent, the topologies that present them on the affine schemes of finite type over `ℤ` not
-being quasi-compact. The open question (do they have enough points?) is not touched here.
+being quasi-compact. What is proved: neither class of commutative rings is **elementary**.
 
-What is proved: neither class of commutative rings is **elementary**. There is no first-order
-theory `T` in the language of rings (`FirstOrder.Language.ring`) whose models among commutative
-rings are exactly the rings with prime nilradical (`not_isAxiomatizable_nilradical_isPrime`), or
-exactly the rings of Krull dimension `≤ 0` (`not_isAxiomatizable_krullDimLE_zero`), or exactly
-those of Krull dimension `0` (`not_isAxiomatizable_ringKrullDim_eq_zero`). A coherent sequent is
-a first-order sentence, so in particular neither theory has the same set-theoretic models as a
-coherent quotient of the theory of commutative rings: this is the content behind the page's
-remark that the presenting topologies are not quasi-compact. It does **not** prove that the
-classifying topoi are not coherent for any presentation: coherence of a topos is not stated here,
-and Mathlib has neither geometric theories nor their classifying topoi.
+## Main results
+
+There is no first-order theory `T` in the language of rings (`FirstOrder.Language.ring`) whose
+models among commutative rings are exactly
+
+* the rings with prime nilradical (`not_isAxiomatizable_nilradical_isPrime`),
+* or the rings of Krull dimension `≤ 0` (`not_isAxiomatizable_krullDimLE_zero`),
+* or those of Krull dimension `0` (`not_isAxiomatizable_ringKrullDim_eq_zero`).
+
+A coherent sequent is a first-order sentence, so in particular neither theory has the same
+set-theoretic models as a coherent quotient of the theory of commutative rings: this is the
+content behind the page's remark that the presenting topologies are not quasi-compact.
+
+## Implementation notes
 
 **The argument.** A class of structures defined by a first-order theory is closed under
 ultraproducts (Łoś, `FirstOrder.Language.Ultraproduct.sentence_realize`). The ultraproduct of
@@ -49,6 +53,17 @@ are not nilpotent, so the nilradical is not prime; and `X` lies in the Jacobson 
 is a unit, coordinatewise) without being nilpotent, whereas in dimension `≤ 0` the Jacobson
 radical is the nilradical. (The family `k[x,y]/(xy, xⁿ, yⁿ)` would do as well; `Dₙ` is finite and
 needs no polynomial computation.)
+
+## Not formalised
+
+The open question (do they have enough points?) is not touched here. This does **not** prove that
+the classifying topoi are not coherent for any presentation: coherence of a topos is not stated
+here, and Mathlib has neither geometric theories nor their classifying topoi.
+
+## References
+
+* the note on the open problems (`docs/problems/article.tex`), problem p:noncoh
+* A. Grothendieck, folder 161-2, pp. 39, 41–42, *Algèbre universelle*
 -/
 
 @[expose] public section

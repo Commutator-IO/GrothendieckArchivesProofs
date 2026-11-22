@@ -12,6 +12,8 @@ The open row `136-automorphism-group-scheme` of the edition's list of findings
 (`src/content/findings.ts`), folder 136, pp. 161–179, 189–199. It cannot be stated faithfully
 with Mathlib and the Stacks library; what is missing.
 
+## Not formalised
+
 * `136-automorphism-group-scheme`: the simplicial-ring homomorphisms between the divided-power de
   Rham algebras `𝒜(S, S⁺, t)_*` (no grading, filtration or divided powers assumed) are classified
   by data `(φ₀, A'₁, (B'_i))` subject to three conditions, the third `(2B'_i)J' = 0`; hence the
@@ -24,4 +26,9 @@ with Mathlib and the Stacks library; what is missing.
   concern a different object, so they would have to be built by hand, and the data
   `(φ₀, A'₁, (B'_i))` are defined by coefficients on the folder's pages; the exponent by which
   automorphisms act on `H^i` is not fixed (the page's phrase is largely illegible).
+
+## References
+
+* A. Grothendieck, folder 136, pp. 161–179, 189–199 (finding `136-automorphism-group-scheme`)
+* Stacks Project, tag 07LG
 -/

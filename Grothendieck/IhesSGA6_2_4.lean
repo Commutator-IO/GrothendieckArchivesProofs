@@ -22,15 +22,11 @@ faithful; (i bis) the same on generators and cogenerators; (iii) `φ` fully fait
 monomorphism `B ↪ B'`. The proof: Ext classes of positive degree in `C` are effaceable (« comme il
 résulte aussitôt des définitions »), and the satellites are unique. The « Rédiger mieux » of view 2
 does it for a fixed `A`: `Extⁿ(A, B) ≅ Extⁿ(φA, φB)` for all `B, n` iff `Hom(A, B) ≅ Hom(φA, φB)`
-for all `B` and the positive-degree classes are effaceable in `B`.
+for all `B` and the positive-degree classes are effaceable in `B`. The equivalences
+(i) ⇔ (iii) ⇔ (iv) are proved here, given the effaceability of Ext in `C`; (ii) is not.
 
-Here `C`, `D` are abelian categories with mathlib's `Ext` (`HasExt`), `F : C ⥤ D` is additive
-and exact, and the map on `Ext` is mathlib's `Ext.mapExactFunctor` (`F.mapExtAddHom`). The
-effaceability of Ext in `C`, which the page takes as known, is a hypothesis (`EffaceableByMono`,
-`EffaceableByEpi`): mathlib does not have it for a general abelian category; it is proved here when
-`C` has enough injectives, resp. projectives.
+## Main results
 
-**What is proved.**
 * `bijective_of_mapEffacedByMono`: the fixed-`A` form of (iv) ⇒ (i): if `F` is bijective on
   `Hom(X, -)` and every class of `Extⁿ⁺¹(FX, FY)` is killed by `F` of a monomorphism `Y ↪ Y'`,
   then `Extⁿ(X, Y) → Extⁿ(FX, FY)` is bijective for all `Y` and `n`;
@@ -42,15 +38,30 @@ effaceability of Ext in `C`, which the page takes as known, is a hypothesis (`Ef
   objects;
 * `effaceableByMono_of_enoughInjectives`, `effaceableByEpi_of_enoughProjectives`.
 
+## Implementation notes
+
+Here `C`, `D` are abelian categories with mathlib's `Ext` (`HasExt`), `F : C ⥤ D` is additive
+and exact, and the map on `Ext` is mathlib's `Ext.mapExactFunctor` (`F.mapExtAddHom`). The
+effaceability of Ext in `C`, which the page takes as known, is a hypothesis (`EffaceableByMono`,
+`EffaceableByEpi`): mathlib does not have it for a general abelian category; it is proved here when
+`C` has enough injectives, resp. projectives.
+
 **More generally.** The fixed-object form is the « Rédiger mieux » statement, and it contains
 mathlib's `Functor.mapExt_bijective_of_preservesInjectiveObjects`: when `F` preserves injectives,
 `F` of a monomorphism into an injective effaces every class. The induction is the uniqueness of
 satellites, with mathlib's long exact sequences of `Ext`.
 
-**Not formalised.** (ii) and its equivalence with (i) (the « dévissage », through the bounded
-derived category, which mathlib does not single out); (i bis), (iii bis), (iv bis) on generators
-and cogenerators; the description of the essential image of `D^b(φ)`; the effaceability of Ext in
-an arbitrary abelian category; the rest of the item (quasi-coherent sheaves, views 3–11).
+## Not formalised
+
+(ii) and its equivalence with (i) (the « dévissage », through the bounded derived category, which
+mathlib does not single out); (i bis), (iii bis), (iv bis) on generators and cogenerators; the
+description of the essential image of `D^b(φ)`; the effaceability of Ext in an arbitrary abelian
+category; the rest of the item (quasi-coherent sheaves, views 3–11).
+
+## References
+
+* A. Grothendieck, autograph notes « Comparaison des cat. dérivées avec Modules quelc. et Modules
+  qu.-coh. », Fonds Grothendieck–Illusie (IHÉS), FG_IL_5_SGA6_2_4, views 1–2
 -/
 
 @[expose] public section

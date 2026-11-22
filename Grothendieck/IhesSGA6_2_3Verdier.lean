@@ -16,19 +16,10 @@ public import Mathlib.Algebra.Exact.Basic
 
 Working notes headed « Groupes K » in the Fonds Grothendieck–Illusie (IHÉS). View 3 states,
 marked « à vérifier », that for a thick (« épaisse ») triangulated subcategory `D` of a
-triangulated category `T` the sequence `K(D) → K(T) → K(T/D) → 0` is exact.
+triangulated category `T` the sequence `K(D) → K(T) → K(T/D) → 0` is exact. This is proved here.
 
-Here `T` is a triangulated category in the sense of mathlib (`IsTriangulated T`: the octahedral
-axiom is used, through mathlib's calculus of fractions for `P.trW`), `D` is given by
-`P : ObjectProperty T` with `P.IsTriangulated` and `P.IsStableUnderRetracts` (thick), and the
-Verdier quotient is any localization functor `L : T ⥤ Q` for `P.trW` (morphisms whose cone lies
-in `D`) which is a triangulated functor to a pretriangulated category; mathlib's
-`P.trW.Localization` is one (`exact_localization` below). `K₀ C` is `FreeAbelianGroup C`
-modulo the relations `[Y] − [X] − [Z]` of the distinguished triangles, as defined in
-`Grothendieck/IhesSGA6_2_3.lean`, which this file imports; mathlib has no `K₀` of a triangulated
-category.
+## Main results
 
-**What is proved.**
 * `map_surjective`: `K(T) → K(T/D)` is surjective, every object of `T/D` being isomorphic to some
   `L X`. Only `L` essentially surjective is used.
 * `map_comp_map_ι`: the composite `K(D) → K(T) → K(T/D)` is zero, since `L X ≅ L 0` for `X ∈ D`.
@@ -42,13 +33,34 @@ category.
 * `ker_map_eq_range`: **the exactness in the middle**, `ker (K(T) → K(T/D)) = im (K(D) → K(T))`.
 * `exact`: the statement of view 3, `Function.Exact (K(ι)) (K(L))` and `K(L)` surjective.
 
+## Implementation notes
+
+Here `T` is a triangulated category in the sense of mathlib (`IsTriangulated T`: the octahedral
+axiom is used, through mathlib's calculus of fractions for `P.trW`), `D` is given by
+`P : ObjectProperty T` with `P.IsTriangulated` and `P.IsStableUnderRetracts` (thick), and the
+Verdier quotient is any localization functor `L : T ⥤ Q` for `P.trW` (morphisms whose cone lies
+in `D`) which is a triangulated functor to a pretriangulated category; mathlib's
+`P.trW.Localization` is one (`exact_localization` below). `K₀ C` is `FreeAbelianGroup C`
+modulo the relations `[Y] − [X] − [Z]` of the distinguished triangles, as defined in
+`Grothendieck/IhesSGA6_2_3.lean`, which this file imports; mathlib has no `K₀` of a triangulated
+category.
+
 **On « épaisse ».** Thickness is needed for exactness in the middle, not only for the
 Verdier quotient to be « the right one ». Without it `T/D = T/D̄` with `D̄` the thick closure,
 while the image of `K(D)` can be smaller than that of `K(D̄)`: for `T = D^b(k)` and `D` the
 complexes of even Euler characteristic (a dense, non-thick triangulated subcategory), `T/D = 0`
-but `K(D) → K(T) = ℤ` has image `2ℤ` (Thomason, Compositio 105, 1997, Th. 2.1). The
-counter-example is not formalised here. Surjectivity and the vanishing of the composite hold for
-any triangulated `D`.
+but `K(D) → K(T) = ℤ` has image `2ℤ` (Thomason, Compositio 105, 1997, Th. 2.1). Surjectivity and
+the vanishing of the composite hold for any triangulated `D`.
+
+## Not formalised
+
+The counter-example for a non-thick `D` (above) is not formalised here.
+
+## References
+
+* A. Grothendieck, working notes « Groupes K », Fonds Grothendieck–Illusie (IHÉS),
+  FG_IL_5_SGA6_2_3, view 3
+* R. W. Thomason, Compositio 105 (1997), Th. 2.1
 -/
 
 @[expose] public section

@@ -13,6 +13,8 @@ The open row `161-2-definite-characteristic-join-of-subtopoi` of the edition's l
 faithfully with Mathlib and the Stacks library; what is missing. The neighbouring problem
 p:noncoh (same folder) is in `OpenProblems/TopoiStacks.lean`.
 
+## Not formalised
+
 * `161-2-definite-characteristic-join-of-subtopoi`: the rings locally of characteristic `p` for
   some prime `p` or of characteristic `0` are classified by a subtopos of the classifying topos of
   rings which is not coherent and not presented by an open condition, but is the join of the open
@@ -24,4 +26,10 @@ p:noncoh (same folder) is in `OpenProblems/TopoiStacks.lean`.
   ones (`IsSubtopos`, `IsOpenSubtopos`, `IsClosedSubtopos`, Stacks 08LV, 08LX, 08LZ), but not the
   join. « Obtained by gluing along an open » is the edition's form of a brouillon (p. 48) and is
   not a defined construction there, so the gluing criterion has no statement yet to formalise.
+
+## References
+
+* A. Grothendieck, folder 161-2, pp. 47–49, *Algèbre universelle* (finding
+  `161-2-definite-characteristic-join-of-subtopoi`)
+* Stacks Project, tags 08LV, 08LX, 08LZ
 -/

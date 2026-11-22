@@ -12,6 +12,8 @@ Section « Moduli of curves and Galois actions » of the note on the open proble
 Montpellier notes (`docs/problems/article.tex`): problems p:gal and p:nc. Neither can be stated
 faithfully with Mathlib and the Stacks library; for each, what is missing.
 
+## Not formalised
+
 * p:gal (folder 142, pp. 94–95, 98–101, *Action de Galois sur Teichmüller*, [from 1978]): for an
   anabelian (hyperbolic) curve `X` over a field `K` of finite type over `ℚ`, are the page's
   conditions on a vertex-fixing automorphism of the profinite fundamental groupoid
@@ -31,4 +33,11 @@ faithfully with Mathlib and the Stacks library; for each, what is missing.
   the two-level principle for the discrete tower is Hatcher, Lochak and Schneps). Missing:
   complex analytic spaces and orbifolds, normal crossings divisors and their unfolding, tubular
   neighbourhoods, homotopy colimits of spaces, and fundamental groupoids of stratified spaces.
+
+## References
+
+* the note on the open problems of the Montpellier notes (`docs/problems/article.tex`), section
+  « Moduli of curves and Galois actions », problems p:gal and p:nc
+* A. Grothendieck, folder 142, pp. 94–95, 98–101, *Action de Galois sur Teichmüller*
+* A. Grothendieck, folder 147, pp. 148–151, *Structure à l'infini des `M_{g,ν}`*
 -/

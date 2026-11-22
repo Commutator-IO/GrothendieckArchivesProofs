@@ -15,6 +15,15 @@ The open row `32-pullback-kernel-index` of the edition's list of findings
 (`src/content/findings.ts`), folder 32, pp. 10–11. Nothing here is proved; a `def … : Prop`
 asserts nothing.
 
+## Main definitions
+
+* `PullbackTraceIndex`: for each abelian sheaf `F` and degree `q`, a map
+  `H^q(X, f⁻¹F) → H^q(Y, F)` whose composite with `f^*` is `N · id`. Weaker than the row (see its
+  docstring).
+* `PullbackKernelIndex`: the row's consequence, `Ker f^*` is killed by `N`.
+
+## Implementation notes
+
 Étale cohomology is that of `OpenProblems/EtaleCohomology.lean`: `Sheaf.H F q` on the small étale
 site, for abelian sheaves with coefficients in `AddCommGrpCat.{u + 1}`. The pullback
 `f^* : H^q(Y, F) → H^q(X, f⁻¹F)` is `Stacks.EtaleCohomology.etaleCohomologyPullback f (𝟙 _) q`
@@ -22,20 +31,18 @@ of the Stacks library. The index `N` of the generic fibre `X_η` (the gcd of the
 closed points) enters through the subgroup of `ℤ` the degrees generate, which is `N ℤ`: a class
 is killed by `N` exactly when it is killed by every element of that subgroup.
 
-## Stated
-
-* `PullbackTraceIndex`: for each abelian sheaf `F` and degree `q`, a map
-  `H^q(X, f⁻¹F) → H^q(Y, F)` whose composite with `f^*` is `N · id`. Weaker than the row (see its
-  docstring).
-* `PullbackKernelIndex`: the row's consequence, `Ker f^*` is killed by `N`.
-
-## Not stated, and what is missing
+## Not formalised
 
 * The functoriality of the map in the coefficients, and coefficients in complexes of étale
   sheaves: the Stacks library has the pullback on the cohomology of a sheaf, not the trace or
   Gysin maps of the folder's § 4 for finite (non-étale) multisections, on which the construction
   rests (`AlgebraicGeometry.unit_comp_abelianTrace_eq_nsmul`, Stacks 03SH, covers finite étale
   maps of constant degree only).
+
+## References
+
+* A. Grothendieck, folder 32, pp. 10–11 (finding `32-pullback-kernel-index`)
+* Stacks Project, tag 03SH
 -/
 
 @[expose] public section

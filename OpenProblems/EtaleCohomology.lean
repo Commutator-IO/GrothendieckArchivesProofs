@@ -17,6 +17,15 @@ Section « Étale cohomology and Hodge theory » of the note on the open problem
 notes (`docs/problems/article.tex`): problems p:cd, p:lower, p:box, p:ext2. Nothing here is
 proved; a `def … : Prop` asserts nothing.
 
+## Main definitions
+
+* `CdShiftThree` (p:cd): the page's conjectured global bound, as stated. Faithful.
+* `LowerBoundExceptions`, `LowerBoundRegular`, `LowerBoundCatenaryJapanese` (p:lower): the page's
+  inequality with its two exceptions, and its two refinements. Faithful, with the reading of
+  « `k` itself real » said below.
+
+## Implementation notes
+
 The `p`-cohomological dimension of a scheme is written with the étale cohomology of Mathlib and
 of the Stacks library: `Sheaf.H F q` on the small étale site, the `Ext` groups out of the constant
 sheaf `ℤ`, for abelian sheaves with coefficients in `AddCommGrpCat.{u + 1}` (the universe of the
@@ -25,14 +34,7 @@ The cohomological dimension of a field `k` is that of `Spec k`, which is the Gal
 dimension of `k` (the étale cohomology of `Spec k` is the Galois cohomology of `k`; this
 identification is not formalised, and the statements below are written on the étale side).
 
-## Stated
-
-* `CdShiftThree` (p:cd): the page's conjectured global bound, as stated. Faithful.
-* `LowerBoundExceptions`, `LowerBoundRegular`, `LowerBoundCatenaryJapanese` (p:lower): the page's
-  inequality with its two exceptions, and its two refinements. Faithful, with the reading of
-  « `k` itself real » said below.
-
-## Not stated, and what is missing
+## Not formalised
 
 * p:box (the Hodge types of the deleted neighbourhood `X ∩ B_y` of a point of a complex variety):
   Mathlib has neither mixed Hodge structures nor the mixed Hodge structure on the cohomology of
@@ -45,6 +47,13 @@ identification is not formalised, and the statements below are written on the é
   group scheme as an abelian fppf sheaf, and a quasi-coherent module as an fppf sheaf. Stacks has
   pieces of the fppf site and an fppf/étale comparison, but not that package in a form we could
   check without a local build; not stated rather than stated wrongly.
+* The identification of the étale cohomology of `Spec k` with the Galois cohomology of `k`
+  (above).
+
+## References
+
+* the note on the open problems of the Montpellier notes (`docs/problems/article.tex`), section
+  « Étale cohomology and Hodge theory », problems p:cd, p:lower, p:box, p:ext2
 -/
 
 @[expose] public section

@@ -15,20 +15,27 @@ The open row `102-open-immersion-criterion` of the edition's list of findings
 (`src/content/findings.ts`), folder 102, p. 12. Nothing here is proved; a `def … : Prop` asserts
 nothing.
 
+## Main definitions
+
+* `OpenImmersionCriterion`: the criterion of p. 12, as the reading reads it.
+
+## Implementation notes
+
 Functors on `S`-schemes are functors `(Over S)ᵒᵖ ⥤ Type u`. « Commutes with filtered colimits of
 rings » is `AlgebraicGeometry.Scheme.IsLimitPreserving` of the Stacks library (Stacks 05LX:
 `colim F(T_i) → F(lim T_i)` bijective for cofiltered systems of affine `S`-schemes). An fpqc sheaf
 is a sheaf for the fpqc topology of Mathlib restricted to `Over S`. The other notions are written
 out below.
 
-## Stated
-
-* `OpenImmersionCriterion`: the criterion of p. 12, as the reading reads it.
-
-## Not stated
+## Not formalised
 
 * Nothing else in the row; the struck third hypothesis (« `u` … épimorphisme ») is left out, as
   the page strikes it.
+
+## References
+
+* A. Grothendieck, folder 102, p. 12 (finding `102-open-immersion-criterion`)
+* Stacks Project, tag 05LX
 -/
 
 @[expose] public section

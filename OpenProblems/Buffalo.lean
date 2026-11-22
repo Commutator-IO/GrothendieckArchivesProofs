@@ -28,7 +28,7 @@ lecturer's expectation; the `Prop` then states *his* expectation, and the docstr
 is false and why. The arguments of the note marked as the edition's own have not been checked by
 a specialist.
 
-## Stated
+## Main definitions
 
 * `PresheafToposConjecture` (p:presheaf): false.
 * `PushforwardWithRightAdjointIsEquivalence` (p:fshriek): false.
@@ -39,7 +39,7 @@ a specialist.
 * `ImmersionDescendsFpqc` (p:immersion, first question): false.
 * `FiniteEquivalenceRelationsEffective` (§ Effectivity): false (Venken 1971).
 
-## Not stated, and what is missing
+## Not formalised
 
 * p:classifying (classifying topoi of algebraic structures): Mathlib has no geometric theories,
   classifying topoi or homotopy types of topoi. The note records the programme as carried out
@@ -75,6 +75,12 @@ a specialist.
 * The second question of p:immersion (exactness of descent of subschemes without
   retrocompactness) is stated loosely in the lecture; the same counterexample answers it, and
   it is not written separately.
+
+## References
+
+* the Buffalo lectures (1973)
+* the note on the open problems of the Buffalo lectures (`docs/buffalo-open/article.tex`)
+* Venken (1971); Perrin (1976)
 -/
 
 @[expose] public section

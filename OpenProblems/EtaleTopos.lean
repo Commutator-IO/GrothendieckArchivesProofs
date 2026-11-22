@@ -15,6 +15,14 @@ Section « A statement the literature has largely settled » of the note on the 
 the Montpellier notes (`docs/problems/article.tex`): problem p:etrec. Nothing here is proved; a
 `def … : Prop` asserts nothing.
 
+## Main definitions
+
+* `EtaleToposFaithful`: the page's « 1-faithful », over a locally noetherian base. Faithful to
+  the page; probably false as it stands (see its docstring).
+* `EtaleToposFaithfulCharZero`: the same over a base of characteristic `0`, as the margin asks.
+
+## Implementation notes
+
 The étale topos of `X` is `Sheaf X.smallEtaleTopology (Type (u + 1))`; a morphism `f : X ⟶ Y`
 induces the inverse image `f⁻¹ = Stacks.EtaleCohomology.smallEtalePullbackSet f` of the Stacks
 library, left adjoint to the direct image, and `Stacks.EtaleCohomology.smallEtalePullbackSetCompIso`
@@ -23,19 +31,18 @@ compares `f⁻¹ ∘ g⁻¹` with `(f ≫ g)⁻¹`. A 2-isomorphism between the 
 by the inverse image along `Y → S` agrees, through these comparisons, with the identity of the
 inverse image along `X → S`.
 
-## Stated
-
-* `EtaleToposFaithful`: the page's « 1-faithful », over a locally noetherian base. Faithful to
-  the page; probably false as it stands (see its docstring).
-* `EtaleToposFaithfulCharZero`: the same over a base of characteristic `0`, as the margin asks.
-
-## Not stated, and what is missing
+## Not formalised
 
 * The full faithfulness, « peut-être », in the category of fractions inverting the universal
   homeomorphisms, on morphisms of topoi sending closed points to closed points: Mathlib and Stacks
   have no category of fractions of schemes at the universal homeomorphisms with its functor to
   topoi, and no notion of the points of a topos being closed; the pinned morphisms of Carlson,
   Haine and Wolf are not in either library.
+
+## References
+
+* the note on the open problems of the Montpellier notes (`docs/problems/article.tex`), section
+  « A statement the literature has largely settled », problem p:etrec
 -/
 
 @[expose] public section

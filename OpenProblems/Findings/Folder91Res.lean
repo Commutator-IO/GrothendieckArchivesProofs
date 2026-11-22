@@ -17,8 +17,12 @@ conditions on finitely many closed subschemes `Zᵢ` of `X`: (a) each `Res_{Zᵢ
 representable; (b) `X` is normally flat along each `Zᵢ`; (c) every associated point of a geometric
 fibre of `X → S` lies in `⋃ Zᵢ`.*
 
-Nothing here is proved; a `def … : Prop` asserts nothing. The Weil restriction is
-`OpenProblems.Findings.Folder91.weilRestriction`, its functor of points on `S`-schemes.
+Nothing here is proved; a `def … : Prop` asserts nothing.
+
+## Implementation notes
+
+The Weil restriction is `OpenProblems.Findings.Folder91.weilRestriction`, its functor of points
+on `S`-schemes.
 
 **Normal flatness** (`IsNormallyFlatAlong`) is read on stalks: for a closed immersion
 `i : Z → X` and `z ∈ Z`, let `J` be the kernel of `𝒪_{X,i(z)} → 𝒪_{Z,z}`; `X` is normally flat
@@ -29,9 +33,16 @@ written `Jⁿ ⧸ J • Jⁿ`.
 maximal ideal of `𝒪_{Y,x}` is an associated prime of `𝒪_{Y,x}` (EGA IV 3.1.1); the geometric
 fibres are taken over the algebraic closures of the residue fields, as in `Folder91`.
 
+## Not formalised
+
 **Not stated.** The conclusions (ii) and (iii) (openness and quasi-projectivity on
 quasi-compact parts) and Corollaries 2–9: their hypotheses carry the uncertain readings noted
 in the finding (« lisse », « ouverte »).
+
+## References
+
+* A. Grothendieck, folder 91, pp. 24–28, 31 (finding `91-res-representable-by-scheme`)
+* [EGA IV] 3.1.1, 6.10.1
 -/
 
 @[expose] public section

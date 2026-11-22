@@ -15,6 +15,12 @@ The open row `45-h1-surjectivity-dim-one` of the edition's list of findings
 (`src/content/findings.ts`), folder 45, pp. 3–10. Nothing here is proved; a `def … : Prop`
 asserts nothing.
 
+## Main definitions
+
+* `H1Surjective`: the reading's statement of the Théorème of p. 9.
+
+## Implementation notes
+
 The flat cohomology set `H¹(k, G)` of an algebraic group `G` over a field `k` is the set of
 isomorphism classes of fppf torsors under `G`; a torsor under a group scheme of finite type over a
 field is representable, so these are the `G`-schemes `X` over `k` with
@@ -24,15 +30,16 @@ isomorphism and `X` is trivial after an fppf covering). For a homomorphism `φ :
 of that form exactly when there is a `G`-torsor `X` with a morphism `X → X'` equivariant along
 `φ`. Surjectivity is stated in that form, which needs no contracted product.
 
-## Stated
-
-* `H1Surjective`: the reading's statement of the Théorème of p. 9.
-
-## Not stated, and what is missing
+## Not formalised
 
 * The lemmas of the reduction (normalisers of maximal tori, Cartan subalgebras of radicial
   kernels, the dévissage of Lemma 5): Mathlib and Stacks have no maximal tori of group schemes or
   Cartan subalgebras of restricted Lie algebras.
+
+## References
+
+* A. Grothendieck, folder 45, pp. 3–10 (finding `45-h1-surjectivity-dim-one`)
+* Stacks Project, tags 0498, 049A
 -/
 
 @[expose] public section

@@ -16,8 +16,10 @@ algebraizable for every one-dimensional integral quotient `B` of `R` with normal
 
 Nothing here is proved; a `def … : Prop` asserts nothing.
 
-**Formal abelian schemes.** AxiomMath/Stacks has abelian schemes (`AlgebraicGeometry.IsAbelianScheme`)
-but no formal schemes of this kind, so a formal abelian scheme over `Spf R` (for the adic
+## Implementation notes
+
+**Formal abelian schemes.** AxiomMath/Stacks has abelian schemes
+(`AlgebraicGeometry.IsAbelianScheme`) but no formal schemes of this kind, so a formal abelian scheme over `Spf R` (for the adic
 topology of an ideal `I`) is written as what it is by definition: a compatible system of abelian
 schemes `Aₙ` over `Spec (R ⧸ I^(n+1))` with isomorphisms of group schemes
 `A_{n+1} ×_{R/I^(n+2)} R/I^(n+1) ≅ Aₙ` (`FormalAbelianScheme`). It is *algebraizable*
@@ -34,8 +36,14 @@ system is its levelwise base change along `R ⧸ 𝔪^(n+1) → B′ ⧸ (𝔪B�
 algebraizability is `IsAlgebraizableAlong` for `R → B → B′`. (That the levelwise base change is
 again a formal abelian scheme is not needed for the statement and is not proved.)
 
+## Not formalised
+
 **Not stated.** The equivalent condition (iii) of page 30 (algebraizable after some proper
 surjective `S′ → Spec R`) and the Proposition of page 36 on `S_red`.
+
+## References
+
+* A. Grothendieck, folder 100, pp. 30–38 (finding `100-formal-abelian-curve-criterion`)
 -/
 
 @[expose] public section

@@ -21,6 +21,8 @@ every finite group `G` of order prime to `p`.*
 
 Nothing here is proved; a `def … : Prop` asserts nothing.
 
+## Implementation notes
+
 **The form stated.** The « in particular » for proper `f`, in the language of AxiomMath/Stacks:
 a specialisation map `sp : π₁(X_η̄) → π₁(X_s̄)` (`AlgebraicGeometry.IsSpecializationMap`, SGA 1
 XIII 2.10) induces an isomorphism of the maximal prime-to-`p` quotients
@@ -42,8 +44,16 @@ smoothness by the two conditions on the closed fibre.
   of Stacks needs. Finite presentation is automatic over the noetherian `R` and is assumed for
   the smooth locus to be defined.
 
+## Not formalised
+
 **Not stated.** Local 1-asphericity itself (vanishing of the local prime-to-`p` `H¹` on the
 punctured strict localisations, 5.1–5.3) for `f` not proper: Stacks has no local asphericity.
+
+## References
+
+* A. Grothendieck, folder 34, pp. 153–155, chapter « IV », 5.1–5.6 (finding
+  `34-lci-local-1-asphericity`)
+* [SGA 1] X 3.8, XIII 2.10
 -/
 
 @[expose] public section

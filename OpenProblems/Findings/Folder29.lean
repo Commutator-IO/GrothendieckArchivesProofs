@@ -13,6 +13,8 @@ Two open rows of the edition's list of findings (`src/content/findings.ts`) for 
 each, what is missing. The neighbouring problem p:domram (folder 29, p. 197) is in
 `OpenProblems/TopoiStacks.lean`.
 
+## Not formalised
+
 * `29-ramification-domain-axioms` (pp. 190–193): a « domaine de ramification » is a stack of
   multigaloisian categories over `Ét(S)` with a continuous geometric realisation `r` into relative
   schemes, subject to axioms R1–R4, and given R1, R3, R4, axiom R2 (direct subobjects of `X`
@@ -34,4 +36,10 @@ each, what is missing. The neighbouring problem p:domram (folder 29, p. 197) is 
   (`AlgebraicGeometry.IsTorsorFor` of the Stacks library, for a precoverage) agree with `H¹_C`
   only when descent is effective, which for infinite `G` is the content of the row; stating the
   comparisons with them would change the statement.
+
+## References
+
+* A. Grothendieck, folder 29, *Groupe fondamental*, pp. 170–171, 190–193 (findings
+  `29-ramification-domain-axioms`, `29-h1-five-classes-infinite-group`)
+* M. Lieblich, M. Olsson (2010), Appendix A
 -/
