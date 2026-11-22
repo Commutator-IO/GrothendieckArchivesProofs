@@ -54,7 +54,7 @@ copied files, and fails on any axiom other than `propext`, `Classical.choice` an
 
 **Cost.** The Stacks modules the proofs import have no cache and are compiled by the build:
 several thousand modules. A cold build took 3 h 50 on GitHub's hosted runner (4 cores, 16 GB of
-RAM plus 12 GB of swap; less memory fails) and 34 minutes on 32 cores with 128 GB. Count about
+RAM plus 12 GB of swap, without which it ran out of memory) and 34 minutes on 32 cores with 128 GB. Count about
 15 GB of disk for `.lake`. The axiom check takes about 5 minutes.
 
 The continuous integration (`.github/workflows/build.yml`) runs these three commands on every push
