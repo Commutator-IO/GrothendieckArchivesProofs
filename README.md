@@ -48,7 +48,7 @@ From a clean clone, with [elan](https://github.com/leanprover/elan) installed:
 lake exe cache get      # Mathlib's compiled files, from its cache
 lake build              # everything else: the Stacks modules imported, and this repository
 lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs \
-  GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP
+  GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP LeanPool
 ```
 
 `lake build` fails on any warning (`warningAsError = true`), so on any `sorry`. The last command
