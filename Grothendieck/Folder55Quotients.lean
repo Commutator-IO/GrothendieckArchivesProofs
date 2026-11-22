@@ -34,6 +34,11 @@ classification of the coherent Ideals is needed.
 * `Qpre 𝒥`, `Qsheaf 𝒥`: **the sheaf of rings `𝒪/𝒥`**. Its sections are the functions with
   values in the `Fib 𝒥 x` that are locally the class of a section of `𝒪` (`IsQ`). `quotMap` is
   the quotient map `𝒪 → 𝒪/𝒥`.
+* `quotMap_universal`: **the universal property of `𝒪 → 𝒪/𝒥`**. The quotient map kills `𝒥`
+  (`quotMap_app_eq_zero`), and every morphism of presheaves of rings `φ : 𝒪 → F` to a sheaf of
+  rings `F` that kills `𝒥` factors uniquely as `ψ ∘ quotMap`. `ψ` glues the images under `φ` of
+  local representatives (`IsLiftQ.exists`); they agree on overlaps because a section of `𝒪` whose
+  class is `0` everywhere lies in `𝒥` near every point (`app_eq_zero_of_cls`).
 * `stalkQuotientEquiv`: **the stalk of `𝒪/𝒥` at `x` is `𝒪_x/𝒥_x`** (`stalkEquivQ`,
   `Q_eq_zero_near`, `fibEquiv`).
 * `Supp 𝒥 = {x | 𝒥_x ≠ 𝒪_x}`, and `mem_Supp_iff_nontrivial_stalk` says this is where the
@@ -57,10 +62,9 @@ The finite type of `𝒥` is used in its sectionwise form, through
 **Not formalised.** `Y` is not built as a ringed space in its own right. Opens of `Y` are the
 traces `U ∩ Y` of opens of `X`, and `𝒪_Y(U ∩ Y)` is identified with `(𝒪/𝒥)(U)`: `𝒪/𝒥` is the
 direct image of `𝒪_Y`, which `Q_ext_of_eqOn_Supp` and `subsingleton_of_not_mem_Supp` justify.
-So (v) is stated on `X`, with `U` an open set of `X` containing `y`. The universal property of
-`𝒪/𝒥` as the cokernel of `𝒥 → 𝒪` (equivalently, that it is the sheafification of
-`U ↦ 𝒪(U)/𝒥(U)`) is not proved: `𝒪/𝒥` is defined by its sections, and what is proved is that its
-stalks are the quotients `𝒪_x/𝒥_x`.
+So (v) is stated on `X`, with `U` an open set of `X` containing `y`. The universal property is
+proved in sheaves of rings (`quotMap_universal`); the same statement for sheaves of abelian groups
+or of `𝒪`-modules (the cokernel of `𝒥 → 𝒪` in those categories) is not stated separately.
 -/
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
@@ -516,6 +520,220 @@ theorem mem_Supp_iff_nontrivial_stalk {x : Xsp} :
     fun _ => (stalkEquivQ 𝒥 x).injective.nontrivial⟩
 
 end Stalks
+
+/-! ### The universal property of `𝒪 → 𝒪/𝒥` -/
+
+section Universal
+
+variable {F : TopCat.Sheaf RingCat Xsp} (φ : Opre κ ε ι ⟶ F.1)
+
+/-- The quotient map kills `𝒥`. -/
+theorem quotMap_app_eq_zero {U : Opens Xsp} {a : (Opre κ ε ι).obj (op U)}
+    (ha : a ∈ 𝒥.obj (op U)) : (quotMap 𝒥).app (op U) a = 0 :=
+  Subtype.ext (funext fun y => Ideal.Quotient.eq_zero_iff_mem.2 ⟨U, y.2, a.1, ⟨a, ha, rfl⟩, rfl⟩)
+
+theorem Fres_res {U V W : Opens Xsp} (i : V ⟶ U) (j : W ⟶ V) (k : W ⟶ U)
+    (t : F.1.obj (op U)) : F.1.map j.op (F.1.map i.op t) = F.1.map k.op t := by
+  rw [← ConcreteCategory.comp_apply, ← F.1.map_comp]
+  rfl
+
+theorem φ_res {U V : Opens Xsp} (i : V ⟶ U) (a : (Opre κ ε ι).obj (op U)) :
+    φ.app (op V) ((Opre κ ε ι).map i.op a) = F.1.map i.op (φ.app (op U) a) := by
+  rw [← ConcreteCategory.comp_apply, φ.naturality, ConcreteCategory.comp_apply]
+
+variable {φ} (hφ : ∀ (U : Opens Xsp) (a : (Opre κ ε ι).obj (op U)), a ∈ 𝒥.obj (op U) →
+  φ.app (op U) a = 0)
+include hφ
+
+/-- A section of `𝒪` whose class vanishes at every point is sent to `0`: it lies in `𝒥` near
+every point. -/
+theorem app_eq_zero_of_cls {V : Opens Xsp} (a : (Opre κ ε ι).obj (op V))
+    (h0 : ∀ y : V, cls 𝒥 a.2 y = 0) : φ.app (op V) a = 0 := by
+  have hloc : ∀ y : V, ∃ (W : Opens Xsp) (hWV : W ≤ V), y.1 ∈ W ∧
+      (Opre κ ε ι).map (homOfLE hWV).op a ∈ 𝒥.obj (op W) := by
+    intro y
+    have hm : toStalk κ ε ι a.2 y ∈ Jst 𝒥 y.1 := Ideal.Quotient.eq_zero_iff_mem.1 (h0 y)
+    obtain ⟨U', hU', j, ⟨b, hb, rfl⟩, hjy⟩ := hm
+    have hd : (fun z : ↥(V ⊓ U') => a.1 ⟨z.1, z.2.1⟩ + -b.1 ⟨z.1, z.2.2⟩) ∈
+        (O κ ε ι).sections (V ⊓ U') :=
+      O_add_mem κ ε ι ((O κ ε ι).restrict inf_le_left a.2)
+        (O_neg_mem κ ε ι ((O κ ε ι).restrict inf_le_right b.2))
+    obtain ⟨W, hW, hyW, hz⟩ := O_eq_zero_near κ ε ι hd ⟨y.2, hU'⟩
+      (show a.1 y + -b.1 ⟨y.1, hU'⟩ = 0 by rw [hjy]; exact add_neg_cancel _)
+    refine ⟨W, le_trans hW inf_le_left, hyW, ?_⟩
+    have hbW := 𝒥.map (homOfLE (le_trans hW inf_le_right)).op hb
+    have e : (Opre κ ε ι).map (homOfLE (le_trans hW inf_le_left)).op a =
+        (SheafOfModules.unit (Osheaf κ ε ι)).val.restrictₛₗ
+          (homOfLE (le_trans hW inf_le_right)).op b :=
+      Subtype.ext (funext fun z => add_neg_eq_zero.1 (hz z))
+    rw [e]
+    exact hbW
+  choose W hWV hyW hmem using hloc
+  refine F.eq_of_locally_eq' W V (fun y => homOfLE (hWV y))
+    (fun y hy => Opens.mem_iSup.2 ⟨⟨y, hy⟩, hyW ⟨y, hy⟩⟩) _ 0 fun y => ?_
+  rw [map_zero, ← φ_res, hφ _ _ (hmem y)]
+
+/-- Two sections of `𝒪` with the same classes have the same image. -/
+theorem app_eq_of_cls {V : Opens Xsp} (a b : (Opre κ ε ι).obj (op V))
+    (h : ∀ y : V, cls 𝒥 a.2 y = cls 𝒥 b.2 y) : φ.app (op V) a = φ.app (op V) b := by
+  refine sub_eq_zero.1 ((map_sub _ a b).symm.trans (app_eq_zero_of_cls 𝒥 hφ (a - b) fun y => ?_))
+  change Ideal.Quotient.mk _ (toStalk κ ε ι a.2 y - toStalk κ ε ι b.2 y) = 0
+  rw [map_sub, sub_eq_zero]
+  exact h y
+
+omit hφ in
+variable (φ) in
+/-- `t ∈ F(U)` lifts the section `σ` of `𝒪/𝒥`: near every point, `σ` is the class of a section
+`a` of `𝒪` and `t` restricts to `φ a`. -/
+def IsLiftQ {U : Opens Xsp} (σ : (Qpre 𝒥).obj (op U)) (t : F.1.obj (op U)) : Prop :=
+  ∀ x : U, ∃ (V : Opens Xsp) (hVU : V ≤ U), x.1 ∈ V ∧ ∃ a : (Opre κ ε ι).obj (op V),
+    (∀ y : V, σ.1 ⟨y.1, hVU y.2⟩ = cls 𝒥 a.2 y) ∧ F.1.map (homOfLE hVU).op t = φ.app (op V) a
+
+omit hφ in
+/-- The restriction of a section of `𝒪/𝒥` represented by `a` is represented by the restriction of
+`a`. -/
+theorem rep_res {U V W : Opens Xsp} {σ : (Qpre 𝒥).obj (op U)} (hVU : V ≤ U) (hWV : W ≤ V)
+    {a : (Opre κ ε ι).obj (op V)} (h : ∀ y : V, σ.1 ⟨y.1, hVU y.2⟩ = cls 𝒥 a.2 y) (y : W) :
+    σ.1 ⟨y.1, hVU (hWV y.2)⟩ = cls 𝒥 ((Opre κ ε ι).map (homOfLE hWV).op a).2 y :=
+  h ⟨y.1, hWV y.2⟩
+
+/-- **A lift is unique.** -/
+theorem IsLiftQ.unique {U : Opens Xsp} {σ : (Qpre 𝒥).obj (op U)} {t t' : F.1.obj (op U)}
+    (ht : IsLiftQ 𝒥 φ σ t) (ht' : IsLiftQ 𝒥 φ σ t') : t = t' := by
+  choose V hVU hxV a ha hta using ht
+  choose V' hVU' hxV' a' ha' hta' using ht'
+  refine F.eq_of_locally_eq' (fun x => V x ⊓ V' x) U
+    (fun x => homOfLE (le_trans inf_le_left (hVU x)))
+    (fun x hx => Opens.mem_iSup.2 ⟨⟨x, hx⟩, hxV _, hxV' _⟩) _ _ fun x => ?_
+  rw [← Fres_res (homOfLE (hVU x)) (homOfLE inf_le_left), hta,
+    ← Fres_res (homOfLE (hVU' x)) (homOfLE inf_le_right), hta', ← φ_res, ← φ_res]
+  exact app_eq_of_cls 𝒥 hφ _ _ fun y =>
+    (rep_res 𝒥 (hVU x) inf_le_left (ha x) y).symm.trans
+      (rep_res 𝒥 (hVU' x) inf_le_right (ha' x) y)
+
+/-- **A lift exists**: glue the images of local representatives. -/
+theorem IsLiftQ.exists {U : Opens Xsp} (σ : (Qpre 𝒥).obj (op U)) :
+    ∃ t : F.1.obj (op U), IsLiftQ 𝒥 φ σ t := by
+  have hσ : IsQ 𝒥 σ.1 := σ.2
+  choose V hVU hxV s hs hrep using hσ
+  let a : ∀ x : U, (Opre κ ε ι).obj (op (V x)) := fun x => ⟨s x, hs x⟩
+  obtain ⟨t, ht, -⟩ := F.existsUnique_gluing' (V := U) V (fun x => homOfLE (hVU x))
+    (fun x hx => Opens.mem_iSup.2 ⟨⟨x, hx⟩, hxV _⟩) (fun x => φ.app (op (V x)) (a x))
+    (fun x x' => by
+      rw [← φ_res, ← φ_res]
+      exact app_eq_of_cls 𝒥 hφ _ _ fun y =>
+        (rep_res 𝒥 (hVU x) inf_le_left (hrep x) y).symm.trans
+          (rep_res 𝒥 (hVU x') inf_le_right (hrep x') y))
+  exact ⟨t, fun x => ⟨V x, hVU x, hxV x, a x, hrep x, ht x⟩⟩
+
+omit hφ in
+/-- Two lifts combine: if `t`, `t'` lift `σ`, `τ`, a local combination of representatives
+represents the combination. -/
+theorem IsLiftQ.common {U : Opens Xsp} {σ τ : (Qpre 𝒥).obj (op U)} {t t' : F.1.obj (op U)}
+    (ht : IsLiftQ 𝒥 φ σ t) (ht' : IsLiftQ 𝒥 φ τ t') (x : U) :
+    ∃ (V : Opens Xsp) (hVU : V ≤ U), x.1 ∈ V ∧ ∃ a b : (Opre κ ε ι).obj (op V),
+      (∀ y : V, σ.1 ⟨y.1, hVU y.2⟩ = cls 𝒥 a.2 y) ∧ (∀ y : V, τ.1 ⟨y.1, hVU y.2⟩ = cls 𝒥 b.2 y) ∧
+      F.1.map (homOfLE hVU).op t = φ.app (op V) a ∧
+      F.1.map (homOfLE hVU).op t' = φ.app (op V) b := by
+  obtain ⟨V, hVU, hxV, a, ha, hta⟩ := ht x
+  obtain ⟨V', hVU', hxV', b, hb, htb⟩ := ht' x
+  refine ⟨V ⊓ V', le_trans inf_le_left hVU, ⟨hxV, hxV'⟩, _, _,
+    rep_res 𝒥 hVU inf_le_left ha, rep_res 𝒥 hVU' inf_le_right hb, ?_, ?_⟩
+  · rw [← Fres_res (homOfLE hVU) (homOfLE inf_le_left), hta, φ_res]
+  · rw [← Fres_res (homOfLE hVU') (homOfLE inf_le_right), htb, φ_res]
+
+omit hφ in
+theorem IsLiftQ.one (U : Opens Xsp) : IsLiftQ 𝒥 φ (1 : (Qpre 𝒥).obj (op U)) 1 :=
+  fun x => ⟨U, le_rfl, x.2, 1, fun y => (map_one (Ideal.Quotient.mk (Jst 𝒥 y.1))).symm,
+    by rw [map_one, map_one]⟩
+
+omit hφ in
+theorem IsLiftQ.mul {U : Opens Xsp} {σ τ : (Qpre 𝒥).obj (op U)} {t t' : F.1.obj (op U)}
+    (ht : IsLiftQ 𝒥 φ σ t) (ht' : IsLiftQ 𝒥 φ τ t') : IsLiftQ 𝒥 φ (σ * τ) (t * t') := by
+  intro x
+  obtain ⟨V, hVU, hxV, a, b, ha, hb, hta, htb⟩ := IsLiftQ.common 𝒥 ht ht' x
+  refine ⟨V, hVU, hxV, a * b, fun y => ?_, by rw [map_mul, map_mul, hta, htb]⟩
+  rw [show (σ * τ).1 ⟨y.1, hVU y.2⟩ = σ.1 ⟨y.1, hVU y.2⟩ * τ.1 ⟨y.1, hVU y.2⟩ from rfl,
+    ha y, hb y]
+  exact (map_mul (Ideal.Quotient.mk (Jst 𝒥 y.1)) (toStalk κ ε ι a.2 y) (toStalk κ ε ι b.2 y)).symm
+
+omit hφ in
+theorem IsLiftQ.add {U : Opens Xsp} {σ τ : (Qpre 𝒥).obj (op U)} {t t' : F.1.obj (op U)}
+    (ht : IsLiftQ 𝒥 φ σ t) (ht' : IsLiftQ 𝒥 φ τ t') : IsLiftQ 𝒥 φ (σ + τ) (t + t') := by
+  intro x
+  obtain ⟨V, hVU, hxV, a, b, ha, hb, hta, htb⟩ := IsLiftQ.common 𝒥 ht ht' x
+  refine ⟨V, hVU, hxV, a + b, fun y => ?_, by rw [map_add, map_add, hta, htb]⟩
+  rw [show (σ + τ).1 ⟨y.1, hVU y.2⟩ = σ.1 ⟨y.1, hVU y.2⟩ + τ.1 ⟨y.1, hVU y.2⟩ from rfl,
+    ha y, hb y]
+  exact (map_add (Ideal.Quotient.mk (Jst 𝒥 y.1)) (toStalk κ ε ι a.2 y) (toStalk κ ε ι b.2 y)).symm
+
+omit hφ in
+theorem IsLiftQ.zero (U : Opens Xsp) : IsLiftQ 𝒥 φ (0 : (Qpre 𝒥).obj (op U)) 0 :=
+  fun x => ⟨U, le_rfl, x.2, 0, fun y => (map_zero (Ideal.Quotient.mk (Jst 𝒥 y.1))).symm,
+    by rw [map_zero, map_zero]⟩
+
+omit hφ in
+theorem IsLiftQ.res {U W : Opens Xsp} (i : W ⟶ U) {σ : (Qpre 𝒥).obj (op U)}
+    {t : F.1.obj (op U)} (ht : IsLiftQ 𝒥 φ σ t) :
+    IsLiftQ 𝒥 φ ((Qpre 𝒥).map i.op σ) (F.1.map i.op t) := by
+  intro x
+  obtain ⟨V, hVU, hxV, a, ha, hta⟩ := ht ⟨x.1, i.le x.2⟩
+  refine ⟨V ⊓ W, inf_le_right, ⟨hxV, x.2⟩, (Opre κ ε ι).map (homOfLE inf_le_left).op a,
+    fun y => ha ⟨y.1, y.2.1⟩, ?_⟩
+  rw [Fres_res i (homOfLE inf_le_right) (homOfLE (le_trans inf_le_left hVU)),
+    ← Fres_res (homOfLE hVU) (homOfLE inf_le_left), hta, φ_res]
+
+/-- The factorisation `𝒪/𝒥 → F` of `φ`, sectionwise. -/
+noncomputable def liftQ (U : Opens Xsp) : (Qpre 𝒥).obj (op U) →+* F.1.obj (op U) where
+  toFun σ := Classical.choose (IsLiftQ.exists 𝒥 hφ σ)
+  map_one' := (Classical.choose_spec (IsLiftQ.exists 𝒥 hφ 1)).unique 𝒥 hφ (IsLiftQ.one 𝒥 U)
+  map_mul' σ τ := (Classical.choose_spec (IsLiftQ.exists 𝒥 hφ (σ * τ))).unique 𝒥 hφ
+    ((Classical.choose_spec (IsLiftQ.exists 𝒥 hφ σ)).mul 𝒥
+      (Classical.choose_spec (IsLiftQ.exists 𝒥 hφ τ)))
+  map_zero' := (Classical.choose_spec (IsLiftQ.exists 𝒥 hφ 0)).unique 𝒥 hφ (IsLiftQ.zero 𝒥 U)
+  map_add' σ τ := (Classical.choose_spec (IsLiftQ.exists 𝒥 hφ (σ + τ))).unique 𝒥 hφ
+    ((Classical.choose_spec (IsLiftQ.exists 𝒥 hφ σ)).add 𝒥
+      (Classical.choose_spec (IsLiftQ.exists 𝒥 hφ τ)))
+
+theorem isLiftQ_liftQ {U : Opens Xsp} (σ : (Qpre 𝒥).obj (op U)) :
+    IsLiftQ 𝒥 φ σ (liftQ 𝒥 hφ U σ) :=
+  Classical.choose_spec (IsLiftQ.exists 𝒥 hφ σ)
+
+/-- **The factorisation `ψ : 𝒪/𝒥 → F` of `φ`**, a morphism of presheaves of rings. -/
+noncomputable def descQ : Qpre 𝒥 ⟶ F.1 where
+  app U := RingCat.ofHom (liftQ 𝒥 hφ U.unop)
+  naturality U W i := by
+    ext σ
+    exact ((isLiftQ_liftQ 𝒥 hφ ((Qpre 𝒥).map i σ))).unique 𝒥 hφ
+      ((isLiftQ_liftQ 𝒥 hφ σ).res 𝒥 i.unop)
+
+omit hφ in
+/-- A morphism out of `𝒪/𝒥` sends each section to a lift of it. -/
+theorem isLiftQ_of_comp {ψ : Qpre 𝒥 ⟶ F.1} (hψ : quotMap 𝒥 ≫ ψ = φ) {U : Opens Xsp}
+    (σ : (Qpre 𝒥).obj (op U)) : IsLiftQ 𝒥 φ σ (ψ.app (op U) σ) := by
+  intro x
+  obtain ⟨V, hVU, hxV, s, hs, hrep⟩ := (show IsQ 𝒥 σ.1 from σ.2) x
+  refine ⟨V, hVU, hxV, ⟨s, hs⟩, hrep, ?_⟩
+  have e : (Qpre 𝒥).map (homOfLE hVU).op σ = (quotMap 𝒥).app (op V) ⟨s, hs⟩ :=
+    Subtype.ext (funext hrep)
+  rw [← ConcreteCategory.comp_apply, ← ψ.naturality, ConcreteCategory.comp_apply, e, ← hψ]
+  rfl
+
+/-- **The universal property of the quotient `𝒪 → 𝒪/𝒥`.** The quotient map kills `𝒥`
+(`quotMap_app_eq_zero`), and every morphism of presheaves of rings `φ : 𝒪 → F` to a sheaf of
+rings `F` which kills `𝒥` factors uniquely through it. -/
+theorem quotMap_universal :
+    ∃! ψ : Qpre 𝒥 ⟶ F.1, quotMap 𝒥 ≫ ψ = φ := by
+  refine ⟨descQ 𝒥 hφ, ?_, fun ψ hψ => ?_⟩
+  · ext U a
+    change liftQ 𝒥 hφ U ((quotMap 𝒥).app (op U) a) = φ.app (op U) a
+    refine (isLiftQ_liftQ 𝒥 hφ _).unique 𝒥 hφ fun x => ⟨U, le_rfl, x.2, a, fun _ => rfl, ?_⟩
+    rw [show (homOfLE (le_refl U)) = 𝟙 U from rfl, op_id, F.1.map_id]
+    rfl
+  · ext U σ
+    exact (isLiftQ_of_comp 𝒥 hψ σ).unique 𝒥 hφ (isLiftQ_liftQ 𝒥 hφ σ)
+
+end Universal
 
 /-! ### Points with a smallest neighbourhood -/
 
