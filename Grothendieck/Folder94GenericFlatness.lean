@@ -9,8 +9,6 @@ public import Grothendieck.Folder94
 public import StacksFrontier.RingTheory.Flat.GenericFlatness
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 94, page 19 (Lemme 16): the dense open for `X` of finite type over `S`
 
@@ -64,6 +62,8 @@ with the same caveat.
 * A. Grothendieck, Folder 94, page 19 (Lemme 16)
 * Stacks Project, tags 051Z, 051R
 -/
+
+@[expose] public section
 
 open RingTheory.Sequence Submodule Function Module PrimeSpectrum TensorProduct
 

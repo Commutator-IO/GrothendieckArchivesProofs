@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder126NilpotentDescent
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 5 to 7: flatness of `X → Y` for a nilpotent `𝒥_X`
@@ -56,6 +59,8 @@ and the climb follow the proofs of `Module.Descent.exists_grMap_sub_grMap_eq` an
 * In `flat_and_bijective_of_isNilpotent` the map `φ` and its bijectivity modulo `𝒥_Y` are
   hypotheses (identifying `(A' ⧸ 𝒥_Y) ⊗ φ` with `R₀ ≅ X₀ ×_{Y₀} X₀` is not done).
 -/
+
+@[expose] public section
 
 namespace Grothendieck.Folder126NilpotentFlat
 

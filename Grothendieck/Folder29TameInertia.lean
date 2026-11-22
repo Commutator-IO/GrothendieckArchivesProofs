@@ -9,8 +9,6 @@ public import Grothendieck.Folder29
 public import StacksFrontier.RingTheory.DiscreteValuationRing.Abhyankar.AbhyankarLemma
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 29, page 120: tame inertia through Abhyankar's lemma
 
@@ -66,6 +64,8 @@ import closure (4,384 modules) was not used.
 * [SGA 1] XIII 5.3
 * Stacks Project, tags 0BRM, 0EYG
 -/
+
+@[expose] public section
 
 open Matrix
 

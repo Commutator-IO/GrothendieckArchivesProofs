@@ -10,8 +10,6 @@ public import Mathlib.RingTheory.Ideal.Operations
 public import Mathlib.Tactic.LinearCombination
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 91, pages 15–24: `Hom_S(X, Y; φ) → Hom_S(Z, Y)` is unramified
 
@@ -56,6 +54,8 @@ as on the page. The functor `Mor_S(X, Y)` itself, as an algebraic space, is not 
 * [EGA III] 7.7.6
 * Stacks Project, tags 0D1C, 0DPN
 -/
+
+@[expose] public section
 
 namespace Grothendieck.Folder91HomUnramified
 
