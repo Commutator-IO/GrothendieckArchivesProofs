@@ -28,20 +28,46 @@ that the libraries cannot yet express are listed in each file's header with what
 
 ## Versions
 
-Lean v4.35.0 and Mathlib v4.35.0, the versions of the Stacks project, which is required at a
-pinned commit (`lakefile.toml`). The proofs that use Stacks import its modules
-(`StacksCore.…`, `StacksFrontier.…`) directly.
+Everything the build depends on is pinned in two files:
+
+- `lean-toolchain`: Lean `v4.35.0` (elan installs it on the first `lake` command);
+- `lake-manifest.json`: the exact commits of every dependency — Mathlib `56a0058`, the
+  [Stacks project](https://github.com/AxiomMath/Stacks) `f56a316` (the Mathlib and Lean of
+  Stacks), and their own dependencies. `lakefile.toml` names the two direct ones.
+
+`Mordell/` and `MMP/` are copied files, not dependencies; their origin commits are in `NOTICE`.
 
 ## Building
 
+From a clean clone, with [elan](https://github.com/leanprover/elan) installed:
+
 ```
-lake exe cache get
-lake build
+lake exe cache get      # Mathlib's compiled files, from its cache
+lake build              # everything else: the Stacks modules imported, and this repository
+lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs \
+  GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP
 ```
 
-The continuous-integration workflow (`.github/workflows/build.yml`) does the same on every push.
-Mathlib's compiled files come from its cache; the Stacks modules the proofs import have no cache
-yet and are compiled by the build.
+`lake build` fails on any warning (`warningAsError = true`), so on any `sorry`. The last command
+walks the dependencies of every constant of this repository, through Mathlib, Stacks and the
+copied files, and fails on any axiom other than `propext`, `Classical.choice` and `Quot.sound`.
+
+**Cost.** The Stacks modules the proofs import have no cache and are compiled by the build:
+several thousand modules. A cold build took 3 h 50 on GitHub's hosted runner (4 cores, 16 GB of
+RAM plus 12 GB of swap, without which it ran out of memory) and 34 minutes on 32 cores with 128 GB. Count about
+15 GB of disk for `.lake`. The axiom check takes about 5 minutes.
+
+**Statements against proofs.** `Challenge/` holds trusted statements, written with Mathlib alone
+and left unproved; `Solution/` proves the same statements through the libraries above.
+`lake comparator` (configured in `comparator.json`, sandboxed with
+[bubblewrap](https://github.com/containers/bubblewrap)) checks that each theorem of `Solution`
+has exactly the statement of `Challenge`, is accepted by the kernel and uses only the three
+axioms, so that no import of the proof can change what the statement means. One statement is
+there so far (folder 19, page 80).
+
+The continuous integration (`.github/workflows/build.yml`) runs these commands on every push
+to `main`, on a self-hosted runner that keeps `main`'s `.lake` between runs, and on a pull request
+when the label `ci` is added; `build-hosted.yml` is the same build on GitHub's runner, by hand.
 
 ## Plan
 
