@@ -4,6 +4,7 @@ public import StacksFrontier.AlgebraicGeometry.Descent.AffineFpqcEffectivity
 public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.CanonicalInvariantOpen
 public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.DescendedScheme
 public import StacksFrontier.AlgebraicGeometry.Descent.Scheme.OpenSubDatum
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -50,6 +51,7 @@ open AlgebraicGeometry
 `D` a descent datum on `X'` relative to `g`. If `X'` is covered by stable opens, `D` is effective
 if and only if the induced data on these opens are. The second item: the restriction of an
 effective datum to any stable open is effective. Stacks 0AP4. -/
+@[buffalo "vuys5SNs2eQ-16640"]
 theorem prop_16640 {S S' : Scheme.{u}} {g : S' ⟶ S} [Surjective g] [Flat g] [QuasiCompact g]
     (D : DescentDatum g) :
     ((∀ v : D.over.left, ∃ (W : D.over.left.Opens) (hW : D.IsTransitionInvariant W),
@@ -82,6 +84,7 @@ theorem prop_16640 {S S' : Scheme.{u}} {g : S' ⟶ S} [Surjective g] [Flat g] [Q
 /-- vuys5SNs2eQ-17552 (4:52:32) [prop], the case `X'` affine over `S'`: along a faithfully flat
 quasi-compact `g : S' ⟶ S`, a descent datum on a scheme affine over `S'` (a quasi-coherent
 `𝒪_{S'}`-algebra with descent datum) is effective. Stacks 0245, one-member covering. -/
+@[buffalo "vuys5SNs2eQ-17552"]
 theorem prop_17552_affine {S S' : Scheme.{u}} {g : S' ⟶ S} [Surjective g] [Flat g]
     [QuasiCompact g] (D : DescentDatum g) (haff : IsAffineHom D.over.hom) :
     DescentData.IsEffective D :=
@@ -90,6 +93,7 @@ theorem prop_17552_affine {S S' : Scheme.{u}} {g : S' ⟶ S} [Surjective g] [Fla
 /-- vuys5SNs2eQ-17552 (4:52:32) [prop] If `g : S' ⟶ S` is faithfully flat and quasi-compact and
 `X'` is covered by opens `X'_i` stable under the descent datum and affine over `S'`, the descent
 datum on `X'` is effective. Stacks 0245 and 0AP4. -/
+@[buffalo "vuys5SNs2eQ-17552"]
 theorem prop_17552 {S S' : Scheme.{u}} {g : S' ⟶ S} [Surjective g] [Flat g] [QuasiCompact g]
     (D : DescentDatum g)
     (h : ∀ v : D.over.left, ∃ (W : D.over.left.Opens) (_ : D.IsTransitionInvariant W),

@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -202,6 +203,7 @@ theorem not_telescopeSurj_away {r : R} (hr0 : r ≠ 0) (hr : ¬IsUnit r) :
 
 /-- For `A = R⟦y⟧`, `x = r` as in `not_telescopeSurj_away`, `A_x` is not isomorphic to any
 `Hom_A(H, E)` with `E` injective. -/
+@[montpellier "101, 14–15"]
 theorem not_nonempty_linearEquiv_dual_powerSeries {r : R} (hr0 : r ≠ 0) (hr : ¬IsUnit r)
     (H E : Type v) [AddCommGroup H] [Module R⟦X⟧ H] [AddCommGroup E] [Module R⟦X⟧ E]
     [Module.Injective R⟦X⟧ E] :
@@ -217,6 +219,7 @@ variable (k : Type u) [Field k]
 /-- **Dimension two: `A_x` is not a Matlis dual.** For `A = k⟦x⟧⟦y⟧ = k[[x, y]]` and `f = x`,
 `A_f` is not isomorphic, as an `A`-module, to `Hom_A(H, E)` for any module `H` and any injective
 module `E` (in particular for `H = H²_x(j_!O_U)` and `E = E(k)`). -/
+@[montpellier "101, 14–15"]
 theorem not_nonempty_linearEquiv_dual (H E : Type v) [AddCommGroup H] [Module k⟦X⟧⟦X⟧ H]
     [AddCommGroup E] [Module k⟦X⟧⟦X⟧ E] [Module.Injective k⟦X⟧⟦X⟧ E] :
     ¬Nonempty (Localization.Away (C (X : k⟦X⟧) : k⟦X⟧⟦X⟧) ≃ₗ[k⟦X⟧⟦X⟧] (H →ₗ[k⟦X⟧⟦X⟧] E)) :=
@@ -225,6 +228,7 @@ theorem not_nonempty_linearEquiv_dual (H E : Type v) [AddCommGroup H] [Module k�
 
 /-- **« φ n'est pas surjective ».** For `A = k[[x, y]]` and `f = x`, every injective `A`-linear
 map `A_f → Hom_A(H, E)`, `E` injective, fails to be surjective. -/
+@[montpellier "101, 14–15"]
 theorem not_surjective_of_injective (H E : Type v) [AddCommGroup H] [Module k⟦X⟧⟦X⟧ H]
     [AddCommGroup E] [Module k⟦X⟧⟦X⟧ E] [Module.Injective k⟦X⟧⟦X⟧ E]
     (φ : Localization.Away (C (X : k⟦X⟧) : k⟦X⟧⟦X⟧) →ₗ[k⟦X⟧⟦X⟧] (H →ₗ[k⟦X⟧⟦X⟧] E))

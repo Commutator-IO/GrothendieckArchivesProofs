@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -49,6 +50,7 @@ omit [IsDomain A] [IsDiscreteValuationRing A] [IsFractionRing A K] in
 lemma mem_Aₖ {x : K} : x ∈ Aₖ A K ↔ ∃ a : A, algebraMap A K a = x := Iff.rfl
 
 /-- Fact a) of page 11: a `K`-linear map with values in `A` is zero. -/
+@[montpellier "101, 11"]
 theorem eq_zero_of_mem {M : Type*} [AddCommGroup M] [Module K M] (g : M →ₗ[K] K)
     (hg : ∀ m, g m ∈ Aₖ A K) : g = 0 := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible A
@@ -78,6 +80,7 @@ variable [IsAdicComplete (maximalIdeal A) A]
 
 /-- Fact b) of page 11: `A` being complete, every `A`-linear map `K → K/A` lifts to `K → K`;
 it is reduction of a multiplication `x ↦ c x` (`Hom_A(K, K/A) = K̂ = K`). -/
+@[montpellier "101, 11"]
 theorem lift_K (f : K →ₗ[A] KA A K) :
     ∃ c : K, ∀ x, f x = Submodule.Quotient.mk (c * x) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible A
@@ -165,6 +168,7 @@ end Complete
 
 /-- Fact c) of page 11: `K/A` is an injective `A`-module (Baer's criterion; `A` is principal
 and `K/A` divisible). -/
+@[montpellier "101, 11"]
 theorem baer_KA : Module.Baer A (KA A K) := by
   intro I g
   obtain ⟨a, rfl⟩ := (IsPrincipalIdealRing.principal I).principal
@@ -222,6 +226,7 @@ def phi1 : Ext1 K u →ₗ[A] (LinearMap.ker u →ₗ[A] KA A K) :=
 /-- **Local duality in dimension one, for every `O_X`-module** (pages 10–11), in the page's
 model: for `A` a complete discrete valuation ring and any triple `(M₀, M₁, u)`, the duality
 maps `Ext⁰ → Hom_A(Coker u, K/A)` and `Ext¹ → Hom_A(Ker u, K/A)` are bijective. -/
+@[montpellier "101, 10–11"]
 theorem duality_dim_one [IsAdicComplete (maximalIdeal A) A] :
     Function.Bijective (phi0 (K := K) u) ∧ Function.Bijective (phi1 (K := K) u) := by
   refine ⟨⟨fun g g' hgg => ?_, fun ψ => ?_⟩, ⟨?_, ?_⟩⟩
@@ -326,6 +331,7 @@ theorem isAdicComplete_of_lift
 
 /-- For a discrete valuation ring, completeness is equivalent to `Ext¹_A(K, A) = 0`, in the form
 « every `A`-linear `K → K/A` lifts to `K` » (`lift_K` and `isAdicComplete_of_lift`). -/
+@[montpellier "101, 11"]
 theorem isAdicComplete_iff_lift : IsAdicComplete (maximalIdeal A) A ↔
     ∀ f : K →ₗ[A] KA A K, ∃ g : K →ₗ[A] K, ∀ x, Submodule.Quotient.mk (g x) = f x :=
   ⟨fun _ f => let ⟨c, hc⟩ := lift_K f; ⟨LinearMap.mulLeft A c, fun x => (hc x).symm⟩,

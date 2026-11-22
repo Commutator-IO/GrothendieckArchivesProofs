@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -33,6 +34,7 @@ section Dominates
 /-- 4gynb9uTEE4-15284 (4:14:44) [def] A preordered set `I` dominates `π` if it is filtered
 (nonempty and directed) and every family of cardinality `≤ π` of elements of `I` has an upper
 bound. -/
+@[buffalo "4gynb9uTEE4-15284"]
 def Dominates (π : Cardinal.{w}) (I : Type w) [Preorder I] : Prop :=
   Nonempty I ∧ IsDirected I (· ≤ ·) ∧
     ∀ (K : Type w) (s : K → I), Cardinal.mk K ≤ π → ∃ j, ∀ k, s k ≤ j
@@ -68,6 +70,7 @@ variable {E : Type u} [Category.{v} E] {E' : Type*} [Category* E']
 
 /-- 4gynb9uTEE4-15352 (4:15:52) [def] `E` satisfies `L_π`: colimits indexed by every small ordered
 set dominating `π` exist in `E`. (`E` satisfies `L` if it satisfies `L_π` for some `π`.) -/
+@[buffalo "4gynb9uTEE4-15352"]
 def SatisfiesL (π : Cardinal.{w}) (E : Type u) [Category.{v} E] : Prop :=
   ∀ (I : Type w) [Preorder I], Dominates π I → HasColimitsOfShape I E
 
@@ -84,6 +87,7 @@ theorem satisfiesL_of_hasCardinalFilteredColimits {π : Cardinal.{w}} (hπ : ℵ
 
 /-- 4gynb9uTEE4-15482 (4:18:02) [def] A functor `F : E → E'` is `π`-accessible if `E` satisfies
 `L_π` and `F` commutes with colimits indexed by the ordered sets dominating `π`. -/
+@[buffalo "4gynb9uTEE4-15482"]
 def IsPiAccessible (π : Cardinal.{w}) (F : E ⥤ E') : Prop :=
   SatisfiesL.{w} π E ∧ ∀ (I : Type w) [Preorder I], Dominates π I → PreservesColimitsOfShape I F
 
@@ -98,6 +102,7 @@ theorem isPiAccessible_of_isCardinalAccessible {π : Cardinal.{w}} (hπ : ℵ₀
 
 /-- 4gynb9uTEE4-15673 (4:21:13) [def] An object `X` is `π`-accessible if `Hom(X, -) : E → Set` is a
 `π`-accessible functor (Mathlib: `IsCardinalPresentable X π⁺`). -/
+@[buffalo "4gynb9uTEE4-15673"]
 def IsPiAccessibleObj (π : Cardinal.{w}) (X : E) : Prop :=
   IsPiAccessible π (coyoneda.obj (op X))
 
@@ -109,18 +114,21 @@ theorem isPiAccessibleObj_of_isCardinalPresentable {π : Cardinal.{w}} (hπ : �
 /-- 4gynb9uTEE4-15809 (4:23:29) [def] `E` is `π`-accessible if it satisfies `L_π` and has a small
 full strictly generating subcategory `C` of `π`-accessible objects: every object `X` is the
 colimit of the canonical diagram `C/X → E` (`C.ι` is dense). -/
+@[buffalo "4gynb9uTEE4-15809"]
 def IsPiAccessibleCat (π : Cardinal.{w}) (E : Type u) [Category.{v} E] : Prop :=
   SatisfiesL.{w} π E ∧ ∃ C : ObjectProperty E, ObjectProperty.EssentiallySmall.{w} C ∧
     (∀ X, C X → IsPiAccessibleObj.{w} π X) ∧ C.ι.IsDense
 
 /-- 4gynb9uTEE4-15877 (4:24:37) [rem] A strictly generating (dense) subcategory is in particular a
 (strong) generator, so the definition is stronger than mere generation. -/
+@[buffalo "4gynb9uTEE4-15877"]
 theorem isStrongGenerator_of_isDense (C : ObjectProperty E) [C.ι.IsDense] :
     (ObjectProperty.ofObj C.ι.obj).IsStrongGenerator :=
   Functor.isStrongGenerator_of_isDense C.ι
 
 /-- 4gynb9uTEE4-16008 (4:26:48) [prop] A colimit, computed argumentwise, of `κ`-accessible
 functors is `κ`-accessible. -/
+@[buffalo "4gynb9uTEE4-16008"]
 theorem colimit_isCardinalAccessible {J : Type*} [Category* J] [HasColimitsOfShape J E']
     (F : J ⥤ E ⥤ E') (κ : Cardinal.{w}) [Fact κ.IsRegular]
     [∀ j, (F.obj j).IsCardinalAccessible κ] : (colimit F).IsCardinalAccessible κ where
@@ -134,6 +142,7 @@ theorem colimit_isCardinalAccessible {J : Type*} [Category* J] [HasColimitsOfSha
 argumentwise and indexed by a category with `< κ` arrows, of `κ`-accessible functors is
 `κ`-accessible. (For a general target `E'` one needs colimits along the `I` dominating `π` to
 commute with such limits in `E'`.) -/
+@[buffalo "4gynb9uTEE4-16076"]
 theorem limit_isCardinalAccessible {K : Type*} [Category* K] {F : K ⥤ E ⥤ Type w}
     (c : Cone F) (hc : IsLimit c) (κ : Cardinal.{w}) [Fact κ.IsRegular]
     [HasLimitsOfShape K (Type w)] (hK : HasCardinalLT (Arrow K) κ)
@@ -142,6 +151,7 @@ theorem limit_isCardinalAccessible {K : Type*} [Category* K] {F : K ⥤ E ⥤ Ty
 
 /-- 4gynb9uTEE4-16213 (4:30:13) [prop] In `Set`, colimits along a `κ`-filtered category commute
 with limits along a category with `< κ` arrows: `lim : Set^K → Set` commutes with them. -/
+@[buffalo "4gynb9uTEE4-16213"]
 theorem lim_preservesCardinalFilteredColimits {K : Type w} [SmallCategory K] (κ : Cardinal.{w})
     [Fact κ.IsRegular] (hK : HasCardinalLT (Arrow K) κ) (I : Type w) [SmallCategory I]
     [IsCardinalFiltered I κ] : PreservesColimitsOfShape I (lim : (K ⥤ Type w) ⥤ Type w) := by
@@ -166,6 +176,7 @@ theorem exists_regular_ge {ι : Type w} (f : ι → Cardinal.{w}) (X : Type w) :
 
 /-- 4gynb9uTEE4-16213 (4:30:13) [prop] (corrected) Accessible functors are stable under small
 colimits computed argumentwise ... -/
+@[buffalo "4gynb9uTEE4-16213"]
 theorem colimit_isAccessible {J : Type w} [SmallCategory J] [HasColimitsOfShape J E']
     (F : J ⥤ E ⥤ E') [∀ j, (F.obj j).IsAccessible.{w}] : (colimit F).IsAccessible.{w} := by
   choose κ hκ h using fun j => Functor.IsAccessible.exists_cardinal (F.obj j)
@@ -189,6 +200,7 @@ theorem limit_isAccessible {K : Type w} [SmallCategory K] (F : K ⥤ E ⥤ Type 
 
 /-- 4gynb9uTEE4-16276 (4:31:16) [prop] The `κ`-accessible objects are stable under colimits
 indexed by a category with `< κ` arrows (Mathlib). -/
+@[buffalo "4gynb9uTEE4-16276"]
 theorem isClosedUnderColimitsOfShape_presentable [LocallySmall.{w} E] {κ : Cardinal.{w}}
     [Fact κ.IsRegular] {J : Type*} [Category* J] [HasLimitsOfShape Jᵒᵖ (Type w)]
     (hJ : HasCardinalLT (Arrow J) κ) :
@@ -196,6 +208,7 @@ theorem isClosedUnderColimitsOfShape_presentable [LocallySmall.{w} E] {κ : Card
   isClosedUnderColimitsOfShape_isCardinalPresentable E hJ
 
 /-- 4gynb9uTEE4-16341 (4:32:21) [prop] The accessible objects are stable under small colimits. -/
+@[buffalo "4gynb9uTEE4-16341"]
 theorem isPresentable_of_isColimit [LocallySmall.{w} E] {K : Type w} [SmallCategory K]
     {Y : K ⥤ E} (c : Cocone Y) (hc : IsColimit c) [h : ∀ k, IsPresentable.{w} (Y.obj k)] :
     IsPresentable.{w} c.pt := by
@@ -209,6 +222,7 @@ theorem isPresentable_of_isColimit [LocallySmall.{w} E] {K : Type w} [SmallCateg
 
 /-- 4gynb9uTEE4-16406 (4:33:26) [prop] In an accessible category every object is accessible
 (Mathlib). -/
+@[buffalo "4gynb9uTEE4-16406"]
 theorem isPresentable_of_isAccessibleCategory [IsAccessibleCategory.{w} E] (X : E) :
     IsPresentable.{w} X := inferInstance
 
@@ -220,6 +234,7 @@ section Examples
 
 /-- 4gynb9uTEE4-16654 (4:37:34) [prop] (special case `Set`) An epimorphic family is jointly
 surjective ... -/
+@[buffalo "4gynb9uTEE4-16654"]
 theorem jointly_surjective_of_epi {B : Type u} {α : Type*} (X : α → Type u) (π : ∀ a, X a ⟶ B)
     (h : ∀ (W : Type u) (f g : B ⟶ W), (∀ a, π a ≫ f = π a ≫ g) → f = g) (b : B) :
     ∃ a x, π a x = b := by
@@ -265,10 +280,12 @@ theorem effectiveEpiFamily_of_epi {B : Type u} {α : Type*} (X : α → Type u) 
 
 /-- 4gynb9uTEE4-16654 (4:37:34) [prop] (special case: presheaf topoi, which satisfy all the
 hypotheses of SGA 4 I 9.11) presheaf categories on a small category are locally presentable. -/
+@[buffalo "4gynb9uTEE4-16654"]
 theorem presheaf_isLocallyPresentable (C : Type u) [SmallCategory C] :
     IsLocallyPresentable.{u} (Cᵒᵖ ⥤ Type u) := inferInstance
 
 /-- 4gynb9uTEE4-16782 (4:39:42) [ex] (presheaf topoi) Every presheaf topos is accessible. -/
+@[buffalo "4gynb9uTEE4-16782"]
 theorem presheaf_isAccessibleCategory (C : Type u) [SmallCategory C] :
     IsAccessibleCategory.{u} (Cᵒᵖ ⥤ Type u) := inferInstance
 
@@ -281,7 +298,7 @@ abbrev partialProd (S : Set I) : Type u := ∀ i : S, Y i
 
 /-- 4gynb9uTEE4-16908 (4:41:48) [prop] The diagram of partial products over the subsets of `I` of
 cardinality `< κ` (an ordered set that is `κ`-filtered: Mathlib instance). -/
-@[simps]
+@[buffalo "4gynb9uTEE4-16908", simps]
 def partialProdDiagram (κ : Cardinal.{u}) : (HasCardinalLT.Set I κ)ᵒᵖ ⥤ Type u where
   obj S := partialProd Y S.unop.1
   map {S T} h := ↾fun z i => z ⟨i.1, leOfHom h.unop i.2⟩
@@ -314,6 +331,7 @@ open Classical in
 /-- 4gynb9uTEE4-17102 (4:45:02) [prop] If some index `i ∉ S` exists and every `Y_i` has two
 distinct points, the indicator of a point `y₀` of `∏ Y_i` factors through no partial product
 `∏_{i ∈ S} Y_i`. -/
+@[buffalo "4gynb9uTEE4-17102"]
 theorem indicator_not_factor (hY : ∀ i, ∃ a b : Y i, a ≠ b) (y₀ : ∀ i, Y i) {S : Set I}
     {i : I} (hi : i ∉ S) {T : Type*} (g : partialProd Y S → T) {t₁ t₂ : T} (ht : t₁ ≠ t₂)
     (f : (∀ i, Y i) → T) (hf : ∀ z, f z = if z = y₀ then t₁ else t₂)
@@ -338,6 +356,7 @@ theorem indicator_not_factor (hY : ∀ i, ∃ a b : Y i, a ≠ b) (y₀ : ∀ i,
 
 /-- 4gynb9uTEE4-16782 (4:39:42) [cex] A set `X` with two distinct points is not an accessible
 object of `Set^op`: for no regular `κ` is `X` `κ`-presentable in `Set^op`. -/
+@[buffalo "4gynb9uTEE4-16782"]
 theorem not_isCardinalPresentable_op {X : Type u} {x₁ x₂ : X} (hx : x₁ ≠ x₂) (κ : Cardinal.{u})
     [Fact κ.IsRegular] : ¬ IsCardinalPresentable (op X) κ := by
   classical
@@ -396,6 +415,7 @@ variable {C : Type u} [Category.{v} C]
 
 /-- 4gynb9uTEE4-17429 (4:50:29) [def] `Ind(C)`: the full subcategory of `Ĉ` of the filtered
 colimits of representables (Mathlib `Ind`, `IsIndObject`). -/
+@[buffalo "4gynb9uTEE4-17429"]
 abbrev IndCat (C : Type u) [Category.{v} C] : Type (max u (v + 1)) := Ind C
 
 theorem ind_inclusion_fullyFaithful : (Ind.inclusion C).Full ∧ (Ind.inclusion C).Faithful :=
@@ -403,6 +423,7 @@ theorem ind_inclusion_fullyFaithful : (Ind.inclusion C).Full ∧ (Ind.inclusion 
 
 /-- 4gynb9uTEE4-17557 (4:52:37) [prop] `Hom((X_i), (Y_j)) = lim_i colim_j Hom(X_i, Y_j)`: first
 `Hom(colim_i yX_i, P) ≅ lim_i P(X_i)` ... -/
+@[buffalo "4gynb9uTEE4-17557"]
 def indHomIsoLimit {I J : Type v} [SmallCategory I] [SmallCategory J] (D : I ⥤ C) (G : J ⥤ C) :
     (colimit (D ⋙ yoneda) ⟶ colimit (G ⋙ yoneda)) ≅
       limit (D.op ⋙ colimit (G ⋙ yoneda) ⋙ uliftFunctor.{u}) :=
@@ -415,12 +436,14 @@ def indColimitObjIso {J : Type v} [SmallCategory J] (G : J ⥤ C) (X : C) :
 
 /-- 4gynb9uTEE4-17684 (4:54:44) [prop] (partial) `C → Ind(C)` is fully faithful and `Ind(C)` has
 filtered colimits; the universal property is not in Mathlib. -/
+@[buffalo "4gynb9uTEE4-17684"]
 theorem ind_yoneda_filtered :
     (Ind.yoneda (C := C)).Full ∧ (Ind.yoneda (C := C)).Faithful ∧ HasFilteredColimits (Ind C) :=
   ⟨inferInstance, inferInstance, inferInstance⟩
 
 /-- 4gynb9uTEE4-17880 (4:58:00) [prop] (partial) If `C` has finite colimits, `Ind(C)` has small
 colimits (Mathlib) ... -/
+@[buffalo "4gynb9uTEE4-17880"]
 theorem ind_hasColimits [HasFiniteColimits C] : HasColimits (Ind C) := inferInstance
 
 /-- ... and (for `C` small with finite colimits) `Ind(C)` is the category of left exact presheaves,
@@ -431,6 +454,7 @@ theorem isIndObject_iff_lex {C : Type u} [SmallCategory C] [HasFiniteColimits C]
 
 /-- 4gynb9uTEE4-18008 (5:00:08) [def] `Ind_π(C)`: the presheaves that are colimits of
 representables indexed by an ordered set dominating `π` (`κ = π⁺`-filtered). -/
+@[buffalo "4gynb9uTEE4-18008"]
 def IsIndPi (κ : Cardinal.{v}) [Fact κ.IsRegular] (A : Cᵒᵖ ⥤ Type v) : Prop :=
   ∃ (I : Type v) (_ : Preorder I) (_ : IsCardinalFiltered I κ) (F : I ⥤ C),
     Nonempty (A ≅ colimit (F ⋙ yoneda))
@@ -445,6 +469,7 @@ theorem IsIndPi.isIndObject {κ : Cardinal.{v}} [Fact κ.IsRegular] {A : Cᵒᵖ
 
 /-- 4gynb9uTEE4-18331 (5:05:31) [prop] (partial) A retract ("direct summand") of a `κ`-accessible
 object is `κ`-accessible (Mathlib). -/
+@[buffalo "4gynb9uTEE4-18331"]
 theorem retract_isCardinalPresentable {E : Type*} [Category* E] {X Y : E} (h : Retract Y X)
     (κ : Cardinal.{w}) [Fact κ.IsRegular] [IsCardinalPresentable X κ] :
     IsCardinalPresentable Y κ :=
@@ -452,6 +477,7 @@ theorem retract_isCardinalPresentable {E : Type*} [Category* E] {X Y : E} (h : R
 
 /-- 4gynb9uTEE4-18396 (5:06:36) [def] `C` Karoubian: Mathlib `IsIdempotentComplete`; Karoubian
 envelope `Karoubi`. Presheaves do not change when `C` is replaced by its Karoubian envelope. -/
+@[buffalo "4gynb9uTEE4-18396"]
 instance type_isIdempotentComplete : IsIdempotentComplete (Type v) :=
   (Idempotents.isIdempotentComplete_iff_hasEqualizer_of_id_and_idempotent _).2 (fun _ _ _ => inferInstance)
 
@@ -471,6 +497,7 @@ variable {E : Type u} [Category.{v} E]
 
 /-- 4gynb9uTEE4-18524 (5:08:44) [prop] (partial) An ordered set dominating `π` of cardinality
 `≤ π` has a largest element ... -/
+@[buffalo "4gynb9uTEE4-18524"]
 theorem exists_top_of_dominates {π : Cardinal.{w}} {I : Type w} [Preorder I] (h : Dominates π I)
     (hI : Cardinal.mk I ≤ π) : ∃ t : I, ∀ i, i ≤ t :=
   h.2.2 I id hI
@@ -484,6 +511,7 @@ def isColimitOfTop {I : Type w} [Preorder I] {t : I} (ht : ∀ i, i ≤ t) (F : 
 /-- 4gynb9uTEE4-18589 (5:09:49) [prop] (partial) The objects of `Fil^{π'}` are `π'`-accessible: a
 colimit of `κ`-presentable objects indexed by a category with `< κ'` arrows is `κ'`-presentable
 for `κ ≤ κ'`. -/
+@[buffalo "4gynb9uTEE4-18589"]
 theorem fil_isCardinalPresentable [LocallySmall.{w} E] {I : Type w} [SmallCategory I]
     {κ κ' : Cardinal.{w}} [Fact κ.IsRegular] [Fact κ'.IsRegular] (hκ : κ ≤ κ')
     (hI : HasCardinalLT (Arrow I) κ') {Y : I ⥤ E} [∀ i, IsCardinalPresentable (Y.obj i) κ]
@@ -495,6 +523,7 @@ theorem fil_isCardinalPresentable [LocallySmall.{w} E] {I : Type w} [SmallCatego
 full subcategories `Fil^{π'}`, `π' ≥ π`, increasing, stable under colimits indexed by ordered sets
 `I` dominating `π` with `card I ≤ π'`, every object of `Fil^{π''}` being such a colimit, indexed by
 an `I` dominating `π'` with `card I ≤ π''`, of objects of `Fil^{π'}`. -/
+@[buffalo "4gynb9uTEE4-18652"]
 structure CardinalFiltration (π : Cardinal.{w}) (E : Type u) [Category.{v} E] where
   /-- The subcategories. -/
   Fil : Cardinal.{w} → ObjectProperty E
@@ -525,6 +554,7 @@ theorem isStrongGenerator_of_le_isoClosure {P Q : ObjectProperty E} (hQ : Q.IsSt
 /-- 4gynb9uTEE4-18911 (5:15:11) [thm] (partial: a ⇔ c) For `E` with small colimits, `E` is
 `κ`-accessible (locally `κ`-presentable) iff `E_κ` is essentially small and strictly generating
 (the inclusion `E_κ → E` is dense). -/
+@[buffalo "4gynb9uTEE4-18911"]
 theorem locallyPresentable_iff_dense [HasColimitsOfSize.{w, w} E] [LocallySmall.{w} E]
     (κ : Cardinal.{w}) [Fact κ.IsRegular] :
     IsCardinalLocallyPresentable E κ ↔
@@ -546,6 +576,7 @@ theorem locallyPresentable_iff_dense [HasColimitsOfSize.{w, w} E] [LocallySmall.
 Counterexample: in `E = Set`, `C = {1}` is made of finitely presentable objects, is strictly
 generating and stable under all limits, but `Ind(C) → Set` is not an equivalence: a filtered
 colimit of one-point sets is never empty. -/
+@[buffalo "4gynb9uTEE4-19371"]
 theorem filtered_colimit_of_punit_nonempty {I : Type u} [Category I] [IsFiltered I]
     (F : I ⥤ Type u) (hF : ∀ i, Nonempty (F.obj i)) (c : Cocone F) : Nonempty c.pt :=
   ⟨c.ι.app (IsFiltered.nonempty.some) (hF _).some⟩
@@ -568,12 +599,14 @@ theorem limit_of_punit_unique {K : Type u} [SmallCategory K] (F : K ⥤ Type u)
 colimit of the partial colimits) Special case of the corrected form: a set `X = ∐_{x ∈ X} 1` is
 the colimit, along the `κ`-filtered ordered set of its subsets of cardinality `< κ`, of these
 subsets (Mathlib). -/
+@[buffalo "4gynb9uTEE4-19433"]
 def isColimit_partialCoproducts (X : Type u) {κ : Cardinal.{u}} (hκ : ℵ₀ ≤ κ) :
     IsColimit (HasCardinalLT.Set.cocone X κ) :=
   HasCardinalLT.Set.isColimitCocone X κ hκ
 
 /-- 4gynb9uTEE4-19702 (5:28:22) [prop] A locally `κ`-presentable category is locally
 `κ'`-presentable for every regular `κ' ≥ κ` (Mathlib). -/
+@[buffalo "4gynb9uTEE4-19702"]
 theorem locallyPresentable_of_le {κ κ' : Cardinal.{w}}
     [Fact κ.IsRegular] [Fact κ'.IsRegular] [IsCardinalLocallyPresentable E κ] (h : κ ≤ κ') : IsCardinalLocallyPresentable E κ' :=
   IsCardinalLocallyPresentable.of_le E h
@@ -581,6 +614,7 @@ theorem locallyPresentable_of_le {κ κ' : Cardinal.{w}}
 /-- 4gynb9uTEE4-19912 (5:31:52) [cex] A functor from the point commutes with all colimits indexed
 by connected (e.g. filtered) categories, and the point is `κ`-presentable; but its image `X` need
 not be: take `X` a set of cardinality `κ`. -/
+@[buffalo "4gynb9uTEE4-19912"]
 theorem point_isCardinalPresentable (κ : Cardinal.{u}) [Fact κ.IsRegular] :
     IsCardinalPresentable (⟨PUnit.unit⟩ : Discrete PUnit.{u + 1}) κ := by
   let e : coyoneda.obj (op (⟨PUnit.unit⟩ : Discrete PUnit.{u + 1})) ≅
@@ -600,6 +634,7 @@ theorem not_isCardinalPresentable_card (κ : Cardinal.{u}) [Fact κ.IsRegular] :
 /-- 4gynb9uTEE4-19978 (5:32:58) [prop] (partial) Uniformization: an accessible functor between
 accessible categories is `κ`-accessible and sends `κ`-presentable objects to `κ`-presentable
 objects for some `κ` (Mathlib), so it restricts to `f : E_κ → E'_κ`. -/
+@[buffalo "4gynb9uTEE4-19978"]
 theorem uniformization {E' : Type*} [Category* E'] [IsAccessibleCategory.{w} E]
     [IsAccessibleCategory.{w} E'] (F : E ⥤ E') [Functor.IsAccessible.{w} F] :
     ∃ (κ : Cardinal.{w}) (_ : Fact κ.IsRegular),

@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -67,6 +68,7 @@ variable (R : Type*) [CommRing R]
 
 /-- The polynomial `F_n` of page 109: `F_{2m} = S_{m−1}`, `F_{2m+1} = S_m + S_{m−1}`, with
 `S` the rescaled Chebyshev polynomials of the second kind. -/
+@[montpellier "78, 109"]
 noncomputable def F (n : ℤ) : R[X] :=
   if Even n then S R (n / 2 - 1) else S R (n / 2) + S R (n / 2 - 1)
 
@@ -126,6 +128,7 @@ theorem F_add_four (n : ℤ) : F R (n + 4) = X * F R (n + 2) - F R n := by
     ring
 
 /-- **Proposition (p. 109).** `F_n F_{n+1} − U F_{n−1} F_n + F_{n−2} F_{n−1} = 1`. -/
+@[montpellier "78, 109"]
 theorem F_identity (n : ℤ) :
     F R n * F R (n + 1) - X * F R (n - 1) * F R n + F R (n - 2) * F R (n - 1) = 1 := by
   obtain ⟨m, rfl | rfl⟩ := Int.even_or_odd' n
@@ -145,6 +148,7 @@ theorem F_identity (n : ℤ) :
     linear_combination S R (m - 1) * hS + hC
 
 /-- The Bézout relation of page 113, with the reading's coefficient `A_n = F_{n−2} − U F_n`. -/
+@[montpellier "78, 113"]
 theorem F_bezout (n : ℤ) :
     (F R (n - 2) - X * F R n) * F R (n - 1) + F R n * F R (n + 1) = 1 := by
   linear_combination F_identity R n
@@ -156,6 +160,7 @@ end Poly
 
 /-- The page's coefficient `A_n = F_{n−2} − U F_{n−1}` does not give a Bézout relation at
 `n = 4`. -/
+@[montpellier "78, 109–113"]
 theorem page_A_four_fails :
     (F ℤ 2 - X * F ℤ 3) * F ℤ 3 + F ℤ 4 * F ℤ 5 ≠ 1 := fun h => by
   have := congrArg (eval 1) h
@@ -258,6 +263,7 @@ theorem u_V (α : k) (n : ℤ) (p : k × k) : u α (V α n p) = V α (n + 1) p :
 
 /-- **Page 111.** `u_α^n (x, y) = (1 − x − y) s_n + x s_{n+1} + y s_{n−1}`, with
 `s_n = (X_n, X_{n−1})`: the matrix of `u^n` (its first version). -/
+@[montpellier "78, 111"]
 theorem u_zpow_apply (α : k) (n : ℤ) (p : k × k) : (u α ^ n) p = V α n p := by
   induction n using Int.induction_on with
   | zero =>
@@ -280,6 +286,7 @@ theorem u_zpow_apply (α : k) (n : ℤ) (p : k × k) : (u α ^ n) p = V α n p :
 noncomputable def s (α : k) (n : ℤ) : k × k := (u α ^ n) (0, 0)
 
 /-- **Page 111.** `s_n = (F_n F_{n+1}(α), F_{n−1} F_n(α))`. -/
+@[montpellier "78, 111"]
 theorem vertex (α : k) (n : ℤ) :
     s α n = ((F k n).eval α * (F k (n + 1)).eval α,
       (F k (n - 1)).eval α * (F k n).eval α) := by
@@ -293,6 +300,7 @@ theorem s_one (α : k) : s α 1 = (1, 0) := by simp [s, u_apply]
 theorem s_neg_one (α : k) : s α (-1) = (0, 1) := by simp [s, u_inv_apply]
 
 /-- d) ⇒ a) and b) ⇒ d): **Théorème (p. 112)**, `s_n = s_0 ⇔ F_n(α) = 0`. -/
+@[montpellier "78, 112"]
 theorem vertex_eq_iff (α : k) (n : ℤ) : s α n = (0, 0) ↔ (F k n).eval α = 0 := by
   rw [vertex, Prod.mk.injEq]
   refine ⟨fun ⟨h1, h2⟩ => ?_, fun h => by simp [h]⟩
@@ -300,6 +308,7 @@ theorem vertex_eq_iff (α : k) (n : ℤ) : s α n = (0, 0) ↔ (F k n).eval α =
     + ((F k (n - 2)).eval α - α * (F k n).eval α) * h2
 
 /-- a) ⇔ d): **Théorème (p. 112)**, `u_α^n = id ⇔ F_n(α) = 0`, over any commutative ring. -/
+@[montpellier "78, 112"]
 theorem zpow_eq_one_iff (α : k) (n : ℤ) : u α ^ n = 1 ↔ (F k n).eval α = 0 := by
   refine ⟨fun h => by rw [← vertex_eq_iff, s, h]; rfl, fun h => ?_⟩
   have hx0 : xs α n = 0 := by simp [xs, h]
@@ -314,6 +323,7 @@ theorem zpow_eq_one_iff (α : k) (n : ℤ) : u α ^ n = 1 ↔ (F k n).eval α = 
   · rw [u_zpow_apply]; simp [V, hx0, hxm, hxm2]
 
 /-- c) ⇔ d): `u_α^n s_i = s_i` for one `i` iff `F_n(α) = 0`. -/
+@[montpellier "78, 112"]
 theorem zpow_fix_iff (α : k) (n i : ℤ) :
     (u α ^ n) (s α i) = s α i ↔ (F k n).eval α = 0 := by
   rw [← vertex_eq_iff, s, s, ← Equiv.Perm.mul_apply, ← zpow_add, add_comm, zpow_add,
@@ -387,6 +397,7 @@ section Strip
 variable {k : Type*} [CommRing k]
 
 /-- **Page 95.** For `α = −2`: `s_{2m} = (−m, m)` and `s_{2m+1} = (1 + m, −m)`. -/
+@[montpellier "78, 95"]
 theorem strip_vertex (m : ℤ) :
     s (-2 : k) (2 * m) = (-(m : k), (m : k)) ∧ s (-2 : k) (2 * m + 1) = (1 + (m : k), -(m : k)) := by
   have step : ∀ n, s (-2 : k) (n + 1) = u (-2) (s (-2) n) := fun n => zpow_succ_apply _ _ _
@@ -416,6 +427,7 @@ theorem strip_lines (m : ℤ) :
   rw [(strip_vertex m).1, (strip_vertex m).2]; constructor <;> simp
 
 /-- **Page 99.** `f_{−2} = (x + y)(x + y − 1)`: the invariant conic is the pair of lines. -/
+@[montpellier "78, 99"]
 theorem strip_conic (q : k × k) : fα (-2) q = (q.1 + q.2) * (q.1 + q.2 - 1) := by
   simp only [fα]; ring
 
@@ -437,16 +449,19 @@ theorem strip_vertex_eq_zero_iff (n : ℤ) : s (-2 : k) n = (0, 0) ↔ (2 * p : 
 
 include p in
 /-- **Pages 94–95.** In characteristic `p`, `u_{−2}^n = id ⇔ 2p ∣ n`. -/
+@[montpellier "78, 94–95"]
 theorem strip_zpow_eq_one_iff (n : ℤ) : u (-2 : k) ^ n = 1 ↔ (2 * p : ℤ) ∣ n := by
   rw [zpow_eq_one_iff, ← vertex_eq_iff, strip_vertex_eq_zero_iff p]
 
 include p in
 /-- `F_n(−2) = 0 ⇔ 2p ∣ n` in characteristic `p`. -/
+@[montpellier "78, 84–85, 94–99"]
 theorem strip_F_eq_zero_iff (n : ℤ) : (F k n).eval (-2) = 0 ↔ (2 * p : ℤ) ∣ n := by
   rw [← vertex_eq_iff, strip_vertex_eq_zero_iff p]
 
 include p in
 /-- `u_{−2}` has order `2p`. -/
+@[montpellier "78, 84–85, 94–99"]
 theorem strip_orderOf : orderOf (u (-2 : k)) = 2 * p := by
   apply Nat.dvd_antisymm
   · apply orderOf_dvd_of_pow_eq_one
@@ -457,12 +472,14 @@ theorem strip_orderOf : orderOf (u (-2 : k)) = 2 * p := by
 
 include p in
 /-- The vertices: `s_n = s_m ⇔ 2p ∣ n − m`; there are `2p` of them. -/
+@[montpellier "78, 84–85, 94–99"]
 theorem strip_vertex_eq_iff (n m : ℤ) : s (-2 : k) n = s (-2) m ↔ (2 * p : ℤ) ∣ n - m := by
   rw [s, s, orbit_eq_iff, ← s, strip_vertex_eq_zero_iff p]
 
 omit [Nontrivial k] in
 /-- Three consecutive vertices are never collinear: the determinant of
 `(s_{n+1} − s_n, s_{n−1} − s_n)` is `1`. -/
+@[montpellier "78, 84–85, 94–99"]
 theorem strip_noncollinear (n : ℤ) :
     ((s (-2 : k) (n + 1)).1 - (s (-2) n).1) * ((s (-2 : k) (n - 1)).2 - (s (-2) n).2)
       - ((s (-2 : k) (n + 1)).2 - (s (-2) n).2) * ((s (-2 : k) (n - 1)).1 - (s (-2) n).1)
@@ -484,6 +501,7 @@ section Improper
 variable {k : Type*} [CommRing k]
 
 /-- **Page 85.** The improper realisation `u (x, y) = (1 − y, −x)`. -/
+@[montpellier "78, 85"]
 def ui : Equiv.Perm (k × k) where
   toFun q := (1 - q.2, -q.1)
   invFun q := (-q.2, 1 - q.1)
@@ -493,6 +511,7 @@ def ui : Equiv.Perm (k × k) where
 theorem ui_apply (q : k × k) : (ui : Equiv.Perm (k × k)) q = (1 - q.2, -q.1) := rfl
 
 /-- `u^{2m}` is the translation by `m (1, −1)`, and `u^{2m+1} (x, y) = (1 − y + m, −x − m)`. -/
+@[montpellier "78, 85"]
 theorem imp_zpow_apply (m : ℤ) (q : k × k) :
     ((ui : Equiv.Perm (k × k)) ^ (2 * m)) q = (q.1 + m, q.2 - m) ∧
       ((ui : Equiv.Perm (k × k)) ^ (2 * m + 1)) q = (1 - q.2 + m, -q.1 - m) := by
@@ -529,6 +548,7 @@ theorem imp_inv_eq_conj : σ₁ * ui * σ₁ = (ui : Equiv.Perm (k × k))⁻¹ :
   ext q <;> simp [σ₁, ui_apply]
 
 /-- The linear part `(x, y) ↦ (−y, −x)` has determinant `−1`: not unimodular when `2 ≠ 0`. -/
+@[montpellier "78, 85"]
 theorem imp_linPart_det : !![(0 : k), -1; -1, 0].det = -1 := by
   simp [Matrix.det_fin_two]
 
@@ -574,6 +594,7 @@ theorem imp_zpow_eq_one_iff (n : ℤ) :
   ext q <;> simp [show (2 * (p : ℤ) * c) = 2 * (p * c) by ring, (imp_zpow_apply _ q).1, hc]
 
 include p in
+@[montpellier "78, 85"]
 theorem imp_orderOf : orderOf (ui : Equiv.Perm (k × k)) = 2 * p := by
   apply Nat.dvd_antisymm
   · apply orderOf_dvd_of_pow_eq_one

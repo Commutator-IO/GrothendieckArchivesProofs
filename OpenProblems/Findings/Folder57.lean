@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -69,6 +70,7 @@ def IsPrimeToChar (S : Scheme.{u}) (s : S) (n : ℕ) : Prop :=
 /-- A group scheme `H` over `S` is rigid (p. 42, as the reading reads it): commutative, flat, and
 every geometric fibre `H_{\bar s}` is the schematic closure of its torsion prime to the residue
 characteristic. -/
+@[montpellier "57, 42"]
 def IsRigidSubgroup {S : Scheme.{u}} (H : Grp (Over S)) : Prop :=
   Flat H.X.hom ∧ IsCommMonObj H.X ∧ ∀ s : S,
     ⨅ (n : ℕ) (_ : IsPrimeToChar S s n), (torsionKer (geomFibreGrp H s) n).left.ker = ⊥
@@ -93,6 +95,7 @@ and is left out, so `IsRigidSubgroup` is the reading's « prime-to-`p` torsion d
 commutative (an illegible word after « schéma en groupes » on p. 45, read « comm. »; the row
 gives a counterexample in `GL₂` without it). « Agree on one fibre » is equality of the fibres at
 a point `s`, as subschemes of `G_s`. -/
+@[montpellier "57, 42–45"]
 def RigidSubgroupsOneFibre : Prop :=
   ∀ (S : Scheme.{u}) [IsLocallyNoetherian S] [ConnectedSpace S] (G : Over S) [GrpObj G]
     [IsCommMonObj G] [LocallyOfFiniteType G.hom] [QuasiCompact G.hom]

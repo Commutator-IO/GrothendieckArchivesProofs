@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.AG.Part08a
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -41,12 +42,14 @@ theorem fpqc_hyp [Surjective g] [Flat g] [QuasiCompact g] :
 /-- vuys5SNs2eQ-2913 (0:48:33) [prop] `f` is quasi-separated iff its diagonal is quasi-compact;
 coherent means quasi-compact and quasi-separated (mathlib:
 `quasiSeparated_eq_diagonal_is_quasiCompact`). -/
+@[buffalo "vuys5SNs2eQ-2913"]
 theorem prop_2913 :
     @QuasiSeparated.{u} = MorphismProperty.diagonal @QuasiCompact :=
   quasiSeparated_eq_diagonal_is_quasiCompact
 
 /-- vuys5SNs2eQ-3040 (0:50:40) [prop] If `g` is faithfully flat and quasi-compact, `f` is locally of
 finite type (resp. finite presentation) iff `f'` is (mathlib: `LocalFlatDescent`). -/
+@[buffalo "vuys5SNs2eQ-3040"]
 theorem prop_3040 [Surjective g] [Flat g] [QuasiCompact g] :
     (LocallyOfFiniteType (pullback.snd f g) ↔ LocallyOfFiniteType f) ∧
       (LocallyOfFinitePresentation (pullback.snd f g) ↔ LocallyOfFinitePresentation f) :=
@@ -55,6 +58,7 @@ theorem prop_3040 [Surjective g] [Flat g] [QuasiCompact g] :
 /-- vuys5SNs2eQ-3104 (0:51:44) [prop] Finite type = locally of finite type + quasi-compact, finite
 presentation = locally of finite presentation + coherent; both descend along `g` faithfully flat
 quasi-compact (`prop_3040`, `prop_2750`). -/
+@[buffalo "vuys5SNs2eQ-3104"]
 theorem prop_3104 [Surjective g] [Flat g] [QuasiCompact g] :
     ((LocallyOfFiniteType (pullback.snd f g) ∧ QuasiCompact (pullback.snd f g)) ↔
         (LocallyOfFiniteType f ∧ QuasiCompact f)) ∧
@@ -67,6 +71,7 @@ theorem prop_3104 [Surjective g] [Flat g] [QuasiCompact g] :
 /-- vuys5SNs2eQ-3624 (1:00:24) [prop] `f` is flat iff `f'` is flat, for `Y' → Y` faithfully flat.
 Proved here for `g` faithfully flat and quasi-compact, by mathlib's
 `HasRingHomProperty.descendsAlong_flat` from flat descent for rings. -/
+@[buffalo "vuys5SNs2eQ-3624"]
 theorem prop_3624 [Surjective g] [Flat g] [QuasiCompact g] :
     Flat (pullback.snd f g) ↔ Flat f := by
   have : MorphismProperty.DescendsAlong @Flat.{u}
@@ -82,18 +87,21 @@ theorem prop_3624 [Surjective g] [Flat g] [QuasiCompact g] :
 (resp. proper) iff `f'` is. Proved: universal closedness descends (mathlib
 `descendsAlong_universallyClosed_surjective_inf_flat_inf_quasicompact`), and finite type
 (`prop_3104`). -/
+@[buffalo "vuys5SNs2eQ-5811"]
 theorem prop_5811 [Surjective g] [Flat g] [QuasiCompact g] :
     UniversallyClosed (pullback.snd f g) ↔ UniversallyClosed f :=
   MorphismProperty.pullback_snd_iff (fpqc_hyp g)
 
 /-- vuys5SNs2eQ-5892 (1:38:12) [prop] For `g` faithfully flat quasi-compact, `f` is an isomorphism
 iff `f'` is (mathlib: `descendsAlong_isomorphisms_surjective_inf_flat_inf_quasicompact`). -/
+@[buffalo "vuys5SNs2eQ-5892"]
 theorem prop_5892 [Surjective g] [Flat g] [QuasiCompact g] :
     IsIso (pullback.snd f g) ↔ IsIso f :=
   MorphismProperty.pullback_snd_iff (P := MorphismProperty.isomorphisms Scheme.{u}) (fpqc_hyp g)
 
 /-- vuys5SNs2eQ-6022 (1:40:22) [prop] Base change along `g` faithfully flat quasi-compact is
 faithful and conservative (mathlib: the `(Over.pullback g).Faithful` instance and `prop_5892`). -/
+@[buffalo "vuys5SNs2eQ-6022"]
 theorem prop_6022 [Surjective g] [Flat g] [QuasiCompact g] :
     (Over.pullback g).Faithful ∧ (IsIso (pullback.snd f g) → IsIso f) :=
   ⟨inferInstance, (prop_5892 g f).1⟩
@@ -101,6 +109,7 @@ theorem prop_6022 [Surjective g] [Flat g] [QuasiCompact g] :
 /-- vuys5SNs2eQ-6088 (1:41:28) [prop] `f` is a monomorphism iff `Δ_f` is an isomorphism (mathlib:
 `pullback.isIso_diagonal_iff`); hence `f` is a monomorphism iff `f'` is, for `g` faithfully flat
 quasi-compact (descent of isomorphisms applied to the diagonal). -/
+@[buffalo "vuys5SNs2eQ-6088"]
 theorem prop_6088 [Surjective g] [Flat g] [QuasiCompact g] :
     (IsIso (pullback.diagonal f) ↔ Mono f) ∧ (Mono (pullback.snd f g) ↔ Mono f) := by
   refine ⟨pullback.isIso_diagonal_iff f, ?_⟩
@@ -131,6 +140,7 @@ variable {A A' : Type u} [CommRing A] [CommRing A'] [Algebra A A']
 (resp. finitely presented) over `A` iff `A' ⊗_A B` is over `A'` (mathlib:
 `Algebra.FiniteType.of_finiteType_tensorProduct_of_faithfullyFlat` and its `FinitePresentation`
 variant). -/
+@[buffalo "vuys5SNs2eQ-3297"]
 theorem prop_3297 [Module.FaithfullyFlat A A'] (B : Type u) [CommRing B] [Algebra A B] :
     (Algebra.FiniteType A' (A' ⊗[A] B) ↔ Algebra.FiniteType A B) ∧
       (Algebra.FinitePresentation A' (A' ⊗[A] B) ↔ Algebra.FinitePresentation A B) :=
@@ -139,6 +149,7 @@ theorem prop_3297 [Module.FaithfullyFlat A A'] (B : Type u) [CommRing B] [Algebr
 
 /-- vuys5SNs2eQ-3491 (0:58:11) [prop] A quasi-coherent module is of finite type iff `F'` is. Affine
 case (mathlib: `Module.Finite.of_finite_tensorProduct_of_faithfullyFlat`). -/
+@[buffalo "vuys5SNs2eQ-3491"]
 theorem prop_3491 [Module.FaithfullyFlat A A'] (M : Type u) [AddCommGroup M] [Module A M] :
     Module.Finite A' (A' ⊗[A] M) ↔ Module.Finite A M :=
   ⟨fun _ => .of_finite_tensorProduct_of_faithfullyFlat A', fun _ => inferInstance⟩
@@ -146,6 +157,7 @@ theorem prop_3491 [Module.FaithfullyFlat A A'] (M : Type u) [AddCommGroup M] [Mo
 /-- vuys5SNs2eQ-3687 (1:01:27) [prop] If `A → A'` is faithfully flat, `M` is flat iff `A' ⊗_A M`
 is flat over `A'` (mathlib: `Module.Flat.iff_flat_tensorProduct`); likewise for faithful
 flatness. -/
+@[buffalo "vuys5SNs2eQ-3687"]
 theorem prop_3687 [Module.FaithfullyFlat A A'] (M : Type u) [AddCommGroup M] [Module A M] :
     (Module.Flat A' (A' ⊗[A] M) ↔ Module.Flat A M) ∧
       (Module.FaithfullyFlat A' (A' ⊗[A] M) ↔ Module.FaithfullyFlat A M) := by
@@ -167,6 +179,7 @@ theorem prop_3687 [Module.FaithfullyFlat A A'] (M : Type u) [AddCommGroup M] [Mo
 /-- vuys5SNs2eQ-3752 (1:02:32) [prop] A module is locally free of finite type (finitely generated
 projective) iff it is of finite presentation and flat (mathlib:
 `Module.Flat.projective_of_finitePresentation`, `Module.finitePresentation_of_projective`). -/
+@[buffalo "vuys5SNs2eQ-3752"]
 theorem prop_3752 (M : Type u) [AddCommGroup M] [Module A M] :
     (Module.Projective A M ∧ Module.Finite A M) ↔
       (Module.FinitePresentation A M ∧ Module.Flat A M) := by
@@ -178,6 +191,7 @@ theorem prop_3752 (M : Type u) [AddCommGroup M] [Module A M] :
 
 /-- vuys5SNs2eQ-3556 (0:59:16) [prop] `F` locally free of finite type iff `F'` is. Affine case for a
 finitely presented `M`: `M` is projective iff `A' ⊗_A M` is (flat descent and `prop_3752`). -/
+@[buffalo "vuys5SNs2eQ-3556"]
 theorem prop_3556 [Module.FaithfullyFlat A A'] (M : Type u) [AddCommGroup M] [Module A M]
     [Module.FinitePresentation A M] :
     Module.Projective A' (A' ⊗[A] M) ↔ Module.Projective A M := by
@@ -189,6 +203,7 @@ theorem prop_3556 [Module.FaithfullyFlat A A'] (M : Type u) [AddCommGroup M] [Mo
 conservative, and `Hom(M, N) → Hom(M', N')` is injective. Affine case (mathlib:
 `Module.FaithfullyFlat.lTensor_exact_iff_exact`, `lTensor_bijective_iff_bijective`,
 `zero_iff_lTensor_zero`). -/
+@[buffalo "vuys5SNs2eQ-6217"]
 theorem prop_6217 [Module.FaithfullyFlat A A'] {M N P : Type u} [AddCommGroup M] [Module A M]
     [AddCommGroup N] [Module A N] [AddCommGroup P] [Module A P] (w : M →ₗ[A] N)
     (w' : N →ₗ[A] P) :
@@ -202,6 +217,7 @@ theorem prop_6217 [Module.FaithfullyFlat A A'] {M N P : Type u} [AddCommGroup M]
 
 /-- vuys5SNs2eQ-6408 (1:46:48) [prop] `Hom(M,N) → Hom(M',N') ⇉ Hom(M'',N'')` is a complex, and the
 first arrow is injective if `g` is faithfully flat. Proved: the injectivity (`prop_6217`). -/
+@[buffalo "vuys5SNs2eQ-6408"]
 theorem prop_6408 [Module.FaithfullyFlat A A'] {M N : Type u} [AddCommGroup M] [Module A M]
     [AddCommGroup N] [Module A N] :
     Function.Injective (fun w : M →ₗ[A] N => w.lTensor A') :=
@@ -212,6 +228,7 @@ omit [Algebra A A'] in
 functor to modules with gluing data is faithful. Affine case: `M ↦ A' ⊗_A M` is faithful
 (`prop_6408`), and reflects isomorphisms (mathlib:
 `ModuleCat.reflectsIsomorphisms_extendScalars_of_faithfullyFlat`). -/
+@[buffalo "vuys5SNs2eQ-7642"]
 theorem prop_7642 (φ : A →+* A') (hφ : φ.FaithfullyFlat) :
     (ModuleCat.extendScalars.{u, u, u} φ).ReflectsIsomorphisms :=
   ModuleCat.reflectsIsomorphisms_extendScalars_of_faithfullyFlat hφ
@@ -221,13 +238,14 @@ omit [Algebra A A'] in
 for quasi-coherent modules. Affine case, in Beck's form: extension of scalars along a faithfully
 flat ring map is comonadic (mathlib: `comonadicExtendScalars`); comonad coalgebras are the descent
 data. -/
-@[instance_reducible]
+@[buffalo "vuys5SNs2eQ-6533", instance_reducible]
 def thm_6533 (φ : A →+* A') (hφ : φ.FaithfullyFlat) :
     ComonadicLeftAdjoint (ModuleCat.extendScalars.{u, u, u} φ) :=
   comonadicExtendScalars hφ
 
 /-- vuys5SNs2eQ-6663 (1:51:03) [def] A gluing datum on an `A'`-module `M'` (for `A → A'`, with
 `A'' = A' ⊗_A A'` and `p₁, p₂ : A' → A''`) is an isomorphism `c : p₁^* M' ≅ p₂^* M'`. -/
+@[buffalo "vuys5SNs2eQ-6663"]
 structure GluingDatum (A A' : Type u) [CommRing A] [CommRing A'] [Algebra A A'] where
   /-- The module on `S'`. -/
   M : ModuleCat.{u} A'
@@ -240,18 +258,21 @@ structure GluingDatum (A A' : Type u) [CommRing A] [CommRing A'] [Algebra A A'] 
 /-- vuys5SNs2eQ-7841 (2:10:41) [def] A descent datum is a gluing datum satisfying the cocycle
 condition: mathlib's `Pseudofunctor.DescentData` (for a pseudofunctor `F` and a family of
 morphisms). -/
+@[buffalo "vuys5SNs2eQ-7841"]
 abbrev def_7841 {C : Type u} [Category.{v} C] (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v, u})
     {ι : Type u} {S : C} {X : ι → C} (f : ∀ i, X i ⟶ S) : Type _ :=
   F.DescentData f
 
 /-- vuys5SNs2eQ-6470 (1:47:50) [def] `g` is a descent morphism (rank `1`) if the sequence of `Hom`
 is exact, i.e. `M ↦ (M', can)` is fully faithful: mathlib's `Pseudofunctor.IsPrestackFor`. -/
+@[buffalo "vuys5SNs2eQ-6470"]
 abbrev def_6470 {C : Type u} [Category.{v} C] (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v, u})
     {S : C} (R : Presieve S) : Prop :=
   F.IsPrestackFor R
 
 /-- vuys5SNs2eQ-7906 (2:11:46) [def] `g` is of effective descent (rank `2`) if `Mod(S)` is
 equivalent to modules on `S'` with descent data: mathlib's `Pseudofunctor.IsStackFor`. -/
+@[buffalo "vuys5SNs2eQ-7906"]
 abbrev def_7906 {C : Type u} [Category.{v} C] (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v, u})
     {S : C} (R : Presieve S) : Prop :=
   F.IsStackFor R
@@ -259,6 +280,7 @@ abbrev def_7906 {C : Type u} [Category.{v} C] (F : Pseudofunctor (LocallyDiscret
 /-- vuys5SNs2eQ-8840 (2:27:20) [prop] If a descent (resp. effective descent) family factors through
 `S' → S`, then `S' → S` is of descent (resp. effective descent). Abstract form for a prestack
 (mathlib: `Pseudofunctor.DescentData.isEquivalence_toDescentData_of_sieve_le`). -/
+@[buffalo "vuys5SNs2eQ-8840"]
 theorem prop_8840 {C : Type u} [Category.{v} C] (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v, u})
     (J : GrothendieckTopology C) [F.IsPrestack J] {ι ι' : Type u} {S : C} {X : ι → C}
     {f : ∀ i, X i ⟶ S} {X' : ι' → C} {f' : ∀ j, X' j ⟶ S}
@@ -274,6 +296,7 @@ section Topological
 
 /-- vuys5SNs2eQ-3885 (1:04:45) [prop] For continuous `g` one always has
 `closure(g⁻¹ Z) ⊂ g⁻¹(closure Z)`; equality for all `Z` characterizes open maps. -/
+@[buffalo "vuys5SNs2eQ-3885"]
 theorem prop_3885 {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] {g : X → Y}
     (hg : Continuous g) :
     (∀ Z, closure (g ⁻¹' Z) ⊆ g ⁻¹' closure Z) ∧
@@ -295,6 +318,7 @@ theorem prop_3885 {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] {g : X
 
 /-- vuys5SNs2eQ-3950 (1:05:50) [cex] The inclusion of the generic point of an integral scheme is
 flat but in general not open: `Spec ℚ → Spec ℤ` is flat, with image `{(0)}` not open. -/
+@[buffalo "vuys5SNs2eQ-3950"]
 theorem cex_3950 :
     Module.Flat ℤ ℚ ∧ ¬ IsOpen (Set.range (comap (algebraMap ℤ ℚ))) := by
   refine ⟨IsLocalization.flat ℚ (nonZeroDivisors ℤ), fun hopen => ?_⟩
@@ -332,6 +356,7 @@ variable {S S' X : Scheme.{u}} (g : S' ⟶ S) (f : X ⟶ S)
 
 /-- vuys5SNs2eQ-5252 (1:27:32) [prop] A faithfully flat quasi-compact morphism is universally
 submersive (mathlib: `Flat.isQuotientMap_of_surjective`, applied to every base change). -/
+@[buffalo "vuys5SNs2eQ-5252"]
 theorem prop_5252 [Surjective g] [Flat g] [QuasiCompact g] :
     IsQuotientMap g ∧ IsQuotientMap (pullback.fst f g) :=
   ⟨Flat.isQuotientMap_of_surjective g, Flat.isQuotientMap_of_surjective _⟩
@@ -339,11 +364,13 @@ theorem prop_5252 [Surjective g] [Flat g] [QuasiCompact g] :
 /-- vuys5SNs2eQ-4795 (1:19:55) [prop] If `g` is flat, quasi-compact and surjective, `g` is
 submersive (mathlib: `Flat.isQuotientMap_of_surjective`); the quotient topology on `g(S')` for
 non-surjective `g` is not stated. -/
+@[buffalo "vuys5SNs2eQ-4795"]
 theorem prop_4795 [Surjective g] [Flat g] [QuasiCompact g] : IsQuotientMap g :=
   Flat.isQuotientMap_of_surjective g
 
 /-- vuys5SNs2eQ-5590 (1:33:10) [prop] If `g` is surjective, `f` is surjective iff `f'` is, and `f'`
 injective implies `f` injective. -/
+@[buffalo "vuys5SNs2eQ-5590"]
 theorem prop_5590 [Surjective g] :
     (Surjective (pullback.snd f g) ↔ Surjective f) ∧
       (Function.Injective (pullback.snd f g) → Function.Injective f) := by
@@ -357,6 +384,7 @@ theorem prop_5590 [Surjective g] :
 closed, generalizing, a homeomorphism), so is `f`; likewise for the universal properties (mathlib
 for these: `descendsAlong_universallyOpen_…`, `descendsAlong_universallyClosed_…`). Generalizing
 needs only `g` flat and surjective. -/
+@[buffalo "vuys5SNs2eQ-5323"]
 theorem prop_5323 [Surjective g] [Flat g] [QuasiCompact g] :
     (IsOpenMap (pullback.snd f g) → IsOpenMap f) ∧
       (IsClosedMap (pullback.snd f g) → IsClosedMap f) ∧

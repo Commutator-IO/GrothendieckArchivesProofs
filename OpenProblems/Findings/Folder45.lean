@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.Torsor
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -66,6 +67,7 @@ extensions (Mathlib's `BrauerGroup`, over the universe of `k`). An algebraic gro
 group object of finite type over `Spec k`; an epimorphism is a faithfully flat homomorphism (flat
 and surjective). `H¹` surjective is « every `G'`-torsor receives a `G`-torsor equivariantly », as
 in the module docstring. -/
+@[montpellier "45, 9"]
 def H1Surjective : Prop :=
   ∀ (k : Type u) [Field k], BrauerTrivialFiniteSeparable k →
     ∀ (G G' : Over (Spec (CommRingCat.of k))) [GrpObj G] [GrpObj G']

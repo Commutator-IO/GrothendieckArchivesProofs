@@ -12,6 +12,7 @@ public import Mathlib.RingTheory.Spectrum.Maximal.Defs
 public import Mathlib.RingTheory.Ideal.Nonunits
 public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 public import Grothendieck.Upstream.SemilocalStableRange
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -125,6 +126,7 @@ variable (U₀ σ) in
 commuting with `H`, such that `(s, t)` an arc implies `(λ s, λ⁻¹ t)` an arc
 (condition (70 b) as corrected by the reading), and acting faithfully in the
 sense of (72). Commutativity is not assumed: `IsHomothetyGroup.comm` derives it. -/
+@[montpellier "79, 241–243"]
 structure IsHomothetyGroup (Z : Subgroup (Equiv.Perm (H ⧸ U₀))) : Prop where
   commute : ∀ l ∈ Z, ∀ (h : H) (x : H ⧸ U₀), l (h • x) = h • l x
   homothety : ∀ l ∈ Z, ∀ s t, IsArc (σ := σ) s t → IsArc (σ := σ) (l s) (l⁻¹ t)
@@ -134,6 +136,7 @@ variable (U₀ σ) in
 /-- The conditions of (89) on a subgroup `T ⊂ H`: `σ` inverts `T` (hence
 normalises it), `T` normalises `U₀`, and `U₀ × T × U₁ → H` is injective,
 with `U₁ = σ U₀ σ⁻¹ = {b | σ⁻¹ b σ ∈ U₀}`. -/
+@[montpellier "79, 242–247"]
 structure IsTorus (T : Subgroup H) : Prop where
   inverts : ∀ t ∈ T, σ * t * σ⁻¹ = t⁻¹
   normalises : ∀ t ∈ T, ∀ u ∈ U₀, t * u * t⁻¹ ∈ U₀
@@ -188,6 +191,7 @@ omit hz in
 /-- Commutativity of `Z` follows from the other conditions: the bracket
 `[T_H / 𝔷_H commutatif]` of (88), which the margin of page 247 says
 « résulte des autres ». -/
+@[montpellier "79, 247"]
 theorem IsHomothetyGroup.comm (hZ : IsHomothetyGroup U₀ σ Z) {a b} (ha : a ∈ Z)
     (hb : b ∈ Z) : a * b = b * a := by
   obtain ⟨u, hu1, hu2⟩ := hZ.base ha
@@ -407,6 +411,7 @@ theorem torusOf_homothetiesOf (hσ : σ * σ ∈ U₀) {T : Subgroup H} (hT : Is
 `H` simply transitive on arcs (`U₀ ∩ σ U₀ σ⁻¹ = 1`, and `σ² ∈ U₀`), groups of
 homotheties correspond bijectively to subgroups `T ⊂ H` that `σ` inverts,
 that normalise `U₀`, and for which `U₀ × T × U₁ → H` is injective. -/
+@[montpellier "79, 245–247"]
 def homothetyEquiv (hσ : σ * σ ∈ U₀) :
     {Z : Subgroup (Equiv.Perm (H ⧸ U₀)) // IsHomothetyGroup U₀ σ Z} ≃
       {T : Subgroup H // IsTorus U₀ σ T} where
@@ -450,6 +455,7 @@ variable {l : Equiv.Perm (H ⧸ U₀)}
 
 /-- Distance `0`: an `H`-equivariant permutation with a fixed point is the
 identity. -/
+@[montpellier "79, 187–188"]
 theorem homothety_fixed (hl : ∀ (h : H) x, l (h • x) = h • l x) {x : H ⧸ U₀}
     (hx : l x = x) : l = 1 := by
   apply equivariant_ext hl (fun _ _ => rfl)
@@ -461,6 +467,7 @@ theorem homothety_fixed (hl : ∀ (h : H) x, l (h • x) = h • l x) {x : H ⧸
 /-- Distance `1` (page 188, « puisque stabilisateurs »): if `λ x` is a
 neighbour of `x`, the stabiliser of `x` fixes `λ x` and is transitive on the
 neighbours of `x`, so `λ x` is the only neighbour of `x`. -/
+@[montpellier "79, 188"]
 theorem homothety_adj (hl : ∀ (h : H) x, l (h • x) = h • l x) {x t : H ⧸ U₀}
     (h : IsArc (σ := σ) x (l x)) (ht : IsArc (σ := σ) x t) : t = l x := by
   obtain ⟨g, hg, rfl⟩ := h.stab_trans ht
@@ -468,6 +475,7 @@ theorem homothety_adj (hl : ∀ (h : H) x, l (h • x) = h • l x) {x t : H ⧸
 
 /-- Distance `2` (page 188): if `x` and `λ x` have a common neighbour, they
 have the same neighbours. -/
+@[montpellier "79, 188"]
 theorem homothety_common_nbr (hσ : σ * σ ∈ U₀) (hl : ∀ (h : H) x, l (h • x) = h • l x)
     {x t : H ⧸ U₀} (h1 : IsArc (σ := σ) x t) (h2 : IsArc (σ := σ) t (l x)) (t' : H ⧸ U₀) :
     IsArc (σ := σ) x t' ↔ IsArc (σ := σ) (l x) t' := by
@@ -488,6 +496,7 @@ the vertices of the coset graph (`σ² ∈ U₀`), and `x` a vertex with at leas
 neighbours that no other vertex has as its neighbours. Then `λ x` is neither `x`,
 nor a neighbour of `x`, nor at distance `2` from `x`. If `λ x` is at distance at
 most `3` from `x`, the distance is therefore `3`. The same holds for `λ⁻¹`. -/
+@[montpellier "79, 188"]
 theorem homothety_dist_ge_three (hσ : σ * σ ∈ U₀) (hl : ∀ (h : H) x, l (h • x) = h • l x)
     (hl1 : l ≠ 1) {x : H ⧸ U₀}
     (hstar : ∃ t t', IsArc (σ := σ) x t ∧ IsArc (σ := σ) x t' ∧ t ≠ t')
@@ -618,6 +627,7 @@ theorem scal_vtx (c : Rˣ) {x y : Fin 2 → R} (h : det2 x y = 1) :
     scal c (vtx h) = vtx (det2_scal c h) := rfl
 
 /-- The scalars commute with `SL(2, R)`. -/
+@[montpellier "79, 92–95"]
 theorem scal_act (c : Rˣ) (g : Matrix.SpecialLinearGroup (Fin 2) R) (v : Vtx R) :
     scal c (act g v) = act g (scal c v) := by
   induction v using Vtx.ind with
@@ -627,6 +637,7 @@ theorem scal_act (c : Rˣ) (g : Matrix.SpecialLinearGroup (Fin 2) R) (v : Vtx R)
 
 /-- `c` and `c'` act alike on `S_M` iff `c = ± c'`: the scalars act through
 `R*/±1`, faithfully. -/
+@[montpellier "79, 92–95"]
 theorem scal_eq_scal_iff (c c' : Rˣ) : scal (R := R) c = scal c' ↔ c = c' ∨ c = -c' := by
   constructor
   · intro h
@@ -644,6 +655,7 @@ theorem scal_eq_scal_iff (c c' : Rˣ) : scal (R := R) c = scal c' ↔ c = c' ∨
 /-! ### The exceptional rings: `2R = {0, 2}` -/
 
 /-- The ideal `2R` is contained in `{0, 2}`. With `2 ≠ 0` this is `2R = {0, 2} ≠ {0}`. -/
+@[montpellier "79, 92–95"]
 def Exceptional (R : Type*) [CommRing R] : Prop := ∀ s : R, 2 * s = 0 ∨ 2 * s = 2
 
 theorem Exceptional.four (hR : Exceptional R) : (4 : R) = 0 := by
@@ -662,6 +674,7 @@ theorem Exceptional.neg_two (hR : Exceptional R) : (-2 : R) = 2 := by
   linear_combination -hR.four
 
 /-- On `Z/n`, `2R = {0, 2} ≠ {0}` holds only for `n = 4`. -/
+@[montpellier "79, 92–95"]
 theorem exceptional_zmod_iff (n : ℕ) :
     (Exceptional (ZMod n) ∧ (2 : ZMod n) ≠ 0) ↔ n = 4 := by
   constructor
@@ -715,6 +728,7 @@ theorem sigma_vtx (hR : Exceptional R) {x y : Fin 2 → R} (h : det2 x y = 1) :
   Quotient.sound (hR.sigma_rel h (⟨x, y, h⟩ : {x : Fin 2 → R // Unimod x}).2.choose_spec
     (Or.inl rfl))
 
+@[montpellier "79, 92–95"]
 theorem sigma_act (hR : Exceptional R) (g : Matrix.SpecialLinearGroup (Fin 2) R) (v : Vtx R) :
     sigma hR (act g v) = act g (sigma hR v) := by
   induction v using Vtx.ind with
@@ -723,6 +737,7 @@ theorem sigma_act (hR : Exceptional R) (g : Matrix.SpecialLinearGroup (Fin 2) R)
     left; rw [Matrix.mulVec_add, Matrix.mulVec_smul]
 
 /-- `σ² = 1`. -/
+@[montpellier "79, 92–95"]
 theorem sigma_sigma (hR : Exceptional R) (v : Vtx R) : sigma hR (sigma hR v) = v := by
   induction v using Vtx.ind with
   | H x y h =>
@@ -732,6 +747,7 @@ theorem sigma_sigma (hR : Exceptional R) (v : Vtx R) : sigma hR (sigma hR v) = v
     linear_combination (y i) * hR.four
 
 /-- `σ` commutes with the scalars: the commutant is a direct product. -/
+@[montpellier "79, 92–95"]
 theorem sigma_scal (hR : Exceptional R) (c : Rˣ) (v : Vtx R) :
     sigma hR (scal c v) = scal c (sigma hR v) := by
   induction v using Vtx.ind with
@@ -748,6 +764,7 @@ theorem scal_one (v : Vtx R) : scal 1 v = v := by
   | H x y h => rw [scal_vtx, vtx_eq_iff]; left; simp
 
 /-- If `2 ≠ 0`, `σ` is no scalar; in particular (`c = 1`) it has no fixed point. -/
+@[montpellier "79, 92–95"]
 theorem sigma_ne_scal (hR : Exceptional R) (h2 : (2 : R) ≠ 0) (c : Rˣ) (v : Vtx R) :
     sigma hR v ≠ scal c v := by
   induction v using Vtx.ind with
@@ -803,6 +820,7 @@ theorem cols_mulVec {x y : Fin 2 → R} (h : det2 x y = 1) (w : Fin 2 → R) :
 /-- **Pages 92 to 95, the commutant.** A map of `S_M = M*/±1` to itself that
 commutes with `SL(2, R)` is a scalar `c ∈ R*`, or, when `2R ⊂ {0, 2}`, a scalar
 times `σ`. No hypothesis on `R`; the map need not be assumed bijective. -/
+@[montpellier "79, 92–95"]
 theorem commutant (f : Vtx R → Vtx R) (hf : ∀ g v, f (act g v) = act g (f v)) :
     (∃ c : Rˣ, f = scal c) ∨ (∃ hR : Exceptional R, ∃ c : Rˣ, f = scal c ∘ sigma hR) := by
   obtain ⟨⟨w, w', hw⟩, hrep⟩ := Quotient.exists_rep (f (vtx (det2_e (R := R))))
@@ -867,6 +885,7 @@ theorem commutant_of_not_exceptional (hR : ¬ (Exceptional R ∧ (2 : R) ≠ 0))
 
 /-- Over `Z/n` with `n ≠ 4`, the commutant of `SL(2, Z/n)` on `M*/±1` is the
 group of scalars. -/
+@[montpellier "79, 92–95"]
 theorem commutant_zmod {n : ℕ} (hn : n ≠ 4) (f : Vtx (ZMod n) → Vtx (ZMod n))
     (hf : ∀ g v, f (act g v) = act g (f v)) : ∃ c : (ZMod n)ˣ, f = scal c :=
   commutant_of_not_exceptional (fun h => hn ((exceptional_zmod_iff n).1 h)) f hf
@@ -876,6 +895,7 @@ theorem exceptional_zmod_four : Exceptional (ZMod 4) := ((exceptional_zmod_iff 4
 /-- **Z/4: σ is the antipody of the octahedron.** For `x ∧ y = 1` in `(Z/4)²`,
 the vertices `z` not joined to `x` (`x ∧ z` not a unit) are `± x` and
 `± (x + 2y)`, so `σ(ẋ)` is the one vertex other than `ẋ` not adjacent to it. -/
+@[montpellier "79, 92–95"]
 theorem zmod4_non_neighbours {x y z w : Fin 2 → ZMod 4} (h : det2 x y = 1)
     (hz : det2 z w = 1) (hn : ¬ IsUnit (det2 x z)) :
     z = x ∨ z = -x ∨ z = x + (2 : ZMod 4) • y ∨ z = -(x + (2 : ZMod 4) • y) := by
@@ -929,6 +949,7 @@ theorem star_aux {α β : R} (H : ∀ s : R, α - s * β = 1 ∨ α - s * β = -
 vector `x'` has, type by type, the neighbours of `x` (`x ∧ z` a unit implies
 `x' ∧ z = ± x ∧ z`) iff `x' = ± x`, or `2R ⊂ {0, 2}` and `x' = ± (x + 2y)`,
 that is `ẋ' = σ(ẋ)`. No semi-local hypothesis is needed. -/
+@[montpellier "79, 276–277"]
 theorem same_star_iff {x y x' : Fin 2 → R} (h : det2 x y = 1) :
     (∀ z, IsUnit (det2 x z) → det2 x' z = det2 x z ∨ det2 x' z = -det2 x z) ↔
       x' = x ∨ x' = -x ∨
@@ -985,6 +1006,7 @@ def matA : Matrix (Fin 2) (Fin 2) R := !![1, 2; 2, -1]
 /-- **Pages 277 to 279.** When `2R ⊂ {0, 2}`, `σ` is induced by the matrix
 `A` with rows `(1, 2)` and `(2, -1)`: `A x = ± (x + 2y)` whenever `x ∧ y = 1`.
 `A` has determinant `-1` and `A² = 1`. -/
+@[montpellier "79, 277–279"]
 theorem matA_mulVec (hR : Exceptional R) {x y : Fin 2 → R} (h : det2 x y = 1) :
     matA *ᵥ x = x + (2 : R) • y ∨ matA *ᵥ x = -(x + (2 : R) • y) := by
   have h' : x 0 * y 1 - x 1 * y 0 = 1 := h
@@ -1023,6 +1045,7 @@ theorem exists_isUnit_mul_add [Finite (MaximalSpectrum R)] {d d' a₀ b₀ : R}
 two unimodular `x`, `y` of `R²`, there are unimodular `z₁`, `z₂` with
 `x ∧ z₁ = z₁ ∧ z₂ = z₂ ∧ y = e`: any two vertices of `SP_M` are at distance
 at most `3`. -/
+@[montpellier "79, 20"]
 theorem semilocal_dist_three [Finite (MaximalSpectrum R)] (e : Rˣ) {x y : Fin 2 → R}
     (hx : Unimod x) (hy : Unimod y) :
     ∃ z₁ z₂ : Fin 2 → R, Unimod z₁ ∧ Unimod z₂ ∧
@@ -1059,6 +1082,7 @@ theorem finite_maximalSpectrum_of_local [IsLocalRing R] : Finite (MaximalSpectru
   exact Finite.of_subsingleton
 
 /-- The case of a local ring (in particular a field). -/
+@[montpellier "79, 19–20"]
 theorem local_dist_three [IsLocalRing R] (e : Rˣ) {x y : Fin 2 → R}
     (hx : Unimod x) (hy : Unimod y) :
     ∃ z₁ z₂ : Fin 2 → R, Unimod z₁ ∧ Unimod z₂ ∧
@@ -1073,6 +1097,7 @@ theorem finite_maximalSpectrum_of_finite [Finite R] : Finite (MaximalSpectrum R)
 
 /-- The case `Λ = Z/n`, `n ≥ 1` (for `n ≥ 5` this is Singerman and Strudwick's
 Theorem 11, with equality). -/
+@[montpellier "79, 19–20"]
 theorem zmod_dist_three (n : ℕ) [NeZero n] (e : (ZMod n)ˣ) {x y : Fin 2 → ZMod n}
     (hx : Unimod x) (hy : Unimod y) :
     ∃ z₁ z₂ : Fin 2 → ZMod n, Unimod z₁ ∧ Unimod z₂ ∧
@@ -1094,6 +1119,7 @@ theorem pm_mul_cancel {a b : R} (μ : Rˣ) :
 
 /-- Twisting one end by the scalar `μ` changes the type `± e` of an edge into
 `± μ e`: the edge set `A_{T_μ}` of `P_{M, i}` is that of `P_{M, μ i}`. -/
+@[montpellier "79, 96–101, 136–140"]
 theorem twist_edge (μ : Rˣ) (e : R) (x y : Fin 2 → R) :
     (det2 x ((μ : R) • y) = μ * e ∨ det2 x ((μ : R) • y) = -(μ * e)) ↔
       (det2 x y = e ∨ det2 x y = -e) := by
@@ -1101,12 +1127,14 @@ theorem twist_edge (μ : Rˣ) (e : R) (x y : Fin 2 → R) :
 
 /-- The star of `ẋ` in `P_{M, i}` (`i = ± e`) is, as a set, the star of
 `μ ẋ` in `P_{M, μ i}`: `Et_{A₀}(s) = Et_{A_λ}(λ s)`. -/
+@[montpellier "79, 96–101, 136–140"]
 theorem twist_star (μ : Rˣ) (e : R) (x z : Fin 2 → R) :
     (det2 ((μ : R) • x) z = μ * e ∨ det2 ((μ : R) • x) z = -(μ * e)) ↔
       (det2 x z = e ∨ det2 x z = -e) := by
   rw [det2_smul_left]; exact pm_mul_cancel μ
 
 /-- The star of `ẋ` in `P_{M, ±e}` is the line `y + R x` (pages 14 to 16). -/
+@[montpellier "79, 14–16"]
 theorem star_line (e : Rˣ) {x y z : Fin 2 → R} (hy : det2 x y = e) (hz : det2 x z = e) :
     z = y + det2 z ((↑e⁻¹ : R) • y) • x := by
   have h1 : det2 x ((↑e⁻¹ : R) • y) = 1 := by rw [det2_smul_right, hy]; simp
@@ -1116,6 +1144,7 @@ theorem star_line (e : Rˣ) {x y z : Fin 2 → R} (hy : det2 x y = e) (hz : det2
 /-- **Page 67, formula (178): the faces of a type are the triangles of its
 edges.** If `x ∧ y = e` is a unit, `x ∧ z = ± e` and `z ∧ y = ± e`, then
 `z = ± x ± y`. -/
+@[montpellier "79, 67"]
 theorem triangle_face (e : Rˣ) {x y z : Fin 2 → R} (hy : det2 x y = e)
     (hxz : det2 x z = e ∨ det2 x z = -e) (hzy : det2 z y = e ∨ det2 z y = -e) :
     ∃ a b : R, (a = 1 ∨ a = -1) ∧ (b = 1 ∨ b = -1) ∧ z = a • x + b • y := by
@@ -1132,6 +1161,7 @@ theorem triangle_face (e : Rˣ) {x y z : Fin 2 → R} (hy : det2 x y = e)
 of type `± μ e` iff `k - k' = ± μ`. For `μ = 1` this is the polygon of the
 star in `P_{M, ±e}`; in `P_{M, ±μe}` the same set carries the `μ`-th star
 polygon. The exponent is `μ` itself, as the reading computes. -/
+@[montpellier "79, 138–139"]
 theorem link_polygon (e μ : Rˣ) {x y : Fin 2 → R} (hy : det2 x y = e) (k k' : R) :
     (det2 (y + k • x) (y + k' • x) = μ * e ∨ det2 (y + k • x) (y + k' • x) = -(μ * e)) ↔
       (k - k' = μ ∨ k - k' = -μ) := by
@@ -1151,6 +1181,7 @@ theorem link_polygon (e μ : Rˣ) {x y : Fin 2 → R} (hy : det2 x y = e) (k k' 
 `k ↦ y + k x`, onto the star of `ẋ` in `P_{M, ±μe}`, indexed by
 `j ↦ μ y + j x` (`x ∧ μ y = μ e`), by `k ↦ μ k`: a translation by `k`
 steps becomes a translation by `μ k` steps (`λ_{Γ, s} = ± μ`, page 99). -/
+@[montpellier "79, 99"]
 theorem twist_index (μ : R) (x y : Fin 2 → R) (k : R) :
     μ • (y + k • x) = μ • y + (μ * k) • x ∧ det2 x (μ • y) = μ * det2 x y := by
   refine ⟨?_, det2_smul_right μ x y⟩
@@ -1221,6 +1252,7 @@ theorem scal_dist [Nontrivial R] (e : Rˣ) {c : Rˣ} (hc : c ≠ 1 ∧ c ≠ -1)
   ⟨scal_ne_self hc v, not_adj_scal e c v, no_common_nbr_scal e hc v⟩
 
 /-- `σ(ẋ)` and `ẋ` have a common neighbour of each type: `(e y)˙`. -/
+@[montpellier "79, 187–188"]
 theorem sigma_common_nbr (hR : Exceptional R) (e : Rˣ) (v : Vtx R) :
     ∃ w, Adj R e v w ∧ Adj R e w (sigma hR v) := by
   induction v using Vtx.ind with
@@ -1242,6 +1274,7 @@ be a map of `M*/±1` commuting with `SL(2, R)` and `e ∈ R*`. For every vertex
 `v`: `λ v ≠ v`; `λ v` is not adjacent to `v` in `P_{M, ±e}`; and `v`, `λ v`
 have a common neighbour iff `R` is exceptional (`2R ⊂ {0, 2}`) and `λ = σ`, the
 octahedral antipody for `Z/4`. -/
+@[montpellier "79, 188"]
 theorem commutant_dist [Nontrivial R] (e : Rˣ) (f : Vtx R → Vtx R)
     (hf : ∀ g v, f (act g v) = act g (f v)) (hf1 : f ≠ id) (v : Vtx R) :
     f v ≠ v ∧ ¬ Adj R e v (f v) ∧
@@ -1312,6 +1345,7 @@ theorem adj_path_three [Finite (MaximalSpectrum R)] (e : Rˣ) (v v' : Vtx R) :
 with `SL(2, R)` and is not `σ`, every vertex `v` is at distance exactly `3`
 from `λ v` in `P_{M, ±e}`: `λ v ≠ v`, not adjacent, no common neighbour, and a
 path of length `3`. -/
+@[montpellier "79, 187–188"]
 theorem commutant_dist_three [Nontrivial R] [Finite (MaximalSpectrum R)] (e : Rˣ)
     (f : Vtx R → Vtx R) (hf : ∀ g v, f (act g v) = act g (f v)) (hf1 : f ≠ id)
     (hσ : ¬ ∃ hR : Exceptional R, f = sigma hR) (v : Vtx R) :
@@ -1323,6 +1357,7 @@ theorem commutant_dist_three [Nontrivial R] [Finite (MaximalSpectrum R)] (e : R�
 /-- **The model case of the finding: the Farey map mod `n`.** For `n ≥ 2`, a unit
 `μ ≠ ± 1` of `Z/n` and any type `± e`, every vertex is at distance exactly `3`
 from its image under `μ` (for `e = 1`: Singerman and Strudwick, Theorem 9). -/
+@[montpellier "79, 187–188"]
 theorem zmod_scal_dist_three {n : ℕ} (hn : 1 < n) (e : (ZMod n)ˣ) {μ : (ZMod n)ˣ}
     (hμ : μ ≠ 1 ∧ μ ≠ -1) (v : Vtx (ZMod n)) :
     scal μ v ≠ v ∧ ¬ Adj (ZMod n) e v (scal μ v) ∧
@@ -1493,6 +1528,7 @@ theorem twist_eq_twist_iff (hn : 2 < n) (ν ν' : (ZMod n)ˣ) (P : Pol n E) :
 
 /-- **The « fait mirifique » (page 138).** `(Z/n)*` acts on the polygon
 structures of `E`, through `(Z/n)*/±1`. -/
+@[montpellier "79, 138"]
 noncomputable instance polygonAction [Fact (2 < n)] : MulAction (ZMod n)ˣ (Pol n E) where
   smul := twist
   one_smul := twist_one Fact.out
@@ -1513,6 +1549,7 @@ theorem rot_pow (φ : ZMod n ≃ E) (k : ℕ) (x : E) : (rot φ ^ k) x = φ (φ.
 
 /-- **Pages 184 to 187.** Two polygon structures on `E` with the same group of
 rotations differ by a star twist. -/
+@[montpellier "79, 184–187"]
 theorem exists_twist_of_zpowers_rot (hn : 0 < n) {φ ψ : ZMod n ≃ E}
     (h : Subgroup.zpowers (rot ψ) = Subgroup.zpowers (rot φ)) :
     ∃ ν : (ZMod n)ˣ, cyc ψ 1 = cyc φ ν := by
@@ -1591,6 +1628,7 @@ theorem star_twistGraph (l : Equiv.Perm S) (s : S) : star (twistGraph A l) (l s)
 
 /-- **To 6.** `A` induces a polygon on every star, and `A_λ` induces on every
 star `Et(s) = Et_{A_λ}(λ s)` the `ν`-th star polygon of it. -/
+@[montpellier "79, 138–140"]
 def ToSix (hpol : ∀ s, IsPolygon n (onStar A A s)) (l : Equiv.Perm S) (ν : (ZMod n)ˣ) : Prop :=
   ∀ s, onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1
 
@@ -1632,6 +1670,7 @@ theorem twistGraph_eq_of_toSix (hn : 2 < n) {hpol : ∀ s, IsPolygon n (onStar A
 /-- **Pages 139 and 140: `Z ↪ Z'_n`, except for the octahedron.** If no two
 vertices have the same star (the octahedron excepted, page 275) and the twisted
 graphs are triangulated, two homotheties with the same `ν ∈ Z'_n` are equal. -/
+@[montpellier "79, 139–140"]
 theorem eq_of_toSix (hn : 2 < n) {hpol : ∀ s, IsPolygon n (onStar A A s)}
     (hstar : ∀ s s', star A s = star A s' → s = s')
     {l l' : Equiv.Perm S} {ν ν' : (ZMod n)ˣ} (h : ToSix A hpol l ν) (h' : ToSix A hpol l' ν')
@@ -1660,6 +1699,7 @@ theorem onStar_starEquiv {g : Equiv.Perm S} (hg : ∀ a b, A (g a) (g b) ↔ A a
 /-- **Pages 184 to 187, (29): `ν` does not depend on the vertex.** If an
 automorphism `g` of `A` commutes with `λ`, the star twist `ν` that `A_λ`
 induces at `s` is the one it induces at `g s`. -/
+@[montpellier "79, 184–187"]
 theorem toSix_at_smul (hn : 2 < n) (hpol : ∀ s, IsPolygon n (onStar A A s))
     {l g : Equiv.Perm S} (hg : ∀ a b, A (g a) (g b) ↔ A a b) (hgl : g * l = l * g)
     {ν : (ZMod n)ˣ} {s : S} (h : onStar A (twistGraph A l) s = (twist ν (⟨_, hpol s⟩ : Pol n _)).1) :
@@ -1803,6 +1843,7 @@ theorem isPolygon_adj (v : Vtx (ZMod n)) :
 `n ≥ 3`, the homothety `T_μ` of `P_{M, ±e}` satisfies To 6 with `ν = μ`: on each
 star, `A_{T_μ}` induces the `μ`-th star polygon of the polygon induced by
 `P_{M, ±e}`. So `T_μ ↦ μ` is the map `Z → Z'_n` of page 139. -/
+@[montpellier "79, 138–139"]
 theorem toSix_scal (μ : (ZMod n)ˣ) :
     ToSix (Adj (ZMod n) e) (isPolygon_adj hn e) (scalPerm μ) μ := by
   intro v
@@ -1874,6 +1915,7 @@ whose vertices all have the same order `n ≥ 3`, two distinct vertices `s ≠ s
 with the same star force `n = 4` and the octahedron: the graph is isomorphic to
 `K_{2,2,2}`, the vertices `Fin 3 × Bool` joined when their first coordinates
 differ, the pairs `{(i, false), (i, true)}` being the opposite vertices. -/
+@[montpellier "79, 275"]
 theorem double_cone (hA : ∀ a b, A a b → A b a) (hn : 2 < n)
     (hpol : ∀ s, IsPolygon n (onStar A A s)) (hconn : ∀ a b, Relation.ReflTransGen A a b)
     {s s' : S} (hss : s ≠ s') (hst : star A s = star A s') :
@@ -2005,6 +2047,7 @@ If an `H`-equivariant permutation `λ ≠ 1` moves some vertex `x` to distance a
 most `2` (`λ x = x`, or `λ x` a neighbour of `x`, or a common neighbour), then
 `n = 4`, the polyhedron is the octahedron, and `λ` is its antipody: for every
 vertex `y`, `λ y ≠ y` has the star of `y`. -/
+@[montpellier "79, 187–188, 275"]
 theorem homothety_dist_le_two (hσ : σ * σ ∈ U₀) (hl : ∀ (h : H) x, l (h • x) = h • l x)
     (hl1 : l ≠ 1) (hn : 2 < n)
     (hpol : ∀ s, IsPolygon n (onStar (IsArc (U₀ := U₀) (σ := σ)) (IsArc (U₀ := U₀) (σ := σ)) s))
@@ -2049,6 +2092,7 @@ theorem homothety_dist_le_two (hσ : σ * σ ∈ U₀) (hl : ∀ (h : H) x, l (h
 octahedron (`n ≠ 4`): an `H`-equivariant permutation `λ ≠ 1` moves no vertex
 to itself, to a neighbour, or to distance `2`. When `λ x` (or `λ⁻¹ x`, which is
 equivariant too) is at distance at most `3` from `x`, the distance is `3`. -/
+@[montpellier "79, 188"]
 theorem homothety_dist_three (hσ : σ * σ ∈ U₀) (hl : ∀ (h : H) x, l (h • x) = h • l x)
     (hl1 : l ≠ 1) (hn : 2 < n) (h4 : n ≠ 4)
     (hpol : ∀ s, IsPolygon n (onStar (IsArc (U₀ := U₀) (σ := σ)) (IsArc (U₀ := U₀) (σ := σ)) s))
@@ -2107,6 +2151,7 @@ theorem toSix_one_of_star_eq (hn : 2 < n) (hpol : ∀ s, IsPolygon n (onStar A A
 symmetric graph whose stars are polygons of order `n ≥ 3`, `n ≠ 4`, two
 permutations satisfying To 6 with the same `ν ∈ Z'_n`, and whose twisted graphs
 are triangulated, are equal. -/
+@[montpellier "79, 139–140"]
 theorem eq_of_toSix_of_ne_four (hA : ∀ a b, A a b → A b a) (hn : 2 < n) (h4 : n ≠ 4)
     {hpol : ∀ s, IsPolygon n (onStar A A s)} (hconn : ∀ a b, Relation.ReflTransGen A a b)
     {l l' : Equiv.Perm S} {ν ν' : (ZMod n)ˣ} (h : ToSix A hpol l ν) (h' : ToSix A hpol l' ν')
@@ -2119,6 +2164,7 @@ theorem eq_of_toSix_of_ne_four (hA : ∀ a b, A a b → A b a) (hn : 2 < n) (h4 
 
 /-- The same without `n ≠ 4`: two such permutations are equal, or the graph is
 the octahedron `K_{2,2,2}`. -/
+@[montpellier "79, 139–140, 275"]
 theorem eq_of_toSix_or_octahedron (hA : ∀ a b, A a b → A b a) (hn : 2 < n)
     {hpol : ∀ s, IsPolygon n (onStar A A s)} (hconn : ∀ a b, Relation.ReflTransGen A a b)
     {l l' : Equiv.Perm S} {ν ν' : (ZMod n)ˣ} (h : ToSix A hpol l ν) (h' : ToSix A hpol l' ν')
@@ -2176,6 +2222,7 @@ noncomputable def sigmaPerm (hR : Exceptional R) : Equiv.Perm (Vtx R) where
 `P_{M, ±e}` (the octahedron), the antipody `σ` and the identity both satisfy
 To 6 with `ν = 1`, both twisted graphs are triangulated, and `σ ≠ 1`: the map
 `λ ↦ ν` is not injective. -/
+@[montpellier "79, 139"]
 theorem octahedron_toSix (e : (ZMod 4)ˣ) :
     ToSix (Adj (ZMod 4) e) (isPolygon_adj (by norm_num) e) (sigmaPerm exceptional_zmod_four) 1 ∧
       ToSix (Adj (ZMod 4) e) (isPolygon_adj (by norm_num) e) 1 1 ∧
@@ -2281,6 +2328,7 @@ antipody commutes with `H`, satisfies the homothety condition (70 b), is not the
 star of each vertex (so `A_λ = A`: it is strict), and moves each vertex to
 distance `2`. It fails the faithfulness (72), so it lies in no homothety group
 `IsHomothetyGroup`. -/
+@[montpellier "79, 188"]
 theorem octAnti_isHomothety
     (he : ∀ a b, IsArc (U₀ := U₀) (σ := σ) a b ↔ (e a).1 ≠ (e b).1) :
     (∀ (h : H) x, octAnti e (h • x) = h • octAnti e x) ∧
@@ -2304,6 +2352,7 @@ theorem octAnti_isHomothety
 /-- **Page 188, the exception is the antipody.** In a connected coset graph whose
 stars are polygons of order `n ≥ 3`, an `H`-equivariant permutation `λ ≠ 1`
 moving some vertex to distance at most `2` is the antipody of the octahedron. -/
+@[montpellier "79, 188"]
 theorem homothety_dist_le_two_eq {n : ℕ} {l : Equiv.Perm (H ⧸ U₀)} (hσ : σ * σ ∈ U₀)
     (hl : ∀ (h : H) x, l (h • x) = h • l x) (hl1 : l ≠ 1) (hn : 2 < n)
     (hpol : ∀ s, IsPolygon n

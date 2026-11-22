@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -56,6 +57,7 @@ lemma neg_ne_zero' {a : SignType} (ha : a ≠ 0) : -a ≠ 0 := by
   simpa
 
 /-- A valid sequence has at most one zero. -/
+@[montpellier "154, 153"]
 theorem ValidSeq.eq_of_eq_zero {n : ℕ} {s : Fin n → SignType} (h : ValidSeq s) {i j : Fin n}
     (hi : s i = 0) (hj : s j = 0) : i = j := by
   obtain ⟨-, a, ha, c, h1, h2⟩ := h
@@ -67,6 +69,7 @@ theorem ValidSeq.eq_of_eq_zero {n : ℕ} {s : Fin n → SignType} (h : ValidSeq 
   exact Fin.ext ((key i hi).trans (key j hj).symm)
 
 /-- A sequence agreeing with a valid one wherever the latter is nonzero is valid. -/
+@[montpellier "154, 153"]
 theorem ValidSeq.of_agree {n : ℕ} {s t : Fin n → SignType} (h : ValidSeq s)
     (hst : ∀ i, s i ≠ 0 → t i = s i) : ValidSeq t := by
   obtain ⟨⟨j, hj⟩, a, ha, c, h1, h2⟩ := h
@@ -102,17 +105,20 @@ def restr (σ : V → SignType) (ℓ : L) : Fin (A.len ℓ) → SignType :=
 
 /-- A position of an added pseudoline: a cocircuit signature valid on every line of `Σ`
 (Las Vergnas's criterion, with the edition's exclusion of the lines of `Σ` themselves). -/
+@[montpellier "154, 153"]
 def IsPosition (σ : V → SignType) : Prop := ∀ ℓ, ValidSeq (A.restr σ ℓ)
 
 variable {A}
 
 /-- Two zeros of a position never lie on a common line of `Σ`. -/
+@[montpellier "154, 153"]
 theorem IsPosition.eq_of_zero_on_line {σ : V → SignType} (h : A.IsPosition σ) (ℓ : L)
     {i j : Fin (A.len ℓ)} (hi : σ (A.vert ℓ i) = 0) (hj : σ (A.vert ℓ j) = 0) : i = j :=
   (h ℓ).eq_of_eq_zero (by simp [restr, hi]) (by simp [restr, hj])
 
 /-- Independence of the choices: every generisation, as a sign vector, of a position is a
 position. -/
+@[montpellier "154, 153"]
 theorem IsPosition.of_spec {σ τ : V → SignType} (h : A.IsPosition σ) (hst : Spec σ τ) :
     A.IsPosition τ := fun ℓ =>
   (h ℓ).of_agree fun i hi => by
@@ -129,6 +135,7 @@ abbrev Gen (A : Arrangement V L) (σD : V → SignType) :=
   {σ : V → SignType // A.IsPosition σ ∧ Spec σD σ}
 
 /-- The generisations of `σ_D` are the sign vectors on the zeros of `σ_D`: restriction. -/
+@[montpellier "154, 153"]
 def genEquiv {σD : V → SignType} (hD : A.IsPosition σD) :
     A.Gen σD ≃ ({v // σD v = 0} → SignType) where
   toFun σ z := σ.1 z.1
@@ -141,6 +148,7 @@ def genEquiv {σD : V → SignType} (hD : A.IsPosition σD) :
 
 /-- Specialisation among the generisations of `σ_D` is specialisation of the sign vectors on
 the zeros of `σ_D`. -/
+@[montpellier "154, 153"]
 theorem genEquiv_spec_iff {σD : V → SignType} (hD : A.IsPosition σD) (σ τ : A.Gen σD) :
     Spec σ.1 τ.1 ↔ Spec (genEquiv hD σ) (genEquiv hD τ) := by
   refine ⟨fun h z hz => h z.1 hz, fun h v hv => ?_⟩
@@ -170,6 +178,7 @@ lemma abs_cast_le_one (s : SignType) : |(s : ℝ)| ≤ 1 := by
 
 /-- Incidence of faces is specialisation: the face `w` lies in the face `w'` iff `w'` is a
 specialisation of `w`. -/
+@[montpellier "154, 153"]
 theorem cubeFace_subset_iff (w w' : X → SignType) : cubeFace w ⊆ cubeFace w' ↔ Spec w' w := by
   constructor
   · intro h z hz
@@ -179,6 +188,7 @@ theorem cubeFace_subset_iff (w w' : X → SignType) : cubeFace w ⊆ cubeFace w'
     exact ⟨hx1, fun z hz => by rw [hx2 z (by rwa [h z hz]), h z hz]⟩
 
 /-- A sign vector without zero is a vertex of the cube. -/
+@[montpellier "154, 153"]
 theorem cubeFace_eq_singleton {w : X → SignType} (hw : ∀ z, w z ≠ 0) :
     cubeFace w = {fun z => (w z : ℝ)} := by
   ext x
@@ -256,11 +266,13 @@ variable {V L : Type*} [Fintype V] {A : Arrangement V L} {σD : V → SignType}
 
 /-- The generisations of `D`: `3^ν`, one for each face of the `ν`-cube, `ν` the number of
 vertices through which `D` passes. -/
+@[montpellier "154, 153"]
 theorem card_gen (hD : A.IsPosition σD) :
     Nat.card (A.Gen σD) = 3 ^ Fintype.card {v // σD v = 0} := by
   rw [Nat.card_congr (genEquiv hD), card_signVectors]
 
 /-- Page 153: the stable generisations of `D` (no zero) are `2^ν`, the vertices of the cube. -/
+@[montpellier "154, 153"]
 theorem card_gen_stable (hD : A.IsPosition σD) :
     Nat.card {σ : A.Gen σD // ∀ v, σ.1 v ≠ 0} = 2 ^ Fintype.card {v // σD v = 0} := by
   rw [← card_stable]
@@ -271,6 +283,7 @@ theorem card_gen_stable (hD : A.IsPosition σD) :
 
 /-- Page 153: the sub-stable generisations of `D` (exactly one zero) are `ν · 2^(ν−1)`, the
 edges of the cube. -/
+@[montpellier "154, 153"]
 theorem card_gen_substable (hD : A.IsPosition σD) :
     Nat.card {σ : A.Gen σD // ∃! v, σ.1 v = 0} =
       Fintype.card {v // σD v = 0} * 2 ^ (Fintype.card {v // σD v = 0} - 1) := by
@@ -321,6 +334,7 @@ def IsExtension {E : Type} (M : Chirotope3 E) (N : Chirotope3 (Option E)) : Prop
 
 /-- Problem 17 (oriented-matroid form): two extensions with the same contraction at the new
 element, up to a global sign, agree up to reorientation of the new element. -/
+@[montpellier "154, 18"]
 def problem17 : Prop :=
   ∀ (E : Type) (M : Chirotope3 E) (N₁ N₂ : Chirotope3 (Option E)),
     IsExtension M N₁ → IsExtension M N₂ →
@@ -350,6 +364,7 @@ lemma Chirotope3.eq_first {E : Type} (N : Chirotope3 E) (a b c : E) :
 /-- Problem 17 holds in this form, by alternation alone: the triples without the new element
 are those of `M`, those with exactly one are, up to the sign of a permutation, read off the
 contraction, and those with two or three vanish. -/
+@[montpellier "154, 18"]
 theorem problem17_holds : problem17 := fun E M N₁ N₂ h₁ h₂ ⟨s, hs, hc⟩ => ⟨s, hs, by
   rintro (_ | a) (_ | b) (_ | c) <;> simp [Chirotope3.eq_zero₁₂, Chirotope3.eq_zero₂₃,
     Chirotope3.eq_zero₁₃, h₁ _ _ _, h₂ _ _ _, hc, N₁.swap23 (some _) (some _) none,

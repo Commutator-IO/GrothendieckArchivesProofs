@@ -11,6 +11,7 @@ public import Mathlib.Tactic.FinCases
 public import Mathlib.Data.ZMod.Basic
 public import Mathlib.Data.Fintype.Perm
 public import Mathlib.Tactic.Abel
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -102,9 +103,11 @@ section Axioms
 variable {V : Type*} (G : SimpleGraph V)
 
 /-- Axiom 1: every edge lies in a unique triangle. -/
+@[montpellier "74, 92"]
 def Axiom1 : Prop := ∀ x y, G.Adj x y → ∃! z, G.Adj x z ∧ G.Adj y z
 
 /-- Axiom 2: a vertex off a triangle is adjacent to one of its vertices. -/
+@[montpellier "74, 92"]
 def Axiom2 : Prop := ∀ a b c, G.Adj a b → G.Adj b c → G.Adj a c →
   ∀ s, s ≠ a → s ≠ b → s ≠ c → G.Adj s a ∨ G.Adj s b ∨ G.Adj s c
 
@@ -266,6 +269,7 @@ theorem et_disjoint {α β : Fin 3} (s : C.Et α) (u : C.Et β) (h : s.1 = u.1) 
   C.off_unique s.2.1 s.2.2 (h ▸ u.2.2)
 
 /-- Page 94, Prop. 2. -/
+@[montpellier "74, 94"]
 theorem prop2 {α β : Fin 3} (s : C.Et α) (u : C.Et β) :
     ¬ (C.G.Adj u.1 s.1 ∧ C.G.Adj u.1 (C.sig s).1) := by
   rintro ⟨h1, h2⟩
@@ -273,6 +277,7 @@ theorem prop2 {α β : Fin 3} (s : C.Et α) (u : C.Et β) :
   exact u.2.1 ⟨α, this.symm⟩
 
 /-- Page 98, Prop. 5: a point of `Ẽ_β` is adjacent to `s` or to `σ_α s`. -/
+@[montpellier "74, 98"]
 theorem prop5 {α β : Fin 3} (hab : α ≠ β) (s : C.Et α) (u : C.Et β) :
     C.G.Adj u.1 s.1 ∨ C.G.Adj u.1 (C.sig s).1 := by
   have n1 : u.1 ≠ C.t α := fun h => u.2.1 ⟨α, h.symm⟩
@@ -295,6 +300,7 @@ theorem adj_sig_sig {α β : Fin 3} (hab : α ≠ β) {s : C.Et α} {u : C.Et β
 
 /-- Page 95, Prop. 3: the third vertex of a triangle on a transverse edge lies in
 the third `Ẽ`. -/
+@[montpellier "74, 95"]
 theorem prop3 {α β : Fin 3} (hab : α ≠ β) (s : C.Et α) (u : C.Et β)
     (hsu : C.G.Adj s.1 u.1) {z : V} (hs : C.G.Adj s.1 z) (hu : C.G.Adj u.1 z) :
     z ∉ Set.range C.t ∧ C.G.Adj z (C.t (third α β)) := by
@@ -321,6 +327,7 @@ abbrev UT : Type _ := {x : Fin 3 → V // (∀ α, x α ∉ Set.range C.t ∧ C.
 def pr (x : C.UT) (α : Fin 3) : C.Et α := ⟨x.1 α, x.2.1 α⟩
 
 /-- Page 95, Props 3 and 4 (image): a transverse edge lies in an upper triangle. -/
+@[montpellier "74, 95"]
 theorem ut_exists {α β : Fin 3} (hab : α ≠ β) (s : C.Et α) (u : C.Et β)
     (hsu : C.G.Adj s.1 u.1) : ∃ x : C.UT, x.1 α = s.1 ∧ x.1 β = u.1 := by
   classical
@@ -343,6 +350,7 @@ theorem ut_exists {α β : Fin 3} (hab : α ≠ β) (s : C.Et α) (u : C.Et β)
 
 /-- Page 96, Prop. 4 (injectivity): an upper triangle is determined by two of its
 vertices. -/
+@[montpellier "74, 96"]
 theorem ut_unique {α β : Fin 3} (hab : α ≠ β) {x y : C.UT} (ha : x.1 α = y.1 α)
     (hb : x.1 β = y.1 β) : x = y := by
   obtain ⟨h1, h2, h3⟩ := third_spec α β hab
@@ -405,6 +413,7 @@ theorem phi_mkG (α : Fin 3) (x : C.UT) : C.phi α (C.mkG x) = C.mkE (C.pr x α)
 
 /-- Page 102, axiom `β_Γ`: for `α ≠ β`, `Γ → E_α × E_β` is bijective. `Γ` is a
 Latin square on the three `E_α`. -/
+@[montpellier "74, 102"]
 theorem latin {α β : Fin 3} (hab : α ≠ β) :
     Bijective fun g : C.Gam => (C.phi α g, C.phi β g) := by
   refine ⟨fun g h e => ?_, fun p => ?_⟩
@@ -445,6 +454,7 @@ theorem latin {α β : Fin 3} (hab : α ≠ β) :
 abbrev PB (α : Fin 3) : Type _ := {p : C.Gam × C.Et α // C.phi α p.1 = C.mkE p.2}
 
 /-- Page 101: `Γ̃` is the pull-back of `Ẽ_α → E_α` along `Γ → E_α`, for each `α`. -/
+@[montpellier "74, 101"]
 noncomputable def pullback (α : Fin 3) : C.UT ≃ C.PB α :=
   Equiv.ofBijective (fun x => ⟨(C.mkG x, C.pr x α), rfl⟩) <| by
     refine ⟨fun x y e => ?_, fun ⟨⟨g, s⟩, h⟩ => ?_⟩
@@ -460,6 +470,7 @@ noncomputable def pullback (α : Fin 3) : C.UT ≃ C.PB α :=
       · exact ⟨C.sigUT x, Subtype.ext (Prod.ext (inv_mk_f _ _ _) ((C.pr_sigUT x α).trans h'.symm))⟩
 
 /-- Page 102: the isomorphisms between the pull-backs of the three double covers. -/
+@[montpellier "74, 102"]
 noncomputable def transition (α β : Fin 3) : C.PB α ≃ C.PB β :=
   (C.pullback α).symm.trans (C.pullback β)
 
@@ -470,6 +481,7 @@ theorem transition_over (α β : Fin 3) (p : C.PB α) : (C.transition α β p).1
   rfl
 
 /-- And they form a transitive system. -/
+@[montpellier "74, 102"]
 theorem transition_trans (α β γ : Fin 3) :
     (C.transition α β).trans (C.transition β γ) = C.transition α γ :=
   Equiv.ext fun p => by simp [transition]
@@ -479,18 +491,22 @@ theorem transition_self (α : Fin 3) : C.transition α α = Equiv.refl _ :=
 
 /-! ## Counts (pages 99 and 104) -/
 
+@[montpellier "74, 99, 104"]
 theorem card_Et (α : Fin 3) : Nat.card (C.Et α) = 2 * Nat.card (C.E α) :=
   card_eq_two_mul _ _ C.sig_ne
 
+@[montpellier "74, 99, 104"]
 theorem card_UT : Nat.card C.UT = 2 * Nat.card C.Gam :=
   card_eq_two_mul _ _ C.sigUT_ne
 
+@[montpellier "74, 99, 104"]
 theorem card_Gam {α β : Fin 3} (hab : α ≠ β) :
     Nat.card C.Gam = Nat.card (C.E α) * Nat.card (C.E β) := by
   rw [Nat.card_congr (Equiv.ofBijective _ (C.latin hab)), Nat.card_prod]
 
 /-- Page 99, corollary: if `Ẽ_α` is nonempty, `E_β` and `E_γ` are in bijection
 (and so are `Ẽ_β` and `Ẽ_γ`). -/
+@[montpellier "74, 99"]
 theorem E_equiv {α β γ : Fin 3} (hab : α ≠ β) (hac : α ≠ γ) (s : C.Et α) :
     Nonempty (C.E β ≃ C.E γ) :=
   ⟨Equiv.ofBijective _ (row_bijective (C.phi α) (C.phi β) (C.phi γ) (C.latin hab)
@@ -526,16 +542,19 @@ def sg (p : Pt X) : Pt X := ⟨p.1, D.σ p.1 p.2⟩
 def Lk (p q : Pt X) : Prop := p.1 ≠ q.1 ∧ ∃ τ ∈ D.T, τ p.1 = p.2 ∧ τ q.1 = q.2
 
 /-- Condition (*): the projections of `T` on two factors are injective. -/
+@[montpellier "74, 96–100"]
 def Star : Prop :=
   ∀ τ ∈ D.T, ∀ ρ ∈ D.T, ∀ α β, α ≠ β → τ α = ρ α → τ β = ρ β → τ = ρ
 
 /-- Condition `β_Γ̃` (page 101, with Prop. 5 of page 98): of the two points of an
 orbit of `σ_α`, exactly one is linked to a given point of `Ẽ_β`, `β ≠ α`. -/
+@[montpellier "74, 101"]
 def Beta : Prop := ∀ p q : Pt X, p.1 ≠ q.1 → (D.Lk (D.sg p) q ↔ ¬ D.Lk p q)
 
 /-- Condition (***) = (Ka) of the margin of page 96, in the form used here: three
 triples `τ, ρ₁, ρ₂ ∈ T` through the pairs `(s_α, s_β)`, `(s_α, s_γ)`, `(s_β, s_γ)`
 of one family `(s_α, s_β, s_γ)` coincide. -/
+@[montpellier "74, 96"]
 def Ka : Prop :=
   ∀ α β γ : Fin 3, α ≠ β → α ≠ γ → β ≠ γ → ∀ τ ∈ D.T, ∀ ρ₁ ∈ D.T, ∀ ρ₂ ∈ D.T,
     τ α = ρ₁ α → τ β = ρ₂ β → ρ₁ γ = ρ₂ γ → τ = ρ₁
@@ -543,6 +562,7 @@ def Ka : Prop :=
 /-- (Ka) in the shape of the margin of page 96: a family `(s_α)` and triples
 `(t_α)` of `T` with `s_β = φ_β(t_α)` for `α ≠ β`; the conclusion, illegible on
 the leaf, is taken to be `(s_α) ∈ T`. -/
+@[montpellier "74, 96"]
 def KaPage : Prop :=
   ∀ (s : ∀ α, X α) (t : Fin 3 → ∀ α, X α), (∀ α, t α ∈ D.T) →
     (∀ α β, α ≠ β → t α β = s β) → s ∈ D.T
@@ -722,6 +742,7 @@ theorem apex_transverse (hB : D.Beta) (hK : D.Ka) {τ : ∀ α, X α}
 
 /-- Page 97: under `β_Γ̃` and (Ka), the upper triangles of the graph are the
 triples of `T`. -/
+@[montpellier "74, 97"]
 theorem upper_triangle (hB : D.Beta) (hK : D.Ka) {p q r : Pt X}
     (hpq : D.graph.Adj (.inr p) (.inr q)) (hqr : D.graph.Adj (.inr q) (.inr r))
     (hpr : D.graph.Adj (.inr p) (.inr r)) :
@@ -873,9 +894,11 @@ theorem ka_of_axiom1 (hS : D.Star) (h1 : Axiom1 D.graph) : D.Ka := by
 
 /-- Under (*) and `β_Γ̃`, the graph satisfies axiom 1 if and only if (Ka) holds;
 it then satisfies axiom 2. -/
+@[montpellier "74, 96–100"]
 theorem axiom1_iff_ka (hS : D.Star) (hB : D.Beta) : Axiom1 D.graph ↔ D.Ka :=
   ⟨D.ka_of_axiom1 hS, D.axiom1 hB⟩
 
+@[montpellier "74, 96–100"]
 theorem scholie_converse (hB : D.Beta) (hK : D.Ka) : Axiom1 D.graph ∧ Axiom2 D.graph :=
   ⟨D.axiom1 hB hK, D.axiom2 hB hK⟩
 
@@ -925,6 +948,7 @@ theorem q_eq {α β : Fin 3} (hab : α ≠ β) {x y : L.Γt} (h1 : L.ψ α x = L
   exact (L.latin α β hab).1 (Prod.ext e1 e2)
 
 /-- Condition (*) holds for the data of a Latin square with double covers. -/
+@[montpellier "74, 101–103"]
 theorem star : L.toScholie.Star := by
   rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩ α β hab e1 e2
   have e1' : L.ψ α x = L.ψ α y := e1
@@ -938,6 +962,7 @@ theorem lk_iff {α β : Fin 3} (s : X α) (u : X β) :
   · rintro ⟨h, x, h1, h2⟩; exact ⟨h, _, ⟨x, rfl⟩, h1, h2⟩
 
 /-- Page 102: `β_Γ` gives `β_Γ̃`. -/
+@[montpellier "74, 102"]
 theorem beta : L.toScholie.Beta := by
   rintro ⟨α, s⟩ ⟨β, u⟩ hab
   have hab' : α ≠ β := hab
@@ -970,6 +995,7 @@ theorem beta : L.toScholie.Beta := by
 /-- Problems I and II, converse: a Latin square with three double covers and the
 identifications of their pull-backs, subject to (Ka), gives a graph satisfying
 axioms 1 and 2. -/
+@[montpellier "74, 101–103"]
 theorem converse (hK : L.toScholie.Ka) :
     Axiom1 L.toScholie.graph ∧ Axiom2 L.toScholie.graph :=
   L.toScholie.scholie_converse L.beta hK
@@ -987,6 +1013,7 @@ namespace Config
 variable {V : Type*} (C : Config V)
 
 /-- The Latin square, double covers and pull-back identifications of a graph. -/
+@[montpellier "74, 101–103"]
 def latinCover : LatinCover C.Et where
   Γ := C.Gam
   E := C.E
@@ -1035,6 +1062,7 @@ theorem scholie_ka : C.scholie.Ka := by
   rw [C.ut_unique hac h1 hc]
 
 /-- Pages 96–102, forward: the data of a graph satisfy (*), `β_Γ̃` and (Ka). -/
+@[montpellier "74, 96–102"]
 theorem scholie_forward : C.scholie.Star ∧ C.scholie.Beta ∧ C.scholie.Ka :=
   ⟨C.latinCover.star, C.latinCover.beta, C.scholie_ka⟩
 
@@ -1085,6 +1113,7 @@ theorem toV_adj (a b : Fin 3 ⊕ Pt C.Et) :
       exact (C.scholie_lk hab s u).symm
 
 /-- Page 96, Scholie: the graph is isomorphic to the graph built from its data. -/
+@[montpellier "74, 96"]
 def scholieIso : C.scholie.graph ≃g C.G :=
   { Equiv.ofBijective C.toV ⟨C.toV_injective, C.toV_surjective⟩ with
     map_rel_iff' := fun {a b} => C.toV_adj a b }
@@ -1127,6 +1156,7 @@ theorem ex_lk {α β : Fin 3} (s u : Bool × Bool) :
 and `β_Γ̃`, but not (Ka), and their graph violates axiom 1: the edge
 `{(0,0) ∈ Ẽ_a, (0,0) ∈ Ẽ_b}` lies in the two triangles closed by `(0,0)` and by
 `(1,0) ∈ Ẽ_c`. -/
+@[montpellier "74, 97"]
 theorem ka_needed : ex.Star ∧ ex.Beta ∧ ¬ ex.Ka ∧ ¬ Axiom1 ex.graph := by
   have hS : ex.Star := by
     rintro _ ⟨a, rfl⟩ _ ⟨b, rfl⟩ α β h h1 h2
@@ -1147,6 +1177,7 @@ theorem ka_needed : ex.Star ∧ ex.Beta ∧ ¬ ex.Ka ∧ ¬ Axiom1 ex.graph := b
 /-! ## Page 116: the group is an elementary abelian 2-group -/
 
 /-- If every element of `G` has order dividing 2, `G` is commutative (page 116). -/
+@[montpellier "74, 116"]
 theorem p116_comm {G : Type*} [Group G] (h : ∀ g : G, g * g = 1) (g k : G) :
     g * k = k * g := by
   have hinv : ∀ g : G, g⁻¹ = g := fun g => inv_eq_of_mul_eq_one_right (h g)
@@ -1157,6 +1188,7 @@ theorem p116_comm {G : Type*} [Group G] (h : ∀ g : G, g * g = 1) (g k : G) :
 /-- Page 116: on the relation `xyz = 1` of a group `G`, the maps
 `φ_a : (x, y, z) ↦ (x, a⁻¹z⁻¹, a⁻¹y⁻¹)` all preserve the relation if and only if
 every element of `G` has order dividing 2. -/
+@[montpellier "74, 116"]
 theorem p116 {G : Type*} [Group G] :
     (∀ a x y z : G, x * y * z = 1 → x * (a⁻¹ * z⁻¹) * (a⁻¹ * y⁻¹) = 1) ↔
       ∀ g : G, g * g = 1 := by

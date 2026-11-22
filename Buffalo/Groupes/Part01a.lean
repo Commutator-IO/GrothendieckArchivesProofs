@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -33,6 +34,7 @@ variable {C D : Type*} [Category C] [Category D] [CartesianMonoidalCategory C]
 
 /-- _lTf_L0yvrU-3 (0:00:03) [prop] A functor commuting with finite products and the final object
 takes a group object `X` of `C` to a group object `F(X)` of `C'`. -/
+@[buffalo "_lTf_L0yvrU-3"]
 noncomputable def mapGrpOfPreservesFiniteProducts (F : C ⥤ D) [PreservesFiniteProducts F] :
     Grp C ⥤ Grp D :=
   letI := Functor.Monoidal.ofChosenFiniteProducts F
@@ -40,12 +42,14 @@ noncomputable def mapGrpOfPreservesFiniteProducts (F : C ⥤ D) [PreservesFinite
 
 /-- _lTf_L0yvrU-135 (0:02:15) [prop] More generally, such a functor carries other algebraic
 structures over: monoids (here) and commutative groups (next). -/
+@[buffalo "_lTf_L0yvrU-135"]
 noncomputable def mapMonOfPreservesFiniteProducts (F : C ⥤ D) [PreservesFiniteProducts F] :
     Mon C ⥤ Mon D :=
   letI := Functor.Monoidal.ofChosenFiniteProducts F
   F.mapMon
 
 /-- _lTf_L0yvrU-135 (0:02:15) [prop] Commutative group objects are carried over too. -/
+@[buffalo "_lTf_L0yvrU-135"]
 noncomputable def mapCommGrpOfPreservesFiniteProducts [BraidedCategory C] [BraidedCategory D]
     (F : C ⥤ D) [PreservesFiniteProducts F] : CommGrp C ⥤ CommGrp D :=
   letI := Functor.Braided.ofChosenFiniteProducts F
@@ -54,6 +58,7 @@ noncomputable def mapCommGrpOfPreservesFiniteProducts [BraidedCategory C] [Braid
 /-- _lTf_L0yvrU-596 (0:09:56) [prop] A group structure on an object `X` is the same as a lift of
 its functor of points to groups: the functors to groups whose underlying functor is
 representable are exactly those of group objects (Mathlib `essImage_yonedaGrp`). -/
+@[buffalo "_lTf_L0yvrU-596"]
 theorem grp_iff_representable :
     yonedaGrp (C := C).essImage = fun F ↦ (F ⋙ forget _).IsRepresentable :=
   essImage_yonedaGrp
@@ -66,6 +71,7 @@ variable (k : Type u) [CommRing k]
 
 /-- _lTf_L0yvrU-267 (0:04:27) [prop] A functor from `k`-algebras to sets is in the essential image
 of the Yoneda embedding of `(k-alg)ᵒᵖ` exactly when it is (co)representable. -/
+@[buffalo "_lTf_L0yvrU-267"]
 theorem essImage_coyoneda_iff (F : CommAlgCat.{u} k ⥤ Type u) :
     coyoneda.essImage F ↔ F.IsCorepresentable :=
   ⟨fun ⟨Y, ⟨e⟩⟩ ↦ ⟨Y.unop, ⟨Functor.corepresentableByEquiv.symm e⟩⟩,
@@ -73,11 +79,13 @@ theorem essImage_coyoneda_iff (F : CommAlgCat.{u} k ⥤ Type u) :
 
 /-- _lTf_L0yvrU-267 (0:04:27) [prop] The affine spaces (representable functors) form a full
 subcategory equivalent to the opposite of the category of `k`-algebras (Yoneda). -/
+@[buffalo "_lTf_L0yvrU-267"]
 noncomputable def affineSpacesEquiv :
     (CommAlgCat.{u} k)ᵒᵖ ≌ (coyoneda (C := CommAlgCat.{u} k)).EssImageSubcategory :=
   (coyoneda (C := CommAlgCat.{u} k)).toEssImage.asEquivalence
 
 /-- _lTf_L0yvrU-393 (0:06:33) [prop] The space represented by `A` has `X(k') = Hom_{k-alg}(A, k')`. -/
+@[buffalo "_lTf_L0yvrU-393"]
 def pointsEquiv (A B : CommAlgCat.{u} k) : (coyoneda.obj (op A)).obj B ≃ (A →ₐ[k] B) where
   toFun f := f.hom
   invFun f := CommAlgCat.ofHom f
@@ -86,10 +94,12 @@ def pointsEquiv (A B : CommAlgCat.{u} k) : (coyoneda.obj (op A)).obj B ≃ (A �
 
 /-- _lTf_L0yvrU-660 (0:11:00) [def] An affine algebraic group over `k`: a functor from
 `k`-algebras to groups whose underlying set-valued functor is representable. -/
+@[buffalo "_lTf_L0yvrU-660"]
 def IsAffineGroup (G : CommAlgCat.{u} k ⥤ GrpCat.{u}) : Prop :=
   (G ⋙ forget GrpCat).IsCorepresentable
 
 /-- _lTf_L0yvrU-660 (0:11:00) [def] Equivalently (Mathlib), a group object in affine schemes. -/
+@[buffalo "_lTf_L0yvrU-660"]
 abbrev AffineGroupScheme := Grp (CommAlgCat.{u} k)ᵒᵖ
 
 /-- Building a corepresentation from a family of bijections natural in the algebra. -/
@@ -136,11 +146,13 @@ noncomputable def laurentHomEquiv (A : Type u) [CommRing A] [Algebra k A] :
 
 /-- _lTf_L0yvrU-722 (0:12:02) [ex] `𝔾_a` is an affine algebraic group (represented by `k[t]`);
 its groups of points are commutative. -/
+@[buffalo "_lTf_L0yvrU-722"]
 noncomputable def Ga_corep : (Ga k ⋙ forget _).CorepresentableBy (CommAlgCat.of k (Polynomial k)) :=
   corepOf k _ _ (fun A ↦ (polyHomEquiv k A).trans Multiplicative.ofAdd) (fun _ _ _ _ ↦ rfl)
 
 /-- _lTf_L0yvrU-722 (0:12:02) [ex] `𝔾_m` is an affine algebraic group (represented by
 `k[t,t⁻¹]`); its groups of points are commutative. -/
+@[buffalo "_lTf_L0yvrU-722"]
 noncomputable def Gm_corep :
     (Gm k ⋙ forget _).CorepresentableBy (CommAlgCat.of k (LaurentPolynomial k)) :=
   corepOf k _ _ (fun A ↦ laurentHomEquiv k A) (fun _ _ _ _ ↦ Units.ext rfl)
@@ -186,12 +198,14 @@ noncomputable def glHomEquiv (n : Type) [Fintype n] [DecidableEq n]
 
 /-- _lTf_L0yvrU-790 (0:13:10) [ex] `GL_n` is an affine algebraic group: its functor of points
 is represented by `k[t_{ij}][1/Δ]`. -/
+@[buffalo "_lTf_L0yvrU-790"]
 noncomputable def GLn_corep (n : Type) [Fintype n] [DecidableEq n] :
     (GLn k n ⋙ forget _).CorepresentableBy (CommAlgCat.of k (Localization.Away (genDet k n))) :=
   corepOf k _ _ (fun A ↦ glHomEquiv k n A) (fun _ _ _ _ ↦ Units.ext (Matrix.ext fun _ _ ↦ rfl))
 
 /-- _lTf_L0yvrU-790 (0:13:10) [ex] `GL_n` is in general non-commutative: `GL_2(A)` is not
 commutative as soon as `A ≠ 0`. -/
+@[buffalo "_lTf_L0yvrU-790"]
 theorem GL2_not_comm (A : Type u) [CommRing A] [Nontrivial A] :
     ∃ g h : Matrix.GeneralLinearGroup (Fin 2) A, g * h ≠ h * g := by
   refine ⟨⟨!![1, 1; 0, 1], !![1, -1; 0, 1], ?_, ?_⟩, ⟨!![1, 0; 1, 1], !![1, 0; -1, 1], ?_, ?_⟩, ?_⟩
@@ -209,6 +223,7 @@ theorem GL2_not_comm (A : Type u) [CommRing A] [Nontrivial A] :
 monoid of `𝒪(A) = A`: every submonoid all of whose elements are invertible in it consists of
 units. (That `𝒪 : A ↦ A` is a `k`-algebra object and `𝔾_a` its additive group is the
 definition of `Ga`.) -/
+@[buffalo "_lTf_L0yvrU-932"]
 theorem units_largest {M : Type*} [Monoid M] (H : Submonoid M)
     (h : ∀ x ∈ H, ∃ y ∈ H, x * y = 1 ∧ y * x = 1) : H ≤ IsUnit.submonoid M := by
   intro x hx
@@ -217,6 +232,7 @@ theorem units_largest {M : Type*} [Monoid M] (H : Submonoid M)
 
 /-- _lTf_L0yvrU-995 (0:16:35) [prop] `𝔾_a`, `𝔾_m`, `GL_n` are represented by `k[t]`,
 `k[t,t⁻¹]`, `k[t_{ij}][1/Δ]` (the three corepresentations above, collected). -/
+@[buffalo "_lTf_L0yvrU-995"]
 theorem Ga_Gm_GLn_representable (n : Type) [Fintype n] [DecidableEq n] :
     (Ga k ⋙ forget _).IsCorepresentable ∧ (Gm k ⋙ forget _).IsCorepresentable ∧
       (GLn k n ⋙ forget _).IsCorepresentable :=
@@ -225,6 +241,7 @@ theorem Ga_Gm_GLn_representable (n : Type) [Fintype n] [DecidableEq n] :
 /-- _lTf_L0yvrU-1061 (0:17:41) [ex] The orthogonal group of a quadratic form `Q` on `Aⁿ`, the
 `g ∈ GL_n(A)` with `Q ∘ g = Q`, is a subgroup: the stabilizer of `Q` for the action of
 `GL_n(A)`. -/
+@[buffalo "_lTf_L0yvrU-1061"]
 def orthogonalGroup {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [CommRing A]
     (Q : QuadraticForm A (n → A)) : Subgroup (Matrix.GeneralLinearGroup n A) where
   carrier := {g | Q.comp (Matrix.toLin' (g : Matrix n n A)) = Q}
@@ -278,6 +295,7 @@ noncomputable def triDiag (n : Type) [Fintype n] [LinearOrder n] :
 /-- _lTf_L0yvrU-1262 (0:21:02) [ex] The upper triangular subgroup `T_n` of `GL_n` is represented by
 `k[t_{ij} (i ≤ j)][t_{11}⁻¹, …, t_{nn}⁻¹]`: its points are the invertible upper triangular
 matrices. -/
+@[buffalo "_lTf_L0yvrU-1262"]
 noncomputable def triHomEquiv (n : Type) [Fintype n] [LinearOrder n]
     (A : Type u) [CommRing A] [Algebra k A] :
     (Localization.Away (triDiag k n) →ₐ[k] A) ≃
@@ -328,6 +346,7 @@ theorem det_unipotentMatrix {n : Type} [Fintype n] [LinearOrder n] {A : Type u} 
 /-- _lTf_L0yvrU-1337 (0:22:17) [ex] The strictly triangular subgroup (diagonal `1`) of `GL_n` is
 represented by `k[t_{ij} (i < j)]`: its points are the families `(x_{ij})_{i<j}`, every such
 matrix being invertible (determinant `1`). -/
+@[buffalo "_lTf_L0yvrU-1337"]
 noncomputable def unipotentHomEquiv (n : Type) [Fintype n] [LinearOrder n]
     (A : Type u) [CommRing A] [Algebra k A] :
     (MvPolynomial {p : n × n // p.1 < p.2} k →ₐ[k] A) ≃
@@ -370,6 +389,7 @@ noncomputable def adjoinRootHomEquiv (f : Polynomial k) (A : Type u) [CommRing A
 /-- _lTf_L0yvrU-1466 (0:24:26) [ex] The group `{(x, y) : xy = 1}` is represented by
 `k[x,y]/(xy - 1)`, and it is `𝔾_m`: its points are the units (whence `k[x,y]/(xy-1) ≃ k[x,x⁻¹]`
 by Yoneda, both representing `𝔾_m`). -/
+@[buffalo "_lTf_L0yvrU-1466"]
 noncomputable def xyHomEquiv (A : Type u) [CommRing A] [Algebra k A] :
     (MvPolynomial (Fin 2) k ⧸ Ideal.span {(MvPolynomial.X 0 * MvPolynomial.X 1 - 1 : MvPolynomial (Fin 2) k)} →ₐ[k] A) ≃
       {x : Fin 2 → A // x 0 * x 1 = 1} :=
@@ -379,6 +399,7 @@ noncomputable def xyHomEquiv (A : Type u) [CommRing A] [Algebra k A] :
 
 /-- _lTf_L0yvrU-1466 (0:24:26) [ex] The pairs with `xy = 1` are the units, with the coordinatewise
 law. -/
+@[buffalo "_lTf_L0yvrU-1466"]
 def xyEquivUnits (A : Type u) [CommRing A] : {x : Fin 2 → A // x 0 * x 1 = 1} ≃ Aˣ where
   toFun x := ⟨x.1 0, x.1 1, x.2, by rw [mul_comm]; exact x.2⟩
   invFun u := ⟨![u, ↑u⁻¹], by simp⟩
@@ -387,6 +408,7 @@ def xyEquivUnits (A : Type u) [CommRing A] : {x : Fin 2 → A // x 0 * x 1 = 1} 
 
 /-- _lTf_L0yvrU-1661 (0:27:41) [ex] `λ ↦ λ I_n` is a monomorphism `𝔾_m → GL_n` (injective on
 points, `n ≠ 0`); its image is the group of scalar matrices. -/
+@[buffalo "_lTf_L0yvrU-1661"]
 theorem scalar_units_injective (n : Type) [Fintype n] [DecidableEq n] [Nonempty n]
     (A : Type u) [CommRing A] :
     Function.Injective (Units.map (Matrix.scalar n : A →+* Matrix n n A).toMonoidHom) := by
@@ -397,6 +419,7 @@ theorem scalar_units_injective (n : Type) [Fintype n] [DecidableEq n] [Nonempty 
 /-- _lTf_L0yvrU-1724 (0:28:44) [cex] For `n ≥ 2`, `λ ↦ diag(1, …, λ, …, 1)` is not central: when
 `λ ≠ 1` it does not commute with the transvection `1 + E_{ij}` (`j ≠ i`). (For `n = 1` it is
 the identity of `𝔾_m`, which is central.) -/
+@[buffalo "_lTf_L0yvrU-1724"]
 theorem diag_not_central {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [CommRing A]
     {i j : n} (hij : i ≠ j) {c : A} (hc : c ≠ 1) :
     Matrix.diagonal (Function.update 1 i c) * Matrix.transvection i j 1 ≠
@@ -410,6 +433,7 @@ theorem diag_not_central {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [Co
 
 /-- _lTf_L0yvrU-2181 (0:36:21) [def] The center is the kernel of `g ↦ (inner automorphism of
 `g`)`: pointwise, the kernel of `MulAut.conj` is `Subgroup.center`. -/
+@[buffalo "_lTf_L0yvrU-2181"]
 theorem ker_conj_eq_center (G : Type*) [Group G] :
     (MulAut.conj : G →* MulAut G).ker = Subgroup.center G := by
   ext g
@@ -422,6 +446,7 @@ variable {k} in
 /-- _lTf_L0yvrU-2181 (0:36:21) [def] The center of a group functor `G`, as a subgroup functor:
 `g ∈ G(A)` is central when its image in `G(B)` is central for every `A → B` (this is the kernel
 of `G → Aut(G)`, the automorphisms of `G` restricted to `A`-algebras). -/
+@[buffalo "_lTf_L0yvrU-2181"]
 def fCenter (G : CommAlgCat.{u} k ⥤ GrpCat.{u}) (A : CommAlgCat.{u} k) : Subgroup (G.obj A) where
   carrier := {g | ∀ (B : CommAlgCat.{u} k) (f : A ⟶ B), (G.map f).hom g ∈ Subgroup.center (G.obj B)}
   one_mem' B f := by rw [map_one]; exact one_mem _
@@ -432,6 +457,7 @@ variable {k} in
 /-- _lTf_L0yvrU-2376 (0:39:36) [prop] `g ∈ G(Z)` is in the center iff its image in `G(Z')` is
 central for every `Z' → Z` (here `A → B` on algebras); the center is a subfunctor, and it is
 contained in the center of each `G(A)`. -/
+@[buffalo "_lTf_L0yvrU-2376"]
 theorem mem_fCenter_iff (G : CommAlgCat.{u} k ⥤ GrpCat.{u}) (A : CommAlgCat.{u} k) (g : G.obj A) :
     g ∈ fCenter G A ↔
       ∀ (B : CommAlgCat.{u} k) (f : A ⟶ B), (G.map f).hom g ∈ Subgroup.center (G.obj B) :=
@@ -439,6 +465,7 @@ theorem mem_fCenter_iff (G : CommAlgCat.{u} k ⥤ GrpCat.{u}) (A : CommAlgCat.{u
 
 variable {k} in
 /-- _lTf_L0yvrU-2376 (0:39:36) [prop] The center is a subgroup functor. -/
+@[buffalo "_lTf_L0yvrU-2376"]
 theorem fCenter_map (G : CommAlgCat.{u} k ⥤ GrpCat.{u}) {A B : CommAlgCat.{u} k} (f : A ⟶ B)
     {g : G.obj A} (hg : g ∈ fCenter G A) : (G.map f).hom g ∈ fCenter G B := by
   intro C f'
@@ -448,12 +475,14 @@ theorem fCenter_map (G : CommAlgCat.{u} k ⥤ GrpCat.{u}) {A B : CommAlgCat.{u} 
 variable {k} in
 /-- _lTf_L0yvrU-2376 (0:39:36) [prop] The functorial center lies in the center of each group of
 points. -/
+@[buffalo "_lTf_L0yvrU-2376"]
 theorem fCenter_le_center (G : CommAlgCat.{u} k ⥤ GrpCat.{u}) (A : CommAlgCat.{u} k) :
     fCenter G A ≤ Subgroup.center (G.obj A) := fun g hg ↦ by
   simpa using hg A (𝟙 A)
 
 /-- _lTf_L0yvrU-2441 (0:40:41) [def] `λ ↦ λ I_n` is central: scalar matrices are in the center
 of `GL_n(A)` for every `A`. -/
+@[buffalo "_lTf_L0yvrU-2441"]
 theorem scalar_mem_center (n : Type) [Fintype n] [DecidableEq n] {A : Type u} [CommRing A]
     (c : Aˣ) : Units.map (Matrix.scalar n : A →+* Matrix n n A).toMonoidHom c ∈
       Subgroup.center (Matrix.GeneralLinearGroup n A) :=
@@ -462,6 +491,7 @@ theorem scalar_mem_center (n : Type) [Fintype n] [DecidableEq n] {A : Type u} [C
 
 /-- _lTf_L0yvrU-2639 (0:43:59) [ex] `λ ↦ 1 + λ E_{ij}` (`i ≠ j`; for `n = 2`, `(1 λ; 0 1)`) is a
 homomorphism `𝔾_a → GL_n`. -/
+@[buffalo "_lTf_L0yvrU-2639"]
 def transvectionHom {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [CommRing A] {i j : n}
     (hij : i ≠ j) : Multiplicative A →* Matrix.GeneralLinearGroup n A where
   toFun a := ⟨Matrix.transvection i j a.toAdd, Matrix.transvection i j (-a.toAdd),
@@ -471,6 +501,7 @@ def transvectionHom {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [CommRin
   map_mul' a b := Units.ext (by simp [Matrix.transvection_mul_transvection_same _ _ hij])
 
 /-- _lTf_L0yvrU-2639 (0:43:59) [ex] … and it embeds `𝔾_a` in `GL_n` (injective on points). -/
+@[buffalo "_lTf_L0yvrU-2639"]
 theorem transvectionHom_injective {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [CommRing A]
     {i j : n} (hij : i ≠ j) : Function.Injective (transvectionHom (A := A) hij) := fun a b h ↦ by
   have := congrArg (fun g : Matrix.GeneralLinearGroup n A ↦ (g : Matrix n n A) i j) h

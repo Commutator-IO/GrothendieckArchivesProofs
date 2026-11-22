@@ -2,6 +2,7 @@ module
 
 public import StacksFrontier.AlgebraicGeometry.Algebraization.StrictDepthFullyFaithful
 public import StacksFrontier.AlgebraicGeometry.FormalGeometry.PrincipalFormalLocusDimensionCriterion
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -52,6 +53,7 @@ noncomputable abbrev situation (A : Type u) [CommRing A] [IsNoetherianRing A] [I
 `t`-adically complete, with a dualizing complex, and coherent `F`, `G` on the punctured spectrum
 `X′`, completion along `Y′ = V(t) ∩ X′` is bijective on `Hom(F, G)` when `G` has depth `≥ 2`
 at the closed points of `X′ ∖ Y′` and `Ĝ` satisfies the strict `(1, 2)`-inequalities. -/
+@[montpellier "58, 45"]
 theorem hom_bijective_of_depth_two_off_V_t (A : Type u) [CommRing A] [IsNoetherianRing A]
     [IsLocalRing A] (t : A) (ht : t ∈ IsLocalRing.maximalIdeal A)
     [hc : IsAdicComplete (Ideal.span {t}) A]

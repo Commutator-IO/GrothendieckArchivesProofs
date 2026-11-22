@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.Folder80Maps3
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -88,6 +89,7 @@ include s12 s23
 
 /-- **Step 3.** Four lines in general position: the triangle `i, j, l` gets the value `0`. The
 three relations at `i`, `j` and `l` add up to `ψ i j l`, everything else appearing twice. -/
+@[montpellier "80, 39–54"]
 theorem eq_zero_of_fourth (hψ : LocalForm (on := on) ψ) {i j l m : L} (h : Basis on i j l)
     (hm1 : Basis on i j m) (hm2 : Basis on i l m) (hm3 : Basis on j l m) : ψ i j l = 0 := by
   obtain ⟨δ, hδ⟩ := hψ
@@ -108,6 +110,7 @@ theorem eq_zero_of_fourth (hψ : LocalForm (on := on) ψ) {i j l m : L} (h : Bas
 
 /-- **Steps 3 and 4.** In a bigon-free incidence structure, a sign function of local form
 vanishes on every basis. -/
+@[montpellier "80, 39–54"]
 theorem eq_zero (hI : Incidence on) (hbf : BigonFree on) (hψ : LocalForm (on := on) ψ)
     {a b c : L} (h : Basis on a b c) : ψ a b c = 0 := by
   have key : ∀ {i j l m : L}, Basis on i j l → Basis on i j m → Basis on i l m →
@@ -194,6 +197,7 @@ def LocallyEquivalent (χ χ' : L → L → L → ZMod 2) (σ : L → L) : Prop 
 /-- **Steps 2–4.** In a bigon-free incidence structure, two alternating chirotopes that are
 locally equivalent along every line differ by a reorientation: `χ' ∘ σ` is `χ` with the lines in
 `r` reversed. -/
+@[montpellier "80, 39–54"]
 theorem reorientation_of_locallyEquivalent (hI : Incidence on) (hbf : BigonFree on)
     {χ χ' : L → L → L → ZMod 2} {σ : L → L}
     (a12 : ∀ i j l, Basis on i j l → χ j i l = χ i j l + 1)
@@ -293,6 +297,7 @@ def SameSeparation (χ χ' : L → L → L → ZMod 2) (σ : L → L) : Prop :=
 
 /-- **The rank-2 step.** In a bigon-free incidence structure, chirotopes with the same separation
 relation along every line are locally equivalent. -/
+@[montpellier "80, 39–54"]
 theorem locallyEquivalent_of_sameSeparation (hI : Incidence on) (hbf : BigonFree on)
     {χ χ' : L → L → L → ZMod 2} {σ : L → L}
     (a23 : ∀ i j l, Basis on i j l → χ i l j = χ i j l + 1)
@@ -363,6 +368,7 @@ theorem locallyEquivalent_of_sameSeparation (hI : Incidence on) (hbf : BigonFree
 structure, two alternating chirotopes with the same separation relation along every line differ
 by a reorientation. Only Folkman–Lawrence, from the reorientation to a homeomorphism, and the
 reading of the separation relation on an actual arrangement, are left outside. -/
+@[montpellier "80, 39–54"]
 theorem reorientation_of_sameSeparation (hI : Incidence on) (hbf : BigonFree on)
     {χ χ' : L → L → L → ZMod 2} {σ : L → L}
     (a12 : ∀ i j l, Basis on i j l → χ j i l = χ i j l + 1)

@@ -9,6 +9,7 @@ public import Mathlib.CategoryTheory.Sites.Limits
 public import Mathlib.CategoryTheory.Sites.Types
 public import Mathlib.RingTheory.TensorProduct.Maps
 public import StacksFrontier.CategoryTheory.Sites.Topos.MorphismOfTopoi
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -117,6 +118,7 @@ Wood (Lucyshyn-Wright, 1.5.5).
 
 Choice: the exactness properties « of `Set` » are read as exactly (A) and (B), the two the
 lecture names; universes are those of the site (`C : Type u`, sheaves of `Type u`). -/
+@[buffalo "PqCQM3Pcl6Q-5182"]
 def PresheafToposConjecture : Prop :=
   ∀ (C : Type u) [SmallCategory C] (J : GrothendieckTopology C),
     ProductsOfEpisAreEpi (Sheaf J (Type u)) →
@@ -132,6 +134,7 @@ Status: false. For the open point of the Sierpiński space, `j_*` is the diagona
 and has the global-sections functor as right adjoint; more generally the global-sections functor
 of presheaves on a category with a terminal object has a right adjoint (local topoi, Johnstone and
 Moerdijk 1989). -/
+@[buffalo "PqCQM3Pcl6Q-14750"]
 def PushforwardWithRightAdjointIsEquivalence : Prop :=
   ∀ (C D : Type u) [SmallCategory C] [SmallCategory D] (J : GrothendieckTopology C)
     (K : GrothendieckTopology D) (f : MorphismOfTopoi (Sheaf J (Type u)) (Sheaf K (Type u))),
@@ -150,6 +153,7 @@ accessible functors and so refutes this special case too: the free category on `
 has as pushout the one-object category with endomorphisms `{1, t}`, `t = t²`, in which the
 idempotent `t` does not split. Directed colimits along accessible full embeddings are accessible
 (Paré and Rosický 2013). -/
+@[buffalo "4gynb9uTEE4-5463"]
 def ColimitOfSmallAccessibleIsAccessible : Prop :=
   ∀ (I : Type v) [SmallCategory I] (F : I ⥤ Cat.{v, v}),
     (∀ i, IsAccessibleCategory.{v} (F.obj i)) → IsAccessibleCategory.{v} (colimit F : Cat.{v, v})
@@ -164,6 +168,7 @@ principle for a locally presentable ambient category (Adámek and Rosický, ch. 
 Choices: « accessible » is Mathlib's `IsAccessibleCategory.{v}` (κ-accessible for some regular
 `κ`, cardinals in the universe of the morphisms); « stable under limits » is closure under limits
 of every small shape, which also makes the subcategory replete. -/
+@[buffalo "4gynb9uTEE4-6691"]
 def ReflectiveLimitClosedIsAccessible : Prop :=
   ∀ (C : Type u) [Category.{v} C] [IsAccessibleCategory.{v} C] (P : ObjectProperty C),
     (∀ (J : Type v) [SmallCategory J], P.IsClosedUnderLimitsOfShape J) →
@@ -175,6 +180,7 @@ def ReflectiveLimitClosedIsAccessible : Prop :=
 Status: false: the two-element chain is small and idempotent complete, as is its opposite, so
 both are accessible. With small colimits in `E` (his setting) `E` is a complete lattice
 (Gabriel and Ulmer, Satz 7.13). -/
+@[buffalo "4gynb9uTEE4-17297"]
 def AccessibleSelfDualIsPoint : Prop :=
   ∀ (E : Type u) [Category.{v} E], IsAccessibleCategory.{v} E → IsAccessibleCategory.{v} Eᵒᵖ →
     Nonempty (E ≌ Discrete PUnit.{u + 1})
@@ -194,6 +200,7 @@ found no earlier published counterexample).
 
 Choice: the base change is `pullback.snd i p`, and the hypothesis on `p` is Mathlib's `Flat`,
 `Surjective` and `QuasiCompact`. -/
+@[buffalo "vuys5SNs2eQ-12671"]
 def ImmersionDescendsFpqc : Prop :=
   ∀ {X X' Z : Scheme.{u}} (p : X' ⟶ X) (i : Z ⟶ X), Flat p → Surjective p → QuasiCompact p →
     IsImmersion (pullback.snd i p) → IsImmersion i
@@ -251,6 +258,7 @@ a local Artin algebra of dimension 33. The repository checks Venken's example in
 `B K` and its ideal `venkenRel K`, with the same projections and invariants as here); the
 deduction of `¬ FiniteEquivalenceRelationsEffective` from it, which needs `B K` finite over `K`,
 is not written. A second example, of length 15, is in the edition's note on effectivity. -/
+@[buffalo "3ULFIl_2Wis-25190"]
 def FiniteEquivalenceRelationsEffective : Prop :=
   ∀ (k : Type u) [Field k] (B : Type u) [CommRing B] [Algebra k B], Module.Finite k B →
     ∀ I : Ideal (B ⊗[k] B), IsEquivalenceRelationIdeal k B I → IsEffectiveIdeal k B I

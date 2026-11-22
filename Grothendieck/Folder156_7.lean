@@ -5,6 +5,7 @@ public import Mathlib.Order.Basic
 public import Mathlib.Data.Set.Lattice.Indexed
 public import Mathlib.Tactic.Order
 public import Mathlib.Data.Fintype.Powerset
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -58,12 +59,15 @@ section Polarity
 variable {M : Type*} (r : M → M → Prop)
 
 /-- The cosupport of `A`: the elements disjoint from every element of `A`. -/
+@[montpellier "156-7, 61–63"]
 def cosupp (A : Set M) : Set M := {X | ∀ Y ∈ A, r X Y}
 
 /-- The support, cosupport of the cosupport. -/
+@[montpellier "156-7, 61–63"]
 def supp (A : Set M) : Set M := cosupp r (cosupp r A)
 
 /-- A support is a part equal to its support. -/
+@[montpellier "156-7, 61–63"]
 def IsSupp (A : Set M) : Prop := supp r A = A
 
 end Polarity
@@ -90,6 +94,7 @@ theorem mem_cosupp_iff (h1 : ∀ X Y, r X Y ↔ f X ∩ f Y = ∅) {A : Set M} {
     exact h p ⟨hp, Y, hY, hpY⟩
 
 /-- Page 80, (ii) 2°: `A ∥ B ↔ |A| ∩ |B| = ∅`, from `Supp¹_P` alone. -/
+@[montpellier "156-7, 80"]
 theorem orth_iff (h1 : ∀ X Y, r X Y ↔ f X ∩ f Y = ∅) {A B : Set M} :
     A ⊆ cosupp r B ↔ img f A ∩ img f B = ∅ := by
   simp only [Set.subset_def, mem_cosupp_iff h1, Set.eq_empty_iff_forall_notMem,
@@ -104,6 +109,7 @@ variable (h1 : ∀ X Y, r X Y ↔ f X ∩ f Y = ∅) (h2 : ∀ p : P, ∃ X, f X
 include h1 h2
 
 /-- Page 80: `|cosupp A| = P ∖ |A|`. -/
+@[montpellier "156-7, 80"]
 theorem img_cosupp (A : Set M) : img f (cosupp r A) = (img f A)ᶜ := by
   ext p
   constructor
@@ -124,10 +130,12 @@ theorem supp_eq (A : Set M) : supp r A = {X | f X ⊆ img f A} := by
     Set.mem_compl_iff, not_and, not_not]
 
 /-- Page 80, (i): `|supp A| = |A|`. -/
+@[montpellier "156-7, 80"]
 theorem img_supp (A : Set M) : img f (supp r A) = img f A := by
   rw [supp, img_cosupp h1 h2, img_cosupp h1 h2, compl_compl]
 
 /-- Page 80, (ii) 1°: `A ⊂ supp B ↔ |A| ⊂ |B|`. -/
+@[montpellier "156-7, 80"]
 theorem subset_supp_iff {A B : Set M} : A ⊆ supp r B ↔ img f A ⊆ img f B := by
   rw [supp_eq h1 h2]
   constructor
@@ -138,10 +146,12 @@ theorem subset_supp_iff {A B : Set M} : A ⊆ supp r B ↔ img f A ⊆ img f B :
     exact h (mem_img.2 ⟨X, hX, hp⟩)
 
 /-- Page 80, (ii) 1°: `supp A ⊂ supp B ↔ |A| ⊂ |B|`. -/
+@[montpellier "156-7, 80"]
 theorem supp_subset_supp_iff {A B : Set M} : supp r A ⊆ supp r B ↔ img f A ⊆ img f B := by
   rw [subset_supp_iff h1 h2, img_supp h1 h2]
 
 /-- Page 80, (iii): `A ↦ |A|` is an order isomorphism from the supports onto `𝔓(P)`. -/
+@[montpellier "156-7, 80"]
 def supportsIso : {A : Set M // IsSupp r A} ≃o Set P where
   toFun A := img f A.1
   invFun T := ⟨{X | f X ⊆ T}, by
@@ -171,6 +181,7 @@ def supportsIso : {A : Set M // IsSupp r A} ≃o Set P where
     rw [← subset_supp_iff h1 h2, B.2]
 
 /-- Page 80, (iii): the isomorphism carries the cosupport to the complement. -/
+@[montpellier "156-7, 80"]
 theorem supportsIso_cosupp (A : {A : Set M // IsSupp r A}) :
     supportsIso h1 h2 ⟨cosupp r A.1, by
       show cosupp r (supp r A.1) = cosupp r A.1
@@ -190,6 +201,7 @@ def nested (z w : I × I') : Prop := z < w ∨ w < z
 def pt (z : I × I') : Set (I ⊕ I') := {Sum.inl z.1, Sum.inr z.2}
 
 /-- Pages 82–83: every `{z}` is a support. -/
+@[montpellier "156-7, 82–83"]
 theorem ficelle_supp_singleton (z : I × I') : supp nested {z} = {z} := by
   ext w
   simp only [supp, cosupp, Set.mem_singleton_iff, forall_eq, Set.mem_ofPred_eq]
@@ -215,6 +227,7 @@ theorem ficelle_supp_singleton (z : I × I') : supp nested {z} = {z} := by
 
 /-- Without `NoMinOrder` a singleton need not be a support: in the product of two three-element
 chains, `(1, 1) ∈ supp {(0, 2)}`. -/
+@[montpellier "156-7, 81–83"]
 theorem ficelle_finite_not_supp :
     ((1, 1) : Fin 3 × Fin 3) ∈ supp nested {((0, 2) : Fin 3 × Fin 3)} := by
   simp only [supp, cosupp, Set.mem_ofPred_eq, Set.mem_singleton_iff, forall_eq]
@@ -226,6 +239,7 @@ variable {x₁ x₂ x₃ : I} {y₁ y₂ y₃ : I'}
 omit [NoMinOrder I] [NoMinOrder I'] in
 /-- Page 83: for crossing `z₁ = (x₁, y₁)`, `z₂ = (x₂, y₂)` and `z₃` strictly between them on
 both strands, `z₃ ∈ supp {z₁, z₂}`. -/
+@[montpellier "156-7, 83"]
 theorem ficelle_mem_supp (h13 : x₁ < x₃) (h32 : x₃ < x₂) (h23 : y₂ < y₃) (h31 : y₃ < y₁) :
     (x₃, y₃) ∈ supp nested {(x₁, y₁), (x₂, y₂)} := by
   intro u hu
@@ -243,6 +257,7 @@ omit [NoMinOrder I] [NoMinOrder I'] in
 /-- Pages 82–83, **the supports of the two-strand string are not distributive**: with meet the
 intersection and join the support of the union, `{z₃} ∧ ({z₁} ∨ {z₂}) = {z₃}` while
 `({z₃} ∧ {z₁}) ∨ ({z₃} ∧ {z₂}) = ∅`. -/
+@[montpellier "156-7, 82–83"]
 theorem ficelle_not_distrib (h13 : x₁ < x₃) (h32 : x₃ < x₂) (h23 : y₂ < y₃) (h31 : y₃ < y₁) :
     ({(x₃, y₃)} : Set (I × I')) ∩ supp nested ({(x₁, y₁)} ∪ {(x₂, y₂)}) = {(x₃, y₃)} ∧
       supp nested (({(x₃, y₃)} : Set (I × I')) ∩ {(x₁, y₁)} ∪ {(x₃, y₃)} ∩ {(x₂, y₂)}) = ∅ := by
@@ -260,6 +275,7 @@ theorem ficelle_not_distrib (h13 : x₁ < x₃) (h32 : x₃ < x₂) (h23 : y₂ 
 omit [NoMinOrder I] [NoMinOrder I'] in
 /-- Page 81: `Supp¹_P` fails for the point supports `|(x, x')| = {x, x'}`: crossing lieux have
 disjoint point supports without being disjoint. -/
+@[montpellier "156-7, 81"]
 theorem ficelle_not_supp1 (h12 : x₁ < x₂) (h21 : y₂ < y₁) :
     pt (x₁, y₁) ∩ pt (x₂, y₂) = ∅ ∧ ¬ nested (x₁, y₁) (x₂, y₂) := by
   refine ⟨?_, ?_⟩
@@ -273,6 +289,7 @@ theorem ficelle_not_supp1 (h12 : x₁ < x₂) (h21 : y₂ < y₁) :
 omit [NoMinOrder I] [NoMinOrder I'] in
 /-- Page 83: `|A| ⊊ |supp A|` for `A = {z₁, z₂}`; the point `x₃` of the first strand lies in
 `|supp A|` and not in `|A|`. -/
+@[montpellier "156-7, 83"]
 theorem ficelle_img_ssubset (h13 : x₁ < x₃) (h32 : x₃ < x₂) (h23 : y₂ < y₃) (h31 : y₃ < y₁) :
     img pt ({(x₁, y₁), (x₂, y₂)} : Set (I × I')) ⊂
       img pt (supp nested ({(x₁, y₁), (x₂, y₂)} : Set (I × I'))) := by
@@ -313,6 +330,7 @@ theorem coe_cosuppP (S : Finset (Fin 4)) : (cosuppP S : Set (Fin 4)) = cosupp ad
 
 /-- Page 98: `cosupp A = {A', B}`, `supp A = {A}`, `cosupp B = {A, B'}`, `supp B = {B}`, and the
 supports of the path are `∅, {A}, {B}, {A', B}, {A, B'}, 𝓜`. -/
+@[montpellier "156-7, 98"]
 theorem path_supports :
     cosuppP {1} = {0, 2} ∧ suppP {1} = {1} ∧ cosuppP {2} = {1, 3} ∧ suppP {2} = {2} ∧
       Finset.univ.filter (fun S : Finset (Fin 4) => suppP S = S) =
@@ -321,6 +339,7 @@ theorem path_supports :
 
 /-- Page 98, **the Lemme 3 of page 97 is false**: `S = {A}` and `S' = {B}` are disjoint
 supports, `S ∨ S' = 𝓜`, and `(S ∨ S') ∩ ∁ S = {A', B} ≠ S'`. The orthomodular law fails. -/
+@[montpellier "156-7, 98"]
 theorem path_lemma3_false :
     suppP {1} = {1} ∧ suppP {2} = {2} ∧ (∀ x ∈ ({1} : Finset (Fin 4)), ∀ y ∈ ({2} : Finset _),
       adj x y) ∧ suppP ({1} ∪ {2}) = Finset.univ ∧

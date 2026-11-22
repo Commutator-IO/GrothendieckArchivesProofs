@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -27,6 +28,7 @@ variable (k : Type u) [CommRing k]
 
 /-- _lTf_L0yvrU-8101 (2:15:01) [def] `D(M)(A) = Hom(M, Aˣ)` (the abelian group `M` written
 multiplicatively), a commutative group, contravariant in `M`. -/
+@[buffalo "_lTf_L0yvrU-8101"]
 abbrev D (M : Type*) [AddCommGroup M] (A : Type*) [CommRing A] := Multiplicative M →* Aˣ
 
 example (M : Type*) [AddCommGroup M] (A : Type*) [CommRing A] : CommGroup (D M A) := inferInstance
@@ -39,9 +41,11 @@ def D_map {M N : Type*} [AddCommGroup M] [AddCommGroup N] (f : M →+ N) (A : Ty
   map_mul' _ _ := rfl
 
 /-- _lTf_L0yvrU-8234 (2:17:14) [prop] `D(ℤ) = 𝔾_m`. -/
+@[buffalo "_lTf_L0yvrU-8234"]
 def D_int (A : Type*) [CommRing A] : D ℤ A ≃ Aˣ := (zpowersHom Aˣ).symm
 
 /-- _lTf_L0yvrU-8234 (2:17:14) [prop] `D(M ⊕ N) ≃ D(M) × D(N)`. -/
+@[buffalo "_lTf_L0yvrU-8234"]
 def D_prod (M N : Type*) [AddCommGroup M] [AddCommGroup N] (A : Type*) [CommRing A] :
     D (M × N) A ≃ D M A × D N A where
   toFun φ := (φ.comp (AddMonoidHom.toMultiplicative (AddMonoidHom.inl M N)),
@@ -58,6 +62,7 @@ def D_prod (M N : Type*) [AddCommGroup M] [AddCommGroup N] (A : Type*) [CommRing
 
 /-- _lTf_L0yvrU-8368 (2:19:28) [def] The group algebra `k[M]`: basis `e^m`, `e^m e^{m'} = e^{m+m'}`
 (Mathlib `AddMonoidAlgebra`). -/
+@[buffalo "_lTf_L0yvrU-8368"]
 theorem groupAlgebra_mul (M : Type*) [AddCommGroup M] (m m' : M) :
     (AddMonoidAlgebra.single m 1 : AddMonoidAlgebra k M) * AddMonoidAlgebra.single m' 1 =
       AddMonoidAlgebra.single (m + m') 1 := by
@@ -66,6 +71,7 @@ theorem groupAlgebra_mul (M : Type*) [AddCommGroup M] (m m' : M) :
 /-- _lTf_L0yvrU-8563 (2:22:43) [prop] `D(M)` is represented by `k[M]`:
 `Hom_{k-alg}(k[M], A) ≃ Hom(M, Aˣ)` (Mathlib `AddMonoidAlgebra.lift`); for `M = ℤ`, `k[M]` is
 `k[t, t⁻¹]` by definition (`LaurentPolynomial`). -/
+@[buffalo "_lTf_L0yvrU-8563"]
 noncomputable def D_repr (M : Type*) [AddCommGroup M] (A : Type*) [CommRing A] [Algebra k A] :
     (AddMonoidAlgebra k M →ₐ[k] A) ≃ D M A :=
   (AddMonoidAlgebra.lift k A M).symm.trans
@@ -79,6 +85,7 @@ example : LaurentPolynomial k = AddMonoidAlgebra k ℤ := rfl
 /-- _lTf_L0yvrU-8704 (2:25:04) [thm] One half: if `M` is a quotient of `ℤ^r` (finitely
 generated), `D(M)` is a subgroup of `D(ℤ^r) = 𝔾_m^r`, on points (and `k[ℤ^r] → k[M]` is onto,
 so the inclusion is closed). -/
+@[buffalo "_lTf_L0yvrU-8704"]
 theorem D_injective_of_surjective {M N : Type*} [AddCommGroup M] [AddCommGroup N] (f : M →+ N)
     (hf : Function.Surjective f) (A : Type*) [CommRing A] : Function.Injective (D_map f A) := by
   intro φ ψ h
@@ -104,6 +111,7 @@ theorem groupAlgebra_surjective {M N : Type*} [AddCommGroup M] [AddCommGroup N] 
 
 /-- _lTf_L0yvrU-8833 (2:27:13) [def] A group functor is radicial (infinitesimal) if its groups of
 points over reduced algebras are trivial (`μ_p`, `α_p`: `mu_p_trivial`, `alpha_reduced`). -/
+@[buffalo "_lTf_L0yvrU-8833"]
 def IsRadicial (G : CategoryTheory.Functor (CommAlgCat.{u} k) GrpCat.{u}) : Prop :=
   ∀ A : CommAlgCat.{u} k, IsReduced A → Subsingleton (G.obj A)
 
@@ -112,6 +120,7 @@ def IsRadicial (G : CategoryTheory.Functor (CommAlgCat.{u} k) GrpCat.{u}) : Prop
 /-- _lTf_L0yvrU-9346 (2:35:46) [prop] Points of `Spec A × Spec B = Spec (A ⊗ B)`: pairs of points
 (the tensor product is the coproduct of commutative algebras). With Yoneda, a composition law on
 `Spec A` is a homomorphism `A → A ⊗ A`, an action on `Spec B` a homomorphism `B → A ⊗ B`. -/
+@[buffalo "_lTf_L0yvrU-9346"]
 noncomputable def tensorPoints (A B R : Type u) [CommRing A] [Algebra k A] [CommRing B]
     [Algebra k B] [CommRing R] [Algebra k R] :
     (A ⊗[k] B →ₐ[k] R) ≃ (A →ₐ[k] R) × (B →ₐ[k] R) where
@@ -130,18 +139,21 @@ example (A : CommAlgCat.{u} k) :
 /-- _lTf_L0yvrU-9603 (2:40:03) [prop] Group (monoid) laws on affine schemes are the same as
 (co)associative counital comultiplications: Mathlib's equivalence between commutative bialgebras
 and monoid objects of affine schemes; likewise Hopf algebras and group objects. -/
+@[buffalo "_lTf_L0yvrU-9603"]
 noncomputable def bialg_equiv_mon :
     CommBialgCat.{u} k ≌ (CategoryTheory.Mon (CommAlgCat.{u} k)ᵒᵖ)ᵒᵖ :=
   commBialgCatEquivComonCommAlgCat k
 
 /-- _lTf_L0yvrU-10378 (2:52:58) [thm] Group structures on `Spec A` = Hopf algebra structures on `A`
 (Mathlib `commHopfAlgCatEquivCogrpCommAlgCat`). -/
+@[buffalo "_lTf_L0yvrU-10378"]
 noncomputable def hopf_equiv_grp :
     CommHopfAlgCat.{u} k ≌ (CategoryTheory.Grp (CommAlgCat.{u} k)ᵒᵖ)ᵒᵖ :=
   commHopfAlgCatEquivCogrpCommAlgCat k
 
 /-- _lTf_L0yvrU-9735 (2:42:15) [prop] A section of `Spec A` over the final object `Spec k` is an
 augmentation `A → k`. -/
+@[buffalo "_lTf_L0yvrU-9735"]
 def sections_eq_augmentations (A : CommAlgCat.{u} k) :
     (Opposite.op (CommAlgCat.of k k) ⟶ Opposite.op A) ≃ (A →ₐ[k] k) where
   toFun f := f.unop.hom
@@ -151,6 +163,7 @@ def sections_eq_augmentations (A : CommAlgCat.{u} k) :
 
 /-- _lTf_L0yvrU-9927 (2:45:27) [prop] A counit of a comultiplication is unique: if `ε` is a left
 and `ε'` a right counit of `π`, then `ε = ε'` (also _lTf_L0yvrU-10706). -/
+@[buffalo "_lTf_L0yvrU-9927"]
 theorem counit_unique {C : Type*} [AddCommGroup C] [Module k C] (π : C →ₗ[k] C ⊗[k] C)
     (ε ε' : C →ₗ[k] k)
     (hl : (TensorProduct.lid k C).toLinearMap ∘ₗ ε.rTensor C ∘ₗ π = LinearMap.id)
@@ -176,6 +189,7 @@ noncomputable example {C : Type u} [CommRing C] [Bialgebra k C] [Coalgebra.IsCoc
 
 /-- _lTf_L0yvrU-10053 (2:47:33) [prop] … and conversely: commutativity of the law on the points
 with values in `C ⊗ C` (at the two universal points) gives `τ ∘ π = π`. -/
+@[buffalo "_lTf_L0yvrU-10053"]
 theorem cocomm_of_comm {C : Type u} [CommRing C] [Bialgebra k C]
     (h : ∀ f g : WithConv (C →ₐ[k] C ⊗[k] C), f * g = g * f) :
     (TensorProduct.comm k C C).toLinearMap ∘ₗ Coalgebra.comul = Coalgebra.comul := by
@@ -203,6 +217,7 @@ theorem cocomm_of_comm {C : Type u} [CommRing C] [Bialgebra k C]
 /-- _lTf_L0yvrU-10309 (2:51:49) [prop] The inverse map is unique, and a one-sided identity
 `m ∘ (id ⊗ σ) ∘ π = η ∘ ε` already determines it: it is the antipode (Mathlib
 `eq_antipode_of_id_convMul_eq_one`). -/
+@[buffalo "_lTf_L0yvrU-10309"]
 theorem antipode_unique {C : Type u} [Semiring C] [HopfAlgebra k C] {σ : C →ₗ[k] C}
     (h : toConv LinearMap.id * toConv σ = 1) : σ = HopfAlgebra.antipode k :=
   HopfAlgebra.eq_antipode_of_id_convMul_eq_one h
@@ -222,6 +237,7 @@ example (C : Type u) [CommRing C] [Bialgebra k C] : C →ₐ[k] C ⊗[k] C := Bi
 
 /-- _lTf_L0yvrU-18942 (5:15:42) [def] A (right) comodule over a coalgebra `A`: `δ : M → M ⊗ A`
 with `(id ⊗ ε) ∘ δ = id` and `(id ⊗ π) ∘ δ = (δ ⊗ id) ∘ δ` (up to associativity). -/
+@[buffalo "_lTf_L0yvrU-18942"]
 structure IsComodule (A M : Type u) [AddCommGroup A] [Module k A] [Coalgebra k A]
     [AddCommGroup M] [Module k M] (δ : M →ₗ[k] M ⊗[k] A) : Prop where
   counit : (TensorProduct.rid k M).toLinearMap ∘ₗ (Coalgebra.counit (R := k) (A := A)).lTensor M ∘ₗ
@@ -241,6 +257,7 @@ noncomputable example (A : Type u) [AddCommGroup A] [Module k A] [Coalgebra k A]
 
 /-- _lTf_L0yvrU-11735 (3:15:35) [ex] The comultiplication `t ↦ t ⊗ 1 + 1 ⊗ t` of `k[t]` gives
 the addition of `𝔾_a`: at points `t ↦ a`, `t ↦ b`, it is `t ↦ a + b`. -/
+@[buffalo "_lTf_L0yvrU-11735"]
 theorem Ga_comul (R : Type u) [CommRing R] [Algebra k R] (a b : R) :
     Algebra.TensorProduct.lift (Polynomial.aeval (R := k) a) (Polynomial.aeval (R := k) b)
       (fun _ _ ↦ Commute.all _ _)
@@ -250,6 +267,7 @@ theorem Ga_comul (R : Type u) [CommRing R] [Algebra k R] (a b : R) :
 /-- _lTf_L0yvrU-11993 (3:19:53) [ex] The comultiplication `t ↦ t ⊗ t` of `k[t, t⁻¹]` gives the
 multiplication of `𝔾_m`: at points `t ↦ a`, `t ↦ b` (here on `k[t]`), it is `t ↦ ab`; and it is
 Mathlib's comultiplication of the group algebra `k[ℤ]` (`T ↦ T ⊗ T`). -/
+@[buffalo "_lTf_L0yvrU-11993"]
 theorem Gm_comul (R : Type u) [CommRing R] [Algebra k R] (a b : R) :
     Algebra.TensorProduct.lift (Polynomial.aeval (R := k) a) (Polynomial.aeval (R := k) b)
       (fun _ _ ↦ Commute.all _ _)

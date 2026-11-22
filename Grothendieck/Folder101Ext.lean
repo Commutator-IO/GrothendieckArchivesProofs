@@ -1,6 +1,7 @@
 module
 
 public import Grothendieck.Folder101
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -70,6 +71,7 @@ lemma ses_shortExact : (ses A K).ShortExact :=
 
 /-- **`Ext¹_A(K, A)` is the cokernel of `Hom_A(K, K) → Hom_A(K, K/A)`**, in the form: it vanishes
 if and only if that map is onto. -/
+@[montpellier "101, 11"]
 theorem ext_one_eq_zero_iff_lift :
     Subsingleton (Ext (ModuleCat.of A K) (ModuleCat.of A A) 1) ↔
       ∀ f : K →ₗ[A] KA A K, ∃ g : K →ₗ[A] K, ∀ x, Submodule.Quotient.mk (g x) = f x := by
@@ -102,6 +104,7 @@ theorem ext_one_eq_zero_iff_lift :
 
 /-- **Completeness is `Ext¹_A(K, A) = 0`.** For a discrete valuation ring `A` with fraction field
 `K`, `A` is complete if and only if `Ext¹_A(K, A) = 0` (mathlib's `Ext` in `ModuleCat A`). -/
+@[montpellier "101, 11"]
 theorem isAdicComplete_iff_ext_one : IsAdicComplete (maximalIdeal A) A ↔
     Subsingleton (Ext (ModuleCat.of A K) (ModuleCat.of A A) 1) :=
   isAdicComplete_iff_lift.trans ext_one_eq_zero_iff_lift.symm

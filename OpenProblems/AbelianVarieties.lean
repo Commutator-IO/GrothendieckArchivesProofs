@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -82,6 +83,7 @@ by `k` applications of that shift, `k + 1` linearly independent vectors of `V_k`
 types `B`, `C`, `D` are `KostantOppositeTypeB`, `KostantOppositeTypeC`, `KostantOppositeTypeD`
 below; the exceptional types are open (the note found nothing on the general position). A special
 case of the problem, not the problem. -/
+@[montpellier "123, 21–22"]
 def KostantOppositeTypeA (n : ℕ) : Prop :=
   ∀ c : Fin n → ℂ, (∀ i, c i ≠ 0) →
     ∀ V : Fin (n + 1) → Submodule ℂ (Fin n → ℂ), Monotone V →

@@ -3,6 +3,7 @@ module
 public import Mathlib.Data.Nat.Totient
 public import Mathlib.Data.Nat.Factorial.Basic
 public import Mathlib.Tactic.NormNum
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -36,9 +37,11 @@ def dataG2 : ℕ × ℕ × ℕ := (12, 6, 1)
 abbrev integral (d : ℕ × ℕ × ℕ) : Prop := d.1 ^ 2 % (d.2.1 * d.2.2 * Nat.totient d.2.1) = 0
 
 /-- The announced number of classes. -/
+@[montpellier "123, n.p."]
 def number (d : ℕ × ℕ × ℕ) : ℕ := d.1 ^ 2 / (d.2.1 * d.2.2 * Nat.totient d.2.1)
 
 /-- The hand checks of the reading: `A₁`, `A₂`, `B₂`, `G₂` give 1, 2, 4, 12. -/
+@[montpellier "123, n.p."]
 theorem small_cases :
     number (dataA 1) = 1 ∧ number (dataA 2) = 2 ∧ number (dataB 2) = 4 ∧ number dataG2 = 12 := by
   decide

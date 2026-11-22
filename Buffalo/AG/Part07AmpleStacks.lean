@@ -10,6 +10,8 @@ public import StacksFrontier.AlgebraicGeometry.RelativeAmple.VeryAmple
 public import StacksFrontier.AlgebraicGeometry.RelativeAmpleAffineBase.Basic
 public import StacksFrontier.AlgebraicGeometry.RelativeProjSeparated.Basic
 public import StacksFrontier.AlgebraicGeometry.RelativelyAmple.Separated
+import Grothendieck.Attr
+import StacksCore.Tactic.EgaSgaAttribute
 
 @[expose] public section
 
@@ -90,6 +92,7 @@ namespace Buffalo.AG.Part07
 
 /-- Oqhr-Gt66es-27285 (7:34:45) [def] `f : X → Y` is quasi-projective if it is of finite type and
 there is an invertible sheaf on `X` ample relative to `Y` (Stacks tag 01VW, EGA II 5.3.1). -/
+@[buffalo "Oqhr-Gt66es-27285"]
 theorem def_27285 {X S : Scheme.{u}} (f : X ⟶ S) :
     IsQuasiProjective f ↔ ((LocallyOfFiniteType f ∧ QuasiCompact f) ∧
       ∃ L : X.Modules, ∃ hL : AlgebraicGeometry.SheafOfModules.IsInvertible X.presheaf
@@ -100,6 +103,7 @@ theorem def_27285 {X S : Scheme.{u}} (f : X ⟶ S) :
 
 /-- Oqhr-Gt66es-27544 (7:39:04) [prop] (quasi-projective half) Quasi-projective morphisms are
 stable under base change (Stacks tag 0B3G). -/
+@[buffalo "Oqhr-Gt66es-27544"]
 theorem prop_27544 {X S X' S' : Scheme.{u}} {p : X' ⟶ X} {f' : X' ⟶ S'} {f : X ⟶ S}
     {g : S' ⟶ S} (hsq : IsPullback p f' f g) (hf : IsQuasiProjective f) :
     IsQuasiProjective f' :=
@@ -107,6 +111,7 @@ theorem prop_27544 {X S X' S' : Scheme.{u}} {p : X' ⟶ X} {f' : X' ⟶ S'} {f :
 
 /-- Oqhr-Gt66es-32075 (8:54:35) [prop] If there is an invertible sheaf ample relative to `Y`,
 then `X` is separated over `Y` (Stacks tag 01VI, EGA II 4.6.3). -/
+@[buffalo "Oqhr-Gt66es-32075", ega "II 4.6.3"]
 theorem prop_32075 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules)
     [AlgebraicGeometry.SheafOfModules.IsInvertible X.presheaf X.ringCatSheaf.2 L]
     (hL : Stacks.RelativeAmple.IsRelativelyAmple f L) : IsSeparated f :=
@@ -114,6 +119,7 @@ theorem prop_32075 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules)
 
 /-- Oqhr-Gt66es-25928 (7:12:08) [prop] (first half) If `X` has a sheaf very ample relative to
 `Y`, then `X` is separated over `Y` (Stacks tag 01VQ, EGA II 4.4.2). -/
+@[buffalo "Oqhr-Gt66es-25928"]
 theorem prop_25928 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules)
     [Stacks.Ample.IsInvertibleModule X L]
     (hL : Stacks.Tag01VMVeryAmple.IsRelativelyVeryAmple f L) : IsSeparated f := by
@@ -126,6 +132,7 @@ theorem prop_25928 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules)
 
 /-- Oqhr-Gt66es-32333 (8:58:53) [prop] (the case `n = 1`) For `f` quasi-compact, an invertible
 sheaf very ample relative to `Y` is ample relative to `Y` (Stacks tag 01VN, EGA II 4.6.2). -/
+@[buffalo "Oqhr-Gt66es-32333", ega "II 4.6.2"]
 theorem prop_32333 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules)
     [Stacks.Ample.IsInvertibleModule X L] (hf : QuasiCompact f)
     (hL : Stacks.Tag01VMVeryAmple.IsRelativelyVeryAmple f L) :
@@ -135,6 +142,7 @@ theorem prop_32333 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules)
 /-- Oqhr-Gt66es-31756 (8:49:16) [prop] (first half) If `X` is quasi-compact over an affine
 `Y = Spec A` and `L^{⊗ n}` is very ample relative to `Y` for some `n > 0`, then `L` is ample,
 absolutely and relative to `Y` (Stacks tags 01VN, 01VK, 01PT). -/
+@[buffalo "Oqhr-Gt66es-31756"]
 theorem prop_31756 {X S : Scheme.{u}} [IsAffine S] (f : X ⟶ S) (L : X.Modules)
     [Stacks.Ample.IsInvertibleModule X L] (hf : QuasiCompact f) (n : ℕ) (hn : 1 ≤ n)
     (hL : Stacks.Tag01VMVeryAmple.IsRelativelyVeryAmple f
@@ -148,6 +156,7 @@ theorem prop_31756 {X S : Scheme.{u}} [IsAffine S] (f : X ⟶ S) (L : X.Modules)
 
 /-- Oqhr-Gt66es-26840 (7:27:20) [prop] (last clause) For `n > 0`, `L` is ample if and only if
 `L^{⊗ n}` is (Stacks tag 01PT, EGA II 4.5.6 (i)). -/
+@[buffalo "Oqhr-Gt66es-26840", ega "II 4.5.6" "(i)"]
 theorem prop_26840 {X : Scheme.{u}} (L : X.Modules) [Stacks.Ample.IsInvertibleModule X L]
     (n : ℕ) (hn : 1 ≤ n) :
     Stacks.Ample.IsAmple X L ↔
@@ -156,6 +165,7 @@ theorem prop_26840 {X : Scheme.{u}} (L : X.Modules) [Stacks.Ample.IsInvertibleMo
 
 /-- Oqhr-Gt66es-27098 (7:31:38) [prop] (first half, `Y` affine) `𝒪_X` is ample relative to `Y`
 if and only if `X` is quasi-affine (Stacks tags 01VK, 01QE). -/
+@[buffalo "Oqhr-Gt66es-27098"]
 theorem prop_27098 {X S : Scheme.{u}} [IsAffine S] (f : X ⟶ S) :
     Stacks.RelativeAmple.IsRelativelyAmple f (Stacks.Ample.unitModule X) ↔ X.IsQuasiAffine :=
   (Stacks.RelativeAmpleAffineBase.isRelativelyAmple_iff_isAmple f _).trans
@@ -163,6 +173,7 @@ theorem prop_27098 {X S : Scheme.{u}} [IsAffine S] (f : X ⟶ S) :
 
 /-- Oqhr-Gt66es-33470 (9:17:50) [prop] (the clause « `𝒪_X` is ample ») `X` is quasi-affine if and
 only if `𝒪_X` is ample (Stacks tag 01QE, EGA II 5.1.2). -/
+@[buffalo "Oqhr-Gt66es-33470", ega "II 5.1.2"]
 theorem prop_33470_ample (X : Scheme.{u}) :
     X.IsQuasiAffine ↔ Stacks.Ample.IsAmple X (Stacks.Ample.unitModule X) :=
   Stacks.Ample.isQuasiAffine_iff_isAmple X
@@ -170,6 +181,7 @@ theorem prop_33470_ample (X : Scheme.{u}) :
 /-- Oqhr-Gt66es-31422 (8:43:42) [prop] For `L` invertible, the `X_s`, `s ∈ Γ(X, L^{⊗ n})`,
 `n > 0`, form a base of the topology if and only if those that are affine do (Stacks tag 01PX;
 no coherence hypothesis is needed). -/
+@[buffalo "Oqhr-Gt66es-31422"]
 theorem prop_31422 (X : Scheme.{u}) (L : X.Modules)
     [AlgebraicGeometry.SheafOfModules.IsInvertible X.toRingedSpace.presheaf
       (structureSheafRing X.toRingedSpace).property L] :
@@ -199,6 +211,7 @@ theorem prop_31422 (X : Scheme.{u}) (L : X.Modules)
 /-- Oqhr-Gt66es-32012 (8:53:32) [def] For `f` quasi-compact, `L` is ample relative to `Y` (over
 every affine open of `Y`) if and only if `Y` is covered by affine opens `Y_i` with `L` ample on
 `f⁻¹(Y_i)` (Stacks tag 01VJ, EGA II 4.6.4). -/
+@[buffalo "Oqhr-Gt66es-32012", ega "II 4.6.4"]
 theorem def_32012 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules)
     [Stacks.Ample.IsInvertibleModule X L] (hf : QuasiCompact f) :
     Stacks.RelativeAmple.IsRelativelyAmple f L ↔
@@ -209,6 +222,7 @@ theorem def_32012 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules)
 
 /-- Oqhr-Gt66es-32012 (8:53:32) [def] (complement) Over an affine base, ampleness relative to
 `Y` is ampleness (Stacks tag 01VK, EGA II 4.6.6). -/
+@[buffalo "Oqhr-Gt66es-32012", ega "II 4.6.6"]
 theorem def_32012_affine {X S : Scheme.{u}} [IsAffine S] (f : X ⟶ S) (L : X.Modules)
     [Stacks.Ample.IsInvertibleModule X L] :
     Stacks.RelativeAmple.IsRelativelyAmple f L ↔ Stacks.Ample.IsAmple X L :=
@@ -218,6 +232,7 @@ theorem def_32012_affine {X S : Scheme.{u}} [IsAffine S] (f : X ⟶ S) (L : X.Mo
 `L` is ample relative to `f : X → Y` and `M` is ample on `Y`, then
 `L ⊗ f^* M^{⊗ a}` (`Stacks.AmplePullbackPart1.tensorPullbackPowModule f L M a`) is ample for all
 `a ≥ n₀` (Stacks tag 0892 (1)). -/
+@[buffalo "Oqhr-Gt66es-32398"]
 theorem prop_32398 {X S : Scheme.{u}} (f : X ⟶ S) (L : X.Modules) (M : S.Modules)
     [Stacks.Ample.IsInvertibleModule X L] [Stacks.Ample.IsInvertibleModule S M]
     (hL : Stacks.RelativeAmple.IsRelativelyAmple f L) (hM : Stacks.Ample.IsAmple S M) :

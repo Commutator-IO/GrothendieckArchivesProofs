@@ -3,6 +3,7 @@ module
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.TopologicalInvariance.MorphismDescent
 public import StacksFrontier.AlgebraicGeometry.Topologies.EtaleDescentIntegral
 public import StacksFrontier.AlgebraicGeometry.Morphisms.UniversalHomeomorphism.Defs.Integral
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -56,6 +57,7 @@ variable {X Z Y : Scheme.{u}}
 `g : X ⟶ Z` be a universal homeomorphism and `h : Z ⟶ Y` any morphism. Every `Y`-morphism
 `v : X ⟶ E` into an étale `Y`-scheme `E` factors uniquely as `g ≫ u` with `u : Z ⟶ E` a
 `Y`-morphism. -/
+@[montpellier "126, 23"]
 theorem existsUnique_lift (g : X ⟶ Z) [UniversalHomeomorphism g] (h : Z ⟶ Y)
     {E : Scheme.{u}} (e : E ⟶ Y) [Etale e] (v : X ⟶ E) (hv : v ≫ e = g ≫ h) :
     ∃! u : Z ⟶ E, u ≫ e = h ∧ g ≫ u = v := by
@@ -74,6 +76,7 @@ theorem existsUnique_lift (g : X ⟶ Z) [UniversalHomeomorphism g] (h : Z ⟶ Y)
 injective and surjective (for a finite morphism: finite, surjective and radicial) and
 `h : Z ⟶ Y` any morphism. Every `Y`-morphism `v : X ⟶ E` into an étale `Y`-scheme factors
 uniquely through `g` by a `Y`-morphism. -/
+@[montpellier "126, 23"]
 theorem existsUnique_lift_of_integral (g : X ⟶ Z) [IsIntegralHom g] [UniversallyInjective g]
     [Surjective g] (h : Z ⟶ Y) {E : Scheme.{u}} (e : E ⟶ Y) [Etale e] (v : X ⟶ E)
     (hv : v ≫ e = g ≫ h) :
@@ -86,6 +89,7 @@ theorem existsUnique_lift_of_integral (g : X ⟶ Z) [IsIntegralHom g] [Universal
 /-- The universal property as a bijection: for `g` integral, universally injective and
 surjective, precomposition with `g` is a bijection from the `Y`-morphisms `Z ⟶ E` to the
 `Y`-morphisms `X ⟶ E`, for every étale `Y`-scheme `E`. -/
+@[montpellier "126, 17–23"]
 theorem bijective_comp_of_integral (g : X ⟶ Z) [IsIntegralHom g] [UniversallyInjective g]
     [Surjective g] (h : Z ⟶ Y) {E : Scheme.{u}} (e : E ⟶ Y) [Etale e] :
     Function.Bijective (fun u : {u : Z ⟶ E // u ≫ e = h} =>
@@ -102,6 +106,7 @@ theorem bijective_comp_of_integral (g : X ⟶ Z) [IsIntegralHom g] [UniversallyI
 `X ⟶ Z ⟶ Y` and `X ⟶ Z' ⟶ Y` of the same morphism, each a universal homeomorphism followed by
 an étale morphism, are isomorphic by exactly one isomorphism `Z ≅ Z'` compatible with both
 arrows. -/
+@[montpellier "126, 17–23"]
 theorem existsUnique_iso_of_factorisations {Z' : Scheme.{u}} (g : X ⟶ Z) (h : Z ⟶ Y)
     (g' : X ⟶ Z') (h' : Z' ⟶ Y) [UniversalHomeomorphism g] [UniversalHomeomorphism g']
     [Etale h] [Etale h'] (hgh : g ≫ h = g' ≫ h') :

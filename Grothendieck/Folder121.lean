@@ -5,6 +5,7 @@ public import Mathlib.Data.Finset.Powerset
 public import Mathlib.Order.WellFounded
 public import Mathlib.Order.CompleteLattice.Finset
 public import Mathlib.Topology.Connected.Basic
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -54,6 +55,7 @@ variable {X : Type*} [TopologicalSpace X]
 def Rare (B Z : Set X) : Prop := ∀ V, IsOpen V → V ∩ Z ⊆ B → V ∩ Z = ∅
 
 /-- Conditions a) to e) of pages 3–5 on a family `F` of parts of `X`. -/
+@[montpellier "121, 3–5"]
 structure Tame (F : Set (Set X)) : Prop where
   empty_mem : ∅ ∈ F
   compl_mem : ∀ A ∈ F, Aᶜ ∈ F
@@ -105,6 +107,7 @@ theorem Tame.bd_mem (hF : Tame F) {Z A : Set X} (hZ : Z ∈ F) (hA : A ∈ F) : 
 theorem isClosed_bd (Z A : Set X) : IsClosed (bd Z A) := isClosed_closure.inter isClosed_closure
 
 /-- **Page 8.** The boundary of a member is rare (here relative to a member `Z`). -/
+@[montpellier "121, 8"]
 theorem Tame.rare_bd (hF : Tame F) {Z A : Set X} (hZ : Z ∈ F) (hA : A ∈ F) (hAZ : A ⊆ Z) :
     Rare (bd Z A) Z := by
   intro V hV hVZ
@@ -165,6 +168,7 @@ theorem rare_biUnion {ι : Type*} (s : Finset ι) (f : ι → Set X) {Z : Set X}
 
 /-- A finite cellular decomposition of `Z` (page 10): nonempty disjoint cells covering `Z`,
 the closure of a cell a union of cells (1), distinct cells with distinct closures (2). -/
+@[montpellier "121, 10"]
 structure IsDecomp (Z : Set X) (P : Finset (Set X)) : Prop where
   nonempty : ∀ c ∈ P, c.Nonempty
   disjoint : ∀ c ∈ P, ∀ d ∈ P, c ≠ d → Disjoint c d
@@ -207,6 +211,7 @@ end IsDecomp
 
 /-- The edition's argument for « la plus grossière »: a cell of a decomposition for which
 `Y` is a union of cells, and which meets the boundary of `Y`, lies in it. -/
+@[montpellier "121, 14"]
 theorem subset_bd {Z Y q : Set X} {Q : Finset (Set X)} (hQ : IsDecomp Z Q)
     (hc : ∀ c ∈ Q, c ⊆ Y ∨ Disjoint c Y) (hq : q ∈ Q) (h : (q ∩ bd Z (Y ∩ Z)).Nonempty) :
     q ⊆ bd Z (Y ∩ Z) := by
@@ -468,6 +473,7 @@ theorem step (hF : Tame F) {Z : Set X} (hZF : Z ∈ F) (hZc : IsClosed Z) (L : F
       subset_cell (fun Y hY => hQc Y hY q hq) hqU hy⟩
 
 /-- Induction on condition e): the statement of page 14 on every closed member. -/
+@[montpellier "121, 14"]
 theorem exists_coarsest (hF : Tame F) {Z : Set X} (hZF : Z ∈ F) (hZc : IsClosed Z)
     (L : Finset (Set X)) (hL : ∀ Y ∈ L, Y ∈ F) :
     ∃ P, Good F L Z P ∧ ∀ Q, Good F L Z Q → Coarser P Q := by
@@ -490,6 +496,7 @@ theorem exists_coarsest (hF : Tame F) {Z : Set X} (hZF : Z ∈ F) (hZc : IsClose
 /-- **Page 14.** Under a) to e), for every finite family `L ⊂ F` there is an `F`-admissible
 cellular decomposition of `X` of which the members of `L` are unions of cells, and among them
 one coarser than all the others. -/
+@[montpellier "121, 14"]
 theorem page14 (hF : Tame F) (L : Finset (Set X)) (hL : ∀ Y ∈ L, Y ∈ F) :
     ∃ P, Good F L univ P ∧ ∀ Q, Good F L univ Q → Coarser P Q :=
   exists_coarsest hF hF.univ_mem isClosed_univ L hL
@@ -516,6 +523,7 @@ variable {X : Type*} [TopologicalSpace X] {F : Set (Set X)}
 
 /-- Condition f) (page 9): a locally closed member has finitely many connected components, all
 of them members. -/
+@[montpellier "121, 9"]
 def CondF (F : Set (Set X)) : Prop :=
   ∀ B ∈ F, ∀ C ∈ F, IsClosed B → IsClosed C →
     (connectedComponentIn (B \ C) '' (B \ C)).Finite ∧
@@ -730,6 +738,7 @@ theorem step_conn (hF : Tame F) (hf : CondF F) {Z : Set X} (hZF : Z ∈ F) (hZc 
     exact ⟨_, Finset.mem_union_right _ (hWmem y (hqU hy).1 (hqU hy).2), hQW q hq hqU y hy⟩
 
 /-- Induction on condition e), with connected cells, on every closed member. -/
+@[montpellier "121, 16"]
 theorem exists_coarsest_conn (hF : Tame F) (hf : CondF F) {Z : Set X} (hZF : Z ∈ F)
     (hZc : IsClosed Z) (L : Finset (Set X)) (hL : ∀ Y ∈ L, Y ∈ F) :
     ∃ P, GoodC F L Z P ∧ ∀ Q, GoodC F L Z Q → Coarser P Q := by
@@ -752,6 +761,7 @@ theorem exists_coarsest_conn (hF : Tame F) (hf : CondF F) {Z : Set X} (hZF : Z �
 /-- **Page 16.** Under a) to f), for every finite family `L ⊂ F` there is an `F`-admissible
 cellular decomposition of `X` with connected cells of which the members of `L` are unions of
 cells, and among them one coarser than all the others. -/
+@[montpellier "121, 16"]
 theorem page16 (hF : Tame F) (hf : CondF F) (L : Finset (Set X)) (hL : ∀ Y ∈ L, Y ∈ F) :
     ∃ P, GoodC F L univ P ∧ ∀ Q, GoodC F L univ Q → Coarser P Q :=
   exists_coarsest_conn hF hf hF.univ_mem isClosed_univ L hL

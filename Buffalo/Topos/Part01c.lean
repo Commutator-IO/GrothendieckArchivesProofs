@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.Topos.Part01a
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -26,6 +27,7 @@ variable {X Y : TopCat.{u}}
 
 /-- URU5jgTvjhU-12248 (3:24:08) [def] For `f : X → Y`, an `f`-morphism `G → F` is a family
 `G(V) → F(U)`, for `f(U) ⊆ V`, compatible with the restrictions. -/
+@[buffalo "URU5jgTvjhU-12248"]
 structure FMorphism (f : X ⟶ Y) (G : Y.Presheaf (Type u)) (F : X.Presheaf (Type u)) where
   /-- The map `G(V) → F(U)` for `U ⊆ f⁻¹(V)`. -/
   app : ∀ (U : Opens X) (V : Opens Y), U ≤ (Opens.map f).obj V → G.obj (op V) → F.obj (op U)
@@ -41,6 +43,7 @@ theorem FMorphism.ext' {f : X ⟶ Y} {G : Y.Presheaf (Type u)} {F : X.Presheaf (
 /-- URU5jgTvjhU-12440 (3:27:20) [prop] and URU5jgTvjhU-12768 (3:32:48) [prop] An `f`-morphism
 `G → F` is equivalent to a compatible family `G(V) → F(f⁻¹(V))`, that is, to a morphism of
 presheaves `G → f_*F`. -/
+@[buffalo "URU5jgTvjhU-12440"]
 def fMorphismEquiv (f : X ⟶ Y) (G : Y.Presheaf (Type u)) (F : X.Presheaf (Type u)) :
     FMorphism f G F ≃ (G ⟶ (TopCat.Presheaf.pushforward (Type u) f).obj F) where
   toFun φ :=
@@ -68,6 +71,7 @@ def fMorphismEquiv (f : X ⟶ Y) (G : Y.Presheaf (Type u)) (F : X.Presheaf (Type
 
 /-- URU5jgTvjhU-12633 (3:30:33) [prop] `V ↦ f⁻¹(V)` is an increasing functor `𝒪_Y → 𝒪_X` that
 commutes with arbitrary unions. -/
+@[buffalo "URU5jgTvjhU-12633"]
 theorem opens_map_iSup (f : X ⟶ Y) {ι : Type*} (V : ι → Opens Y) :
     Monotone (Opens.map f).obj ∧ (Opens.map f).obj (iSup V) = ⨆ i, (Opens.map f).obj (V i) :=
   ⟨(Opens.map f).monotone, Opens.map_iSup f V⟩
@@ -79,6 +83,7 @@ example (f : X ⟶ Y) (F : X.Presheaf (Type u)) (V : Opens Y) :
 
 /-- URU5jgTvjhU-12832 (3:33:52) [prop] On presheaves, `f_*` commutes with arbitrary limits and
 colimits. -/
+@[buffalo "URU5jgTvjhU-12832"]
 theorem pushforward_preserves (f : X ⟶ Y) :
     Nonempty (PreservesLimits (TopCat.Presheaf.pushforward (Type u) f)) ∧
       Nonempty (PreservesColimits (TopCat.Presheaf.pushforward (Type u) f)) :=
@@ -86,28 +91,33 @@ theorem pushforward_preserves (f : X ⟶ Y) :
     ⟨inferInstanceAs (PreservesColimits ((Functor.whiskeringLeft _ _ _).obj (Opens.map f).op))⟩⟩
 
 /-- URU5jgTvjhU-12899 (3:34:59) [prop] The direct image of a sheaf is a sheaf. -/
+@[buffalo "URU5jgTvjhU-12899"]
 theorem pushforward_isSheaf (f : X ⟶ Y) {F : X.Presheaf (Type u)} (h : F.IsSheaf) :
     ((TopCat.Presheaf.pushforward (Type u) f).obj F).IsSheaf :=
   TopCat.Sheaf.pushforward_sheaf_of_sheaf f h
 
 /-- URU5jgTvjhU-13294 (3:41:34) [def] The inverse image `f^*` is the left adjoint of `f_*`. -/
+@[buffalo "URU5jgTvjhU-13294"]
 def pullback_adjunction (f : X ⟶ Y) :
     TopCat.Sheaf.pullback (Type u) f ⊣ TopCat.Sheaf.pushforward (Type u) f :=
   TopCat.Sheaf.pullbackPushforwardAdjunction (Type u) f
 
 /-- URU5jgTvjhU-13097 (3:38:17) [prop] `f_* : Sh(X) → Sh(Y)` commutes with arbitrary limits (it is
 a right adjoint). -/
+@[buffalo "URU5jgTvjhU-13097"]
 theorem sheaf_pushforward_preservesLimits (f : X ⟶ Y) :
     Nonempty (PreservesLimits (TopCat.Sheaf.pushforward (Type u) f)) :=
   ⟨(pullback_adjunction f).rightAdjoint_preservesLimits⟩
 
 /-- URU5jgTvjhU-13743 (3:49:03) [prop] `f^*` commutes with arbitrary colimits (left adjoint). -/
+@[buffalo "URU5jgTvjhU-13743"]
 theorem sheaf_pullback_preservesColimits (f : X ⟶ Y) :
     Nonempty (PreservesColimits (TopCat.Sheaf.pullback (Type u) f)) :=
   ⟨(pullback_adjunction f).leftAdjoint_preservesColimits⟩
 
 /-- URU5jgTvjhU-13614 (3:46:54) [prop] `f^*G` is the sheaf associated to the presheaf inverse
 image. -/
+@[buffalo "URU5jgTvjhU-13614"]
 def sheaf_pullback_iso (f : X ⟶ Y) :
     TopCat.Sheaf.pullback (Type u) f ≅
       TopCat.Sheaf.forget (Type u) Y ⋙ TopCat.Presheaf.pullback (Type u) f ⋙
@@ -116,6 +126,7 @@ def sheaf_pullback_iso (f : X ⟶ Y) :
 
 /-- URU5jgTvjhU-13485 (3:44:45) [prop] For every functor `φ : C → D` between small categories, the
 restriction `D̂ → Ĉ`, `P ↦ P ∘ φ`, has a left adjoint and a right adjoint (Kan extensions). -/
+@[buffalo "URU5jgTvjhU-13485"]
 theorem restriction_adjoints {C D : Type u} [SmallCategory C] [SmallCategory D] (φ : C ⥤ D) :
     ((Functor.whiskeringLeft Cᵒᵖ Dᵒᵖ (Type u)).obj φ.op).IsRightAdjoint ∧
       ((Functor.whiskeringLeft Cᵒᵖ Dᵒᵖ (Type u)).obj φ.op).IsLeftAdjoint :=
@@ -124,6 +135,7 @@ theorem restriction_adjoints {C D : Type u} [SmallCategory C] [SmallCategory D] 
 /-- URU5jgTvjhU-13162 (3:39:22) [cex] `f_*` does not commute with coproducts in general: for
 `f : ∅ → pt`, `f_*` sends no sheaf to an initial sheaf (the empty coproduct is not preserved), since
 every sheaf on `∅` has a section over `∅ = f⁻¹(pt)` while a sheaf on the point may have none. -/
+@[buffalo "URU5jgTvjhU-13162"]
 theorem pushforward_not_initial (f : TopCat.of PEmpty.{u + 1} ⟶ TopCat.of PUnit.{u + 1})
     (I : TopCat.Sheaf (Type u) (TopCat.of PEmpty.{u + 1})) :
     ¬ Nonempty (IsInitial ((TopCat.Sheaf.pushforward (Type u) f).obj I)) := by
@@ -142,12 +154,14 @@ theorem pushforward_not_initial (f : TopCat.of PEmpty.{u + 1} ⟶ TopCat.of PUni
 
 /-- URU5jgTvjhU-13945 (3:52:25) [def] The inverse image of a space `G → Y` under `f` is the fibre
 product `X ×_Y G ⊆ X × G`, with the induced topology. -/
+@[buffalo "URU5jgTvjhU-13945"]
 def pullbackIsoSubtype {Z : TopCat.{u}} (f : X ⟶ Y) (g : Z ⟶ Y) :
     pullback f g ≅ TopCat.of { p : X × Z // f p.1 = g p.2 } :=
   TopCat.pullbackIsoProdSubtype f g
 
 /-- URU5jgTvjhU-14011 (3:53:31) [prop] Étalé maps are stable under base change: if `g : G → Y` is a
 local homeomorphism, so is `X ×_Y G → X`. -/
+@[buffalo "URU5jgTvjhU-14011"]
 theorem isLocalHomeomorph_pullback {A B G : Type*} [TopologicalSpace A] [TopologicalSpace B]
     [TopologicalSpace G] (f : A → B) (hf : Continuous f) (g : G → B) (hg : IsLocalHomeomorph g) :
     IsLocalHomeomorph fun p : { p : A × G // f p.1 = g p.2 } => p.1.1 := by
@@ -176,6 +190,7 @@ theorem isLocalHomeomorph_pullback {A B G : Type*} [TopologicalSpace A] [Topolog
 /-- URU5jgTvjhU-14268 (3:57:48) [prop] Étalé spaces over `B` are stable under finite limits in
 spaces over `B`: the terminal object `B → B`, fibre products `E ×_B E'`, and equalizers
 `{e | a e = b e}` of maps over `B` are étalé over `B`. -/
+@[buffalo "URU5jgTvjhU-14268"]
 theorem etale_finite_limits {B E E' : Type*} [TopologicalSpace B] [TopologicalSpace E]
     [TopologicalSpace E'] (p : E → B) (hp : IsLocalHomeomorph p) (p' : E' → B)
     (hp' : IsLocalHomeomorph p') :
@@ -192,6 +207,7 @@ theorem etale_finite_limits {B E E' : Type*} [TopologicalSpace B] [TopologicalSp
 
 /-- URU5jgTvjhU-14268 (3:57:48) [prop] The fibre of `X ×_Y G` at `x` is homeomorphic to the fibre
 of `G` at `f(x)`. -/
+@[buffalo "URU5jgTvjhU-14268"]
 def pullback_fibre {A B G : Type*} [TopologicalSpace A] [TopologicalSpace B] [TopologicalSpace G]
     (f : A → B) (g : G → B) (x : A) :
     { q : { p : A × G // f p.1 = g p.2 } // q.1.1 = x } ≃ₜ { e : G // g e = f x } where
@@ -205,6 +221,7 @@ def pullback_fibre {A B G : Type*} [TopologicalSpace A] [TopologicalSpace B] [To
   continuous_invFun := by fun_prop
 
 /-- URU5jgTvjhU-14332 (3:58:52) [prop] `(f^*G)_x ≃ G_{f(x)}`. -/
+@[buffalo "URU5jgTvjhU-14332"]
 def pullback_stalk (f : X ⟶ Y) (G : Y.Presheaf (Type u)) (x : X) :
     G.stalk (f x) ≅ ((TopCat.Presheaf.pullback (Type u) f).obj G).stalk x :=
   TopCat.Presheaf.stalkPullbackIso (Type u) f G x
@@ -213,6 +230,7 @@ def pullback_stalk (f : X ⟶ Y) (G : Y.Presheaf (Type u)) (x : X) :
 
 /-- URU5jgTvjhU-17311 (4:48:31) [prop] Two morphisms `u, v : F → G` of sheaves are equal if and
 only if `u_x = v_x` for all `x`: the fibre functors form a faithful family. -/
+@[buffalo "URU5jgTvjhU-17311"]
 theorem sheaf_hom_ext_stalks {F G : TopCat.Sheaf (Type u) X} (u v : F ⟶ G) :
     u = v ↔ ∀ x, (TopCat.Presheaf.stalkFunctor (Type u) x).map u.hom =
       (TopCat.Presheaf.stalkFunctor (Type u) x).map v.hom := by
@@ -228,6 +246,7 @@ theorem sheaf_hom_ext_stalks {F G : TopCat.Sheaf (Type u) X} (u v : F ⟶ G) :
 
 /-- URU5jgTvjhU-17440 (4:50:40) [prop] The fibre functors commute with colimits (each is a left
 adjoint) and form a conservative family. -/
+@[buffalo "URU5jgTvjhU-17440"]
 theorem stalk_colimits_conservative (x : X) :
     Nonempty (PreservesColimits (TopCat.Presheaf.stalkFunctor (Type u) x)) ∧
       ∀ {F G : TopCat.Sheaf (Type u) X} (f : F ⟶ G),
@@ -236,6 +255,7 @@ theorem stalk_colimits_conservative (x : X) :
 
 /-- URU5jgTvjhU-17585 (4:53:05) [prop] `φ : F → G` is an epimorphism of sheaves if and only if every
 section of `G` lifts locally to a section of `F`. -/
+@[buffalo "URU5jgTvjhU-17585"]
 theorem sheaf_epi_iff_local_lift {F G : TopCat.Sheaf (Type u) X} (φ : F ⟶ G) :
     Epi φ ↔ ∀ (U : Opens X) (t : G.obj.obj (op U)) (x : X), x ∈ U →
       ∃ (V : Opens X) (i : V ⟶ U), x ∈ V ∧ ∃ s : F.obj.obj (op V), φ.hom.app (op V) s = G.obj.map i.op t := by
@@ -265,6 +285,7 @@ def twoIntervals : TopCat.LocalPredicate fun _ : TopCat.of ℝ => Bool where
 /-- URU5jgTvjhU-17712 (4:55:12) [cex] An epimorphism of sheaves need not be surjective on global
 sections: on `ℝ`, the sheaf of sections of `(-∞,1) ⊔ (0,∞) → ℝ` maps onto the terminal sheaf, but
 has no global section (`ℝ` is connected). -/
+@[buffalo "URU5jgTvjhU-17712"]
 theorem epi_not_surjective_global :
     ∃ (F G : TopCat.Sheaf (Type) (TopCat.of ℝ)) (φ : F ⟶ G),
       Epi φ ∧ ¬ Function.Surjective (φ.hom.app (op ⊤)) := by
@@ -306,6 +327,7 @@ theorem epi_not_surjective_global :
 /-- URU5jgTvjhU-17712 (4:55:12) [prop] The entry as written is false: the Sierpiński space `Prop`
 is compact and not totally disconnected, yet `Γ` sends every epimorphism of sheaves to a surjection
 (the closed point has `X` as its only neighbourhood). The statement needs `X` Hausdorff. -/
+@[buffalo "URU5jgTvjhU-17712"]
 theorem sierpinski_counterexample :
     CompactSpace Prop ∧ ¬ TotallyDisconnectedSpace Prop ∧
       ∀ (F G : TopCat.Sheaf (Type) (TopCat.of Prop)) (φ : F ⟶ G), Epi φ →

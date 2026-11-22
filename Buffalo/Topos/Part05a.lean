@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -30,6 +31,7 @@ noncomputable section
 
 /-- PqCQM3Pcl6Q-32543 (9:02:23) [ex] Extra structure on a group `G` by adding an arrow between
 constructions on `G`, e.g. a map `G^ab → G × G` (here in sets). -/
+@[buffalo "PqCQM3Pcl6Q-32543"]
 structure GroupWithArrow where
   /-- the underlying set -/
   G : Type u
@@ -52,6 +54,7 @@ def GroupWithArrow.trivial (G : Type u) [Group G] : GroupWithArrow.{u} := ⟨G, 
 /-- PqCQM3Pcl6Q-32664 (9:04:24) [prop] Adding arrows `H` to the empty structure on objects:
 for `D = ∅` the theory « objects `F(i)` and arrows `F(h)` » is represented by the free category
 on the quiver `(I, H)`: functors out of it are exactly the prefunctors (`Quiv.adj`). -/
+@[buffalo "PqCQM3Pcl6Q-32664"]
 def freeCategory_represents (Q : Quiv.{max u v, u}) (C : Cat.{max u v, u}) :
     (Cat.free.obj Q ⟶ C) ≃ (Q ⟶ Quiv.forget.obj C) :=
   Quiv.adj.homEquiv Q C
@@ -61,18 +64,21 @@ def freeCategory_represents (Q : Quiv.{max u v, u}) (C : Cat.{max u v, u}) :
 /-- PqCQM3Pcl6Q-33138 (9:12:18) [def] Rule 4: the product of two theories is represented by the
 2-sum of the representing categories; for `D = ∅`, functors out of a sum are pairs of functors
 (`Sum.functorEquiv`). -/
+@[buffalo "PqCQM3Pcl6Q-33138"]
 def sum_represents_product (A A' B : Type u) [Category.{v} A] [Category.{v} A'] [Category.{v} B] :
     (A ⊕ A' ⥤ B) ≌ (A ⥤ B) × (A' ⥤ B) :=
   Sum.functorEquiv A A' B
 
 /-- PqCQM3Pcl6Q-33551 (9:19:11) [ex] A ring is a Lie ring under the commutator bracket
 (`LieRing.ofAssociativeRing`, `Ring.lie_def`). -/
+@[buffalo "PqCQM3Pcl6Q-33551"]
 theorem ring_lie_bracket (A : Type*) [Ring A] (x y : A) : ⁅x, y⁆ = x * y - y * x :=
   Ring.lie_def x y
 
 /-- PqCQM3Pcl6Q-34019 (9:26:59) [prop] For `D = ∅`: a small category `R` is recovered from the
 empty structure on `Ob R` by adding its arrows as formal arrows (the path category) and imposing
 that composites be respected (`quotientPathsEquiv`). -/
+@[buffalo "PqCQM3Pcl6Q-34019"]
 def quotientPaths_equiv (R : Type u) [Category.{v} R] :
     Quotient (pathsHomRel R) ≌ R :=
   quotientPathsEquiv R
@@ -81,6 +87,7 @@ def quotientPaths_equiv (R : Type u) [Category.{v} R] :
 
 /-- PqCQM3Pcl6Q-34369 (9:32:49) [prop] For `D = ∅`, making given pairs of arrows equal is solved
 by the quotient category (`CategoryTheory.Quotient.lift`). -/
+@[buffalo "PqCQM3Pcl6Q-34369"]
 def quotient_lift {C : Type u} [Category.{v} C] (r : HomRel C) {D : Type u'} [Category.{v'} D]
     (F : C ⥤ D) (H : ∀ (x y : C) (f₁ f₂ : x ⟶ y), r f₁ f₂ → F.map f₁ = F.map f₂) :
     Quotient r ⥤ D :=
@@ -123,6 +130,7 @@ theorem eq_of_preservesBinaryProducts {R : Type u} [Preorder R] {C : Type u'} [C
 /-- PqCQM3Pcl6Q-35544 (9:52:24) [prop] If `R` is a lattice (indeed any preorder) and the functors
 preserve the finite meets, then `Hom_D(R, C)` is a preordered category: between two such functors
 there is at most one natural transformation. -/
+@[buffalo "PqCQM3Pcl6Q-35544"]
 theorem natTrans_subsingleton {R : Type u} [Preorder R] {C : Type u'} [Category.{v'} C]
     (F G : R ⥤ C) [PreservesLimitsOfShape (Discrete WalkingPair) G] :
     Subsingleton (F ⟶ G) :=
@@ -139,6 +147,7 @@ theorem faithful_of_subsingleton_hom {A : Type u} [Category.{v} A] {B : Type u'}
 /-- PqCQM3Pcl6Q-36352 (10:05:52) [def] Semi-additive: zero object (initial = final) and binary
 biproducts (`X ⊔ Y → X × Y` an isomorphism); in Mathlib, `HasZeroObject` and
 `HasBinaryBiproducts`, the biproduct being both a product and a coproduct. -/
+@[buffalo "PqCQM3Pcl6Q-36352"]
 def biprodIsLimit {C : Type u} [Category.{v} C] [HasZeroMorphisms C] [HasBinaryBiproducts C]
     (X Y : C) : IsLimit (BinaryFan.mk (biprod.fst : X ⊞ Y ⟶ X) biprod.snd) :=
   BinaryBiproduct.isLimit X Y
@@ -157,6 +166,7 @@ attribute [local instance] SemiadditiveOfBinaryBiproducts.addCommMonoidHomOfHasB
 /-- PqCQM3Pcl6Q-36465 (10:07:45) [prop] In a semi-additive category the Hom-sets are commutative
 monoids (Eckmann–Hilton, `SemiadditiveOfBinaryBiproducts.addCommMonoidHomOfHasBinaryBiproducts`),
 composition being biadditive. -/
+@[buffalo "PqCQM3Pcl6Q-36465"]
 theorem hom_add_comm (X Y : C) (f g : X ⟶ Y) : f + g = g + f := add_comm f g
 
 theorem hom_add_comp {X Y Z : C} (f g : X ⟶ Y) (h : Y ⟶ Z) : (f + g) ≫ h = f ≫ h + g ≫ h :=
@@ -171,6 +181,7 @@ def shear (X : C) : X ⊞ X ⟶ X ⊞ X := biprod.lift biprod.fst (biprod.fst + 
 /-- PqCQM3Pcl6Q-36577 (10:09:37) [prop] « The monoid `X` is a group » is an exactness property:
 the shear map `(x, y) ↦ (x, x + y)` of `X ⊞ X` is an isomorphism iff `𝟙 X` has an opposite
 (equivalently every `Hom(Y, X)` is a group, `f ↦ f ≫ n` being the negation). -/
+@[buffalo "PqCQM3Pcl6Q-36577"]
 theorem isIso_shear_iff (X : C) : IsIso (shear X) ↔ ∃ n : X ⟶ X, 𝟙 X + n = 0 := by
   constructor
   · intro h

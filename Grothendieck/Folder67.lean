@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -115,6 +116,7 @@ end Basics
 /-! ## The two categories -/
 
 /-- A `2`-regular `k`-module with an involution. -/
+@[montpellier "67, 90"]
 structure InvMod where
   /-- the module `M` -/
   carrier : Type v
@@ -187,6 +189,7 @@ lemma mem_minus {x : X.carrier} : x ∈ X.minus ↔ X.σ x = -x := by
     add_eq_zero_iff_neg_eq, eq_comm]
 
 /-- Page 90: `P ∩ Q = 0`, from `2`-regularity. -/
+@[montpellier "67, 90"]
 theorem inf_eigen_eq_bot : X.plus ⊓ X.minus = ⊥ := by
   rw [eq_bot_iff]
   intro x hx
@@ -204,6 +207,7 @@ lemma sub_σ_mem_minus (x : X.carrier) : x - X.σ x ∈ X.minus := by
   rw [mem_minus, map_sub, X.σ_σ, neg_sub]
 
 /-- Page 90: `M₊ ∩ 2M = 2M₊` (« de `2x ∈ P` on tire `x ∈ P` »). -/
+@[montpellier "67, 90"]
 theorem mem_two_of_plus (p : X.plus) (h : (p : X.carrier) ∈ two k X.carrier) :
     p ∈ two k X.plus := by
   obtain ⟨y, hy⟩ := mem_two.1 h
@@ -215,6 +219,7 @@ theorem mem_two_of_plus (p : X.plus) (h : (p : X.carrier) ∈ two k X.carrier) :
   exact mem_two.2 ⟨⟨y, hy'⟩, Subtype.ext (by simpa using hy)⟩
 
 /-- Page 90: `M₋ ∩ 2M = 2M₋`. -/
+@[montpellier "67, 90"]
 theorem mem_two_of_minus (q : X.minus) (h : (q : X.carrier) ∈ two k X.carrier) :
     q ∈ two k X.minus := by
   obtain ⟨y, hy⟩ := mem_two.1 h
@@ -229,6 +234,7 @@ end InvMod
 
 /-- A triple `(P, Q, m)`: two `2`-regular modules and a submodule
 `m ⊂ P/2P × Q/2Q` meeting each factor trivially. -/
+@[montpellier "67, 90"]
 structure Triple where
   /-- the module `P` -/
   P : Type v
@@ -324,6 +330,7 @@ def buildMap {X Y : Triple.{v} k} (φ : X ⟶ Y) : buildObj X ⟶ buildObj Y whe
 end Triple
 
 /-- The functor `(P, Q, m) ↦ (M, σ)` of page 90. -/
+@[montpellier "67, 90"]
 def build : Triple.{v} k ⥤ InvMod.{v} k where
   obj := Triple.buildObj
   map := Triple.buildMap
@@ -480,10 +487,12 @@ def S : Submodule k (X.plus × X.minus) :=
   (two k X.carrier).comap (X.plus.subtype.coprod X.minus.subtype)
 
 /-- The submodule `m ⊂ M₊/2M₊ × M₋/2M₋` of page 90: the image of `2M`. -/
+@[montpellier "67, 90"]
 def m : Submodule k ((X.plus ⧸ two k X.plus) × (X.minus ⧸ two k X.minus)) :=
   X.S.map ((two k X.plus).mkQ.prodMap (two k X.minus).mkQ)
 
 /-- `(p̄, q̄) ∈ m` if and only if `p + q ∈ 2M`. -/
+@[montpellier "67, 90"]
 theorem mk_mem_m_iff (p : X.plus) (q : X.minus) :
     (Submodule.Quotient.mk p, Submodule.Quotient.mk q) ∈ X.m ↔
       (p : X.carrier) + q ∈ two k X.carrier := by
@@ -505,6 +514,7 @@ theorem mk_mem_m_iff (p : X.plus) (q : X.minus) :
   exact Submodule.sub_mem _ (Submodule.sub_mem _ hS' h1) h2
 
 /-- The triple `(M₊, M₋, m)` of page 90. -/
+@[montpellier "67, 90"]
 def triple : Triple.{v} k where
   P := X.plus
   Q := X.minus
@@ -580,6 +590,7 @@ lemma toBuild_bijective : Function.Bijective X.toBuild := by
 
 /-- Page 90: `(M, σ)` is rebuilt from `(M₊, M₋, m)`, by `x ↦ (x + σx, x - σx)`
 (which is « la multiplication par `2` », `M ≅ M' = 2M ⊂ M₊ ⊕ M₋`). -/
+@[montpellier "67, 90"]
 noncomputable def essSurj_witness : (build k).obj X.triple ≅ X :=
   (isoOfBijective X.toBuildHom X.toBuild_bijective).symm
 
@@ -592,11 +603,13 @@ instance : (build k).IsEquivalence where
 
 /-- **Proposition (page 90).** Two-regular `k`-modules with an involution are
 equivalent to triples `(P, Q, m)`. -/
+@[montpellier "67, 90"]
 noncomputable def equivalence : Triple.{v} k ≌ InvMod.{v} k :=
   (build k).asEquivalence
 
 /-- The inverse of the equivalence is the page's functor `(M, σ) ↦ (P, Q, m)`:
 it sends `(M, σ)` to a triple isomorphic to `(M₊, M₋, m)`. -/
+@[montpellier "67, 90"]
 noncomputable def inverse_obj_iso (X : InvMod.{v} k) :
     (equivalence k).inverse.obj X ≅ X.triple :=
   (build k).preimageIso ((equivalence k).counitIso.app X ≪≫ X.essSurj_witness.symm)

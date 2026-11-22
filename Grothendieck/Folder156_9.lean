@@ -3,6 +3,7 @@ module
 public import Mathlib.Order.Lattice
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Fin.Basic
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -61,6 +62,7 @@ def Disj (x y : S) : Prop := x ≤ cpl y
 
 /-- **Lemme 1 (page 108).** For `b ≤ c`, there is `b*` disjoint from `b` with `b ∨ b* = c` if and
 only if `b ∨ (∁ b ∧ c) = c`. -/
+@[montpellier "156-9, 108"]
 theorem lemme1 {b c : S} (hbc : b ≤ c) :
     (∃ e, Disj cpl e b ∧ b ⊔ e = c) ↔ b ⊔ (cpl b ⊓ c) = c := by
   constructor
@@ -71,6 +73,7 @@ theorem lemme1 {b c : S} (hbc : b ≤ c) :
     exact ⟨cpl b ⊓ c, inf_le_left, h⟩
 
 /-- **Lemme 1, end (page 108).** Every such `b*` lies under `b*₀ = ∁ b ∧ c`. -/
+@[montpellier "156-9, 108"]
 theorem lemme1_max {b c e : S} (he : Disj cpl e b) (hc : b ⊔ e = c) : e ≤ cpl b ⊓ c :=
   le_inf he (hc ▸ le_sup_right)
 
@@ -83,6 +86,7 @@ variable {S S' : Type*} [PartialOrder S] [PartialOrder S'] {cpl : S → S} {cpl'
 /-- **Page 107, the question answered.** Let `∁, ∁'` be order-reversing involutions, and `β` a
 transpose of `α`: `α x ≤ ∁' y ↔ x ≤ ∁ (β y)`. If `α` and `β` both commute with the
 complements, they are inverse to each other. -/
+@[montpellier "156-9, 107"]
 theorem transpose_inverse (hcc : ∀ x, cpl (cpl x) = x) (hcc' : ∀ y, cpl' (cpl' y) = y)
     (hanti : ∀ {x y}, x ≤ y → cpl y ≤ cpl x) (hanti' : ∀ {x y}, x ≤ y → cpl' y ≤ cpl' x)
     {α : S → S'} {β : S' → S} (htr : ∀ x y, α x ≤ cpl' y ↔ x ≤ cpl (β y))
@@ -146,33 +150,40 @@ instance : DecidableRel O6 := fun _ _ => inferInstanceAs (Decidable (_ ∨ _))
 instance : DecidableRel MO2 := fun _ _ => inferInstanceAs (Decidable (_ ∧ _))
 
 /-- The supports of `O6` are `∅, {1}, {2}, {0, 2}, {1, 3}, E`: six elements, the hexagon. -/
+@[montpellier "156-9, 107–110"]
 theorem o6_supports :
     Finset.univ.filter (fun A : Finset (Fin 4) => supp O6 A = A) =
       {∅, {1}, {2}, {0, 2}, {1, 3}, Finset.univ} := by
   decide
 
+@[montpellier "156-9, 107–110"]
 theorem o6_spatios : IsSpatios O6 := by decide
 
 /-- **The hexagon is not orthomodular**: `{1} ⊆ {1, 3}`, but `{1}^⊥ ∩ {1, 3} = ∅`, so
 `{1} ∨ ({1}^⊥ ∧ {1, 3}) = {1}`. -/
+@[montpellier "156-9, 107–110"]
 theorem o6_not_orthomodular :
     ({1} : Finset (Fin 4)) ⊆ {1, 3} ∧ supp O6 {1} = {1} ∧ supp O6 {1, 3} = {1, 3} ∧
       supp O6 ({1} ∪ (perp O6 {1} ∩ {1, 3})) = {1} ∧ ¬ IsOrthomodular O6 := by
   decide
 
 /-- The supports of `MO2` are `∅, {0}, {1}, {2}, {3}, E`. -/
+@[montpellier "156-9, 107–110"]
 theorem mo2_supports :
     Finset.univ.filter (fun A : Finset (Fin 4) => supp MO2 A = A) =
       {∅, {0}, {1}, {2}, {3}, Finset.univ} := by
   decide
 
+@[montpellier "156-9, 107–110"]
 theorem mo2_spatios : IsSpatios MO2 := by decide
 
 /-- **`MO2` is orthomodular.** -/
+@[montpellier "156-9, 107–110"]
 theorem mo2_orthomodular : IsOrthomodular MO2 := by decide
 
 /-- **`MO2` is not distributive, hence not a Boolean algebra**: `{0} ∧ ({2} ∨ {3}) = {0}`,
 while `({0} ∧ {2}) ∨ ({0} ∧ {3}) = ∅`. -/
+@[montpellier "156-9, 107–110"]
 theorem mo2_not_distrib :
     ({0} : Finset (Fin 4)) ∩ supp MO2 ({2} ∪ {3}) = {0} ∧
       supp MO2 (({0} : Finset (Fin 4)) ∩ {2} ∪ {0} ∩ {3}) = ∅ := by

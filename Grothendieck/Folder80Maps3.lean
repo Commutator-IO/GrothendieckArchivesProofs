@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -296,6 +297,7 @@ theorem edge_a1_a2_ne (hbf : BigonFree X.On) (u : D) :
 omit [Fintype D] in
 /-- **Faithfulness.** Two maps of flags `X → X'` commuting with `a1` (for instance two
 isomorphisms of arrangements) that induce the same maps on vertices and on edges are equal. -/
+@[montpellier "80, 54"]
 theorem faithful {D' L' : Type*} [Fintype D'] {X' : PseudolineMap D' L'}
     (hbf : BigonFree X'.On) {g g' : D → D'}
     (h1 : ∀ d, g (X.M.a1 d) = X'.M.a1 (g d)) (h1' : ∀ d, g' (X.M.a1 d) = X'.M.a1 (g' d))
@@ -446,6 +448,7 @@ theorem B1_le_Z1 (hbf : BigonFree X.On) : X.B1 ≤ X.Z1 := by
 
 /-- **`Z₁/B₁` has dimension at most `1`** (from `χ = 1`): this is the page 42 relation
 `c₂ = c(K)`, the first Betti number of the skeleton. -/
+@[montpellier "80, 42"]
 theorem finrank_Z1_le (hbf : BigonFree X.On) :
     Module.finrank (ZMod 2) X.Z1 ≤ Module.finrank (ZMod 2) X.B1 + 1 := by
   classical
@@ -574,6 +577,7 @@ noncomputable def nu (v : X.M.Vtx) : ℕ :=
 variable (X) in
 /-- **Going straight** (page 60; (22) of page 41): half a turn around a vertex of `ν` lines,
 `ν` edge-ends further, one finds the same line. -/
+@[montpellier "80, 41, 60"]
 def Straight : Prop := ∀ d, X.line ((X.phi ^ X.nu (X.M.vtx d)) d) = X.line d
 
 open Classical in
@@ -1002,6 +1006,7 @@ theorem tri_bound (hbf : BigonFree X.On) (hs : X.Straight) {a b c Δ : L}
     (fun h => h2 (meet_eq hbΔ h hw ob hwbΔ)) (fun h => h3 (meet_eq hcΔ h hw oc hwcΔ)) e he)
 
 /-- Exactly one of a cycle `z` and `z + D`, for a line `D`, bounds. -/
+@[montpellier "80, 35"]
 theorem flip (hbf : BigonFree X.On) (hs : X.Straight) {a Δ : L} (h : a ≠ Δ)
     {z : X.M.Edge → ZMod 2} (hz : z ∈ X.Z1) : z ∈ X.B1 ↔ z + X.lineChain a ∉ X.B1 :=
   ⟨fun h1 h2 => lineChain_not_mem hbf hs h (by
@@ -1019,6 +1024,7 @@ of `a, b, c` between these points, and `Δ` a fourth line through none of them; 
 `Pa ea + Pb eb + Pc ec = 0`. The right-hand side involves only the skeleton and its lines, so
 the canonical orientation of the triangle (which four of its eight cycles bound) is determined
 by the skeleton, and does not depend on `Δ`. -/
+@[montpellier "80, 50"]
 theorem triangle_iff (hbf : BigonFree X.On) (hs : X.Straight) {a b c Δ : L}
     {pab pbc pca : X.M.Vtx} (hpab : X.On pab a ∧ X.On pab b) (hpbc : X.On pbc b ∧ X.On pbc c)
     (hpca : X.On pca c ∧ X.On pca a) (hab : a ≠ b) (hnc : ¬X.On pab c)
@@ -1073,6 +1079,7 @@ variable (X X') in
 /-- An isomorphism of the skeletons decomposed into lines: bijections of vertices, edges and
 lines preserving incidence and the line of each edge (the arrangements of dimension `1` of
 page 40). -/
+@[montpellier "80, 40"]
 structure SkelIso where
   fV : X.M.Vtx ≃ X'.M.Vtx
   fE : X.M.Edge ≃ X'.M.Edge
@@ -1120,6 +1127,7 @@ theorem exists_dart (hbf : BigonFree X.On) (hs : X.Straight) (f : SkelIso X X')
 /-- **The general theorem on maps, page 41.** An isomorphism of decomposed skeletons that
 carries the three-edge face paths to face paths is induced by a morphism of the arrangements
 (commuting with `a0, a1, a2`, over the given bijections). -/
+@[montpellier "80, 41"]
 theorem lift (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight) (f : SkelIso X X')
     (hT : ∀ e1 e e2, X.Path3 e1 e e2 → X'.Path3 (f.fE e1) (f.fE e) (f.fE e2)) :
     ∃ g : D → D', (∀ d, g (X.M.a0 d) = X'.M.a0 (g d)) ∧ (∀ d, g (X.M.a1 d) = X'.M.a1 (g d)) ∧
@@ -1142,6 +1150,7 @@ theorem lift (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight) (
 arrangements comes from an isomorphism of the arrangements (a bijection of flags commuting with
 `a0, a1, a2`) iff it preserves the three-edge face paths in both directions; the isomorphism is
 then unique (`faithful`). -/
+@[montpellier "80, 41"]
 theorem lift_iff (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight)
     (hs' : X'.Straight) (f : SkelIso X X') :
     (∃ g : D ≃ D', (∀ d, g (X.M.a0 d) = X'.M.a0 (g d)) ∧ (∀ d, g (X.M.a1 d) = X'.M.a1 (g d)) ∧
@@ -1299,6 +1308,7 @@ open Classical in
 /-- **Skeleton isomorphisms preserve the orientation of triangles** ((A5) transported). For a
 triangle of three non-concurrent lines with a fourth line through none of its vertices, a
 triangle cycle bounds a union of faces iff its image by a skeleton isomorphism does. -/
+@[montpellier "80, 50"]
 theorem triangle_map (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight)
     (hs' : X'.Straight) {a b c Δ : L}
     {pab pbc pca : X.M.Vtx} (hpab : X.On pab a ∧ X.On pab b) (hpbc : X.On pbc b ∧ X.On pbc c)
@@ -1437,6 +1447,7 @@ open Classical in
 `a1 d, d, a1 a0 d` be the flags of a face path `e1, e, e2` (`e = edge d` joining `v` to `w`),
 and `Pa`, `Pb` segments of the lines of `e1` and `e2` from `v` and `w` to a common vertex `p`,
 starting with `e1` and `e2`. Then the triangle cycle `e + Pa + Pb` bounds a union of faces. -/
+@[montpellier "80, 50"]
 theorem path_bounds (hbf : BigonFree X.On) (hs : X.Straight) (d : D) {p : X.M.Vtx}
     {Pa Pb : X.M.Edge → ZMod 2} (sa : ∀ e, Pa e ≠ 0 → X.lineE e = X.line (X.M.a1 d))
     (sb : ∀ e, Pb e ≠ 0 → X.lineE e = X.line (X.M.a1 (X.M.a0 d)))
@@ -1694,6 +1705,7 @@ theorem path_map (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straigh
 /-- **Full faithfulness for simple arrangements** (page 54, when every vertex is on exactly two
 lines). Every isomorphism of decomposed skeleta of two simple bigon-free arrangements that go
 straight comes from a unique isomorphism of the arrangements. -/
+@[montpellier "80, 54"]
 theorem full_simple (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight)
     (hs' : X'.Straight) (h2 : ∀ y : D, X.nu (X.M.vtx y) = 2)
     (h2' : ∀ y : D', X'.nu (X'.M.vtx y) = 2) (f : SkelIso X X') :
@@ -1738,6 +1750,7 @@ open Classical in
 at `v` and after `a0 d` at `w`, both strictly within the half turn on the side of the face of
 `d`, and `Pa`, `Pb` segments of their lines from `v`, `w` to a common vertex starting with
 them. Then the triangle `e + Pa + Pb` bounds. -/
+@[montpellier "80, 50"]
 theorem side_bounds (hbf : BigonFree X.On) (hs : X.Straight) (d : D) {j k : ℕ}
     (hj : j + 1 < X.nu (X.M.vtx d)) (hk : k + 1 < X.nu (X.M.vtx (X.M.a0 d))) {p : X.M.Vtx}
     {Pa Pb : X.M.Edge → ZMod 2} (sa : ∀ e, Pa e ≠ 0 → X.lineE e = X.line ((X.phi ^ (j + 1)) d))
@@ -1849,6 +1862,7 @@ open Classical in
 `side_bounds`, but `e2` taken on the side of the face of `a2 d` (after `a0 (a2 d)` at `w`), the
 triangle `e + Pa + Pb` does not bound. With `side_bounds`: whether two edges at the two ends of
 `e` leave it on the same side is read on the bounding triangles, that is (A4). -/
+@[montpellier "80, 50"]
 theorem side_not (hbf : BigonFree X.On) (hs : X.Straight) (d : D) {j k : ℕ}
     (hj : j + 1 < X.nu (X.M.vtx d)) (hk : k + 1 < X.nu (X.M.vtx (X.M.a0 d))) {p : X.M.Vtx}
     (hpv : p ≠ X.M.vtx d) {Pa Pb : X.M.Edge → ZMod 2}
@@ -2229,6 +2243,7 @@ theorem path_map_gen (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Str
 /-- **Full faithfulness without simplicity** (page 54, away from `III₆`). If every triangle of
 both arrangements has a fourth line avoiding its vertices, every isomorphism of decomposed
 skeleta comes from a unique isomorphism of the arrangements. -/
+@[montpellier "80, 54"]
 theorem full_of_fourth (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight)
     (hs' : X'.Straight) (hF : X.FourthLine) (hF' : X'.FourthLine) (f : SkelIso X X') :
     ∃ g : D ≃ D', (∀ d, g (X.M.a0 d) = X'.M.a0 (g d)) ∧ (∀ d, g (X.M.a1 d) = X'.M.a1 (g d)) ∧
@@ -2251,6 +2266,7 @@ theorem SkelIso.fourth_map (f : SkelIso X X') (hF : X.FourthLine) : X'.FourthLin
 /-- **Full faithfulness away from `III₆`.** If every triangle of a bigon-free arrangement has
 a fourth line avoiding its vertices, every isomorphism of its decomposed skeleton with that of
 another bigon-free arrangement comes from a unique isomorphism of the arrangements. -/
+@[montpellier "80, 54"]
 theorem full_of_fourth' (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight)
     (hs' : X'.Straight) (hF : X.FourthLine) (f : SkelIso X X') :
     ∃ g : D ≃ D', (∀ d, g (X.M.a0 d) = X'.M.a0 (g d)) ∧ (∀ d, g (X.M.a1 d) = X'.M.a1 (g d)) ∧
@@ -2342,6 +2358,7 @@ variable {D' L' : Type*} [Fintype D'] {X' : PseudolineMap D' L'}
 bigon-free arrangement has a vertex on exactly two lines (for instance a simple arrangement),
 every isomorphism of its decomposed skeleton with that of another bigon-free arrangement comes
 from a unique isomorphism of the arrangements. The complete quadrangle `III₆` is excluded. -/
+@[montpellier "80, 39–54"]
 theorem full_of_simpleCorner (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight)
     (hs' : X'.Straight) (H : X.SimpleCorner) (f : SkelIso X X') :
     ∃ g : D ≃ D', (∀ d, g (X.M.a0 d) = X'.M.a0 (g d)) ∧ (∀ d, g (X.M.a1 d) = X'.M.a1 (g d)) ∧

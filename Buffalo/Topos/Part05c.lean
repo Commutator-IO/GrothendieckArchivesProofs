@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.Topos.Part05a
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -31,11 +32,13 @@ noncomputable section
 
 /-- 4gynb9uTEE4-8276 (2:17:56) [prop, partial] A representable `Hom(R, -)` commutes with limits
 (1-categorical shadow of `T(lim Cᵢ) ≃ lim T(Cᵢ)`). -/
+@[buffalo "4gynb9uTEE4-8276"]
 theorem coyoneda_preservesLimits {C : Type u} [Category.{v} C] (R : C) :
     PreservesLimits (coyoneda.obj (op R)) :=
   inferInstance
 
 /-- 4gynb9uTEE4-8410 (2:20:10) [prop] `Hom(R, -)` sends faithful functors to faithful functors... -/
+@[buffalo "4gynb9uTEE4-8410"]
 instance whiskeringRight_faithful {R : Type u} [Category.{v} R] {C : Type u'} [Category.{v'} C]
     {C' : Type u''} [Category.{v''} C'] (F : C ⥤ C') [F.Faithful] :
     ((Functor.whiskeringRight R C C').obj F).Faithful :=
@@ -52,6 +55,7 @@ def whiskeringRight_fullyFaithful {R : Type u} [Category.{v} R] {C : Type u'} [C
 /-- 4gynb9uTEE4-8607 (2:23:27) [def] An exactness property given by `(R, Σ)`: the localization
 `R → R[Σ⁻¹]` identifies `Hom(R[Σ⁻¹], C)` with the functors `R → C` inverting `Σ`
 (`Localization.functorEquivalence`). -/
+@[buffalo "4gynb9uTEE4-8607"]
 def exactness_equivalence {R : Type u} [Category.{v} R] {R' : Type u'} [Category.{v'} R']
     (L : R ⥤ R') (W : MorphismProperty R) [L.IsLocalization W] (C : Type u'') [Category.{v''} C] :
     (R' ⥤ C) ≌ W.FunctorsInverting C :=
@@ -59,6 +63,7 @@ def exactness_equivalence {R : Type u} [Category.{v} R] {R' : Type u'} [Category
 
 /-- 4gynb9uTEE4-8738 (2:25:38) [def] Generalized exactness property given by `u : R → R'`:
 `Hom(R', C) → Hom(R, C)` is an equivalence (resp. fully faithful, faithful). -/
+@[buffalo "4gynb9uTEE4-8738"]
 def SatisfiesExactness {R : Type u} [Category.{v} R] {R' : Type u'} [Category.{v'} R']
     (u : R ⥤ R') (C : Type u'') [Category.{v''} C] : Prop :=
   ((Functor.whiskeringLeft R R' C).obj u).IsEquivalence
@@ -70,6 +75,7 @@ def SatisfiesExactnessFF {R : Type u} [Category.{v} R] {R' : Type u'} [Category.
 
 /-- 4gynb9uTEE4-8802 (2:26:42) [prop, partial] Stability under products: a functor into a
 product inverts an arrow iff each component does. -/
+@[buffalo "4gynb9uTEE4-8802"]
 theorem isIso_map_pi_iff {R : Type u} [Category.{v} R] {I : Type w} (C : I → Type u')
     [∀ i, Category.{v'} (C i)] (F : R ⥤ ∀ i, C i) {X Y : R} (s : X ⟶ Y) :
     IsIso (F.map s) ↔ ∀ i, IsIso ((F ⋙ Pi.eval C i).map s) := by
@@ -83,6 +89,7 @@ theorem isIso_map_pi_iff {R : Type u} [Category.{v} R] {I : Type w} (C : I → T
 
 /-- 4gynb9uTEE4-8931 (2:28:51) [ex] Requiring the arrow of `{0 → 1}` to be inverted by every functor
 defines the groupoids. -/
+@[buffalo "4gynb9uTEE4-8931"]
 theorem groupoid_iff (C : Type u) [Category.{v} C] :
     (∀ F : Fin 2 ⥤ C, IsIso (F.map (homOfLE (by decide : (0 : Fin 2) ≤ 1)))) ↔
       ∀ (X Y : C) (f : X ⟶ Y), IsIso f := by
@@ -94,6 +101,7 @@ theorem groupoid_iff (C : Type u) [Category.{v} C] :
 
 /-- 4gynb9uTEE4-8998 (2:29:58) [ex] Equalizing the two arrows of `{0 ⇉ 1}` defines the preordered
 categories (all Hom-sets subsingletons). -/
+@[buffalo "4gynb9uTEE4-8998"]
 theorem preordered_iff (C : Type u) [Category.{v} C] :
     (∀ F : WalkingParallelPair ⥤ C,
       F.map WalkingParallelPairHom.left = F.map WalkingParallelPairHom.right) ↔
@@ -111,6 +119,7 @@ def thin_equivalence (C : Type u) [Category.{v} C] [Quiver.IsThin C] : ThinSkele
 
 /-- 4gynb9uTEE4-9126 (2:32:06) [ex] Both conditions together: the thin skeleton is discrete
 (`≤` is equality), so the category is essentially discrete, equivalent to a set. -/
+@[buffalo "4gynb9uTEE4-9126"]
 theorem thinSkeleton_discrete (C : Type u) [Category.{v} C] [Quiver.IsThin C]
     (h : ∀ (X Y : C) (f : X ⟶ Y), IsIso f) (a b : ThinSkeleton C) (hab : a ≤ b) : a = b := by
   induction a using Quotient.inductionOn
@@ -121,12 +130,14 @@ theorem thinSkeleton_discrete (C : Type u) [Category.{v} C] [Quiver.IsThin C]
 
 /-- 4gynb9uTEE4-9190 (2:33:10) [ex] For `Δ = Cat`, problem two is solved by the Gabriel–Zisman
 category of fractions (`MorphismProperty.Localization`). -/
+@[buffalo "4gynb9uTEE4-9190"]
 theorem gabrielZisman {C : Type u} [Category.{v} C] (W : MorphismProperty C) :
     W.Q.IsLocalization W :=
   inferInstance
 
 /-- 4gynb9uTEE4-9256 (2:34:16) [ex, partial] For groupoids, the envelope of `I` is `I[I⁻¹]`: every
 functor from `I` to a groupoid factors through the localization at all arrows. -/
+@[buffalo "4gynb9uTEE4-9256"]
 def groupoid_lift {I : Type u} [Category.{v} I] {G : Type u'} [Groupoid.{v'} G] (F : I ⥤ G) :
     (⊤ : MorphismProperty I).Localization ⥤ G :=
   Localization.Construction.lift F (fun _ _ _ _ => inferInstance)
@@ -148,6 +159,7 @@ instance (I : Type u) [Category.{v} I] : Preorder (PreEnv I) where
 /-- 4gynb9uTEE4-9381 (2:36:21) [ex] For preorders, the envelope of `I` is `Ob I` preordered by the
 existence of arrows: `I → PreEnv I` is a functor, and every functor from `I` to a preorder is
 monotone for this preorder. (Mathlib's convention: an arrow `x → y` means `x ≤ y`.) -/
+@[buffalo "4gynb9uTEE4-9381"]
 def toPreEnv (I : Type u) [Category.{v} I] : I ⥤ PreEnv I where
   obj x := ⟨x⟩
   map f := homOfLE ⟨f⟩
@@ -158,6 +170,7 @@ theorem preEnv_universal {I : Type u} [Category.{v} I] {P : Type u'} [Preorder P
 
 /-- 4gynb9uTEE4-9444 (2:37:24) [ex] Making relations `xᵢ ≤ yᵢ` invertible: the preorder generated
 by `≤` and the `yᵢ ≤ xᵢ` has the universal property. -/
+@[buffalo "4gynb9uTEE4-9444"]
 def genRel {P : Type u} [Preorder P] {ι : Type w} (x y : ι → P) : P → P → Prop :=
   Relation.ReflTransGen (fun a b => a ≤ b ∨ ∃ i, a = y i ∧ b = x i)
 
@@ -174,6 +187,7 @@ theorem genRel_universal {P : Type u} [Preorder P] {ι : Type w} (x y : ι → P
 /-- 4gynb9uTEE4-9510 (2:38:30) [ex] For discrete categories the envelope of `I` is `π₀(I)`:
 functors from `I` to a discrete category are functions on the connected components
 (`ConnectedComponents.typeToCatHomEquiv`). -/
+@[buffalo "4gynb9uTEE4-9510"]
 def discrete_envelope (I : Type u) [Category.{v} I] (X : Type u') :
     (ConnectedComponents I → X) ≃ (I ⥤ Discrete X) :=
   ConnectedComponents.typeToCatHomEquiv I X
@@ -183,12 +197,14 @@ def discrete_envelope (I : Type u) [Category.{v} I] (X : Type u') :
 /-- 4gynb9uTEE4-9714 (2:41:54) [prop, partial] Limits of functors `R → C` exist and are computed
 argumentwise (for `D'' = ∅`, 4gynb9uTEE4-10103, the limit of `D'`-continuous functors is again
 `D'`-continuous, limits commuting with limits). -/
+@[buffalo "4gynb9uTEE4-9714"]
 theorem functor_hasLimitsOfShape {R : Type u} [Category.{v} R] {C : Type u'} [Category.{v'} C]
     (K : Type w) [Category.{w'} K] [HasLimitsOfShape K C] : HasLimitsOfShape K (R ⥤ C) :=
   inferInstance
 
 /-- 4gynb9uTEE4-9978 (2:46:18) [prop, partial] The evaluation `r_C : T(C) → C` commutes with these
 limits. -/
+@[buffalo "4gynb9uTEE4-9978"]
 theorem evaluation_preserves {R : Type u} [Category.{v} R] {C : Type u'} [Category.{v'} C]
     (K : Type w) [Category.{w'} K] [HasLimitsOfShape K C] (r : R) :
     PreservesLimitsOfShape K ((evaluation R C).obj r) :=
@@ -196,6 +212,7 @@ theorem evaluation_preserves {R : Type u} [Category.{v} R] {C : Type u'} [Catego
 
 /-- 4gynb9uTEE4-9915 (2:45:15) [prop, partial] `T(C) → T(C')` commutes with these limits if
 `C → C'` does. -/
+@[buffalo "4gynb9uTEE4-9915"]
 theorem whiskeringRight_preserves {R : Type u} [Category.{v} R] {C : Type u'} [Category.{v'} C]
     {C' : Type u''} [Category.{v''} C'] (K : Type w) [Category.{w'} K] [HasLimitsOfShape K C]
     (G : C ⥤ C') [PreservesLimitsOfShape K G] :
@@ -211,6 +228,7 @@ variable (G : Type u) [Group G] [Nontrivial G]
 /-- 4gynb9uTEE4-10040 (2:47:20) [ex] The category of torsors under `G ≠ 1` (equivalent to the
 one-object groupoid `SingleObj G`, all torsors being isomorphic with automorphisms `G`) has no
 terminal object... -/
+@[buffalo "4gynb9uTEE4-10040"]
 theorem torsor_no_terminal (X : SingleObj G) : IsTerminal X → False := by
   intro h
   obtain ⟨a, ha⟩ := exists_ne (1 : G)
@@ -255,6 +273,7 @@ end Torsors
 /-- 4gynb9uTEE4-11448 (3:10:48) [prop] `J → Ĵ` is the envelope under colimits: a cocontinuous
 functor on `Ĵ` is determined by its restriction to `J`, being the left Kan extension of it along
 Yoneda (`Presheaf.uniqueExtensionAlongULiftYoneda`). -/
+@[buffalo "4gynb9uTEE4-11448"]
 def yoneda_extension_unique {J : Type u} [SmallCategory J] {ℰ : Type u'} [Category.{u} ℰ]
     (A : J ⥤ ℰ) (L : (Jᵒᵖ ⥤ Type u) ⥤ ℰ) (e : A ≅ uliftYoneda.{u} ⋙ L)
     [PreservesColimitsOfSize.{u, u} L] [HasColimitsOfSize.{u, u} ℰ] :
@@ -274,6 +293,7 @@ def saturation : MorphismProperty C := fun _ _ u =>
     W.IsInvertedBy F → IsIso (F.map u)
 
 /-- 4gynb9uTEE4-12093 (3:21:33) [prop] `Σ'` contains `Σ`... -/
+@[buffalo "4gynb9uTEE4-12093"]
 theorem le_saturation : W ≤ saturation W := fun _ _ _ hu _ _ _ _ hF => hF _ hu
 
 /-- ... the isomorphisms... -/
@@ -316,6 +336,7 @@ theorem saturation_baseChange {P X Y Z : C} {fst : P ⟶ X} {snd : P ⟶ Y} {f :
 
 /-- 4gynb9uTEE4-12219 (3:23:39) [prop] If `u : X → Y` is in `Σ'`, so is the diagonal
 `X → X ×_Y X` (its composite with the first projection, a base change of `u`, is `𝟙`). -/
+@[buffalo "4gynb9uTEE4-12219"]
 theorem saturation_diagonal {X Y : C} (u : X ⟶ Y) [HasPullback u u]
     (hu : saturation W u) : saturation W (pullback.diagonal u) := by
   have hfst : saturation W (pullback.fst u u) :=
@@ -326,6 +347,7 @@ theorem saturation_diagonal {X Y : C} (u : X ⟶ Y) [HasPullback u u]
 
 /-- 4gynb9uTEE4-12539 (3:28:59) [prop] `Σ'` is stable under arbitrary fibre products: if the
 `uᵢ : Xᵢ → Y` are in `Σ'`, so is `∏_Y Xᵢ → Y`. -/
+@[buffalo "4gynb9uTEE4-12539"]
 theorem saturation_widePullback {ι : Type v} {Y : C} (X : ι → C) (u : ∀ i, X i ⟶ Y)
     [HasWidePullback Y X u] (hu : ∀ i, saturation W (u i)) :
     saturation W (WidePullback.base u) := by
@@ -351,6 +373,7 @@ theorem saturation_widePullback {ι : Type v} {Y : C} (X : ι → C) (u : ∀ i,
 pullbacks and equalizers: spans are completed by fibre products, and two arrows equalized by
 `s ∈ Σ'` are equalized by their kernel, which is in `Σ'`; so (Mathlib) `Hom(X, Y)` in
 `C[Σ'⁻¹]` is the colimit of the `Hom_C(X', Y)` over the `X' → X` in `Σ'`. -/
+@[buffalo "4gynb9uTEE4-12284"]
 theorem saturation_hasRightCalculusOfFractions [HasPullbacks C] [HasEqualizers C] :
     (saturation W).HasRightCalculusOfFractions where
   id_mem X := saturation_of_isIso W (𝟙 X)
@@ -370,6 +393,7 @@ theorem saturation_hasRightCalculusOfFractions [HasPullbacks C] [HasEqualizers C
 /-- 4gynb9uTEE4-12473 (3:27:53) [prop, partial] With a class stable under finite products, the
 localization has finite products and the localization functor preserves them
 (`Localization.hasFiniteProducts`). -/
+@[buffalo "4gynb9uTEE4-12473"]
 theorem localization_hasFiniteProducts [HasFiniteProducts C] [W.ContainsIdentities]
     [W.IsStableUnderFiniteProducts] :
     HasFiniteProducts W.Localization :=

@@ -2,6 +2,7 @@ module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.CohomologicalDimension.TorsionVanishingBound
 public import Mathlib.Algebra.Ring.IsFormallyReal
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -53,6 +54,7 @@ abbrev adjoinSqrtNegOne (F : Type u) [Field F] : Type u :=
 
 /-- The second exception of page 22: some point `x` of `Spec A` has an orderable residue field
 `κ(x)` with `cd₂ κ(x)(√−1)` finite. -/
+@[montpellier "31, 22"]
 def RealException (A : Type u) [CommRing A] : Prop :=
   ∃ x : PrimeSpectrum A, IsFormallyReal x.asIdeal.ResidueField ∧
     cdPrime (adjoinSqrtNegOne x.asIdeal.ResidueField) 2 < ⊤
@@ -60,6 +62,7 @@ def RealException (A : Type u) [CommRing A] : Prop :=
 /-- **Folder 31, page 22.** For a noetherian local domain `A` with fraction field `K` and residue
 field `k`, and a prime `r`: unless `r` is the characteristic of `K`, or `r = 2` and the real
 exception holds, `cd_r(K) ≥ cd_r(k) + dim A`. -/
+@[montpellier "31, 22"]
 def CdLowerBound : Prop :=
   ∀ (A : Type u) [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsLocalRing A] (r : ℕ),
     r.Prime → r ≠ ringChar (FractionRing A) → ¬ (r = 2 ∧ RealException A) →
@@ -67,6 +70,7 @@ def CdLowerBound : Prop :=
 
 /-- **Folder 31, page 22, the regular case.** For a regular local ring `A` the second exception
 disappears: `cd_r(K) ≥ cd_r(k) + dim A` for every prime `r` other than the characteristic of `K`. -/
+@[montpellier "31, 22"]
 def CdLowerBoundRegular : Prop :=
   ∀ (A : Type u) [CommRing A] [IsDomain A] [IsRegularLocalRing A] (r : ℕ),
     r.Prime → r ≠ ringChar (FractionRing A) →

@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -122,6 +123,7 @@ open P
 /-- The multiplication of `M(b, c; b', c'; t)` (table of page 92, left factor in
 the row): `u² = bu − c`, `vu = (t − bb') + b'u + bv − uv`, `v(uv) = −bc' + c'u + tv`,
 `(uv)u = −b'c + tu + cv`, `(uv)² = −cc' + t·uv`, and so on. -/
+@[montpellier "83, 92"]
 def mulM (b c b' c' t : k) (x y : P k) : P k where
   x0 := x.x0 * y.x0 - c * x.x1 * y.x1 - c' * x.x2 * y.x2 - c * c' * x.x3 * y.x3
     + (t - b * b') * x.x2 * y.x1 - b * c' * x.x2 * y.x3 - b' * c * x.x3 * y.x1
@@ -158,6 +160,7 @@ theorem smul_mulM (a : k) (x y : P k) :
 
 /-- Page 84 (« se vérifient »): `M(b, c; b', c'; t)` is associative, for every
 value of the twist `t`, over any commutative ring. -/
+@[montpellier "83, 84"]
 theorem mulM_assoc (x y z : P k) :
     mulM b c b' c' t (mulM b c b' c' t x y) z = mulM b c b' c' t x (mulM b c b' c' t y z) := by
   ext <;> simp [mulM] <;> ring
@@ -192,6 +195,7 @@ theorem trM_w : trM b b' t (w : P k) = t := by simp [trM, P.w]
 
 /-- Hamilton–Cayley: every element `x` of `M(b, c; b', c'; t)` satisfies
 `x² − Tr(x)x + det(x) = 0`. -/
+@[montpellier "83, 130–136"]
 theorem hamilton_cayley (x : P k) :
     mulM b c b' c' t x x = trM b b' t x • x + (-nrdM b c b' c' t x) • one := by
   ext <;> simp [mulM, trM, nrdM, one] <;> ring
@@ -203,6 +207,7 @@ theorem nrdM_mulM (x y : P k) :
 
 /-- Distinct twists give distinct structures: the structures `M(b, c; b', c'; t)`
 are parametrised injectively by `t ∈ k`. -/
+@[montpellier "83, 130–136"]
 theorem mulM_inj {t t' : k} (h : mulM b c b' c' t = mulM b c b' c' t') : t = t' := by
   simpa [mulM, P.u, P.v] using congrArg (fun m => (m (v : P k) u).x0) h
 
@@ -215,6 +220,7 @@ Hamilton–Cayley for a linear form `T` and a function `N`, two elements `u`, `v
 with `T u = b`, `N u = c`, `T v = b'`, `N v = c'` satisfy
 `vu = (t − bb') + b'u + bv − uv` with `t = bb' + c + c' − N(u + v)`, and the
 realisation `M(b, c; b', c'; t) → A` is multiplicative. -/
+@[montpellier "83, 81, 130"]
 theorem realise_mulM {A : Type*} [Ring A] [Algebra k A] (T : A →ₗ[k] k) (N : A → k)
     (hHC : ∀ x : A, x * x - T x • x + N x • (1 : A) = 0) {uA vA : A}
     (hTu : T uA = b) (hNu : N uA = c) (hTv : T vA = b') (hNv : N vA = c') :
@@ -258,6 +264,7 @@ theorem realise_mulM {A : Type*} [Ring A] [Algebra k A] (T : A →ₗ[k] k) (N :
 
 /-- Uniqueness of the twist: if the realisation `M(b, c; b', c'; t) → A` is
 injective (`(1, u, v, uv)` free in `A`), at most one `t` makes it multiplicative. -/
+@[montpellier "83, 130–136"]
 theorem realise_unique {A : Type*} [Ring A] [Algebra k A] {uA vA : A}
     (hinj : Function.Injective (realise (k := k) uA vA)) {t t' : k}
     (ht : ∀ x y : P k, realise uA vA (mulM b c b' c' t x y) = realise uA vA x * realise uA vA y)
@@ -281,6 +288,7 @@ def Q : k := t ^ 2 - b * b' * t + (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c')
 
 /-- Page 94: the reduced norm on `B = k1 + ku + kv` is
 `x₀² + cx₁² + c'x₂² + bx₀x₁ + b'x₀x₂ + (bb' − t)x₁x₂`. -/
+@[montpellier "83, 94"]
 theorem nrdM_B (x0 x1 x2 : k) :
     nrdM b c b' c' t ⟨x0, x1, x2, 0⟩ = x0 ^ 2 + c * x1 ^ 2 + c' * x2 ^ 2 + b * x0 * x1
       + b' * x0 * x2 + (b * b' - t) * x1 * x2 := by
@@ -300,15 +308,18 @@ theorem two_mul_halfDisc3 (a1 a2 a3 a12 a13 a23 : k) :
 /-- Pages 94, 116–120 and 136: `δ_{P,B}`, the half discriminant of `det` on `B` in
 the basis `(1, u, v)`, is `−Q(t)`. Its zero locus on the line of twists is
 `Q(t) = 0`. -/
+@[montpellier "83, 94, 116–120, 136"]
 theorem deltaPB_eq : halfDisc3 1 c c' b b' (b * b' - t) = -Q b c b' c' t := by
   unfold halfDisc3 Q; ring
 
 /-- Page 91, (13): the discriminant of `Q` in `t` is `δδ'`. -/
+@[montpellier "83, 91"]
 theorem disc_Q :
     (b * b') ^ 2 - 4 * (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c') = (b ^ 2 - 4 * c) * (b' ^ 2 - 4 * c') := by
   ring
 
 /-- Pages 140–141: `Q` is invariant under the involution `t ↦ bb' − t` of the line. -/
+@[montpellier "83, 140–141"]
 theorem Q_invol : Q b c b' c' (b * b' - t) = Q b c b' c' t := by
   unfold Q; ring
 
@@ -329,6 +340,7 @@ theorem traceForm_eq : traceForm b c b' c' t =
 
 /-- The discriminant of the trace form of `M(b, c; b', c'; t)` is `−Q(t)²`: where
 `Q(t)` is invertible the trace form is non-degenerate. -/
+@[montpellier "83, 126–143"]
 theorem det_traceForm : (traceForm b c b' c' t).det = -(Q b c b' c' t) ^ 2 := by
   rw [traceForm_eq, Matrix.det_succ_row_zero]
   simp [Fin.sum_univ_succ, Matrix.det_fin_three, Matrix.submatrix, Fin.succAbove, Q]
@@ -368,6 +380,7 @@ lemma root_eq (b c : k) :
 noncomputable def Qpoly (b c b' c' : k) : k[X] := qp (b * b') (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c')
 
 /-- `S̃ = Spec k[t]/(Q)` is a quadratic cover: `k[t]/(Q)` is free of rank `2`. -/
+@[montpellier "83, 137–143"]
 theorem Stilde_rank [Nontrivial k] (b c b' c' : k) :
     (AdjoinRoot.powerBasis' (qp_monic (b * b') (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c'))).dim = 2 := by
   rw [AdjoinRoot.powerBasis'_dim, qp_natDegree]
@@ -389,6 +402,7 @@ noncomputable def star : Hq b c ⊗[k] Hq b' c' :=
 
 /-- Page 143: `u * v` is a root of `Q` in `H ⊗ H'`, so `Tr(u * v) = bb'` and
 `det(u * v) = b²c' + b'²c − 4cc'`. -/
+@[montpellier "83, 143"]
 theorem star_root :
     star b c b' c' ^ 2 - algebraMap k _ (b * b') * star b c b' c'
       + algebraMap k _ (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c') = 0 := by
@@ -404,6 +418,7 @@ theorem star_root :
 
 /-- Pages 141–143: the algebra map `k[t]/(Q) → H ⊗ H'`, `t ↦ u * v`, comorphism of
 `X ×_S X' → S̃`. -/
+@[montpellier "83, 141–143"]
 noncomputable def starHom : AdjoinRoot (Qpoly b c b' c') →ₐ[k] Hq b c ⊗[k] Hq b' c' :=
   AdjoinRoot.liftAlgHom _ (Algebra.ofId k _) (star b c b' c') (by
     rw [Qpoly, eval₂_qp]
@@ -424,6 +439,7 @@ theorem conj_root : conj b c (AdjoinRoot.root _) = algebraMap k _ b - AdjoinRoot
   AdjoinRoot.liftAlgHom_root _ _ _ _
 
 /-- Page 143: `(u * v)' = u' * v`: the conjugation of `H` sends `u * v` to `bb' − u * v`. -/
+@[montpellier "83, 143"]
 theorem conjL_star :
     Algebra.TensorProduct.map (conj b c) (AlgHom.id k _) (star b c b' c')
       = algebraMap k _ (b * b') - star b c b' c' := by
@@ -434,6 +450,7 @@ theorem conjL_star :
 
 /-- Page 143: `(u * v)' = u * v'`: the conjugation of `H'` also sends `u * v` to
 `bb' − u * v`. -/
+@[montpellier "83, 143"]
 theorem conjR_star :
     Algebra.TensorProduct.map (AlgHom.id k _) (conj b' c') (star b c b' c')
       = algebraMap k _ (b * b') - star b c b' c' := by
@@ -453,6 +470,7 @@ variable {K : Type*} [CommRing K] [Algebra k K]
 
 /-- Pages 137–139 and 143: for characters `φ : H → K`, `φ' : H' → K`, with
 `z = φ(u)`, `z' = φ'(v)`, `(φ ⊗ φ')(u * v) = b'z + bz' − 2zz'`. -/
+@[montpellier "83, 137–139, 143"]
 theorem productMap_star (φ : Hq b c →ₐ[k] K) (φ' : Hq b' c' →ₐ[k] K) :
     Algebra.TensorProduct.productMap φ φ' (star b c b' c')
       = algebraMap k K b' * φ (AdjoinRoot.root _) + algebraMap k K b * φ' (AdjoinRoot.root _)
@@ -483,6 +501,7 @@ theorem twist_one_left (Tr : H →ₗ[k] k) (Tr' : H' →ₗ[k] k) (φ : H →�
 
 /-- Page 143: `t_{φ,φ'}(u, v) = (φ ⊗ φ')(u * v)`, for any traces with `Tr u = b`,
 `Tr v = b'`. -/
+@[montpellier "83, 143"]
 theorem twist_eq_productMap (Tr : Hq b c →ₗ[k] k) (Tr' : Hq b' c' →ₗ[k] k)
     (hTr : Tr (AdjoinRoot.root _) = b) (hTr' : Tr' (AdjoinRoot.root _) = b')
     (φ : Hq b c →ₐ[k] K) (φ' : Hq b' c' →ₐ[k] K) :
@@ -493,6 +512,7 @@ theorem twist_eq_productMap (Tr : Hq b c →ₗ[k] k) (Tr' : Hq b' c' →ₗ[k] 
 /-- Pages 138–139: `t = b'z + bz' − 2zz'` is a root of `Q` whenever `z`, `z'` are
 roots of `z² − bz + c`, `z'² − b'z' + c'`: the twist of two characters lies on the
 degenerate locus `S̃`. -/
+@[montpellier "83, 138–139"]
 theorem twist_root {z z' : K}
     (hz : z ^ 2 - algebraMap k K b * z + algebraMap k K c = 0)
     (hz' : z' ^ 2 - algebraMap k K b' * z' + algebraMap k K c' = 0) :
@@ -513,6 +533,7 @@ theorem productMap_star_root (φ : Hq b c →ₐ[k] K) (φ' : Hq b' c' →ₐ[k]
 
 /-- Page 141: replacing `φ` by the conjugate character `φ ∘ σ` sends the twist `t`
 to `bb' − t`, the involution of `S̃`. -/
+@[montpellier "83, 141"]
 theorem twist_conj (φ : Hq b c →ₐ[k] K) (φ' : Hq b' c' →ₐ[k] K) :
     Algebra.TensorProduct.productMap (φ.comp (conj b c)) φ' (star b c b' c')
       = algebraMap k K (b * b') - Algebra.TensorProduct.productMap φ φ' (star b c b' c') := by
@@ -770,6 +791,7 @@ theorem bijective_mulLeftRight_iff :
 (`IsAzumaya`: finite, projective, faithful, with `M ⊗ Mᵐᵒᵖ → End M` bijective) if and
 only if `Q(t) = t² − bb't + b²c' + b'²c − 4cc'` is invertible in `k`. Over any
 commutative ring, characteristic `2` included. -/
+@[montpellier "83, 98"]
 theorem isAzumaya_iff : IsAzumaya k (MAlg b c b' c' t) ↔ IsUnit (Q b c b' c' t) := by
   rw [← isUnit_sandwichMatrix_iff, ← bijective_mulLeftRight_iff]
   exact ⟨fun h => h.bij, fun h =>
@@ -778,17 +800,20 @@ theorem isAzumaya_iff : IsAzumaya k (MAlg b c b' c' t) ↔ IsUnit (Q b c b' c' t
 
 /-- Page 98, second form: `M(b, c; b', c'; t)` is Azumaya iff the form `det` on
 `B = k1 + ku + kv` is non-degenerate, i.e. its half discriminant `δ_{P,B}` is a unit. -/
+@[montpellier "83, 98"]
 theorem isAzumaya_iff_deltaPB :
     IsAzumaya k (MAlg b c b' c' t) ↔ IsUnit (halfDisc3 1 c c' b b' (b * b' - t)) := by
   rw [deltaPB_eq, IsUnit.neg_iff, isAzumaya_iff]
 
 /-- Over a field, `M(b, c; b', c'; t)` is Azumaya iff `Q(t) ≠ 0`: the non-Azumaya
 locus of the line of twists is `S̃ = {Q = 0}`. -/
+@[montpellier "83, 98"]
 theorem isAzumaya_iff_ne_zero {F : Type*} [Field F] {b c b' c' t : F} :
     IsAzumaya F (MAlg b c b' c' t) ↔ Q b c b' c' t ≠ 0 := by
   rw [isAzumaya_iff, isUnit_iff_ne_zero]
 
 /-- Page 97: `M(0, 0; 0, 0; t)` (`u`, `v` nilpotent) is Azumaya iff `t` is a unit. -/
+@[montpellier "83, 97"]
 theorem isAzumaya_nilpotent_iff : IsAzumaya k (MAlg (0 : k) 0 0 0 t) ↔ IsUnit t := by
   rw [isAzumaya_iff]
   simp [Q, isUnit_pow_iff]

@@ -27,6 +27,7 @@ public import Mathlib.RingTheory.Localization.Away.Basic
 public import Mathlib.RingTheory.FiniteType
 public import Mathlib.RingTheory.Algebraic.Defs
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -150,6 +151,7 @@ theorem chain (s u : R[X]) :
 noncomputable def N (f : R[X]) : R[X] := D 2 f ^ 2 - D 3 f * D 1 f
 
 /-- `G₀(t, f) = −D⁽³⁾f / D⁽¹⁾f + (D⁽²⁾f / D⁽¹⁾f)²`, with `Ring.inverse` for the division. -/
+@[montpellier "93, 72, 115–123"]
 noncomputable def G0 (f : R[X]) : R[X] := N f * (D 1 f ^ 2)⁻¹ʳ
 
 /-- Numerator of the classical `G = −2 f⁽³⁾/f' + 3 (f⁽²⁾/f')²`. -/
@@ -160,6 +162,7 @@ noncomputable def Ncl (f : R[X]) : R[X] :=
 noncomputable def G (f : R[X]) : R[X] := Ncl f * (derivative f ^ 2)⁻¹ʳ
 
 /-- Page 120: `G = 12 G₀`, cleared of denominators, over any commutative ring. -/
+@[montpellier "93, 120"]
 theorem Ncl_eq (f : R[X]) : Ncl f = 12 * N f := by
   have h2 := congrFun (factorial_smul_hasseDeriv (R := R) (k := 2)) f
   have h3 := congrFun (factorial_smul_hasseDeriv (R := R) (k := 3)) f
@@ -170,10 +173,12 @@ theorem Ncl_eq (f : R[X]) : Ncl f = 12 * N f := by
   ring
 
 /-- Page 120: `G = 12 G₀`. -/
+@[montpellier "93, 120"]
 theorem G_eq (f : R[X]) : G f = 12 * G0 f := by
   rw [G, G0, Ncl_eq, hasseDeriv_one', mul_assoc]
 
 /-- The cocycle relation cleared of denominators: no unit hypothesis. -/
+@[montpellier "93, 115–117"]
 theorem N_comp (s u : R[X]) :
     N (s.comp u) = (N s).comp u * D 1 u ^ 4 + ((D 1 s).comp u) ^ 2 * N u := by
   obtain ⟨h1, h2, h3⟩ := chain s u
@@ -202,6 +207,7 @@ lemma unit_algebra {S : Type*} [CommRing S] {a b n m k : S} (ha : IsUnit a) (hb 
 
 /-- Pages 115–117, relation (II): `G₀(t, s∘u) = G₀(u, s∘u) + G₀(t, u)`, where
 `G₀(u, s∘u) = G₀(t, s)∘u · (D⁽¹⁾u)²` expresses the quadratic differential in `dt²`. -/
+@[montpellier "93, 115–117"]
 theorem G0_comp (s u : R[X]) (hs : IsUnit (D 1 s)) (hu : IsUnit (D 1 u)) :
     G0 (s.comp u) = (G0 s).comp u * D 1 u ^ 2 + G0 u := by
   have hsu : IsUnit ((D 1 s).comp u) := hs.map (compRingHom u)
@@ -215,6 +221,7 @@ theorem G0_X : G0 (X : R[X]) = 0 := by simp [G0, N_X]
 
 /-- Invariance under homographies, cleared of denominators: if `s · q = p` with `p`, `q`
 killed by `D⁽²⁾` and `D⁽³⁾`, then `q² · N(s) = 0`. -/
+@[montpellier "93, 115"]
 theorem N_homography {s p q : R[X]} (hp2 : D 2 p = 0) (hp3 : D 3 p = 0)
     (hq2 : D 2 q = 0) (hq3 : D 3 q = 0) (h : s * q = p) : q ^ 2 * N s = 0 := by
   have e2 := congrArg (D 2) h
@@ -230,6 +237,7 @@ lemma D_mul_X_of_const {a : R[X]} (h1 : D 1 a = 0) (h2 : D 2 a = 0) (h3 : D 3 a 
   simp
 
 /-- Homographies whose coefficients are killed by `D⁽¹⁾, D⁽²⁾, D⁽³⁾` satisfy `G₀ = 0`. -/
+@[montpellier "93, 115"]
 theorem G0_homography {s a b c d : R[X]}
     (ha : D 1 a = 0 ∧ D 2 a = 0 ∧ D 3 a = 0) (hb : D 1 b = 0 ∧ D 2 b = 0 ∧ D 3 b = 0)
     (hc : D 1 c = 0 ∧ D 2 c = 0 ∧ D 3 c = 0) (hd : D 1 d = 0 ∧ D 2 d = 0 ∧ D 3 d = 0)
@@ -242,6 +250,7 @@ theorem G0_homography {s a b c d : R[X]}
   simp [G0, hN]
 
 /-- Constant homographies: `a, b, c, d ∈ R`. -/
+@[montpellier "93, 115"]
 theorem G0_homography_const {s : R[X]} {a b c d : R} (hq : IsUnit (C c * X + C d))
     (h : s * (C c * X + C d) = C a * X + C b) : G0 s = 0 := by
   have k : ∀ r : R, D 1 (C r) = 0 ∧ D 2 (C r) = 0 ∧ D 3 (C r) = 0 := fun r =>
@@ -255,11 +264,13 @@ lemma D_X_pow (k n : ℕ) : D k (X ^ n : R[X]) = (n.choose k : R[X]) * X ^ (n - 
     map_natCast]
 
 /-- `G₀(t, t²) · (2t)² = 1`, so `G₀(t, t²) = 1/(4t²)` where `2` is invertible. -/
+@[montpellier "93, 72"]
 theorem N_X_sq : N (X ^ 2 : R[X]) = 1 ∧ D 1 (X ^ 2 : R[X]) = 2 * X := by
   simp only [N, D_X_pow]
   norm_num
 
 /-- `G₀(t, t³) · (3t²)² = 6t²`, so `G₀(t, t³) = 2/(3t²)` where `3` is invertible. -/
+@[montpellier "93, 72"]
 theorem N_X_cube : N (X ^ 3 : R[X]) = 6 * X ^ 2 ∧ D 1 (X ^ 3 : R[X]) = 3 * X ^ 2 := by
   simp only [N, D_X_pow]
   norm_num
@@ -271,6 +282,7 @@ lemma natCast_eq_zero (p : ℕ) [CharP R p] : (p : R[X]) = 0 := by
   rw [← map_natCast C, CharP.cast_eq_zero, map_zero]
 
 /-- In characteristic 2, `t²` is killed by `D⁽¹⁾` but `G₀(t, t + t²) = 1`. -/
+@[montpellier "93, 72, 115–123"]
 theorem char_two [CharP R 2] :
     D 1 (X ^ 2 : R[X]) = 0 ∧ D 1 (X + X ^ 2 : R[X]) = 1 ∧ G0 (X + X ^ 2 : R[X]) = 1 := by
   have h2 : (2 : R[X]) = 0 := by exact_mod_cast natCast_eq_zero (R := R) 2
@@ -285,6 +297,7 @@ theorem char_two [CharP R 2] :
 
 /-- In characteristic 3, `t³` is killed by `D⁽¹⁾` and `D⁽²⁾` but not by `D⁽³⁾`, and
 `G₀(t, t + t³) = −1`. -/
+@[montpellier "93, 72, 115–123"]
 theorem char_three [CharP R 3] :
     D 1 (X ^ 3 : R[X]) = 0 ∧ D 2 (X ^ 3 : R[X]) = 0 ∧ D 3 (X ^ 3 : R[X]) = 1 ∧
       D 1 (X + X ^ 3 : R[X]) = 1 ∧ G0 (X + X ^ 3 : R[X]) = -1 := by
@@ -306,6 +319,7 @@ theorem char_three [CharP R 3] :
 def Killed (f : R[X]) : Prop := D 1 f = 0 ∧ D 2 f = 0 ∧ D 3 f = 0
 
 /-- If `u` is killed, so is every polynomial in `u` (by the chain rule). -/
+@[montpellier "93, 121"]
 theorem Killed.comp {u : R[X]} (hu : Killed u) (f : R[X]) : Killed (f.comp u) := by
   obtain ⟨h1, h2, h3⟩ := chain f u
   obtain ⟨u1, u2, u3⟩ := hu
@@ -356,6 +370,7 @@ lemma dvd_choose_of_dvd (p : ℕ) [hp : Fact p.Prime] {n k : ℕ} (hk0 : 0 < k) 
   exact Nat.dvd_of_mod_eq_zero this
 
 /-- Margin of page 121, `p > 3`: the killed polynomials are those in `X^p`. -/
+@[montpellier "93, 121"]
 theorem killed_iff_of_gt (p : ℕ) [Fact p.Prime] [CharP R p] (hp : 3 < p) (f : R[X]) :
     Killed f ↔ ∀ n, f.coeff n ≠ 0 → p ∣ n := by
   rw [killed_iff p]
@@ -364,6 +379,7 @@ theorem killed_iff_of_gt (p : ℕ) [Fact p.Prime] [CharP R p] (hp : 3 < p) (f : 
   · exact dvd_choose_of_dvd p (by norm_num) hp h
 
 /-- Margin of page 121, `p = 2`: the killed polynomials are those in `X^4`. -/
+@[montpellier "93, 121"]
 theorem killed_iff_two [CharP R 2] (f : R[X]) :
     Killed f ↔ ∀ n, f.coeff n ≠ 0 → 4 ∣ n := by
   rw [killed_iff 2]
@@ -381,6 +397,7 @@ theorem killed_iff_two [CharP R 2] (f : R[X]) :
     omega
 
 /-- Margin of page 121, `p = 3`: the killed polynomials are those in `X^9`. -/
+@[montpellier "93, 121"]
 theorem killed_iff_three [CharP R 3] (f : R[X]) :
     Killed f ↔ ∀ n, f.coeff n ≠ 0 → 9 ∣ n := by
   rw [killed_iff 3]
@@ -424,6 +441,7 @@ lemma coeff_lin_of_two_le (a b : R) {i : ℕ} (hi : 2 ≤ i) : (C a * X + C b).c
 
 /-- The step of page 122: if `s · (cX + d) ≡ aX + b` modulo `X^(j+3)`, the coefficient of
 `X^j` in `(cX + d) · N(s)` is `−C(j+3,3) · s₁ · (coefficient of X^(j+3) in s·(cX+d))`. -/
+@[montpellier "93, 122"]
 theorem step (s : R[X]) (a b c d : R) (j : ℕ)
     (h : X ^ (j + 3) ∣ s * (C c * X + C d) - (C a * X + C b)) :
     ((C c * X + C d) * N s).coeff j =
@@ -454,6 +472,7 @@ theorem step (s : R[X]) (a b c d : R) (j : ℕ)
 /-- The induction of pages 121–123, over any commutative ring: if `C(k,3)` is a unit for
 `3 ≤ k < n`, `s₁` is a unit, `s · (cX + d)` has no `X²` term and the coefficients of `N(s)`
 vanish below `X^(n−3)`, then `s · (cX + d)` is affine modulo `X^n`. -/
+@[montpellier "93, 121–123"]
 theorem rigidity_core (n : ℕ) (hC : ∀ k, 3 ≤ k → k < n → IsUnit ((k.choose 3 : ℕ) : R))
     (s : R[X]) (hs : IsUnit (s.coeff 1)) (c d : R) (h2 : (s * (C c * X + C d)).coeff 2 = 0)
     (hN : ∀ m, m + 3 < n → (N s).coeff m = 0) :
@@ -493,6 +512,7 @@ lemma coeff_mul_lin_succ (s : R[X]) (c d : R) (i : ℕ) :
 
 /-- The Proposition of pages 121–123 with an explicit homography: for
 `c = −s₂/s₁`, `s · (cX + 1) ≡ (s₁ + c s₀) X + s₀` modulo `X^n`. -/
+@[montpellier "93, 121–123"]
 theorem rigidity_explicit (n : ℕ) (hC : ∀ k, 3 ≤ k → k < n → IsUnit ((k.choose 3 : ℕ) : R))
     (s : R[X]) (hs : IsUnit (s.coeff 1)) (hN : ∀ m, m + 3 < n → (N s).coeff m = 0) :
     X ^ n ∣ s * (C (-(s.coeff 2 * (s.coeff 1)⁻¹ʳ)) * X + 1) -
@@ -510,6 +530,7 @@ theorem rigidity_explicit (n : ℕ) (hC : ∀ k, 3 ≤ k → k < n → IsUnit ((
 `X^n ∣ N(s)`, and `D⁽¹⁾s` is a unit of `B` iff `s₁` is a unit of `A`), over any commutative
 ring `A` in which `C(k,3)` is a unit for `3 ≤ k < n`: `s = (at + b)/(ct + 1)` in `B`, with
 `a, b, c ∈ A` and determinant `a − bc = s₁`. -/
+@[montpellier "93, 121–123"]
 theorem rigidity (n : ℕ) (hC : ∀ k, 3 ≤ k → k < n → IsUnit ((k.choose 3 : ℕ) : R))
     (s : R[X]) (hs : IsUnit (s.coeff 1)) (hN : X ^ n ∣ N s) :
     ∃ a b c : R, a - b * c = s.coeff 1 ∧ X ^ n ∣ s * (C c * X + 1) - (C a * X + C b) :=
@@ -519,6 +540,7 @@ theorem rigidity (n : ℕ) (hC : ∀ k, 3 ≤ k → k < n → IsUnit ((k.choose 
 
 /-- Characteristic `p > 3`, `B = A[T]/(T^p)`: the Proposition of pages 121–122, over any
 ring of characteristic `p` (no hypothesis on `Pic(A)`). -/
+@[montpellier "93, 121–122"]
 theorem rigidity_of_gt (p : ℕ) [hp : Fact p.Prime] [CharP R p] (s : R[X])
     (hs : IsUnit (s.coeff 1)) (hN : X ^ p ∣ N s) :
     ∃ a b c : R, a - b * c = s.coeff 1 ∧ X ^ p ∣ s * (C c * X + 1) - (C a * X + C b) := by
@@ -530,6 +552,7 @@ theorem rigidity_of_gt (p : ℕ) [hp : Fact p.Prime] [CharP R p] (s : R[X])
 
 /-- `B = A[T]/(T^4)`, the level `p²` for `p = 2` (page 123): only `C(3,3) = 1` occurs, and
 the statement holds over any commutative ring. -/
+@[montpellier "93, 123"]
 theorem rigidity_four (s : R[X]) (hs : IsUnit (s.coeff 1)) (hN : X ^ 4 ∣ N s) :
     ∃ a b c : R, a - b * c = s.coeff 1 ∧ X ^ 4 ∣ s * (C c * X + 1) - (C a * X + C b) :=
   rigidity 4 (fun k hk3 hk4 => by
@@ -538,6 +561,7 @@ theorem rigidity_four (s : R[X]) (hs : IsUnit (s.coeff 1)) (hN : X ^ 4 ∣ N s) 
 
 /-- `B = A[T]/(T^9)`, the level `p²` for `p = 3` (page 123, right-hand column):
 `C(k,3) ≢ 0 mod 3` for `3 ≤ k ≤ 8`. -/
+@[montpellier "93, 123"]
 theorem rigidity_nine [CharP R 3] (s : R[X]) (hs : IsUnit (s.coeff 1)) (hN : X ^ 9 ∣ N s) :
     ∃ a b c : R, a - b * c = s.coeff 1 ∧ X ^ 9 ∣ s * (C c * X + 1) - (C a * X + C b) := by
   have : Fact (Nat.Prime 3) := ⟨Nat.prime_three⟩
@@ -546,6 +570,7 @@ theorem rigidity_nine [CharP R 3] (s : R[X]) (hs : IsUnit (s.coeff 1)) (hN : X ^
 
 /-- Characteristic `0` (`A` a `ℚ`-algebra), in `A[X]` itself: `N(s) = 0` with `s₁` a unit
 forces `s · (cX + 1) = aX + b`. -/
+@[montpellier "93, 121–123"]
 theorem rigidity_char_zero [Algebra ℚ R] (s : R[X]) (hs : IsUnit (s.coeff 1)) (hN : N s = 0) :
     ∃ a b c : R, a - b * c = s.coeff 1 ∧ s * (C c * X + 1) = C a * X + C b := by
   have hC : ∀ k, 3 ≤ k → IsUnit ((k.choose 3 : ℕ) : R) := fun k hk => by
@@ -605,6 +630,7 @@ theorem N_of_homography_trunc (p M : ℕ) [Fact p.Prime] [CharP R p] (hM : 3 < p
   ring
 
 /-- The Proposition of pages 121–123 as an equivalence in `A[T]/(T^p)`, `p > 3`. -/
+@[montpellier "93, 121–123"]
 theorem rigidity_iff_of_gt (p : ℕ) [hp : Fact p.Prime] [CharP R p] (hp3 : 3 < p) (s : R[X])
     (hs : IsUnit (s.coeff 1)) :
     X ^ p ∣ N s ↔
@@ -617,6 +643,7 @@ theorem rigidity_iff_of_gt (p : ℕ) [hp : Fact p.Prime] [CharP R p] (hp3 : 3 < 
 /-! ### The determinant cannot be normalised to `1` -/
 
 /-- If `uX` is a homography of determinant `1` modulo `X³`, then `u` is a square. -/
+@[montpellier "93, 121"]
 theorem det_one_square (u : R) {a b c d : R} (hdet : a * d - b * c = 1)
     (h : X ^ 3 ∣ C u * X * (C c * X + C d) - (C a * X + C b)) : ∃ v, u = v ^ 2 := by
   have h0 := X_pow_dvd_iff.1 h 0 (by norm_num)
@@ -630,6 +657,7 @@ theorem det_one_square (u : R) {a b c d : R} (hdet : a * d - b * c = 1)
 /-- Page 121 adds « avec `ad − bc = 1` »: in `𝔽₅[T]/(T^5)`, `s = 2t` has `G₀ = 0` and
 `D⁽¹⁾s = 2` a unit, and is `(2t + 0)/(0·t + 1)`, but no homography of determinant `1` gives
 it, `2` not being a square mod `5`. -/
+@[montpellier "93, 121"]
 theorem det_one_counterexample :
     N (C 2 * X : (ZMod 5)[X]) = 0 ∧ IsUnit ((C 2 * X : (ZMod 5)[X]).coeff 1) ∧
       X ^ 5 ∣ (C 2 * X : (ZMod 5)[X]) * (C 0 * X + C 1) - (C 2 * X + C 0) ∧
@@ -678,6 +706,7 @@ def barRel : AddSubgroup (G × FreeAbelianGroup P) :=
     ((-x.1, FreeAbelianGroup.of (x.1 +ᵥ x.2) - FreeAbelianGroup.of x.2) : G × FreeAbelianGroup P))
 
 /-- `Ḡ`, the extension of `ℤ` by `G` with `j⁻¹(1) = P`, built without choosing a point. -/
+@[montpellier "93, 233–235"]
 abbrev Gbar := (G × FreeAbelianGroup P) ⧸ barRel G P
 
 variable {G P}
@@ -754,6 +783,7 @@ theorem eq_ι_add (p₀ : P) (x : Gbar G P) : x = ι (r p₀ x) + j x • e p₀
 
 /-- The complex `𝓛 = [G → Ḡ]` is quasi-isomorphic to `ℤ`: `ι` is injective (above), its image is
 the kernel of `j`, and `j` is onto. -/
+@[montpellier "93, 233–235"]
 theorem j_eq_zero_iff (x : Gbar G P) : j x = 0 ↔ ∃ g, ι g = x := by
   obtain ⟨p₀⟩ := (inferInstance : Nonempty P)
   refine ⟨fun h => ⟨r p₀ x, ?_⟩, fun ⟨g, hg⟩ => hg ▸ j_ι g⟩
@@ -788,6 +818,7 @@ variable {C : Type*} [Category C] [Preadditive C] {K' K'' : CochainComplex C ℤ
   (hu : ∀ (g : G) (p : P), u (g +ᵥ p) - u p = δ (-1) 0 (k g))
 
 /-- `φ⁰ : Ḡ → Hom⁰(K', K'')`, equal to `dk + kd` on `G` and to `u` on `P`. -/
+@[montpellier "93, 233–235"]
 def φ0 : Gbar G P →+ Cochain K' K'' 0 :=
   QuotientAddGroup.lift _ ((((δ_hom ℤ K' K'' (-1) 0).toAddMonoidHom.comp k).comp
       (AddMonoidHom.fst G _)) + (FreeAbelianGroup.lift u).comp (AddMonoidHom.snd G _)) (by
@@ -824,6 +855,7 @@ def homotopy (p p' : P) : Homotopy (homOf' u hc p') (homOf' u hc p) :=
 
 /-- **Pages 234–235.** The class of `u(p)` in the homotopy category does not depend on `p`:
 the morphism defined by `(P, u, k)` needs no choice of a point. -/
+@[montpellier "93, 234–235"]
 theorem quotient_map_eq (p p' : P) :
     (HomotopyCategory.quotient C (ComplexShape.up ℤ)).map (homOf' u hc p) =
       (HomotopyCategory.quotient C (ComplexShape.up ℤ)).map (homOf' u hc p') :=
@@ -832,6 +864,7 @@ theorem quotient_map_eq (p p' : P) :
 omit hc in
 /-- The value of `φ⁰` on `j⁻¹(1)` is `u(p)` for some `p`: the class given by `φ` on the
 generator of `H⁰(𝓛) = ℤ` is the class of any `u(p)`. -/
+@[montpellier "93, 233–235"]
 theorem φ0_of_j_eq_one (x : Gbar G P) (hx : j x = 1) : ∃ p, φ0 k u hu x = u p := by
   obtain ⟨p, rfl⟩ := (j_eq_one_iff x).1 hx
   exact ⟨p, φ0_e k u hu p⟩
@@ -848,6 +881,7 @@ variable {C : Type*} [Category C] [Abelian C] [HasDerivedCategory C] {K' K'' : C
 include hu
 
 /-- The same in the derived category `D(C)`: `(P, u, k)` defines one morphism `K' → K''`. -/
+@[montpellier "93, 233–235"]
 theorem derived_map_eq (p p' : P) :
     DerivedCategory.Q.map (homOf' u hc p) = DerivedCategory.Q.map (homOf' u hc p') :=
   (DerivedCategory.Q_map_eq_of_homotopy (h := homotopy k u hu hc p p')).symm
@@ -988,6 +1022,7 @@ theorem iterate_leibniz (x y : A) : D^[p] (x * y) = x * D^[p] y + D^[p] x * y :=
   simpa [Module.End.pow_apply, mul_comm] using this
 
 /-- `Dᵖ` packaged as a derivation. -/
+@[montpellier "93, 193–194, 208"]
 def pDerivation : Derivation ℤ A A :=
   Derivation.mk' ((D : Module.End ℤ A) ^ p) fun x y => by
     simp [Module.End.pow_apply, iterate_leibniz, smul_eq_mul]; ring
@@ -996,6 +1031,7 @@ theorem pDerivation_apply (x : A) : pDerivation D p x = D^[p] x := by
   simp [pDerivation, Module.End.pow_apply]
 
 /-- **Statement 2 (Jacobson's formula in rank one).** -/
+@[montpellier "93, 193–194, 208"]
 theorem jacobson (a : A) :
     ((D : Module.End ℤ A) + μ a) ^ p = (D : Module.End ℤ A) ^ p + μ (a ^ p + D^[p - 1] a) := by
   set q : (Module.End ℤ A)[X] := C δ + X * C (μ a) with hqdef
@@ -1069,6 +1105,7 @@ theorem iterate_one : D^[p] (1 : A) = 0 := by
 /-- **Statement 3 (the easy direction in rank one).** If the unit `y` is horizontal for the
 connection `D + a` on `A`, i.e. `D y + a y = 0`, then `(D + a)ᵖ = Dᵖ + ω(Dᵖ)` with
 `ω = -dy/y` the connection form: the `p`-curvature `(∇_D)ᵖ - ∇_{Dᵖ}` vanishes. -/
+@[montpellier "93, 193–194, 208"]
 theorem pCurvature_eq_zero (y z a : A) (hu : y * z = 1) (hy : D y + a * y = 0) :
     (δ + μ a) ^ p = δ ^ p + μ (-(D^[p] y) * z) := by
   have hinv : μ z * μ y = 1 := by ext x; simp [← mul_assoc, mul_comm z y, hu]
@@ -1100,6 +1137,7 @@ theorem pCurvature_eq_zero (y z a : A) (hu : y * z = 1) (hy : D y + a * y = 0) :
   linear_combination (D^[p] x) * hu - x * hl
 
 /-- Statements 2 and 3 together: `a ^ p + D^{p-1} a = -(Dᵖ y)/y` for `a = -Dy/y`. -/
+@[montpellier "93, 193–194, 208"]
 theorem jacobson_logDeriv (y z a : A) (hu : y * z = 1) (hy : D y + a * y = 0) :
     a ^ p + D^[p - 1] a = -(D^[p] y) * z := by
   have h := congrArg (· 1) ((jacobson D p a).symm.trans (pCurvature_eq_zero D p y z a hu hy))
@@ -1107,6 +1145,7 @@ theorem jacobson_logDeriv (y z a : A) (hu : y * z = 1) (hy : D y + a * y = 0) :
 
 /-- When `Dᵖ = 0` (as for `d/dX` on `𝔽_p(X)`), a logarithmic derivative `a = -Dy/y`
 satisfies `a ^ p + D^{p-1} a = 0`. -/
+@[montpellier "93, 193–194, 208"]
 theorem jacobson_logDeriv_of_pow_eq_zero (hD : ∀ x, D^[p] x = 0) (y z a : A) (hu : y * z = 1)
     (hy : D y + a * y = 0) : a ^ p + D^[p - 1] a = 0 := by
   rw [jacobson_logDeriv D p y z a hu hy, hD, neg_zero, zero_mul]
@@ -1621,6 +1660,7 @@ axiom; nothing depends on it. The easy direction in characteristic `p` is
 open Polynomial in
 /-- **The Grothendieck–Katz `p`-curvature conjecture** on an open subset of the affine line
 (statement, open; page 194, « La réciproque est-elle vraie ? »). -/
+@[montpellier "93, 194"]
 def PCurvatureConjecture : Prop :=
   ∀ (R : Type) [CommRing R] [IsDomain R] [CharZero R] [Algebra.FiniteType ℤ R]
     (g : R[X]), g ≠ 0 →
@@ -1852,6 +1892,7 @@ noncomputable def denom (s g : A[X]) (l m : A) : A[X] :=
 
 /-- The reduction to `α = 0` (pages 121–123), over any commutative ring `A` of characteristic `p`
 in which `C(k,3)` is a unit for `3 ≤ k < p^n`. -/
+@[montpellier "93, 121–123"]
 theorem rigidity_alpha [Fact p.Prime] [CharP A p] (hq : 3 < p ^ n)
     (hC : ∀ k, 3 ≤ k → k < p ^ n → IsUnit ((k.choose 3 : ℕ) : A))
     (s g : A[X]) (hg : AdjoinRoot.mk (P p n α) (D 1 s * g) = 1)
@@ -1953,6 +1994,7 @@ theorem rigidity_alpha [Fact p.Prime] [CharP A p] (hq : 3 < p ^ n)
 (so `Pic(A) = 0`), `α` arbitrary: if `C(k,3)` is a unit for `3 ≤ k < p^n`, `D⁽¹⁾s` is a unit
 of `B` and `G₀(t, s) = 0` in `B`, then `s = (at + b)/(ct + d)` in `B` with `a, b, c, d ∈ A`
 and `ct + d` a unit of `B`. -/
+@[montpellier "93, 121–123"]
 theorem rigidity_alpha_local [IsLocalRing A] [Fact p.Prime] [CharP A p] (hq : 3 < p ^ n)
     (hC : ∀ k, 3 ≤ k → k < p ^ n → IsUnit ((k.choose 3 : ℕ) : A)) (s : A[X])
     (hs : IsUnit (AdjoinRoot.mk (P p n α) (D 1 s))) (hN : AdjoinRoot.mk (P p n α) (N s) = 0) :
@@ -1989,6 +2031,7 @@ theorem rigidity_alpha_local [IsLocalRing A] [Fact p.Prime] [CharP A p] (hq : 3 
     exact ((isUnit_pow_iff hq0).1 this).pow _
 
 /-- `p > 3`, `B = A[T]/(T^p − α)` (page 122), `A` local. -/
+@[montpellier "93, 122"]
 theorem rigidity_alpha_of_gt [IsLocalRing A] [hp : Fact p.Prime] [CharP A p] (hp3 : 3 < p)
     (s : A[X]) (hs : IsUnit (AdjoinRoot.mk (P p 1 α) (D 1 s)))
     (hN : AdjoinRoot.mk (P p 1 α) (N s) = 0) :
@@ -2003,6 +2046,7 @@ theorem rigidity_alpha_of_gt [IsLocalRing A] [hp : Fact p.Prime] [CharP A p] (hp
   exact absurd ((Nat.Prime.dvd_factorial hp.out).1 hf) (by simp at hkp; omega)
 
 /-- `p = 2`, `B = A[T]/(T^4 − α)` (page 123), `A` local. -/
+@[montpellier "93, 123"]
 theorem rigidity_alpha_four [IsLocalRing A] [CharP A 2] (s : A[X])
     (hs : IsUnit (AdjoinRoot.mk (P 2 2 α) (D 1 s))) (hN : AdjoinRoot.mk (P 2 2 α) (N s) = 0) :
     ∃ a b c d : A,
@@ -2014,6 +2058,7 @@ theorem rigidity_alpha_four [IsLocalRing A] [CharP A 2] (s : A[X])
   simp
 
 /-- `p = 3`, `B = A[T]/(T^9 − α)` (page 123, right-hand column), `A` local. -/
+@[montpellier "93, 123"]
 theorem rigidity_alpha_nine [IsLocalRing A] [CharP A 3] (s : A[X])
     (hs : IsUnit (AdjoinRoot.mk (P 3 2 α) (D 1 s))) (hN : AdjoinRoot.mk (P 3 2 α) (N s) = 0) :
     ∃ a b c d : A,
@@ -2048,6 +2093,7 @@ local notation "D" => Polynomial.hasseDeriv
 variable {A : Type*} [CommRing A] (p n : ℕ) (α : A)
 
 /-- The Proposition of pages 121–123 in `B = A[T]/(T^(p^n) − α)` when `Pic(A) = 0`. -/
+@[montpellier "93, 121–123"]
 theorem rigidity_alpha_pic [Subsingleton (CommRing.Pic A)] [Fact p.Prime] [CharP A p]
     (hq : 3 < p ^ n) (hC : ∀ k, 3 ≤ k → k < p ^ n → IsUnit ((k.choose 3 : ℕ) : A)) (s : A[X])
     (hs : IsUnit (AdjoinRoot.mk (P p n α) (D 1 s))) (hN : AdjoinRoot.mk (P p n α) (N s) = 0) :
@@ -2120,6 +2166,7 @@ theorem rigidity_alpha_pic [Subsingleton (CommRing.Pic A)] [Fact p.Prime] [CharP
   exact ⟨a, b, c, d, h, e ▸ v.isUnit⟩
 
 /-- `p > 3`, `B = A[T]/(T^p − α)` (page 122), `Pic(A) = 0`. -/
+@[montpellier "93, 122"]
 theorem rigidity_alpha_pic_of_gt [Subsingleton (CommRing.Pic A)] [hp : Fact p.Prime]
     [CharP A p] (hp3 : 3 < p) (s : A[X]) (hs : IsUnit (AdjoinRoot.mk (P p 1 α) (D 1 s)))
     (hN : AdjoinRoot.mk (P p 1 α) (N s) = 0) :
@@ -2133,6 +2180,7 @@ theorem rigidity_alpha_pic_of_gt [Subsingleton (CommRing.Pic A)] [hp : Fact p.Pr
   simp at hkp; omega
 
 /-- `p = 2`, `B = A[T]/(T^4 − α)` (page 123), `Pic(A) = 0`. -/
+@[montpellier "93, 123"]
 theorem rigidity_alpha_pic_four [Subsingleton (CommRing.Pic A)] [CharP A 2] (s : A[X])
     (hs : IsUnit (AdjoinRoot.mk (P 2 2 α) (D 1 s))) (hN : AdjoinRoot.mk (P 2 2 α) (N s) = 0) :
     ∃ a b c d : A,
@@ -2144,6 +2192,7 @@ theorem rigidity_alpha_pic_four [Subsingleton (CommRing.Pic A)] [CharP A 2] (s :
     simp) s hs hN
 
 /-- `p = 3`, `B = A[T]/(T^9 − α)` (page 123, right-hand column), `Pic(A) = 0`. -/
+@[montpellier "93, 123"]
 theorem rigidity_alpha_pic_nine [Subsingleton (CommRing.Pic A)] [CharP A 3] (s : A[X])
     (hs : IsUnit (AdjoinRoot.mk (P 3 2 α) (D 1 s))) (hN : AdjoinRoot.mk (P 3 2 α) (N s) = 0) :
     ∃ a b c d : A,

@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -79,6 +80,7 @@ def zbar : Subgroup G :=
   (center (G ⧸ (N ⊓ N'))).comap (QuotientGroup.mk' (N ⊓ N')) ⊓ centralizer (N : Set G)
 
 /-- `ℨ = zbar ⧸ N′` (page 46). -/
+@[montpellier "133, 46"]
 abbrev Zfrak := zbar N N' ⧸ N'.subgroupOf (zbar N N')
 
 variable {N N'}
@@ -157,6 +159,7 @@ theorem phi_eq_of_rel {z w : zbar N N'} (h : z⁻¹ * w ∈ N'.subgroupOf (zbar 
   rw [show (w : G) = z * ((z : G)⁻¹ * w) by group, comm_mul_central hc]
 
 /-- `Ψ_G : ℨ → Hom(π₀, π₁)` (page 46). -/
+@[montpellier "133, 46"]
 def Psi : Zfrak N N' → (G ⧸ (N ⊔ N') →* ↥(N ⊓ N')) :=
   fun a => Quotient.liftOn' a (phi hN') fun _ _ h =>
     phi_eq_of_rel hN' (QuotientGroup.leftRel_apply.mp h)
@@ -165,6 +168,7 @@ theorem Psi_mk (z : zbar N N') (g : G) :
     (Psi hN' (z : Zfrak N N') (g : G ⧸ (N ⊔ N')) : G) = ⁅g, (z : G)⁆ := rfl
 
 /-- `Ψ_G` is a homomorphism: `Ψ_G(ab) = Ψ_G(a) Ψ_G(b)` pointwise. -/
+@[montpellier "133, 46"]
 theorem Psi_mul (a b : Zfrak N N') (x : G ⧸ (N ⊔ N')) :
     Psi hN' (a * b) x = Psi hN' a x * Psi hN' b x := by
   induction a using QuotientGroup.induction_on with | H z => ?_
@@ -180,6 +184,7 @@ theorem Psi_mul (a b : Zfrak N N') (x : G ⧸ (N ⊔ N')) :
     _ = ⁅g, (z : G)⁆ * ⁅g, (w : G)⁆ := by rw [commutatorElement_def g (z : G)]; group
 
 /-- **Page 46.** `N′ = Cent(G)` if and only if `Ψ_G` is injective. -/
+@[montpellier "133, 46"]
 theorem injective_Psi_iff : Function.Injective (Psi (N := N) hN') ↔ N' = center G := by
   constructor
   · intro hinj
@@ -221,6 +226,7 @@ section Derived
 
 /-- `𝒟 = (N_ab)_M`, the coinvariants under `M = G/N′` of the abelianised `N`
 (page 51): the quotient of `N` by `⁅G, N⁆`. -/
+@[montpellier "133, 51"]
 abbrev Dcal (N : Subgroup G) [N.Normal] := ↥N ⧸ (⁅(⊤ : Subgroup G), N⁆).subgroupOf N
 
 /-- The class in `𝒟` of an element of `N`. -/
@@ -309,6 +315,7 @@ theorem lamG_swap (x y : G) : lamG hD y x = (lamG hD x y)⁻¹ := by
   exact dmk_eq_of_eq (commutatorElement_inv y x).symm _ _
 
 /-- `λ_G : π₀ × π₀ → 𝒟`, the commutator of two lifts (page 51). -/
+@[montpellier "133, 51"]
 def lam (hN' : N' ≤ center G) : G ⧸ (N ⊔ N') → G ⧸ (N ⊔ N') → Dcal N :=
   fun a b => Quotient.liftOn₂' a b (fun x y => lamG hD y x) fun x y x' y' hx hy => by
     show lamG hD y x = lamG hD y' x'
@@ -321,6 +328,7 @@ omit [N'.Normal] in
 theorem lam_mk (x y : G) :
     lam hD hN' (x : G ⧸ (N ⊔ N')) (y : G ⧸ (N ⊔ N')) = dmk ⁅x, y⁆ (comm_mem hD x y) := rfl
 
+@[montpellier "133, 51–52"]
 theorem lam_mul_left (a a' b : G ⧸ (N ⊔ N')) :
     lam hD hN' (a * a') b = lam hD hN' a b * lam hD hN' a' b := by
   induction a using QuotientGroup.induction_on with | H x => ?_
@@ -329,17 +337,20 @@ theorem lam_mul_left (a a' b : G ⧸ (N ⊔ N')) :
   exact map_mul (lamG hD y) x x'
 
 omit [N'.Normal] in
+@[montpellier "133, 51–52"]
 theorem lam_swap (a b : G ⧸ (N ⊔ N')) : lam hD hN' a b = (lam hD hN' b a)⁻¹ := by
   induction a using QuotientGroup.induction_on with | H x => ?_
   induction b using QuotientGroup.induction_on with | H y => ?_
   exact lamG_swap hD x y
 
+@[montpellier "133, 51–52"]
 theorem lam_mul_right (a b b' : G ⧸ (N ⊔ N')) :
     lam hD hN' a (b * b') = lam hD hN' a b * lam hD hN' a b' := by
   rw [lam_swap hD hN' a (b * b'), lam_mul_left, mul_inv_rev, ← lam_swap, ← lam_swap, Dcal_comm]
 
 omit [N'.Normal] in
 /-- `λ_G` is alternating. -/
+@[montpellier "133, 51–52"]
 theorem lam_self (a : G ⧸ (N ⊔ N')) : lam hD hN' a a = 1 := by
   induction a using QuotientGroup.induction_on with | H x => ?_
   rw [lam_mk, ← dmk_one]
@@ -348,6 +359,7 @@ theorem lam_self (a : G ⧸ (N ⊔ N')) : lam hD hN' a a = 1 := by
 omit [N'.Normal] in
 /-- **Pages 51–52.** With `N ⊃ D(G)` and `N′ ⊂ Cent(G)`, `N = D(G)` if and only if
 `λ_G` is surjective, i.e. its values generate `𝒟`. -/
+@[montpellier "133, 51–52"]
 theorem eq_commutator_iff_lam_surjective :
     N = _root_.commutator G ↔
       closure (Set.range fun p : (G ⧸ (N ⊔ N')) × (G ⧸ (N ⊔ N')) => lam hD hN' p.1 p.2) = ⊤ := by
@@ -418,6 +430,7 @@ def antidiag (hex : q.ker = ι.range) (a : ↥(N ⊓ N')) : fibre q :=
 /-- `G₁ = (G ×_{π₀} E)/π₁`. The antidiagonal image of `π₁` is central, so its
 normal closure is itself; the normal closure is taken only to have a quotient group
 without carrying that proof in the type. -/
+@[montpellier "133, 48, 52"]
 abbrev G1 (hex : q.ker = ι.range) := fibre q ⧸ normalClosure (Set.range (antidiag ι q hex))
 
 /-- `N ⊂ G` seen in the fibre product, as `n ↦ (n, 1)`. -/
@@ -446,6 +459,7 @@ theorem cE_spec (hex : q.ker = ι.range) (e f : E) : ι (cE hD ι q hex e f) = �
   (MonoidHom.mem_range.mp (comm_mem_range hD ι q hex e f)).choose_spec
 
 /-- `c_E` depends only on the images in `π₀`: it is a pairing `π₀ × π₀ → π₁`. -/
+@[montpellier "133, 48, 52"]
 theorem cE_well_defined (hex : q.ker = ι.range) (hιc : ∀ a, ι a ∈ center E)
     (hι : Function.Injective ι) {e e' f f' : E} (he : q e = q e') (hf : q f = q f') :
     cE hD ι q hex e f = cE hD ι q hex e' f' := by
@@ -464,6 +478,7 @@ theorem cE_well_defined (hex : q.ker = ι.range) (hιc : ∀ a, ι a ∈ center 
 /-- **Pages 48 and 52.** In `G₁`, the commutator of the classes of `(g, e)` and
 `(z, f)` is the class of `(⁅g, z⁆ · c_E(e, f), 1)`: the commutator in `G` times
 the commutator pairing of `E`. -/
+@[montpellier "133, 48, 52"]
 theorem commutator_G1 (hex : q.ker = ι.range) (p r : fibre q) :
     (⁅(p : G1 ι q hex), (r : G1 ι q hex)⁆ : G1 ι q hex) =
       ((incN q (mul_mem (comm_mem hD (p : G × E).1 (r : G × E).1)
@@ -486,6 +501,7 @@ theorem commutator_G1 (hex : q.ker = ι.range) (p r : fibre q) :
 
 /-- **Page 48.** `Ψ_{G₁} = Ψ_G · c̃_E α`: for `z ∈ zbar`, the commutator in `G₁` of
 the classes of `(g, e)` and `(z, f)` is the image of `Ψ_G(z)(ḡ) · c_E(e, f) ∈ π₁`. -/
+@[montpellier "133, 48"]
 theorem Psi_G1 (hex : q.ker = ι.range) (p r : fibre q) (hz : (r : G × E).1 ∈ zbar N N') :
     (⁅(p : G1 ι q hex), (r : G1 ι q hex)⁆ : G1 ι q hex) =
       ((incN q (mem_inf.mp ((Psi hN' ((⟨_, hz⟩ : zbar N N') : Zfrak N N')
@@ -496,6 +512,7 @@ theorem Psi_G1 (hex : q.ker = ι.range) (p r : fibre q) (hz : (r : G × E).1 ∈
 omit [N'.Normal] in
 /-- **Page 52.** `λ_{G₁} = λ_G + β c_E`: the class in `𝒟` of the element of `N`
 given by `commutator_G1` is `λ_G(x̄, ȳ) · β(c_E(e, f))`, `β : π₁ → 𝒟`. -/
+@[montpellier "133, 52"]
 theorem lam_G1 (x y : G) (c : ↥(N ⊓ N')) :
     dmk (⁅x, y⁆ * c) (mul_mem (comm_mem hD x y) (mem_inf.mp c.2).1) =
       lam hD hN' (x : G ⧸ (N ⊔ N')) (y : G ⧸ (N ⊔ N')) * dmk (c : G) (mem_inf.mp c.2).1 := rfl

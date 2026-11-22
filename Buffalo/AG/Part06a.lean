@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -40,6 +41,7 @@ example (f : X ⟶ Y) : IsOpenImmersion f ↔ IsOpenEmbedding f ∧ ∀ x, IsIso
 to the open sets of `Y` (every open `U` gives `U.ι` with image `U`, and two open immersions with
 the same image are isomorphic over `Y`); open immersions are stable under composition and base
 change. -/
+@[buffalo "Oqhr-Gt66es-3549"]
 theorem prop_3549 :
     (∀ U : Y.Opens, Set.range U.ι = U) ∧
     (∀ (f : X ⟶ Y) (g : Z ⟶ Y) [IsOpenImmersion f] [IsOpenImmersion g]
@@ -68,22 +70,26 @@ example (f : X ⟶ Y) : IsClosedImmersion f ↔
 /-- Oqhr-Gt66es-3740 (1:02:20) [prop] Intrinsic characterization: `f` is a closed immersion iff it
 is a homeomorphism onto a closed set and `𝒪_Y → f_*𝒪_X` is surjective (mathlib's definition of
 `IsClosedImmersion`; surjectivity of the map of sheaves is surjectivity on stalks). -/
+@[buffalo "Oqhr-Gt66es-3740"]
 theorem prop_3740 (f : X ⟶ Y) :
     IsClosedImmersion f ↔ IsClosedEmbedding f ∧ ∀ x, Function.Surjective (f.stalkMap x) :=
   ⟨fun h => ⟨h.isClosedEmbedding, h.stalkMap_surjective⟩,
     fun ⟨h₁, h₂⟩ => { stalkMap_surjective := h₂, isClosedEmbedding := h₁ }⟩
 
 /-- Oqhr-Gt66es-3941 (1:05:41) [prop] A closed immersion is a monomorphism. -/
+@[buffalo "Oqhr-Gt66es-3941"]
 theorem prop_3941 (f : X ⟶ Y) [IsClosedImmersion f] : Mono f := inferInstance
 
 /-- Oqhr-Gt66es-4070 (1:07:50) [prop] The closed subschemes of `Y` correspond to the
 quasi-coherent ideals `J ⊂ 𝒪_Y` (mathlib: `IsClosedImmersion.overEquivIdealSheafData`, an
 (anti-)equivalence between closed immersions into `Y` and ideal sheaves of `Y`). -/
+@[buffalo "Oqhr-Gt66es-4070"]
 def prop_4070 (Y : Scheme.{u}) := IsClosedImmersion.overEquivIdealSheafData Y
 
 /-- Oqhr-Gt66es-4200 (1:10:00) [prop] Closed immersions are stable under base change:
 `V(J) ×_Y Y' = V(J𝒪_{Y'})`, since `A' ⊗_A A/J ≃ A'/JA'`
 (`Algebra.TensorProduct.quotIdealMapEquivTensorQuot`). -/
+@[buffalo "Oqhr-Gt66es-4200"]
 theorem prop_4200 :
     MorphismProperty.IsStableUnderBaseChange (@IsClosedImmersion : MorphismProperty Scheme.{u}) ∧
     ∀ (A A' : Type u) [CommRing A] [CommRing A'] [Algebra A A'] (J : Ideal A),
@@ -93,6 +99,7 @@ theorem prop_4200 :
 /-- Oqhr-Gt66es-4265 (1:11:05) [prop] For `X = V(J)`, the ideals of `𝒪_X` correspond to the ideals
 `K ⊃ J` via `K ↦ K/J`, and `V(K/J) = V(K)`. Affine case: ideals of `A/J` are the ideals of `A`
 containing `J`, and `(A/J)/(K/J) ≃ A/K`. -/
+@[buffalo "Oqhr-Gt66es-4265"]
 theorem prop_4265 {A : Type u} [CommRing A] (J : Ideal A) :
     Nonempty (Ideal (A ⧸ J) ≃o {K : Ideal A // J ≤ K}) ∧
     ∀ K : Ideal A, J ≤ K → Nonempty ((A ⧸ J) ⧸ K.map (Ideal.Quotient.mk J) ≃+* A ⧸ K) := by
@@ -103,6 +110,7 @@ theorem prop_4265 {A : Type u} [CommRing A] (J : Ideal A) :
   rw [← RingHom.ker_eq_comap_bot, Ideal.mk_ker]
 
 /-- Oqhr-Gt66es-4328 (1:12:08) [prop] Closed immersions are stable under composition. -/
+@[buffalo "Oqhr-Gt66es-4328"]
 theorem prop_4328 : MorphismProperty.IsStableUnderComposition
     (@IsClosedImmersion : MorphismProperty Scheme.{u}) :=
   ⟨fun f g hf hg => by have := hf; have := hg; exact IsClosedImmersion.comp f g⟩
@@ -110,12 +118,14 @@ theorem prop_4328 : MorphismProperty.IsStableUnderComposition
 /-- Oqhr-Gt66es-4647 (1:17:27) [prop] For `f` quasi-compact, the kernel of `𝒪_Y → f_*𝒪_X` is a
 quasi-coherent ideal: mathlib's `Scheme.Hom.ker` (an ideal sheaf, i.e. a quasi-coherent ideal
 given on affine opens) is, on every affine open `U`, the kernel of `Γ(Y, U) → Γ(X, f⁻¹U)`. -/
+@[buffalo "Oqhr-Gt66es-4647"]
 theorem prop_4647 (f : X ⟶ Y) [QuasiCompact f] (U : Y.affineOpens) :
     f.ker.ideal U = RingHom.ker (f.app U).hom :=
   f.ker_apply U
 
 /-- Oqhr-Gt66es-4903 (1:21:43) [prop] For `Y = Spec A` and `J` an ideal of `A`,
 `V(J) = Spec A/J` (a closed immersion onto the zero locus of `J`); `J ↦ V(J)` reverses order. -/
+@[buffalo "Oqhr-Gt66es-4903"]
 theorem prop_4903 {A : Type u} [CommRing A] (J : Ideal A) :
     IsClosedImmersion (Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk J))) ∧
     Set.range (PrimeSpectrum.comap (Ideal.Quotient.mk J)) = PrimeSpectrum.zeroLocus J ∧
@@ -127,6 +137,7 @@ theorem prop_4903 {A : Type u} [CommRing A] (J : Ideal A) :
 /-- Oqhr-Gt66es-4968 (1:22:48) [prop] Open subschemes are ordered like the open sets (`V ≤ U` iff
 `V.ι` factors through `U.ι`); closed subschemes are ordered like the ideals, reversed. Affine
 case for the latter: `A → A/K` factors through `A → A/J` iff `J ≤ K`. -/
+@[buffalo "Oqhr-Gt66es-4968"]
 theorem prop_4968 {A : Type u} [CommRing A] (J K : Ideal A) :
     (∃ φ : A ⧸ J →+* A ⧸ K, φ.comp (Ideal.Quotient.mk J) = Ideal.Quotient.mk K) ↔ J ≤ K := by
   constructor
@@ -151,6 +162,7 @@ theorem prop_4968_open (U V : Y.Opens) :
 
 /-- Oqhr-Gt66es-5038 (1:23:58) [prop] The intersection of `V(J₁)` and `V(J₂)` is `V(J₁ + J₂)`:
 `A/J₁ ⊗_A A/J₂ ≃ A/(J₁ + J₂)`. -/
+@[buffalo "Oqhr-Gt66es-5038"]
 def prop_5038 {A : Type u} [CommRing A] (J₁ J₂ : Ideal A) :
     (A ⧸ J₂) ⊗[A] (A ⧸ J₁) ≃+* A ⧸ (J₁ ⊔ J₂) :=
   (Algebra.TensorProduct.quotIdealMapEquivTensorQuot (A ⧸ J₂) J₁).toRingEquiv.symm.trans <|
@@ -180,6 +192,7 @@ theorem subset_coborder_of_isClosed {T : Type*} [TopologicalSpace T] {s U : Set 
 /-- Oqhr-Gt66es-5297 (1:28:17) [prop] An immersion is a homeomorphism onto a locally closed subset
 `X` of `Y`; the largest open set in which `X` is closed is `Y ∖ (X̄ ∖ X)` (mathlib: `coborder`):
 the image is closed in its coborder, and every open set in which it is closed lies in it. -/
+@[buffalo "Oqhr-Gt66es-5297"]
 theorem prop_5297 (f : X ⟶ Y) [IsImmersion f] :
     IsEmbedding f ∧ IsLocallyClosed (Set.range f) ∧
     IsOpen (coborder (Set.range f)) ∧ Set.range f ⊆ coborder (Set.range f) ∧
@@ -195,6 +208,7 @@ theorem prop_5297 (f : X ⟶ Y) [IsImmersion f] :
 /-- Oqhr-Gt66es-5361 (1:29:21) [prop] Intrinsic characterization: `f` is an immersion iff it is a
 homeomorphism onto a locally closed subset and `f⁻¹𝒪_Y → 𝒪_X` is surjective (on stalks; mathlib's
 definition of `IsImmersion` over `IsPreimmersion`). -/
+@[buffalo "Oqhr-Gt66es-5361"]
 theorem prop_5361 (f : X ⟶ Y) :
     IsImmersion f ↔ IsEmbedding f ∧ IsLocallyClosed (Set.range f) ∧
       ∀ x, Function.Surjective (f.stalkMap x) :=
@@ -204,6 +218,7 @@ theorem prop_5361 (f : X ⟶ Y) :
 /-- Oqhr-Gt66es-5426 (1:30:26) [prop] Equivalently, `f(X)` has an open neighbourhood `V` such that
 `f⁻¹(V) → V` is a closed immersion (here `V` is the coborder, `f⁻¹(V) = X`); conversely such a
 factorisation makes `f` an immersion. -/
+@[buffalo "Oqhr-Gt66es-5426"]
 theorem prop_5426 (f : X ⟶ Y) :
     IsImmersion f ↔ ∃ (V : Y.Opens) (g : X ⟶ V.toScheme), IsClosedImmersion g ∧ g ≫ V.ι = f := by
   constructor
@@ -213,6 +228,7 @@ theorem prop_5426 (f : X ⟶ Y) :
     infer_instance
 
 /-- Oqhr-Gt66es-5617 (1:33:37) [prop] Immersions are stable under base change and composition. -/
+@[buffalo "Oqhr-Gt66es-5617"]
 theorem prop_5617 :
     MorphismProperty.IsStableUnderBaseChange (@IsImmersion : MorphismProperty Scheme.{u}) ∧
     MorphismProperty.IsStableUnderComposition (@IsImmersion : MorphismProperty Scheme.{u}) :=
@@ -221,6 +237,7 @@ theorem prop_5617 :
 /-- Oqhr-Gt66es-5682 (1:34:42) [prop] Every diagonal morphism is an immersion; every section of an
 `S`-scheme is an immersion; the kernel of two morphisms `u, v : X → Y` of `S`-schemes (the base
 change of the diagonal along `(u, v)`) is an immersion. -/
+@[buffalo "Oqhr-Gt66es-5682"]
 theorem prop_5682 {S : Scheme.{u}} (g : Y ⟶ S) :
     IsImmersion (pullback.diagonal g) ∧
     (∀ s : S ⟶ Y, s ≫ g = 𝟙 S → IsImmersion s) ∧

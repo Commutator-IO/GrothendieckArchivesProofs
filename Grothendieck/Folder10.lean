@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -87,6 +88,7 @@ lemma sY_single (p : ℕ) (n : ℤ) {k : ℕ} (j : Fin k) :
   · simp [h]
 
 /-- The Lie relation `[Y, X] = p X` (p. 191) on every string. -/
+@[montpellier "10, 191"]
 theorem sY_sX (p : ℕ) (n : ℤ) {k : ℕ} (u : Fin k → K) :
     sY p n k (sX k u) = sX k (sY p n k u) + (p : K) • sX k u := by
   ext i
@@ -98,6 +100,7 @@ theorem sY_sX (p : ℕ) (n : ℤ) {k : ℕ} (u : Fin k → K) :
 /-! ## Endomorphisms of a string -/
 
 /-- In characteristic `0` with `p ≥ 1`, every endomorphism of `e_{n,k}` is a scalar. -/
+@[montpellier "10, 191–197"]
 theorem string_end_scalar [CharZero K] {p : ℕ} (hp : p ≠ 0) (n : ℤ) {k : ℕ}
     (f : Module.End K (Fin k → K)) (hX : f ∘ₗ sX k = sX k ∘ₗ f)
     (hY : f ∘ₗ sY p n k = sY p n k ∘ₗ f) : ∃ c : K, f = c • LinearMap.id := by
@@ -142,6 +145,7 @@ theorem string_end_scalar [CharZero K] {p : ℕ} (hp : p ≠ 0) (n : ℤ) {k : �
   rfl
 
 /-- `e_{n,k}` is indecomposable: an idempotent endomorphism is `0` or the identity. -/
+@[montpellier "10, 191–197"]
 theorem string_indecomposable [CharZero K] {p : ℕ} (hp : p ≠ 0) (n : ℤ) {k : ℕ}
     (f : Module.End K (Fin k → K)) (hX : f ∘ₗ sX k = sX k ∘ₗ f)
     (hY : f ∘ₗ sY p n k = sY p n k ∘ₗ f) (hf : f * f = f) : f = 0 ∨ f = 1 := by
@@ -166,6 +170,7 @@ lemma trace_sY (p : ℕ) (n : ℤ) (k : ℕ) :
   simp
 
 /-- `e_{n,k} ≅ e_{n',k'}` with `k ≥ 1` forces `(n, k) = (n', k')`. -/
+@[montpellier "10, 191–197"]
 theorem string_iso_imp [CharZero K] (p : ℕ) {n n' : ℤ} {k k' : ℕ} (hk : 0 < k)
     (h : IsoRep (sX k) (sY p n k) (sX (K := K) k') (sY p n' k')) : k = k' ∧ n = n' := by
   obtain ⟨e, -, hY⟩ := h
@@ -196,6 +201,7 @@ lemma dualStringBasis_apply {k : ℕ} (j : Fin k) (u : Fin k → K) :
     Pi.basisFun_repr, Units.smul_def]
 
 /-- **Page 194**: the dual `(-Xᵀ, -Yᵀ)` of `e_{n,k}` is `e_{-n-p(k-1),k}`. -/
+@[montpellier "10, 194"]
 theorem string_dual (p : ℕ) (n : ℤ) (k : ℕ) :
     IsoRep (sX k) (sY p (-n - p * ((k : ℤ) - 1)) k)
       (-(sX (K := K) k).dualMap) (-(sY p n k).dualMap) := by
@@ -402,6 +408,7 @@ lemma top_le_span (hk : ((m : K) + 2) ≠ 0) :
 variable (n p) in
 /-- **Page 197, the leading term**: `ξ ⊗ e_{n,k} ≅ e_{n,k+1} ⊕ e_{n+p,k-1}` for `k = m + 2`,
 whenever `k` is invertible in `K`. -/
+@[montpellier "10, 197"]
 theorem xi_tensor_string (hk : ((m : K) + 2) ≠ 0) :
     IsoRep (LinearMap.prodMap (sX (m + 3)) (sX (m + 1)))
       (LinearMap.prodMap (sY p n (m + 3)) (sY p (n + p) (m + 1)))
@@ -590,6 +597,7 @@ theorem map_succ_injective {G : Type} [Group G]
       ((ModuleCat.isZero_of_subsingleton _).eq_of_src _ _))
 
 /-- Page 65, abstractly: `H²(Γ, G) → H²(Γ, Z^*)` is injective as soon as `H¹(Γ, M) = 0`. -/
+@[montpellier "10, 65"]
 theorem torus_H2_injective (h : Subsingleton (groupCohomology M 1)) :
     Function.Injective (map (MonoidHom.id Γ) (A := Rep.of (twistRep χ M)) (torusSeq χ M).f 2).hom :=
   map_succ_injective (torusSeq_shortExact χ M) 1 h
@@ -679,6 +687,7 @@ variable (K L : Type) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
 
 /-- Page 65, Exemple 1, at a finite level: by Hilbert 90 (`H1ofAutOnUnitsUnique`),
 `H²(Gal(L/K), G(L)) → H²(Gal(L/K), (Z ⊗_K L)ˣ)` is injective, for every sign `χ`. -/
+@[montpellier "10, 65"]
 theorem norm_one_torus_H2_injective (χ : Gal(L/K) →* ℤˣ) :
     Function.Injective
       (map (MonoidHom.id _) (A := Rep.of (twistRep χ (Rep.ofAlgebraAutOnUnits K L)))
@@ -735,6 +744,7 @@ lemma normMap_units (χ : Gal(L/K) →* ℤˣ) (x y : Lˣ) :
 /-- Page 65, Exemple 1, for a quadratic `Z ⊆ L` with `L/K` finite Galois: the composite
 `H²(Gal(L/K), G(L)) → H²(Gal(L/K), (Z ⊗_K L)ˣ) ≅ H²(Gal(L/Z), Lˣ)` (Shapiro) is injective;
 `H²(Gal(L/Z), Lˣ)` is the relative Brauer group `Br(L/Z)`. -/
+@[montpellier "10, 65"]
 theorem norm_one_torus_H2_injective_quadratic [IsGalois K L] (Z : IntermediateField K L)
     [Algebra.IsQuadraticExtension K Z] :
     Function.Injective
@@ -781,6 +791,7 @@ lemma Y_X_pow (hR : ∀ u, Y (X u) = X (Y u) + (p : K) • X u) (a : ℕ) (u : V
 
 /-- **Lemmes 1–2, p. 194**: an indecomposable representation with `[Y, X] = p X` and a basis
 of eigenvectors of `Y` with integer weights is a string `e_{n,k}`, `k ≥ 1`. -/
+@[montpellier "10, 194"]
 theorem indecomposable_is_string [CharZero K] [FiniteDimensional K V] [Nontrivial V]
     (hp : p ≠ 0) (hR : ∀ u, Y (X u) = X (Y u) + (p : K) • X u)
     {ι : Type*} (b : Module.Basis ι K V) (w : ι → ℤ) (hb : ∀ i, Y (b i) = (w i : K) • b i)

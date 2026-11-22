@@ -9,6 +9,7 @@ public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Tactic.FinCases
 public import Mathlib.Tactic.IntervalCases
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -75,11 +76,13 @@ theorem sqrt5_pos : 0 < √5 := Real.sqrt_pos.2 (by norm_num)
 
 theorem sqrt5_lt_three : √5 < 3 := by nlinarith [sqrt5_sq, sqrt5_pos]
 
+@[montpellier "161-6, 4, 6, 12, 14"]
 theorem cos_two_pi_div_five : cos (2 * π / 5) = (√5 - 1) / 4 := by
   rw [show 2 * π / 5 = 2 * (π / 5) by ring, cos_two_mul, cos_pi_div_five]
   linear_combination (1 / 8 : ℝ) * sqrt5_sq
 
 /-- `η = 2 cos(2π/5)` is the inverse of the golden ratio, `(√5 − 1)/2`. -/
+@[montpellier "161-6, 4, 6, 12, 14"]
 theorem eta_eq_inv_goldenRatio :
     2 * cos (2 * π / 5) = goldenRatio⁻¹ ∧ 2 * cos (2 * π / 5) = (√5 - 1) / 2 := by
   refine ⟨?_, ?_⟩
@@ -87,12 +90,14 @@ theorem eta_eq_inv_goldenRatio :
   · rw [cos_two_pi_div_five]; ring
 
 /-- The golden equation of `η = 2 cos(2π/5)`, page 12. -/
+@[montpellier "161-6, 12"]
 theorem eta_golden : (2 * cos (2 * π / 5)) ^ 2 + 2 * cos (2 * π / 5) - 1 = 0 := by
   rw [cos_two_pi_div_five]; linear_combination (1 / 4 : ℝ) * sqrt5_sq
 
 /-- Pages 14 and 12, over any commutative ring in which `ζ` is a root of the fifth
 cyclotomic polynomial: `η = ζ + ζ⁴`, `η′ = ζ² + ζ³` have trace and norm `−1`, `η` is a root of
 `t² + t − 1`, and squaring permutes the two roots by `t ↦ t² − 2`. -/
+@[montpellier "161-6, 12, 14"]
 theorem trace_norm {A : Type*} [CommRing A] (ζ : A) (h : 1 + ζ + ζ ^ 2 + ζ ^ 3 + ζ ^ 4 = 0) :
     ζ ^ 5 = 1 ∧ (ζ + ζ ^ 4) + (ζ ^ 2 + ζ ^ 3) = -1 ∧ (ζ + ζ ^ 4) * (ζ ^ 2 + ζ ^ 3) = -1 ∧
       (ζ + ζ ^ 4) ^ 2 + (ζ + ζ ^ 4) - 1 = 0 ∧ ζ ^ 2 + ζ ^ 3 = (ζ + ζ ^ 4) ^ 2 - 2 ∧
@@ -107,6 +112,7 @@ theorem trace_norm {A : Type*} [CommRing A] (ζ : A) (h : 1 + ζ + ζ ^ 2 + ζ ^
 
 /-- Page 4, corrected: for `0 < θ ≤ π`, the equilateral condition `(1′)` has a solution
 `0 < α < π` iff `θ > π/3` (the page writes `θ ≥ π/3`; at `π/3` only `α = 0` is left). -/
+@[montpellier "161-6, 4"]
 theorem exists_alpha_iff {θ : ℝ} (h0 : 0 < θ) (hπ : θ ≤ π) :
     (∃ α, 0 < α ∧ α < π ∧ cos α = cos θ / (1 - cos θ)) ↔ π / 3 < θ := by
   have hc1 : cos θ < 1 := by
@@ -131,16 +137,19 @@ theorem exists_alpha_iff {θ : ℝ} (h0 : 0 < θ) (hπ : θ ≤ π) :
       cos_arccos hgt.le hlt.le⟩
 
 /-- `(2)`: at `θ = 2π/5`, `cos α = cos θ / (1 − cos θ) = 1/√5`. -/
+@[montpellier "161-6, 3–6"]
 theorem cos_alpha : cos (2 * π / 5) / (1 - cos (2 * π / 5)) = 1 / √5 := by
   rw [cos_two_pi_div_five, div_eq_div_iff (by nlinarith [sqrt5_lt_three]) sqrt5_pos.ne']
   nlinarith [sqrt5_sq]
 
 /-- Identity (A) of the reading's completion of page 6, `c (1 − cos 2π/5) = cos 2π/5`. -/
+@[montpellier "161-6, 6"]
 theorem identity_A : 1 / √5 * (1 - cos (2 * π / 5)) = cos (2 * π / 5) := by
   rw [← cos_alpha, div_mul_cancel₀]
   rw [cos_two_pi_div_five]; nlinarith [sqrt5_lt_three]
 
 /-- Identity (B), `c (1 + cos π/5) = cos π/5`. -/
+@[montpellier "161-6, 6"]
 theorem identity_B : 1 / √5 * (1 + cos (π / 5)) = cos (π / 5) := by
   rw [cos_pi_div_five]
   field_simp
@@ -148,6 +157,7 @@ theorem identity_B : 1 / √5 * (1 + cos (π / 5)) = cos (π / 5) := by
 
 /-- Page 21: `cos α = γ/(2 − γ) = (2γ + 1)/5` over any field in which `γ² + γ − 1 = 0` and
 `5 ≠ 0` (then `2 − γ ≠ 0`). -/
+@[montpellier "161-6, 21"]
 theorem page21_cos_alpha {K : Type*} [Field K] {γ : K} (hγ : γ ^ 2 + γ - 1 = 0)
     (h5 : (5 : K) ≠ 0) : 2 - γ ≠ 0 ∧ γ / (2 - γ) = (2 * γ + 1) / 5 := by
   have h2 : 2 - γ ≠ 0 := by
@@ -160,6 +170,7 @@ theorem page21_cos_alpha {K : Type*} [Field K] {γ : K} (hγ : γ ^ 2 + γ - 1 =
   linear_combination (2 : K) * hγ
 
 /-- `cos 2α = 2 cos² α − 1 = −3/5`. -/
+@[montpellier "161-6, 21"]
 theorem cos_two_alpha : 2 * (1 / √5) ^ 2 - 1 = -3 / 5 := by
   rw [div_pow, sqrt5_sq]; norm_num
 
@@ -181,6 +192,7 @@ theorem axis_norm {t : R} (ht : t ^ 2 = t + 1) (i : Fin 6) :
   fin_cases i <;> simp [dot, axis] <;> linear_combination ht
 
 /-- The six axes are equiangular: `5 B′(x_i, x_j)² = Q(x_i) Q(x_j)` for `i ≠ j`. -/
+@[montpellier "161-6, 21"]
 theorem axes_equiangular {t : R} (ht : t ^ 2 = t + 1) {i j : Fin 6} (hij : i ≠ j) :
     5 * dot (axis t i) (axis t j) ^ 2 = dot (axis t i) (axis t i) * dot (axis t j) (axis t j) := by
   rw [axis_norm ht, axis_norm ht]
@@ -191,6 +203,7 @@ theorem axes_equiangular {t : R} (ht : t ^ 2 = t + 1) {i j : Fin 6} (hij : i ≠
 end Axes
 
 /-- Over `ℝ`, with `t = φ`: `cos′(D_i, D_j) = B(x, y)²/(Q(x)Q(y)) − 2 = −6/5`, `B = 2 B′`. -/
+@[montpellier "161-6, 21"]
 theorem cos'_axes {i j : Fin 6} (hij : i ≠ j) :
     (2 * dot (axis goldenRatio i) (axis goldenRatio j)) ^ 2 /
         (dot (axis goldenRatio i) (axis goldenRatio i) *
@@ -203,6 +216,7 @@ theorem cos'_axes {i j : Fin 6} (hij : i ≠ j) :
   linear_combination (4 / 5 : ℝ) * axes_equiangular ht hij
 
 /-- The margin of page 21 is false as read: `c = −6/5` is not a root of `c² + c − 1`. -/
+@[montpellier "161-6, 21"]
 theorem margin_false : ((-6 / 5 : ℝ)) ^ 2 + (-6 / 5) - 1 = -19 / 25 ∧
     ((-6 / 5 : ℝ)) ^ 2 + (-6 / 5) - 1 ≠ 0 := by norm_num
 
@@ -226,24 +240,29 @@ def Edge (i j : Fin 12) : Prop := d2 (vert i) (vert j) = 16
 instance : DecidableRel Edge := fun _ _ => inferInstanceAs (Decidable (_ = _))
 
 /-- All twelve vertices are on one sphere, `Q = 10 + 2√5`. -/
+@[montpellier "161-6, 3–6, 12, 14, 21"]
 theorem vert_norm : ∀ i, dot (vert i) (vert i) = ⟨10, 2⟩ := by decide +kernel
 
 /-- `16` is the minimal distance: every other squared distance between distinct vertices
 is `24 + 8√5` (the « ℓ′ » distance) or `40 + 8√5` (the antipode). -/
+@[montpellier "161-6, 3–6, 12, 14, 21"]
 theorem d2_values : ∀ i j, i ≠ j →
     d2 (vert i) (vert j) = 16 ∨ d2 (vert i) (vert j) = ⟨24, 8⟩ ∨
       d2 (vert i) (vert j) = ⟨40, 8⟩ := by decide +kernel
 
 /-- Each vertex has five neighbours. -/
+@[montpellier "161-6, 3–6, 12, 14, 21"]
 theorem nbrs_card : ∀ i, (Finset.univ.filter (fun j => Edge i j)).card = 5 := by
   decide +kernel
 
 /-- Thirty edges. -/
+@[montpellier "161-6, 3–6, 12, 14, 21"]
 theorem edges_card :
     (Finset.univ.filter (fun p : Fin 12 × Fin 12 => p.1 < p.2 ∧ Edge p.1 p.2)).card = 30 := by
   decide +kernel
 
 /-- Twenty faces: triples pairwise joined by an edge. -/
+@[montpellier "161-6, 3–6, 12, 14, 21"]
 theorem faces_card :
     (Finset.univ.filter (fun p : Fin 12 × Fin 12 × Fin 12 =>
       p.1 < p.2.1 ∧ p.2.1 < p.2.2 ∧ Edge p.1 p.2.1 ∧ Edge p.1 p.2.2 ∧ Edge p.2.1 p.2.2)).card
@@ -251,6 +270,7 @@ theorem faces_card :
   decide +kernel
 
 /-- The antipodal map `−1` permutes the vertices (`vert (i + 6) = −vert i`), hence the edges. -/
+@[montpellier "161-6, 3–6, 12, 14, 21"]
 theorem vert_neg : ∀ i : Fin 12, ∃ j, vert j = -vert i ∧
     ∀ k, (Edge i k ↔ ∃ l, vert l = -vert k ∧ Edge j l) := by decide +kernel
 
@@ -261,6 +281,7 @@ theorem det_neg_one : Matrix.det (-1 : Matrix (Fin 3) (Fin 3) ℝ) = -1 := by
 
 /-- Over any field, three pairwise equiangular lines with constant `1/5` force `5` to be a
 square: `5 B′(x_i, x_j)² = Q(x_i) Q(x_j)` for the three pairs, the `Q(x_i)` nonzero. -/
+@[montpellier "161-6, 21"]
 theorem isSquare_five_of_three_lines {K : Type*} [Field K] {q₁ q₂ q₃ b₁₂ b₁₃ b₂₃ : K}
     (hq₁ : q₁ ≠ 0) (hq₂ : q₂ ≠ 0) (hq₃ : q₃ ≠ 0)
     (h₁₂ : 5 * b₁₂ ^ 2 = q₁ * q₂) (h₁₃ : 5 * b₁₃ ^ 2 = q₁ * q₃) (h₂₃ : 5 * b₂₃ ^ 2 = q₂ * q₃) :
@@ -278,6 +299,7 @@ theorem isSquare_five_of_three_lines {K : Type*} [Field K] {q₁ q₂ q₃ b₁�
     (q₁ * q₂ * (q₁ * q₃)) * h₂₃
 
 /-- Hence there are no three such lines over `ℚ`: the « localement » of page 21 needs `√5`. -/
+@[montpellier "161-6, 21"]
 theorem no_three_rat_lines (x₁ x₂ x₃ : Fin 3 → ℚ) (hq₁ : dot x₁ x₁ ≠ 0) (hq₂ : dot x₂ x₂ ≠ 0)
     (hq₃ : dot x₃ x₃ ≠ 0) (h₁₂ : 5 * dot x₁ x₂ ^ 2 = dot x₁ x₁ * dot x₂ x₂)
     (h₁₃ : 5 * dot x₁ x₃ ^ 2 = dot x₁ x₁ * dot x₃ x₃)

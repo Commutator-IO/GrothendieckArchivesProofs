@@ -1,6 +1,8 @@
 module
 
 public import StacksFrontier.AlgebraicGeometry.SectionRatioNoAmple.Pullback
+import Grothendieck.Attr
+import StacksCore.Tactic.EgaSgaAttribute
 
 @[expose] public section
 
@@ -32,6 +34,7 @@ namespace Buffalo.AG.Part09
 /-- vuys5SNs2eQ-19516 (5:25:16) [prop] (inverse image) If `f : X → S` is quasi-affine and `M` is
 an ample invertible sheaf on `S`, then `f^* M` is ample on `X` (Stacks tag 0892 (2),
 EGA II 5.1.12). -/
+@[buffalo "vuys5SNs2eQ-19516", ega "II 5.1.12"]
 theorem prop_19516 {X S : Scheme.{u}} (f : X ⟶ S) [IsQuasiAffineHom f] (M : S.Modules)
     [Stacks.Ample.IsInvertibleModule S M] (hM : Stacks.Ample.IsAmple S M) :
     Stacks.Ample.IsAmple X

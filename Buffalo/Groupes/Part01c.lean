@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.Groupes.Part01a
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -25,11 +26,13 @@ variable (k : Type u) [CommRing k]
 /-! ## The groups `μ_n` -/
 
 /-- _lTf_L0yvrU-6199 (1:43:19) [def] `μ_n` is the kernel of `λ ↦ λⁿ` on `𝔾_m`. -/
+@[buffalo "_lTf_L0yvrU-6199"]
 theorem rootsOfUnity_eq_ker (n : ℕ) (A : Type*) [CommMonoid A] :
     rootsOfUnity n A = (powMonoidHom n : Aˣ →* Aˣ).ker := by
   ext; simp [mem_rootsOfUnity]
 
 /-- _lTf_L0yvrU-6328 (1:45:28) [prop] `μ_n` is represented by `k[t]/(tⁿ - 1)`. -/
+@[buffalo "_lTf_L0yvrU-6328"]
 noncomputable def mu_repr (n : ℕ) [NeZero n] (A : Type u) [CommRing A] [Algebra k A] :
     (AdjoinRoot (X ^ n - C 1 : k[X]) →ₐ[k] A) ≃ rootsOfUnity n A :=
   (adjoinRootHomEquiv k _ A).trans
@@ -41,6 +44,7 @@ noncomputable def mu_repr (n : ℕ) [NeZero n] (A : Type u) [CommRing A] [Algebr
 
 /-- _lTf_L0yvrU-6328 (1:45:28) [prop] `k[t]/(tⁿ - 1)` is free of rank `n`, with basis
 `1, x, …, x^{n-1}` (Mathlib `AdjoinRoot.powerBasis'`). -/
+@[buffalo "_lTf_L0yvrU-6328"]
 theorem mu_rank [Nontrivial k] (n : ℕ) (hn : n ≠ 0) :
     (AdjoinRoot.powerBasis' (monic_X_pow_sub_C (1 : k) hn)).dim = n := by
   simp only [AdjoinRoot.powerBasis']
@@ -48,6 +52,7 @@ theorem mu_rank [Nontrivial k] (n : ℕ) (hn : n ≠ 0) :
 
 /-- _lTf_L0yvrU-6393 (1:46:33) [def] An affine space is finite over `k` when its algebra is a
 finitely generated `k`-module; `μ_n` is finite. -/
+@[buffalo "_lTf_L0yvrU-6393"]
 theorem mu_finite (n : ℕ) (hn : n ≠ 0) : Module.Finite k (AdjoinRoot (X ^ n - C 1 : k[X])) :=
   (AdjoinRoot.powerBasis' (monic_X_pow_sub_C (1 : k) hn)).finite
 
@@ -69,6 +74,7 @@ theorem rootsOfUnity_char_mul {K : Type*} [CommRing K] [IsReduced K] (p : ℕ) [
 
 /-- _lTf_L0yvrU-6521 (1:48:41) [prop] Over an algebraically closed field `K` of characteristic `p`,
 `μ_n(K)` is cyclic of order `n'`, the prime-to-`p` part of `n = p^v n'`. -/
+@[buffalo "_lTf_L0yvrU-6521"]
 theorem mu_algClosed (K : Type*) [Field K] [IsAlgClosed K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (v n' : ℕ) (hn' : ¬ p ∣ n') :
     rootsOfUnity (p ^ v * n') K = rootsOfUnity n' K ∧ Nat.card (rootsOfUnity n' K) = n' ∧
@@ -104,6 +110,7 @@ theorem onePlusEps_ne_one [Nontrivial k] : onePlusEps k ≠ 1 := by
 
 /-- _lTf_L0yvrU-6586 (1:49:46) [cex] In characteristic `p`, `μ_{p^i}(K)` is trivial for every
 field `K` (indeed every reduced ring)… -/
+@[buffalo "_lTf_L0yvrU-6586"]
 theorem mu_p_trivial {K : Type*} [CommRing K] [IsReduced K] (p : ℕ) [ExpChar K p] (i : ℕ)
     (ζ : rootsOfUnity (p ^ i) K) : ζ = 1 := by
   have := ζ.2
@@ -113,6 +120,7 @@ theorem mu_p_trivial {K : Type*} [CommRing K] [IsReduced K] (p : ℕ) [ExpChar K
 
 /-- _lTf_L0yvrU-6586 (1:49:46) [cex] … yet `μ_{p^i}` (`i ≥ 1`) is not the trivial group: `1 + ε` is
 a non-trivial point over `k[ε]` (`k ≠ 0` of characteristic `p`). -/
+@[buffalo "_lTf_L0yvrU-6586"]
 theorem mu_p_nontrivial [Nontrivial k] (p : ℕ) [CharP k p] (i : ℕ) (hi : i ≠ 0) :
     onePlusEps k ∈ rootsOfUnity (p ^ i) (DualNumber k) ∧ onePlusEps k ≠ 1 := by
   refine ⟨?_, onePlusEps_ne_one k⟩
@@ -129,6 +137,7 @@ def frobUnits (A : Type*) [CommRing A] (p : ℕ) : Aˣ →* Aˣ := powMonoidHom 
 
 /-- _lTf_L0yvrU-6715 (1:51:55) [cex] On a perfect field `K` of characteristic `p`, `λ ↦ λ^p` is
 bijective on `𝔾_m(K)`… -/
+@[buffalo "_lTf_L0yvrU-6715"]
 theorem frobUnits_bijective (K : Type*) [Field K] (p : ℕ) [ExpChar K p] [PerfectField K] :
     Function.Bijective (frobUnits K p) := by
   have hb : Function.Bijective (frobenius K p) := bijective_frobenius K p
@@ -144,6 +153,7 @@ theorem frobUnits_bijective (K : Type*) [Field K] (p : ℕ) [ExpChar K p] [Perfe
 
 /-- _lTf_L0yvrU-6715 (1:51:55) [cex] … but it is not an isomorphism `𝔾_m → 𝔾_m`: it is not
 injective on `k[ε]`-points (its kernel `μ_p` contains `1 + ε`). -/
+@[buffalo "_lTf_L0yvrU-6715"]
 theorem frobUnits_not_injective [Nontrivial k] (p : ℕ) [Fact p.Prime] [CharP k p] :
     ¬ Function.Injective (frobUnits (DualNumber k) p) := by
   intro h
@@ -156,6 +166,7 @@ theorem frobUnits_not_injective [Nontrivial k] (p : ℕ) [Fact p.Prime] [CharP k
 /-! ## `SL_n`, `PGL_n` and centers -/
 
 /-- _lTf_L0yvrU-6843 (1:54:03) [def] `SL_n` is the kernel of `det : GL_n → 𝔾_m`. -/
+@[buffalo "_lTf_L0yvrU-6843"]
 theorem SL_eq_ker_det (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [CommRing A] :
     (Matrix.SpecialLinearGroup.toGL : Matrix.SpecialLinearGroup n A →* _).range =
       (Matrix.GeneralLinearGroup.det : Matrix.GeneralLinearGroup n A →* Aˣ).ker := by
@@ -170,11 +181,13 @@ theorem SL_eq_ker_det (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [CommRi
 
 /-- _lTf_L0yvrU-6906 (1:55:06) [prop] The center of `GL_n` is `𝔾_m` embedded as the scalar
 matrices (Mathlib `Matrix.GeneralLinearGroup.center_eq_range_scalar`). -/
+@[buffalo "_lTf_L0yvrU-6906"]
 theorem center_GL (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [CommRing A] :
     Subgroup.center (Matrix.GeneralLinearGroup n A) = (Matrix.GeneralLinearGroup.scalar n).range :=
   Matrix.GeneralLinearGroup.center_eq_range_scalar
 
 /-- _lTf_L0yvrU-7035 (1:57:15) [prop] `SL_n ∩ (scalars) = μ_n`: `det(λ I_n) = λⁿ`. -/
+@[buffalo "_lTf_L0yvrU-7035"]
 theorem scalar_det_eq_one_iff (n : Type) [Fintype n] [DecidableEq n] {A : Type*} [CommRing A]
     (c : Aˣ) : Matrix.GeneralLinearGroup.det (Matrix.GeneralLinearGroup.scalar n c) = 1 ↔
       c ∈ rootsOfUnity (Fintype.card n) A := by
@@ -183,6 +196,7 @@ theorem scalar_det_eq_one_iff (n : Type) [Fintype n] [DecidableEq n] {A : Type*}
 
 /-- _lTf_L0yvrU-7099 (1:58:19) [prop] The center of `SL_n` is `μ_n` (Mathlib
 `Matrix.SpecialLinearGroup.center_equiv_rootsOfUnity`; `n ≥ 1`). -/
+@[buffalo "_lTf_L0yvrU-7099"]
 noncomputable def center_SL (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [CommRing A] :
     Subgroup.center (Matrix.SpecialLinearGroup n A) ≃*
       rootsOfUnity (max (Fintype.card n) 1) A :=
@@ -191,6 +205,7 @@ noncomputable def center_SL (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [
 /-- _lTf_L0yvrU-7164 (1:59:24) [prop] On points over an algebraically closed field,
 `GL_n/(center) = PGL_n ≃ SL_n/μ_n = PSL_n` (Mathlib
 `Matrix.ProjectiveSpecialLinearGroup.isoPSLOfAlgClosed`); the quotients as group schemes are not formalised. -/
+@[buffalo "_lTf_L0yvrU-7164"]
 noncomputable def PGL_eq_PSL (n : Type) [Fintype n] [DecidableEq n] (F : Type*) [Field F]
     [IsAlgClosed F] :
     Matrix.ProjGenLinGroup n F ≃* Matrix.ProjectiveSpecialLinearGroup n F :=
@@ -199,6 +214,7 @@ noncomputable def PGL_eq_PSL (n : Type) [Fintype n] [DecidableEq n] (F : Type*) 
 /-- _lTf_L0yvrU-7227 (2:00:27) [cex] In characteristic `p`, the kernel `μ_p` of `SL_p → PGL_p` is
 non-trivial: `(1+ε) I_p ∈ SL_p(k[ε])` is a non-trivial central (scalar) element, although
 `μ_p(K) = 1` for every field `K` (`mu_p_trivial`). -/
+@[buffalo "_lTf_L0yvrU-7227"]
 theorem SL_p_scalar_nontrivial [Nontrivial k] (p : ℕ) [CharP k p] (hp : p ≠ 0) :
     Matrix.GeneralLinearGroup.det
         (Matrix.GeneralLinearGroup.scalar (Fin p) (onePlusEps k)) = 1 ∧
@@ -220,6 +236,7 @@ theorem SL_p_scalar_nontrivial [Nontrivial k] (p : ℕ) [CharP k p] (hp : p ≠ 
 /-- _lTf_L0yvrU-7290 (2:01:30) [prop] In characteristic `p`, `λ ↦ λ^p` is a ring endomorphism
 (Mathlib `frobenius`), natural in the algebra (`map_frobenius`); likewise `λ ↦ λ^{p^i}`
 (`iterateFrobenius`). -/
+@[buffalo "_lTf_L0yvrU-7290"]
 theorem frobenius_natural {A B : Type*} [CommRing A] [CommRing B] (p : ℕ) [ExpChar A p]
     [ExpChar B p] (f : A →+* B) (x : A) : f (frobenius A p x) = frobenius B p (f x) :=
   RingHom.map_frobenius f p x
@@ -274,6 +291,7 @@ theorem isUnit_natCast_of_not_dvd (p : ℕ) [Fact p.Prime] [CharP k p] (c : ℕ)
 /-- _lTf_L0yvrU-7417 (2:03:37) [thm] In characteristic `p` (over any `𝔽_p`-algebra `k`), the
 additive polynomials `f(X+Y) = f(X) + f(Y)` — the endomorphisms of `𝔾_a` — are exactly the
 `∑ a_i X^{p^i}`: every coefficient of `f` outside the degrees `p^i` vanishes. -/
+@[buffalo "_lTf_L0yvrU-7417"]
 theorem isAdditivePoly_iff (p : ℕ) [Fact p.Prime] [CharP k p] (f : k[X]) :
     IsAdditivePoly k f ↔ ∀ n, f.coeff n ≠ 0 → ∃ i, n = p ^ i := by
   constructor
@@ -311,6 +329,7 @@ theorem isAdditivePoly_iff (p : ℕ) [Fact p.Prime] [CharP k p] (f : k[X]) :
 
 /-- _lTf_L0yvrU-7480 (2:04:40) [def] `α_{p^i}`, the kernel of `λ ↦ λ^{p^i}` on `𝔾_a`:
 `α_{p^i}(A) = {λ | λ^{p^i} = 0}`, an additive subgroup in characteristic `p`. -/
+@[buffalo "_lTf_L0yvrU-7480"]
 def alpha (A : Type*) [CommRing A] (p : ℕ) [ExpChar A p] (i : ℕ) : AddSubgroup A :=
   (iterateFrobenius A p i).toAddMonoidHom.ker
 
@@ -319,6 +338,7 @@ theorem mem_alpha {A : Type*} [CommRing A] (p : ℕ) [ExpChar A p] (i : ℕ) (x 
   simp [alpha, iterateFrobenius_def]
 
 /-- _lTf_L0yvrU-7480 (2:04:40) [def] `α_{p^i}` is trivial on reduced rings. -/
+@[buffalo "_lTf_L0yvrU-7480"]
 theorem alpha_reduced {A : Type*} [CommRing A] [IsReduced A] (p : ℕ) [ExpChar A p] (i : ℕ) :
     alpha A p i = ⊥ := by
   ext x
@@ -326,17 +346,20 @@ theorem alpha_reduced {A : Type*} [CommRing A] [IsReduced A] (p : ℕ) [ExpChar 
   exact ⟨fun h ↦ IsReduced.eq_zero _ ⟨_, h⟩, fun h ↦ by rw [h]; exact zero_pow (pow_pos (expChar_pos A p) i).ne'⟩
 
 /-- _lTf_L0yvrU-7545 (2:05:45) [prop] `α_{p^i}` is represented by `k[t]/(t^{p^i})`… -/
+@[buffalo "_lTf_L0yvrU-7545"]
 noncomputable def alpha_repr (m : ℕ) (A : Type u) [CommRing A] [Algebra k A] :
     (AdjoinRoot (X ^ m : k[X]) →ₐ[k] A) ≃ {a : A // a ^ m = 0} :=
   (adjoinRootHomEquiv k _ A).trans (Equiv.subtypeEquivRight fun a ↦ by simp)
 
 /-- _lTf_L0yvrU-7545 (2:05:45) [prop] … free of rank `p^i`… -/
+@[buffalo "_lTf_L0yvrU-7545"]
 theorem alpha_rank [Nontrivial k] (m : ℕ) : (AdjoinRoot.powerBasis' (monic_X_pow (R := k) m)).dim = m := by
   simp only [AdjoinRoot.powerBasis']
   exact natDegree_X_pow m
 
 /-- _lTf_L0yvrU-7545 (2:05:45) [prop] … and not trivial: `ε ≠ 0` and `ε^{m} = 0` (`m ≥ 2`) in the
 dual numbers. -/
+@[buffalo "_lTf_L0yvrU-7545"]
 theorem alpha_nontrivial [Nontrivial k] (m : ℕ) (hm : 2 ≤ m) :
     (DualNumber.eps : DualNumber k) ^ m = 0 ∧ (DualNumber.eps : DualNumber k) ≠ 0 := by
   refine ⟨?_, fun h ↦ ?_⟩
@@ -347,12 +370,14 @@ theorem alpha_nontrivial [Nontrivial k] (m : ℕ) (hm : 2 ≤ m) :
 
 /-- _lTf_L0yvrU-7625 (2:07:05) [def] An affine space has rank `n` when its algebra is free of
 rank `n`; for a group, the rank is the order. -/
+@[buffalo "_lTf_L0yvrU-7625"]
 def HasRank (R : Type*) [Ring R] [Algebra k R] (n : ℕ) : Prop :=
   Module.Free k R ∧ Module.finrank k R = n
 
 /-- _lTf_L0yvrU-7690 (2:08:10) [prop] `μ_n` has order `n` and `α_{p^i}` order `p^i` (for `k ≠ 0`),
 and the group of points with values in a field (or a domain) `L` of a group of order `n` has at
 most `n` elements (Mathlib `card_algHom_le_finrank`). -/
+@[buffalo "_lTf_L0yvrU-7690"]
 theorem order_mu_alpha [Nontrivial k] (n : ℕ) (hn : n ≠ 0) (m : ℕ) :
     HasRank k (AdjoinRoot (X ^ n - C 1 : k[X])) n ∧ HasRank k (AdjoinRoot (X ^ m : k[X])) m := by
   refine ⟨⟨Module.Free.of_basis (AdjoinRoot.powerBasis' (monic_X_pow_sub_C (1 : k) hn)).basis, ?_⟩,
@@ -367,12 +392,14 @@ theorem card_points_le (R : Type*) [CommRing R] [Algebra k R] [Module.Free k R]
 
 /-- _lTf_L0yvrU-7841 (2:10:41) [prop] In characteristic `p`, `F_G : (λ_{ij}) ↦ (λ_{ij}^p)` is an
 endomorphism of `GL_n`. -/
+@[buffalo "_lTf_L0yvrU-7841"]
 def frobGL (n : Type) [Fintype n] [DecidableEq n] (A : Type*) [CommRing A] (p : ℕ) [ExpChar A p] :
     Matrix.GeneralLinearGroup n A →* Matrix.GeneralLinearGroup n A :=
   Units.map (frobenius A p).mapMatrix.toMonoidHom
 
 /-- _lTf_L0yvrU-7907 (2:11:47) [prop] The kernel of `F_G` on `GL_n`: the matrices with
 `λ_{ij}^p = 0` (`i ≠ j`) and `λ_{ii}^p = 1`. -/
+@[buffalo "_lTf_L0yvrU-7907"]
 theorem mem_ker_frobGL (n : Type) [Fintype n] [DecidableEq n] {A : Type*} [CommRing A] (p : ℕ)
     [ExpChar A p] (g : Matrix.GeneralLinearGroup n A) :
     g ∈ (frobGL n A p).ker ↔
@@ -404,6 +431,7 @@ noncomputable def frobKerEqs (n : Type) [DecidableEq n] (p : ℕ) (q : n × n) :
 /-- _lTf_L0yvrU-7949 (2:12:29) [prop] The Frobenius kernel of `GL_n` is represented by
 `k[t_{ij}]/(t_{ij}^p (i ≠ j), t_{ii}^p - 1)`: its points are the matrices with
 `λ_{ij}^p = δ_{ij}`… -/
+@[buffalo "_lTf_L0yvrU-7949"]
 noncomputable def frobKer_repr (n : Type) [DecidableEq n] (p : ℕ) (A : Type u) [CommRing A]
     [Algebra k A] :
     (MvPolynomial (n × n) k ⧸ Ideal.span (Set.range (frobKerEqs k n p)) →ₐ[k] A) ≃
@@ -421,6 +449,7 @@ noncomputable def frobKer_repr (n : Type) [DecidableEq n] (p : ℕ) (A : Type u)
 
 /-- _lTf_L0yvrU-7949 (2:12:29) [prop] … which are invertible (in characteristic `p`,
 `det(M)^p = det(M^{(p)}) = 1`), so that these points are the kernel of `F_G`… -/
+@[buffalo "_lTf_L0yvrU-7949"]
 theorem frobKer_isUnit (n : Type) [Fintype n] [DecidableEq n] {A : Type*} [CommRing A] (p : ℕ)
     [ExpChar A p] (M : Matrix n n A) (hM : ∀ i j, M i j ^ p = if i = j then 1 else 0) :
     IsUnit M := by
@@ -432,6 +461,7 @@ theorem frobKer_isUnit (n : Type) [Fintype n] [DecidableEq n] {A : Type*} [CommR
   exact (Units.ofPowEqOne _ p this (expChar_pos A p).ne').isUnit
 
 /-- _lTf_L0yvrU-7949 (2:12:29) [prop] … an infinitesimal group: trivial on reduced rings… -/
+@[buffalo "_lTf_L0yvrU-7949"]
 theorem frobKer_reduced (n : Type) [Fintype n] [DecidableEq n] {A : Type*} [CommRing A]
     [IsReduced A] (p : ℕ) [ExpChar A p] (g : Matrix.GeneralLinearGroup n A)
     (hg : g ∈ (frobGL n A p).ker) : g = 1 := by
@@ -471,6 +501,7 @@ theorem transvection_noncomm {B : Type*} [CommRing B] {n : Type} [Fintype n] [De
 /-- _lTf_L0yvrU-7949 (2:12:29) [prop] … and non-commutative for `n ≥ 2`: over
 `B = k[ε][ε']`, the transvections `1 + ε' E_{ij}` and `1 + ε E_{ji}` are in it (they have
 determinant `1`) and do not commute, `ε' ε ≠ 0`. -/
+@[buffalo "_lTf_L0yvrU-7949"]
 theorem frobKer_noncomm [Nontrivial k] {n : Type} [Fintype n] [DecidableEq n] (p : ℕ) (hp : 2 ≤ p)
     {i j : n} (hij : i ≠ j) :
     let x : DualNumber (DualNumber k) := DualNumber.eps
@@ -499,6 +530,7 @@ theorem frobKer_noncomm [Nontrivial k] {n : Type} [Fintype n] [DecidableEq n] (p
 
 /-- _lTf_L0yvrU-8015 (2:13:35) [prop] `F_G : GL_n → GL_n` is not an isomorphism (`n ≥ 2`): its
 kernel has the non-trivial point `1 + ε E_{ij}` over `k[ε]`. -/
+@[buffalo "_lTf_L0yvrU-8015"]
 theorem frobGL_kernel_nontrivial [Nontrivial k] {n : Type} [Fintype n] [DecidableEq n] (p : ℕ)
     (hp : 2 ≤ p) {i j : n} (hij : i ≠ j) :
     (∀ a b, Matrix.transvection i j (DualNumber.eps : DualNumber k) a b ^ p =

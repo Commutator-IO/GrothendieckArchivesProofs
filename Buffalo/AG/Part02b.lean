@@ -1,6 +1,7 @@
 module
 
 public import Buffalo.AG.Part02a
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -33,6 +34,7 @@ variable (k : Type u) [CommRing k]
 /-- 51wmmpHand0-24256 (6:44:16) [def] The `V(S)` are the closed sets of the spectral (Zariski)
 topology on `Spec A` (mathlib: `PrimeSpectrum.zariskiTopology`), and `V(J) = V(J')` iff
 `√J = √J'`. -/
+@[buffalo "51wmmpHand0-24256"]
 theorem def_24256 {A : Type*} [CommRing A] (J J' : Ideal A) :
     (∀ S : Set A, IsClosed (zeroLocus S)) ∧
       (zeroLocus (J : Set A) = zeroLocus J' ↔ J.radical = J'.radical) := by
@@ -45,11 +47,13 @@ theorem def_24256 {A : Type*} [CommRing A] (J J' : Ideal A) :
 
 /-- 51wmmpHand0-24326 (6:45:26) [prop] The nilradical is the intersection of the prime ideals
 (mathlib: `nilradical_eq_sInf`). -/
+@[buffalo "51wmmpHand0-24326"]
 theorem prop_24326 (A : Type*) [CommRing A] : nilradical A = sInf {J : Ideal A | J.IsPrime} :=
   nilradical_eq_sInf A
 
 /-- 51wmmpHand0-24456 (6:47:36) [prop] The points with values in a field `K'` of class
 `x ∈ Spec A` correspond to the homomorphisms `κ(x) → K'` (`prop_21989`, for `K = ℤ`). -/
+@[buffalo "51wmmpHand0-24456"]
 theorem prop_24456 {A : Type*} [CommRing A] (x : PrimeSpectrum A) (K' : Type*) [Field K'] :
     Nonempty ({u : A →+* K' // RingHom.ker u = x.asIdeal} ≃
       (FractionRing (A ⧸ x.asIdeal) →+* K')) :=
@@ -57,6 +61,7 @@ theorem prop_24456 {A : Type*} [CommRing A] (x : PrimeSpectrum A) (K' : Type*) [
 
 /-- 51wmmpHand0-24518 (6:48:38) [prop] A nonempty space is irreducible iff two nonempty open sets
 always meet, iff every nonempty open set is dense. -/
+@[buffalo "51wmmpHand0-24518"]
 theorem prop_24518 (X : Type*) [TopologicalSpace X] [Nonempty X] :
     List.TFAE [IrreducibleSpace X,
       ∀ U V : Set X, IsOpen U → IsOpen V → U.Nonempty → V.Nonempty → (U ∩ V).Nonempty,
@@ -73,6 +78,7 @@ theorem prop_24518 (X : Type*) [TopologicalSpace X] [Nonempty X] :
 
 /-- 51wmmpHand0-24714 (6:51:54) [prop] For every ideal `J`, the closed set `V(J)` with the induced
 topology is homeomorphic to `Spec(A/J)`. -/
+@[buffalo "51wmmpHand0-24714"]
 theorem prop_24714 {A : Type*} [CommRing A] (J : Ideal A) :
     Nonempty (PrimeSpectrum (A ⧸ J) ≃ₜ zeroLocus (J : Set A)) := by
   have hs : Function.Surjective (Ideal.Quotient.mk J) := Ideal.Quotient.mk_surjective
@@ -84,6 +90,7 @@ theorem prop_24714 {A : Type*} [CommRing A] (J : Ideal A) :
 /-- 51wmmpHand0-25035 (6:57:15) [prop] `V(J)` is irreducible iff `√J` is prime (mathlib:
 `PrimeSpectrum.isIrreducible_zeroLocus_iff`); `P ↦ V(P)` is a bijection from `Spec A` onto the
 irreducible closed sets (mathlib: `PrimeSpectrum.pointsEquivIrreducibleCloseds`). -/
+@[buffalo "51wmmpHand0-25035"]
 theorem prop_25035 {A : Type*} [CommRing A] (J : Ideal A) :
     (IsIrreducible (zeroLocus (J : Set A)) ↔ J.radical.IsPrime) ∧
       ∀ x : PrimeSpectrum A,
@@ -96,6 +103,7 @@ theorem prop_25035 {A : Type*} [CommRing A] (J : Ideal A) :
 /-- 51wmmpHand0-25167 (6:59:27) [prop] This bijection is `x ↦ closure {x}`: `Spec A` is sober,
 every irreducible closed set having a unique generic point (mathlib: `QuasiSober`, `T0Space`,
 `irreducibleSetEquivPoints`). -/
+@[buffalo "51wmmpHand0-25167"]
 theorem prop_25167 {A : Type*} [CommRing A] :
     QuasiSober (PrimeSpectrum A) ∧ T0Space (PrimeSpectrum A) ∧
       ∀ Z : Set (PrimeSpectrum A), IsIrreducible Z → IsClosed Z → ∃! x, closure {x} = Z :=
@@ -103,6 +111,7 @@ theorem prop_25167 {A : Type*} [CommRing A] :
 
 /-- 51wmmpHand0-25297 (7:01:37) [ex] The spectrum of an integral domain `A` is Hausdorff iff `A`
 is a field; those of `ℤ`, of `k[T]` and of a discrete valuation ring are not Hausdorff. -/
+@[buffalo "51wmmpHand0-25297"]
 theorem ex_25297 (A : Type*) [CommRing A] [IsDomain A] :
     T2Space (PrimeSpectrum A) ↔ IsField A := by
   constructor
@@ -122,6 +131,7 @@ theorem ex_25297 (A : Type*) [CommRing A] [IsDomain A] :
 
 /-- 51wmmpHand0-25297 (7:01:37) [ex] `Spec ℤ`, `Spec k[T]` and the spectrum of a discrete
 valuation ring are not Hausdorff. -/
+@[buffalo "51wmmpHand0-25297"]
 theorem ex_25297_examples (R : Type*) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     [IsDomain k] :
     ¬ T2Space (PrimeSpectrum ℤ) ∧ ¬ T2Space (PrimeSpectrum (Polynomial k)) ∧
@@ -134,6 +144,7 @@ theorem ex_25297_examples (R : Type*) [CommRing R] [IsDomain R] [IsDiscreteValua
 /-- 51wmmpHand0-25433 (7:03:53) [def] An irreducible component is an irreducible closed set
 maximal among irreducible closed sets (mathlib's `irreducibleComponents`, defined as the maximal
 irreducible sets, which are closed: `irreducibleComponents_eq_maximals_closed`). -/
+@[buffalo "51wmmpHand0-25433"]
 theorem def_25433 (X : Type*) [TopologicalSpace X] :
     irreducibleComponents X = {s | Maximal (fun t => IsClosed t ∧ IsIrreducible t) s} :=
   irreducibleComponents_eq_maximals_closed X
@@ -141,12 +152,14 @@ theorem def_25433 (X : Type*) [TopologicalSpace X] :
 /-- 51wmmpHand0-25498 (7:04:58) [prop] Every irreducible subset lies in an irreducible component
 (Zorn), and the space is the union of its components (mathlib:
 `exists_mem_irreducibleComponents_subset_of_isIrreducible`, `sUnion_irreducibleComponents`). -/
+@[buffalo "51wmmpHand0-25498"]
 theorem prop_25498 {X : Type*} [TopologicalSpace X] (s : Set X) (hs : IsIrreducible s) :
     (∃ Z ∈ irreducibleComponents X, s ⊆ Z) ∧ ⋃₀ irreducibleComponents X = Set.univ :=
   ⟨exists_mem_irreducibleComponents_subset_of_isIrreducible s hs, sUnion_irreducibleComponents⟩
 
 /-- 51wmmpHand0-25626 (7:07:06) [prop] A filtered (directed) union of irreducible subsets is
 irreducible. -/
+@[buffalo "51wmmpHand0-25626"]
 theorem prop_25626 {X : Type*} [TopologicalSpace X] (S : Set (Set X)) (hne : S.Nonempty)
     (hd : DirectedOn (· ⊆ ·) S) (h : ∀ s ∈ S, IsIrreducible s) : IsIrreducible (⋃₀ S) := by
   obtain ⟨s₀, hs₀⟩ := hne
@@ -160,6 +173,7 @@ theorem prop_25626 {X : Type*} [TopologicalSpace X] (S : Set (Set X)) (hne : S.N
 
 /-- 51wmmpHand0-25626 (7:07:06) [prop] In a Hausdorff space the irreducible components are the
 points. -/
+@[buffalo "51wmmpHand0-25626"]
 theorem prop_25626_t2 (X : Type*) [TopologicalSpace X] [T2Space X] :
     irreducibleComponents X = Set.range fun x : X => ({x} : Set X) := by
   ext s
@@ -176,6 +190,7 @@ theorem prop_25626_t2 (X : Type*) [TopologicalSpace X] [T2Space X] :
 
 /-- 51wmmpHand0-25689 (7:08:09) [prop] The irreducible components of `Spec A` correspond to the
 minimal primes of `A` (mathlib: `PrimeSpectrum.vanishingIdeal_irreducibleComponents`). -/
+@[buffalo "51wmmpHand0-25689"]
 theorem prop_25689 (A : Type*) [CommRing A] :
     vanishingIdeal '' irreducibleComponents (PrimeSpectrum A) = minimalPrimes A :=
   vanishingIdeal_irreducibleComponents A
@@ -183,6 +198,7 @@ theorem prop_25689 (A : Type*) [CommRing A] :
 /-- 51wmmpHand0-25949 (7:12:29) [prop] For `A` of finite type over `ℂ`, the points of `X(ℂ)`
 correspond to the maximal ideals of `A` (the Nullstellensatz, `Buffalo.AG.Part01.prop_8452`),
 i.e. to the closed points of `Spec A` (`PrimeSpectrum.isClosed_singleton_iff_isMaximal`). -/
+@[buffalo "51wmmpHand0-25949"]
 theorem prop_25949 (A : Type) [CommRing A] [Algebra ℂ A] [Algebra.FiniteType ℂ A] :
     Function.Bijective (fun u : A →ₐ[ℂ] ℂ => (⟨RingHom.ker u, RingHom.ker_isMaximal_of_surjective u
       (fun c => ⟨algebraMap ℂ A c, u.commutes c⟩)⟩ : {m : Ideal A // m.IsMaximal})) ∧
@@ -191,6 +207,7 @@ theorem prop_25949 (A : Type) [CommRing A] [Algebra ℂ A] [Algebra.FiniteType �
 
 /-- 51wmmpHand0-26144 (7:15:44) [prop] A space is irreducible iff it has exactly one irreducible
 component; the empty space has none. -/
+@[buffalo "51wmmpHand0-26144"]
 theorem prop_26144 (X : Type*) [TopologicalSpace X] :
     (IrreducibleSpace X ↔ ∃ Z, irreducibleComponents X = {Z}) ∧
       (IsEmpty X → irreducibleComponents X = ∅) := by
@@ -208,6 +225,7 @@ theorem prop_26144 (X : Type*) [TopologicalSpace X] :
 
 /-- 51wmmpHand0-26208 (7:16:48) [prop] In a sober space, the irreducible components are the
 closures of the maximal points for specialization (the generic points of the components). -/
+@[buffalo "51wmmpHand0-26208"]
 theorem prop_26208 {X : Type*} [TopologicalSpace X] [QuasiSober X] [T0Space X] :
     (∀ x : X, closure {x} ∈ irreducibleComponents X ↔ ∀ y, y ⤳ x → y = x) ∧
       ∀ Z ∈ irreducibleComponents X, ∃ x, closure {x} = Z := by
@@ -230,6 +248,7 @@ theorem prop_26208 {X : Type*} [TopologicalSpace X] [QuasiSober X] [T0Space X] :
 
 /-- 51wmmpHand0-26376 (7:19:36) [prop] In a quasi-compact space, every irreducible closed set
 contains a minimal irreducible closed set (Zorn). -/
+@[buffalo "51wmmpHand0-26376"]
 theorem prop_26376 {X : Type*} [TopologicalSpace X] [CompactSpace X] (Z : Set X)
     (hZ : IsIrreducible Z) (hZc : IsClosed Z) :
     ∃ M ⊆ Z, Minimal (fun s => IsIrreducible s ∧ IsClosed s) M := by
@@ -249,6 +268,7 @@ theorem prop_26376 {X : Type*} [TopologicalSpace X] [CompactSpace X] (Z : Set X)
 
 /-- 51wmmpHand0-26508 (7:21:48) [prop] A nonempty subset equal to the closure of each of its
 points is a minimal irreducible closed set, and conversely. -/
+@[buffalo "51wmmpHand0-26508"]
 theorem prop_26508 {X : Type*} [TopologicalSpace X] (S : Set X) :
     (S.Nonempty ∧ ∀ x ∈ S, closure {x} = S) ↔ Minimal (fun s => IsIrreducible s ∧ IsClosed s) S := by
   constructor
@@ -266,6 +286,7 @@ theorem prop_26508 {X : Type*} [TopologicalSpace X] (S : Set X) :
 /-- 51wmmpHand0-26698 (7:24:58) [prop] In a sober space (indeed in any `T₀` space) the minimal
 irreducible closed sets are the closed points; if the space is moreover quasi-compact, every
 nonempty closed set contains a closed point (mathlib: `IsClosed.exists_closed_singleton`). -/
+@[buffalo "51wmmpHand0-26698"]
 theorem prop_26698 {X : Type*} [TopologicalSpace X] [T0Space X] :
     ∀ S : Set X, Minimal (fun s => IsIrreducible s ∧ IsClosed s) S ↔
       ∃ x, IsClosed ({x} : Set X) ∧ S = {x} := by
@@ -283,6 +304,7 @@ theorem prop_26698 {X : Type*} [TopologicalSpace X] [T0Space X] :
 
 /-- 51wmmpHand0-26698 (7:24:58) [prop] In a quasi-compact `T₀` space every nonempty closed set
 contains a closed point (mathlib: `IsClosed.exists_closed_singleton`). -/
+@[buffalo "51wmmpHand0-26698"]
 theorem prop_26698_compact {X : Type*} [TopologicalSpace X] [T0Space X] [CompactSpace X]
     (S : Set X) (hS : IsClosed S) (hne : S.Nonempty) : ∃ x ∈ S, IsClosed ({x} : Set X) :=
   hS.exists_closed_singleton hne
@@ -290,6 +312,7 @@ theorem prop_26698_compact {X : Type*} [TopologicalSpace X] [T0Space X] [Compact
 /-- 51wmmpHand0-26762 (7:26:02) [prop] The closed points of `Spec A` are the maximal ideals, and
 for `A ≠ 0` a maximal ideal exists (Krull) (mathlib:
 `PrimeSpectrum.isClosed_singleton_iff_isMaximal`, `Ideal.exists_maximal`). -/
+@[buffalo "51wmmpHand0-26762"]
 theorem prop_26762 (A : Type*) [CommRing A] :
     (∀ x : PrimeSpectrum A, IsClosed ({x} : Set (PrimeSpectrum A)) ↔ x.asIdeal.IsMaximal) ∧
       (Nontrivial A → ∃ M : Ideal A, M.IsMaximal) :=
@@ -300,6 +323,7 @@ theorem prop_26762 (A : Type*) [CommRing A] :
 /-- 51wmmpHand0-26826 (7:27:06) [def] A space is noetherian (mathlib's `NoetherianSpace`) iff every
 increasing sequence of open sets is stationary, iff every decreasing sequence of closed sets is
 (`WellFoundedLT (Closeds X)`). -/
+@[buffalo "51wmmpHand0-26826"]
 theorem def_26826 (X : Type*) [TopologicalSpace X] :
     (NoetherianSpace X ↔ ∀ f : ℕ →o Opens X, ∃ n, ∀ m, n ≤ m → f n = f m) ∧
       (NoetherianSpace X ↔ WellFoundedLT (Closeds X)) := by
@@ -308,17 +332,20 @@ theorem def_26826 (X : Type*) [TopologicalSpace X] :
 
 /-- 51wmmpHand0-26888 (7:28:08) [prop] A space is noetherian iff all its open sets are
 quasi-compact (mathlib: `noetherianSpace_TFAE`). -/
+@[buffalo "51wmmpHand0-26888"]
 theorem prop_26888 (X : Type*) [TopologicalSpace X] :
     NoetherianSpace X ↔ ∀ U : Opens X, IsCompact (U : Set X) :=
   (noetherianSpace_TFAE X).out 1 4
 
 /-- 51wmmpHand0-27083 (7:31:23) [prop] In a noetherian space every subset is quasi-compact and
 noetherian (mathlib: `NoetherianSpace.isCompact`, `NoetherianSpace.set`). -/
+@[buffalo "51wmmpHand0-27083"]
 theorem prop_27083 {X : Type*} [TopologicalSpace X] [NoetherianSpace X] (s : Set X) :
     IsCompact s ∧ NoetherianSpace s :=
   ⟨NoetherianSpace.isCompact s, inferInstance⟩
 
 /-- 51wmmpHand0-27151 (7:32:31) [prop] A noetherian Hausdorff space is finite and discrete. -/
+@[buffalo "51wmmpHand0-27151"]
 theorem prop_27151 (X : Type*) [TopologicalSpace X] [NoetherianSpace X] [T2Space X] :
     Finite X ∧ DiscreteTopology X := by
   have := NoetherianSpace.discrete (α := X)
@@ -326,6 +353,7 @@ theorem prop_27151 (X : Type*) [TopologicalSpace X] [NoetherianSpace X] [T2Space
 
 /-- 51wmmpHand0-27151 (7:32:31) [prop] The spectrum of a noetherian ring is a noetherian space
 (mathlib instance). -/
+@[buffalo "51wmmpHand0-27151"]
 theorem prop_27151_spec (A : Type*) [CommRing A] [IsNoetherianRing A] :
     NoetherianSpace (PrimeSpectrum A) :=
   inferInstance
@@ -333,6 +361,7 @@ theorem prop_27151_spec (A : Type*) [CommRing A] [IsNoetherianRing A] :
 /-- 51wmmpHand0-27214 (7:33:34) [prop] Fields and principal rings are noetherian; if `A` is
 noetherian so is `A[T]` (Hilbert); a ring is noetherian iff its ideals are finitely generated
 (mathlib instances and `isNoetherianRing_iff_ideal_fg`). -/
+@[buffalo "51wmmpHand0-27214"]
 theorem prop_27214 (K R A : Type*) [Field K] [CommRing R] [IsDomain R] [IsPrincipalIdealRing R]
     [CommRing A] [IsNoetherianRing A] :
     IsNoetherianRing K ∧ IsNoetherianRing R ∧ IsNoetherianRing (Polynomial A) ∧
@@ -342,12 +371,14 @@ theorem prop_27214 (K R A : Type*) [Field K] [CommRing R] [IsDomain R] [IsPrinci
 /-- 51wmmpHand0-27282 (7:34:42) [prop] A noetherian space has finitely many irreducible
 components; a noetherian ring has finitely many minimal primes (mathlib:
 `NoetherianSpace.finite_irreducibleComponents`, `minimalPrimes.finite_of_isNoetherianRing`). -/
+@[buffalo "51wmmpHand0-27282"]
 theorem prop_27282 (X A : Type*) [TopologicalSpace X] [NoetherianSpace X] [CommRing A]
     [IsNoetherianRing A] : (irreducibleComponents X).Finite ∧ (minimalPrimes A).Finite :=
   ⟨NoetherianSpace.finite_irreducibleComponents, minimalPrimes.finite_of_isNoetherianRing A⟩
 
 /-- 51wmmpHand0-27535 (7:38:55) [prop] In a noetherian space every nonempty family of closed sets
 has a minimal element (noetherian induction). -/
+@[buffalo "51wmmpHand0-27535"]
 theorem prop_27535 {X : Type*} [TopologicalSpace X] [NoetherianSpace X] (S : Set (Set X))
     (hS : ∀ s ∈ S, IsClosed s) (hne : S.Nonempty) : ∃ m ∈ S, ∀ s ∈ S, ¬ s ⊂ m := by
   obtain ⟨s₀, hs₀⟩ := hne
@@ -367,6 +398,7 @@ def chainIdeal (K : Type*) [Field K] (n : ℕ) : Ideal (TrivSqZeroExt K (ℕ →
 /-- 51wmmpHand0-27747 (7:42:27) [cex] A non-noetherian ring can have a noetherian spectrum:
 `K ⊕ V` with `V = K^ℕ` infinite-dimensional and `V² = 0` is not noetherian, and its spectrum is a
 single point. -/
+@[buffalo "51wmmpHand0-27747"]
 theorem cex_27747 (K : Type*) [Field K] :
     ¬ IsNoetherianRing (TrivSqZeroExt K (ℕ → K)) ∧
       (Nonempty (PrimeSpectrum (TrivSqZeroExt K (ℕ → K))) ∧
@@ -397,6 +429,7 @@ theorem cex_27747 (K : Type*) [Field K] :
 
 /-- 51wmmpHand0-27809 (7:43:29) [prop] `Spec A` is noetherian iff the radical ideals of `A`
 satisfy the ascending chain condition. -/
+@[buffalo "51wmmpHand0-27809"]
 theorem prop_27809 (A : Type*) [CommRing A] :
     NoetherianSpace (PrimeSpectrum A) ↔ WellFoundedGT {J : Ideal A // J.IsRadical} := by
   let e : (Closeds (PrimeSpectrum A))ᵒᵈ ≃o {J : Ideal A // J.IsRadical} :=
@@ -430,6 +463,7 @@ theorem prop_27809 (A : Type*) [CommRing A] :
 the maximal ideals `M` with residue field `k` (`k → A/M` bijective), by `u ↦ ker u`; if `k` is
 algebraically closed and `A` finitely generated, these are all the maximal ideals
 (`Buffalo.AG.Part01.prop_8452`). -/
+@[buffalo "51wmmpHand0-28019"]
 theorem prop_28019 {K A : Type u} [Field K] [CommRing A] [Algebra K A] :
     Function.Injective (fun u : A →ₐ[K] K => RingHom.ker u) ∧
       Set.range (fun u : A →ₐ[K] K => RingHom.ker u) =
@@ -462,6 +496,7 @@ theorem prop_28019 {K A : Type u} [Field K] [CommRing A] [Algebra K A] :
 /-- 51wmmpHand0-28083 (7:48:03) [prop] For `A` finitely generated over a field `k`,
 `X(k) ⊂ X₀ ⊂ Spec A`: the kernel of a `k`-point is maximal (a closed point), and if `k` is
 algebraically closed every closed point arises (`Buffalo.AG.Part01.prop_8452`). -/
+@[buffalo "51wmmpHand0-28083"]
 theorem prop_28083 {K A : Type u} [Field K] [CommRing A] [Algebra K A] :
     ∀ u : A →ₐ[K] K, IsClosed ({⟨RingHom.ker u, (RingHom.ker_isMaximal_of_surjective u
       fun c => ⟨algebraMap K A c, u.commutes c⟩).isPrime⟩} : Set (PrimeSpectrum A)) :=
@@ -470,6 +505,7 @@ theorem prop_28083 {K A : Type u} [Field K] [CommRing A] [Algebra K A] :
 
 /-- 51wmmpHand0-28083 (7:48:03) [prop] If moreover `k` is algebraically closed, every closed
 point of `Spec A` is the kernel of a `k`-point. -/
+@[buffalo "51wmmpHand0-28083"]
 theorem prop_28083_algClosed {K A : Type u} [Field K] [IsAlgClosed K] [CommRing A] [Algebra K A]
     [Algebra.FiniteType K A] (x : PrimeSpectrum A) (hx : IsClosed ({x} : Set (PrimeSpectrum A))) :
     ∃ u : A →ₐ[K] K, RingHom.ker u = x.asIdeal := by
@@ -480,11 +516,13 @@ theorem prop_28083_algClosed {K A : Type u} [Field K] [IsAlgClosed K] [CommRing 
 
 /-- 51wmmpHand0-28151 (7:49:11) [def] A subset `X₀ ⊆ X` is very dense if `U ↦ U ∩ X₀`, from the
 open sets of `X` to those of `X₀`, is injective. -/
+@[buffalo "51wmmpHand0-28151"]
 def VeryDense {X : Type*} [TopologicalSpace X] (X₀ : Set X) : Prop :=
   Function.Injective fun U : Opens X => (U : Set X) ∩ X₀
 
 /-- 51wmmpHand0-28151 (7:49:11) [def] The map from the open sets of `X` to those of `X₀` is always
 surjective (subspace topology), hence bijective when `X₀` is very dense. -/
+@[buffalo "51wmmpHand0-28151"]
 theorem def_28151 {X : Type*} [TopologicalSpace X] (X₀ : Set X) :
     Function.Surjective (fun U : Opens X => (⟨Subtype.val ⁻¹' (U : Set X),
       U.2.preimage continuous_subtype_val⟩ : Opens X₀)) := fun W => by
@@ -493,6 +531,7 @@ theorem def_28151 {X : Type*} [TopologicalSpace X] (X₀ : Set X) :
 
 /-- 51wmmpHand0-28339 (7:52:19) [prop] `X₀` is very dense iff every nonempty locally closed subset
 of `X` meets `X₀`. -/
+@[buffalo "51wmmpHand0-28339"]
 theorem prop_28339 {X : Type*} [TopologicalSpace X] (X₀ : Set X) :
     VeryDense X₀ ↔ ∀ Z : Set X, Z.Nonempty → IsLocallyClosed Z → (Z ∩ X₀).Nonempty := by
   constructor
@@ -523,6 +562,7 @@ theorem prop_28339 {X : Type*} [TopologicalSpace X] (X₀ : Set X) :
 
 /-- 51wmmpHand0-28403 (7:53:23) [prop] `X₀` is very dense iff `T ∩ X₀` is dense in `T` for every
 closed `T`. -/
+@[buffalo "51wmmpHand0-28403"]
 theorem prop_28403 {X : Type*} [TopologicalSpace X] (X₀ : Set X) :
     VeryDense X₀ ↔ ∀ T : Set X, IsClosed T → T ⊆ closure (T ∩ X₀) := by
   rw [prop_28339]
@@ -539,6 +579,7 @@ theorem prop_28403 {X : Type*} [TopologicalSpace X] (X₀ : Set X) :
 
 /-- 51wmmpHand0-28472 (7:54:32) [prop] If `X₀` is very dense, the lattices of open sets of `X` and
 of `X₀` are isomorphic (by `U ↦ U ∩ X₀`). -/
+@[buffalo "51wmmpHand0-28472"]
 def prop_28472 {X : Type*} [TopologicalSpace X] (X₀ : Set X) (h : VeryDense X₀) :
     Opens X ≃o Opens X₀ := by
   let f : Opens X → Opens X₀ := fun U => ⟨Subtype.val ⁻¹' (U : Set X),
@@ -564,6 +605,7 @@ def prop_28472 {X : Type*} [TopologicalSpace X] (X₀ : Set X) (h : VeryDense X�
 /-- 51wmmpHand0-28537 (7:55:37) [prop] Conversely, if restriction to `X₀` is conservative on the
 open sets (the subobjects of the final sheaf): `U ⊆ V` and `U ∩ X₀ = V ∩ X₀` imply `U = V`, then
 `X₀` is very dense. -/
+@[buffalo "51wmmpHand0-28537"]
 theorem prop_28537 {X : Type*} [TopologicalSpace X] (X₀ : Set X)
     (h : ∀ U V : Opens X, U ≤ V → (U : Set X) ∩ X₀ = (V : Set X) ∩ X₀ → U = V) :
     VeryDense X₀ := by
@@ -580,6 +622,7 @@ theorem prop_28537 {X : Type*} [TopologicalSpace X] (X₀ : Set X)
 /-- 51wmmpHand0-28667 (7:57:47) [prop] If `X` is sober and `X₀` very dense, the points of `X`
 correspond to the irreducible closed subsets of `X₀` (`x ↦ closure {x} ∩ X₀`), so `X` is the sober
 space associated to `X₀`. -/
+@[buffalo "51wmmpHand0-28667"]
 theorem prop_28667 {X : Type*} [TopologicalSpace X] [QuasiSober X] [T0Space X] (X₀ : Set X)
     (h : VeryDense X₀) :
     Set.BijOn (fun x : X => closure {x} ∩ X₀) Set.univ
@@ -599,6 +642,7 @@ theorem prop_28667 {X : Type*} [TopologicalSpace X] [QuasiSober X] [T0Space X] (
 
 /-- 51wmmpHand0-28733 (7:58:53) [prop] For `A` finitely generated over a field, the closed points
 of `Spec A` are very dense (Nullstellensatz: `Spec A` is a Jacobson space). -/
+@[buffalo "51wmmpHand0-28733"]
 theorem prop_28733 (K A : Type*) [Field K] [CommRing A] [Algebra K A] [Algebra.FiniteType K A] :
     VeryDense (closedPoints (PrimeSpectrum A)) := by
   have : IsJacobsonRing A := isJacobsonRing_of_finiteType (A := K)
@@ -607,6 +651,7 @@ theorem prop_28733 (K A : Type*) [Field K] [CommRing A] [Algebra K A] [Algebra.F
 
 /-- 51wmmpHand0-28988 (8:03:08) [prop] For `A` finitely generated over a field, the nilradical is
 the intersection of the maximal ideals; for any ring it is the intersection of the primes. -/
+@[buffalo "51wmmpHand0-28988"]
 theorem prop_28988 (K A : Type*) [Field K] [CommRing A] [Algebra K A] [Algebra.FiniteType K A] :
     nilradical A = sInf {M : Ideal A | M.IsMaximal} ∧
       nilradical A = sInf {P : Ideal A | P.IsPrime} := by
@@ -620,6 +665,7 @@ theorem prop_28988 (K A : Type*) [Field K] [CommRing A] [Algebra K A] [Algebra.F
 `X(k)` (the closed points) is very dense in `Spec A`, so it has the same lattice of open sets (and
 of closed, locally closed and irreducible closed sets) as `Spec A`; it contains no non-closed,
 in particular no generic, point. -/
+@[buffalo "51wmmpHand0-29114"]
 theorem prop_29114 (K A : Type u) [Field K] [IsAlgClosed K] [CommRing A] [Algebra K A]
     [Algebra.FiniteType K A] :
     VeryDense (closedPoints (PrimeSpectrum A)) ∧
@@ -635,6 +681,7 @@ theorem prop_29114 (K A : Type u) [Field K] [IsAlgClosed K] [CommRing A] [Algebr
 /-- 51wmmpHand0-29287 (8:08:07) [rem] The topology of `Spec A` does not determine `A`: `ℤ/4` and
 `(ℤ/4)/nil` have homeomorphic spectra (`prop_23611`) but are not isomorphic, one being reduced
 and not the other. -/
+@[buffalo "51wmmpHand0-29287"]
 theorem rem_29287 :
     Nonempty (PrimeSpectrum (ZMod 4 ⧸ nilradical (ZMod 4)) ≃ₜ PrimeSpectrum (ZMod 4)) ∧
       IsEmpty (ZMod 4 ≃+* ZMod 4 ⧸ nilradical (ZMod 4)) := by

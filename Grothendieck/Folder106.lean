@@ -3,6 +3,7 @@ module
 public import Mathlib.CategoryTheory.Localization.Construction
 public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
 public import Mathlib.CategoryTheory.Limits.Shapes.IsTerminal
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -188,6 +189,7 @@ theorem factorisation_somme {a b y : C} (hb : Cofibrant cof b) (p : a ⟶ y) (q 
 `i : ỹ → ỹ'` in `cof ∩ W`, `α'_y : ỹ' → y` in `W` with `α_y = α'_y i`, and
 `f̃ : x̃ → ỹ'` with `α'_y f̃ = f α_x`; and `ỹ'` is cofibrant if `ỹ` is.
 Neither `α_x ∈ W` nor `ỹ` cofibrant is needed for the lifting itself. -/
+@[montpellier "106, 1"]
 theorem relevementFaible_general {x y x' y' : C} (f : x ⟶ y) (αx : x' ⟶ x) (αy : y' ⟶ y)
     (hαy : W αy) (hx' : Cofibrant cof x') :
     ∃ (y'' : C) (i : y' ⟶ y'') (α' : y'' ⟶ y) (f' : x' ⟶ y''),
@@ -202,6 +204,7 @@ replacements `α_x : x̃ → x`, `α_y : ỹ → y` (cofibrant sources, arrows i
 there are `i : ỹ → ỹ'` in `cof ∩ W`, `α'_y : ỹ' → y` in `W` with
 `α_y = α'_y i`, and `f̃ : x̃ → ỹ'` with `α'_y f̃ = f α_x`; moreover `ỹ'` is
 cofibrant. -/
+@[montpellier "106, 1"]
 theorem relevementFaible {x y x' y' : C} (f : x ⟶ y) (αx : x' ⟶ x) (αy : y' ⟶ y)
     (hx' : Cofibrant cof x') (_hαx : W αx) (hy' : Cofibrant cof y') (hαy : W αy) :
     ∃ (y'' : C) (i : y' ⟶ y'') (α' : y'' ⟶ y) (f' : x' ⟶ y''),
@@ -214,6 +217,7 @@ theorem relevementFaible {x y x' y' : C} (f : x ⟶ y) (αx : x' ⟶ x) (αy : y
 cofibrant objects, factoring `(f, 1_y) : x ⊔ y → y` gives `x̄`, `i : x → x̄`
 cofibration, `g : y → x̄` in `cof ∩ W`, `α : x̄ → y` in `W`, with `α i = f` and
 `α g = 1_y`. -/
+@[montpellier "106, 9"]
 theorem factorisationDeBrown_general {x y : C} (hx : Cofibrant cof x) (hy : Cofibrant cof y)
     (f : x ⟶ y) :
     ∃ (x' : C) (i : x ⟶ x') (g : y ⟶ x') (α : x' ⟶ y),
@@ -227,6 +231,7 @@ cofibrant and `f : x → y` in `W`. Factoring `(f, 1_y) : x ⊔ y → y` as a
 cofibration followed by `α : x̄ → y` in `W`, and writing `i`, `g` for the
 composites of `x → x ⊔ y`, `y → x ⊔ y` with `x ⊔ y → x̄`, one has `α i = f`,
 `α g = 1_y`, and `i, g ∈ cof ∩ W`. -/
+@[montpellier "106, 9"]
 theorem factorisationDeBrown {x y : C} (hx : Cofibrant cof x) (hy : Cofibrant cof y)
     (f : x ⟶ y) (hf : W f) :
     ∃ (x' : C) (i : x ⟶ x') (g : y ⟶ x') (α : x' ⟶ y),
@@ -238,6 +243,7 @@ theorem factorisationDeBrown {x y : C} (hx : Cofibrant cof x) (hy : Cofibrant co
 inverting the trivial cofibrations `W₀ = W ∩ cof` inverts every weak
 equivalence: write `f = α i` with `α g = 1_y` and `i, g ∈ W₀` (page 9); then
 `[α] = [g]⁻¹` and `[f] = [α][i]` are invertible. -/
+@[montpellier "106, 11"]
 theorem inverse_W_of_inverse_W₀ (hcof : ∀ x : C, Cofibrant cof x) {D : Type*} [Category D]
     (F : C ⥤ D) (hF : (W ⊓ cof).IsInvertedBy F) : W.IsInvertedBy F := by
   intro x y f hf
@@ -255,6 +261,7 @@ theorem inverse_W_of_inverse_W₀ (hcof : ∀ x : C, Cofibrant cof x) {D : Type*
 object is cofibrant, `W₀ = W ∩ cof`. Stated as a pair of functors
 `F : W₀⁻¹𝒞 → W⁻¹𝒞`, `G : W⁻¹𝒞 → W₀⁻¹𝒞`, compatible with the localisation
 functors, with `F ⋙ G` and `G ⋙ F` *equal* to the identities. -/
+@[montpellier "106, 11"]
 theorem localisation_W₀_iso_localisation_W (hcof : ∀ x : C, Cofibrant cof x) :
     ∃ (F : (W ⊓ cof).Localization ⥤ W.Localization)
       (G : W.Localization ⥤ (W ⊓ cof).Localization),
@@ -289,6 +296,7 @@ lemma hom_wInv {x y : C} (w : x ⟶ y) (hw : W w) : W.Q.map w ≫ wInv w hw = �
 variable (W cof) in
 /-- **Page 11, an object of `Ch'₀(x, y)`**: a diagram `x → ỹ ← y`, the first
 arrow a cofibration, the second a weak equivalence. -/
+@[montpellier "106, 11"]
 structure Span (x y : C) where
   /-- the middle object `ỹ` -/
   pt : C
@@ -461,6 +469,7 @@ variable (W cof) in
 /-- **The criterion `(⋆⋆)` of page 15.** For `f : x → y` in `W` and two sections
 `i, i'` of `f`, the diagrams `(1_x, i)` and `(1_x, i')` lie in the same connected
 component of `Ch'₀(x, y)`. -/
+@[montpellier "106, 15"]
 def Critere : Prop :=
   ∀ ⦃x y : C⦄ (f : x ⟶ y) (hf : W f) (i i' : y ⟶ x) (hi : i ≫ f = 𝟙 y) (hi' : i' ≫ f = 𝟙 y),
     Relation.EqvGen Span.Arrow (sectionSpan (cof := cof) f hf i hi) (sectionSpan f hf i' hi')
@@ -468,6 +477,7 @@ def Critere : Prop :=
 omit [HasInitial C] in
 /-- **Page 15, the necessity of `(⋆⋆)`.** If `q'` is faithful, `(⋆⋆)` holds:
 `f i = 1_y` gives `q'(1_x, i) = [i]⁻¹ = [f] = q'(1_x, i')`. -/
+@[montpellier "106, 15"]
 theorem critere_of_fidele
     (h : ∀ x y : C, Function.Injective (qbar (W := W) (cof := cof) (x := x) (y := y))) :
     Critere W cof := by
@@ -479,6 +489,7 @@ theorem critere_of_fidele
 
 /-- The category `𝒞̃'` of page 11: the objects of `𝒞`, and `π₀ Ch'₀(x, y)` as
 arrows `x → y`. -/
+@[montpellier "106, 11"]
 structure Rect (W cof : MorphismProperty C) where
   /-- the underlying object of `𝒞` -/
   as : C
@@ -650,6 +661,7 @@ lemma phi_inverts (hcof : ∀ x : C, Cofibrant cof x) : W.IsInvertedBy (phi W co
 
 variable (W cof) in
 /-- The functor `q' : 𝒞̃' → W⁻¹𝒞` of page 15, `(f, i) ↦ [i]⁻¹[f]`. -/
+@[montpellier "106, 15"]
 noncomputable def qFunctor : Rect W cof ⥤ W.Localization where
   obj X := W.Q.obj X.as
   map φ := qbar φ
@@ -700,6 +712,7 @@ lemma phiBar_frac (hcof : ∀ x : C, Cofibrant cof x) {x y : C} (s : Span W cof 
 
 /-- **`q'` is faithful**: when every object is cofibrant, two diagrams of
 `Ch'₀(x, y)` with the same fraction `[i]⁻¹[f]` lie in the same component. -/
+@[montpellier "106, 11–15"]
 theorem fidele (hcof : ∀ x : C, Cofibrant cof x) (x y : C) :
     Function.Injective (qbar (W := W) (cof := cof) (x := x) (y := y)) := by
   intro a b hab
@@ -711,12 +724,14 @@ theorem fidele (hcof : ∀ x : C, Cofibrant cof x) (x y : C) :
   rwa [phiBar_frac, phiBar_frac] at this
 
 /-- **`(⋆⋆)` holds** when every object is cofibrant (necessity applied to `fidele`). -/
+@[montpellier "106, 11–15"]
 theorem critere (hcof : ∀ x : C, Cofibrant cof x) : Critere W cof :=
   critere_of_fidele (fidele hcof)
 
 /-- **The final statement of page 15, as the finding states it**: when every
 object is cofibrant, `q'` is faithful if and only if `(⋆⋆)` holds. (Both sides
 hold: `fidele`, `critere`.) -/
+@[montpellier "106, 15"]
 theorem fidele_iff_critere (hcof : ∀ x : C, Cofibrant cof x) :
     (∀ x y : C, Function.Injective (qbar (W := W) (cof := cof) (x := x) (y := y))) ↔
       Critere W cof :=
@@ -724,6 +739,7 @@ theorem fidele_iff_critere (hcof : ∀ x : C, Cofibrant cof x) :
 
 /-- **`q' : 𝒞̃' → W⁻¹𝒞` is an isomorphism of categories** when every object is
 cofibrant: `φ̄` is its inverse, as equalities of functors. -/
+@[montpellier "106, 11–15"]
 theorem qFunctor_iso (hcof : ∀ x : C, Cofibrant cof x) :
     qFunctor W cof ⋙ phiBar W cof hcof = 𝟭 _ ∧ phiBar W cof hcof ⋙ qFunctor W cof = 𝟭 _ := by
   constructor
@@ -748,6 +764,7 @@ theorem qFunctor_iso (hcof : ∀ x : C, Cofibrant cof x) :
 
 /-- **`q'` is full**: every arrow of `W⁻¹𝒞(x, y)` is a fraction `[i]⁻¹[f]` with
 `f ∈ cof`, `i ∈ W`. -/
+@[montpellier "106, 11–15"]
 theorem plein (hcof : ∀ x : C, Cofibrant cof x) (x y : C) :
     Function.Surjective (qbar (W := W) (cof := cof) (x := x) (y := y)) := by
   intro φ

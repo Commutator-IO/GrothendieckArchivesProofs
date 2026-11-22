@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -26,10 +27,12 @@ variable {X : TopCat.{u}}
 
 /-- URU5jgTvjhU-9213 (2:33:33) [def] In `Set`, `G` acts simply transitively on `E` if
 `G × E → E × E`, `(g, x) ↦ (gx, x)`, is bijective. -/
+@[buffalo "URU5jgTvjhU-9213"]
 def IsSimplyTransitive (G E : Type*) [Group G] [MulAction G E] : Prop :=
   Function.Bijective fun p : G × E => (p.1 • p.2, p.2)
 
 /-- URU5jgTvjhU-9213 (2:33:33) [def] `E` is a torsor if moreover `E → pt` is surjective. -/
+@[buffalo "URU5jgTvjhU-9213"]
 def IsTorsor (G E : Type*) [Group G] [MulAction G E] : Prop :=
   IsSimplyTransitive G E ∧ Function.Surjective fun _ : E => (PUnit.unit : PUnit.{1})
 
@@ -58,6 +61,7 @@ theorem isSimplyTransitive_iff (G E : Type*) [Group G] [MulAction G E] :
 
 /-- URU5jgTvjhU-9274 (2:34:34) [prop] `f : E → F` is a monomorphism iff the diagonal
 `E → E ×_F E` is an isomorphism; dually an epimorphism iff `F ⊔_E F → F` is one. -/
+@[buffalo "URU5jgTvjhU-9274"]
 theorem mono_iff_diagonal_epi_iff_codiagonal {C : Type*} [Category C] {E F : C} (f : E ⟶ F)
     [HasPullback f f] [HasPushout f f] :
     (Mono f ↔ IsIso (pullback.diagonal f)) ∧ (Epi f ↔ IsIso (pushout.codiagonal f)) :=
@@ -65,6 +69,7 @@ theorem mono_iff_diagonal_epi_iff_codiagonal {C : Type*} [Category C] {E F : C} 
 
 /-- URU5jgTvjhU-9402 (2:36:42) [prop] A morphism of sheaves is an epimorphism if and only if it is
 one (a surjection) on every stalk. -/
+@[buffalo "URU5jgTvjhU-9402"]
 theorem sheaf_epi_iff_stalks {F G : TopCat.Sheaf (Type u) X} (φ : F ⟶ G) :
     Epi φ ↔ ∀ x, Function.Surjective ((TopCat.Presheaf.stalkFunctor (Type u) x).map φ.hom) := by
   rw [← TopCat.Sheaf.isLocallySurjective_iff_epi]
@@ -72,6 +77,7 @@ theorem sheaf_epi_iff_stalks {F G : TopCat.Sheaf (Type u) X} (φ : F ⟶ G) :
 
 /-- URU5jgTvjhU-9900 (2:45:00) [cex] The structures of field and of integral domain are not stable
 under products (`ℚ × ℚ` is not a domain), whereas structures defined by finite limits are. -/
+@[buffalo "URU5jgTvjhU-9900"]
 theorem prod_not_isDomain : ¬ IsDomain (ℚ × ℚ) := by
   intro h
   have h0 : ((1 : ℚ), (0 : ℚ)) * ((0 : ℚ), (1 : ℚ)) = 0 := by ext <;> simp
@@ -81,12 +87,14 @@ theorem prod_not_isDomain : ¬ IsDomain (ℚ × ℚ) := by
 
 /-- URU5jgTvjhU-10423 (2:53:43) The sections `f ∈ K(U)` whose multiplication is a monomorphism
 of `K|_U`: for every `V ⊆ U`, multiplication by `f|_V` is injective on `K(V)`. -/
+@[buffalo "URU5jgTvjhU-10423"]
 def regularSections (K : TopCat.Sheaf CommRingCat.{u} X) (U : Opens X) :
     Set (K.obj.obj (op U)) :=
   {f | ∀ (V : Opens X) (i : V ⟶ U) (g : K.obj.obj (op V)), (K.obj.map i.op).hom f * g = 0 → g = 0}
 
 /-- URU5jgTvjhU-10229 (2:50:29) [def] A sheaf of rings `K` is integral if `K' ⊔ 1 → K` (inclusion
 and zero section) is an epimorphism: locally, every section is zero or in `K'`. -/
+@[buffalo "URU5jgTvjhU-10229"]
 def IsIntegralSheaf (K : TopCat.Sheaf CommRingCat.{u} X) : Prop :=
   ∀ (U : Opens X) (f : K.obj.obj (op U)) (x : X), x ∈ U →
     ∃ (V : Opens X) (i : V ⟶ U), x ∈ V ∧
@@ -94,12 +102,14 @@ def IsIntegralSheaf (K : TopCat.Sheaf CommRingCat.{u} X) : Prop :=
 
 /-- URU5jgTvjhU-10358 (2:52:38) [prop] For two sheaves `K`, `L`, the presheaf
 `U ↦ Hom(K|_U, L|_U)` is a sheaf. -/
+@[buffalo "URU5jgTvjhU-10358"]
 theorem presheafHom_isSheaf (K L : TopCat.Sheaf (Type u) X) :
     Presheaf.IsSheaf (Opens.grothendieckTopology X) (presheafHom K.obj L.obj) :=
   Presheaf.IsSheaf.hom K.obj L.obj L.property
 
 /-- URU5jgTvjhU-10423 (2:53:43) [prop] The sections whose multiplications are monomorphisms form a
 subpresheaf `K'` of `K`: stable under restriction ... -/
+@[buffalo "URU5jgTvjhU-10423"]
 theorem regularSections_res (K : TopCat.Sheaf CommRingCat.{u} X) {U W : Opens X} (j : W ⟶ U)
     {f : K.obj.obj (op U)} (hf : f ∈ regularSections K U) :
     (K.obj.map j.op).hom f ∈ regularSections K W := by
@@ -109,6 +119,7 @@ theorem regularSections_res (K : TopCat.Sheaf CommRingCat.{u} X) {U W : Opens X}
 
 /-- URU5jgTvjhU-10423 (2:53:43) [prop] ... and membership in `K'` is a local property, so `K'` is a
 subsheaf. -/
+@[buffalo "URU5jgTvjhU-10423"]
 theorem regularSections_local (K : TopCat.Sheaf CommRingCat.{u} X) {ι : Type u} (U : ι → Opens X)
     (f : K.obj.obj (op (iSup U)))
     (hf : ∀ i, (K.obj.map (Opens.leSupr U i).op).hom f ∈ regularSections K (U i)) :
@@ -133,6 +144,7 @@ theorem regularSections_local (K : TopCat.Sheaf CommRingCat.{u} X) {ι : Type u}
 
 /-- URU5jgTvjhU-10756 (2:59:16) [def] `(Zᵢ)` is a generating family if every monomorphism
 `E → F` inducing bijections `Hom(Zᵢ, E) → Hom(Zᵢ, F)` is an isomorphism (SGA 4 I 7.1). -/
+@[buffalo "URU5jgTvjhU-10756"]
 def IsGeneratingFamily {C : Type*} [Category C] {ι : Type*} (Z : ι → C) : Prop :=
   ∀ ⦃E F : C⦄ (m : E ⟶ F) [Mono m],
     (∀ i, Function.Bijective fun h : Z i ⟶ E => h ≫ m) → IsIso m
@@ -143,6 +155,7 @@ def IsConservativeFamily {C : Type*} [Category C] {ι : Type*} (Z : ι → C) : 
 
 /-- URU5jgTvjhU-10884 (3:01:24) [prop] In a category with fibre products (such as `Sh(X)`),
 `(Zᵢ)` is generating if and only if the family of functors `Hom(Zᵢ, -)` is conservative. -/
+@[buffalo "URU5jgTvjhU-10884"]
 theorem isGeneratingFamily_iff {C : Type*} [Category C] [HasPullbacks C] {ι : Type*}
     (Z : ι → C) : IsGeneratingFamily Z ↔ IsConservativeFamily Z := by
   constructor
@@ -164,18 +177,21 @@ theorem isGeneratingFamily_iff {C : Type*} [Category C] [HasPullbacks C] {ι : T
 
 /-- URU5jgTvjhU-11028 (3:03:48) [prop] In `Sh(X)` every morphism factors as an epimorphism followed
 by a monomorphism (the image sheaf). -/
+@[buffalo "URU5jgTvjhU-11028"]
 theorem sheaf_image {F G : Sheaf (Opens.grothendieckTopology X) (Type u)} (f : F ⟶ G) :
     Sheaf.toImage f ≫ Sheaf.imageι f = f ∧ Epi (Sheaf.toImage f) ∧ Mono (Sheaf.imageι f) :=
   ⟨Sheaf.toImage_ι f, inferInstance, inferInstance⟩
 
 /-- URU5jgTvjhU-11157 (3:05:57) [prop] In `Sh(X)`, a monomorphism that is an epimorphism is an
 isomorphism (the category is balanced). -/
+@[buffalo "URU5jgTvjhU-11157"]
 theorem sheaf_isIso_of_mono_of_epi {F G : Sheaf (Opens.grothendieckTopology X) (Type u)} (f : F ⟶ G) [Mono f] [Epi f] :
     IsIso f :=
   isIso_of_mono_of_epi f
 
 /-- URU5jgTvjhU-11349 (3:09:09) [def] An open set `U` defines a sheaf: `U(V)` is a singleton if
 `V ⊆ U`, empty otherwise (the presheaf represented by `U`). -/
+@[buffalo "URU5jgTvjhU-11349"]
 theorem yoneda_isSheaf (U : Opens X) : TopCat.Presheaf.IsSheaf (X := X) (yoneda.obj U) := by
   rw [TopCat.Presheaf.isSheaf_iff_isSheafUniqueGluing_types]
   intro ι V sf _
@@ -187,6 +203,7 @@ def opensSheaf (U : Opens X) : Sheaf (Opens.grothendieckTopology X) (Type u) :=
   ⟨yoneda.obj U, yoneda_isSheaf U⟩
 
 /-- URU5jgTvjhU-11484 (3:11:24) [prop] For every sheaf `E`, `Hom(U, E) = E(U)` ... -/
+@[buffalo "URU5jgTvjhU-11484"]
 def opensSheaf_hom (U : Opens X) (E : Sheaf (Opens.grothendieckTopology X) (Type u)) :
     (opensSheaf U ⟶ E) ≃ E.obj.obj (op U) :=
   (fullyFaithfulSheafToPresheaf _ _).homEquiv.trans yonedaEquiv
@@ -199,6 +216,7 @@ theorem opensSheaf_hom_comp (U : Opens X) {E F : Sheaf (Opens.grothendieckTopolo
 
 /-- URU5jgTvjhU-11484 (3:11:24) [prop] ... so the open sets form a small generating family of
 `Sh(X)`: two morphisms agreeing after every `U → E` are equal. -/
+@[buffalo "URU5jgTvjhU-11484"]
 theorem opensSheaf_separating {E F : Sheaf (Opens.grothendieckTopology X) (Type u)} (f g : E ⟶ F)
     (h : ∀ (U : Opens X) (a : opensSheaf U ⟶ E), a ≫ f = a ≫ g) : f = g := by
   apply (sheafToPresheaf _ _).map_injective
@@ -211,10 +229,12 @@ theorem opensSheaf_separating {E F : Sheaf (Opens.grothendieckTopology X) (Type 
 /-! ## Abelian sheaves and injectives -/
 
 /-- URU5jgTvjhU-11555 (3:12:35) [prop] The abelian sheaves on `X` form an abelian category. -/
+@[buffalo "URU5jgTvjhU-11555"]
 theorem ab_abelian : Nonempty (Abelian (TopCat.Sheaf AddCommGrpCat.{u} X)) := ⟨inferInstance⟩
 
 /-- URU5jgTvjhU-11687 (3:14:47) [prop] `Ab(X)` admits limits and colimits, and filtered colimits
 are exact there (it is a Grothendieck abelian category). -/
+@[buffalo "URU5jgTvjhU-11687"]
 theorem ab_grothendieck : IsGrothendieckAbelian.{u} (TopCat.Sheaf AddCommGrpCat.{u} X) :=
   inferInstance
 
@@ -226,11 +246,13 @@ example {I F G : TopCat.Sheaf AddCommGrpCat.{u} X} [Injective I] (g : F ⟶ I) (
 
 /-- URU5jgTvjhU-11881 (3:18:01) [prop] An abelian category with exact filtered colimits and a
 generator has enough injectives; this is the case of `Ab(X)`. -/
+@[buffalo "URU5jgTvjhU-11881"]
 theorem ab_enoughInjectives : EnoughInjectives (TopCat.Sheaf AddCommGrpCat.{u} X) :=
   inferInstance
 
 /-- URU5jgTvjhU-11945 (3:19:05) [prop] For a sheaf of rings `A`, `Mod(A)` is abelian with exact
 filtered colimits and a generator, hence has enough injectives. -/
+@[buffalo "URU5jgTvjhU-11945"]
 theorem modules_enoughInjectives (A : Sheaf (Opens.grothendieckTopology X) RingCat.{u}) :
     IsGrothendieckAbelian.{u} (SheafOfModules.{u} A) ∧ EnoughInjectives (SheafOfModules.{u} A) :=
   ⟨inferInstance, inferInstance⟩

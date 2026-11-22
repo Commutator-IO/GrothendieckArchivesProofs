@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -123,6 +124,7 @@ theorem two_dvd_of_red_eq_zero {n : ℕ} {p : MvPolynomial (Sym2 (Fin n)) ℤ}
 
 /-- **Page 68.** In odd rank the universal discriminant is divisible by `2`
 in `ℤ[Y]`. -/
+@[montpellier "77, 68"]
 theorem two_dvd_det_polar {n : ℕ} (hn : Odd n) :
     (2 : MvPolynomial (Sym2 (Fin n)) ℤ) ∣ (polar n).det := by
   apply two_dvd_of_red_eq_zero
@@ -130,6 +132,7 @@ theorem two_dvd_det_polar {n : ℕ} (hn : Odd n) :
     ← RingHom.map_det, det_skew_of_odd hn, map_zero]
 
 /-- The universal half-discriminant `δ' = Δ / 2` in odd rank. -/
+@[montpellier "77, 68"]
 noncomputable def halfDisc {n : ℕ} (hn : Odd n) : MvPolynomial (Sym2 (Fin n)) ℤ :=
   (two_dvd_det_polar hn).choose
 
@@ -157,6 +160,7 @@ theorem polar_map_aeval {R : Type*} [CommRing R] {n : ℕ} (y : Sym2 (Fin n) →
 /-- Over any commutative ring, in odd rank, the determinant of the polar form is
 twice the value of the universal half-discriminant: `δ'` is defined over any
 base. -/
+@[montpellier "77, 68"]
 theorem det_polarOf_eq {R : Type*} [CommRing R] {n : ℕ} (hn : Odd n)
     (y : Sym2 (Fin n) → R) : (polarOf y).det = 2 * aeval y (halfDisc hn) := by
   have := AlgHom.map_det (aeval (R := ℤ) y) (polar n)
@@ -166,6 +170,7 @@ theorem det_polarOf_eq {R : Type*} [CommRing R] {n : ℕ} (hn : Odd n)
 /-! ## Even rank: `(-1)ⁿ Δ = B² - 4C` in ranks 2 and 4 -/
 
 /-- **Rank 2.** `-Δ = b² - 4ac`; here `B = b` and `C = ac`. -/
+@[montpellier "77, 68–71"]
 theorem disc_rank_two {R : Type*} [CommRing R] (a₁ a₂ b₁₂ : R) :
     -(!![2 * a₁, b₁₂; b₁₂, 2 * a₂]).det = b₁₂ ^ 2 - 4 * (a₁ * a₂) := by
   rw [det_fin_two_of]; ring
@@ -193,6 +198,7 @@ theorem det_polar4 {R : Type*} [CommRing R] (a₁ a₂ a₃ a₄ b₁₂ b₁₃
 
 /-- **Rank 4.** `Δ = B² - 4C`, with `B = b₁₂b₃₄ + b₁₃b₂₄ + b₁₄b₂₃` the sum over the
 three perfect matchings of `{1, 2, 3, 4}`. -/
+@[montpellier "77, 68–71"]
 theorem disc_rank_four {R : Type*} [CommRing R] (a₁ a₂ a₃ a₄ b₁₂ b₁₃ b₁₄ b₂₃ b₂₄ b₃₄ : R) :
     (polar4 a₁ a₂ a₃ a₄ b₁₂ b₁₃ b₁₄ b₂₃ b₂₄ b₃₄).det =
       (b₁₂ * b₃₄ + b₁₃ * b₂₄ + b₁₄ * b₂₃) ^ 2
@@ -206,12 +212,14 @@ theorem disc_rank_four {R : Type*} [CommRing R] (a₁ a₂ a₃ a₄ b₁₂ b�
 
 /-- The other sign fails in rank 2: at `a = c = 0`, `b = 1`, `B² - Δ = 2` is not
 divisible by `4`. -/
+@[montpellier "77, 68–71"]
 theorem not_dvd_rank_two :
     ¬ (4 : ℤ) ∣ (1 : ℤ) ^ 2 - (!![2 * 0, 1; 1, 2 * 0] : Matrix (Fin 2) (Fin 2) ℤ).det := by
   rw [det_fin_two_of]; decide
 
 /-- The other sign fails in rank 4: at `b₁₂ = b₃₄ = 1`, all other coefficients
 `0`, `B² + Δ = 2` is not divisible by `4`. -/
+@[montpellier "77, 68–71"]
 theorem not_dvd_rank_four :
     ¬ (4 : ℤ) ∣ (1 : ℤ) ^ 2 + (polar4 (0 : ℤ) 0 0 0 1 0 0 0 0 1).det := by
   rw [det_polar4]; decide
@@ -504,6 +512,7 @@ theorem det_skew_eq_sq (n : ℕ) : ∃ r, (skew (2 * n)).det = r ^ 2 := by
 
 /-- The hafnian of the off-diagonal variables: the sum over the perfect matchings of
 `Fin m` (the fixed-point-free involutions) of the products of the `Yᵢⱼ`. -/
+@[montpellier "77, 68–71"]
 noncomputable def hafnian (m : ℕ) : MvPolynomial (Sym2 (Fin m)) ℤ :=
   ∑ σ ∈ fpfInv m, ∏ i ∈ Finset.univ.filter (fun i => i < σ i), X s(i, σ i)
 
@@ -546,6 +555,7 @@ theorem four_dvd_neg_one_pow (n : ℕ) : (4 : ℤ) ∣ (-1) ^ n - (1 - 2 * n) :=
 
 /-- **Pages 68–71, every even rank.** In `ℤ[Y]`, `4` divides `(-1)ⁿ Δ - B²`, `Δ` the
 determinant of the polar matrix of rank `2n` and `B` the hafnian of the `Yᵢⱼ`. -/
+@[montpellier "77, 68–71"]
 theorem four_dvd_disc_sub_hafnian_sq (n : ℕ) :
     (4 : MvPolynomial (Sym2 (Fin (2 * n))) ℤ) ∣
       (-1) ^ n * (polar (2 * n)).det - hafnian (2 * n) ^ 2 := by
@@ -564,6 +574,7 @@ theorem four_dvd_disc_sub_hafnian_sq (n : ℕ) :
 /-- **Pages 68–71, every even rank, over any base.** There is `C ∈ ℤ[Y]` such that for every
 commutative ring `R` and every form `Σ yᵢ xᵢ² + Σ_{i<j} yᵢⱼ xᵢ xⱼ` of rank `2n` over `R`,
 `(-1)ⁿ det P(y) = B(y)² - 4 C(y)`. -/
+@[montpellier "77, 68–71"]
 theorem disc_even_rank (n : ℕ) :
     ∃ C : MvPolynomial (Sym2 (Fin (2 * n))) ℤ, ∀ {R : Type*} [CommRing R]
       (y : Sym2 (Fin (2 * n)) → R),
@@ -591,6 +602,7 @@ theorem piForm_apply (Q : QuadraticForm R M) (a x : M) :
     piForm Q a x = QuadraticMap.polar Q a x := rfl
 
 /-- The canonical symmetry `σ = id - π ⊗ a` (page 123, (20)). -/
+@[montpellier "77, 123"]
 def canSym (Q : QuadraticForm R M) (a : M) : M →ₗ[R] M :=
   LinearMap.id - (piForm Q a).smulRight a
 
@@ -605,6 +617,7 @@ theorem quad_map_add (Q : QuadraticForm R M) (x y : M) :
 variable {Q : QuadraticForm R M} {a : M}
 
 /-- **Page 117, (10).** `π(a) = 2`. -/
+@[montpellier "77, 117"]
 theorem piForm_self (ha : Q a = 1) : piForm Q a a = 2 := by
   rw [piForm_apply, polar_self, ha, two_smul, one_add_one_eq_two]
 
@@ -615,16 +628,19 @@ theorem quad_map_add_smul (x : M) (t : R) :
   ring
 
 /-- **Page 123, (19)–(20).** `σ` preserves `Q`. -/
+@[montpellier "77, 123"]
 theorem canSym_isometry (ha : Q a = 1) (x : M) : Q (canSym Q a x) = Q x := by
   rw [canSym_apply, sub_eq_add_neg, ← neg_smul, quad_map_add_smul, ha]; ring
 
 /-- **Page 123, (21).** `σ² = id`, because `π(a) = 2`. -/
+@[montpellier "77, 123"]
 theorem canSym_canSym (ha : Q a = 1) (x : M) : canSym Q a (canSym Q a x) = x := by
   have h : QuadraticMap.polar Q a a = 2 := piForm_self ha
   simp only [canSym_apply, polar_sub_right, polar_smul_right, h, smul_eq_mul]
   module
 
 /-- For `e` idempotent, `x ↦ x - e π(x) a` preserves `Q` (and fixes `ker π`). -/
+@[montpellier "77, 117–125"]
 theorem isometry_of_idem (ha : Q a = 1) {e : R} (he : IsIdempotentElem e) (x : M) :
     Q (x - (e * QuadraticMap.polar Q a x) • a) = Q x := by
   rw [sub_eq_add_neg, ← neg_smul, quad_map_add_smul, ha]
@@ -634,6 +650,7 @@ theorem isometry_of_idem (ha : Q a = 1) {e : R} (he : IsIdempotentElem e) (x : M
 /-- **Page 123, the marginal Proposition, over any base.** If `φ` is nondegenerate and `π`
 is onto, a linear map fixing `ker π` pointwise and preserving `Q` is `x ↦ x - e π(x) a`
 with `e` idempotent (the page's `λ(λ + 1) = 0`, with `e = -λ`). -/
+@[montpellier "77, 123"]
 theorem eq_of_isometry_fix (ha : Q a = 1)
     (hnd : ∀ y, (∀ x, QuadraticMap.polar Q y x = 0) → y = 0) {b : M}
     (hb : QuadraticMap.polar Q a b = 1)
@@ -681,6 +698,7 @@ theorem eq_of_isometry_fix (ha : Q a = 1)
 
 /-- Over a base with no nontrivial idempotent, the isometries fixing `ker π` are `id`
 and `σ`. -/
+@[montpellier "77, 117–125"]
 theorem eq_id_or_canSym (ha : Q a = 1)
     (hnd : ∀ y, (∀ x, QuadraticMap.polar Q y x = 0) → y = 0) {b : M}
     (hb : QuadraticMap.polar Q a b = 1)
@@ -694,6 +712,7 @@ theorem eq_id_or_canSym (ha : Q a = 1)
 
 /-- **Page 123.** If `2` is invertible, `a/2 ∈ E = π⁻¹(1)` and on `E` the projective map `σ`
 (represented by `-σ`, which preserves `E`) is the symmetry of centre `a/2`. -/
+@[montpellier "77, 123"]
 theorem canSym_center [Invertible (2 : R)] (ha : Q a = 1) (x : M)
     (hx : QuadraticMap.polar Q a x = 1) :
     QuadraticMap.polar Q a (⅟(2 : R) • a) = 1 ∧ QuadraticMap.polar Q a (-canSym Q a x) = 1 ∧
@@ -708,6 +727,7 @@ theorem canSym_center [Invertible (2 : R)] (ha : Q a = 1) (x : M)
 
 /-- **Page 123.** If `2 = 0`, `π(a) = 0`: `a ∈ ker π`, `σ` preserves each level of `π` and
 acts on `E` as `x ↦ x - a`; `σ` is the transvection `id - π ⊗ a`. -/
+@[montpellier "77, 123"]
 theorem canSym_char_two (h2 : (2 : R) = 0) (ha : Q a = 1) :
     QuadraticMap.polar Q a a = 0 ∧
       (∀ x, QuadraticMap.polar Q a (canSym Q a x) = QuadraticMap.polar Q a x) ∧
@@ -720,6 +740,7 @@ theorem canSym_char_two (h2 : (2 : R) = 0) (ha : Q a = 1) :
 
 /-- **Page 124.** For `T = M₂(R)`, `q = det`, `a = 1`: `φ(x, 1) = tr x`, so `π` is the trace
 (the page has `-tr`, from the opposite polar form). -/
+@[montpellier "77, 124"]
 theorem det_polar_one (x : Matrix (Fin 2) (Fin 2) R) :
     (x + 1).det - x.det - (1 : Matrix (Fin 2) (Fin 2) R).det = x.trace := by
   rw [Matrix.det_fin_two, Matrix.det_fin_two, Matrix.det_one, Matrix.trace_fin_two]
@@ -806,6 +827,7 @@ theorem re_commutator {x y : ℍ[K,a,b]} (hx : x.re = 0) (hy : y.re = 0) :
   simp [hx, hy]; ring
 
 /-- **(21 bis)**: `q([x, y]) = -4 q(x) q(y) + φ(x, y)²`. -/
+@[montpellier "77, 89–98"]
 theorem qf_commutator {x y : ℍ[K,a,b]} (hx : x.re = 0) (hy : y.re = 0) :
     qf (x * y - y * x) = -4 * qf x * qf y + pol x y ^ 2 := by
   simp [qf, pol, hx, hy]; ring
@@ -971,6 +993,7 @@ theorem exists_perp (h2 : (2 : K) ≠ 0) (ha : a ≠ 0) (hb : b ≠ 0) {t : ℍ[
 
 /-- **Page 95–97, épimorphisme.** Every `t ∈ Σ` is `f̃(x + iy)` for some `(x, y) ∈ Ũ`:
 take a pure `x ⟂ t` with `q(x) ≠ 0` and `y = -tx`. -/
+@[montpellier "77, 95–97"]
 theorem ftilde_surjective (h2 : (2 : K) ≠ 0) (ha : a ≠ 0) (hb : b ≠ 0) {t : ℍ[K,a,b]}
     (ht : t ∈ Sphere) : ∃ ξ ∈ Utilde, ftilde ξ = t := by
   obtain ⟨x, hx, hxt, hq⟩ := exists_perp h2 ha hb ht
@@ -991,6 +1014,7 @@ theorem ftilde_surjective (h2 : (2 : K) ≠ 0) (ha : a ≠ 0) (hb : b ≠ 0) {t 
 
 /-- **Pages 94–96, monomorphisme.** Two points of `Ũ` with the same image under `f̃` differ by
 the action of some `α = c + id`, `c² + d² ≠ 0`. -/
+@[montpellier "77, 94–96"]
 theorem ftilde_fibre (h2 : (2 : K) ≠ 0) {ξ ξ' : ℍ[K,a,b] × ℍ[K,a,b]} (hξ : ξ ∈ Utilde)
     (hξ' : ξ' ∈ Utilde) (h : ftilde ξ' = ftilde ξ) :
     ∃ c d : K, c ^ 2 + d ^ 2 ≠ 0 ∧ ξ' = act c d ξ := by
@@ -1059,6 +1083,7 @@ theorem diag_aux {d₁ d₂ d₃ x₁ x₂ x₃ z₂ z₃ : K} (h₁ : d₁ ≠ 
 /-- **Page 98, the lemma.** Over a field of characteristic `≠ 2`, a nonzero isotropic
 `x + iy` (`q(x) = q(y)`, `φ(x, y) = 0`) outside `Ũ` (`q(x) = 0`) is `(c + id) x₀` with `x₀`
 isotropic: a real point. So `X^{S[i]} ∖ X` is the open set `q(x) ≠ 0`. -/
+@[montpellier "77, 98"]
 theorem hors_de_U (h2 : (2 : K) ≠ 0) (ha : a ≠ 0) (hb : b ≠ 0) {x y : ℍ[K,a,b]}
     (hx : x.re = 0) (hy : y.re = 0) (hq : qf x = qf y) (hp : pol x y = 0) (h0 : qf x = 0) :
     ∃ x₀ : ℍ[K,a,b], x₀.re = 0 ∧ qf x₀ = 0 ∧ ∃ c d : K, x = c • x₀ ∧ y = d • x₀ := by
@@ -1112,6 +1137,7 @@ characteristic `≠ 2` (the twisted quaternion algebra `M` of the reading, its p
 special quadratic module `E` of rank `3`, `q(u) = u²`), the map
 `x + iy ↦ [x, y]/2q(x)` sends `Ũ` onto the affine quadric `Σ : q = -1`, and its fibres are
 exactly the orbits of `α = c + id`, `c² + d² ≠ 0`: `Σ ≅ Ũ/𝔾_m^{S[i]}`. -/
+@[montpellier "77, 94–98"]
 theorem sphere_quotient (h2 : (2 : K) ≠ 0) (ha : a ≠ 0) (hb : b ≠ 0) :
     (∀ ξ ∈ (Utilde : Set (ℍ[K,a,b] × ℍ[K,a,b])), ftilde ξ ∈ Sphere) ∧
       (∀ t ∈ (Sphere : Set ℍ[K,a,b]), ∃ ξ ∈ Utilde, ftilde ξ = t) ∧
@@ -1236,6 +1262,7 @@ abbrev C6 : Type := quadAlg (3 : Z6)
 field, `Δ ∉ 2A`), `B_Δ = ℤ[1/3][U]/(U² − 3)` is finite (free of rank `2`) over `A_Δ = ℤ[1/3]`,
 and inverting `2` gives `A_{2Δ}[U]/(U² − Δ)`; yet `Δ ≠ b² − 4c` for all `b, c ∈ ℤ`. So c),
 with « étale » struck as on the page, does not imply a). -/
+@[montpellier "77, 85"]
 theorem extension_across_two_counterexample :
     ¬ (2 : ℤ) ∣ 3 ∧ Module.Finite Z3 B3 ∧ Module.Free Z3 B3 ∧ Module.finrank Z3 B3 = 2 ∧
       Nonempty (Localization.Away (algebraMap Z3 B3 2) ≃+* C6) ∧
@@ -1451,6 +1478,7 @@ theorem exists_of_sq_sub (h2 : ∀ x : A, 2 * x = 0 → x = 0) [hp : (Ideal.span
 integrally closed domain, `Δ ∉ 2A`. If `B_Δ` is a finite étale `A_Δ`-algebra with
 `(B_Δ)₂ ≅ A_{2Δ}[U]/(U² − Δ)` as `A_Δ`-algebras, then `Δ = b² − 4c` with `b, c ∈ A`.
 No noetherian hypothesis is needed. -/
+@[montpellier "77, 85"]
 theorem prop85_c_imp_a {Δ : A} (h2 : ∀ x : A, 2 * x = 0 → x = 0)
     [hp : (Ideal.span {(2 : A)}).IsPrime] [IsIntegrallyClosed (A ⧸ Ideal.span {(2 : A)})]
     (hΔ : Δ ∉ Ideal.span {(2 : A)})
@@ -1580,6 +1608,7 @@ section Prop85Consequences
 /-- **Page 85, uniqueness of the isomorphism.** Two `A_Δ`-algebra maps `B_Δ → B'_Δ` compatible
 with given identifications of `(B_Δ)₂` and `(B'_Δ)₂` with `A_{2Δ}[U]/(U² − Δ)` are equal, as
 soon as `2` is regular in `A` and `B'_Δ` is flat (here, étale): `B'_Δ ⊂ (B'_Δ)₂`. -/
+@[montpellier "77, 85"]
 theorem prop85_iso_unique {A : Type*} [CommRing A] {Δ : A} (h2 : ∀ x : A, 2 * x = 0 → x = 0)
     (B B' : Type*) [CommRing B] [CommRing B'] [Algebra (Localization.Away Δ) B]
     [Algebra (Localization.Away Δ) B'] [Algebra.Etale (Localization.Away Δ) B']
@@ -1615,6 +1644,7 @@ instance : IsIntegrallyClosed (ℤ ⧸ Ideal.span {(2 : ℤ)}) := by
 
 /-- **Page 85, the struck « étale ».** `B_Δ = ℤ[1/3][U]/(U² − 3)` is not étale over `ℤ[1/3]`:
 otherwise the Proposition with « finie étale » would give `3 = b² − 4c` in `ℤ`. -/
+@[montpellier "77, 85"]
 theorem B3_not_etale : ¬ Algebra.Etale Z3 B3 := by
   intro hB
   obtain ⟨e⟩ := quadAlg_away (3 : Z3) (2 : Z3)

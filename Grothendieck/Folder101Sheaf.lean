@@ -7,6 +7,7 @@ public import Mathlib.Topology.Sheaves.LocallySurjective
 public import StacksFrontier.Algebra.Homology.DerivedCategory.RightDerivedExactFunctor
 public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.CokernelFinitePresentation
 public import StacksFrontier.Topology.Sheaves.Cohomology.Locality.DegreeZeroSections
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -99,6 +100,7 @@ def sectionsEquivTop {T : TopCat.{u}} (F : (Opens T)ᵒᵖ ⥤ Type u) :
 
 /-- **`Ext⁰(X; j_!𝒪_U, 𝒪_X) = Γ(U, 𝒪_X)`**: maps `j_!𝒪_U ⟶ 𝒪_X` are the sections of
 `𝒪_X` over `U`. -/
+@[montpellier "101, 10"]
 noncomputable def homEquivΓ (f : A) :
     (jO A f ⟶ SheafOfModules.unit (structureSheafRing (X A))) ≃
       Γ(Spec (.of A), PrimeSpectrum.basicOpen f) :=
@@ -213,6 +215,7 @@ instance preservesFiniteColimits_Γfun : PreservesFiniteColimits (Γfun A) :=
 
 /-- **On the spectrum of a local ring, `Hⁿ(X, M) = 0` for `n > 0` and every `𝒪_X`-module `M`**,
 quasi-coherent or not: `Γ(X, -)` is exact. -/
+@[montpellier "101, 10"]
 theorem isZero_cohomology (M : ModuleSheaves (X A)) {n : ℕ} (hn : 0 < n) :
     IsZero (((Γfun A).rightDerived n).obj M) :=
   Functor.isZero_rightDerived_of_exact _ M n hn
@@ -274,6 +277,7 @@ open Stacks.Cohomology.SectionsWithSupport in
 `U = D(f)` with `f ∈ 𝔪`: `H⁰_x(F) = 0`, `H¹_x(F) ≅ Γ(X ∖ {x}, F)` and
 `Hⁿ⁺¹_x(F) ≅ Hⁿ(X ∖ {x}, F)` for `n ≥ 1`, through the connecting maps of the long exact
 sequence of sections with support. -/
+@[montpellier "101, 10"]
 theorem localCohomology_jO {f : A} (hf : f ∈ IsLocalRing.maximalIdeal A) :
     IsZero ((Hx A 0).obj (jO A f)) ∧
     ∃ δ : ∀ n : ℕ, HU A n ⟶ Hx A (n + 1), ∀ n, IsIso ((δ n).app (jO A f)) := by
@@ -305,6 +309,7 @@ open Stacks.Cohomology.SectionsWithSupport in
 `Γ(X, M) → Γ(X ∖ {x}, M)`, for every `𝒪_X`-module `M` on the spectrum of a local ring
 (`H⁰_x(M)` is its kernel by definition). For a discrete valuation ring, `X ∖ {x}` is the generic
 point and this is page 10's `H¹_x(F) = Coker u` for the triple `(Γ(X, F), F_η, u)`. -/
+@[montpellier "101, 10"]
 theorem nonempty_iso_cokernel (M : ModuleSheaves (X A)) :
     Nonempty ((Hx A 1).obj M ≅
       cokernel ((restrictionToComplement (X A) {x₀ A} (isClosed_x₀ A)).app M)) := by
@@ -367,6 +372,7 @@ instance preservesFiniteColimits_sectionsOnComplement :
 `1`.** On `X = Spec A`, `A` a discrete valuation ring, `Hⁱ_x(F) = 0` for `i ≥ 2` and every
 `𝒪_X`-module `F`, quasi-coherent or not: `Hⁱ_x(F) ≅ Hⁱ⁻¹(X ∖ {x}, F)`, and `X ∖ {x}` is
 the generic point, on which sections are exact. -/
+@[montpellier "101, 10"]
 theorem isZero_localCohomology_of_two_le (M : ModuleSheaves (X A)) {i : ℕ} (hi : 2 ≤ i) :
     IsZero ((Hx A i).obj M) := by
   obtain ⟨-, δ, hδ, -⟩ := localCohomology_eq_punctured A

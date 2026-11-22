@@ -2,6 +2,7 @@ module
 
 public import Grothendieck.Folder94
 public import StacksFrontier.RingTheory.Flat.GenericFlatness
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -190,6 +191,7 @@ variable [IsNoetherianRing A]
 nilpotent ideal with `A/J` reduced (e.g. the nilradical), `B` an `A`-algebra of finite type and
 `R` a finite `B`-module. There is a dense open `U ⊆ Spec A` such that at every `𝔭 ∈ U` every
 sequence of `A` weakly regular on `A_𝔭` is weakly regular on `R_𝔭`. -/
+@[montpellier "94, 19"]
 theorem exists_isOpen_dense_isWeaklyRegular_of_finiteType {n : ℕ} (hn : J ^ n = ⊥)
     [IsReduced (A ⧸ J)] [Algebra.FiniteType A B] [Module.Finite B R] :
     ∃ U : Set (PrimeSpectrum A), IsOpen U ∧ Dense U ∧ ∀ 𝔭 ∈ U, ∀ rs : List A,
@@ -228,6 +230,7 @@ theorem exists_isOpen_dense_isWeaklyRegular_of_finiteType {n : ℕ} (hn : J ^ n 
 
 /-- **Lemme 16, as stated.** The same dense open `U`, for every `A_𝔭`-weakly regular sequence of
 `A_𝔭` (each term is a unit times the image of an element of `A`). -/
+@[montpellier "94, 19"]
 theorem exists_isOpen_dense_isWeaklyRegular_of_finiteType' {n : ℕ} (hn : J ^ n = ⊥)
     [IsReduced (A ⧸ J)] [Algebra.FiniteType A B] [Module.Finite B R] :
     ∃ U : Set (PrimeSpectrum A), IsOpen U ∧ Dense U ∧

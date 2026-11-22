@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import StacksFrontier.RingTheory.GeometricallyNormal.Defs
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.Normal
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -97,6 +98,7 @@ Choices: the affine case described in the module docstring (`X = Spec B`, `Y = S
 `U = D(g)`), with `A` and `B` noetherian; the points of `X − U` are the primes containing `g`; a
 trait is the spectrum of a discrete valuation ring. Not formalised: non-affine `X`, a
 retrocompact `U` that is not principal. -/
+@[montpellier "127, 2–4, 15, 19"]
 def ClosureFlatnessArtinianOrTrait : Prop :=
   ∀ (A B M N : Type u) [CommRing A] [CommRing B] [Algebra A B] [AddCommGroup M] [Module B M]
     [Module A M] [IsScalarTower A B M] [AddCommGroup N] [Module B N] [Module A N]
@@ -125,6 +127,7 @@ Choices: the affine case of the module docstring; `Y' = Spec A'` with `A → A'`
 repeated by the lemma. Not formalised: the other branch of the page's alternative (« `f` and the
 solution of finite presentation », a pencil note), which needs the base-changed solution as a
 module over `A' ⊗_A B`; non-affine `X`. -/
+@[montpellier "127, 2–3"]
 def NonFlatDescentArtinian : Prop :=
   ∀ (A B M N : Type u) [CommRing A] [CommRing B] [Algebra A B] [AddCommGroup M] [Module B M]
     [Module A M] [IsScalarTower A B M] [AddCommGroup N] [Module B N] [Module A N]
@@ -190,6 +193,7 @@ Choices: the conclusion follows p. 10, the conclusion on p. 7 being struck; « `
 geometrically normal » is taken for the whole fibre, as the row writes it (a hypothesis only
 near `x` would give a stronger statement); `U_red` is any reduced scheme with a surjective closed
 immersion into `U`; « of finite type » is locally of finite type and quasi-compact. -/
+@[montpellier "127, 7, 9, 10, 12"]
 def HironakaReducedBase : Prop :=
   ∀ (X Y : Scheme.{u}) (f : X ⟶ Y) [LocallyOfFiniteType f] [QuasiCompact f] [IsNoetherian Y]
     (x : X), _root_.IsReduced (Y.presheaf.stalk (f.base x)) →

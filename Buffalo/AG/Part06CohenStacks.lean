@@ -2,6 +2,7 @@ module
 
 public import StacksFrontier.RingTheory.CompleteLocalRing.Regular
 public import StacksFrontier.RingTheory.RegularLocalRing.Criteria
+import Grothendieck.Attr
 
 @[expose] public section
 
@@ -47,6 +48,7 @@ namespace Buffalo.AG.Part06
 
 /-- Oqhr-Gt66es-8313 (2:18:33) [prop] A complete local algebra `𝒪` over a field `k`, with residue
 field `k`, is regular if and only if `𝒪 ≃ k[[t_1, …, t_n]]` as a `k`-algebra. Stacks 0C0S. -/
+@[buffalo "Oqhr-Gt66es-8313"]
 theorem prop_8313 (k : Type u) [Field k] (O : Type v) [CommRing O] [IsLocalRing O]
     [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O] [Algebra k O]
     (hk : Function.Bijective ((residue O).comp (algebraMap k O))) :
@@ -61,6 +63,7 @@ theorem prop_8313 (k : Type u) [Field k] (O : Type v) [CommRing O] [IsLocalRing 
 
 /-- Oqhr-Gt66es-8313 (2:18:33) [prop], second half: if `A` is a regular local ring, so is the
 power series ring `A[[t]]`. -/
+@[buffalo "Oqhr-Gt66es-8313"]
 theorem prop_8313_powerSeries (A : Type u) [CommRing A] [IsRegularLocalRing A] :
     IsRegularLocalRing (PowerSeries A) :=
   PowerSeries.isRegularLocalRing A
