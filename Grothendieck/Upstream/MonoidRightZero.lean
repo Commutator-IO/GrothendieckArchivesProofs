@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
-
-@[expose] public section
 
 /-!
 # Backport of the mathlib4 branch `mycaule/monoid-right-zero`
@@ -12,6 +15,9 @@ the fork mycaule/mathlib4, branch `mycaule/monoid-right-zero`, closed upstream o
 2026-10-22. They keep their mathlib names, against the pinned Mathlib; drop a
 declaration once Mathlib has it.
 -/
+
+@[expose] public section
+
 
 
 /-! ## From `Mathlib/GroupTheory/MonoidRightZero.lean` (new file) -/

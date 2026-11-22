@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.AbelianSchemeFirstCohomologyGenericPoint
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.Torsion
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 100: homomorphisms of abelian schemes, stated as propositions
@@ -14,19 +17,21 @@ Two open rows of the edition's list of findings (`src/content/findings.ts`) for 
 `100-full-faithfulness-connected-components` and `100-proper-epimorphism-hom-descent`. Nothing
 here is proved; a `def … : Prop` asserts nothing.
 
+## Main definitions
+
+* `ProperEpimorphismHomDescent` (`100-proper-epimorphism-hom-descent`): Lemma 1 of p. 22.
+* `FullFaithfulnessConnectedComponents` (`100-full-faithfulness-connected-components`): the
+  Corollary of p. 3, with `A[p^∞]` as the system of its levels `A[p^n]`.
+
+## Implementation notes
+
 Abelian schemes are `AlgebraicGeometry.IsAbelianScheme` of the Stacks library (commutative, flat,
 proper group schemes of finite presentation whose fibres are abelian varieties), group objects in
 `Over S`. The `p^n`-torsion `A[p^n]` is `CategoryTheory.GrpObj.torsion A (p ^ n)`, the kernel of
 multiplication by `p^n`, with its inclusion `torsionι`. Base change of group schemes along an open
 immersion `U → S` is the functor `(Over.pullback U.ι).mapGrp` of Mathlib.
 
-## Stated
-
-* `ProperEpimorphismHomDescent` (`100-proper-epimorphism-hom-descent`): Lemma 1 of p. 22.
-* `FullFaithfulnessConnectedComponents` (`100-full-faithfulness-connected-components`): the
-  Corollary of p. 3, with `A[p^∞]` as the system of its levels `A[p^n]`.
-
-## Not stated, and what is missing
+## Not formalised
 
 * Corollaries 2 and 3 of p. 24 (pull-back along `f` fully faithful on abelian schemes and on
   `p`-divisible groups): they go through the scheme of homomorphisms `Hom_gr(A, B)`, which Stacks
@@ -35,7 +40,15 @@ immersion `U → S` is the functor `(Over.pullback U.ι).mapGrp` of Mathlib.
   the algebraicity locus `S_v` in a point of characteristic `p`): it needs the closed subscheme
   `S_v` of the Lemma of p. 3, which the page does not prove and refers to « Invariants 1.2 »,
   unidentified.
+
+## References
+
+* A. Grothendieck, folder 100, pp. 3, 20, 22, 24 (findings
+  `100-full-faithfulness-connected-components`, `100-proper-epimorphism-hom-descent`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry CategoryTheory.GrpObj
 

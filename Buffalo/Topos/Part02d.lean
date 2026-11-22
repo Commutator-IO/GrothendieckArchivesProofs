@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02b
 public import Buffalo.Topos.Part02c
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 2d: definitions and first examples of topoi (25 May 1973)
@@ -13,10 +16,20 @@ Entries of `docs/buffalo-topos/index.tex` from « Points and morphisms of sober 
 uniqueness statement 8:29:59) to « Basic examples of topoi » (video `URU5jgTvjhU`,
 8:29:59–9:25:54). The status of each entry is in `docs/buffalo-topos/lean/Part02.json`.
 
+## Implementation notes
+
 Mathlib has no notion of Grothendieck topos as such; the definitions below state Giraud's axioms
 with Mathlib's notions, and the propositions are proved for the topoi `Sh(X)`, or for any category
 having the properties used.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 8:29:59–9:25:54
+  (25 May 1973)
 -/
+
+@[expose] public section
+
 
 universe v u
 
@@ -52,7 +65,8 @@ theorem iso_of_iso_on_opens {E : Type*} [Category.{u} E]
   let k : uliftYoneda.{u} ⋙ a ≅ J.yoneda :=
     Functor.isoWhiskerRight uliftYonedaIsoYoneda a ≪≫
       Functor.isoWhiskerRight (GrothendieckTopology.yonedaCompSheafToPresheaf J).symm a ≪≫
-      Functor.associator _ _ _ ≪≫ Functor.isoWhiskerLeft J.yoneda (asIso (sheafificationAdjunction J (Type u)).counit) ≪≫
+      Functor.associator _ _ _ ≪≫
+      Functor.isoWhiskerLeft J.yoneda (asIso (sheafificationAdjunction J (Type u)).counit) ≪≫
       J.yoneda.rightUnitor
   let e₂ : uliftYoneda.{u} ⋙ a ⋙ L₁ ≅ uliftYoneda.{u} ⋙ a ⋙ L₂ :=
     Functor.isoWhiskerRight k L₁ ≪≫ e ≪≫ (Functor.isoWhiskerRight k L₂).symm
@@ -185,7 +199,8 @@ end Defs
 @[buffalo "URU5jgTvjhU-31066"]
 theorem sheaf_isToposFirstForm :
     IsToposFirstForm (Sheaf (Opens.grothendieckTopology X) (Type u)) :=
-  ⟨inferInstance, inferInstance, ⟨Opens X, opensSheaf, fun _ _ f g h => opensSheaf_separating f g h⟩⟩
+  ⟨inferInstance, inferInstance,
+    ⟨Opens X, opensSheaf, fun _ _ f g h => opensSheaf_separating f g h⟩⟩
 
 /-! ## Cohomology in a topos -/
 

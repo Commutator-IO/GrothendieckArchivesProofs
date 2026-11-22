@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.CohomologicalDimension.TorsionVanishingBound
 public import Mathlib.Algebra.Ring.IsFormallyReal
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 31, page 22: a lower bound for the cohomological dimension of a local domain, stated
@@ -18,6 +21,13 @@ japanese.*
 
 Nothing here is proved; a `def … : Prop` asserts nothing.
 
+## Main definitions
+
+* `CdLowerBound`: the inequality off the two exceptions.
+* `CdLowerBoundRegular`: for regular `A`, the inequality whenever `r ≠ char K`.
+
+## Implementation notes
+
 **The `r`-cohomological dimension.** `cd_r(F)` of a field is the least `d` such that
 `H^p_ét(Spec F, 𝓖) = 0` for every abelian sheaf `𝓖` killed by `r` and every `p > d`
 (`cdPrime`, from Stacks' `AlgebraicGeometry.Scheme.IsTorsionVanishingBound` with `n = r`, the
@@ -28,13 +38,19 @@ form of Travaux de Gabber XVIII-A used by Stacks 0DC6). Values are in `WithBot �
 residue field `κ(x)`, and `cd₂ κ(x)(√−1) < ∞`, where `κ(x)(√−1)` is `κ(x)[X] ⧸ (X² + 1)`, a field
 because `−1` is not a square in an orderable field.
 
-## Stated
-
-* `CdLowerBound`: the inequality off the two exceptions.
-* `CdLowerBoundRegular`: for regular `A`, the inequality whenever `r ≠ char K`.
+## Not formalised
 
 **Not stated.** The refinement for catenary universally japanese `A` (« `k` itself real »).
+
+## References
+
+* A. Grothendieck, folder 31, p. 22 (finding `31-local-ring-cd-lower-bound`)
+* Travaux de Gabber, XVIII-A
+* Stacks Project, tag 0DC6
 -/
+
+@[expose] public section
+
 
 open CategoryTheory AlgebraicGeometry IsLocalRing Polynomial
 

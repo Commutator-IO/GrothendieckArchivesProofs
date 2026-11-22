@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 80, page 26: the « cas latticiel » — a counterexample and the correct criterion
@@ -22,14 +25,7 @@ between them**, i.e. iff it is none of the two-pencil types `I_N`, `I_{p,q}`, `I
 the hypothesis of the Théorème of page 24. Direction (⇒) of the page survives: a bigonal line,
 or `II_4`, gives two such points.
 
-We work in the combinatorial model of the cell decomposition: the oriented-matroid covectors.
-A cell of the decomposition of the sphere `S²` (the double cover of `ℝP²`) is a sign vector
-`X : E → SignType`; the closed cell of `X` is the set of its conformal faces `Z ≤ X`
-(`closure_cell` checks this against the topology for straight lines), and a cell of `ℝP²` is a
-pair `±X`. The abstract theorem `lattice_iff` needs only that the set `L` of covectors is
-symmetric and closed under composition; it therefore covers every pseudoline arrangement through
-the Folkman–Lawrence representation (not formalised). For straight lines `ℓ i ∈ ℝ³` the covectors
-are the sign vectors of points (`cov`), and `lattice_iff_not_twoPencil` restates the criterion.
+## Main results
 
 * `lattice_iff`: `Lattice L ↔` no two nonzero covectors have disjoint supports;
 * `closure_cell`: the topological closure of a cone cell is its set of conformal faces;
@@ -37,7 +33,30 @@ are the sign vectors of points (`cov`), and `lattice_iff_not_twoPencil` restates
 * `not_lattice_of_bigonal`, `not_lattice_of_four`: conditions a), b) are necessary;
 * `II32_no_bigon`, `II32_nondegenerate`, `II32_not_lattice`, `lattice_criterion_false`: the
   counterexample `x = 0, x = z, x = 2z, y = 0, y = z`.
+
+## Implementation notes
+
+We work in the combinatorial model of the cell decomposition: the oriented-matroid covectors.
+A cell of the decomposition of the sphere `S²` (the double cover of `ℝP²`) is a sign vector
+`X : E → SignType`; the closed cell of `X` is the set of its conformal faces `Z ≤ X`
+(`closure_cell` checks this against the topology for straight lines), and a cell of `ℝP²` is a
+pair `±X`. The abstract theorem `lattice_iff` needs only that the set `L` of covectors is
+symmetric and closed under composition; it therefore covers every pseudoline arrangement through
+the Folkman–Lawrence representation. For straight lines `ℓ i ∈ ℝ³` the covectors are the sign
+vectors of points (`cov`), and `lattice_iff_not_twoPencil` restates the criterion.
+
+## Not formalised
+
+The Folkman–Lawrence representation, through which `lattice_iff` covers pseudoline arrangements.
+
+## References
+
+* A. Grothendieck, folder 80, pp. 24, 26 (finding `80-lattice-criterion`)
+* the Folkman–Lawrence representation theorem
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Maps1
 
@@ -129,6 +148,7 @@ theorem not_lattice_of_disjoint (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L) 
   generalize v e = a; generalize w f = b; generalize W e = c; generalize W f = d
   cases a <;> cases b <;> cases c <;> cases d <;> decide
 
+set_option linter.unusedFintypeInType false in
 /-- If no nonzero face of `X` is a face of `-Y`, the closed cells `±X` and `±Y` meet in nothing
 or in the closed cell of the composite of all their common faces. -/
 theorem pcl_inter_of [Fintype E] (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L)
@@ -157,7 +177,8 @@ theorem pcl_inter_of [Fintype E] (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L)
     have hMZ : comp M Z ∈ S := ⟨hL _ hM.1 _ hZ, (conf_comp M Z).ne_zero hM.2.1,
       hM.2.2.1.comp hZX, hM.2.2.2.comp hZY⟩
     have heq := Finset.eq_of_subset_of_card_le (fun e => by
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and]; simp +contextual [comp]) (hmax _ hMZ)
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]; simp +contextual [comp])
+      (hmax _ hMZ)
     by_cases hZe : Z e = 0
     · exact Or.inl hZe
     have hMe : M e ≠ 0 := fun hMe => by
@@ -172,6 +193,7 @@ theorem pcl_inter_of [Fintype E] (hL : ∀ X ∈ L, ∀ Y ∈ L, comp X Y ∈ L)
     · have h' := conf_neg_iff.1 h
       exact ⟨hZ, hZ0, Or.inr ⟨hN _ hZ, neg_ne_zero' hZ0, h'.trans hM.2.2.1, h'.trans hM.2.2.2⟩⟩
 
+set_option linter.unusedFintypeInType false in
 /-- **The lattice criterion for covectors.** For a symmetric set of sign vectors closed under
 composition, the closed cells of `ℝP²` meet pairwise in nothing or a single closed cell iff no two
 nonzero covectors have disjoint supports. -/
@@ -218,7 +240,8 @@ theorem neg_mem_cov {X : ι → SignType} (hX : X ∈ cov ℓ) : -X ∈ cov ℓ 
   obtain ⟨p, rfl⟩ := hX; exact ⟨-p, funext fun i => by simp [sgn, Left.sign_neg]⟩
 
 theorem eventually_sign (a b : ℝ) : ∀ᶠ t in 𝓝[>] (0 : ℝ),
-    SignType.sign (a + t * b) = if SignType.sign a = 0 then SignType.sign b else SignType.sign a := by
+    SignType.sign (a + t * b) =
+      if SignType.sign a = 0 then SignType.sign b else SignType.sign a := by
   have hc : Tendsto (fun t : ℝ => a + t * b) (𝓝[>] 0) (𝓝 a) :=
     ((by fun_prop : Continuous fun t : ℝ => a + t * b).tendsto' 0 a (by simp)).mono_left
       nhdsWithin_le_nhds
@@ -254,7 +277,8 @@ theorem closure_cell [Finite ι] {X : ι → SignType} (hX : X ∈ cov ℓ) :
       ext q; simp [sgn, sign_pos h, le_iff_eq_or_lt, eq_comm (a := (0 : ℝ)),
         sign_eq_one_iff]
   · refine mem_closure_of_tendsto (f := fun t : ℝ => q + t • p) (b := 𝓝[>] 0)
-      (tendsto_nhdsWithin_of_tendsto_nhds ((by fun_prop : Continuous fun t : ℝ => q + t • p).tendsto'
+      (tendsto_nhdsWithin_of_tendsto_nhds
+        ((by fun_prop : Continuous fun t : ℝ => q + t • p).tendsto'
         0 q (by simp))) ?_
     filter_upwards [self_mem_nhdsWithin] with t (ht : 0 < t)
     refine funext fun i => ?_
@@ -267,6 +291,7 @@ theorem closure_cell [Finite ι] {X : ι → SignType} (hX : X ∈ cov ℓ) :
       · rw [hp] at h' ⊢; simpa using h'
       · rw [sign_pos hp, sign_eq_one_iff] at h' ⊢; linarith [mul_pos ht hp]
 
+set_option linter.unusedFintypeInType false in
 /-- **The lattice criterion for lines.** The arrangement is latticial iff no two points carry
 every line between them. -/
 @[montpellier "80, 26"]
@@ -291,6 +316,7 @@ def Bigonal {R : Type*} [CommRing R] (ℓ : ι → Fin 3 → R) (i : ι) : Prop 
 def NoCommonVertex {R : Type*} [CommRing R] (ℓ : ι → Fin 3 → R) : Prop :=
   ∀ i j, i ≠ j → ∃ m, tp (ℓ i) (ℓ j) (ℓ m) ≠ 0
 
+set_option linter.unusedFintypeInType false in
 /-- **Condition a) is necessary**: a bigonal line breaks the lattice property. -/
 @[montpellier "80, 26"]
 theorem not_lattice_of_bigonal [Fintype ι] (hnd : NoCommonVertex ℓ) {i : ι} (h : Bigonal ℓ i) :

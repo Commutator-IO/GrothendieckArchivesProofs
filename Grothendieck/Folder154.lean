@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 154, page 153: the cube of generisations
@@ -12,17 +15,10 @@ Finding `154-generisation-cube` (`src/content/findings.ts`), on the reading
 `transcripts/154/154.modern.tex` (« Le cube des générisations »). Page 153: for a position `D`
 of an added pseudoline passing through `ν ≥ 2` vertices of the arrangement `Σ`, « les
 générisations stables de `D` correspondent aux sommets d'un cube de dimension `ν`, dont les
-arêtes sont les générisations sous-stables », with the counts `2^ν` and `ν 2^(ν−1)`.
+arêtes sont les générisations sous-stables », with the counts `2^ν` and `ν 2^(ν−1)`. Proved, in
+the combinatorial model below.
 
-**The model** (the edition's precise statement, mathlib having no oriented matroids). A position
-of an added pseudoline is a single-element extension of the rank-3 oriented matroid of `Σ`,
-given by Las Vergnas's signature on the cocircuits (the vertices); since `σ(−Y) = −σ(Y)`, it is
-a map `σ : V → SignType` on one chosen representative of each vertex. A line `ℓ` of `Σ` is the
-sequence of the vertices it carries, read along its double cover from a base point, each with a
-sign `ori ℓ i = ±1` comparing the chosen representative with the orientation of `ℓ`
-(`Arrangement`). Las Vergnas's criterion, checked line by line (`ValidSeq`, `IsPosition`): along
-each line the signs `ori ℓ i · σ(vᵢ)` read `+ … + (0) − … −` up to reversal, at most one `0`,
-not all zero. `σ` is a specialisation of `τ` (`Spec σ τ`) when `τ = σ` wherever `σ ≠ 0`.
+## Main results
 
 * `ValidSeq.eq_of_eq_zero`, `IsPosition.eq_of_zero_on_line`: a line carries at most one zero of
   a position — two vertices of `D` never lie on a common line of `Σ`;
@@ -36,11 +32,35 @@ not all zero. `σ` is a specialisation of `τ` (`Spec σ τ`) when `τ = σ` whe
 * `card_gen`, `card_gen_stable`, `card_gen_substable`: there are `3^ν` generisations of `D`,
   `2^ν` stable ones (no zero) and `ν · 2^(ν−1)` sub-stable ones (exactly one zero).
 
+## Implementation notes
+
+**The model** (the edition's precise statement, mathlib having no oriented matroids). A position
+of an added pseudoline is a single-element extension of the rank-3 oriented matroid of `Σ`,
+given by Las Vergnas's signature on the cocircuits (the vertices); since `σ(−Y) = −σ(Y)`, it is
+a map `σ : V → SignType` on one chosen representative of each vertex. A line `ℓ` of `Σ` is the
+sequence of the vertices it carries, read along its double cover from a base point, each with a
+sign `ori ℓ i = ±1` comparing the chosen representative with the orientation of `ℓ`
+(`Arrangement`). Las Vergnas's criterion, checked line by line (`ValidSeq`, `IsPosition`): along
+each line the signs `ori ℓ i · σ(vᵢ)` read `+ … + (0) − … −` up to reversal, at most one `0`,
+not all zero. `σ` is a specialisation of `τ` (`Spec σ τ`) when `τ = σ` wherever `σ ≠ 0`.
+
 The hypothesis `ν ≥ 2` is not needed, nor the axioms of an arrangement (two lines meet in one
-vertex, …): the statement holds for any such data. Not formalised: positions as topological
-pseudolines (that would need the topological representation theorem of Folkman–Lawrence), the
-surface `X*` of page 150 and the tension with it for `ν ≥ 3`, and the question of page 153.
+vertex, …): the statement holds for any such data.
+
+## Not formalised
+
+Positions as topological pseudolines (that would need the topological representation theorem of
+Folkman–Lawrence), the surface `X*` of page 150 and the tension with it for `ν ≥ 3`, and the
+question of page 153.
+
+## References
+
+* A. Grothendieck, Folder 154, p. 153 (reading `transcripts/154/154.modern.tex`; finding
+  `154-generisation-cube`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder154
 
@@ -248,6 +268,7 @@ noncomputable def fiberEquiv (z : X) :
     · simp [h]
   right_inv g := funext fun y => Subtype.ext (by simp [y.2])
 
+set_option linter.unusedDecidableInType false in
 /-- `ν · 2^(ν−1)` edges: the sign vectors with exactly one zero. -/
 theorem card_substable :
     Nat.card {w : X → SignType // ∃! z, w z = 0} =
@@ -301,7 +322,9 @@ theorem card_gen_substable (hD : A.IsPosition σD) :
 
 end Arrangement
 
-/-! ## Problem 17 of `docs/problems/article.tex`: an added pseudoline and its crossing order (statement only)
+/-! ## Problem 17: an added pseudoline and its crossing order (statement only)
+
+Problem 17 of `docs/problems/article.tex`.
 
 Page 18 asserts, « il ne devrait pas être difficile de montrer », that the position of an
 added pseudoline is determined by the antipody-compatible cyclic order in which its double
@@ -309,10 +332,10 @@ cover meets the pseudolines of `Σ`. In oriented-matroid terms (rank 3, Folkman�
 the added pseudoline is a single-element extension, and its cyclic crossing order is the
 rank-2 contraction at the new element.
 
-The statement is here as a `Prop`, proved (`problem17_holds`) from alternation alone: the triples through the new element are read off the
-contraction, the others off `Σ`. What the page asks needs, in addition, the dictionary from
-pseudolines to chirotopes (the topological representation theorem) and from the cyclic order
-to the contraction, which Mathlib does not have. -/
+The statement is here as a `Prop`, proved (`problem17_holds`) from alternation alone: the triples
+through the new element are read off the contraction, the others off `Σ`. What the page asks needs,
+in addition, the dictionary from pseudolines to chirotopes (the topological representation theorem)
+and from the cyclic order to the contraction, which Mathlib does not have. -/
 
 section Problem17
 

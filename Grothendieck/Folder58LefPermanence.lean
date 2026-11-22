@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 public import StacksFrontier.AlgebraicGeometry.FormalGeometry.CompletionFunctor.FullyFaithfulComplete
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 58, pages 33 and 41–42: the conditions `(LG)ₙ` and their permanence
@@ -20,13 +23,14 @@ is bijective for `i ≤ n` and injective for `i = n + 1`. Corollaire 1 of page 4
 from `(X, Y)` to `(W, g⁻¹(Y))` for every `g : W ⟶ X` projective and flat. Stacks has no
 `(LG)ₙ` and no Lef / Leff conditions; they are defined here.
 
+## Main definitions
+
 * `LGn I n` is `(LG)ₙ` for the pair `(X, V(I))`, `I` an ideal sheaf on `X` (the formal
   completion depends on `Y` only as a closed set, so any ideal sheaf cutting out `Y` may be
-  used). The target of `(*)` is spelled `limₖ Hⁱ(X, F / Iᵏ⁺¹ F)`, the target of the comparison
-  map `Stacks.Algebraization.cohomologyToLimit` of [Stacks, Tag 087U]: Stacks has no cohomology
-  of the formal completion as an object, and `Hⁱ(X_{/Y}, F_{/Y})` maps onto this limit, with
-  equality whenever the tower `Hⁱ⁻¹(X, F / Iᵏ F)` is Mittag-Leffler (EGA 0_III 13.3.1), in
-  particular in the proper case below.
+  used).
+
+## Main results
+
 * `lgN_of_isProper_of_isAdicComplete`: if `A` is noetherian and `J`-adically complete and
   `X ⟶ Spec A` is proper, the pair `(X, X ×_A V(J))` satisfies `(LG)ₙ` for every `n` (indeed `(*)`
   is bijective in every degree, for every coherent `F`). This is the theorem on formal functions
@@ -34,6 +38,14 @@ from `(X, Y)` to `(W, g⁻¹(Y))` for every `g : W ⟶ X` projective and flat. S
 * `lgN_permanence_of_isProper_of_isAdicComplete`: **Corollaire 1 for `(LG)ₙ` over a complete
   base.** For such `X` and every proper `g : W ⟶ X` (projective and flat in the page; neither is
   needed here) the pair `(W, g⁻¹(Y))` satisfies `(LG)ₙ`, with `g⁻¹(Y)` cut out by `J 𝒪_W`.
+
+## Implementation notes
+
+In `LGn`, the target of `(*)` is spelled `limₖ Hⁱ(X, F / Iᵏ⁺¹ F)`, the target of the comparison
+map `Stacks.Algebraization.cohomologyToLimit` of [Stacks, Tag 087U]: Stacks has no cohomology
+of the formal completion as an object, and `Hⁱ(X_{/Y}, F_{/Y})` maps onto this limit, with
+equality whenever the tower `Hⁱ⁻¹(X, F / Iᵏ F)` is Mittag-Leffler (EGA 0_III 13.3.1), in
+particular in the proper case.
 
 ## Not formalised
 
@@ -45,7 +57,17 @@ from `(X, Y)` to `(W, g⁻¹(Y))` for every `g : W ⟶ X` projective and flat. S
   stricte (`Leff(X, Y)`), Remarques 1 and 3 (`(LG)₀ ⇔ LG faible ⇔ LG`), and the LG and LG-stricte
   cases of Corollaire 1. Théorème (iii), which the reading does not verify, is left out.
 * Page 43's suggestion that quasi-projectivity of `X` can be dropped.
+
+## References
+
+* A. Grothendieck, folder 58, pp. 33, 41–43 (finding `58-lef-permanence-projective-flat`)
+* [EGA III] 4.1, 4.1.5; [EGA 0_III] 13.3.1
+* [SGA 2] exposé X (`Lef(X, Y)`, `Leff(X, Y)`)
+* Stacks Project, tag 087U
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder58LefPermanence
 

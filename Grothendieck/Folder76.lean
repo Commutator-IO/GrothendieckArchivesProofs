@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 76, pages 26–28: flags of type `H` in a set with operators
@@ -27,7 +30,7 @@ This is finding `76-flag-presheaf-gset-lemma` of `src/content/findings.ts`.
 Proving it says only that the claim holds as stated; whether it stands in the
 literature is a separate question.
 
-What is formalised.
+## Main results
 
 * `mem_mul_of_split`: if `K ∪ K'` splits at an index `i ∉ K ∪ K'` into a part
   below `i` contained in `K'` and a part above `i` contained in `K`, then every
@@ -40,9 +43,19 @@ What is formalised.
   `H' = {j, k}`); `prec_iff_pair` reduces the common majorant to one in
   `D({i, j})`; `prec_of_mem` and `not_prec_self` give (c) and irreflexivity.
 
+## Implementation notes
+
 The `σᵢ` are not assumed to be involutions; the group, the set `X` and the
 action are arbitrary.
+
+## References
+
+* A. Grothendieck, folder 76, pp. 26–29 (finding `76-flag-presheaf-gset-lemma`); modernised
+  reading `transcripts/76/76.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder76
 
@@ -864,7 +877,7 @@ lemma orderEmbOfFin_faceType {k m : ℕ} (u : Fin (k + 1) ↪o Fin (m + 1)) (H :
 
 lemma faceType_comp {k m l : ℕ} (u : Fin (k + 1) ↪o Fin (m + 1)) (v : Fin (m + 1) ↪o Fin (l + 1))
     (H : Typ n l) : (faceType (u.trans v) H).1 = (faceType u (faceType v H)).1 := by
-  show _ = Finset.univ.map (u.trans ((faceType v H).1.orderEmbOfFin (faceType v H).2)).toEmbedding
+  change _ = Finset.univ.map (u.trans ((faceType v H).1.orderEmbOfFin (faceType v H).2)).toEmbedding
   rw [orderEmbOfFin_faceType]; rfl
 
 lemma map_univ_orderEmbOfFin {m : ℕ} (H : Typ n m) :
@@ -909,7 +922,7 @@ theorem flagSS_le_iff {k m : ℕ} {H : Typ n k} {H' : Typ n m} (a : D σ X H.1) 
       rw [RelEmbedding.trans_apply, ← Finset.coe_orderIsoOfFin_apply]
       exact congrArg Subtype.val (e.apply_symm_apply _)
     have hH : (faceType u H').1 = H.1 := by
-      show Finset.univ.map (u.trans (H'.1.orderEmbOfFin H'.2)).toEmbedding = H.1
+      change Finset.univ.map (u.trans (H'.1.orderEmbOfFin H'.2)).toEmbedding = H.1
       rw [hu]; exact map_univ_orderEmbOfFin H
     exact ⟨u, (simp_eq_iff _ _).2 ⟨hH.symm, fun _ => by dsimp only; exact (res_res _ _ _).symm⟩⟩
 

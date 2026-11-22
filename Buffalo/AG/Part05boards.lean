@@ -1,15 +1,26 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part05
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05: blackboard items
 
 The board items of `public/buffalo-boards/` in the time range of part 05 that no index entry
 formalises (`docs/buffalo-ag/lean/Part05-boards.json`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), part 05 (reconstructed blackboards
+  `public/buffalo-boards/`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory
 
@@ -60,6 +71,7 @@ theorem board_2728 : IsEmpty (Algebra (ZMod 2) (ZMod 4)) := by
 artinian: a discrete valuation ring (two points) is noetherian but not artinian. -/
 theorem board_2857 (R : Type*) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] :
     IsNoetherianRing R ∧ ¬ IsArtinianRing R :=
-  ⟨inferInstance, fun _ => IsDiscreteValuationRing.not_isField R (IsArtinianRing.isField_of_isDomain R)⟩
+  ⟨inferInstance, fun _ =>
+    IsDiscreteValuationRing.not_isField R (IsArtinianRing.isField_of_isDomain R)⟩
 
 end Buffalo.AG.Part05

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -6,6 +11,8 @@ module
 The open row `47-chow-fourier-todd-over-base` of the edition's list of findings
 (`src/content/findings.ts`), folder 47, pp. 9–10. It cannot be stated faithfully with Mathlib
 and the Stacks library; what is missing.
+
+## Not formalised
 
 * `47-chow-fourier-todd-over-base`: over a base `S`, Grothendieck–Riemann–Roch for `m_A` and
   `pr_2` gives `ch(x * y) = (ch x * ch y) · Todd(t_A)` on an abelian scheme `A`, the transform
@@ -19,4 +26,10 @@ and the Stacks library; what is missing.
   abelian scheme over a base with its Pontryagin product, and the tangent bundle `t_A` and
   `ω_A` of an abelian scheme. The factor itself is disputed: the reading replaces the page's `T`
   by `Todd(t_A) · Todd(t_B) · ch(ω_A)`, and the pass's own conditional step would make it `1`.
+
+## References
+
+* A. Grothendieck, folder 47, pp. 9–10 (finding `47-chow-fourier-todd-over-base`)
+* C. Deninger, J. Murre (1991), § 2
+* Stacks Project, tag 0FEM
 -/

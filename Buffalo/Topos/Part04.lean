@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part04a
 public import Buffalo.Topos.Part04b
 public import Buffalo.Topos.Part04boards
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 4 (6, 20 and 27 June 1973)
@@ -16,9 +19,17 @@ sites, sheaves on a site, the associated sheaf) and `Part04b` (exactness propert
 `docs/buffalo-topos/lean/Part04.json`.
 
 One entry was found imprecise: PqCQM3Pcl6Q-20146 (« a conjunction of exactness properties
-`(I_λ, Σ_λ)` is one exactness property `(I, Σ)`, `I` the 2-sum »). Satisfying every `(I_λ, Σ_λ)`
-implies satisfying `(I, Σ)` (`satisfiesExactness_twoSum_of_forall`), but the converse needs every
-`I_μ` to admit some `D`-functor to `C` (`forall_of_satisfiesExactness_twoSum`): otherwise `(I, Σ)`
-holds vacuously, as for `Set` when `D` contains the empty limit and colimit
-(`no_initial_terminal_set`).
+`(I_λ, Σ_λ)` is one exactness property `(I, Σ)`, `I` the 2-sum »). Satisfying every
+`(I_λ, Σ_λ)` implies satisfying `(I, Σ)` (`satisfiesExactness_twoSum_of_forall`), but the
+converse needs every `I_μ` to admit some `D`-functor to `C`
+(`forall_of_satisfiesExactness_twoSum`): otherwise `(I, Σ)` holds vacuously, as for `Set` when
+`D` contains the empty limit and colimit (`no_initial_terminal_set`).
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 3:23:52–8:58:56
+  (6, 20 and 27 June 1973), `docs/buffalo-topos/index.tex` lines 536–678
 -/
+
+@[expose] public section
+

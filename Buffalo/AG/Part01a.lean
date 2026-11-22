@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 01 (a): 29 and 30 May 1973
@@ -13,12 +16,22 @@ The entries of `docs/buffalo-ag/index.tex` for the sessions of 29 and 30 May 197
 `k`-algebras, the dictionary with ideals of polynomial rings, the Nullstellensatz, algebras of
 functions, and products and sums of affine spaces.
 
+## Implementation notes
+
 Conventions. `k` is a commutative ring, a `k`-algebra is an object of `CommAlgCat.{u} k`, and
 `P_I = MvPolynomial I k`. The functor `E k I` is the standard affine space `k' ↦ k'^I`;
 `Z S k'` is the set of solutions in `k'^I` of a system `S ⊆ P_I`, and `VS k S` the subfunctor of
 `E k I` it defines; `V k A` is the functor `k' ↦ Hom_k(A, k')` represented by `A`. "Representable"
 is mathlib's `Functor.IsCorepresentable` (a covariant functor `CommAlgCat k ⥤ Type u`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), sessions of 29 and 30 May 1973, video
+  `51wmmpHand0`, 0:00:00–3:07:15 (`docs/buffalo-ag/index.tex`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory MvPolynomial
 
@@ -474,7 +487,7 @@ theorem prop_4970 {A : Type u} [CommRing A] [Algebra k A] (a : I → A) :
     apply CommAlgCat.hom_ext
     apply h k'
     funext i
-    show embFun k a k' u.hom i = embFun k a k' v.hom i
+    change embFun k a k' u.hom i = embFun k a k' v.hom i
     have := congrArg (fun w : CommAlgCat.of k (MvPolynomial I k) ⟶ k' => w (X i)) huv
     simpa [embFun] using this
   · intro h k' u v huv
@@ -516,7 +529,8 @@ theorem ex_5353 [Nontrivial k] :
     have := IsLocalization.ringHom_ext (Submonoid.powers (Polynomial.X : (Polynomial k))) h'
     exact AlgHom.ext fun x => DFunLike.congr_fun this x
   · obtain ⟨p, hp⟩ := h (T (-1))
-    have h1 : Polynomial.toLaurent (Polynomial.X * p) = Polynomial.toLaurent (1 : (Polynomial k)) := by
+    have h1 : Polynomial.toLaurent (Polynomial.X * p) =
+        Polynomial.toLaurent (1 : (Polynomial k)) := by
       rw [map_mul, hp, Polynomial.toLaurent_X, ← T_add, map_one]
       norm_num
     exact Polynomial.not_isUnit_X (isUnit_iff_exists_inv.2 ⟨p, Polynomial.toLaurent_injective h1⟩)
@@ -532,7 +546,8 @@ theorem prop_5417 (k' : Type*) [CommRing k'] [Algebra k k'] :
   · have h' : u.toRingHom.comp (algebraMap (Polynomial k) k[T;T⁻¹]) =
         v.toRingHom.comp (algebraMap (Polynomial k) k[T;T⁻¹]) := by
       ext p
-      · simp [algebraMap_eq_toLaurent]
+      · simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_comp, RingHom.coe_coe, Function.comp_apply,
+            algebraMap_eq_toLaurent, Polynomial.toLaurent_C]
         rw [LaurentPolynomial.C_eq_algebraMap, AlgHom.commutes, AlgHom.commutes]
       · simpa [algebraMap_eq_toLaurent] using huv
     have := IsLocalization.ringHom_ext (Submonoid.powers (Polynomial.X : (Polynomial k))) h'
@@ -545,7 +560,8 @@ theorem prop_5417 (k' : Type*) [CommRing k'] [Algebra k k'] :
       let g : (Polynomial k) →+* k' := (Polynomial.aeval t).toRingHom
       have hg : IsUnit (g Polynomial.X) := by simpa [g] using ht
       let l : k[T;T⁻¹] →+* k' := IsLocalization.Away.lift (Polynomial.X : (Polynomial k)) hg
-      have hl : ∀ p : (Polynomial k), l (Polynomial.toLaurent p) = Polynomial.aeval t p := fun p => by
+      have hl : ∀ p : (Polynomial k),
+          l (Polynomial.toLaurent p) = Polynomial.aeval t p := fun p => by
         rw [← algebraMap_eq_toLaurent]
         exact IsLocalization.lift_eq _ p
       refine ⟨{ l with commutes' := fun c => ?_ }, ?_⟩
@@ -560,7 +576,8 @@ open LaurentPolynomial in
 /-- 51wmmpHand0-5552 (1:32:32) [cex] The monomorphism `V_{k[T,T⁻¹]} → E^1`, `u ↦ u(T)`, is an
 isomorphism onto no closed subspace `V_J` of `E^1` (`k ≠ 0`). -/
 @[buffalo "51wmmpHand0-5552"]
-theorem cex_5552 [Nontrivial k] : ¬ ∃ J : Ideal (Polynomial k), ∀ (k' : Type u) [CommRing k'] [Algebra k k']
+theorem cex_5552 [Nontrivial k] : ¬ ∃ J : Ideal (Polynomial k),
+    ∀ (k' : Type u) [CommRing k'] [Algebra k k']
     (t : k'), (∃ u : k[T;T⁻¹] →ₐ[k] k', u (T 1) = t) ↔ ∀ f ∈ J, Polynomial.aeval t f = 0 := by
   rintro ⟨J, hJ⟩
   have h0 : ∀ f ∈ J, f = 0 := by

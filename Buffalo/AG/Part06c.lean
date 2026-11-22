@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part06b
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (c): 26 June 1973, to 4:35:38
@@ -11,13 +14,23 @@ import Grothendieck.Attr
 The entries of `docs/buffalo-ag/index.tex` lines 847–879 (video `Oqhr-Gt66es`, 3:23:46–4:35:38):
 diagonals, separated, quasi-separated and coherent morphisms.
 
+## Implementation notes
+
 Conventions. The kernel of a pair `u, v : X → Y` of `S`-morphisms is the base change of the
 diagonal `Δ : Y → Y ×_S Y` along `(u, v)`, and the graph of `f` is `pullback.lift (𝟙 X) f`, as in
 `Part06b` (`prop_10536`, `prop_10860`), which gives the equivalent forms of separatedness and
 quasi-separatedness. A scheme `X` is separated (quasi-separated, quasi-compact) when
 `X → Spec ℤ` is, that is mathlib's `X.IsSeparated` (`QuasiSeparatedSpace X`, `CompactSpace X`).
 A coherent morphism is a quasi-compact quasi-separated one.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 26 June 1973, video `Oqhr-Gt66es`,
+  3:23:46–4:35:38 (`docs/buffalo-ag/index.tex`, lines 847–879)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Topology TensorProduct
 
@@ -206,8 +219,8 @@ theorem prop_13639 (f : X ⟶ Y) (g : Z ⟶ Y) [Mono f] [IsImmersion g] :
 theorem prop_13704 (f : X ⟶ Y) (g : Y ⟶ Z) [IsSeparated (f ≫ g)] : IsSeparated f :=
   IsSeparated.of_comp f g
 
-/-- Oqhr-Gt66es-13770 (3:49:30) [def] A scheme is separated if it is separated over `Spec ℤ` (mathlib:
-`Scheme.IsSeparated`, i.e. `X → ⊤_ Scheme` separated); an affine scheme is separated. -/
+/-- Oqhr-Gt66es-13770 (3:49:30) [def] A scheme is separated if it is separated over `Spec ℤ`
+(mathlib: `Scheme.IsSeparated`, i.e. `X → ⊤_ Scheme` separated); an affine scheme is separated. -/
 example (X : Scheme.{u}) [IsAffine X] : X.IsSeparated ∧ IsSeparated (terminal.from X) :=
   ⟨inferInstance, inferInstance⟩
 
@@ -308,7 +321,8 @@ theorem def_15031 (f : X ⟶ S) :
 /-- Oqhr-Gt66es-15094 (4:11:34) [prop] If `S` is quasi-separated, an `S`-scheme is quasi-separated
 iff it is so over `S`. -/
 @[buffalo "Oqhr-Gt66es-15094"]
-theorem prop_15094 [QuasiSeparatedSpace S] (f : X ⟶ S) : QuasiSeparatedSpace X ↔ QuasiSeparated f := by
+theorem prop_15094 [QuasiSeparatedSpace S] (f : X ⟶ S) :
+    QuasiSeparatedSpace X ↔ QuasiSeparated f := by
   refine ⟨(def_15031 f).2, fun _ => ?_⟩
   have : QuasiSeparated (terminal.from S) := (quasiSeparatedSpace_iff_quasiSeparated S).1 ‹_›
   rw [quasiSeparatedSpace_iff_quasiSeparated,
@@ -474,8 +488,8 @@ theorem prop_16267 (f : X ⟶ Y) (g : Y ⟶ Z) [QuasiSeparated g] (h : IsCoheren
   obtain ⟨_, _⟩ := h
   exact ⟨QuasiCompact.of_comp f g, QuasiSeparated.of_comp f g⟩
 
-/-- Oqhr-Gt66es-16329 (4:32:09) [rem] Nothing can be concluded about `g` from `g ∘ f` coherent alone:
-for `f` from the empty scheme, `g ∘ f` is always coherent. -/
+/-- Oqhr-Gt66es-16329 (4:32:09) [rem] Nothing can be concluded about `g` from `g ∘ f` coherent
+alone: for `f` from the empty scheme, `g ∘ f` is always coherent. -/
 @[buffalo "Oqhr-Gt66es-16329"]
 theorem rem_16329 [IsEmpty X] (h : X ⟶ Z) : IsCoherentHom h :=
   ⟨⟨fun U _ _ => by simp [Set.eq_empty_of_isEmpty]⟩, inferInstance⟩

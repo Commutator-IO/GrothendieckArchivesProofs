@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder136
 public import StacksFrontier.AlgebraicTopology.SimplicialObject.ChainHomotopy
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 136, page 226, Proposition 1: `Φ_* ≃ 0`, and `C^{p,q}_*` is contractible for `p ≥ 1`
@@ -16,23 +19,31 @@ every functor `F`), hence `C^{p,q}_*` is acyclic. This is the second step of fin
 `136-pd-de-rham-shadows`; the first step, the exactness of the rows, is in
 `Grothendieck/Folder136.lean`.
 
-**What is proved.** In the model of `Grothendieck/Folder136.lean` (`Φ_[n] = Fin (n+1) → k`,
+## Main definitions
+
+In the model of `Grothendieck/Folder136.lean` (`Φ_[n] = Fin (n+1) → k`,
 `θ^* = LinearMap.funLeft θ`, `Ψ_[n] = PsiM k n`, `Γ = DividedPowerAlgebra`), over any commutative
 ring `k`:
+
 * `phiSimplicial`: the simplicial `k`-module `Φ_*`.
-* `phi_htpyRel`, `phiHomotopy`: **Proposition 1**, a simplicial homotopy from the identity of `Φ_*`
-  to `0`.
 * `dpGrade`: `Γ^p M ⊆ Γ(M)`, the span of the products `x₁^{(n₁)} ⋯ x_r^{(n_r)}` with
   `n₁ + ⋯ + n_r = p`; it is carried into `Γ^p N` by `Γ(f)` (`map_mem_dpGrade`) and killed by
   `Γ(0)` for `p ≠ 0` (`map_zero_of_mem_dpGrade`); `T^{(p)} ∈ Γ^p` (`dp_mem_dpGrade`).
 * `pdGradeSimplicial p q`: the simplicial `k`-module `C^{p,q}_* = Γ^p Φ_* ⊗ Λ^q Ψ_*`.
+
+## Main results
+
+* `phi_htpyRel`, `phiHomotopy`: **Proposition 1**, a simplicial homotopy from the identity of `Φ_*`
+  to `0`.
 * `pdGrade_htpyRel`, `pdGradeHomotopy`: for `p ≠ 0`, a simplicial homotopy from the identity of
   `C^{p,q}_*` to `0`.
 * `phi_chainHomotopy`, `pdGrade_chainHomotopy`: the alternating face map complexes of `Φ_*` and of
   `C^{p,q}_*`, `p ≠ 0`, are chain contractible;
   `phi_exactAt`, `pdGrade_exactAt`: they are acyclic in every degree.
 
-**How.** The homotopy is indexed by the `n`-simplices `αⁿᵢ : [n] → [1]` of `Δ[1]`, `αⁿᵢ(x) = 0`
+## Implementation notes
+
+The homotopy is indexed by the `n`-simplices `αⁿᵢ : [n] → [1]` of `Δ[1]`, `αⁿᵢ(x) = 0`
 exactly for `x < i`, `0 ≤ i ≤ n + 1`. Its component at `αⁿᵢ` is the cut-off `cutoff i`,
 `f ↦ (x ↦ f x if x < i, 0 otherwise)`: at `i = n + 1` it is the identity, at `i = 0` it is `0`,
 and `θ^* ∘ cutoff i = cutoff i' ∘ θ^*` as soon as `θ(x) < i ↔ x < i'`, which is what the
@@ -46,14 +57,25 @@ to `0` otherwise); Stacks states it for the cosimplicial module free on the vert
 `Γ^p(0)` vanishes for `p ≥ 1`. Stacks' `HtpyRel.toHomotopy` turns the family into Mathlib's
 `SimplicialObject.Homotopy`, and Mathlib's `Homotopy.toChainHomotopy` into a chain homotopy.
 
-**Not formalised.** The page's route (Dold–Puppe: the normalised complex of `Φ_*` is
+## Not formalised
+
+The page's route (Dold–Puppe: the normalised complex of `Φ_*` is
 `k → k` in degrees `1, 0`), replaced by the explicit homotopy. Corollaries 1.2 to 1.4
 (`Ψ_*` is a `K(k, 1)`, `Λ^i Ψ_*` a `K(k, i)`, `π_ℓ(A_* ⊗ Λ^iΨ_*) ≅ π_{ℓ−i}(A_*)`). The
 identification of `dpGrade p` with the weight-`p` part of the basis `dpBasis` of
 `Grothendieck/Folder136.lean`, and the inclusion `C^{p,q}_* ⊆ pdSimplicial q`. The passage to
 cohomology of a simplicial set `X` with coefficients in `C^{p,q}_*`, hence
 `H^{p,q}_DRpd(X, k) ≅ H^q(X, k)`.
+
+## References
+
+* A. Grothendieck, cote 136, p. 226, Proposition 1 and Corollaries 1.1–1.4 (finding
+  `136-pd-de-rham-shadows`)
+* Stacks Project, tags 019L, 07L7, 07KQ
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder136Prop1
 

@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.EffectiveVenken
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.Relations.PreRelations
 public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GroupoidOfEquivalenceRelation
-
-@[expose] public section
 
 /-!
 # Venken's relation as an equivalence relation of schemes
@@ -12,22 +15,13 @@ public import StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.GroupoidOfE
 `Grothendieck/EffectiveVenken.lean` handles Venken's relation `R ⊂ Spec B × Spec B` through its
 ideal `I_V ⊂ B ⊗_K B`: it proves `I_V ⊆ ker(B ⊗ B → B)`, `σ(I_V) ⊆ I_V` for the exchange `σ`,
 and `pr₁₃*(I_V) ⊆ pr₁₂*(I_V) + pr₂₃*(I_V)`, and leaves the scheme-theoretic language out.
+This file supplies it with the vocabulary of the vendored AxiomMath/Stacks library.
 
-This file supplies it with the vocabulary of the vendored AxiomMath/Stacks library: a
-pre-relation `j : R → U ×_S U` of `S`-schemes (`Stacks.Groupoids.PreRelation`, Stacks tag 022P,
-file `StacksFrontier/AlgebraicGeometry/Spaces/EquivalenceRelations.lean`), Mathlib's internal
-equivalence relation `CategoryTheory.IsEquivalenceRelation j.target j.source`, its
-characterisation as a monic pre-relation inducing an equivalence relation on `T`-valued points
-for every `T` (`Stacks.Groupoids.isEquivalenceRelation_iff_mono_and_isPreEquivalenceRelation`,
-file `StacksFrontier/AlgebraicGeometry/GroupScheme/Relations/PreRelations.lean`; its tag 022Q,
-the induced relation on underlying points, is not needed here), and the groupoid scheme of an equivalence relation
-(`AlgebraicGeometry.existsUnique_groupoidScheme_of_isEquivalenceRelation`, tag 0233, file
-`StacksFrontier/AlgebraicGeometry/GroupScheme/OverField/GroupoidOfEquivalenceRelation.lean`).
+## Main results
 
-**What is proved.** Let `K` be a commutative ring, `B` a `K`-algebra and `I ⊆ B ⊗_K B` an ideal.
-Over `S = Spec K`, with `U = Spec B` and `R = Spec (B ⊗_K B)/I`, let
-`relationOfIdeal I : R → U ×_S U` be the pre-relation whose target and source are induced by
-`b ↦ b ⊗ 1` and `b ↦ 1 ⊗ b`.
+Let `K` be a commutative ring, `B` a `K`-algebra and `I ⊆ B ⊗_K B` an ideal. Over `S = Spec K`,
+with `U = Spec B` and `R = Spec (B ⊗_K B)/I`, let `relationOfIdeal I : R → U ×_S U` be the
+pre-relation whose target and source are induced by `b ↦ b ⊗ 1` and `b ↦ 1 ⊗ b`.
 * `mono_relationOfIdeal`: it is a monomorphism (a relation);
 * `exists_trans`: the algebra of transitivity, two composable `Γ`-points of `(B ⊗ B)/I` with a
   composite, from `pr₁₃*(I) ⊆ pr₁₂*(I) + pr₂₃*(I)`;
@@ -45,10 +39,34 @@ Over `S = Spec K`, with `U = Spec B` and `R = Spec (B ⊗_K B)/I`, let
   `venken_not_effective` (`J_{B^R} ≠ I_V`) this is Venken's statement in the language of
   schemes, the quotient itself being handled through invariants as before.
 
-Not formalised: the contrast with the finite locally free case (Stacks 03BM, whose import
-closure is out of reach here), and the identification of effectivity of `R` with the equality
-`J_{B^R} = I_V` in scheme-theoretic terms.
+## Implementation notes
+
+The vocabulary used: a pre-relation `j : R → U ×_S U` of `S`-schemes
+(`Stacks.Groupoids.PreRelation`, Stacks tag 022P, file
+`StacksFrontier/AlgebraicGeometry/Spaces/EquivalenceRelations.lean`), Mathlib's internal
+equivalence relation `CategoryTheory.IsEquivalenceRelation j.target j.source`, its
+characterisation as a monic pre-relation inducing an equivalence relation on `T`-valued points
+for every `T` (`Stacks.Groupoids.isEquivalenceRelation_iff_mono_and_isPreEquivalenceRelation`,
+file `StacksFrontier/AlgebraicGeometry/GroupScheme/Relations/PreRelations.lean`; its tag 022Q,
+the induced relation on underlying points, is not needed here), and the groupoid scheme of an
+equivalence relation (`AlgebraicGeometry.existsUnique_groupoidScheme_of_isEquivalenceRelation`,
+tag 0233, file
+`StacksFrontier/AlgebraicGeometry/GroupScheme/OverField/GroupoidOfEquivalenceRelation.lean`).
+
+## Not formalised
+
+The contrast with the finite locally free case (Stacks 03BM, whose import closure is out of
+reach here), and the identification of effectivity of `R` with the equality `J_{B^R} = I_V` in
+scheme-theoretic terms.
+
+## References
+
+* Venken's note, as cited in `Grothendieck/EffectiveVenken.lean`
+* Stacks Project, tags 022P, 022Q, 0233, 03BM
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.EffectiveVenken.Relation
 

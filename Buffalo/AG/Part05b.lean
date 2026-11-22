@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 05 (b): 20 June 1973
@@ -12,11 +15,21 @@ The entries of `docs/buffalo-ag/index.tex` lines 684–733 (video `thSz9ZHDK9o`,
 fibres and base change for projective bundles, the relative spectrum and affine morphisms, fibre
 products of schemes, Grassmannians and automorphism groups, localization at a point.
 
-Conventions. As in `Part05a`, mathlib has no projective bundle `𝐏(ℳ)` and no relative spectrum
-`Spec 𝒜` of a quasi-coherent algebra; the entries on them are formalised in their affine or
-ring-theoretic content (`S = Spec K`, the absolute `Spec`, the `Γ ⊣ Spec` adjunction, and
-`Proj` of a graded algebra for the properness of projective bundles).
+## Not formalised
+
+As in `Part05a`, mathlib has no projective bundle `𝐏(ℳ)` and no relative spectrum `Spec 𝒜` of a
+quasi-coherent algebra; the entries on them are formalised in their affine or ring-theoretic
+content (`S = Spec K`, the absolute `Spec`, the `Γ ⊣ Spec` adjunction, and `Proj` of a graded
+algebra for the properness of projective bundles).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 20 June 1973, video `thSz9ZHDK9o`,
+  8:56:26–10:31:34 (`docs/buffalo-ag/index.tex`, lines 684–733)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits Opposite AlgebraicGeometry TensorProduct Topology
 
@@ -135,7 +148,8 @@ itself, an epimorphism `R → R` being bijective (`𝐏(𝒪_S) = S`). -/
 theorem ex_33086 {A : Type u} [CommRing A] [Nontrivial A] :
     (∀ q : PUnit.{u + 1} →ₗ[A] A, ¬ Function.Surjective q) ∧
       ∀ q : A →ₗ[A] A, Function.Surjective q → Function.Bijective q := by
-  refine ⟨fun q hq => ?_, fun q hq => ⟨OrzechProperty.injective_of_surjective_endomorphism q hq, hq⟩⟩
+  refine ⟨fun q hq => ?_,
+    fun q hq => ⟨OrzechProperty.injective_of_surjective_endomorphism q hq, hq⟩⟩
   obtain ⟨x, hx⟩ := hq 1
   rw [Subsingleton.elim x 0, map_zero] at hx
   exact zero_ne_one hx
@@ -259,7 +273,8 @@ theorem rem_36210 (R A B : Type u) [CommRing R] [CommRing A] [CommRing B] [Algeb
     [Algebra R B] :
     IsPushout (CommRingCat.ofHom (algebraMap R A)) (CommRingCat.ofHom (algebraMap R B))
       (CommRingCat.ofHom (Algebra.TensorProduct.includeLeftRingHom (R := R) (A := A) (B := B)))
-      (CommRingCat.ofHom (Algebra.TensorProduct.includeRight (R := R) (A := A) (B := B)).toRingHom) :=
+      (CommRingCat.ofHom
+        (Algebra.TensorProduct.includeRight (R := R) (A := A) (B := B)).toRingHom) :=
   CommRingCat.isPushout_tensorProduct R A B
 
 /-- thSz9ZHDK9o-36274 (10:04:34) [prop] (affine base) `M ↦ M~` commutes with inductive limits

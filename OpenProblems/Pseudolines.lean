@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder80Maps2
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Pseudoline arrangements: the numbering lemma, stated as a proposition (proved)
@@ -16,11 +19,22 @@ edition's). The dichotomy is proved in Lean for combinatorial pseudoline maps, a
 a `Prop`, with the definitions of `Grothendieck/Folder80Maps2.lean`, and proved in Lean as
 `Grothendieck.Folder80Numbering.numberingLemma` (`Grothendieck/Folder80Numbering.lean`).
 
+## Not formalised
+
 Not formalised either, and not stated: the passage from a topological arrangement of
 pseudolines in the real projective plane to its combinatorial map (Mathlib has no pseudolines);
 folders 80 and 154 are otherwise covered by `Grothendieck/Folder80*.lean` and
 `Grothendieck/Folder154*.lean`.
+
+## References
+
+* the note on the open problems of the Montpellier notes (`docs/problems/article.tex`), section
+  « Pseudoline arrangements »
+* A. Grothendieck, folder 80, pp. 20, 24, 28
 -/
+
+@[expose] public section
+
 
 namespace OpenProblems.Pseudolines
 

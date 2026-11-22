@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Localization.Construction
 public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
 public import Mathlib.CategoryTheory.Limits.Shapes.IsTerminal
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 106: cofibration categories and Brown's factorisation lemma
@@ -23,14 +26,23 @@ memory) as follows:
 > équivalence faible si `u` en est une ; C3, toute flèche se factorise en une
 > cofibration suivie d'une équivalence faible.
 
-These are the fields of `CategorieACofibrations` below, verbatim. C2 is stated
-for every pushout square (`IsPushout`) rather than for a chosen pushout; since
-C1 puts the isomorphisms in `W` and `cof`, and both are closed under
-composition, the two formulations are equivalent.
-
 This file formalises, first, what issue #26 names for the folder — the
 cofibration-category axioms and Brown's factorisation — namely three statements
-of the reading:
+of the reading; second, the finding `106-section-criterion-span-faithfulness`, pages 11 to 15.
+All three statements hold as the reading states them, with no hypothesis added.
+
+## Main definitions
+
+* `CategorieACofibrations`: the axioms C1–C3 above, verbatim, as its fields.
+* `Span` (with arrows `Span.Arrow`): every object cofibrant, `Ch'₀(x, y)` the category of
+  diagrams `x → ỹ ← y`, the first arrow a cofibration, the second in `W`.
+* `Rect`: `𝒞̃'`, the category of their connected components (composition by pushout along the
+  cofibration, page 5's formula).
+* `qFunctor` (on arrows `qbar`): `q' : 𝒞̃' → W⁻¹𝒞`, `(f, i) ↦ [i]⁻¹[f]`.
+
+## Main results
+
+### Cofibration categories and Brown's factorisation (issue #26)
 
 * **Page 1, the « weak lifting lemma »** (`relevementFaible`), in the form the
   reading derives from C1–C3: given `f : x → y`, `α_x : x̃ → x`, `α_y : ỹ → y`
@@ -49,8 +61,26 @@ of the reading:
   mutually inverse functors (equalities of functors, not natural isomorphisms)
   compatible with the two localisation functors.
 
-What the formalisation finds. All three hold as the reading states them, with
-no hypothesis added. Two hypotheses are more than the proofs use, and the
+### The section criterion, pages 11 to 15 (finding `106-section-criterion-span-faithfulness`)
+
+* **necessity of `(⋆⋆)`** (`critere_of_fidele`): if `q'` is faithful, then for
+  `f : x → y` in `W` and two sections `i, i'`, the diagrams `(1_x, i)` and
+  `(1_x, i')` lie in the same component — the reading's argument;
+* **`q'` is faithful, unconditionally** (`fidele`), and therefore `(⋆⋆)` always
+  holds (`critere`); the finding's « iff » (`fidele_iff_critere`) holds with
+  both sides true;
+* **`q'` is full** (`plein`) and **an isomorphism of categories**
+  (`qFunctor_iso`, inverse functor `phiBar`, equalities of functors).
+
+## Implementation notes
+
+The axioms C1–C3 are the fields of `CategorieACofibrations` below, verbatim. C2 is stated
+for every pushout square (`IsPushout`) rather than for a chosen pushout; since
+C1 puts the isomorphisms in `W` and `cof`, and both are closed under
+composition, the two formulations are equivalent.
+
+What the formalisation finds. All three statements of issue #26 hold as the reading states them,
+with no hypothesis added. Two hypotheses are more than the proofs use, and the
 general forms are proved alongside:
 * in the weak lifting lemma, `α_x ∈ W` is not used, and `ỹ` need not be
   cofibrant for `i` to be a cofibration — only `x̃` must be (as the reading
@@ -62,22 +92,8 @@ general forms are proved alongside:
   only the existence of pushouts along a cofibration and the stability of
   cofibrations under cobase change are used.
 
-Second, the finding `106-section-criterion-span-faithfulness`, pages 11 to 15:
-every object cofibrant, `Ch'₀(x, y)` the category of diagrams
-`x → ỹ ← y`, the first arrow a cofibration, the second in `W` (`Span`, with
-arrows `Span.Arrow`), `𝒞̃'` the category of their connected components
-(`Rect`, composition by pushout along the cofibration, page 5's formula), and
-`q' : 𝒞̃' → W⁻¹𝒞`, `(f, i) ↦ [i]⁻¹[f]` (`qFunctor`, on arrows `qbar`). Proved:
-* **necessity of `(⋆⋆)`** (`critere_of_fidele`): if `q'` is faithful, then for
-  `f : x → y` in `W` and two sections `i, i'`, the diagrams `(1_x, i)` and
-  `(1_x, i')` lie in the same component — the reading's argument;
-* **`q'` is faithful, unconditionally** (`fidele`), and therefore `(⋆⋆)` always
-  holds (`critere`); the finding's « iff » (`fidele_iff_critere`) holds with
-  both sides true;
-* **`q'` is full** (`plein`) and **an isomorphism of categories**
-  (`qFunctor_iso`, inverse functor `phiBar`, equalities of functors).
-The proof is not the one the page sketches: it never compares two sections.
-It maps `𝒞` to `𝒞̃'` by `F ↦` the diagram of a Brown factorisation of `F`
+The proof of the section criterion is not the one the page sketches: it never compares two
+sections. It maps `𝒞` to `𝒞̃'` by `F ↦` the diagram of a Brown factorisation of `F`
 (`phi`), shows that any diagram `(f, i)` with a retraction `ψ`, `ψ i = 1`,
 `ψ f = F`, lies in the component of that diagram (`arrow_brown`: push out the
 factorisation's cofibration `x ⊔ z → z̄` along `(f, i)` and factor the map to
@@ -90,14 +106,25 @@ that isomorphisms are cofibrations, unused by the first three statements, is
 used here: the unit `(1_x, 1_x)` and the diagrams `(1_x, i)` of `(⋆⋆)` need
 `1_x ∈ cof`.
 
-Not formalised: the Proposition of page 5 (`Ψ` is an equivalence iff `(⋆)`),
-the reduction to `𝒞_cof`, page 5's first categories `Ch₀`, `𝒞̃` (backward arrow
-in `cof ∩ W`) and the fullness of their `q` on page 9, and page 13's
-construction of the image of an arrow with a separately chosen section.
+## Not formalised
+
+The Proposition of page 5 (`Ψ` is an equivalence iff `(⋆)`), the reduction to `𝒞_cof`, page 5's
+first categories `Ch₀`, `𝒞̃` (backward arrow in `cof ∩ W`) and the fullness of their `q` on
+page 9, and page 13's construction of the image of an arrow with a separately chosen section.
 
 What this certifies is that the reading holds together, not that it is what the
 page says (issue #26).
+
+## References
+
+* A. Grothendieck, cote 106, pp. 1, 5, 9 and 11–15 (issue #26, finding
+  `106-section-criterion-span-faithfulness`); modernised reading
+  `transcripts/106/106.modern.tex`
+* Baues's axioms C1–C3 for cofibration categories
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder106
 
@@ -360,9 +387,9 @@ lemma arrow_comp_left {s s' : Span W cof x y} (t : Span W cof y z) (h : Arrow s 
   have := hasPushout (W := W) (cof := cof) t.f s'.i t.hf
   refine ⟨pushout.desc (pushout.inl _ _) (u ≫ pushout.inr _ _) ?_, ?_, ?_⟩
   · rw [← Category.assoc, h2]; exact pushout.condition
-  · show (s.f ≫ pushout.inr _ _) ≫ _ = s'.f ≫ pushout.inr _ _
+  · change (s.f ≫ pushout.inr _ _) ≫ _ = s'.f ≫ pushout.inr _ _
     rw [Category.assoc, pushout.inr_desc, ← Category.assoc, h1]
-  · show (t.i ≫ pushout.inl _ _) ≫ _ = t.i ≫ pushout.inl _ _
+  · change (t.i ≫ pushout.inl _ _) ≫ _ = t.i ≫ pushout.inl _ _
     rw [Category.assoc, pushout.inl_desc]
 
 omit [HasInitial C] in
@@ -373,9 +400,9 @@ lemma arrow_comp_right (s : Span W cof x y) {t t' : Span W cof y z} (h : Arrow t
   have := hasPushout (W := W) (cof := cof) t'.f s.i t'.hf
   refine ⟨pushout.desc (v ≫ pushout.inl _ _) (pushout.inr _ _) ?_, ?_, ?_⟩
   · rw [← Category.assoc, h1]; exact pushout.condition
-  · show (s.f ≫ pushout.inr _ _) ≫ _ = s.f ≫ pushout.inr _ _
+  · change (s.f ≫ pushout.inr _ _) ≫ _ = s.f ≫ pushout.inr _ _
     rw [Category.assoc, pushout.inr_desc]
-  · show (t.i ≫ pushout.inl _ _) ≫ _ = t'.i ≫ pushout.inl _ _
+  · change (t.i ≫ pushout.inl _ _) ≫ _ = t'.i ≫ pushout.inl _ _
     rw [Category.assoc, pushout.inl_desc, ← Category.assoc, h2]
 
 /-- The unit `1_x = (1_x, 1_x)`. -/
@@ -404,13 +431,13 @@ lemma arrow_assoc (s : Span W cof x y) (t : Span W cof y z) (r : Span W cof z w)
     rw [← Category.assoc]; exact pushout.condition
   have hB : r.f ≫ (pushout.inl r.f t.i ≫ pushout.inl (t.comp r).f s.i) =
       (s.comp t).i ≫ pushout.desc _ _ hA := by
-    show _ = (t.i ≫ pushout.inl t.f s.i) ≫ _
+    change _ = (t.i ≫ pushout.inl t.f s.i) ≫ _
     rw [Category.assoc, pushout.inl_desc, ← Category.assoc, pushout.condition,
       Category.assoc]
   refine ⟨pushout.desc _ (pushout.desc _ _ hA) hB, ?_, ?_⟩
-  · show ((s.f ≫ pushout.inr _ _) ≫ pushout.inr _ _) ≫ _ = s.f ≫ pushout.inr _ _
+  · change ((s.f ≫ pushout.inr _ _) ≫ pushout.inr _ _) ≫ _ = s.f ≫ pushout.inr _ _
     simp only [Category.assoc, pushout.inr_desc]
-  · show (r.i ≫ pushout.inl _ _) ≫ _ = (r.i ≫ pushout.inl _ _) ≫ pushout.inl _ _
+  · change (r.i ≫ pushout.inl _ _) ≫ _ = (r.i ≫ pushout.inl _ _) ≫ pushout.inl _ _
     simp only [Category.assoc, pushout.inl_desc]
 
 /-- The diagram `(g, 1) : x → x' ← x'` of a cofibration `g`. -/
@@ -426,11 +453,12 @@ omit [HasInitial C] in
 /-- `(f, i) = (1, i) ∘ (f, 1)`, as page 15 writes it. -/
 lemma arrow_decomp (s : Span W cof x y) :
     Arrow s ((cofSpan (W := W) s.f s.hf).comp (backSpan (cof := cof) s.i s.hi)) := by
-  have := hasPushout (W := W) (cof := cof) (𝟙 s.pt) (𝟙 s.pt) (iso_cof (W := W) (cof := cof) (Iso.refl s.pt))
+  have := hasPushout (W := W) (cof := cof) (𝟙 s.pt) (𝟙 s.pt)
+      (iso_cof (W := W) (cof := cof) (Iso.refl s.pt))
   have hlr : pushout.inl (𝟙 s.pt) (𝟙 s.pt) = pushout.inr _ _ := by
     simpa using (pushout.condition (f := 𝟙 s.pt) (g := 𝟙 s.pt))
   refine ⟨pushout.inr _ _, rfl, ?_⟩
-  show _ = s.i ≫ pushout.inl _ _
+  change _ = s.i ≫ pushout.inl _ _
   rw [hlr]
 
 omit [HasInitial C] in
@@ -441,9 +469,9 @@ lemma arrow_cof_back {x y : C} (g : x ⟶ y) (hg : cof g) (hgW : W g) :
   have hlr : pushout.inl (𝟙 y) (𝟙 y) = pushout.inr _ _ := by
     simpa using (pushout.condition (f := 𝟙 y) (g := 𝟙 y))
   refine ⟨g ≫ pushout.inl _ _, ?_, ?_⟩
-  · show 𝟙 x ≫ g ≫ _ = g ≫ pushout.inr _ _
+  · change 𝟙 x ≫ g ≫ _ = g ≫ pushout.inr _ _
     rw [Category.id_comp, hlr]
-  · show 𝟙 x ≫ g ≫ _ = g ≫ pushout.inl _ _
+  · change 𝟙 x ≫ g ≫ _ = g ≫ pushout.inl _ _
     rw [Category.id_comp]
 
 end Span
@@ -545,7 +573,8 @@ lemma brown_nonempty (hcof : ∀ x : C, Cofibrant cof x) {x z : C} (F : x ⟶ z)
     by rw [hcα, hP.inl_desc], by rw [hcα, hP.inr_desc]⟩⟩
 
 /-- The diagram `(c ι_x, c ι_z) : x → z̄ ← z` of a Brown factorisation. -/
-@[reducible] def Brown.span {x z : C} {F : x ⟶ z} (B : Brown (W := W) (cof := cof) F) : Span W cof x z :=
+@[reducible] def Brown.span {x z : C} {F : x ⟶ z} (B : Brown (W := W) (cof := cof) F) :
+    Span W cof x z :=
   ⟨B.pt, B.ιx ≫ B.c, B.ιz ≫ B.c, cof_comp (W := W) _ _ B.hιx B.hc,
     W_of_comp_right (cof := cof) _ B.α B.hα
       (by rw [Category.assoc, B.hz]; exact W_id (cof := cof) z)⟩
@@ -572,9 +601,9 @@ theorem arrow_brown {x z : C} {F : x ⟶ z} (B : Brown (W := W) (cof := cof) F)
   refine ⟨⟨R, s.f ≫ pushout.inr B.c h ≫ κ, s.i ≫ pushout.inr B.c h ≫ κ,
     cof_comp (W := W) _ _ s.hf (cof_comp (W := W) _ _ (pushout_cof (W := W) hQ B.hc) hκ), hr⟩,
     ⟨pushout.inr B.c h ≫ κ, rfl, rfl⟩, ⟨pushout.inl B.c h ≫ κ, ?_, ?_⟩⟩
-  · show (B.ιx ≫ B.c) ≫ _ = _
+  · change (B.ιx ≫ B.c) ≫ _ = _
     rw [Category.assoc, pushout.condition_assoc, B.hS.inr_desc_assoc]
-  · show (B.ιz ≫ B.c) ≫ _ = _
+  · change (B.ιz ≫ B.c) ≫ _ = _
     rw [Category.assoc, pushout.condition_assoc, B.hS.inl_desc_assoc]
 
 lemma mk_eq_brown {x z : C} {F : x ⟶ z} (B : Brown (W := W) (cof := cof) F)
@@ -603,20 +632,20 @@ noncomputable def phi (hcof : ∀ x : C, Cofibrant cof x) : C ⥤ Rect W cof whe
   map_comp {x y z} f g := by
     let Bf := Classical.choice (brown_nonempty (W := W) hcof f)
     let Bg := Classical.choice (brown_nonempty (W := W) hcof g)
-    show phiMap hcof (f ≫ g) = Quot.mk _ (Bf.span.comp Bg.span)
+    change phiMap hcof (f ≫ g) = Quot.mk _ (Bf.span.comp Bg.span)
     have := hasPushout (W := W) (cof := cof) Bg.span.f Bf.span.i Bg.span.hf
     have hcond : Bg.span.f ≫ Bg.α = Bf.span.i ≫ Bf.α ≫ g := by
-      show (Bg.ιx ≫ Bg.c) ≫ _ = (Bf.ιz ≫ Bf.c) ≫ _
+      change (Bg.ιx ≫ Bg.c) ≫ _ = (Bf.ιz ≫ Bf.c) ≫ _
       rw [Category.assoc, Bg.hx, Category.assoc, ← Category.assoc Bf.c, ← Category.assoc,
         Bf.hz, Category.id_comp]
     refine phiMap_eq hcof _ (pushout.desc Bg.α (Bf.α ≫ g) hcond) ?_ ?_
-    · show (Bg.span.i ≫ pushout.inl _ _) ≫ _ = _
+    · change (Bg.span.i ≫ pushout.inl _ _) ≫ _ = _
       rw [Category.assoc, pushout.inl_desc]
-      show (Bg.ιz ≫ Bg.c) ≫ _ = _
+      change (Bg.ιz ≫ Bg.c) ≫ _ = _
       rw [Category.assoc, Bg.hz]
-    · show (Bf.span.f ≫ pushout.inr _ _) ≫ _ = _
+    · change (Bf.span.f ≫ pushout.inr _ _) ≫ _ = _
       rw [Category.assoc, pushout.inr_desc]
-      show (Bf.ιx ≫ Bf.c) ≫ _ = _
+      change (Bf.ιx ≫ Bf.c) ≫ _ = _
       have := Bf.hx
       simp only [Category.assoc] at this ⊢
       rw [reassoc_of% this]
@@ -666,7 +695,7 @@ noncomputable def qFunctor : Rect W cof ⥤ W.Localization where
   obj X := W.Q.obj X.as
   map φ := qbar φ
   map_id X := by
-    show frac (idSpan X.as) = _
+    change frac (idSpan X.as) = _
     exact (frac_of_retraction _ (𝟙 X.as) (𝟙 X.as) (Category.comp_id _)
       (Category.comp_id _)).trans (W.Q.map_id _)
   map_comp {X Y Z} φ ψ := by
@@ -674,12 +703,12 @@ noncomputable def qFunctor : Rect W cof ⥤ W.Localization where
     | mk s =>
     induction ψ using Quot.ind with
     | mk t =>
-    show frac (s.comp t) = frac s ≫ frac t
+    change frac (s.comp t) = frac s ≫ frac t
     have := hasPushout (W := W) (cof := cof) t.f s.i t.hf
     unfold frac
     have := W.Q_inverts _ (s.comp t).hi
     rw [← cancel_mono (W.Q.map (s.comp t).i), Category.assoc, wInv_hom, Category.comp_id]
-    show W.Q.map (s.f ≫ pushout.inr t.f s.i) = _ ≫ W.Q.map (t.i ≫ pushout.inl t.f s.i)
+    change W.Q.map (s.f ≫ pushout.inr t.f s.i) = _ ≫ W.Q.map (t.i ≫ pushout.inl t.f s.i)
     simp only [Category.assoc, Functor.map_comp, wInv_hom_assoc]
     rw [← W.Q.map_comp t.f, pushout.condition (f := t.f) (g := s.i), W.Q.map_comp,
       wInv_hom_assoc]
@@ -758,9 +787,9 @@ theorem qFunctor_iso (hcof : ∀ x : C, Cofibrant cof x) :
     intro x y F
     erw [eqToHom_refl, eqToHom_refl, Category.id_comp, Category.comp_id]
     let B := Classical.choice (brown_nonempty (W := W) hcof F)
-    show frac B.span = _
-    exact frac_of_retraction _ B.α F (by show (B.ιz ≫ B.c) ≫ B.α = 𝟙 _; rw [Category.assoc, B.hz])
-      (by show (B.ιx ≫ B.c) ≫ B.α = F; rw [Category.assoc, B.hx])
+    change frac B.span = _
+    exact frac_of_retraction _ B.α F (by change (B.ιz ≫ B.c) ≫ B.α = 𝟙 _; rw [Category.assoc, B.hz])
+      (by change (B.ιx ≫ B.c) ≫ B.α = F; rw [Category.assoc, B.hx])
 
 /-- **`q'` is full**: every arrow of `W⁻¹𝒞(x, y)` is a fraction `[i]⁻¹[f]` with
 `f ∈ cof`, `i ∈ W`. -/

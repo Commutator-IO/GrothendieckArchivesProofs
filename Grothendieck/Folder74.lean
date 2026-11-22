@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
@@ -13,8 +18,6 @@ public import Mathlib.Data.Fintype.Perm
 public import Mathlib.Tactic.Abel
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 74: generalised cubic complexes around a triangle (pages 92–103, 116)
 
@@ -24,7 +27,14 @@ modernised reading `transcripts/74/74.modern.tex`, sections 19–21.
 A graph `G` satisfies **axiom 1** if every edge lies in a unique triangle, and
 **axiom 2** if every vertex off a triangle is adjacent to a vertex of it. Fix a
 triangle `t₀ = {t 0, t 1, t 2}`. For `α : Fin 3`, `Ẽ_α` (`Et α`) is the set of
-vertices off `t₀` adjacent to `t α`. The file proves:
+vertices off `t₀` adjacent to `t α`.
+
+The axiom (Ka) is only partly legible on the leaf; `Ka` and `KaPage` are
+reconstructions, the forms under which the Scholie becomes an equivalence. What this certifies is
+that the reading holds together, not that it is what the page says (issue
+#26).
+
+## Main results
 
 * (pp. 93–99, Props 1–5) the third vertex of the vertical triangle on
   `{t α, s}` is a fixed-point-free involution `σ_α` of `Ẽ_α`; a vertex of `Ẽ_β`,
@@ -64,7 +74,9 @@ vertices off `t₀` adjacent to `t α`. The file proves:
   (`autotopism_iff`); the Klein group has 6 automorphisms (`card_klein_addAut`) and
   its table 96 autotopisms (`card_klein_autotopisms`, cross-checked by enumeration in
   `card_klein_autotopisms_decide`). With two lifts and the 6 permutations of a
-  triangle this gives the 1152 of folder 69; the lift is not formalised.
+  triangle this gives the 1152 of folder 69.
+
+## Implementation notes
 
 The forward direction uses axiom 2 only for `t₀` and for the vertical
 triangles, and does not use axiom 3 (the `Ẽ_α` nonempty), which serves only for
@@ -72,11 +84,18 @@ the counts. (Ka) in triangle form (`Ka`) implies (*), and under (*) it is
 equivalent to the shape of the margin of page 96 with the conclusion
 `(s_α) ∈ Γ̃` (`Scholie.ka_iff`).
 
-The axiom (Ka) is only partly legible on the leaf; `Ka` and `KaPage` are
-reconstructions, the forms under which the Scholie becomes an equivalence. What this certifies is
-that the reading holds together, not that it is what the page says (issue
-#26).
+## Not formalised
+
+The lift giving the 1152 of folder 69 from the 96 autotopisms.
+
+## References
+
+* A. Grothendieck, folder 74, pp. 92–103, 116 (finding `74-gq2t-latin-square-reduction`,
+  issue #26); modernised reading `transcripts/74/74.modern.tex`, sections 19–21
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder74
 

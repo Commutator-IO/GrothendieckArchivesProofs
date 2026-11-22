@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.ChoosePrimePowSubOne
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 136, pages 19–31: the binomial lemma behind the « ombres »
@@ -29,26 +32,41 @@ form, `M T^{(i)} ≃ Hom^i(τ_{N−i} S, M ⊗_k S)`, written on coefficients. P
 says only that the claims hold as stated; whether they stand in the literature is a
 separate question.
 
-What is formalised.
+## Main results
 
-* The second theorem, for every `i` (the hypothesis `i ≤ N` is not used)
-  (`binomial_shadow_existsUnique`). The proof is not the page's: no localisation and
-  no `p`-adic digit shift. With `K = p^r − 1` above `k` and `k'`, every `binom(K, ·)`
-  is prime to `p` (`not_dvd_choose_pow_sub_one`, the « aucune retenue » of p. 31),
-  and the relations from `k` and `k'` up to `K`, with the identity
-  `binom(k+l, l) binom(k, i) = binom(k+l, i) binom(k+l−i, l)` (`choose_add_mul_choose`),
-  give that `binom(k, i) ξ_{k'} − binom(k', i) ξ_k` is killed by an integer prime to
-  `p`; for every `p` this forces it to vanish (`eq_zero_of_forall_prime_smul`, through
-  the additive order). The `binom(k, i)`, `k ≥ N`, generate the unit ideal of `ℤ`
-  (`span_choose_eq_top`), and a Bézout combination `∑ mₐ binom(kₐ, i) = 1` defines
-  `ξ = ∑ mₐ ξ_{kₐ}` and gives its uniqueness, as on page 27.
-* Théorème 1 (`binomial_constant`) is the case `i = 0`; the family of additive maps
-  of Corollary 1 is its instance in `M →+ M'` (`hom_family_constant`).
+* `binomial_shadow_existsUnique`: the second theorem, for every `i` (the hypothesis `i ≤ N` is
+  not used).
+* `binomial_constant`: Théorème 1, the case `i = 0`; the family of additive maps of
+  Corollary 1 is its instance in `M →+ M'` (`hom_family_constant`).
 
-Not formalised: the full faithfulness of `ω_N` and the isomorphism
-`M ⊗_k S → φ_N τ_N (M ⊗_k S)` over the divided-power algebra `k{T}` as statements
-about graded modules; Lemma 2 of page 21 (the `ℤ_(p)`-local form with few indices).
+## Implementation notes
+
+The proof of the second theorem is not the page's: no localisation and
+no `p`-adic digit shift. With `K = p^r − 1` above `k` and `k'`, every `binom(K, ·)`
+is prime to `p` (`not_dvd_choose_pow_sub_one`, the « aucune retenue » of p. 31),
+and the relations from `k` and `k'` up to `K`, with the identity
+`binom(k+l, l) binom(k, i) = binom(k+l, i) binom(k+l−i, l)` (`choose_add_mul_choose`),
+give that `binom(k, i) ξ_{k'} − binom(k', i) ξ_k` is killed by an integer prime to
+`p`; for every `p` this forces it to vanish (`eq_zero_of_forall_prime_smul`, through
+the additive order). The `binom(k, i)`, `k ≥ N`, generate the unit ideal of `ℤ`
+(`span_choose_eq_top`), and a Bézout combination `∑ mₐ binom(kₐ, i) = 1` defines
+`ξ = ∑ mₐ ξ_{kₐ}` and gives its uniqueness, as on page 27.
+
+## Not formalised
+
+The full faithfulness of `ω_N` and the isomorphism `M ⊗_k S → φ_N τ_N (M ⊗_k S)` over the
+divided-power algebra `k{T}` as statements about graded modules; Lemma 2 of page 21 (the
+`ℤ_(p)`-local form with few indices).
+
+## References
+
+* A. Grothendieck, cote 136, « Coefficients binomiaux modulo `p` », pp. 19–22, and « Le
+  théorème sur `M ⊗_k S` », pp. 26–34 (finding `136-shadow-full-faithfulness`); modernised
+  reading `transcripts/136/136.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder136
 
@@ -397,7 +415,8 @@ theorem pdH_pdD_add (f : ℕ → (σ → ℕ) → Finset σ → k) (a : ℕ) (β
   rw [hP, sub_zero, pdH_of_least hjS hmin]
   -- `pdH f` on the faces `(β + e_i, I ∖ i)`, `i ∈ I`
   have hface : ∀ i ∈ I, pdH f a (β + Pi.single i 1) (I.erase i)
-      = if j ∈ I.erase i then 0 else f a (β + Pi.single i 1 - Pi.single j 1) (insert j (I.erase i)) := by
+      = if j ∈ I.erase i then 0
+        else f a (β + Pi.single i 1 - Pi.single j 1) (insert j (I.erase i)) := by
     intro i hi
     rw [← pdSupp_add_erase (β := β) hi] at hjS hmin
     exact pdH_of_least hjS hmin
@@ -437,7 +456,8 @@ theorem pdH_pdD_add (f : ℕ → (σ → ℕ) → Finset σ → k) (a : ℕ) (β
       erase_insert_of_ne (hlt i hi).ne, add_sub_comm_single β (hlt i hi).ne']
     have hs : kSign (insert j I) i = -(kSign I i : k) := by
       unfold kSign
-      rw [filter_insert, ite_eq_left (hlt i hi), card_insert_of_notMem (fun h => hjI (mem_filter.1 h).1)]
+      rw [filter_insert, ite_eq_left (hlt i hi),
+          card_insert_of_notMem (fun h => hjI (mem_filter.1 h).1)]
       ring
     rw [hs]; ring
 
@@ -580,7 +600,7 @@ theorem cocycle_zero {n : ℕ} {f : ℕ → (σ → ℕ) → Finset σ → k} (h
     · have : f a 0 ∅ = 0 := by
         by_contra hne
         have := (hf a 0 ∅ hne).1
-        simp at this; exact ha this
+        simp only [Pi.zero_apply, sum_const_zero, add_zero, card_empty] at this; exact ha this
       simp [this, ha]
   · simp only [hβI, ↓reduceIte]
     rw [ite_eq_right (by tauto), mul_zero]
@@ -664,9 +684,11 @@ theorem pd_row_cohomology (n : ℕ) :
         ∃ g, IsBideg n q g ∧ pdD g = f) ∧
     (∀ f : ℕ → (σ → ℕ) → Finset σ → k, IsBideg n 0 f → pdD f = 0 →
         ∃! c : k, f = c • tPow n) ∧
-    (IsBideg n 0 (tPow n : ℕ → (σ → ℕ) → Finset σ → k) ∧ pdD (tPow n : ℕ → (σ → ℕ) → Finset σ → k) = 0) ∧
+    (IsBideg n 0 (tPow n : ℕ → (σ → ℕ) → Finset σ → k) ∧
+      pdD (tPow n : ℕ → (σ → ℕ) → Finset σ → k) = 0) ∧
     (∀ q (f : ℕ → (σ → ℕ) → Finset σ → k), n < q → IsBideg n q f → f = 0) ∧
-    (∀ j, tMul j (tPow n : ℕ → (σ → ℕ) → Finset σ → k) = ((n + j).choose j : k) • tPow (n + j)) := by
+    (∀ j, tMul j (tPow n : ℕ → (σ → ℕ) → Finset σ → k) =
+      ((n + j).choose j : k) • tPow (n + j)) := by
   refine ⟨fun q f hf hd => ⟨_, exact_of_pos hf hd⟩, fun f hf hd => ⟨_, cocycle_zero hf hd, ?_⟩,
     ⟨tPow_isBideg n, pdD_tPow n⟩, fun q f h hf => hf.eq_zero_of_gt h, fun j => tMul_tPow j n⟩
   intro c hc
@@ -751,7 +773,8 @@ theorem coeff_aeval_C_mul_X (r : k) (n : ℕ) (q : k[X]) :
 
 theorem pdF_smul (n : ℕ) (r : k) (m : M) : pdF k (n, r • m) = r ^ n • pdF k (n, m) := by
   have : pdEv k (r • m) = (aeval (C r * X)).comp (pdEv k m) :=
-    SymmetricAlgebra.algHom_ext (by ext; simp [smul_eq_C_mul, mul_assoc, coeff_C_mul, mul_left_comm])
+    SymmetricAlgebra.algHom_ext (by ext; simp [smul_eq_C_mul, mul_assoc, coeff_C_mul,
+      mul_left_comm])
   apply ofConv_injective; ext c
   simp [pdF, this, coeff_aeval_C_mul_X]
 
@@ -894,7 +917,9 @@ theorem pdTheta_coeff (i : σ) (n : ℕ) {a : σ →₀ ℕ} (ha : a i = 0) (q :
         MvPolynomial.X_pow_eq_monomial, MvPolynomial.monomial_mul_monomial, one_mul]
       simp only [map_nsmul, map_tmul, lcoeff_apply, coeff_X_pow, MvPolynomial.lcoeff_apply,
         MvPolynomial.coeff_monomial, LinearMap.mul'_apply, e]
-      by_cases h1 : n = x1 <;> by_cases h2 : x2 = 0 <;> simp [h1, h2, @eq_comm _ x1] at hx ⊢
+      by_cases h1 : n = x1 <;> by_cases h2 : x2 = 0 <;> simp only [h2, add_zero, @eq_comm _ x1, h1,
+          ↓reduceIte, true_and, mul_ite, one_mul, mul_zero, smul_ite, nsmul_eq_mul,
+          false_and, Prod.mk.injEq, and_false, zero_mul, ite_self, and_true, and_self] at hx ⊢
       subst hx; simp
     rw [pdTheta_monomial, add_tmul_one_pow, sum_mul, map_sum, map_sum, sum_congr rfl key]
     have e : γ = Finsupp.single i n + a ↔ γ i = n ∧ γ.erase i = a := by
@@ -917,18 +942,21 @@ theorem pdFF_zero : pdFF k b 0 = 1 := by
   rw [AlgHom.comp_apply, MvPolynomial.aeval_zero, Algebra.algebraMap_self, RingHom.id_apply] at h
   exact h
 
+set_option linter.unusedDecidableInType false in
 theorem pdF_mul_pdFF (i : σ) (n : ℕ) {a : σ →₀ ℕ} (ha : a i = 0) :
     pdF k (n, b i) * pdFF k b a = pdFF k b (Finsupp.single i n + a) := by
   apply ofConv_injective; ext c
   have : TensorProduct.map (pdF k (n, b i)).ofConv (pdFF k b a).ofConv (comul c) =
       TensorProduct.map (lcoeff k n) (MvPolynomial.lcoeff k a)
-        (Algebra.TensorProduct.map (pdEv k (b i)) (pdCoordEv k b) (Bialgebra.comulAlgHom k Cd c)) := by
+        (Algebra.TensorProduct.map (pdEv k (b i)) (pdCoordEv k b)
+          (Bialgebra.comulAlgHom k Cd c)) := by
     rw [pdF, pdFF, ofConv_toConv, ofConv_toConv, TensorProduct.map_comp]
     rfl
   rw [LinearMap.convMul_apply, this, ← AlgHom.comp_apply, pdEv_comul_EV, AlgHom.comp_apply,
     pdTheta_coeff k i n ha]
   rfl
 
+set_option linter.unusedDecidableInType false in
 theorem pdRep_prod (a : σ →₀ ℕ) :
     pdRep k (a.prod fun i n => DividedPowerAlgebra.dp k n (b i)) = pdFF k b a := by
   induction a using Finsupp.induction with
@@ -939,12 +967,15 @@ theorem pdRep_prod (a : σ →₀ ℕ) :
       pdF_mul_pdFF k b i n (Finsupp.notMem_support_iff.1 hi)]
 
 /-- The monomial `∏ⱼ (b^∨ⱼ)^{γⱼ}` of `Sym M^∨`. -/
-noncomputable def pdTest (γ : σ →₀ ℕ) : Cd := γ.prod fun j e => SymmetricAlgebra.ι k _ (b.coord j) ^ e
+noncomputable def pdTest (γ : σ →₀ ℕ) : Cd :=
+    γ.prod fun j e => SymmetricAlgebra.ι k _ (b.coord j) ^ e
 
 omit [DecidableEq σ] in
 theorem pdCoordEv_test (γ : σ →₀ ℕ) : pdCoordEv k b (pdTest k b γ) = MvPolynomial.monomial γ 1 := by
   simp [pdTest, Finsupp.prod, MvPolynomial.prod_X_pow_eq_monomial]
 
+set_option linter.unusedDecidableInType false in
+set_option linter.unusedFintypeInType false in
 /-- **The basis theorem for `Γ` of a free module of finite rank**: if `(bᵢ)` is a basis of
 `M`, the products `∏ᵢ bᵢ^{(aᵢ)}`, `a ∈ ℕ^{(σ)}`, are a basis of `Γ_k(M)`, over any commutative
 ring `k`. -/
@@ -1065,7 +1096,8 @@ variable (k) in
 /-- **The simplicial `k`-module `C^{•,q}_* = Γ^•Φ_* ⊗ Λ^qΨ_*`** (pages 5–7), with
 `Φ_* : [n] ↦ k^{n+1}` and `Ψ_* = Φ_*/k_*`. -/
 @[montpellier "136, 5–7"]
-noncomputable def pdSimplicial (q : ℕ) : CategoryTheory.Functor SimplexCategoryᵒᵖ (ModuleCat k) where
+noncomputable def pdSimplicial (q : ℕ) :
+    CategoryTheory.Functor SimplexCategoryᵒᵖ (ModuleCat k) where
   obj n := ModuleCat.of k (PDModel k n.unop.len q)
   map θ := ModuleCat.ofHom (pdModelMap q θ.unop.toOrderHom)
   map_id _ := ModuleCat.hom_ext (pdModelMap_id q)

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Polynomial.Eval.SMul
@@ -17,8 +22,6 @@ public import Mathlib.Data.Nat.Choose.Vandermonde
 public import Mathlib.Algebra.Polynomial.Basis
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 153: integer-valued polynomials, co-operations, analyseurs
 
@@ -30,23 +33,19 @@ fixes a pair of commutative rings `k₀ ⊂ K₀` and
 > `F ∈ K₀[T] ⊗_{k₀} M` tels que `F(x) ∈ M` pour tout `x ∈ k₀` s'identifie à
 > `Ω ⊗_{k₀} M` — coordonnée par coordonnée dans une base de `M`.
 
-Here `F(x)` is the image of `F` under `ev_x ⊗ id : K₀[T] ⊗ M → K₀ ⊗ M`, and
-"`F(x) ∈ M`" means that it lies in the image of `M → K₀ ⊗ M`, `m ↦ 1 ⊗ m`.
-"S'identifie à" is read as: the canonical map `Ω ⊗ M → K₀[T] ⊗ M` is injective
-(`lemme_injective`) and its image is exactly that set (`lemme_range`). The
-reading's "coordinate by coordinate" is `lemme_coordonnees`: in a basis of `M`,
-`F` satisfies the condition iff each of its coordinates lies in `Ω`.
-
 What the formalisation found. The Lemme holds as stated, and one hypothesis
-is not used: that `k₀ → K₀` is an inclusion. The proof works for any
-`k₀`-algebra `K₀`, `Int(k₀)` being then the polynomials sending `k₀` into the
-image of `k₀`. Freeness of `M` is used twice, as the reading says it is: for
-the injectivity (a free module is flat, `Module.Flat.of_free`) and for the
-coordinates. (The reading's footnote on the co-operations — that
-`K₀[X] ⊗_{k₀} K₀[Y] = K₀[X,Y]` needs `K₀ ⊗_{k₀} K₀ = K₀` — concerns the next
-paragraph; the co-operations are formalised below without it.)
+is not used: that `k₀ → K₀` is an inclusion. The rest of the folder (pages 2, 3, 5, 7) is
+formalised as well: co-operations of `Ω`, Pólya's basis of `Int(ℤ)`, compositions and
+analyseurs.
 
-## The rest of the folder
+## Main results
+
+* `lemme_injective`, `lemme_range`: the canonical map `Ω ⊗ M → K₀[T] ⊗ M` is injective and its
+  image is exactly the set of the Lemme;
+* `lemme_coordonnees`: in a basis of `M`, `F` satisfies the condition iff each of its
+  coordinates lies in `Ω`.
+
+### The rest of the folder
 
 * Page 3: `Ω` is stable under composition (`comp_mem_Omega`); for `K₀ = S⁻¹k₀` and
   `Ω` free, `Φ : Ω ⊗ Ω → K₀[X, Y]`, `G ⊗ H ↦ G(X) H(Y)`, is injective
@@ -58,8 +57,7 @@ paragraph; the co-operations are formalised below without it.)
   that `K₀ ⊗_{k₀} Ω → K₀[T]` be injective (`..._of_injective`); it is always
   surjective (`omegaBaseChange_surjective`), and injective for `K₀` a localisation
   (`omegaBaseChange_injective`) and for `K₀` flat over `k₀` with `K₀ ⊗ K₀ = K₀`
-  (`omegaBaseChange_injective_of_flat`). Whether `K₀ ⊗ K₀ = K₀` alone suffices is
-  left open.
+  (`omegaBaseChange_injective_of_flat`).
 * Page 2: Pólya's basis of `Int(ℤ)` by forward differences (`polya`, `polyaBasis`),
   Vandermonde in `ℚ[X, Y]` from mathlib's `Ring.add_choose_eq` (`vandermonde`), and
   the co-operations of `Int(ℤ)` (`coaddition_binom`, `comultiplication_binom`).
@@ -73,7 +71,36 @@ paragraph; the co-operations are formalised below without it.)
   `Ω → Ω_{Ω₀}` is injective (`poly_toAppl_injective`, `eq_of_comp_intCast`);
   `∑_{m ≥ 1} T^m` has no finite co-addition in `k[[T]]⁺`, stated on coefficients
   (`geom_not_finite_coaddition`, from `pascal_det`).
+
+## Implementation notes
+
+Here `F(x)` is the image of `F` under `ev_x ⊗ id : K₀[T] ⊗ M → K₀ ⊗ M`, and
+"`F(x) ∈ M`" means that it lies in the image of `M → K₀ ⊗ M`, `m ↦ 1 ⊗ m`.
+"S'identifie à" is read as: the canonical map `Ω ⊗ M → K₀[T] ⊗ M` is injective
+(`lemme_injective`) and its image is exactly that set (`lemme_range`). The
+reading's "coordinate by coordinate" is `lemme_coordonnees`: in a basis of `M`,
+`F` satisfies the condition iff each of its coordinates lies in `Ω`.
+
+The proof works for any `k₀`-algebra `K₀`, `Int(k₀)` being then the polynomials sending `k₀`
+into the image of `k₀`. Freeness of `M` is used twice, as the reading says it is: for
+the injectivity (a free module is flat, `Module.Flat.of_free`) and for the
+coordinates. (The reading's footnote on the co-operations — that
+`K₀[X] ⊗_{k₀} K₀[Y] = K₀[X,Y]` needs `K₀ ⊗_{k₀} K₀ = K₀` — concerns the next
+paragraph; the co-operations are formalised below without it.)
+
+## Not formalised
+
+Whether `K₀ ⊗ K₀ = K₀` alone suffices for the injectivity of `K₀ ⊗_{k₀} Ω → K₀[T]` (page 3) is
+left open.
+
+## References
+
+* A. Grothendieck, Folder 153, manuscript pp. 2, 3, 5, 7 (reading
+  `transcripts/153/153.modern.tex`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder153
 
@@ -174,7 +201,8 @@ theorem range_mk_one :
 /-- **Lemme, coordinate by coordinate.** In a basis `b` of `M`, `F ∈ K₀[T] ⊗ M`
 takes values in `M` on `k₀` iff each of its coordinates lies in `Ω = Int(k₀)`. -/
 @[montpellier "153, 3"]
-theorem lemme_coordonnees {ι : Type*} [DecidableEq ι] (b : Module.Basis ι k₀ M) (F : K₀[X] ⊗[k₀] M) :
+theorem lemme_coordonnees {ι : Type*} [DecidableEq ι] (b : Module.Basis ι k₀ M)
+    (F : K₀[X] ⊗[k₀] M) :
     F ∈ valeursDansM K₀ M ↔ ∀ i, coords b K₀[X] F i ∈ Omega k₀ K₀ := by
   simp only [valeursDansM, Set.mem_ofPred_eq, range_mk_one, mem_range_rTensor b,
     coords_rTensor, Finsupp.mapRange_apply, ev_apply]
@@ -382,7 +410,8 @@ theorem omegaBaseChange_injective_of_flat [Module.Flat k₀ K₀]
     (hmul : Function.Injective (LinearMap.mul' k₀ K₀)) :
     Function.Injective (omegaBaseChange k₀ K₀) := by
   set g : K₀ ⊗[k₀] K₀[X] →ₗ[k₀] K₀[X] :=
-    (LinearMap.liftBaseChange K₀ ((LinearMap.id : K₀[X] →ₗ[K₀] K₀[X]).restrictScalars k₀)).restrictScalars k₀
+    (LinearMap.liftBaseChange K₀
+      ((LinearMap.id : K₀[X] →ₗ[K₀] K₀[X]).restrictScalars k₀)).restrictScalars k₀
   have hfac : ∀ t, omegaBaseChange k₀ K₀ t =
       g (LinearMap.lTensor K₀ (Omega k₀ K₀).val.toLinearMap t) := by
     intro t
@@ -469,7 +498,8 @@ theorem mem_range_Phi_iff_of_injective [Module.Free k₀ (Omega k₀ K₀)]
   refine ⟨∑ j ∈ g.support, (⟨g j, hg j⟩ : Omega k₀ K₀) ⊗ₜ e j, ?_⟩
   simp [map_sum, Phi_tmul, Finsupp.sum]
 
-/-- **Uniqueness.** When `K₀ ⊗_{k₀} Ω → K₀[T]` is injective and `Ω` is free, `Φ : Ω ⊗ Ω → K₀[X, Y]` is injective. -/
+/-- **Uniqueness.** When `K₀ ⊗_{k₀} Ω → K₀[T]` is injective and `Ω` is free,
+`Φ : Ω ⊗ Ω → K₀[X, Y]` is injective. -/
 @[montpellier "153, 3"]
 theorem Phi_injective_of_injective [Module.Free k₀ (Omega k₀ K₀)]
     (hK : Function.Injective (omegaBaseChange k₀ K₀)) : Function.Injective (Phi k₀ K₀) := by
@@ -755,7 +785,8 @@ namespace Composition
 variable {Ω : Type*} [NonUnitalCommRing Ω] (c : Composition Ω)
 
 /-- `F ↦ F ∘ G` as an additive map. -/
-def rightComp (G : Ω) : Ω →+ Ω := AddMonoidHom.mk' (fun F => c.comp F G) fun F F' => c.add_comp F F' G
+def rightComp (G : Ω) : Ω →+ Ω :=
+  AddMonoidHom.mk' (fun F => c.comp F G) fun F F' => c.add_comp F F' G
 
 theorem zero_comp (G : Ω) : c.comp 0 G = 0 := (c.rightComp G).map_zero
 theorem neg_comp (F G : Ω) : c.comp (-F) G = -c.comp F G := (c.rightComp G).map_neg F
@@ -808,7 +839,8 @@ theorem sub_comp_zero_mem_zeroPart (F : Ω) : F - c.comp F 0 ∈ c.zeroPart := b
 theorem isCompl_constants_zeroPart : IsCompl c.constants.toAddSubgroup c.zeroPart :=
   ⟨AddSubgroup.disjoint_def.mpr fun hl h0 => c.eq_zero_of_mem_constants_of_mem_zeroPart hl h0,
     codisjoint_iff_le_sup.mpr fun F _ => AddSubgroup.mem_sup.mpr ⟨c.comp F 0,
-      c.comp_zero_mem_constants F, F - c.comp F 0, c.sub_comp_zero_mem_zeroPart F, add_sub_cancel _ _⟩⟩
+      c.comp_zero_mem_constants F, F - c.comp F 0, c.sub_comp_zero_mem_zeroPart F,
+      add_sub_cancel _ _⟩⟩
 
 /-- `Ω → Appl(Ω₀, Ω₀)`, `F ↦ (λ ↦ F ∘ λ)` (page 7). -/
 def toAppl (F : Ω) : c.constants → c.constants := fun l => ⟨c.comp F l, c.comp_mem_constants F l.2⟩
@@ -931,7 +963,7 @@ theorem choose_add_eq_sum (p q : ℕ) :
     ← Finset.sum_range_reflect (fun k => p.choose k * q.choose k)]
   refine Finset.sum_congr rfl fun j hj => ?_
   have hj : j ≤ p := Nat.lt_succ_iff.mp (Finset.mem_range.mp hj)
-  show _ = p.choose (p + 1 - 1 - j) * q.choose (p + 1 - 1 - j)
+  change _ = p.choose (p + 1 - 1 - j) * q.choose (p + 1 - 1 - j)
   rw [show p + 1 - 1 - j = p - j by omega, Nat.choose_symm hj]
 
 /-- The Pascal matrix `(binom(p + q, p))_{p, q < N}` has determinant `1`. -/

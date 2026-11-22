@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Monad.Monadicity
@@ -8,8 +13,6 @@ public import Mathlib.CategoryTheory.Presentable.Dense
 public import Mathlib.CategoryTheory.Limits.Indization.Category
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 161-2: Lawvere theories, monadicity, and locally presentable categories
 
@@ -17,6 +20,17 @@ Issue #26 lists folder 161-2 in tier 2: « Lawvere theories and locally
 presentable categories; partial support only ». What of that row the reading
 `transcripts/161-2/161-2.modern.tex` states crisply is formalised here, and
 nothing else of the folder.
+
+**What the formalisation finds.** Nothing false, and no missing hypothesis: all
+four statements hold as the reading gives them, and all four rest on results
+already in mathlib (the Gabriel–Ulmer corollary needing a short argument to
+pass from mathlib's strong-generator form to the reading's dense-subcategory
+form). The descent criterion is more general than stated: no topos is needed.
+
+What this certifies is that the reading holds together, not that it is what the
+pages say (issue #26).
+
+## Main results
 
 * **Pages 33–34, the working sheets on Lawvere theories.** They carry two
   statements. `monadicite`: « un foncteur `U : A → B` admettant un adjoint à
@@ -32,27 +46,27 @@ nothing else of the folder.
 * **Page 61, Corollaire** (`caracterisation_gabriel_ulmer`): « une
   `𝒰`-catégorie cocomplète `E` est équivalente à un `Ind_π(𝒞)`, `𝒞` petite, si
   et seulement si elle admet une petite sous-catégorie strictement génératrice
-  formée d'objets accessibles ». « Strictement génératrice » is taken as the
-  reading's page-56 definition, i.e. *dense* (mathlib `Functor.IsDense`), and
-  « accessible » as *presentable* (the reading's footnote). The left side is
-  mathlib's `IsLocallyPresentable` (cocomplete, and every object a `κ`-filtered
-  colimit of a small family of `κ`-presentable objects, which is what
-  `E ≃ Ind_κ(𝒞)` says; the literal `Ind_π(𝒞)` of SGA 4 is not in mathlib). The
-  proof glues mathlib's Adámek–Rosický 1.20
-  (`IsCardinalLocallyPresentable.iff_exists_isStrongGenerator`), density of the
-  presentable objects, and a bound on a small family of cardinals.
+  formée d'objets accessibles ».
 * **Page 77, Lemme** (`lemme_ind`), the finite-limit case of the duality: for a
   small `Σ` with finite colimits, the ind-objects of `Σ` are exactly the
   left-exact presheaves, so `Ind(Σ) ≃ Hom_lex(Σ°, Ens)`. In mathlib
   (`isIndObject_iff_preservesFiniteLimits`).
 
-**What the formalisation finds.** Nothing false, and no missing hypothesis: all
-four statements hold as the reading gives them, and all four rest on results
-already in mathlib (the Gabriel–Ulmer corollary needing a short argument to
-pass from mathlib's strong-generator form to the reading's dense-subcategory
-form). The descent criterion is more general than stated: no topos is needed.
+## Implementation notes
 
-**Not formalised** from the row: the page-33 adjunction between the models of a
+In `caracterisation_gabriel_ulmer`, « Strictement génératrice » is taken as the
+reading's page-56 definition, i.e. *dense* (mathlib `Functor.IsDense`), and
+« accessible » as *presentable* (the reading's footnote). The left side is
+mathlib's `IsLocallyPresentable` (cocomplete, and every object a `κ`-filtered
+colimit of a small family of `κ`-presentable objects, which is what
+`E ≃ Ind_κ(𝒞)` says; the literal `Ind_π(𝒞)` of SGA 4 is not in mathlib). The
+proof glues mathlib's Adámek–Rosický 1.20
+(`IsCardinalLocallyPresentable.iff_exists_isStrongGenerator`), density of the
+presentable objects, and a bound on a small family of cardinals.
+
+## Not formalised
+
+From the row: the page-33 adjunction between the models of a
 Lawvere theory `Hom'(𝓛°, ENS)` and the algebras of a monad (the page gives no
 statement precise enough); the page-54 theorem (`π`-accessible ⟺ `Ind_π(𝒞)` ⟺
 `E_π` small and strictly generating), the page-55 corollary and the claim that
@@ -61,9 +75,16 @@ functors, the page-59 lemma on `Ind_π(𝒞)` and cardinal filtrations (mathlib 
 no `Ind_π`), and the page-77 corollary (a model is representable iff
 `Hom_S(X, -)` commutes with filtered colimits).
 
-What this certifies is that the reading holds together, not that it is what the
-pages say (issue #26).
+## References
+
+* A. Grothendieck, Folder 161-2, pp. 33–34, 54–56, 59, 61, 77 (reading
+  `transcripts/161-2/161-2.modern.tex`)
+* [SGA 4] (`Ind_π(𝒞)`)
+* J. Adámek, J. Rosický, *Locally presentable and accessible categories*, 1.20
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder161_2
 

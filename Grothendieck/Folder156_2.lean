@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Order.Filter.Germ.Basic
@@ -7,8 +12,6 @@ public import Mathlib.Topology.NhdsSet
 public import Mathlib.Data.ZMod.Defs
 public import Mathlib.Algebra.Ring.Subring.Basic
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 156-2, pages 14–15: the rives of a closed subset and the map `Riv(A, X) → Comp(Ã)`
@@ -23,7 +26,13 @@ a closed subset `A` of a space `X`, `j : U = X ∖ A → X`,
 The reading's footnote: « L'injectivité n'utilise rien : une section sur `V` nulle en germe en
 chaque point de `A` est nulle sur un voisinage ouvert de `A`. »
 
-What is formalised, with `Comp(Z)` the clopen subsets of `Z` and parts of `V ∖ A` open and
+**What the formalisation finds.** The injectivity holds as the reading's footnote says, with no
+hypothesis: neither closedness of `A` nor any separation of `X` is used. What this certifies is
+that the reading holds together at this point, not that it is what the pages say (issue #26).
+
+## Main definitions
+
+With `Comp(Z)` the clopen subsets of `Z` and parts of `V ∖ A` open and
 closed in `V ∖ A` encoded by their indicators, functions `X → 𝔽₂` locally constant on `V ∖ A`:
 
 * `Riv A` — germs along `A` (for the filter `𝓝ˢ A ⊓ 𝓟 (X ∖ A)`) of such functions, as a
@@ -35,25 +44,35 @@ closed in `V ∖ A` encoded by their indicators, functions `X → 𝔽₂` local
 * `toComp` — the map `(*)`, `ρ ↦ {(x, χ) : χ(ρ_x) = 1}`; its values are clopen
   (`isOpen_toSpecSet`, `toSpecSet_compl`), and it is a morphism of Boolean algebras
   (`toComp_mul`, `toComp_one`, `toSpecSet_compl`).
+
+## Main results
+
 * `toComp_injective` — **the map `(*)` is injective**, for any subset `A` of any space.
 * `riv_one_eq_zero_iff` — `Riv(A, X) = 0` iff `A` is open: the reading's « A non ouvert » for
   the page's « A ≠ ∅ » in the remark on bi-rives.
 
-Not formalised: the bijectivity for `X` paracompact (Godement's theorem, Tier 3 of issue #54),
+## Implementation notes
+
+The only input beyond the definitions is that distinct germs at `x` are separated by a point of
+the spectrum of the stalk, which comes here from an ultrafilter finer than `𝓝[X ∖ A] x`
+(evaluation along it is a ring morphism on germs, `evGerm`), so no Boolean prime ideal theorem
+has to be invoked separately. With the topology chosen on `Ã` (the one the finding notes the
+reading names but does not specify), the image of each rive is clopen.
+
+## Not formalised
+
+The bijectivity for `X` paracompact (Godement's theorem, Tier 3 of issue #54),
 the identification `Comp(Ã) ≃ Γ(A, (j_* 𝔽₂)|_A)`, regularly immersed `A`, and the cut space
 `X̄` of pages 16–17.
 
-**What the formalisation finds.** The injectivity holds as the reading's footnote says, with no
-hypothesis: neither closedness of `A` nor any separation of `X` is used. The only input beyond
-the definitions is that distinct germs at `x` are separated by a point of the spectrum of the
-stalk, which comes here from an ultrafilter finer than `𝓝[X ∖ A] x` (evaluation along it is a
-ring morphism on germs, `evGerm`), so no Boolean prime ideal theorem has to be invoked
-separately. With the topology chosen on `Ã` (the one the finding notes the reading names but
-does not specify), the image of each rive is clopen.
+## References
 
-What this certifies is that the reading holds together at this point, not that it is what the
-pages say (issue #26).
+* A. Grothendieck, Folder 156-2, pp. 14–15 (reading `transcripts/156-2/156-2.modern.tex`)
+* Godement's theorem (for the bijectivity, not formalised)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder156_2
 

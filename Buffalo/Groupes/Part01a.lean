@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (a): functors of points, first examples, centers
@@ -11,13 +14,23 @@ import Grothendieck.Attr
 Entries `_lTf_L0yvrU-3` to `_lTf_L0yvrU-2769` of `docs/buffalo-groupes/index.tex` (the undated
 side and the first half of 4 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.json`.
 
+## Implementation notes
+
 Conventions. The base ring is `k : Type u`, a commutative ring; the category of commutative
 `k`-algebras is Mathlib's `CommAlgCat k`, and a "space over `k`" is a functor
 `CommAlgCat k ⥤ Type u`. Affine spaces are the corepresentable ones (`Functor.IsCorepresentable`),
 and the affine schemes over `k` are `(CommAlgCat k)ᵒᵖ`, a cartesian monoidal category in Mathlib.
 Where only the value of a functor at one `k`-algebra `A` matters, the statement is made for an
 arbitrary `A`, which is the functor-of-points statement read pointwise.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 3–2769 (the
+  undated side and the first half of 4 June 1973)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part01
 
@@ -84,7 +97,8 @@ noncomputable def affineSpacesEquiv :
     (CommAlgCat.{u} k)ᵒᵖ ≌ (coyoneda (C := CommAlgCat.{u} k)).EssImageSubcategory :=
   (coyoneda (C := CommAlgCat.{u} k)).toEssImage.asEquivalence
 
-/-- _lTf_L0yvrU-393 (0:06:33) [prop] The space represented by `A` has `X(k') = Hom_{k-alg}(A, k')`. -/
+/-- _lTf_L0yvrU-393 (0:06:33) [prop] The space represented by `A` has
+`X(k') = Hom_{k-alg}(A, k')`. -/
 @[buffalo "_lTf_L0yvrU-393"]
 def pointsEquiv (A B : CommAlgCat.{u} k) : (coyoneda.obj (op A)).obj B ≃ (A →ₐ[k] B) where
   toFun f := f.hom
@@ -214,7 +228,8 @@ theorem GL2_not_comm (A : Type u) [CommRing A] [Nontrivial A] :
   · ext i j; fin_cases i <;> fin_cases j <;> simp
   · ext i j; fin_cases i <;> fin_cases j <;> simp
   · intro h
-    have := congrArg (fun g : Matrix.GeneralLinearGroup (Fin 2) A ↦ (g : Matrix (Fin 2) (Fin 2) A) 0 0) h
+    have := congrArg (fun g : Matrix.GeneralLinearGroup (Fin 2) A ↦
+      (g : Matrix (Fin 2) (Fin 2) A) 0 0) h
     simp [Matrix.mul_apply, Fin.sum_univ_two] at this
 
 /-! ## Basic examples -/
@@ -254,8 +269,8 @@ def orthogonalGroup {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [CommRin
     rw [Units.val_mul, ← Matrix.mulVec_mulVec, this, h2]
   inv_mem' {g} hg := by
     ext x
-    have := congrArg (fun Q' : QuadraticForm A (n → A) ↦ Q' (Matrix.mulVec ((g⁻¹ : Matrix.GeneralLinearGroup n A) :
-      Matrix n n A) x)) hg
+    have := congrArg (fun Q' : QuadraticForm A (n → A) ↦
+      Q' (Matrix.mulVec ((g⁻¹ : Matrix.GeneralLinearGroup n A) : Matrix n n A) x)) hg
     simp only [QuadraticMap.comp_apply, Matrix.toLin'_apply, Matrix.mulVec_mulVec] at this ⊢
     rw [← this, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_mulVec]
 
@@ -391,7 +406,8 @@ noncomputable def adjoinRootHomEquiv (f : Polynomial k) (A : Type u) [CommRing A
 by Yoneda, both representing `𝔾_m`). -/
 @[buffalo "_lTf_L0yvrU-1466"]
 noncomputable def xyHomEquiv (A : Type u) [CommRing A] [Algebra k A] :
-    (MvPolynomial (Fin 2) k ⧸ Ideal.span {(MvPolynomial.X 0 * MvPolynomial.X 1 - 1 : MvPolynomial (Fin 2) k)} →ₐ[k] A) ≃
+    (MvPolynomial (Fin 2) k ⧸
+        Ideal.span {(MvPolynomial.X 0 * MvPolynomial.X 1 - 1 : MvPolynomial (Fin 2) k)} →ₐ[k] A) ≃
       {x : Fin 2 → A // x 0 * x 1 = 1} :=
   (quotHomEquiv k _ A).trans
     ((mvHomEquiv k (Fin 2) A).subtypeEquiv fun φ ↦ by
@@ -426,7 +442,9 @@ theorem diag_not_central {n : Type} [Fintype n] [DecidableEq n] {A : Type u} [Co
       Matrix.transvection i j 1 * Matrix.diagonal (Function.update 1 i c) := by
   intro h
   have := congrFun (congrFun h i) j
-  simp [Matrix.transvection, Matrix.diagonal_mul, Matrix.mul_diagonal, hij, Ne.symm hij] at this
+  simp only [Matrix.transvection, Matrix.diagonal_mul, Function.update_self, Matrix.add_apply,
+      ne_eq, hij, not_false_eq_true, Matrix.one_apply_ne, Matrix.single_apply_same, zero_add,
+      mul_one, Matrix.mul_diagonal, Ne.symm hij, Function.update_of_ne, Pi.one_apply] at this
   exact hc this
 
 /-! ## Centers and central morphisms -/

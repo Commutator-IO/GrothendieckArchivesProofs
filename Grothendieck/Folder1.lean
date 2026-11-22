@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import Grothendieck.Upstream.SingularValuesSigmaTwo
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 1: the system (16) of page 71 for `m ≤ 2`, and (16) ⟹ (15)
@@ -17,19 +20,55 @@ states, for compact `u, v` and `0 ≤ m ≤ n`,
 where `σ_n^m(w)` is the elementary symmetric function of degree `m` of the first `n`
 singular values of `w` (17), and the product form
 
-> `∏_{i≤n} (1 + r s_i(u+v)) ≤ ∏_{i≤n} (1 + r s_i(u)) ∏_{i≤n} (1 + r s_i(v))`, `r ≥ 0`  (15).
+> `∏_{i≤n} (1 + r s_i(u+v)) ≤ ∏_{i≤n} (1 + r s_i(u)) ∏_{i≤n} (1 + r s_i(v))`,
+> `r ≥ 0`  (15).
 
-This is the finding `1-sigma-nm-system` of `src/content/findings.ts`. Proved here, for
-linear maps between finite-dimensional inner product spaces over `ℝ` or `ℂ`, with mathlib's
-`LinearMap.singularValues` (zero-indexed, so `s_0` is the largest):
+This is the finding `1-sigma-nm-system` of `src/content/findings.ts`. The file also covers
+pages 123–124 (finding `1-mixed-schwarz-fredholm-coefficients`, issue #54) and pages 126–139
+(finding `1-schatten-p-via-fredholm-determinant`, issue #54).
+
+## Main results
+
+### Pages 71–73
+
+Proved here, for linear maps between finite-dimensional inner product spaces over `ℝ` or `ℂ`,
+with mathlib's `LinearMap.singularValues` (zero-indexed, so `s_0` is the largest):
 
 * `sum_singularValues_add_le`: Ky Fan's inequality, the case `m = 1` of (16), for every `n`;
 * `sigma_system_of_le_one`: (16) for `m ≤ 1` and every `n`;
 * `prod_le_of_sigma_system`: (16) for all `m ≤ n` implies (15) for that `n`;
 * `one_add_singularValues_zero_le`: (15) for `n = 1`;
-* `sigma_two_add_le`: (16) for `m = 2`, `σ_n^2(u+v) ≤ σ_n^2(u) + σ_n^1(u) σ_n^1(v) + σ_n^2(v)`,
-  for every `n`; hence `sigma_system_of_le_two` ((16) for `m ≤ 2`) and `prod_le_of_le_two`
-  ((15) for `n ≤ 2`).
+* `sigma_two_add_le`: (16) for `m = 2`,
+  `σ_n^2(u+v) ≤ σ_n^2(u) + σ_n^1(u) σ_n^1(v) + σ_n^2(v)`, for every `n`; hence
+  `sigma_system_of_le_two` ((16) for `m ≤ 2`) and `prod_le_of_le_two` ((15) for `n ≤ 2`).
+
+### Pages 123–124
+
+Finding `1-mixed-schwarz-fredholm-coefficients`, issue #54, for complex square matrices, with
+`α_k(T)` the coefficient of `X^k` in `det(1 + X T)` (`alpha`; by mathlib, the sum of the
+principal `k × k` minors) and `|A| = (A*A)^{1/2}` mathlib's `CFC.abs`:
+
+* `corollaire2`: `|α_k(A + B)|² ≤ α_k(|A| + |B|) · α_k(|A*| + |B*|)` — Corollaire 2 holds;
+* `corollaire3`: `|det(1 + A + B)| ≤ ½[det(1 + |A| + |B|) + det(1 + |A*| + |B*|)]`
+  (Corollaire 3) and the geometric-mean form
+  `|det(1 + A + B)|² ≤ det(1 + |A| + |B|) det(1 + |A*| + |B*|)`.
+
+### Pages 126–139
+
+Finding `1-schatten-p-via-fredholm-determinant`, issue #54, the route from the Fredholm
+determinant to the subadditivity of `S_p`, `0 < p < 1`, in finite dimension:
+
+* `integral_kernel`: `s^p · K_p = ∫₀^∞ log(1 + v s) v^{−1−p} dv` for `s ≥ 0`, with
+  `K_p = ∫₀^∞ log(1 + t) t^{−1−p} dt > 0` (`K_pos`; its value `π/(p sin πp)` is not needed);
+* `sum_rpow_le_of_prod_le`: if `∏ (1 + r aᵢ) ≤ ∏ (1 + r bᵢ) ∏ (1 + r cᵢ)` for all `r ≥ 0`,
+  then `Σ aᵢ^p ≤ Σ bᵢ^p + Σ cᵢ^p` — page 129's deduction;
+* `sum_singularValues_rpow_add_le_of_prod`: hence `S_p(u + v) ≤ S_p(u) + S_p(v)` on the first
+  `n` singular values whenever (15) holds for that `n`, and unconditionally for `n ≤ 2`
+  (`sum_singularValues_rpow_add_le_of_le_two`).
+
+## Implementation notes
+
+### Pages 71–73
 
 Ky Fan's maximum principle (`norm_sum_inner_le`) is proved for families that are pairwise
 orthogonal of norm `≤ 1`, not only orthonormal. The case `m = 2` follows the page's route
@@ -38,38 +77,37 @@ through `Λ²` without building the Hilbert space `Λ² E`: the inner product
 Cauchy–Binet (`two_mul_sum_minor`) and Lagrange's inequality (`sum_sum_norm_sub_sq_le`); the
 mixed term `u ∧ v + v ∧ u` is bounded by `σ_n^1(u) σ_n^1(v)` (`norm_bform_le_mul`, the page's
 constant `p! q!/(p+q)! = 1/2`), the pure terms by `2 σ_n^2` (`norm_bform_self_le`, through the
-weight lemma `sum_sum_mul_le_of_weights`). Not proved: (16) for `3 ≤ m ≤ n`, Prop. 3 in
-general, and the passage to compact operators. A proof says only that the claim holds as stated; whether
-the system is in the literature stays open.
+weight lemma `sum_sum_mul_le_of_weights`).
 
-**Pages 123–124** (finding `1-mixed-schwarz-fredholm-coefficients`, issue #54), for complex
-square matrices, with `α_k(T)` the coefficient of `X^k` in `det(1 + X T)` (`alpha`; by mathlib,
-the sum of the principal `k × k` minors) and `|A| = (A*A)^{1/2}` mathlib's `CFC.abs`:
-
-* `corollaire2`: `|α_k(A + B)|² ≤ α_k(|A| + |B|) · α_k(|A*| + |B*|)` — Corollaire 2 holds;
-* `corollaire3`: `|det(1 + A + B)| ≤ ½[det(1 + |A| + |B|) + det(1 + |A*| + |B*|)]` (Corollaire 3)
-  and the geometric-mean form `|det(1 + A + B)|² ≤ det(1 + |A| + |B|) det(1 + |A*| + |B*|)`.
+### Pages 123–124
 
 The proof is not the page's multilinear expansion: `[[|A|, A*], [A, |A*|]]` is `|H| + H` for the
 self-adjoint `H = [[0, A*], [A, 0]]`, hence `≥ 0` (`block_posSemidef`); adding the blocks of `A`
 and `B` and restricting to `S ⊔ S`, each principal minor satisfies `|det T_S|² ≤ det P_S det Q_S`
 (`norm_det_sq_le`, by the Schur complement and the monotonicity of `det`, `det_le_det_add`), and
-Cauchy–Schwarz over the subsets `S` gives Corollaire 2. Trace-class operators are not formalised.
+Cauchy–Schwarz over the subsets `S` gives Corollaire 2.
 
-**Pages 126–139** (finding `1-schatten-p-via-fredholm-determinant`, issue #54), the route from
-the Fredholm determinant to the subadditivity of `S_p`, `0 < p < 1`, in finite dimension:
+## Not formalised
 
-* `integral_kernel`: `s^p · K_p = ∫₀^∞ log(1 + v s) v^{−1−p} dv` for `s ≥ 0`, with
-  `K_p = ∫₀^∞ log(1 + t) t^{−1−p} dt > 0` (`K_pos`; its value `π/(p sin πp)` is not needed);
-* `sum_rpow_le_of_prod_le`: if `∏ (1 + r aᵢ) ≤ ∏ (1 + r bᵢ) ∏ (1 + r cᵢ)` for all `r ≥ 0`, then
-  `Σ aᵢ^p ≤ Σ bᵢ^p + Σ cᵢ^p` — page 129's deduction;
-* `sum_singularValues_rpow_add_le_of_prod`: hence `S_p(u + v) ≤ S_p(u) + S_p(v)` on the first
-  `n` singular values whenever (15) holds for that `n`, and unconditionally for `n ≤ 2`
-  (`sum_singularValues_rpow_add_le_of_le_two`).
+* Pages 71–73: (16) for `3 ≤ m ≤ n`, Prop. 3 in general, and the passage to compact operators.
+  A proof says only that the claim holds as stated; whether the system is in the literature
+  stays open.
+* Pages 123–124: trace-class operators are not formalised.
+* Pages 126–139: (15) for `n ≥ 3`, so the subadditivity in general; Weyl's inequality via
+  Jensen's formula and the power trick; Hölder for all exponents.
 
-Not proved: (15) for `n ≥ 3`, so the subadditivity in general; Weyl's inequality via Jensen's
-formula and the power trick; Hölder for all exponents.
+## References
+
+* A. Grothendieck, cote 1, pp. 71–73, Théorème 2 (finding `1-sigma-nm-system`); modernised
+  reading `transcripts/1/1.modern.tex`
+* A. Grothendieck, cote 1, pp. 123–124 (finding `1-mixed-schwarz-fredholm-coefficients`, issue
+  #54)
+* A. Grothendieck, cote 1, pp. 126–139 (finding `1-schatten-p-via-fredholm-determinant`, issue
+  #54)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder1
 
@@ -471,6 +509,7 @@ theorem two_mul_sum_powersetCard_two (f : ℕ → ℝ) (n : ℕ) :
       obtain ⟨t', _, rfl⟩ := mem_image.mp ht'
       exact hn ((mem_powersetCard.mp ht).1 (mem_insert_self _ _))
 
+set_option linter.unusedDecidableInType false in
 /-- The weight lemma for `σ²`. Let `s ≥ 0` and `θ ≥ 0` with `s_k ≥ θ` on a finite set `G` and
 `s_k ≤ θ` off `G`. Let `(α_{kl})` be symmetric with entries in `[0,1]` and zero diagonal, and
 `p_k ∈ [0,1]` with `∑ p_k ≤ |G|` and row sums `∑_l α_{kl} ≤ (|G| - 1) p_k`. Then
@@ -686,6 +725,7 @@ theorem sum_lam_le {κ : Type*} [Fintype κ] (g : κ → H)
         simp only [wt, hc]
         ring
 
+set_option linter.unusedDecidableInType false in
 /-- The weight lemma applied to `α_{kl} = Λ_{kl} / 2` and `p_k = wt g h S k`. -/
 theorem sum_lam_mul_le {κ : Type*} [Fintype κ] [DecidableEq κ] (g : κ → H)
     (hg : ∀ k l, k ≠ l → ⟪g k, g l⟫_𝕜 = 0) (hg1 : ∀ k, ‖g k‖ ≤ 1) (G : Finset κ)
@@ -791,10 +831,12 @@ theorem bform_add {ι : Type*} (S : Finset ι) (x : ι → E) (y : ι → F) (u 
 /-- `|bform| ≤ ¼ ∑_{k,l} s_k(T) s_l(T') (Λ^f_{kl} + Λ^e_{kl})`, from the Cauchy–Binet identity
 and `|ab| ≤ (|a|² + |b|²)/2`. -/
 theorem norm_bform_le {ι : Type*} (S : Finset ι) (x : ι → E) (y : ι → F) (T T' : E →ₗ[𝕜] F) :
-    ‖bform S x y T T'‖ ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+    ‖bform S x y T T'‖ ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      T.singularValues k * T'.singularValues l *
       (lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
         lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l) := by
-  have h2 : (2 : 𝕜) * bform S x y T T' = ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), ((T.singularValues k : ℝ) : 𝕜) *
+  have h2 : (2 : 𝕜) * bform S x y T T' = ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      ((T.singularValues k : ℝ) : 𝕜) *
       ((T'.singularValues l : ℝ) : 𝕜) * ∑ i ∈ S, ∑ j ∈ S,
         conj (minor2 (fvec T) (fvec T') y k l i j) * minor2 (ebasis T) (ebasis T') x k l i j := by
     have := two_mul_sum_minor S (fun k : Fin (finrank 𝕜 E) => ((T.singularValues k : ℝ) : 𝕜))
@@ -810,7 +852,8 @@ theorem norm_bform_le {ι : Type*} (S : Finset ι) (x : ι → E) (y : ι → F)
     congr 1
     refine sum_congr rfl fun i _ => sum_congr rfl fun j _ => ?_
     simp only [minor2, map_sub, map_mul]
-  have hb : ‖(2 : 𝕜) * bform S x y T T'‖ ≤ ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+  have hb : ‖(2 : 𝕜) * bform S x y T T'‖ ≤ ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      T.singularValues k * T'.singularValues l *
       ((lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
         lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l) / 2) := by
     rw [h2]
@@ -828,10 +871,12 @@ theorem norm_bform_le {ι : Type*} (S : Finset ι) (x : ι → E) (y : ι → F)
     rw [norm_mul, RCLike.norm_conj]
     nlinarith [sq_nonneg (‖(minor2 (fvec T) (fvec T') y k l i j : 𝕜)‖ -
       ‖(minor2 (ebasis T) (ebasis T') x k l i j : 𝕜)‖)]
-  have e : ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+  have e : ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      T.singularValues k * T'.singularValues l *
       ((lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
         lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l) / 2) =
-      2 * ((1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+      2 * ((1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+        T.singularValues k * T'.singularValues l *
       (lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
         lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l)) := by
     rw [← mul_assoc, mul_sum]
@@ -853,7 +898,8 @@ theorem norm_bform_le_mul (T T' : E →ₗ[𝕜] F) {n : ℕ} (hn : #S ≤ n) :
     ‖bform S x y T T'‖ ≤
       (∑ j ∈ range n, T.singularValues j) * ∑ j ∈ range n, T'.singularValues j := by
   have hKF : ∀ (T : E →ₗ[𝕜] F) (c : Fin (finrank 𝕜 E) → ℝ), (∀ k, 0 ≤ c k) → (∀ k, c k ≤ 1) →
-      ∑ k : Fin (finrank 𝕜 E), c k ≤ #S → ∑ k : Fin (finrank 𝕜 E), T.singularValues k * c k ≤ ∑ j ∈ range n, T.singularValues j :=
+      ∑ k : Fin (finrank 𝕜 E), c k ≤ #S →
+        ∑ k : Fin (finrank 𝕜 E), T.singularValues k * c k ≤ ∑ j ∈ range n, T.singularValues j :=
     fun T c h0 h1 hs => sum_mul_le_sum_range T.singularValues T.singularValues_antitone
       T.singularValues_nonneg c h0 h1 (hs.trans (by exact_mod_cast hn))
   have hfo : ∀ T : E →ₗ[𝕜] F, ∀ k l, k ≠ l → ⟪fvec T k, fvec T l⟫_𝕜 = 0 :=
@@ -862,11 +908,13 @@ theorem norm_bform_le_mul (T T' : E →ₗ[𝕜] F) {n : ℕ} (hn : #S ≤ n) :
     fun T k l h => (ebasis T).orthonormal.2 h
   have he1 : ∀ T : E →ₗ[𝕜] F, ∀ k, ‖ebasis T k‖ ≤ 1 :=
     fun T k => ((ebasis T).orthonormal.1 k).le
-  have Aq : ∀ T : E →ₗ[𝕜] F, ∑ k : Fin (finrank 𝕜 E), T.singularValues k * wt (𝕜 := 𝕜) (fvec T) y S k ≤
+  have Aq : ∀ T : E →ₗ[𝕜] F,
+      ∑ k : Fin (finrank 𝕜 E), T.singularValues k * wt (𝕜 := 𝕜) (fvec T) y S k ≤
       ∑ j ∈ range n, T.singularValues j := fun T =>
     hKF T _ (wt_nonneg _ _ _) (wt_le_one S y hy hy1 _ (norm_fvec_le T))
       (sum_wt_le S y hy1 _ (hfo T) (norm_fvec_le T))
-  have Ap : ∀ T : E →ₗ[𝕜] F, ∑ k : Fin (finrank 𝕜 E), T.singularValues k * wt (𝕜 := 𝕜) (ebasis T) x S k ≤
+  have Ap : ∀ T : E →ₗ[𝕜] F,
+      ∑ k : Fin (finrank 𝕜 E), T.singularValues k * wt (𝕜 := 𝕜) (ebasis T) x S k ≤
       ∑ j ∈ range n, T.singularValues j := fun T =>
     hKF T _ (wt_nonneg _ _ _) (wt_le_one S x hx hx1 _ (he1 T))
       (sum_wt_le S x hx1 _ (heo T) (he1 T))
@@ -876,10 +924,12 @@ theorem norm_bform_le_mul (T T' : E →ₗ[𝕜] F) {n : ℕ} (hn : #S ≤ n) :
   have K0 : ∀ T : E →ₗ[𝕜] F, 0 ≤ ∑ j ∈ range n, T.singularValues j :=
     fun T => sum_nonneg fun j _ => T.singularValues_nonneg j
   calc ‖bform S x y T T'‖
-      ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+      ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+        T.singularValues k * T'.singularValues l *
         (lam (𝕜 := 𝕜) (fvec T) (fvec T') y S k l +
           lam (𝕜 := 𝕜) (ebasis T) (ebasis T') x S k l) := norm_bform_le S x y T T'
-    _ ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T'.singularValues l *
+    _ ≤ (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+        T.singularValues k * T'.singularValues l *
         (2 * wt (𝕜 := 𝕜) (fvec T) y S k * wt (𝕜 := 𝕜) (fvec T') y S l +
           2 * wt (𝕜 := 𝕜) (ebasis T) x S k * wt (𝕜 := 𝕜) (ebasis T') x S l) := by
         refine mul_le_mul_of_nonneg_left (sum_le_sum fun k _ => sum_le_sum fun l _ => ?_)
@@ -914,11 +964,14 @@ theorem norm_bform_self_le (T : E →ₗ[𝕜] F) (G : Finset (Fin (finrank 𝕜
   have Be := sum_lam_mul_le S x hx hx1 (ebasis T) (fun k l h => (ebasis T).orthonormal.2 h)
     (fun k => ((ebasis T).orthonormal.1 k).le) G (fun k => T.singularValues k) hθ
     (fun k => T.singularValues_nonneg _) hG hGc hSG
-  have e : (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), T.singularValues k * T.singularValues l *
+  have e : (1 / 4) * ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+      T.singularValues k * T.singularValues l *
       (lam (𝕜 := 𝕜) (fvec T) (fvec T) y S k l + lam (𝕜 := 𝕜) (ebasis T) (ebasis T) x S k l) =
-      (1 / 2) * (∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), lam (𝕜 := 𝕜) (fvec T) (fvec T) y S k l / 2 *
+      (1 / 2) * (∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+        lam (𝕜 := 𝕜) (fvec T) (fvec T) y S k l / 2 *
         (T.singularValues k * T.singularValues l) +
-        ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E), lam (𝕜 := 𝕜) (ebasis T) (ebasis T) x S k l / 2 *
+        ∑ k : Fin (finrank 𝕜 E), ∑ l : Fin (finrank 𝕜 E),
+          lam (𝕜 := 𝕜) (ebasis T) (ebasis T) x S k l / 2 *
         (T.singularValues k * T.singularValues l)) := by
     rw [← sum_add_distrib, mul_sum, mul_sum]
     refine sum_congr rfl fun k _ => ?_
@@ -984,7 +1037,8 @@ theorem bform_ebasis_fvec (w : E →ₗ[𝕜] F) (n : ℕ) :
 @[montpellier "1, 71"]
 theorem sigma_two_add_le (u v : E →ₗ[𝕜] F) (n : ℕ) :
     sigma n 2 (u + v) ≤ sigma n 2 u + sigma n 1 u * sigma n 1 v + sigma n 2 v :=
-  by rw [sigma_one, sigma_one]; exact LinearMap.sum_powersetCard_two_prod_singularValues_add_le u v n
+  by rw [sigma_one, sigma_one]
+     exact LinearMap.sum_powersetCard_two_prod_singularValues_add_le u v n
 
 /-- **The system (16) of page 71 for `m ≤ 2`** and every `n`. -/
 @[montpellier "1, 71"]
@@ -1115,6 +1169,7 @@ theorem norm_det_sq_le {m : Type*} [Fintype m] [DecidableEq m] {P Q X : Matrix m
   rw [hX, ← hdS, mul_comm (det P)]
   exact mul_le_mul_of_nonneg_right hle hP.det_nonneg
 
+set_option linter.unusedDecidableInType false in
 /-- `|H| = [[|A|, 0], [0, |A*|]]` for `H = [[0, A*], [A, 0]]`. -/
 theorem abs_block (A : Matrix n n ℂ) :
     CFC.abs (fromBlocks 0 Aᴴ A 0) = fromBlocks (CFC.abs A) 0 0 (CFC.abs Aᴴ) := by
@@ -1135,6 +1190,7 @@ theorem abs_block (A : Matrix n n ℂ) :
   rw [CFC.abs_mul_abs, CFC.abs_mul_abs]
   simp [star_eq_conjTranspose]
 
+set_option linter.unusedDecidableInType false in
 /-- `[[|A|, A*], [A, |A*|]] ≥ 0`: it is `|H| + H`, `H = [[0, A*], [A, 0]]`. -/
 theorem block_posSemidef (A : Matrix n n ℂ) :
     (fromBlocks (CFC.abs A) Aᴴ A (CFC.abs Aᴴ)).PosSemidef := by
@@ -1646,6 +1702,7 @@ theorem eigenvalues₀_le_of_conj_diagonal (s : ℕ → ℝ) (hs : Antitone s) (
   rw [hlam]
   exact le_of_mul_le_mul_right (hlow.trans hup) (by positivity)
 
+set_option linter.unusedDecidableInType false in
 /-- Reindexing a sum of products over the `p`-subsets along an equivalence. -/
 theorem sum_powersetCard_prod_equiv {α β R : Type*} [Fintype α] [Fintype β] [DecidableEq β]
     [CommSemiring R] (σ : α ≃ β) (f : β → R) (p : ℕ) :
@@ -1909,7 +1966,8 @@ theorem compr_eq (T w : E →ₗ[ℂ] F) (n : ℕ) :
 
 /-- `compr T T n` is the diagonal matrix of `s_j(T)`, `j < n`. -/
 theorem compr_self (T : E →ₗ[ℂ] F) (n : ℕ) :
-    compr T T n = diagonal fun j : Fin (finrank ℂ E) => (((if (j : ℕ) < n then T.singularValues j else 0 : ℝ)) : ℂ) := by
+    compr T T n = diagonal fun j : Fin (finrank ℂ E) =>
+      (((if (j : ℕ) < n then T.singularValues j else 0 : ℝ)) : ℂ) := by
   ext i j
   simp only [compr, of_apply, xs, ys, diagonal_apply]
   by_cases hij : i = j
@@ -2225,7 +2283,8 @@ theorem norm_alpha_comp_le (u : E →ₗ[ℂ] F) {w : F →ₗ[ℂ] E} (hw : ∀
   refine norm_alpha_cmat_le u _ _ (fun k l h => ?_) (fun k => ?_) (fun k l h => ?_) (fun k => ?_)
     n (fun j hj => by simp [ht0 j hj]) (fun j hj => by simp [ht0 j hj]) m
   · simp [inner_ebasis_of_ne w' h]
-  · rw [norm_smul]; exact (mul_le_of_le_one_right (norm_nonneg _) (norm_ebasis_le w' k)).trans (ht1 k)
+  · rw [norm_smul]; exact (mul_le_of_le_one_right (norm_nonneg _)
+      (norm_ebasis_le w' k)).trans (ht1 k)
   · simp [inner_fvec_of_ne w' h]
   · rw [norm_smul]; exact (mul_le_of_le_one_right (norm_nonneg _) (norm_fvec_le w' k)).trans (ht1 k)
 

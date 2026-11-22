@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (a): 26 June 1973, from 5:24:53
@@ -12,13 +15,23 @@ The entries of `docs/buffalo-ag/index.tex` lines 907–940 (video `Oqhr-Gt66es`,
 geometric integrality and connectedness (with the tensor squares of finite extensions of `k`),
 and complements on subschemes and coherence.
 
+## Implementation notes
+
 Conventions. A `k`-scheme is a morphism `f : X ⟶ Spec k`; `X_{k'}` is the pullback along
 `Spec k' → Spec k`. Mathlib's `GeometricallyIrreducible`, `GeometricallyConnected`,
 `GeometricallyReduced` ("separable") and `GeometricallyIntegral` are the notions of the lecture.
 Universal openness of a scheme over a field, which the lecture uses freely, is not in mathlib in
 general; it is assumed where needed, or deduced from flatness for schemes locally of finite
 presentation.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 26 June 1973, video `Oqhr-Gt66es`,
+  5:24:53–6:43:27 (`docs/buffalo-ag/index.tex`, lines 907–940)
 -/
+
+@[expose] public section
+
 
 open TensorProduct Polynomial AlgebraicGeometry CategoryTheory Limits PrimeSpectrum Topology
 
@@ -89,7 +102,8 @@ theorem preconnectedSpace_iff_idempotent (R : Type*) [CommRing R] :
       rw [← he.pow_succ_eq n, pow_succ, hn, zero_mul]
     · right
       have h1 : IsNilpotent (1 - e) := by
-        refine (PrimeSpectrum.basicOpen_eq_bot_iff _).1 (SetLike.coe_injective (Set.eq_empty_of_forall_notMem ?_))
+        refine (PrimeSpectrum.basicOpen_eq_bot_iff _).1
+          (SetLike.coe_injective (Set.eq_empty_of_forall_notMem ?_))
         intro p hp
         have hpe : p ∈ (basicOpen e : Set _) := h ▸ Set.mem_univ p
         have h0 : e * (1 - e) ∈ p.asIdeal := by
@@ -242,7 +256,8 @@ theorem prop_20796 (k : Type u) [Field k]
   have hT : Subsingleton T := by
     rcases hc with h | h
     · have := congrArg (fun x => (e x).1) h; simp at this
-    · have := congrArg (fun x => (e x).2) h; simp at this
+    · have := congrArg (fun x => (e x).2) h; simp only [AlgEquiv.apply_symm_apply, map_one,
+                                                 Prod.snd_one] at this
       exact subsingleton_of_zero_eq_one this
   have hinj : Function.Injective ((RingHom.fst L T).comp e.toRingEquiv.toRingHom) := by
     intro x y hxy
@@ -314,7 +329,8 @@ theorem prop_21601 (hF : Presieve.IsSheaf J F) {ι : Type*} (G : ι → Subfunct
           exact ⟨i, by rw [op_comp, F.map_comp, types_comp_apply]; exact (G i).map h.op hi⟩) ∈
         J U.unop) := by
   refine ⟨fun i => (le_iSup G i).trans (Subfunctor.le_sheafify J _),
-    Subfunctor.sheafify_isSheaf _ hF, fun G' hG' hle => Subfunctor.sheafify_le _ _ (iSup_le hle) hF hG',
+    Subfunctor.sheafify_isSheaf _ hF,
+    fun G' hG' hle => Subfunctor.sheafify_le _ _ (iSup_le hle) hF hG',
     fun U s => ?_⟩
   change (⨆ i, G i).sieveOfSection s ∈ J U.unop ↔ _
   have : (⨆ i, G i).sieveOfSection s = Sieve.mk (fun V (g : V ⟶ U.unop) =>
@@ -424,9 +440,11 @@ theorem piToZ2_apply (m : ℕ → ℤ) (n : ℕ) : piToZ2 m n = algebraMap ℤ Z
 
 /-- The image of `2` in `∏ ℤ[1/2]` is a unit. -/
 theorem isUnit_two_pi : IsUnit (piToZ2 2) := by
-  refine isUnit_iff_exists_inv.2 ⟨fun _ => IsLocalization.mk' Z2 (1 : ℤ) ⟨2, Submonoid.mem_powers 2⟩,
+  refine isUnit_iff_exists_inv.2 ⟨fun _ => IsLocalization.mk' Z2 (1 : ℤ)
+      ⟨2, Submonoid.mem_powers 2⟩,
     funext fun n => ?_⟩
-  rw [Pi.mul_apply, piToZ2_apply, Pi.one_apply, Pi.ofNat_apply, IsLocalization.mul_mk'_eq_mk'_of_mul,
+  rw [Pi.mul_apply, piToZ2_apply, Pi.one_apply, Pi.ofNat_apply,
+    IsLocalization.mul_mk'_eq_mk'_of_mul,
     mul_one]
   exact IsLocalization.mk'_self _ (Submonoid.mem_powers 2)
 

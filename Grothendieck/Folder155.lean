@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 155: the Takeuchi product as an idealiser quotient (page 1)
@@ -17,6 +20,8 @@ Finding `155-takeuchi-idealiser` (`src/content/findings.ts`), on the reading
 **Partial: the uncompleted version**, for `K` a commutative `k`-algebra and
 `ι : K → A` a `k`-algebra map into a ring `A`, not central.
 
+## Main results
+
 * `idealiser`, `ringCon`, `le_idealiser_of`: for a right ideal `L` of a ring
   `S`, `𝕀(L) = {λ | λL ⊆ L}` is a subring containing `L`, in which `L` is a
   two-sided ideal, so that `𝕀(L)/L` is a ring; it is the largest subring of `S`
@@ -29,9 +34,19 @@ Finding `155-takeuchi-idealiser` (`src/content/findings.ts`), on the reading
   `A ⊗_K A` satisfies `Σ aᵢ ι(x) ⊗ bᵢ = Σ aᵢ ⊗ bᵢ ι(x)` for every `x ∈ K`,
   Takeuchi's condition; so `𝒥̃/𝒥` is Takeuchi's `A ×_K A` (`takeuchi_iff`).
 
-Not formalised: the completed tensor products of pro-objects, the
+## Not formalised
+
+The completed tensor products of pro-objects, the
 comultiplication itself, the isomorphism `𝕀(L)/L ≅ End_S(S/L)`.
+
+## References
+
+* A. Grothendieck, Folder 155, p. 1 (reading `transcripts/155/155.modern.tex`; finding
+  `155-takeuchi-idealiser`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder155
 

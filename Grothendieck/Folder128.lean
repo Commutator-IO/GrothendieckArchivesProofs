@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 128, pages 12–13: the equivalence ideals of a rank-2 algebra over a field
@@ -24,10 +27,18 @@ rank `2`, treats `k × k` and stops after « `A' ≃ k[ε]` ».
 
 This file proves that field case, for any field `k` (not only algebraically closed) and any
 commutative `k`-algebra `A` with `finrank k A = 2` — so `k × k`, `k[ε]` and quadratic field
-extensions alike, without classifying them first:
-* `IsEquivalenceIdeal`: the three conditions above;
+extensions alike, without classifying them first.
+
+## Main definitions
+
+* `IsEquivalenceIdeal`: the three conditions above.
+
+## Main results
+
 * `eq_bot_or_eq_ker`: an equivalence ideal of `A ⊗[k] A` is `0` or `Δ`;
 * `isEquivalenceIdeal_bot`, `isEquivalenceIdeal_ker`: both are equivalence ideals.
+
+## Implementation notes
 
 The proof. For `x ∉ k`, `Δ = A · (1 ⊗ x − x ⊗ 1)` (from `1 ⊗ s − s ⊗ 1` spanning `Δ`). If `A`
 is a field, a nonzero element of `J` is `a • δ` with `a` a unit, so `δ ∈ J`. Otherwise a
@@ -36,9 +47,19 @@ gives `δ ∈ J` (the case `k × k`); if `e² = 0`, `J ⊂ k (e ⊗ e)` unless `
 fails transitivity, as `e ⊗ 1 ⊗ e` survives the map `a ⊗ b ⊗ c ↦ χ(b) a ⊗ c` (`χ(e) = 0`)
 which kills `p₁₂(J)` and `p₂₃(J)` (the case `k[ε]`, the edition's).
 
-Not formalised: the reduction to the field case (Prop. 3 and its Cor. 2, the artinian
-reduction modulo `𝔪`), nor the passage from ideals to closed subschemes.
+## Not formalised
+
+The reduction to the field case (Prop. 3 and its Cor. 2, the artinian reduction modulo `𝔪`),
+nor the passage from ideals to closed subschemes.
+
+## References
+
+* A. Grothendieck, cote 128 (« Résultats auxiliaires sur les relations d'équivalence »),
+  pp. 9–13; modernised reading `transcripts/128/128.modern.tex`
 -/
+
+@[expose] public section
+
 
 open TensorProduct
 
@@ -326,7 +347,8 @@ lemma phi_smul (χ : A →ₐ[k] k) (a : A) (t : A ⊗[k] A) : phi χ (a • t) 
   rw [Algebra.smul_def, map_mul, show algebraMap A (A ⊗[k] A) a = a ⊗ₜ 1 from rfl, phi_tmul,
     smul_mul_assoc, one_mul]
 
-lemma chi_phi (χ : A →ₐ[k] k) (t : A ⊗[k] A) : χ (phi χ t) = χ (Algebra.TensorProduct.lmul' k t) := by
+lemma chi_phi (χ : A →ₐ[k] k) (t : A ⊗[k] A) :
+    χ (phi χ t) = χ (Algebra.TensorProduct.lmul' k t) := by
   induction t using TensorProduct.inductionOn with
   | tmul a b => simp [phi_tmul]
   | add s t hs ht => simp only [map_add, hs, ht]
@@ -407,7 +429,8 @@ lemma finrank_le_two_of_simple [Module.Finite k A]
     exact hn.ne_top ((Ideal.eq_top_iff_one _).2 (by
       simpa using add_mem this (Ideal.mul_mem_left _ b hw)))
   -- so `𝔪_χ = k z`, and `(c, d) ↦ c + d z` is onto
-  let f : k × k →ₗ[k] A := (LinearMap.toSpanSingleton k A 1).coprod (LinearMap.toSpanSingleton k A z)
+  let f : k × k →ₗ[k] A :=
+      (LinearMap.toSpanSingleton k A 1).coprod (LinearMap.toSpanSingleton k A z)
   have hf : Function.Surjective f := fun a => by
     obtain ⟨b, hb⟩ := Ideal.mem_span_singleton'.1 (h z hz hz0 _ (hsplit χ a))
     refine ⟨(χ a, χ' b), ?_⟩
@@ -478,7 +501,8 @@ theorem finrank_le_two [Module.Finite k A]
       rw [sub_sub_cancel, e, map_sub, delta_algebraMap, sub_zero, delta_apply]
     change (1 : A) ⊗ₜ[k] x - x ⊗ₜ 1 ∈ _
     rw [this]
-    exact sub_mem (Submodule.mem_sup_left hf) (Submodule.mem_sup_right (sub_delta_phi_mem χ (hJ hf)))
+    exact sub_mem (Submodule.mem_sup_left hf)
+        (Submodule.mem_sup_right (sub_delta_phi_mem χ (hJ hf)))
   -- exactness: `δ(x) ∈ Δ ⊂ J` forces `x ∈ k`, so `dim A ≤ 1`
   refine hlt ((finrank_le_one (1 : A) fun a => ?_).trans (by norm_num))
   obtain ⟨c, hc⟩ := hexact a (hD (delta_mem a))
@@ -584,7 +608,8 @@ lemma rTensor_smulMap_injective [Module.Flat A G]
     Function.Injective ((smulMap I G).rTensor M) := by
   have hμ : Function.Injective ((TensorProduct.lid A M).toLinearMap ∘ₗ I.subtype.rTensor M) := by
     rw [LinearMap.coe_comp]; exact (TensorProduct.lid A M).injective.comp h1
-  have e : (smulMap I G).rTensor M = ((TensorProduct.lid A M).toLinearMap ∘ₗ I.subtype.rTensor M).lTensor G ∘ₗ
+  have e : (smulMap I G).rTensor M =
+    ((TensorProduct.lid A M).toLinearMap ∘ₗ I.subtype.rTensor M).lTensor G ∘ₗ
       (TensorProduct.assoc A G I M).toLinearMap ∘ₗ
         (TensorProduct.comm A I G).toLinearMap.rTensor M := by
     refine TensorProduct.ext_threefold fun r g m => ?_
@@ -681,10 +706,11 @@ lemma rTensor_injective_of_smul_le (h0 : Module.Flat (A ⧸ I) ((A ⧸ I) ⊗[A]
   let L : Submodule A (F →₀ A) := (LinearMap.range u).comap p
   have hIL : I • (⊤ : Submodule A (F →₀ A)) ≤ L :=
     Submodule.smul_le.2 fun c hc g _ => by
-      show p (c • g) ∈ LinearMap.range u
+      change p (c • g) ∈ LinearMap.range u
       rw [map_smul]; exact hIu (Submodule.smul_mem_smul hc trivial)
   let e := LinearEquiv.ofInjective u hu
-  let q : L →ₗ[A] K := e.symm.toLinearMap ∘ₗ p.restrict (p := L) (q := LinearMap.range u) fun (x : F →₀ A) (h : x ∈ L) => h
+  let q : L →ₗ[A] K := e.symm.toLinearMap ∘ₗ
+      p.restrict (p := L) (q := LinearMap.range u) fun (x : F →₀ A) (h : x ∈ L) => h
   have huq : u ∘ₗ q = p ∘ₗ L.subtype := by
     ext x
     simp only [q, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe]
@@ -695,7 +721,7 @@ lemma rTensor_injective_of_smul_le (h0 : Module.Flat (A ⧸ I) ((A ⧸ I) ⊗[A]
     refine ⟨⟨g, ⟨k, hg.symm⟩⟩, hu ?_⟩
     rw [← LinearMap.comp_apply, huq]; exact hg
   have hker : LinearMap.ker p ≤ L := fun g hg => by
-    show p g ∈ LinearMap.range u
+    change p g ∈ LinearMap.range u
     simp [LinearMap.mem_ker.1 hg]
   let ι := Submodule.inclusion hker
   have hqι : q ∘ₗ ι = 0 := by
@@ -742,7 +768,8 @@ theorem flat_of_isNilpotent (hI : IsNilpotent I)
       refine Submodule.smul_le.2 fun c hc x _ => ⟨⟨c * x, ?_⟩, Subtype.ext rfl⟩
       have hx : c * (x : A) ∈ I * (J ⊔ I ^ k) := Ideal.mul_mem_mul hc x.2
       rw [Ideal.mul_sup, ← pow_succ'] at hx
-      exact (sup_le_sup_right (Ideal.mul_le.2 fun a _ b hb => J.mul_mem_left a hb) _ : I * J ⊔ I ^ (k + 1) ≤ J ⊔ I ^ (k + 1)) hx
+      exact (sup_le_sup_right (Ideal.mul_le.2 fun a _ b hb => J.mul_mem_left a hb) _ :
+          I * J ⊔ I ^ (k + 1) ≤ J ⊔ I ^ (k + 1)) hx
   obtain ⟨n, hn⟩ := hI
   have := key n
   rwa [hn, Ideal.zero_eq_bot, sup_bot_eq] at this
@@ -904,7 +931,7 @@ lemma mem_smul_of_red_eq_zero (g : N →ₗ[A] M₀)
     Module.compHom _ (algebraMap (A ⧸ I) (S ⧸ I.map (algebraMap A S)))
   have : IsScalarTower (A ⧸ I) (S ⧸ I.map (algebraMap A S)) (S ⊗[A] N ⧸ P) :=
     ⟨fun a b q => by
-      show (a • b) • q = algebraMap _ (S ⧸ I.map (algebraMap A S)) a • b • q
+      change (a • b) • q = algebraMap _ (S ⧸ I.map (algebraMap A S)) a • b • q
       rw [Algebra.smul_def, mul_smul]⟩
   have hfx : ∀ (x : A) (q : S ⊗[A] N ⧸ P),
       (Ideal.Quotient.mk (I.map (algebraMap A S)) (algebraMap A S x)) • q = x • q := by
@@ -915,7 +942,7 @@ lemma mem_smul_of_red_eq_zero (g : N →ₗ[A] M₀)
   have : IsScalarTower A (A ⧸ I) (S ⊗[A] N ⧸ P) :=
     ⟨fun x a q => by
       obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective a
-      show algebraMap _ (S ⧸ I.map (algebraMap A S)) (x • Ideal.Quotient.mk I a) • q =
+      change algebraMap _ (S ⧸ I.map (algebraMap A S)) (x • Ideal.Quotient.mk I a) • q =
         x • algebraMap _ (S ⧸ I.map (algebraMap A S)) (Ideal.Quotient.mk I a) • q
       rw [Algebra.smul_def, map_mul, mul_smul]
       exact hfx x _⟩
@@ -946,7 +973,7 @@ lemma mem_smul_of_red_eq_zero (g : N →ₗ[A] M₀)
     induction t using TensorProduct.inductionOn with
     | tmul b n =>
       rw [red_tmul, LinearMap.liftBaseChange_tmul]
-      show (Ideal.Quotient.mk _ b) • h₂ (g n) = _
+      change (Ideal.Quotient.mk _ b) • h₂ (g n) = _
       rw [h₂g]
       simp only [h₁, LinearMap.coe_comp, Function.comp_apply, TensorProduct.mk_apply,
         LinearMap.coe_restrictScalars, Submodule.mkQ_apply]
@@ -1298,7 +1325,10 @@ theorem flat_and_bijective_of_reduce (h : IsConductorIdeal S I) (hI : IsNilpoten
     have hΦ : Φ = (ι ∘ₗ (TensorProduct.lid A N).toLinearMap) ∘ₗ I.subtype.rTensor N := by
       refine TensorProduct.ext' fun x n => ?_
       simp only [Φ, αe, α, j]
-      simp [algebraMap_smul]
+      simp only [LinearMap.coe_comp, LinearMap.coe_restrictScalars, LinearEquiv.coe_coe,
+          Function.comp_apply, LinearMap.rTensor_tmul, LinearMap.coe_mk, AddHom.coe_mk,
+          AlgebraTensorModule.cancelBaseChange_symm_tmul, LinearMap.lTensor_tmul,
+          Submodule.subtype_apply, lid_tmul, algebraMap_smul, map_smul]
       exact congr_arg _ (LinearMap.liftBaseChange_one_tmul _ _ _)
     have hΦinj : Function.Injective Φ := by
       have h1 : Function.Injective (j.rTensor N) :=

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder69
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 69, pages 77 and 81: the « dodécaèdre gauche » of page 81
@@ -14,14 +17,7 @@ vertices labelled `ξ_{ij}` and twenty edges numbered `1 … 5`. This file prove
 explicit parts of finding `69-petersen-hemidodecahedra-432`, on the figure as encoded in
 `transcripts/69/drawings/05-1.json` (a machine redraw, not checked by a reader).
 
-**Labels.** In the folder, for a base (a sixer) `ξ₁, …, ξ₆`, `ξ_{ij}` is the line meeting `ξ_i`
-and `ξ′_j` (page 29: the triangle `(ξ₁, ξ′₂, ξ₁₂)`), the classical `c_{ij}`. The page writes
-`ξ₅₁`, `ξ₄₁`, `ξ₅₃`, `ξ₃₁`, `ξ₅₂` with the indices in either order; we write each label as the
-pair `(i, j)`, `i < j`. The vertex the transcription reads `ξ_{4,12}`, with `\uncertain{}`, is
-left as a parameter `x`.
-
-**The page's rule** (read off the figure by the edition, not stated on the page): an edge joins
-two `ξ` with disjoint index pairs and carries the fifth index (`rule`).
+## Main results
 
 * `rule_read`: the eighteen edges not at the uncertain vertex satisfy the rule as read;
   `forced`: at the uncertain vertex, the rule holds for its two edges (to `ξ₃₅`, numbered 1, and
@@ -39,10 +35,31 @@ two `ξ` with disjoint index pairs and carries the fifth index (`rule`).
 * `pentagons_card`, `hemi_systems_card`, `drawn_is_system`: the Petersen graph has 12 pentagons
   and exactly two sets of six of them covering every edge twice; the drawn one is one of them.
 
-Not formalised: the count `216 × 2 = 432` of hemi-dodecahedra in the 27-line graph, computed by
-a program on the `C(27, 10)` ten-element subsets; a proof would need the transitivity of
-`W(E₆)` on Petersen subgraphs, which is not proved here.
+## Implementation notes
+
+**Labels.** In the folder, for a base (a sixer) `ξ₁, …, ξ₆`, `ξ_{ij}` is the line meeting `ξ_i`
+and `ξ′_j` (page 29: the triangle `(ξ₁, ξ′₂, ξ₁₂)`), the classical `c_{ij}`. The page writes
+`ξ₅₁`, `ξ₄₁`, `ξ₅₃`, `ξ₃₁`, `ξ₅₂` with the indices in either order; we write each label as the
+pair `(i, j)`, `i < j`. The vertex the transcription reads `ξ_{4,12}`, with `\uncertain{}`, is
+left as a parameter `x`.
+
+**The page's rule** (read off the figure by the edition, not stated on the page): an edge joins
+two `ξ` with disjoint index pairs and carries the fifth index (`rule`).
+
+## Not formalised
+
+The count `216 × 2 = 432` of hemi-dodecahedra in the 27-line graph, computed by a program on the
+`C(27, 10)` ten-element subsets; a proof would need the transitivity of `W(E₆)` on Petersen
+subgraphs, which is not proved here.
+
+## References
+
+* A. Grothendieck, folder 69, pp. 29, 77, 81 (finding `69-petersen-hemidodecahedra-432`); the
+  figure as encoded in `transcripts/69/drawings/05-1.json`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder69Petersen
 
@@ -79,7 +96,8 @@ def ruleAt (x : ℕ × ℕ) (e : ℕ × ℕ × ℕ) : Bool :=
   rule ((lab x).getD e.1 (0, 0)) ((lab x).getD e.2.1 (0, 0)) e.2.2
 
 /-- The labels away from vertex 7 do not depend on `x`. -/
-theorem lab_ne (x : ℕ × ℕ) {v : ℕ} (hv : v ≠ 7) : (lab x).getD v (0, 0) = (lab (0, 0)).getD v (0, 0) := by
+theorem lab_ne (x : ℕ × ℕ) {v : ℕ} (hv : v ≠ 7) :
+    (lab x).getD v (0, 0) = (lab (0, 0)).getD v (0, 0) := by
   unfold lab
   rcases v with _|_|_|_|_|_|_|_|_|_|_|_|_|_|_|v <;> simp at hv ⊢
 
@@ -130,7 +148,8 @@ def qedges : List (ℕ × ℕ) := edges.map fun e => (prs.idxOf (lab24.getD e.1 
 pairs are disjoint, and the twenty drawn edges give fifteen edges. -/
 @[montpellier "69, 81"]
 theorem quotient_adj : (∀ i < 10, ∀ j < 10,
-      (qedges.contains (i, j) || qedges.contains (j, i)) = disj (prs.getD i (0, 0)) (prs.getD j (0, 0))) ∧
+      (qedges.contains (i, j) || qedges.contains (j, i)) =
+        disj (prs.getD i (0, 0)) (prs.getD j (0, 0))) ∧
     ((qedges.map fun e => (min e.1 e.2, max e.1 e.2)).dedup.length = 15) := by
   decide +kernel
 

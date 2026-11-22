@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.RingTheory.Flat.LocalCriteria.FibreCriteria
@@ -7,15 +12,24 @@ public import StacksFrontier.AlgebraicGeometry.Modules.RestrictStalkDepth
 public import Mathlib.AlgebraicGeometry.Noetherian
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 49, page 3: a coherent sheaf that embeds fibrewise into flat stalks is flat
 
 Finding `49-flatness-lemma-pushforward`. The Lemme of page 3: for `φ : X → Y` of finite type over
 a locally noetherian `S`, `F` quasi-coherent on `X` and flat over `S`, `G` coherent on `Y`, and a
 map `G → φ_* F` whose restriction to the fibre over `s` is injective at the points above `y`,
-`G` is flat over `S` at `y`.
+`G` is flat over `S` at `y`. It is proved, locally and for schemes.
+
+## Main results
+
+* `flat_of_fibre_injective_pi`: under these hypotheses, `N` is flat over `R`, and the map
+  `N → ∏ₓ M x` is injective. No finiteness of `φ` at the points above `y` is needed: the target
+  `∏ₓ F_x` is not finite over `A`, but the local criterion only asks that the source be finite.
+* `flat_of_fibre_injective`: the case of one flat target, for instance `(φ_* F)_y` itself when it
+  is flat over `R`.
+* `flat_of_fibre_injective_scheme`: the statement for a morphism of schemes (see below).
+
+## Implementation notes
 
 The statement is local at `y`. Write `R = 𝒪_{S,s}` (noetherian local), `A = 𝒪_{Y,y}` (noetherian
 local, `R → A` local), `N = G_y` (a finite `A`-module), and for each point `x` of `X` above `y`
@@ -23,13 +37,6 @@ let `M x = F_x` (flat over `R`) and `u x : G_y → (φ_* F)_y → F_x` (`R`-line
 is reduction modulo the maximal ideal `𝔪` of `R`, and « injective on the fibre at the points above
 `y` » is read as: an element of `G_y` whose images in all the `F_x / 𝔪 F_x` vanish lies in
 `𝔪 G_y`. That is, `G_y ⊗ k(s) → ∏ₓ F_x ⊗ k(s)` is injective.
-
-**What is proved.**
-* `flat_of_fibre_injective_pi`: under these hypotheses, `N` is flat over `R`, and the map
-  `N → ∏ₓ M x` is injective. No finiteness of `φ` at the points above `y` is needed: the target
-  `∏ₓ F_x` is not finite over `A`, but the local criterion only asks that the source be finite.
-* `flat_of_fibre_injective`: the case of one flat target, for instance `(φ_* F)_y` itself when it
-  is flat over `R`.
 
 **How.** A product of flat modules over a noetherian ring is flat (Chase's theorem, Stacks 05CZ
 `IsCoherentRing.tfae_flat_pi`, a noetherian ring being coherent, 05CY). The local flatness
@@ -47,11 +54,24 @@ germ map of the direct image (Stacks' `pushforwardStalkHom`), semilinear over
 `φ^♯_x : 𝒪_{Y,y} → 𝒪_{X,x}` (`mapAbove_smul`). `R = 𝒪_{S,p(y)}` acts through `p^♯_y`, a local
 homomorphism of noetherian local rings when `S` and `Y` are locally noetherian.
 
-**Not formalised.** Finiteness of `G_y` over `𝒪_{Y,y}` is a hypothesis of the scheme form (it
+## Not formalised
+
+Finiteness of `G_y` over `𝒪_{Y,y}` is a hypothesis of the scheme form (it
 holds for `G` coherent). Flatness of `F` over `S` at `x` is read as flatness of `F_x` over
-`𝒪_{S,p(y)}`. The page's own reading of clause c), with injectivity into `(φ_{s*} F_s)_y` rather than
+`𝒪_{S,p(y)}`. The page's own reading of clause c), with injectivity into `(φ_{s*} F_s)_y`
+rather than
 into the product of the stalks above `y`, is weaker when `φ` is not proper, and is not covered.
+
+## References
+
+* A. Grothendieck, folder 49, page 3 (finding `49-flatness-lemma-pushforward`)
+* [EGA III] 4.6.7.1
+* Chase's theorem
+* Stacks Project, tags 05CZ, 05CY, 00ME, 00HM
 -/
+
+@[expose] public section
+
 
 universe u v
 
@@ -143,7 +163,8 @@ theorem fibreMap_smul (x : X) (r : Y.presheaf.stalk (φ.base x)) (n : G.presheaf
 abbrev Above (y : Y) : Type u := {x : X // φ.base x = y}
 
 /-- `𝒪_{Y,y} → 𝒪_{X,x}` for `x` above `y`. -/
-noncomputable def ringAbove {y : Y} (x : Above φ y) : Y.presheaf.stalk y →+* X.presheaf.stalk x.1 := by
+noncomputable def ringAbove {y : Y} (x : Above φ y) :
+    Y.presheaf.stalk y →+* X.presheaf.stalk x.1 := by
   obtain ⟨x, rfl⟩ := x
   exact (φ.stalkMap x).hom
 
@@ -181,7 +202,8 @@ theorem flat_of_fibre_injective_scheme [AlgebraicGeometry.IsLocallyNoetherian S]
       n ∈ maximalIdeal (S.presheaf.stalk (p.base y)) •
         (⊤ : Submodule (S.presheaf.stalk (p.base y)) (G.presheaf.stalk y))) →
     Module.Flat (S.presheaf.stalk (p.base y)) (G.presheaf.stalk y) ∧
-      Function.Injective (fun n : G.presheaf.stalk y => fun x : Above φ y => mapAbove φ F G α x n) := by
+      Function.Injective
+        (fun n : G.presheaf.stalk y => fun x : Above φ y => mapAbove φ F G α x n) := by
   intro hM hu
   let : Module (S.presheaf.stalk (p.base y)) (G.presheaf.stalk y) :=
     Module.compHom _ (p.stalkMap y).hom
@@ -194,7 +216,8 @@ theorem flat_of_fibre_injective_scheme [AlgebraicGeometry.IsLocallyNoetherian S]
       rw [mul_smul]⟩
   have : IsLocalHom (algebraMap (S.presheaf.stalk (p.base y)) (Y.presheaf.stalk y)) :=
     inferInstanceAs (IsLocalHom (p.stalkMap y).hom)
-  let u : ∀ x : Above φ y, G.presheaf.stalk y →ₗ[S.presheaf.stalk (p.base y)] F.presheaf.stalk x.1 :=
+  let u : ∀ x : Above φ y,
+      G.presheaf.stalk y →ₗ[S.presheaf.stalk (p.base y)] F.presheaf.stalk x.1 :=
     fun x => { mapAbove φ F G α x with
       map_smul' := fun r n => by
         change mapAbove φ F G α x ((p.stalkMap y).hom r • n) = _

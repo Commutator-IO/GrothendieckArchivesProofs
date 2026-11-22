@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Module.FinitePresentation
@@ -5,8 +10,6 @@ public import Mathlib.Algebra.Exact.Basic
 public import Mathlib.LinearAlgebra.Basis.Prod
 public import Mathlib.RingTheory.Finiteness.Prod
 public import Mathlib.RingTheory.Finiteness.Projective
-
-@[expose] public section
 
 /-!
 # IHÉS FG_IL_5_SGA6_1_5, views 1–5: modules with an `n`-presentation
@@ -22,13 +25,8 @@ finite sum. Prop. 4.4 (view 2): for `0 → R → M₀ → X → 0` with `M₀ �
 (view 5) takes `C` the `A`-modules, `A` not necessarily commutative, `P` the free modules of finite
 type, and notes that the `Cₙ` do not change if `P` is the projective modules of finite type.
 
-Here `C` is the category of left modules over a ring `R` and `P` the modules `Fin k → R`.
-`IsNPresented R n M` is defined by recursion on `n`, which is the edition's choice (the page
-writes the exact sequence): `M` is `0`-presented if it is finite, and `(n+1)`-presented if some
-surjection `Rᵏ ↠ M` has an `n`-presented kernel. All modules live in the universe of `R`, so that
-the kernels stay in it.
+## Main results
 
-**What is proved.**
 * `isNPresented_zero_iff`, `isNPresented_one_iff`: at `n = 0` and `n = 1` the notion is
   `Module.Finite` and `Module.FinitePresentation`.
 * `IsNPresented.of_ker_of_surjective`, `IsNPresented.of_exact`: **Prop. 4.2.**
@@ -45,6 +43,14 @@ the kernels stay in it.
   and projective modules of finite type are `n`-presented for all `n`, and § 5's remark that
   projective `Lᵢ` give the same `Cₙ`. `IsNPresented.of_le`: `Cₙ ⊇ Cₙ₊₁`.
 
+## Implementation notes
+
+Here `C` is the category of left modules over a ring `R` and `P` the modules `Fin k → R`.
+`IsNPresented R n M` is defined by recursion on `n`, which is the edition's choice (the page
+writes the exact sequence): `M` is `0`-presented if it is finite, and `(n+1)`-presented if some
+surjection `Rᵏ ↠ M` has an `n`-presented kernel. All modules live in the universe of `R`, so that
+the kernels stay in it.
+
 The proofs follow the induction of the page in a different order. The page proves 4.2 by the
 horseshoe construction of Cartan–Eilenberg V 2.2, and 4.4 by modifying a presentation of `X` until
 it maps onto `M₀`. Here one construction serves both (`exists_coprod`): for `p : N ↠ M` and
@@ -53,13 +59,24 @@ it maps onto `M₀`. Here one construction serves both (`exists_coprod`): for `p
 4.4 at level `n + 1`, which needs 4.2 at level `n` only. The « il faut » half of 4.4 comes from
 4.2 and 4.7 bis, by the same construction.
 
-**Not formalised.** The abelian-category setting of § 4 (only modules are treated), the
+## Not formalised
+
+The abelian-category setting of § 4 (only modules are treated), the
 `∞`-presentations and Cor. 4.7 (`C_∞ = ⋂ Cₙ`), Cor. 4.5 and 4.6 (longer exact sequences),
 Prop. 4.8 and Cor. 4.9 (exact functors and derived functors), and §§ 5–7 beyond the remark on
 projective modules: flat base change, localisation, finite resolutions, regular immersions,
 relative `n`-presentation over an algebra, preschemes. Modules in a universe other than that of
 `R` are not covered.
+
+## References
+
+* A. Grothendieck, Fonds Grothendieck–Illusie (IHÉS), FG_IL_5_SGA6_1_5, views 1–5
+* H. Cartan, S. Eilenberg, *Homological algebra*, V 2.2
+* Stacks Project, tags 064R, 064U, 064X
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.IhesSGA6_1_5
 

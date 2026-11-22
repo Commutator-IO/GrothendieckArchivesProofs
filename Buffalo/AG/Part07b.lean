@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 07 (b): 2 July 1973
@@ -12,12 +15,25 @@ The entries of `docs/buffalo-ag/index.tex` lines 941–995 (video `Oqhr-Gt66es`,
 finite presentation and limits, projective, ample and proper morphisms, valuative criteria,
 integral extensions, finite and integral morphisms.
 
-Conventions. Mathlib has no projective bundle `ℙ(E)`, no ample or very ample invertible sheaves and
-no Picard group of a scheme: the entries on them are not formalised, except through `Proj` of a
-graded ring (`Proj.toSpecZero`), which is the affine-base case `ℙ(E) = Proj(Sym E)`. The valuative
-criteria are mathlib's, for all valuation rings (the lecture's discrete valuation rings need
-noetherian hypotheses).
+## Implementation notes
+
+The valuative criteria are mathlib's, for all valuation rings (the lecture's discrete valuation
+rings need noetherian hypotheses).
+
+## Not formalised
+
+Mathlib has no projective bundle `ℙ(E)`, no ample or very ample invertible sheaves and no Picard
+group of a scheme: the entries on them are not formalised, except through `Proj` of a graded
+ring (`Proj.toSpecZero`), which is the affine-base case `ℙ(E) = Proj(Sym E)`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 2 July 1973, video `Oqhr-Gt66es`,
+  6:47:12–8:27:42 (`docs/buffalo-ag/index.tex`, lines 941–995)
 -/
+
+@[expose] public section
+
 
 open TensorProduct AlgebraicGeometry CategoryTheory Limits
 
@@ -77,9 +93,9 @@ theorem prop_25222 {σ A : Type*} [CommRing A] [SetLike σ A] [AddSubgroupClass 
       QuasiCompact (Proj.toSpecZero 𝒜) :=
   ⟨inferInstance, inferInstance, inferInstance⟩
 
-/-- Oqhr-Gt66es-27355 (7:35:55) [def] (proper half) `f` is proper iff it is of finite type, separated
-and universally closed (mathlib: `IsProper`, whose quasi-compactness follows from universal
-closedness). -/
+/-- Oqhr-Gt66es-27355 (7:35:55) [def] (proper half) `f` is proper iff it is of finite type,
+separated and universally closed (mathlib: `IsProper`, whose quasi-compactness follows from
+universal closedness). -/
 @[buffalo "Oqhr-Gt66es-27355"]
 theorem def_27355 (f : X ⟶ Y) :
     IsProper f ↔ (LocallyOfFiniteType f ∧ QuasiCompact f) ∧ IsSeparated f ∧ UniversallyClosed f :=
@@ -163,7 +179,8 @@ theorem prop_29521 (x : B) :
 subalgebras finite over `A`. -/
 @[buffalo "Oqhr-Gt66es-29585"]
 theorem prop_29585 :
-    Algebra.IsIntegral A B ↔ ∀ x : B, ∃ S : Subalgebra A B, (Subalgebra.toSubmodule S).FG ∧ x ∈ S := by
+    Algebra.IsIntegral A B ↔
+      ∀ x : B, ∃ S : Subalgebra A B, (Subalgebra.toSubmodule S).FG ∧ x ∈ S := by
   rw [Algebra.isIntegral_def]
   exact forall_congr' fun x => (prop_29521 x).2.2
 
@@ -212,7 +229,8 @@ algebras. -/
 theorem prop_30136 (f : X ⟶ Y) {A' B' : Type*} [CommRing A'] [CommRing B'] [Algebra A' B'] :
     (IsFinite f ↔ IsIntegralHom f ∧ LocallyOfFiniteType f) ∧
     (Module.Finite A' B' ↔ Algebra.IsIntegral A' B' ∧ Algebra.FiniteType A' B') :=
-  ⟨IsFinite.iff_isIntegralHom_and_locallyOfFiniteType f, Algebra.finite_iff_isIntegral_and_finiteType⟩
+  ⟨IsFinite.iff_isIntegralHom_and_locallyOfFiniteType f,
+    Algebra.finite_iff_isIntegral_and_finiteType⟩
 
 /-- Oqhr-Gt66es-30201 (8:23:21) [prop] An integral morphism is affine, separated and universally
 closed; a finite morphism is proper. -/
@@ -222,7 +240,8 @@ theorem prop_30201 (f : X ⟶ Y) :
     (IsFinite f → IsProper f) :=
   ⟨fun _ => ⟨inferInstance, inferInstance, inferInstance⟩, fun _ => inferInstance⟩
 
-/-- Oqhr-Gt66es-30267 (8:24:27) [prop] Every closed immersion is finite; `A/J` is finite over `A`. -/
+/-- Oqhr-Gt66es-30267 (8:24:27) [prop] Every closed immersion is finite; `A/J` is finite over
+`A`. -/
 @[buffalo "Oqhr-Gt66es-30267"]
 theorem prop_30267 (f : X ⟶ Y) [IsClosedImmersion f] {A' : Type*} [CommRing A'] (J : Ideal A') :
     IsFinite f ∧ Module.Finite A' (A' ⧸ J) :=

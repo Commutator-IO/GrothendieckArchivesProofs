@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 83, pages 126–143: the line of twists and its degenerate locus
@@ -33,6 +36,8 @@ This is finding `83-twist-line-degenerate-locus-is-product` of
 `src/content/findings.ts`. Proving it says only that the claims hold as stated
 in coordinates; whether they stand in the literature is a separate question.
 
+## Main results
+
 What is formalised, over an arbitrary commutative ring `k`, without dividing by
 `2`, with `H`, `H'` free (`L`, `L'` trivialised, so `(L ⊗ L')^∨ = k`):
 
@@ -60,20 +65,31 @@ What is formalised, over an arbitrary commutative ring `k`, without dividing by
   `Q(u * v) = 0` (`star_root`, from `Q(w) = (2V − b')²(U² − bU + c) + δ(V² − b'V + c')`,
   `Q_star_identity`), whence the algebra map `starHom : k[t]/(Q) → H ⊗ H'`,
   `t ↦ u * v`; the conjugations of `H` and `H'` both send `u * v` to `bb' − u * v`
-  (`conjL_star`, `conjR_star`, `conjL_star_eq_conjR_star`); for characters `φ`, `φ'` with values in any
-  commutative `k`-algebra, `(φ ⊗ φ')(u * v) = b'φ(u) + bφ'(v) − 2φ(u)φ'(v)`
+  (`conjL_star`, `conjR_star`, `conjL_star_eq_conjR_star`); for characters `φ`, `φ'` with
+  values in any commutative `k`-algebra, `(φ ⊗ φ')(u * v) = b'φ(u) + bφ'(v) − 2φ(u)φ'(v)`
   (`productMap_star`), which is `t_{φ,φ'}(u, v)` (`twist_eq_productMap`), a root of
   `Q` (`twist_root`, `productMap_star_root`), and `t_{φ,φ'}` is a twist (`twist_one_right`,
   `twist_one_left`); conjugating `φ` sends it to `bb' − t` (`twist_conj`).
 
-Not formalised: the intrinsic torsors for `H`, `H'` locally free (only the free,
+## Not formalised
+
+The intrinsic torsors for `H`, `H'` locally free (only the free,
 trivialised case), the chain of isomorphisms `AZ_P → Q_P → … → L_P`, the
 criterion « Azumaya iff `Q` invertible » of page 98 (only the trace-form
 determinant `−Q²`), and the identification `S̃ ≅ X ∧ X'` as the quotient of
 `X × X'` by `σ × σ'` when `(2, δ, δ') = 1`, whose algebraic core (the invariants
 of `σ ⊗ σ'` are `k[u * v]` iff `(2, b, b') = 1`) is
 `Grothendieck.Folder84.invariants_of_span_eq_top`.
+
+## References
+
+* A. Grothendieck, Folder 83, pages 92, 98 and 126–143 (modernised reading
+  `transcripts/83/83.modern.tex`, station X; finding
+  `83-twist-line-degenerate-locus-is-product`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder83
 
@@ -315,7 +331,8 @@ theorem deltaPB_eq : halfDisc3 1 c c' b b' (b * b' - t) = -Q b c b' c' t := by
 /-- Page 91, (13): the discriminant of `Q` in `t` is `δδ'`. -/
 @[montpellier "83, 91"]
 theorem disc_Q :
-    (b * b') ^ 2 - 4 * (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c') = (b ^ 2 - 4 * c) * (b' ^ 2 - 4 * c') := by
+    (b * b') ^ 2 - 4 * (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c') =
+      (b ^ 2 - 4 * c) * (b' ^ 2 - 4 * c') := by
   ring
 
 /-- Pages 140–141: `Q` is invariant under the involution `t ↦ bb' − t` of the line. -/
@@ -382,7 +399,8 @@ noncomputable def Qpoly (b c b' c' : k) : k[X] := qp (b * b') (b ^ 2 * c' + b' ^
 /-- `S̃ = Spec k[t]/(Q)` is a quadratic cover: `k[t]/(Q)` is free of rank `2`. -/
 @[montpellier "83, 137–143"]
 theorem Stilde_rank [Nontrivial k] (b c b' c' : k) :
-    (AdjoinRoot.powerBasis' (qp_monic (b * b') (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c'))).dim = 2 := by
+    (AdjoinRoot.powerBasis' (qp_monic (b * b') (b ^ 2 * c' + b' ^ 2 * c - 4 * c * c'))).dim =
+      2 := by
   rw [AdjoinRoot.powerBasis'_dim, qp_natDegree]
 
 /-- Pages 138 and 143, the identity behind `Q(u * v) = 0`: with
@@ -716,7 +734,8 @@ lemma sandwich_det_sq :
 /-- The sign of the swap of `Fin 4 × Fin 4` is a unit of `k`. -/
 lemma isUnit_sign_prodComm :
     IsUnit ((Equiv.Perm.sign (Equiv.prodComm (Fin 4) (Fin 4)) : ℤ) : k) := by
-  simpa using (Units.isUnit (Equiv.Perm.sign (Equiv.prodComm (Fin 4) (Fin 4)))).map (Int.castRingHom k)
+  simpa using
+    (Units.isUnit (Equiv.Perm.sign (Equiv.prodComm (Fin 4) (Fin 4)))).map (Int.castRingHom k)
 
 /-- `det` of the sandwich matrix is a unit iff `Q` is: its square is `±Q¹⁶`. -/
 theorem isUnit_sandwichMatrix_iff :

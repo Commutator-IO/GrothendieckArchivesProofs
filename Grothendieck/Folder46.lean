@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 46, pages 90–92: lifting `H¹(Γ, A*)` through `A → A/𝔪A` when `p ∤ |Γ|`
@@ -20,14 +23,18 @@ step modulo `𝔪ⁿA`, using that `[Γ : Λ]` is invertible on each `𝔪ⁱA/�
 surjectivity of `A^Γ → A/𝔪A` to make the correcting element a unit.
 
 This file proves the case `p ∤ |Γ|` of the kernel statement (the modernised reading's
-« en particulier »; forme reconstituée par l'édition d'après les pages 90–92), by a one-shot
-average in place of the induction: for a cocycle `c` and any `w`, `b = Σ_σ c(σ) σ(w)`
-satisfies `c(γ) γ(b) = b` (the averaging of Hilbert's Theorem 90), and `b` is a unit when `w`
-lifts `v⁻¹`, `v` trivialising `c` modulo `𝔪A`, since then `b ≡ |Γ| w`. Neither the
-triviality of `Γ` on `A/𝔪A` nor the surjectivity of `A^Γ → A/𝔪A` is used, nor any action of
-`Γ` on `𝒪`.
+« en particulier »; forme reconstituée par l'édition d'après les pages 90–92), injectivity
+itself in that case, and the Sylow form at the level of the kernel.
+
+## Main definitions
+
 * `IsCocycle`, `IsCoboundary`: nonabelian 1-cocycles `Γ → Aˣ`, `c(gh) = c(g) · g(c(h))`, and
-  those cohomologous to `1`, `c(g) = u⁻¹ g(u)`;
+  those cohomologous to `1`, `c(g) = u⁻¹ g(u)`.
+
+## Main results
+
+### The kernel, when `p ∤ |Γ|`
+
 * `mul_smul_sum`, `isCoboundary_of_isUnit_sum`: the averaging identity, and its consequence;
 * `isCoboundary_of_sub_one_mem`: a cocycle congruent to `1` modulo an ideal `I` with
   `1 + I ⊂ Aˣ` is a coboundary when `|Γ|` is invertible in `A`;
@@ -41,10 +48,12 @@ triviality of `Γ` on `A/𝔪A` nor the surjectivity of `A^Γ → A/𝔪A` is us
   `Γ = C₂` acting trivially on `ℤ/4` (`𝔪 = (2)`, `𝔪² = 0`, `p = 2 = |Γ|`), `γ ↦ ±1` is a
   cocycle trivial modulo `𝔪` and not a coboundary: `p ∤ |Γ|` cannot be dropped.
 
+### Injectivity
+
 * `mul_smul_sum_twist`, `isCohomologous_of_map`, `injective`: injectivity itself, not only
-  the trivial kernel: two cocycles with cohomologous images are cohomologous. The average
-  `u = Σ_σ c'(σ) σ(w) c(σ)⁻¹` satisfies `c'(γ) γ(u) = u c(γ)`; this is the averaging for the
-  action twisted by `c'` (pages 86–89), written without changing the action.
+  the trivial kernel: two cocycles with cohomologous images are cohomologous.
+
+### The Sylow form
 
 * `mul_smul_sum_cosets`, `isCoboundary_of_restrict`, `ker_trivial_restrict`,
   `ker_trivial_sylow`: the Sylow form, the page's full statement at the level of the kernel:
@@ -52,10 +61,32 @@ triviality of `Γ` on `A/𝔪A` nor the surjectivity of `A^Γ → A/𝔪A` is us
   surjectivity `A^Λ → A/𝔪A` (implied by `A^Γ → A/𝔪A`), a cocycle trivial modulo `𝔪A` and on
   `Λ` is a coboundary — the average over `Γ/Λ`.
 
-Not formalised: injectivity in the Sylow form for noncommutative `A`, the semi-local base with its
+## Implementation notes
+
+The case `p ∤ |Γ|` is proved by a one-shot average in place of the induction: for a cocycle
+`c` and any `w`, `b = Σ_σ c(σ) σ(w)` satisfies `c(γ) γ(b) = b` (the averaging of Hilbert's
+Theorem 90), and `b` is a unit when `w` lifts `v⁻¹`, `v` trivialising `c` modulo `𝔪A`, since
+then `b ≡ |Γ| w`. Neither the triviality of `Γ` on `A/𝔪A` nor the surjectivity of
+`A^Γ → A/𝔪A` is used, nor any action of `Γ` on `𝒪`.
+
+For injectivity, the average `u = Σ_σ c'(σ) σ(w) c(σ)⁻¹` satisfies `c'(γ) γ(u) = u c(γ)`;
+this is the averaging for the action twisted by `c'` (pages 86–89), written without changing
+the action.
+
+## Not formalised
+
+Injectivity in the Sylow form for noncommutative `A`, the semi-local base with its
 decomposition and inertia groups (pages 84–89), and the passage from `𝔪ⁿA` to `A` by
 Artin–Rees (which the finite case here makes unnecessary).
+
+## References
+
+* A. Grothendieck, folder 46, « Petits fourbis cohomologiques », pp. 84–92 (transcription
+  `transcripts/46/batch-05.fr.tex`)
 -/
+
+@[expose] public section
+
 
 open Finset IsLocalRing
 
@@ -403,6 +434,7 @@ theorem mul_smul_sum_cosets {c : Γ → Aˣ} (hc : IsCocycle c) (Λ : Subgroup �
     rfl
   simp only [e, hq, hf _ l hl]
 
+set_option linter.unusedFintypeInType false in
 open scoped Classical in
 /-- **The Sylow form, at the level of rings.** For a surjective equivariant `π : A → B` with
 `1 + Ker π ⊂ Aˣ`, a subgroup `Λ` of index invertible in `A` and `A^Λ → B` onto (the margin of
@@ -456,6 +488,7 @@ theorem isUnit_index (Λ : Subgroup Γ) (hp : ¬ ringChar (ResidueField O) ∣ �
     exact fun h => hp ((ringChar.spec _ _).1 h)
   simpa using this.map (algebraMap O A)
 
+set_option linter.unusedFintypeInType false in
 /-- **Pages 90–92, the Sylow form** (forme reconstituée par l'édition): `A` finite over `𝒪`,
 `π : A → B` onto with kernel in `𝔪A`, `Λ` of index prime to `p` and `A^Λ → B` onto. The kernel
 of `H¹(Γ, A*) → H¹(Γ, B*) × H¹(Λ, A*)` is trivial. -/
@@ -470,6 +503,7 @@ theorem ker_trivial_restrict [Module.Finite O A] (Λ : Subgroup Γ)
   isCoboundary_of_restrict π hπ hequiv (fun x hx => isUnit_one_add_of_mem_smul_top (hker x hx))
     Λ (isUnit_index Λ hp) hlift hc hΛ hπc
 
+set_option linter.unusedFintypeInType false in
 /-- The statement of page 90 with `Λ` a Sylow `p`-subgroup, `p` the residue characteristic. -/
 @[montpellier "46, 90"]
 theorem ker_trivial_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Prime]
@@ -561,7 +595,8 @@ theorem sum_inertia_eq_zero (a : Γ → k) (h : ∀ μ : k, ∑ s, a s * s • �
 theorem exists_sum_smul_ne_zero (hN : ((inertia Γ k).card : k) ≠ 0) :
     ∃ μ : k, ∑ s : Γ, s • μ ≠ 0 := by
   by_contra! h
-  simpa using hN <| by simpa using sum_inertia_eq_zero (fun _ => (1 : k)) fun μ => by simpa using h μ
+  simpa using hN <| by
+    simpa using sum_inertia_eq_zero (fun _ => (1 : k)) fun μ => by simpa using h μ
 
 variable {B : Type*} [Ring B] [Algebra k B] [MulSemiringAction Γ B]
 
@@ -598,6 +633,7 @@ theorem isCocycle_one_eq {Γ A : Type*} [Group Γ] [Ring A] [MulSemiringAction �
     {c : Γ → Aˣ} (hc : IsCocycle c) : c 1 = 1 := by
   simpa using (Units.ext (by simpa using hc 1 1) : c 1 = c 1 * c 1)
 
+set_option linter.unusedFintypeInType false in
 /-- The fixed field `k^Γ` is infinite when `k` is (`[k : k^Γ] ≤ |Γ|`). -/
 theorem infinite_fixedPoints [Infinite k] :
     (FixedPoints.subfield Γ k : Set k).Infinite := by
@@ -644,13 +680,15 @@ theorem isCohomologous_of_eqOn_inertia [Infinite k] [FiniteDimensional k B]
   let b := Module.finBasis k B
   let M : Fin n → Matrix (Fin (Module.finrank k B)) (Fin (Module.finrank k B)) k :=
     fun i => LinearMap.toMatrix b b (LinearMap.mulLeft k (e i : B))
-  let P : MvPolynomial (Fin n) k := (∑ i, (MvPolynomial.X i : MvPolynomial (Fin n) k) • (M i).map MvPolynomial.C).det
+  let P : MvPolynomial (Fin n) k :=
+    (∑ i, (MvPolynomial.X i : MvPolynomial (Fin n) k) • (M i).map MvPolynomial.C).det
   have heval : ∀ x : Fin n → k,
       MvPolynomial.eval x P = LinearMap.det (LinearMap.mulLeft k (∑ i, x i • (e i : B))) := by
     intro x
     rw [← LinearMap.det_toMatrix b, RingHom.map_det]
     congr 1
-    have : LinearMap.mulLeft k (∑ i, x i • (e i : B)) = ∑ i, x i • LinearMap.mulLeft k (e i : B) := by
+    have : LinearMap.mulLeft k (∑ i, x i • (e i : B)) =
+        ∑ i, x i • LinearMap.mulLeft k (e i : B) := by
       ext; simp [sum_mul]
     rw [this, map_sum]
     ext p q
@@ -806,6 +844,7 @@ theorem isCohomologous_of_restrict_inertia [Module.Finite O A] [Infinite (Residu
   rw [hu, hval, mul_inv_rev, Units.val_mul, Units.val_mul, smul_mul']
   simp only [mul_assoc]
 
+set_option linter.unusedFintypeInType false in
 /-- **The case `Γ_i = {e}` (page 88): `H¹(Γ, A*) = 1`.** If `Γ` acts faithfully on the infinite
 residue field `k`, any two cocycles `Γ → A*` are cohomologous. No dévissage along `𝔪ⁿ` and no
 Artin–Rees: an element of trace one in `𝒪` lifts the field case in one average. -/
@@ -822,7 +861,8 @@ theorem isCohomologous_of_faithful [Module.Finite O A] [Infinite (ResidueField O
   have h1 : inertia Γ (ResidueField O) = {1} := by
     ext g
     simp only [mem_inertia, mem_singleton]
-    exact ⟨fun h => FaithfulSMul.eq_of_smul_eq_smul fun μ => by rw [h, one_smul], by rintro rfl μ; exact one_smul _ μ⟩
+    exact ⟨fun h => FaithfulSMul.eq_of_smul_eq_smul fun μ => by rw [h, one_smul],
+      by rintro rfl μ; exact one_smul _ μ⟩
   refine isCohomologous_of_restrict_inertia hO hB (by simp [h1]) π hπ hequiv hker hc hc'
     ⟨1, fun n hn => ?_⟩
   rw [h1, mem_singleton] at hn
@@ -897,6 +937,7 @@ theorem mul_smul_sum_cosets_twist {c c' : Γ → Aˣ} (hc : IsCocycle c) (hc' : 
   simp only [e, hq]
   exact congrArg (· * (c g : A)) (hf _ l hl)
 
+set_option linter.unusedFintypeInType false in
 open scoped Classical in
 /-- **Injectivity in the Sylow form, at the level of rings.** For a surjective equivariant
 `π : A → B` with `1 + Ker π ⊂ Aˣ`, a subgroup `Λ` of index invertible in `A`, and two cocycles
@@ -977,6 +1018,7 @@ section SylowInjectiveLocal
 variable {O A : Type*} [CommRing O] [Ring A] [Algebra O A] [IsLocalRing O]
   {Γ B : Type*} [Group Γ] [Fintype Γ] [MulSemiringAction Γ A] [Ring B] [MulSemiringAction Γ B]
 
+set_option linter.unusedFintypeInType false in
 /-- **Page 90, injectivity in the Sylow form** (forme reconstituée par l'édition): `A` finite
 over `𝒪`, not necessarily commutative, `π : A → B` onto with kernel in `𝔪A`, `Λ` of index prime
 to `p`. Two cocycles cohomologous modulo `𝔪A` and on `Λ` are cohomologous, provided `B` lifts to
@@ -994,6 +1036,7 @@ theorem injective_restrict [Module.Finite O A] (Λ : Subgroup Γ)
   isCohomologous_of_restrict π hπ hequiv (fun x hx => isUnit_one_add_of_mem_smul_top (hker x hx))
     Λ (isUnit_index Λ hp) hc hc' hlift hΛ hπc
 
+set_option linter.unusedFintypeInType false in
 /-- `injective_restrict` with `Λ` a Sylow `p`-subgroup, `p` the residue characteristic. -/
 @[montpellier "46, 90"]
 theorem injective_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Prime]
@@ -1007,6 +1050,7 @@ theorem injective_sylow [Module.Finite O A] [Fact (ringChar (ResidueField O)).Pr
     ∃ u : Aˣ, ∀ g, (c g : A) = ↑u⁻¹ * c' g * g • (u : A) :=
   injective_restrict (Λ : Subgroup Γ) Λ.not_dvd_index π hπ hequiv hker hc hc' hlift hΛ hπc
 
+set_option linter.unusedFintypeInType false in
 /-- The Sylow form with the margin's untwisted hypothesis `A^Λ → B` onto, when `c'` is a
 coboundary on `Λ` (with `c' = 1`: `ker_trivial_sylow`). -/
 @[montpellier "46, 90"]
@@ -1031,6 +1075,7 @@ section SylowInjectiveComm
 variable {O A : Type*} [CommRing O] [CommRing A] [Algebra O A] [IsLocalRing O]
   {Γ B : Type*} [Group Γ] [Fintype Γ] [MulSemiringAction Γ A] [Ring B] [MulSemiringAction Γ B]
 
+set_option linter.unusedFintypeInType false in
 /-- **Page 90 for `A` commutative: `H¹(Γ, A*) → H¹(Γ, B*) × H¹(Λ, A*)` is injective** under the
 margin's hypothesis `A^Λ → B` onto, `Λ` a Sylow `p`-subgroup. -/
 @[montpellier "46, 90"]
@@ -1075,6 +1120,7 @@ section SemiLocal
 
 variable {O A : Type*} [CommRing O] [Ring A] [Algebra O A] [Module.Finite O A]
 
+set_option linter.unusedFintypeInType false in
 /-- Nakayama over a semi-local ring: an `O`-linear endomorphism of a finite `O`-module that is
 surjective modulo `I j` for a finite family of ideals, each maximal ideal containing one of them,
 is surjective. -/
@@ -1101,6 +1147,7 @@ theorem surjective_of_forall {ι : Type*} [Fintype ι] (I : ι → Ideal O)
   exact Submodule.le_of_le_smul_of_le_jacobson_bot Module.Finite.fg_top hP (key univ)
     Submodule.mem_top
 
+set_option linter.unusedFintypeInType false in
 /-- An element invertible modulo each `I j`, on both sides, is a unit. -/
 theorem isUnit_of_forall {ι : Type*} [Fintype ι] (I : ι → Ideal O)
     (hI : ∀ 𝔫 : Ideal O, 𝔫.IsMaximal → ∃ j, I j ≤ 𝔫) {x : A}
@@ -1120,7 +1167,8 @@ variable {Γ : Type*} [Group Γ] [MulSemiringAction Γ O] [MulSemiringAction Γ 
 
 omit [Module.Finite O A] in
 /-- `σ⁻¹(I A) ⊂ σ⁻¹(I) A`, with `σ⁻¹(I) = {a | σ(a) ∈ I}`. -/
-theorem inv_smul_mem_smul_top (hO : ∀ (g : Γ) (a : O), g • algebraMap O A a = algebraMap O A (g • a))
+theorem inv_smul_mem_smul_top
+    (hO : ∀ (g : Γ) (a : O), g • algebraMap O A a = algebraMap O A (g • a))
     {I : Ideal O} {x : A} (hx : x ∈ I • (⊤ : Submodule O A)) (g : Γ) :
     g⁻¹ • x ∈ I.comap (MulSemiringAction.toRingHom Γ O g) • (⊤ : Submodule O A) := by
   refine Submodule.smul_induction_on hx (fun a ha b _ => ?_) fun x y hx hy => ?_
@@ -1148,7 +1196,8 @@ theorem isCohomologous_of_semilocal
   refine isCohomologous_of_isUnit_sum hc hc' (algebraMap O A L * w) ?_
   set u := ∑ s, (c' s : A) * s • (algebraMap O A L * w) * ↑(c s)⁻¹
   have hu : u - w ∈ 𝔪 • (⊤ : Submodule O A) := by
-    have : u - w = ∑ s, (s • L) • ((c' s : A) * s • w * ↑(c s)⁻¹ - w) + (∑ s : Γ, s • L - 1) • w := by
+    have : u - w = ∑ s, (s • L) • ((c' s : A) * s • w * ↑(c s)⁻¹ - w) +
+        (∑ s : Γ, s • L - 1) • w := by
       have ht : ∀ s : Γ, (c' s : A) * s • (algebraMap O A L * w) * ↑(c s)⁻¹ =
           (s • L) • ((c' s : A) * s • w * ↑(c s)⁻¹) := fun s => by
         rw [smul_mul', hO]; simp only [Algebra.smul_def, mul_assoc, Algebra.left_comm]
@@ -1210,7 +1259,8 @@ theorem exists_trace_one_semilocal (𝔪 : Ideal O) [𝔪.IsMaximal] (D : Subgro
     simpa [smul_sub] using 𝔪.neg_mem this
   refine ⟨(1 - m) * l, fun σ hσ => by rw [smul_mul']; exact 𝔪.mul_mem_right _ (he' σ hσ), ?_⟩
   have h1 : ∑ δ : D, (δ : Γ) • l = ∑ σ, if σ ∈ D then σ • l else 0 := by
-    rw [← Finset.sum_filter]; exact (Finset.sum_subtype (p := (· ∈ D)) _ (fun _ => by simp) fun σ => σ • l).symm
+    rw [← Finset.sum_filter]; exact (Finset.sum_subtype (p := (· ∈ D)) _ (fun _ => by simp)
+      fun σ => σ • l).symm
   rw [show ∑ σ : Γ, σ • ((1 - m) * l) - 1 = ∑ σ, (σ • ((1 - m) * l) -
       if σ ∈ D then σ • l else 0) + (∑ δ : D, (δ : Γ) • l - 1) by rw [h1, sum_sub_distrib]; ring]
   refine add_mem (sum_mem fun σ _ => ?_) hl
@@ -1236,6 +1286,7 @@ theorem exists_trace_one_mod (𝔪 : Ideal O) (D : Subgroup Γ) [Fintype D] {k :
   simp only [map_sub, map_sum, smul_mul', map_mul, hρD, hs, map_one, smul_inv'', hg, ← sum_mul,
     mul_inv_cancel₀ hμ, sub_self]
 
+set_option linter.unusedFintypeInType false in
 /-- **Pages 84–89, semi-local base, tame inertia, infinite residue field: `H¹(Γ, A*) →
 H¹(Γ_i, (A/𝔪A)*)` is injective.** With `𝔪`, `Γ_d = D` and `A` as in
 `isCohomologous_of_semilocal`, `ρ : 𝒪 → k` the residue map of `𝔪` (onto a field `k`, infinite,
@@ -1274,9 +1325,11 @@ theorem isCohomologous_of_restrict_inertia_semilocal
   obtain ⟨w', hw'⟩ := hπ ↑(v₀ * v)⁻¹
   refine isCohomologous_of_semilocal hO 𝔪 htrans D hL₁ hL₂ hc hc' (w := w) (w' := w')
     (hker _ (by rw [map_sub, map_mul, hw, hw', Units.mul_inv, map_one, sub_self]))
-    (hker _ (by rw [map_sub, map_mul, hw, hw', Units.inv_mul, map_one, sub_self])) fun δ hδ => hker _ ?_
+    (hker _ (by rw [map_sub, map_mul, hw, hw', Units.inv_mul, map_one, sub_self]))
+    fun δ hδ => hker _ ?_
   have := hv ⟨δ, hδ⟩
-  simp only [Units.coe_map, MonoidHom.coe_ofClass, Units.val_mul, MulSemiringAction.toRingHom_apply] at this
+  simp only [Units.coe_map, MonoidHom.coe_ofClass, Units.val_mul,
+    MulSemiringAction.toRingHom_apply] at this
   rw [map_sub, map_mul, map_mul, hequiv ⟨δ, hδ⟩, hw, sub_eq_zero, this]
   simp only [Units.val_mul, smul_mul', mul_assoc, Units.mul_inv_cancel_left]
 

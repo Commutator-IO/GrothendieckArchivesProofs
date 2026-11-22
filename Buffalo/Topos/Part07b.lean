@@ -1,20 +1,35 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02
 public import Buffalo.Topos.Part03
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Buffalo, topos theory, part 7b: classifying topoi, examples and special cases (12 July 1973)
 
 Entries of `docs/buffalo-topos/index.tex` lines 965–1114 (video `ORG14LNb5gE`, 2:28:03–5:16:37)
 on the classifying topos of objects and its subtopoi, flat functors, `B_G`, torsors, connected
-rings, elementary topoi, flatness, hypertopoi and universes. Mathlib has no Grothendieck topos as
-such and no classifying topos; each entry is checked in a faithful special case (points, i.e.
-models in `Set`, or a presheaf or sheaf topos), as said in `docs/buffalo-topos/lean/Part07.json`.
+rings, elementary topoi, flatness, hypertopoi and universes.
+
+## Implementation notes
+
+Mathlib has no Grothendieck topos as such and no classifying topos; each entry is checked in a
+faithful special case (points, i.e. models in `Set`, or a presheaf or sheaf topos), as said in
+`docs/buffalo-topos/lean/Part07.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `ORG14LNb5gE`, 2:28:03–5:16:37
+  (12 July 1973)
 -/
+
+@[expose] public section
+
 
 universe u v w
 
@@ -61,7 +76,8 @@ nonempty sets (the image of `X → e`) and all sets. -/
 @[buffalo "ORG14LNb5gE-9758"]
 theorem subterminal_classifying (P : FintypeCat.{u} → Prop)
     (hP : ∀ (A B : FintypeCat.{u}) (_ : A ⟶ B), P A → P B) :
-    P = (fun _ => False) ∨ P = (fun A : FintypeCat.{u} => Nonempty (A : Type u)) ∨ P = (fun _ => True) := by
+    P = (fun _ => False) ∨ P = (fun A : FintypeCat.{u} => Nonempty (A : Type u)) ∨
+      P = (fun _ => True) := by
   by_cases h0 : ∃ A : FintypeCat.{u}, IsEmpty A ∧ P A
   · obtain ⟨A, hA, hPA⟩ := h0
     right; right
@@ -94,7 +110,8 @@ theorem epi_toUnit_iff (X : Type u) : Epi (↾(fun _ : X => PUnit.unit.{u+1})) �
 /-- ORG14LNb5gE-10210 (2:50:10) [ex], points of `Φ₀₁`: `x → e` is a monomorphism iff `x` has at most
 one element. -/
 @[buffalo "ORG14LNb5gE-10210"]
-theorem mono_toUnit_iff (X : Type u) : Mono (↾(fun _ : X => PUnit.unit.{u+1})) ↔ Subsingleton X := by
+theorem mono_toUnit_iff (X : Type u) :
+    Mono (↾(fun _ : X => PUnit.unit.{u+1})) ↔ Subsingleton X := by
   rw [mono_iff_injective]
   exact ⟨fun h => ⟨fun a b => h rfl⟩, fun h a b _ => Subsingleton.elim a b⟩
 
@@ -149,7 +166,8 @@ def intHomEquiv (G : Type u) [Group G] : (Multiplicative ℤ →* G) ≃ G := (z
 /-- ORG14LNb5gE-11403 (3:10:03) [prop], for a presheaf target: `φ` is flat iff its extension `φ_!`
 is left exact; if `C` has finite limits, flat means left exact. -/
 @[buffalo "ORG14LNb5gE-11403"]
-theorem flat_iff {C D : Type u} [SmallCategory C] [SmallCategory D] [HasFiniteLimits C] (φ : C ⥤ D) :
+theorem flat_iff {C D : Type u} [SmallCategory C] [SmallCategory D] [HasFiniteLimits C]
+    (φ : C ⥤ D) :
     (RepresentablyFlat φ ↔ PreservesFiniteLimits (φ.op.lan : (Cᵒᵖ ⥤ Type u) ⥤ (Dᵒᵖ ⥤ Type u))) ∧
     (RepresentablyFlat φ ↔ PreservesFiniteLimits φ) :=
   ⟨Buffalo.Topos.Part03.lan_lex_iff_flat φ,
@@ -196,14 +214,16 @@ structure IsElementaryTopos (E : Type u) [Category.{v} E] [MonoidalCategory E] :
 
 /-- `Sh(C, J)` is an elementary topos. -/
 theorem sheaf_isElementaryTopos {C : Type u} [SmallCategory C] (J : GrothendieckTopology C) :
-    IsElementaryTopos (Sheaf J (Type u)) := ⟨⟨inferInstance⟩, inferInstance, ⟨inferInstance⟩, inferInstance⟩
+    IsElementaryTopos (Sheaf J (Type u)) :=
+  ⟨⟨inferInstance⟩, inferInstance, ⟨inferInstance⟩, inferInstance⟩
 
 
 /-- ORG14LNb5gE-18019 (5:00:19) [prop] In `Set`, an arbitrary product of surjections is surjective
 (the failure in other topoi: `Part02.product_of_epis_not_epi`). -/
 @[buffalo "ORG14LNb5gE-18019"]
 theorem pi_surjective {ι : Type u} {X Y : ι → Type v} (f : ∀ i, X i → Y i)
-    (hf : ∀ i, Function.Surjective (f i)) : Function.Surjective (fun (x : ∀ i, X i) i => f i (x i)) :=
+    (hf : ∀ i, Function.Surjective (f i)) :
+    Function.Surjective (fun (x : ∀ i, X i) i => f i (x i)) :=
   fun y => ⟨fun i => (hf i (y i)).choose, funext fun i => (hf i (y i)).choose_spec⟩
 
 /-- ORG14LNb5gE-18084 (5:01:24) [prop], for `Ĉ`: the constant functor has a left adjoint
@@ -295,7 +315,8 @@ def clopens_idempotents (R : Type u) [CommRing R] :
     {e : R × R // e.1 * e.2 = 0 ∧ e.1 + e.2 = 1} ≃o Clopens (PrimeSpectrum R) :=
   PrimeSpectrum.mulZeroAddOneEquivClopens
 
-/-- ORG14LNb5gE-13187 (3:39:47) [prop], trivial topology: for `t ≅ s`, `Isom(s, t)` is a torsor under
+/-- ORG14LNb5gE-13187 (3:39:47) [prop], trivial topology: for `t ≅ s`, `Isom(s, t)` is a torsor
+under
 `Aut(s)` acting by `g • f = g⁻¹ ≫ f`. -/
 @[buffalo "ORG14LNb5gE-13187"]
 theorem iso_torsor {C : Type u} [Category.{v} C] {s t : C} (f f' : s ≅ t) :
@@ -345,7 +366,7 @@ def contractedRegular (X : Type u) [MulAction G X] : ContractedProduct G G X ≃
   left_inv := by
     rintro ⟨p, x⟩
     refine Quotient.sound ⟨p⁻¹, ?_⟩
-    show (p, x) = (MulOpposite.op p⁻¹⁻¹ • (1 : G), p⁻¹ • p • x)
+    change (p, x) = (MulOpposite.op p⁻¹⁻¹ • (1 : G), p⁻¹ • p • x)
     simp [MulOpposite.smul_eq_mul_unop]
   right_inv x := by simp
 
@@ -354,7 +375,8 @@ preserves the terminal object iff `X` is nonempty and transitive. -/
 @[buffalo "ORG14LNb5gE-11667"]
 def contractedPoint (X : Type u) [MulAction G X] :
     ContractedProduct G PUnit X ≃ MulAction.orbitRel.Quotient G X where
-  toFun := Quotient.lift (fun a : PUnit × X => (Quotient.mk _ a.2 : MulAction.orbitRel.Quotient G X))
+  toFun := Quotient.lift
+    (fun a : PUnit × X => (Quotient.mk _ a.2 : MulAction.orbitRel.Quotient G X))
     (fun a b ⟨g, h⟩ => by
       subst h
       exact Quotient.sound ⟨g⁻¹, by simp [smul_smul]⟩)

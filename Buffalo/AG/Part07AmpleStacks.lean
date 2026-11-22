@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.AffineNonvanishing.Basis
@@ -13,31 +18,15 @@ public import StacksFrontier.AlgebraicGeometry.RelativelyAmple.Separated
 import Grothendieck.Attr
 import StacksCore.Tactic.EgaSgaAttribute
 
-@[expose] public section
-
 /-!
 # Buffalo, algebraic geometry, part 07: ℙ(E), ample and very ample invertible sheaves
 
 The index entries of the topics « Projective and ample morphisms », « Quasi-projective and proper
 morphisms » and « Ample sheaves » (and their echoes in parts 01, 04, 05, 08, 09), stated with the
-definitions of the AxiomMath/Stacks project (pinned in `lakefile.toml`, Apache-2.0):
+definitions of the AxiomMath/Stacks project (pinned in `lakefile.toml`, Apache-2.0).
 
-* an invertible `𝒪_X`-module is `L : X.Modules` with `Stacks.Ample.IsInvertibleModule X L`;
-* `L` is ample (`Stacks.Ample.IsAmple X L`, Stacks 01PS, EGA II 4.5.3) when `X` is quasi-compact
-  and every point lies in an affine `X_s`, `s ∈ Γ(X, L^{⊗ n})`, `n ≥ 1`;
-* `L` is ample relative to `f : X ⟶ S` (`Stacks.RelativeAmple.IsRelativelyAmple f L`, Stacks
-  01VH, EGA II 4.6.1) when `f` is quasi-compact and `L` is ample over `f⁻¹(V)` for every affine
-  open `V ⊆ S`;
-* `L` is very ample relative to `f` (`Stacks.Tag01VMVeryAmple.IsRelativelyVeryAmple f L`, Stacks
-  01VM, EGA II 4.4.2) when there are a quasi-coherent `E` on `S` and an `S`-immersion
-  `i : X ⟶ ℙ(E) = Proj_S(Sym E)` with `L ≅ i^* 𝒪_{ℙ(E)}(1)`;
-* `f` is quasi-projective (`AlgebraicGeometry.IsQuasiProjective f`, Stacks 01VW, EGA II 5.3.1)
-  when it is of finite type and some invertible sheaf on `X` is ample relative to `f`. This is
-  Grothendieck's definition 27285.
+## Main results
 
-Grothendieck's « coherent » scheme is a quasi-compact quasi-separated one.
-
-**What is proved.**
 * `def_27285`: the definition of a quasi-projective morphism (Stacks 01VW).
 * `prop_27544`: quasi-projective morphisms are stable under base change (Stacks 0B3G); the
   projective half is not stated.
@@ -66,7 +55,29 @@ Grothendieck's « coherent » scheme is a quasi-compact quasi-separated one.
   0892 (1)); the relative and the very ample versions are not formalised.
 * Part 09, entry 19516 (inverse image along quasi-affine morphisms): `Part09AmpleStacks.lean`.
 
-**Not formalised.** (status suggested for the Buffalo index in brackets)
+## Implementation notes
+
+The definitions used, from AxiomMath/Stacks:
+
+* an invertible `𝒪_X`-module is `L : X.Modules` with `Stacks.Ample.IsInvertibleModule X L`;
+* `L` is ample (`Stacks.Ample.IsAmple X L`, Stacks 01PS, EGA II 4.5.3) when `X` is quasi-compact
+  and every point lies in an affine `X_s`, `s ∈ Γ(X, L^{⊗ n})`, `n ≥ 1`;
+* `L` is ample relative to `f : X ⟶ S` (`Stacks.RelativeAmple.IsRelativelyAmple f L`, Stacks
+  01VH, EGA II 4.6.1) when `f` is quasi-compact and `L` is ample over `f⁻¹(V)` for every affine
+  open `V ⊆ S`;
+* `L` is very ample relative to `f` (`Stacks.Tag01VMVeryAmple.IsRelativelyVeryAmple f L`, Stacks
+  01VM, EGA II 4.4.2) when there are a quasi-coherent `E` on `S` and an `S`-immersion
+  `i : X ⟶ ℙ(E) = Proj_S(Sym E)` with `L ≅ i^* 𝒪_{ℙ(E)}(1)`;
+* `f` is quasi-projective (`AlgebraicGeometry.IsQuasiProjective f`, Stacks 01VW, EGA II 5.3.1)
+  when it is of finite type and some invertible sheaf on `X` is ample relative to `f`. This is
+  Grothendieck's definition 27285.
+
+Grothendieck's « coherent » scheme is a quasi-compact quasi-separated one.
+
+## Not formalised
+
+Status suggested for the Buffalo index in brackets.
+
 * Part 07: 25093 [def, ℙ(E) of a finite type module: AxiomMath/Stacks has `relativeProj` of
   `Sym E` but not the naive projective morphism], 25350 [base change of ℙ(E): not formalised],
   25477, 25603, 33188 [counterexamples: not constructed], 25734 [universal property of ℙ(E):
@@ -80,9 +91,20 @@ Grothendieck's « coherent » scheme is a quasi-compact quasi-separated one.
 * Part 07, already partial and not changed here: 25222, 28411, 28613, 30771, 30835, 30898.
 * Parts 01, 04, 05: 17536, 24233, 28043, 28112, 29283 [ℙ(M) as a functor of invertible quotients:
   not formalised]; 32636, 32959, 33086 unchanged.
-* Parts 08, 09: 13514, 14220, 15139, 15264, 18219, 18281, 18420, 18808, 18872, 19653, 24670, 24799,
-  20037 [relative ampleness and descent data: not formalised].
+* Parts 08, 09: 13514, 14220, 15139, 15264, 18219, 18281, 18420, 18808, 18872, 19653, 24670,
+  24799, 20037 [relative ampleness and descent data: not formalised].
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), part 07, topics « Projective and ample
+  morphisms », « Quasi-projective and proper morphisms » and « Ample sheaves »
+* [EGA II] 4.4.2, 4.5.3, 4.5.6, 4.6.1, 4.6.3, 4.6.4, 4.6.6, 5.3.1
+* Stacks Project, tags 01PS, 01PT, 01PX, 01Q3, 01QE, 01VH, 01VI, 01VJ, 01VK, 01VM, 01VN, 01VQ,
+  01VU, 01VW, 0892, 0B3F, 0B3G
 -/
+
+@[expose] public section
+
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -5,6 +10,8 @@ module
 
 The open row `41-irreducible-components-etale-criterion` of the edition's list of findings
 (`src/content/findings.ts`), folder 41, pp. 3, 8–10. It is not stated; why.
+
+## Not formalised
 
 * `41-irreducible-components-etale-criterion`: for `f : X → Y` of finite type, locally
   universally open and quasi-finite over an affine space at the generic points of the components
@@ -19,4 +26,9 @@ The open row `41-irreducible-components-etale-criterion` of the edition's list o
   available (Stacks has geometric irreducible components over a field and their Galois orbits,
   `AlgebraicGeometry.fiber_irreducibleComponentsBaseChangeMap_eq_orbit`, Stacks 04KY), but
   stating the reading's reconstruction would fix a statement the edition has not settled.
+
+## References
+
+* A. Grothendieck, folder 41, pp. 3, 8–10 (finding `41-irreducible-components-etale-criterion`)
+* Stacks Project, tag 04KY
 -/

@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 public import StacksFrontier.RingTheory.GeometricallyNormal.Defs
 public import StacksFrontier.AlgebraicGeometry.Variety.Geometrically.Normal
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 127: flatness of a schematic closure, stated as propositions
@@ -15,6 +18,18 @@ Three open rows of the edition's list of findings (`src/content/findings.ts`) fo
 reduced base): `127-closure-flatness-artinian-or-trait`, `127-non-flat-descent-artinian-epimorphism`
 and `127-hironaka-reduced-base-openness`. Nothing here is proved; a `def … : Prop` asserts
 nothing.
+
+## Main definitions
+
+* `ClosureFlatnessArtinianOrTrait` (`127-closure-flatness-artinian-or-trait`): the valuative
+  criterion, affine case.
+* `NonFlatDescentArtinian` (`127-non-flat-descent-artinian-epimorphism`): descent along a finite
+  epimorphism over an artinian base, affine case. Doubtful: the folder gives no proof, and the
+  row asks first whether it is true.
+* `HironakaReducedBase` (`127-hironaka-reduced-base-openness`): stated for schemes, as the row
+  gives it.
+
+## Implementation notes
 
 The two first rows concern a coherent sheaf `F` on `X`, a coherent quotient `G_U` of `F|_U` on a
 retrocompact open `U`, flat over `Y`, and the image `G = Im(F → i_*G_U)`. They are stated here in
@@ -27,23 +42,22 @@ the affine case only: `Y = Spec A`, `X = Spec B`, `U = D(g)` a principal open, `
 (`IsFlatClosureSolution`); the second clause is the universal injectivity of `G → i_*G_U`
 relative to `Y` of the second row. These are special cases of the rows, not the rows.
 
-## Stated
-
-* `ClosureFlatnessArtinianOrTrait` (`127-closure-flatness-artinian-or-trait`): the valuative
-  criterion, affine case.
-* `NonFlatDescentArtinian` (`127-non-flat-descent-artinian-epimorphism`): descent along a finite
-  epimorphism over an artinian base, affine case. Doubtful: the folder gives no proof, and the
-  row asks first whether it is true.
-* `HironakaReducedBase` (`127-hironaka-reduced-base-openness`): stated for schemes, as the row
-  gives it.
-
-## Not stated, and what is missing
+## Not formalised
 
 * The two first rows for a general `X → Y` and a retrocompact `U`: Mathlib has sheaves of modules
   on a scheme and their pushforward, but not coherent sheaves with their image sheaf, flatness of
   a sheaf of modules over a base, or universal schematic density relative to a base; the affine
   case keeps the commutative algebra the rows turn on.
+
+## References
+
+* A. Grothendieck, folder 127 (findings `127-closure-flatness-artinian-or-trait`,
+  `127-non-flat-descent-artinian-epimorphism`, `127-hironaka-reduced-base-openness`)
+* [EGA IV] 11.10.2
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Topology TensorProduct
 

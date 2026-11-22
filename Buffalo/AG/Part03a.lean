@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 03 (a): 11 June 1973, from 8:43:41
@@ -12,6 +15,8 @@ The entries of `docs/buffalo-ag/index.tex` lines 356–402 (video `51wmmpHand0`,
 functoriality of `Spec` and the basic open sets, `Spec` and fibre products, faithfully flat
 descent and Čech cohomology.
 
+## Implementation notes
+
 Conventions. Spectra are mathlib's `PrimeSpectrum` with the Zariski topology; `Y_f` is
 `PrimeSpectrum.basicOpen f`, `V(J)` is `PrimeSpectrum.zeroLocus J`, and the map
 `Spec(u) : Spec B → Spec A` of `u : A → B` is `PrimeSpectrum.comap u`. The canonical map
@@ -19,7 +24,15 @@ Conventions. Spectra are mathlib's `PrimeSpectrum` with the Zariski topology; `Y
 `0 → M → M ⊗_A A' ⇉ M ⊗_A A' ⊗_A A'` is written as the exactness of
 `M ⊗ A → M ⊗ A' → M ⊗ (A' ⊗ A')`, the second map being `M ⊗ (s ↦ s ⊗ 1 - 1 ⊗ s)`
 (mathlib's `Algebra.TensorProduct.includeLeftSubRight`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 11 June 1973, video `51wmmpHand0`,
+  8:43:41–10:30:48 (`docs/buffalo-ag/index.tex`, lines 356–402)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory TensorProduct Topology PrimeSpectrum
 
@@ -114,7 +127,8 @@ theorem prop_32072 :
 /-- 51wmmpHand0-32243 (8:57:23) [prop] `Y_1 = Y` and `Y_f ∩ Y_g = Y_{fg}` (mathlib:
 `PrimeSpectrum.basicOpen_one`, `PrimeSpectrum.basicOpen_mul`). -/
 @[buffalo "51wmmpHand0-32243"]
-theorem prop_32243 (f g : A) : basicOpen (1 : A) = ⊤ ∧ basicOpen (f * g) = basicOpen f ⊓ basicOpen g :=
+theorem prop_32243 (f g : A) :
+    basicOpen (1 : A) = ⊤ ∧ basicOpen (f * g) = basicOpen f ⊓ basicOpen g :=
   ⟨basicOpen_one, basicOpen_mul f g⟩
 
 /-- 51wmmpHand0-32306 (8:58:26) [prop] A map from a space to `Spec A` is continuous iff the
@@ -260,7 +274,8 @@ theorem curvePt_over_generic (k : Type*) [Field k] (n : ℕ) (hn : 0 < n) :
       (⟨⊥, Ideal.isPrime_bot⟩, ⟨⊥, Ideal.isPrime_bot⟩) := by
   refine Prod.ext (PrimeSpectrum.ext ?_) (PrimeSpectrum.ext ?_)
   · ext a
-    simp [tensorProductTo, curvePt, evExpand, RingHom.mem_ker, Algebra.TensorProduct.algebraMap_apply]
+    simp [tensorProductTo, curvePt, evExpand, RingHom.mem_ker,
+      Algebra.TensorProduct.algebraMap_apply]
   · ext a
     simp only [tensorProductTo, curvePt, comap_asIdeal, Ideal.mem_comap, RingHom.mem_ker,
       Submodule.mem_bot]
@@ -535,7 +550,8 @@ theorem exact_lTensor_of_homotopy {X Y Z : Type*} [AddCommGroup X] [Module A X] 
     exact LinearMap.congr_fun hgf' x
 
 /-- The sequence `A → B → B ⊗_A B` (`s ↦ s ⊗ 1 - 1 ⊗ s`), the Amitsur complex in degrees ≤ 1. -/
-abbrev d0 (A : Type*) [CommRing A] (B : Type*) [CommRing B] [Algebra A B] : A →ₗ[A] B := Algebra.linearMap A B
+abbrev d0 (A : Type*) [CommRing A] (B : Type*) [CommRing B] [Algebra A B] : A →ₗ[A] B :=
+    Algebra.linearMap A B
 
 /-- The first differential `s ↦ s ⊗ 1 - 1 ⊗ s`. -/
 abbrev d1 (A : Type*) [CommRing A] (B : Type*) [CommRing B] [Algebra A B] : B →ₗ[A] B ⊗[A] B :=
@@ -602,7 +618,8 @@ theorem thm_35250 (B : Type*) [CommRing B] [Algebra A B] [Module.FaithfullyFlat 
           ∃ m : M, m ⊗ₜ[A] (1 : B) = x := by
   refine ⟨fun m m' h => Module.FaithfullyFlat.tensorProduct_mk_injective (A := A) (B := B) M
     (by simpa using congrArg (TensorProduct.comm A M B) h), fun x => ?_⟩
-  have hd : (d1 A B).lTensor M = (Algebra.TensorProduct.includeLeft (S := A)).toLinearMap.lTensor M -
+  have hd : (d1 A B).lTensor M =
+      (Algebra.TensorProduct.includeLeft (S := A)).toLinearMap.lTensor M -
       (Algebra.TensorProduct.includeRight (R := A) (A := B)).toLinearMap.lTensor M := by
     rw [← LinearMap.lTensor_sub]; rfl
   rw [← sub_eq_zero, ← LinearMap.sub_apply, ← hd, descent_exact B M x]
@@ -695,7 +712,8 @@ theorem thm_36802 (B : Type*) [CommRing B] [Algebra A B] [Module.FaithfullyFlat 
     (M : Type*) [AddCommGroup M] [Module A M] :
     Function.Injective ((d0 A B).lTensor M) ∧
       Function.Exact ((d0 A B).lTensor M) ((d1 A B).lTensor M) := by
-  refine ⟨fun y z h => (TensorProduct.rid A M).injective ((thm_35250 (A := A) B M).1 ?_), descent_exact B M⟩
+  refine ⟨fun y z h => (TensorProduct.rid A M).injective ((thm_35250 (A := A) B M).1 ?_),
+    descent_exact B M⟩
   simpa only [d0_lTensor_apply] using h
 
 /-- 51wmmpHand0-36939 (10:15:39) [prop] If the `f_i` generate the unit ideal, the Čech complex of
@@ -714,8 +732,9 @@ theorem prop_36939 (M : Type*) [AddCommGroup M] [Module A M] (s : Set A)
 /-- 51wmmpHand0-37263 (10:21:03) [prop] If `f_1, …, f_n` generate the unit ideal,
 `A → ∏ A_{f_i}` is faithfully flat. -/
 @[buffalo "51wmmpHand0-37263"]
-theorem prop_37263 {ι : Type*} [Fintype ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
+theorem prop_37263 {ι : Type*} [Finite ι] (f : ι → A) (hf : Ideal.span (Set.range f) = ⊤) :
     Module.FaithfullyFlat A (Π i, Localization.Away (f i)) := by
+  have := Fintype.ofFinite ι
   classical
   have : ∀ i, Module.Flat A (Localization.Away (f i)) := fun i =>
     IsLocalization.flat _ (Submonoid.powers (f i))

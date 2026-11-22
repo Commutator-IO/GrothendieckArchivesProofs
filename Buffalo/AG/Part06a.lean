@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (a): 25 June 1973, open and closed immersions
@@ -11,11 +14,21 @@ import Grothendieck.Attr
 The entries of `docs/buffalo-ag/index.tex` lines 770–800 (video `Oqhr-Gt66es`, 0:58:06–1:34:42):
 open immersions, closed immersions, closed subschemes and quasi-coherent ideals, immersions.
 
+## Implementation notes
+
 Conventions. Schemes and their morphisms are mathlib's (`AlgebraicGeometry.Scheme`); the classes
 of morphisms are mathlib's `IsOpenImmersion`, `IsClosedImmersion`, `IsImmersion`, and their
 stability is stated with `MorphismProperty`. Statements about closed subschemes of an affine
 scheme `Spec A` are made on the rings (`A → A/J`).
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 25 June 1973, video `Oqhr-Gt66es`,
+  0:58:06–1:34:42 (`docs/buffalo-ag/index.tex`, lines 770–800)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Topology TensorProduct
 
@@ -213,7 +226,8 @@ theorem prop_5361 (f : X ⟶ Y) :
     IsImmersion f ↔ IsEmbedding f ∧ IsLocallyClosed (Set.range f) ∧
       ∀ x, Function.Surjective (f.stalkMap x) :=
   ⟨fun h => ⟨h.isEmbedding, h.isLocallyClosed_range, h.stalkMap_surjective⟩,
-    fun ⟨h₁, h₂, h₃⟩ => { stalkMap_surjective := h₃, isEmbedding := h₁, isLocallyClosed_range := h₂ }⟩
+    fun ⟨h₁, h₂, h₃⟩ =>
+      { stalkMap_surjective := h₃, isEmbedding := h₁, isLocallyClosed_range := h₂ }⟩
 
 /-- Oqhr-Gt66es-5426 (1:30:26) [prop] Equivalently, `f(X)` has an open neighbourhood `V` such that
 `f⁻¹(V) → V` is a closed immersion (here `V` is the coborder, `f⁻¹(V) = X`); conversely such a

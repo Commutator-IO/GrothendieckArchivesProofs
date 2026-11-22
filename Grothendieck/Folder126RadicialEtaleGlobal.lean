@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.EtaleCohomology.TopologicalInvariance.MorphismDescent
 public import StacksFrontier.AlgebraicGeometry.Topologies.EtaleDescentIntegral
 public import StacksFrontier.AlgebraicGeometry.Morphisms.UniversalHomeomorphism.Defs.Integral
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 17–23: the radicial–étale factorisation, global universal property
@@ -17,15 +20,19 @@ statement that holds over any base scheme `Y`: *every `Y`-morphism from `X` to a
 to unique isomorphism*. It uses neither the noetherian hypothesis nor the constancy of the
 number of geometric points; those serve existence only.
 
-**What is proved.** Let `g : X ⟶ Z` be integral, universally injective and surjective (for a
-finite `g`: finite, surjective and radicial, the first arrow of page 17), and `h : Z ⟶ Y`
-any morphism.
+## Main results
+
+Let `g : X ⟶ Z` be integral, universally injective and surjective (for a finite `g`: finite,
+surjective and radicial, the first arrow of page 17), and `h : Z ⟶ Y` any morphism.
+
 * `existsUnique_lift_of_integral`: for every étale `e : E ⟶ Y` and every `v : X ⟶ E` over `Y`
   (`v ≫ e = g ≫ h`), there is exactly one `u : Z ⟶ E` over `Y` with `g ≫ u = v`.
 * `bijective_comp_of_integral`: the same as a bijection of `Y`-morphisms, `u ↦ g ≫ u`.
 * `existsUnique_iso_of_factorisations`: two factorisations `X ⟶ Z ⟶ Y` and `X ⟶ Z' ⟶ Y`, each a
   universal homeomorphism followed by an étale morphism, are isomorphic by exactly one
   isomorphism `Z ≅ Z'` compatible with both arrows.
+
+## Implementation notes
 
 The proof is the topological invariance of the étale site, Stacks 0BTY, used in the form the
 page needs. Existence of `u` is `Stacks.Etale.exists_section_of_universalHomeomorphism`, applied
@@ -35,6 +42,9 @@ surjective map are equal, because the diagonal of an étale morphism is an open 
 Integral, universally injective and surjective is the same as universal homeomorphism (Stacks
 04DF, `universalHomeomorphism_iff_integral_universallyInjective_surjective`).
 
+The full equivalence of étale sites (Stacks 04DZ, `Stacks.Etale.etalePullback_isEquivalence`) is
+not needed here: full faithfulness, which is what the universal property uses, suffices.
+
 **Existence.** The factorisation itself exists over any `Y`
 (`Grothendieck.Folder126Glue.exists_radicial_etale_factorisation_of_hasGeomDegree`): by étale
 descent from the splitting over étale neighbourhoods over a quasi-compact quasi-separated base
@@ -43,7 +53,22 @@ transitions coming from the uniqueness proved here; the noetherian hypothesis is
 The full equivalence of étale sites
 (Stacks 04DZ, `Stacks.Etale.etalePullback_isEquivalence`) is not needed here: full faithfulness,
 which is what the universal property uses, suffices.
+
+## Not formalised
+
+Existence of the factorisation over a locally noetherian `Y` (pages 17–22): the local splitting
+is proved in `Grothendieck.Folder126RadicialEtale`, but its descent from the strict
+henselisations to `Y` (SGA 1 IX §4) is not done.
+
+## References
+
+* A. Grothendieck, folder 126, pp. 17–23 (finding `126-radicial-etale-factorisation`)
+* [SGA 1] exposé IX, §4
+* Stacks Project, tags 0BTY, 04DF, 04DZ
 -/
+
+@[expose] public section
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 

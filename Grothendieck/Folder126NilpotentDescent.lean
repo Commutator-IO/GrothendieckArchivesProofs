@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder126NilpotentQuotient
@@ -5,8 +10,6 @@ public import StacksFrontier.RingTheory.Descent.AmitsurComplex
 public import StacksFrontier.RingTheory.Descent.NilpotentEqualizerLift
 public import StacksFrontier.RingTheory.Descent.CechSquareZeroGenerators
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 126, pages 5 to 7: the invariant ring of a thickened flat equivalence relation
@@ -73,6 +76,8 @@ elements of `J` are the elements of `I = J ∩ A'`, so the descended module is `
   hypotheses: identifying `(A' ⧸ I) ⊗_{A'} φ` with `B ⊗_A B ≅ C' ⧸ J C'` (that is
   `R₀ ≅ X₀ ×_{Y₀} X₀`) is not done.
 -/
+
+@[expose] public section
 
 namespace Grothendieck.Folder126NilpotentDescent
 

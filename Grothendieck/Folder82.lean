@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 82, pages 77–78: the conic in characteristic 2 and Frobenius, split case
@@ -20,7 +23,12 @@ and the orthogonal of `𝒪(s²X̃ + t²Ỹ + stH̃)` is the hyperplane `t²x + 
 contains `H̃ = 1` and depends only on `(s² : t²)`.
 
 This is finding `82-char2-conic-frobenius` of `src/content/findings.ts`, in the split case,
-over any commutative ring `R` with `2 = 0`, for the coordinates `u = xX̃ + yỸ + zH̃`.
+over any commutative ring `R` with `2 = 0`, for the coordinates `u = xX̃ + yỸ + zH̃`. The file
+also treats pages 26–27, `sl(2)` in characteristic 2 (finding `82-char2-sl2-forms-affine`).
+
+## Main results
+
+### Pages 77–78: the conic and Frobenius
 
 * `coord_mul_self`: `u² = (xy + z²) · 1`, so `u` has square zero iff `xy = z²` in
   characteristic 2: the conic.
@@ -34,9 +42,7 @@ over any commutative ring `R` with `2 = 0`, for the coordinates `u = xX̃ + yỸ
 * `not_mono`: over `R = 𝔽₂[ε]/(ε²)` the distinct points `(1 : ε)` and `(1 : 0)` of `P¹(R)`
   have the same orthogonal hyperplane: (60) is not a monomorphism.
 
-The canonical isomorphism (61) `P(g̃/𝒪_S) ≃ X^{(2)}` for a twisted conic over an arbitrary
-base is not formalised: mathlib has neither conics over a base nor the relative Frobenius.
-## Pages 26–27: `sl(2)` in characteristic 2, split case
+### Pages 26–27: `sl(2)` in characteristic 2, split case
 
 The reading (« Caractéristique 2 : algèbres couplées et plans affines symplectiques ») says
 that over a base with `2 = 0`, `sl(2)` has centre `𝔷 = 𝒪H̃` equal to its derived algebra,
@@ -58,9 +64,23 @@ is `SL(V) ⋉ V`, of dimension 5. This is finding `82-char2-sl2-forms-affine`, i
 * `derEquiv`, `finrank_der`: the derivations (the Lie algebra of `Aut`) are `gl₂ × R²`, free of
   rank 6; `derFixEquiv`, `finrank_derFix`: those killing `H̃` are `sl₂ × R²`, rank 5.
 
-Not formalised: forms over a base (descent), `gp(1)`, the coupling of `E` with `E′`, and
-smoothness of the automorphism schemes (only their points and Lie algebras are computed).
+## Not formalised
+
+* Pages 77–78: the canonical isomorphism (61) `P(g̃/𝒪_S) ≃ X^{(2)}` for a twisted conic over an
+  arbitrary base is not formalised: mathlib has neither conics over a base nor the relative
+  Frobenius.
+* Pages 26–27: forms over a base (descent), `gp(1)`, the coupling of `E` with `E′`, and
+  smoothness of the automorphism schemes (only their points and Lie algebras are computed).
+
+## References
+
+* A. Grothendieck, Folder 82, pages 26–27 and 77–78 (modernised reading
+  `transcripts/82/82.modern.tex`; findings `82-char2-conic-frobenius`,
+  `82-char2-sl2-forms-affine`)
 -/
+
+@[expose] public section
+
 
 open Matrix
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
@@ -10,8 +15,6 @@ public import Mathlib.Tactic.FinCases
 public import Mathlib.Tactic.IntervalCases
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 161-6, pages 3–6, 12, 14 and 21: the golden number and the six axes of the icosahedron
@@ -29,7 +32,14 @@ lines through opposite vertices, computes `cos α = γ/(2 − γ) = (2γ + 1)/5 
 `B′ = B/2`, for generators `x, y` of two distinct lines; a margin writes `c² + c − 1 = 0` for
 the constant `c = cos′(D_i, D_j) = B(x, y)²/(Q(x)Q(y)) − 2`.
 
-Proved here:
+**What the formalisation finds.** The page-4 condition must be strict: at `θ = π/3` the
+only solution is `α = 0`. The margin of page 21 is false as read: `c = −6/5` and
+`c² + c − 1 = −19/25`; the golden relation is that of `η`, not of `cos′(D_i, D_j)`. The
+equiangularity relation needs no division: `5 B′² = Q Q` holds over `ℤ[t]/(t² − t − 1)`. Its
+« localement » needs `√5`: over a field where `5` is not a square, such as `ℚ`, three
+mutually equiangular lines with this constant do not exist.
+
+## Main results
 
 * Golden number. `cos_two_pi_div_five`, `eta_eq_inv_goldenRatio`
   (`2 cos(2π/5) = φ⁻¹ = (√5 − 1)/2`), `eta_golden` (`η² + η − 1 = 0`), and, over any
@@ -43,7 +53,8 @@ Proved here:
   `5 B′(x_i, x_j)² = Q(x_i) Q(x_j)` for the six axes `(0, 1, ±t)`, `(1, ±t, 0)`, `(±t, 0, 1)`,
   `i ≠ j` — no division, so it holds in `ℤ[φ]`, and in characteristic `5`, where both
   sides vanish (`t = 3`, `Q(x_i) = t + 2 = 0`: the axes are isotropic, as in
-  `Folder70.lean`). Over `ℝ`, with `t = φ`: `cos'_axes` (`cos′(D_i, D_j) = −6/5`, page 21) and `margin_false`.
+  `Folder70.lean`). Over `ℝ`, with `t = φ`: `cos'_axes` (`cos′(D_i, D_j) = −6/5`, page 21)
+  and `margin_false`.
 * The twelve vertices, over `ℤ[√5]` in doubled coordinates (`2φ = 1 + √5`): `vert_norm`,
   `d2_values` (three distances: `16`, `24 + 8√5`, `40 + 8√5`), `nbrs_card` (each vertex has
   five neighbours at the minimal distance), `edges_card` (30 edges), `faces_card` (20 faces),
@@ -54,15 +65,20 @@ Proved here:
   `5 B′(x_i, x_j)² = Q(x_i) Q(x_j)` pairwise force `5` to be a square; `no_three_rat_lines`:
   so there are no three such lines over `ℚ`.
 
-**What the formalisation finds.** The page-4 condition must be strict: at `θ = π/3` the
-only solution is `α = 0`. The margin of page 21 is false as read: `c = −6/5` and
-`c² + c − 1 = −19/25`; the golden relation is that of `η`, not of `cos′(D_i, D_j)`. The
-equiangularity relation needs no division: `5 B′² = Q Q` holds over `ℤ[t]/(t² − t − 1)`. Its
-« localement » needs `√5`: over a field where `5` is not a square, such as `ℚ`, three
-mutually equiangular lines with this constant do not exist. That the edge graph has
-`120` automorphisms, not the `60` rotations the page writes (pages 8–9), is `card_aut` of
-`Folder86.lean`; here `vert_neg` gives the orientation-reversing automorphism `−1`.
+## Not formalised
+
+That the edge graph has `120` automorphisms, not the `60` rotations the page writes
+(pages 8–9), is not proved here but is `card_aut` of `Folder86.lean`; here `vert_neg` gives the
+orientation-reversing automorphism `−1`.
+
+## References
+
+* A. Grothendieck, Folder 161-6, pp. 3–10, 12, 14, 21 (reading
+  `transcripts/161-6/161-6.modern.tex`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder161_6
 

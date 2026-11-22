@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 40, pages 26–27: regularity is not stable under the group law of `H¹(A, α_p)`
@@ -22,33 +25,48 @@ This is finding `40-alpha-p-regular-sum` of `src/content/findings.ts`. Proving i
 only that the claims hold as stated; whether they stand in the literature is a separate
 question.
 
-What is formalised.
+## Main results
 
 * `isDVR_adjoinRoot` (the regular torsors): over any discrete valuation ring `A` with
   uniformiser `ϖ`, any unit `u` and any `n ≥ 1`, `A[T]/(T^n - ϖu)` is a discrete
-  valuation ring. No completeness, no characteristic, `n` arbitrary. The proof: the
-  polynomial is Eisenstein, hence prime in the factorial ring `A[T]`; the extension is
-  integral, so every maximal ideal contracts to `(ϖ)`, contains `T` (as `T^n = ϖu`) and is
-  contained in `(T)` (write an element as `a + T b`; then `a ∈ (ϖ) ⊆ (T)`); so the ring is
-  local with principal maximal ideal `(T)`, and Noetherian. Instances:
+  valuation ring. No completeness, no characteristic, `n` arbitrary. Instances:
   `isDVR_root_X` (`T^n = X`) and `isDVR_root_neg_X_add_X_sq` (`T^n = -X + X²`, as
   `-X + X² = X (X - 1)` with `X - 1` a unit) over `k[[X]]`, `k` any field.
 * `cusp_not_valuation` and `not_isDVR_cusp_odd` (the sum): for `n ≥ 3` odd and `k` any
   field, in `S = k[[X]][T]/(T^n - X²)` neither of `X`, `T` divides the other, so `S` is
-  not a discrete valuation ring (not even a valuation ring). The witness is the map
-  `S → k[[Z]]`, `X ↦ Zⁿ`, `T ↦ Z²`, whose image has no coefficient at an odd exponent
-  `< n`: `T ∣ X` would put `Z^(n-2)` in it. For `n` even, `not_isDomain_cusp_even`: `S`
-  is not even a domain (`(T^(n/2) - X)(T^(n/2) + X) = 0`, both factors nonzero), and for
-  `n = 2` in characteristic `2`, `cusp_two_nilpotent`: `(T - X)² = 0` with `T - X ≠ 0`.
+  not a discrete valuation ring (not even a valuation ring). For `n` even,
+  `not_isDomain_cusp_even`: `S` is not even a domain (`(T^(n/2) - X)(T^(n/2) + X) = 0`, both
+  factors nonzero), and for `n = 2` in characteristic `2`, `cusp_two_nilpotent`:
+  `(T - X)² = 0` with `T - X ≠ 0`.
 * `fibre_nilpotent` and `fibre_ne_zero` (the fibre product): in characteristic `p`, with
   `C₁ = A[T]/(T^p - X)`, `C₂ = A[T]/(T^p + X - X²)` and `s`, `t` their roots,
-  `z = 1 ⊗ t + (s - s²) ⊗ 1` satisfies `z^p = 0` in `C₁ ⊗_A C₂` and `z ≠ 0` (its image in
-  `C₁[T]/(T^p + X - X²)` is the class of the monic `T + s - s²` of degree `1 < p`).
+  `z = 1 ⊗ t + (s - s²) ⊗ 1` satisfies `z^p = 0` in `C₁ ⊗_A C₂` and `z ≠ 0`.
   `neg_X_add_X_sq_eq_pow` is the identity `-X + X² = (-s + s²)^p` in `C₁`.
+
+## Implementation notes
+
+* `isDVR_adjoinRoot`: the polynomial is Eisenstein, hence prime in the factorial ring
+  `A[T]`; the extension is integral, so every maximal ideal contracts to `(ϖ)`, contains `T`
+  (as `T^n = ϖu`) and is contained in `(T)` (write an element as `a + T b`; then
+  `a ∈ (ϖ) ⊆ (T)`); so the ring is local with principal maximal ideal `(T)`, and Noetherian.
+* `cusp_not_valuation`: the witness is the map `S → k[[Z]]`, `X ↦ Zⁿ`, `T ↦ Z²`, whose image
+  has no coefficient at an odd exponent `< n`: `T ∣ X` would put `Z^(n-2)` in it.
+* `fibre_ne_zero`: the image of `z` in `C₁[T]/(T^p + X - X²)` is the class of the monic
+  `T + s - s²` of degree `1 < p`.
+
+## Not formalised
 
 The isomorphism `C₁ ⊗_A C₂ ≃ C₁[T]/(T^p)` itself is not formalised, nor is the
 identification of the group law of `H¹(A, α_p)` with addition in `A/A^p`.
+
+## References
+
+* A. Grothendieck, folder 40, pp. 26–27 (reading `transcripts/40/40.modern.tex`; finding
+  `40-alpha-p-regular-sum`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder40
 
@@ -178,7 +196,8 @@ theorem neg_X_add_X_sq : (-PowerSeries.X + PowerSeries.X ^ 2 : (PowerSeries k)) 
     PowerSeries.X * (PowerSeries.X - 1) := by ring
 
 /-- The cusp `S = k[[X]][T]/(T^n - X²)`. -/
-abbrev Cusp (k : Type*) [Field k] (n : ℕ) := AdjoinRoot (X ^ n - C (PowerSeries.X ^ 2 : (PowerSeries k)))
+abbrev Cusp (k : Type*) [Field k] (n : ℕ) :=
+    AdjoinRoot (X ^ n - C (PowerSeries.X ^ 2 : (PowerSeries k)))
 
 /-- Power series with no coefficient at an odd exponent `< n`: a subring. -/
 def noOddBelow (n : ℕ) : Subring (PowerSeries k) where
@@ -207,7 +226,8 @@ theorem substPow_X (n : ℕ) (hn : n ≠ 0) :
   simp [substPow, PowerSeries.coe_substAlgHom, PowerSeries.subst_X
     (PowerSeries.HasSubst.X_pow (R := k) hn)]
 
-theorem substPow_mem (n : ℕ) (hn : n ≠ 0) (a : (PowerSeries k)) : substPow n hn a ∈ noOddBelow n := by
+theorem substPow_mem (n : ℕ) (hn : n ≠ 0) (a : (PowerSeries k)) :
+    substPow n hn a ∈ noOddBelow n := by
   intro m hm hmn
   simp only [substPow, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, PowerSeries.coe_substAlgHom]
   rw [PowerSeries.coeff_subst_X_pow hn, ite_eq_right_iff]
@@ -243,7 +263,8 @@ theorem cusp_not_valuation {n : ℕ} (hn : 3 ≤ n) (hodd : Odd n) (c : Cusp k n
     rw [cuspMap, AdjoinRoot.lift_of, substPow_X]
   have hY : cuspMap (k := k) n hn0 (AdjoinRoot.root _) = PowerSeries.X ^ 2 := by
     rw [cuspMap, AdjoinRoot.lift_root]
-  have hsplit : (PowerSeries.X ^ n : (PowerSeries k)) = PowerSeries.X ^ 2 * PowerSeries.X ^ (n - 2) := by
+  have hsplit : (PowerSeries.X ^ n : (PowerSeries k)) =
+      PowerSeries.X ^ 2 * PowerSeries.X ^ (n - 2) := by
     rw [← pow_add]; congr 1; omega
   have hX2 : (PowerSeries.X ^ 2 : (PowerSeries k)) ≠ 0 := pow_ne_zero _ PowerSeries.X_ne_zero
   constructor
@@ -284,7 +305,8 @@ theorem cusp_factor_ne_zero {m : ℕ} (hm : m ≠ 0) (ε : (PowerSeries k)) :
 @[montpellier "40, 26–27"]
 theorem not_isDomain_cusp_even {m : ℕ} (hm : m ≠ 0) : ¬ IsDomain (Cusp k (2 * m)) := by
   intro hd
-  have h0 : AdjoinRoot.mk (X ^ (2 * m) - C (PowerSeries.X ^ 2 : (PowerSeries k))) (X ^ m + C (-PowerSeries.X)) *
+  have h0 : AdjoinRoot.mk (X ^ (2 * m) - C (PowerSeries.X ^ 2 : (PowerSeries k)))
+        (X ^ m + C (-PowerSeries.X)) *
       AdjoinRoot.mk _ (X ^ m + C PowerSeries.X) = 0 := by
     rw [← map_mul, AdjoinRoot.mk_eq_zero]
     exact ⟨1, by rw [mul_one, map_neg, C_pow]; ring⟩
@@ -326,7 +348,8 @@ abbrev C₂ := AdjoinRoot (X ^ p - C (-PowerSeries.X + PowerSeries.X ^ 2 : (Powe
 
 omit [CharP k p] in
 instance isDomain_C₁ : IsDomain (C₁ (k := k) p) := by
-  have := isDomain_radical hp.out.ne_zero PowerSeries.X_irreducible (isUnit_one (M := PowerSeries k))
+  have := isDomain_radical hp.out.ne_zero PowerSeries.X_irreducible
+      (isUnit_one (M := PowerSeries k))
   rwa [mul_one] at this
 
 omit hp in

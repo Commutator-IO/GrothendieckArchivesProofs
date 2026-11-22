@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 06 (d): 26 June 1973, from 4:39:50
@@ -11,12 +14,25 @@ import Grothendieck.Attr
 The entries of `docs/buffalo-ag/index.tex` lines 880–906 (video `Oqhr-Gt66es`, 4:39:50–5:23:27):
 perfect fields and geometric reducedness, separably closed fields and geometric irreducibility.
 
+## Main results
+
+* `not_isReduced_tensor`: the key computation: for `k` of characteristic `p` and
+  `k' = k[t]/(tᵖ - x)`, the element `α ⊗ 1 - 1 ⊗ α` of `k' ⊗_k k'` is a nonzero nilpotent.
+
+## Implementation notes
+
 Conventions. A `k`-scheme is a morphism `X ⟶ Spec k`. Mathlib's `GeometricallyReduced` and
 `GeometricallyIrreducible` are defined by base change to every field, and
-`Algebra.IsGeometricallyReduced k A` by base change to an algebraic closure. The key computation
-is `not_isReduced_tensor`: for `k` of characteristic `p` and `k' = k[t]/(tᵖ - x)`, the element
-`α ⊗ 1 - 1 ⊗ α` of `k' ⊗_k k'` is a nonzero nilpotent.
+`Algebra.IsGeometricallyReduced k A` by base change to an algebraic closure.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), 26 June 1973, video `Oqhr-Gt66es`,
+  4:39:50–5:23:27 (`docs/buffalo-ag/index.tex`, lines 880–906)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits AlgebraicGeometry Polynomial TensorProduct
 
@@ -118,7 +134,8 @@ theorem pow_mem_range (y : AdjoinRoot (rootPoly k p x)) :
     charP_of_injective_algebraMap (algebraMap k _).injective p
   obtain ⟨f, rfl⟩ := AdjoinRoot.mk_surjective y
   induction f using Polynomial.induction_on with
-  | C a => exact RingHom.mem_range.2 ⟨a ^ p, by rw [map_pow, AdjoinRoot.mk_C, AdjoinRoot.algebraMap_eq]⟩
+  | C a => exact RingHom.mem_range.2 ⟨a ^ p, by rw [map_pow, AdjoinRoot.mk_C,
+      AdjoinRoot.algebraMap_eq]⟩
   | add f g hf hg =>
     rw [map_add, add_pow_char]
     exact Subring.add_mem _ hf hg

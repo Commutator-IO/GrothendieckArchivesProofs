@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01b
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 1d: algebraic structures on objects of a category (11 May 1973)
@@ -11,7 +14,15 @@ import Grothendieck.Attr
 Entries of `docs/buffalo-topos/index.tex` of the section « Algebraic structures on objects of a
 category » (video `URU5jgTvjhU`, 4:59:30–5:34:24). The status of each entry is in
 `docs/buffalo-topos/lean/Part01.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 4:59:30–5:34:24
+  (11 May 1973)
 -/
+
+@[expose] public section
+
 
 universe u
 
@@ -133,8 +144,9 @@ theorem grp_isSheaf_iff (F : X.Presheaf GrpCat.{u}) :
 
 /-- URU5jgTvjhU-19532 (5:25:32) [prop] The stalks of a presheaf of rings are rings, and the
 underlying set of the stalk is the stalk of the underlying presheaf of sets (the forgetful functor
-commutes with filtered colimits). (For groups Mathlib has no colimits in `GrpCat` at this revision.) -/
 @[buffalo "URU5jgTvjhU-19532"]
+commutes with filtered colimits). (For groups Mathlib has no colimits in `GrpCat` at this
+revision.) -/
 def ring_stalk (F : X.Presheaf CommRingCat.{u}) (x : X) :
     (forget CommRingCat.{u}).obj (F.stalk x) ≅
       TopCat.Presheaf.stalk (F ⋙ forget CommRingCat.{u}) x :=

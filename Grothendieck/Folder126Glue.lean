@@ -1,11 +1,14 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder126Existence
 public import Mathlib.AlgebraicGeometry.RelativeGluing
 public import Mathlib.AlgebraicGeometry.Sites.SmallAffineZariski
 import Grothendieck.Attr
-
-@[expose] public noncomputable section
 
 /-!
 # Folder 126, pages 17–23: the radicial–étale factorisation over any base
@@ -27,6 +30,8 @@ cover of `Y` by its affine opens (Stacks 01LH, Mathlib's
 local on the target), the maps `X_V ⟶ X^ét_V` glue to `X ⟶ X^ét`, and that map is a universal
 homeomorphism by the geometric-point criterion, since over `X^ét_V` it is `X_V ⟶ X^ét_V`.
 -/
+
+@[expose] public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Grothendieck.Folder126GeometricPoints Grothendieck.Folder126EtaleSplitting
@@ -156,13 +161,13 @@ theorem exists_radicial_etale_factorisation_of_hasGeomDegree (f : X ⟶ Y) [IsFi
   have hEt : Etale d.toBase := by
     refine IsZariskiLocalAtTarget.of_openCover (P := @Etale) (𝒰Y) fun V => ?_
     have : Etale (h V) := hhe V
-    show Etale (pullback.snd d.toBase ((𝒰Y).f V))
+    change Etale (pullback.snd d.toBase ((𝒰Y).f V))
     rw [← (hpb V).flip.isoPullback_inv_snd]
     infer_instance
   have hFin : IsFinite d.toBase := by
     refine IsZariskiLocalAtTarget.of_openCover (P := @IsFinite) (𝒰Y) fun V => ?_
     have : IsFinite (h V) := hh V
-    show IsFinite (pullback.snd d.toBase ((𝒰Y).f V))
+    change IsFinite (pullback.snd d.toBase ((𝒰Y).f V))
     rw [← (hpb V).flip.isoPullback_inv_snd]
     infer_instance
   -- The glued map `X ⟶ X^ét`.

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 01 (b): the module functors `W(M)`, `V(M)`, endomorphisms
@@ -11,11 +14,21 @@ import Grothendieck.Attr
 Entries `_lTf_L0yvrU-2834` to `_lTf_L0yvrU-6070` of `docs/buffalo-groupes/index.tex` (4 June and
 the beginning of 6 June 1973). Statuses in `docs/buffalo-groupes/lean/Part01.json`.
 
+## Implementation notes
+
 `W(M)(A) = A ⊗[k] M` and `V(M)(A) = Hom_k(M, A)`, for a `k`-module `M` and a commutative
 `k`-algebra `A`; both are `A`-modules, that is modules over the ring functor `𝒪 : A ↦ A`. A
 morphism of `𝒪`-modules `W(M) → W(N)` is written out as a family of `A`-linear maps natural in
 `A` (`WHom`).
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 2834–6070 (4 June
+  and the beginning of 6 June 1973)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part01
 
@@ -51,7 +64,8 @@ noncomputable def WF : CommAlgCat.{u} k ⥤ Type u where
     rw [← LinearMap.rTensor_comp_apply]
     rfl
 
-/-- _lTf_L0yvrU-2899 (0:48:19) [prop] If `M ≃ kⁿ`, `W(M)` is the standard affine space: `A ⊗ M ≃ Aⁿ`. -/
+/-- _lTf_L0yvrU-2899 (0:48:19) [prop] If `M ≃ kⁿ`, `W(M)` is the standard affine space:
+`A ⊗ M ≃ Aⁿ`. -/
 @[buffalo "_lTf_L0yvrU-2899"]
 noncomputable def W_free (n : ℕ) (e : M ≃ₗ[k] (Fin n → k)) (A : Type u) [CommRing A] [Algebra k A] :
     W k M A ≃ₗ[A] (Fin n → A) :=
@@ -168,11 +182,13 @@ def corep_pi {R : Type u} [CommRing R] [Algebra k R] {ι : Type u} (A : ι → T
   left_inv _ := rfl
   right_inv _ := rfl
 
-/-- _lTf_L0yvrU-3352 (0:55:52) [prop] … and with arbitrary projective limits (Mathlib: corepresentable
+/-- _lTf_L0yvrU-3352 (0:55:52) [prop] … and with arbitrary projective limits (Mathlib:
+corepresentable
 functors preserve limits). -/
 example (X : (CommAlgCat.{u} k)ᵒᵖ) : Limits.PreservesLimits (coyoneda.obj X) := inferInstance
 
-/-- The `kᵐᵒᵖ`-module structure on a `k`-module (`k` commutative), to form square-zero extensions. -/
+/-- The `kᵐᵒᵖ`-module structure on a `k`-module (`k` commutative), to form square-zero
+extensions. -/
 abbrev modOp (P : Type u) [AddCommGroup P] [Module k P] : Module kᵐᵒᵖ P :=
   Module.compHom P ((RingHom.id k).fromOpposite fun x y ↦ Commute.all x y)
 
@@ -285,7 +301,7 @@ theorem symm_finiteType_iff : Algebra.FiniteType k (SymmetricAlgebra k M) ↔ Mo
           simp only [Set.mem_ofPred_eq, TrivSqZeroExt.snd_add] at *
           exact add_mem ha hb
         algebraMap_mem' := fun r ↦ by
-          show (TrivSqZeroExt.inl (algebraMap k k r) : TrivSqZeroExt k M).snd ∈
+          change (TrivSqZeroExt.inl (algebraMap k k r) : TrivSqZeroExt k M).snd ∈
             Submodule.span k T
           rw [TrivSqZeroExt.snd_inl]
           exact Submodule.zero_mem _ }
@@ -306,7 +322,8 @@ theorem symm_finiteType_iff : Algebra.FiniteType k (SymmetricAlgebra k M) ↔ Mo
     | ι m =>
       have hm : m ∈ Submodule.span k (s : Set M) := hs ▸ Submodule.mem_top
       have : Submodule.span k ((SymmetricAlgebra.ι k M) '' s) ≤
-          (Algebra.adjoin k ((s.image (SymmetricAlgebra.ι k M) : Finset _) : Set _)).toSubmodule := by
+          (Algebra.adjoin k
+            ((s.image (SymmetricAlgebra.ι k M) : Finset _) : Set _)).toSubmodule := by
         rw [Submodule.span_le]
         intro y hy
         exact Algebra.subset_adjoin (by simpa using hy)

@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Tactic.Ring
 public import Mathlib.Data.Rat.Init
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 147, pages 62–64: the stratified class of `M₁,₁` over `ℤ`
@@ -20,9 +23,19 @@ automorphisms `ℤ/6`), which meet only over `𝔽₂` and `𝔽₃`, where the 
 and the page's formula (80) is `[M₁,₁] = ½(𝕃 − 1) − 1/12 + ⅛ ζ₂ + ⅙ ζ₃`; adding the cusp, with
 weight ½, gives `[M̄₁,₁] = ½ 𝕃 − 1/12 + ⅛ ζ₂ + ⅙ ζ₃`. The modernised reading says it redid the
 computation (« il est juste »); this file checks the arithmetic, over any field of characteristic
-zero, with `𝕃`, `ζ₂`, `ζ₃` as indeterminates. It checks the algebra of the strata,
-not the geometry that produces them.
+zero, with `𝕃`, `ζ₂`, `ζ₃` as indeterminates.
+
+## Not formalised
+
+It checks the algebra of the strata, not the geometry that produces them.
+
+## References
+
+* A. Grothendieck, folder 147, pp. 62–64, formula (80)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder147
 

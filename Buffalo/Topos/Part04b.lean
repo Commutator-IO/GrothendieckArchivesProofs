@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 4b: exactness properties, 2-fibre products, algebraic theories
@@ -12,12 +15,21 @@ Entries of `docs/buffalo-topos/index.tex` from « Algebraic structures and exact
 to « Theories as 2-fibred categories over `Cat_D` » (video `PqCQM3Pcl6Q`, 5:14:17–8:58:56). The
 status of each entry is in `docs/buffalo-topos/lean/Part04.json`.
 
+## Implementation notes
+
 The 2-category `Cat_D` is not in Mathlib. We model the part of it the entries use: a pair
 `D = (D', D'')` of families of small diagram shapes, the categories having limits of type `D'` and
 colimits of type `D''`, the functors preserving them (`IsDFunctor`), exactness properties
 `(I, Σ)`, 2-sums, envelopes and localizations by their (2-)universal properties against one
 target category at a time.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 5:14:17–8:58:56
 -/
+
+@[expose] public section
+
 
 universe w v u v₁ u₁ v₂ u₂
 
@@ -144,7 +156,8 @@ initial and terminal, and `Set` has none. So `Set` satisfies vacuously every exa
 `(I, Σ)` whose `I` is a 2-sum having the point as a summand, without satisfying the other
 summand's. -/
 @[buffalo "PqCQM3Pcl6Q-20146"]
-theorem no_initial_terminal_set : ¬ ∃ X : Type u, Nonempty (IsInitial X) ∧ Nonempty (IsTerminal X) := by
+theorem no_initial_terminal_set :
+    ¬ ∃ X : Type u, Nonempty (IsInitial X) ∧ Nonempty (IsTerminal X) := by
   rintro ⟨X, ⟨hi⟩, ⟨ht⟩⟩
   have x : X := ht.from PUnit.{u + 1} PUnit.unit
   exact (hi.to PEmpty.{u + 1} x).elim

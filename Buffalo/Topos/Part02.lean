@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part02a
@@ -6,8 +11,6 @@ public import Buffalo.Topos.Part02c
 public import Buffalo.Topos.Part02d
 public import Buffalo.Topos.Part02boards
 
-@[expose] public section
-
 /-!
 # Buffalo, topos theory, part 2 (18 and 25 May 1973)
 
@@ -15,8 +18,8 @@ The entries of lines 248–389 of `docs/buffalo-topos/index.tex` (video `URU5jgT
 5:39:20–9:25:54), split into four files by section: `Part02a` (étale morphisms, ring and field
 objects, constant sheaves, internal Hom and the subobject classifier), `Part02b` (infinite
 products, connectedness, torsors, stacks, gluing), `Part02c` (irreducible closed sets, sober
-spaces, fibre functors as points of the site `𝒪(X)`), `Part02d` (functors commuting with colimits,
-Giraud's definitions, first examples of topoi). Status of every entry:
+spaces, fibre functors as points of the site `𝒪(X)`), `Part02d` (functors commuting with
+colimits, Giraud's definitions, first examples of topoi). Status of every entry:
 `docs/buffalo-topos/lean/Part02.json`.
 
 Corrections made to the index:
@@ -26,4 +29,12 @@ Corrections made to the index:
   `stone_prod_epi`), as for Part01 key 17712.
 * URU5jgTvjhU-25307 [disc]: a counterexample to products of epimorphisms *does* exist on the line
   (`product_of_epis_not_epi`); the entry said the lecturer found none there.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `URU5jgTvjhU`, 5:39:20–9:25:54
+  (18 and 25 May 1973), `docs/buffalo-topos/index.tex` lines 248–389
 -/
+
+@[expose] public section
+

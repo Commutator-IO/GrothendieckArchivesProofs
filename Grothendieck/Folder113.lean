@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.CategoryTheory.Idempotents.FunctorExtension
@@ -6,8 +11,6 @@ public import Mathlib.CategoryTheory.Preadditive.Opposite
 public import Mathlib.Algebra.Category.ModuleCat.Abelian
 public import Grothendieck.Upstream.KaroubiAdditiveFunctors
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 113, page 3: the Karoubi envelope and Morita invariance (partial)
@@ -23,7 +26,9 @@ small `k`-additive category `P`, with `P^k = Hom_k(P°, Ab_k)`:
 and it notes that `P^k` does not depend on the `k`-structure: an additive
 functor `P° → Ab` is automatically `k`-module valued.
 
-What is formalised.
+What the formalisation found: nothing wrong in the part formalised.
+
+## Main results
 
 * `enveloppe_libre`: the Karoubi envelope is the free completion under
   retracts — restriction along `P → Kar P` is an equivalence
@@ -34,21 +39,31 @@ What is formalised.
   form: restriction along `P° → (Kar P)°` is an equivalence from additive
   functors `(Kar P)° → D` to additive functors `P° → D`, for any preadditive
   idempotent-complete `D` — in particular `D = ModuleCat k` (`morita_module`).
-  The additive form is the one the reading's remark licenses; the `k`-linear
-  form (and the remark itself) is not formalised. The ingredients not in
-  mathlib are proved here: `Kar(P°) ≌ (Kar P)°` compatibly with the embeddings
-  (`opKaroubi`, `toKaroubi_op_eq`), and the fact that a functor on
-  `(Kar P)°` is additive as soon as its restriction to `P°` is
-  (`additive_of_toKaroubi_op`).
 
-Not formalised: `Kar(P) ≃ Proj_tf(P^k)`, which needs the projective objects of
-a functor category (mathlib has no theory of projective generators of
-`Fun(P°, Ab)`); nor the reading's recognition theorem (Freyd–Mitchell).
+## Implementation notes
 
-What the formalisation found: nothing wrong in the part formalised. The
-smallness of `P` and abelianness of the target are not used — only that the
+The additive form of `morita` is the one the reading's remark licenses. The ingredients not in
+mathlib are proved here: `Kar(P°) ≌ (Kar P)°` compatibly with the embeddings
+(`opKaroubi`, `toKaroubi_op_eq`), and the fact that a functor on
+`(Kar P)°` is additive as soon as its restriction to `P°` is
+(`additive_of_toKaroubi_op`).
+
+The smallness of `P` and abelianness of the target are not used — only that the
 target is preadditive and idempotent complete.
+
+## Not formalised
+
+The `k`-linear form of `morita` (and the reading's remark itself). `Kar(P) ≃ Proj_tf(P^k)`,
+which needs the projective objects of a functor category (mathlib has no theory of projective
+generators of `Fun(P°, Ab)`); nor the reading's recognition theorem (Freyd–Mitchell).
+
+## References
+
+* A. Grothendieck, cote 113, p. 3; modernised reading `transcripts/113/113.modern.tex`
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder113
 
@@ -84,7 +99,7 @@ instance : (opKaroubi P).IsEquivalence where
   full := ⟨fun {Q₁ Q₂} g => by
     refine ⟨⟨(g.unop.f : Q₂.X.unop ⟶ Q₁.X.unop).op, ?_⟩, rfl⟩
     apply Quiver.Hom.unop_inj
-    show (Q₂.p.unop ≫ (g.unop.f : Q₂.X.unop ⟶ Q₁.X.unop)) ≫ Q₁.p.unop = g.unop.f
+    change (Q₂.p.unop ≫ (g.unop.f : Q₂.X.unop ⟶ Q₁.X.unop)) ≫ Q₁.p.unop = g.unop.f
     exact (Category.assoc _ _ _).trans g.unop.comm⟩
   essSurj := ⟨fun Q => ⟨⟨op Q.unop.X, Q.unop.p.op, by rw [← op_comp, Q.unop.idem]⟩,
     ⟨Iso.refl _⟩⟩⟩

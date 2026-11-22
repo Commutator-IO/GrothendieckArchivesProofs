@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7a: generating subcategories, strict epimorphisms, subtopoi
@@ -13,6 +16,8 @@ generating subcategories of a topos and strictly epimorphic families (0:32:47–
 subtopoi of `Sh(C, τ)` (1:19:23). The status of each entry is in
 `docs/buffalo-topos/lean/Part07.json`.
 
+## Implementation notes
+
 A strictly epimorphic family in the sense of SGA 4 (I 10.3) is Mathlib's `EffectiveEpiFamily`;
 « strictly and universally epimorphic » is « the generated sieve covers for the canonical
 topology » (SGA 4 II 2.5), `IsUniversalStrictEpi` below. For a full subcategory `ι : C ⥤ E`,
@@ -20,7 +25,16 @@ condition (b) « every `X` is the colimit of `C/X` » is Mathlib's `ι.isDenseAt
 
 The counterexamples in groups use `F₂ = FreeGroup Bool` for `ℤ * ℤ` and the full subcategory
 `C = {ℤ}` of `GrpCat`, as the induced category on one object.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `ORG14LNb5gE`, 0:32:47–0:50:01 and 1:19:23
+  (12 July 1973)
+* [SGA 4] exposé I, 10.3; exposé II, 2.5
 -/
+
+@[expose] public section
+
 
 universe u v w
 
@@ -55,13 +69,19 @@ def effEpiOfDenseAt {X : E} (hX : ι.DenseAt X) :
   desc e h := hX.desc (compatCocone ι e h)
   fac e h g := by
     have := hX.fac (compatCocone ι e h) g
-    simp at this
+    simp only [Functor.comp_obj, CostructuredArrow.proj_obj, Functor.LeftExtension.coconeAt_pt,
+        Functor.LeftExtension.mk_right, Functor.id_obj, Functor.LeftExtension.coconeAt_ι_app,
+        Functor.whiskeringLeft_obj_obj, Functor.const_obj_obj, Functor.LeftExtension.mk_hom,
+        Functor.rightUnitor_inv_app, Functor.id_map, Category.id_comp, compatCocone_ι_app] at this
     exact this
   uniq e h m hm := by
     apply hX.hom_ext
     intro g
     have := hX.fac (compatCocone ι e h) g
-    simp at this ⊢
+    simp only [Functor.comp_obj, CostructuredArrow.proj_obj, Functor.LeftExtension.coconeAt_pt,
+        Functor.LeftExtension.mk_right, Functor.id_obj, Functor.LeftExtension.coconeAt_ι_app,
+        Functor.whiskeringLeft_obj_obj, Functor.const_obj_obj, Functor.LeftExtension.mk_hom,
+        Functor.rightUnitor_inv_app, Functor.id_map, Category.id_comp, compatCocone_ι_app] at this ⊢
     exact (hm g).trans this.symm
 
 /-- ORG14LNb5gE-2891 (0:48:11) [prop], direction (b) ⇒ (b′), pointwise: if `X` is the colimit of
@@ -254,7 +274,8 @@ theorem kfun_not_hom : ¬ ∃ φ : F2 →* Multiplicative ℤ, ∀ g, φ g = kfu
   rintro ⟨φ, hφ⟩
   have h1 := hφ (FreeGroup.of false * FreeGroup.of true)
   rw [map_mul, hφ, hφ] at h1
-  simp [kfun, ea, eb] at h1
+  simp only [kfun, eb, cond_eq_ite, FreeGroup.lift_apply_of, Bool.false_eq_true, ↓reduceIte, ea,
+      ite_self, mul_one, map_mul, one_mul, left_eq_ite_iff, _root_.not_imp_self] at h1
   exact absurd (congrArg Multiplicative.toAdd h1) (by simp)
 
 /-- `zpowersHom x` sends the generator to `x`. -/
@@ -307,7 +328,8 @@ strictly epimorphic, although it contains the strictly epimorphic family of the 
 theorem not_effEpi_all :
     ¬ EffectiveEpiFamily (fun f : CostructuredArrow ιZ F2g => ιZ.obj f.left) (fun f => f.hom) :=
   not_effEpi_of_cover (fun f : CostructuredArrow ιZ F2g => f.hom) fun g =>
-    ⟨CostructuredArrow.mk (S := ιZ) (Y := (show InducedCategory GrpCat.{0} (fun _ : Unit => Zg) from ()))
+    ⟨CostructuredArrow.mk (S := ιZ)
+      (Y := (show InducedCategory GrpCat.{0} (fun _ : Unit => Zg) from ()))
       (GrpCat.ofHom (zpowersHom F2 g)), by simp [gen1]⟩
 
 /-- The free group on `F₂`, the free product of copies of `ℤ` indexed by `F₂`, as a cofan. -/
@@ -332,7 +354,8 @@ def freeCofanIsColimit : IsColimit freeCofan :=
       have h2 : (zpowersHom (FreeGroup F2) (FreeGroup.of g)) gen1 = FreeGroup.of g :=
         zpowersHom_gen1 _
       change m.hom (zpowersHom (FreeGroup F2) (FreeGroup.of g) gen1) = _ at this
-      exact (congrArg _ h2.symm).trans (this.trans (FreeGroup.lift_apply_of (f := fun g => (s.inj g).hom gen1) (x := g)).symm))
+      exact (congrArg _ h2.symm).trans (this.trans
+        (FreeGroup.lift_apply_of (f := fun g => (s.inj g).hom gen1) (x := g)).symm))
 
 /-- In groups, a surjective homomorphism is a strict epimorphism. -/
 def effEpiStructOfSurjective {A B : GrpCat.{0}} (p : A ⟶ B) (hp : Function.Surjective p.hom) :
@@ -377,7 +400,8 @@ theorem sigma_effEpi_not_family :
 form a strictly epimorphic family. -/
 @[buffalo "ORG14LNb5gE-2380"]
 theorem effEpi_generators :
-    EffectiveEpiFamily (fun _ : Bool => Zg) (fun b => GrpCat.ofHom (zpowersHom F2 (FreeGroup.of b))) :=
+    EffectiveEpiFamily (fun _ : Bool => Zg)
+      (fun b => GrpCat.ofHom (zpowersHom F2 (FreeGroup.of b))) :=
   ⟨⟨{ desc := fun e _ => GrpCat.ofHom (FreeGroup.lift fun b => (e b).hom gen1)
       fac := fun e _ b => by
         ext

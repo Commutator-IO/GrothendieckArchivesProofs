@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -5,6 +10,8 @@ module
 
 The open row `94-representability-criterion` of the edition's list of findings
 (`src/content/findings.ts`), folder 94, pp. 15–16 (Théorème 12). It is not stated; why.
+
+## Not formalised
 
 * `94-representability-criterion`: for a noetherian ring `A` quotient of a regular ring (the
   reading fixes `A` excellent), a functor `F : Mod(A) → Ens` is `Hom_A(P, −)` with `P` finite iff
@@ -20,4 +27,8 @@ The open row `94-representability-criterion` of the edition's list of findings
   the converse of Rem. 5 bis under the global finiteness (iv), which it does not settle, and
   restricts to `A` excellent; a faithful statement would have to choose between the page's
   hypothesis and the reading's.
+
+## References
+
+* A. Grothendieck, folder 94, pp. 15–16, Théorème 12 (finding `94-representability-criterion`)
 -/

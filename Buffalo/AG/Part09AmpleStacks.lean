@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.SectionRatioNoAmple.Pullback
 import Grothendieck.Attr
 import StacksCore.Tactic.EgaSgaAttribute
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 09: inverse image of ample sheaves
@@ -13,17 +16,32 @@ Entry `19516` of the index (« ampleness of an invertible sheaf is preserved und
 under passing to the norm »), stated with the definitions of the AxiomMath/Stacks project (see
 `Part07AmpleStacks.lean` for the conventions).
 
-**What is proved.**
+## Main results
+
 * `prop_19516`: the inverse image of an ample invertible sheaf along a quasi-affine morphism (in
   particular along a finite or an affine morphism) is ample (Stacks tag 0892 (2), EGA II 5.1.12).
-  Absolute ampleness is not preserved by an arbitrary inverse image (pull `𝒪(1)` on `ℙ¹` back to
-  `ℙ¹ × ℙ¹`), so the quasi-affine hypothesis is the correct reading of the entry.
 
-**Not formalised.** The norm of an ample sheaf along a finite locally free morphism (19516, second
-half; 18872), the uniform very ample power of 18420, the descent statements 18219, 18281, 18808,
-20037, 24670, 24799 and the quasi-projectivity over a field extension 19653: AxiomMath/Stacks has
-no norm of invertible sheaves nor descent data of schemes.
+## Implementation notes
+
+Absolute ampleness is not preserved by an arbitrary inverse image (pull `𝒪(1)` on `ℙ¹` back to
+`ℙ¹ × ℙ¹`), so the quasi-affine hypothesis is the correct reading of the entry.
+
+## Not formalised
+
+The norm of an ample sheaf along a finite locally free morphism (19516, second half; 18872), the
+uniform very ample power of 18420, the descent statements 18219, 18281, 18808, 20037, 24670, 24799
+and the quasi-projectivity over a field extension 19653: AxiomMath/Stacks has no norm of
+invertible sheaves nor descent data of schemes.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), entry `19516`
+* [EGA II] 5.1.12
+* Stacks Project, tag 0892
 -/
+
+@[expose] public section
+
 
 open AlgebraicGeometry CategoryTheory
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -6,6 +11,8 @@ module
 The open row `129-ext2-vanishing-p-odd` of the edition's list of findings
 (`src/content/findings.ts`), folder 129, p. 95. It is not stated; why. It is the same statement as
 p:ext2 of the note on the open problems, also not stated in `OpenProblems/EtaleCohomology.lean`.
+
+## Not formalised
 
 * `129-ext2-vanishing-p-odd`: `𝓔xt²_ℤ(G, M) = 0` for every finite locally free commutative group
   scheme `G` and quasi-coherent `M` as soon as `2` is invertible. Status: doubtful. The word
@@ -19,4 +26,10 @@ p:ext2 of the note on the open problems, also not stated in `OpenProblems/EtaleC
   big fppf site (`AlgebraicGeometry.BigFppfSite`, Stacks 021R) and the abelian presheaf of points
   of a commutative group scheme on it, and Mathlib has `Ext` in abelian categories, but not that
   package; a global `Ext²` over the base would be a different statement.
+
+## References
+
+* A. Grothendieck, folder 129, p. 95 (finding `129-ext2-vanishing-p-odd`)
+* L. Illusie (2023)
+* Stacks Project, tag 021R
 -/

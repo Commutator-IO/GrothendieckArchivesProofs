@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import StacksFrontier.AlgebraicGeometry.Algebraization.StrictDepthFullyFaithful
 public import StacksFrontier.AlgebraicGeometry.FormalGeometry.PrincipalFormalLocusDimensionCriterion
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 58, pages 45 to 51: comparison of Hom along `Y′ = V(t)`, depth asked only off `Y′`
@@ -13,26 +16,42 @@ Finding `58-local-hom-comparison-depth-off-y`. Let `A` be a local Noetherian rin
 maximal ideal, `A` complete for the `t`-adic topology, `X′ = Spec A ∖ {𝔪}` and
 `Y′ = V(t) ∩ X′`. Page 45 asserts that `Hom(F, G) → Hom(F̂, Ĝ)` (completion along `Y′`) is
 bijective for coherent `F`, `G` on `X′` as soon as `G` has depth `≥ 2` at the closed points of
-`X′ ∖ Y′`, with no depth condition at the points of `Y′`.
+`X′ ∖ Y′`, with no depth condition at the points of `Y′`. The statement is reduced to Stacks
+Tag 0EJ7 here, but not proved: the strict inequalities `hstrict` are left as a hypothesis.
+
+## Main results
+
+* `hom_bijective_of_depth_two_off_V_t`: the bijection, under
+  * `hdepth`, Stacks' condition `DepthTwoOffFormalLocus`: depth `≥ 2` at every `x ∈ X′` whose
+    closure meets `V(t)` only at `𝔪`. For `A` local this is the folder's condition: such an `x`
+    does not lie on `V(t)`, and a prime `𝔭 ∌ t` has `V(𝔭, t) = {𝔪}` iff `dim A/𝔭 = 1`, iff `𝔭`
+    is a closed point of `X′ ∖ Y′ = Spec A_t` (Krull's principal ideal theorem; not
+    formalised);
+  * `hK`: a dualizing complex on `A` (the folder's « quotient of a regular ring » gives one);
+  * `hstrict`: the strict `(1, 2)`-inequalities of Stacks Tag 0EJ3 for `Ĝ` along `Y′`.
+
+## Implementation notes
 
 This is the case `I = (t)`, `𝔞 = 𝔪`, `d = 1` of Stacks Tag 0EJ7
 (`Stacks.Algebraization.completionFunctor_map_bijective_of_satisfiesStrictDepthInequalities`);
 `cd(A, (t)) ≤ 1` is Stacks Tag 0DX9.
 
-**What is proved.** `hom_bijective_of_depth_two_off_V_t`: the bijection, under
+## Not formalised
 
-* `hdepth`, Stacks' condition `DepthTwoOffFormalLocus`: depth `≥ 2` at every `x ∈ X′` whose
-  closure meets `V(t)` only at `𝔪`. For `A` local this is the folder's condition: such an `x`
-  does not lie on `V(t)`, and a prime `𝔭 ∌ t` has `V(𝔭, t) = {𝔪}` iff `dim A/𝔭 = 1`, iff `𝔭`
-  is a closed point of `X′ ∖ Y′ = Spec A_t` (Krull's principal ideal theorem; not formalised);
-* `hK`: a dualizing complex on `A` (the folder's « quotient of a regular ring » gives one);
-* `hstrict`: the strict `(1, 2)`-inequalities of Stacks Tag 0EJ3 for `Ĝ` along `Y′`.
+The derivation of `hstrict` from the folder's hypotheses (the sweep's sketch through Tags 0AWY,
+0AW6 and 0DX9). Without it the folder's statement is reduced to 0EJ7 but not proved: `hstrict`
+is a condition at the points of `Y′`, the very points where the folder asks nothing, and page 47
+leaves the corresponding `t`-regular step at « ? ». The equivalence in `hdepth` with the
+folder's condition (Krull's principal ideal theorem) is not formalised either.
 
-**Not formalised.** The derivation of `hstrict` from the folder's hypotheses (the sweep's sketch
-through Tags 0AWY, 0AW6 and 0DX9). Without it the folder's statement is reduced to 0EJ7 but not
-proved: `hstrict` is a condition at the points of `Y′`, the very points where the folder asks
-nothing, and page 47 leaves the corresponding `t`-regular step at « ? ».
+## References
+
+* A. Grothendieck, folder 58, pp. 45–51 (finding `58-local-hom-comparison-depth-off-y`)
+* Stacks Project, tags 0EJ7, 0EJ3, 0DX9, 0AWY, 0AW6
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder58DepthComparison
 

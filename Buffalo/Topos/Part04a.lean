@@ -1,17 +1,27 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Buffalo, topos theory, part 4a: coverings, `f_!` and `f^!`, sites and sheaves on a site
 
-Entries of `docs/buffalo-topos/index.tex` from « Galois theory of coverings and classifying topoi »
-to « The associated sheaf on a site » (video `PqCQM3Pcl6Q`, 3:23:52–5:09:50). The status of each
-entry is in `docs/buffalo-topos/lean/Part04.json`.
+Entries of `docs/buffalo-topos/index.tex` from « Galois theory of coverings and classifying
+topoi » to « The associated sheaf on a site » (video `PqCQM3Pcl6Q`, 3:23:52–5:09:50). The status
+of each entry is in `docs/buffalo-topos/lean/Part04.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `PqCQM3Pcl6Q`, 3:23:52–5:09:50
 -/
+
+@[expose] public section
+
 
 universe u
 
@@ -334,7 +344,8 @@ theorem toPlus_properties (P : Cᵒᵖ ⥤ Type u) :
       (CoverSeparated J P → Presheaf.IsSheaf J (J.plusObj P)) ∧
       J.sheafify P = J.plusObj (J.plusObj P) := by
   have sep_iff : CoverSeparated J P ↔ ∀ X, Function.Injective ((J.toPlus P).app (op X)) := by
-    refine ⟨fun h X => GrothendieckTopology.Plus.inj_of_sep P (fun X S x y hxy => h X S x y hxy) X, fun h X S x y hxy => ?_⟩
+    refine ⟨fun h X => GrothendieckTopology.Plus.inj_of_sep P (fun X S x y hxy => h X S x y hxy) X,
+        fun h X S x y hxy => ?_⟩
     apply h X
     apply GrothendieckTopology.Plus.sep P S
     intro I

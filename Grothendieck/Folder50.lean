@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 50: the axiomatic trace formula (pages 6–10)
@@ -15,12 +18,15 @@ duality `D`, a group `N(A)` of antisymmetric elements of `Hom(A, D(A))`, two
 cones `N⁺`, `N^>`, an `r`-linear intersection form `I` with values in `ℤ` and a
 degree `ν` with `I(u*ξ₁, …, u*ξᵣ) = ν(u) I(ξ₁, …, ξᵣ)` — and derive from it the
 coefficients `σᵢ(α)` of `ν(α + n)` and the trace formula
-`tr(α) = r · I(ξ^{r−1}, D_ξ(α)) / I(ξ^r)`.
+`tr(α) = r · I(ξ^{r−1}, D_ξ(α)) / I(ξ^r)`. The trace formula is proved when `I` is
+symmetric and refuted without symmetry; Rosati positivity does not follow from the axioms.
 
-The frame is taken at one object `A` and at one class `ξ` with `φ_ξ` a
-`ℚ`-isomorphism, transported to `E = End(A)` by `ψ(η) = φ_ξ⁻¹ φ_η`: the Rosati
-involution `α' = φ_ξ⁻¹ ᵗα φ_ξ` is a `StarRing` structure on `E`, and
-`φ_{α*η} = ᵗα φ_η α` reads `ψ(α*η) = α' ψ(η) α` (`Frame`).
+## Main definitions
+
+* `Frame`: the frame at one object `A` and one class `ξ`, transported to `E = End(A)` (see
+  the implementation notes).
+
+## Main results
 
 * `ψ_D`, `D_eq_Dξ_star_mul`, `D_eq_Dξ_star_mul'`, `Dξ_star`: the identities
   (1)–(3) of page 9, `D_ξ(α, β) = φ_ξ(α'β + β'α)`,
@@ -42,9 +48,26 @@ involution `α' = φ_ξ⁻¹ ᵗα φ_ξ` is a `StarRing` structure on `E`, and
 * `tr_star_mul_self_pos`: it follows once that positivity on `N⁺` and
   `α ≠ 0 ⇒ α*ξ ≠ 0` are added.
 
-Not formalised: the category itself, Propriété fondamentale 1 on products, the
+## Implementation notes
+
+The frame is taken at one object `A` and at one class `ξ` with `φ_ξ` a
+`ℚ`-isomorphism, transported to `E = End(A)` by `ψ(η) = φ_ξ⁻¹ φ_η`: the Rosati
+involution `α' = φ_ξ⁻¹ ᵗα φ_ξ` is a `StarRing` structure on `E`, and
+`φ_{α*η} = ᵗα φ_η α` reads `ψ(α*η) = α' ψ(η) α` (`Frame`).
+
+## Not formalised
+
+The category itself, Propriété fondamentale 1 on products, the
 first half of the folder (pages 2 and 4).
+
+## References
+
+* A. Grothendieck, folder 50, pp. 6–10 (reading `transcripts/50/50.modern.tex`; finding
+  `50-axiomatic-trace-formula`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder50
 

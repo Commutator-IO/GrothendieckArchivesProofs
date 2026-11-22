@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part03a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 3b: morphisms of topoi, presheaf topoi, Giraud (1973)
@@ -13,11 +16,20 @@ of topoi, the initial and final topoi, presheaf topoi and the functors `u^*`, `u
 topoi, and the topos-theoretic structure of `Sh(C, J)` (Giraud's theorem, elementary topoi). The
 status of each entry is in `docs/buffalo-topos/lean/Part03.json`.
 
+## Implementation notes
+
 Mathlib has no notion of Grothendieck topos or of geometric morphism; a morphism of topoi is
 modelled here by `TopMor` (an adjunction `f^* ⊣ f_*` with `f^*` left exact), between arbitrary
 categories, and statements about « a topos » are proved for the categories of sheaves `Sh(C, J)`
 on a small site or of presheaves `Ĉ`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), `docs/buffalo-topos/index.tex` lines 390–535
 -/
+
+@[expose] public section
+
 
 universe w u v
 
@@ -210,9 +222,9 @@ def presheafMor : TopMor (Cᵒᵖ ⥤ Type u) (C'ᵒᵖ ⥤ Type u) where
   adj := φ.op.ranAdjunction (Type u)
   lex := inferInstance
 
-/-- PqCQM3Pcl6Q-4092 (1:08:12) [prop] If `u^*` has a left exact left adjoint `u_!`, then `u_!` is the
-inverse image of a morphism of topoi in the opposite direction, of which `u^*` is the direct
-image. -/
+/-- PqCQM3Pcl6Q-4092 (1:08:12) [prop] If `u^*` has a left exact left adjoint `u_!`, then `u_!` is
+the inverse image of a morphism of topoi in the opposite direction, of which `u^*` is the
+direct image. -/
 @[buffalo "PqCQM3Pcl6Q-4092"]
 def presheafMorOp [PreservesFiniteLimits (φ.op.lan : (Cᵒᵖ ⥤ Type u) ⥤ _)] :
     TopMor (C'ᵒᵖ ⥤ Type u) (Cᵒᵖ ⥤ Type u) where
@@ -242,8 +254,13 @@ def restrMapEquiv (φ ψ : C ⥤ C') : (φ ⟶ ψ) ≃ (restr ψ ⟶ restr φ) w
     { app c := (η.app (yoneda.obj (ψ.obj c))).app (op c) (𝟙 (ψ.obj c))
       naturality c d k := by
         have h1 := NatTrans.naturality_apply (η.app (yoneda.obj (ψ.obj d))) k.op (𝟙 (ψ.obj d))
-        have h2 := congrArg (fun t => t.app (op c) (𝟙 (ψ.obj c))) (η.naturality (yoneda.map (ψ.map k)))
-        simp [restr] at h1 h2
+        have h2 :=
+          congrArg (fun t => t.app (op c) (𝟙 (ψ.obj c))) (η.naturality (yoneda.map (ψ.map k)))
+        simp only [restr, Functor.whiskeringLeft_obj_obj, Functor.comp_obj, Functor.op_obj,
+            CategoryTheory.yoneda_obj_obj, Functor.comp_map, Functor.op_map, Quiver.Hom.unop_op,
+            yoneda_obj_map, hom_ofHom, Fun.coe_mk, Category.comp_id, Functor.whiskeringLeft_obj_map,
+            NatTrans.comp_app, Functor.whiskerLeft_app, yoneda_map_app, comp_apply,
+            Category.id_comp] at h1 h2
         exact h1.symm.trans h2 }
   left_inv α := by
     ext c
@@ -253,7 +270,10 @@ def restrMapEquiv (φ ψ : C ⥤ C') : (φ ⟶ ψ) ≃ (restr ψ ⟶ restr φ) w
     obtain ⟨a, rfl⟩ := (yonedaEquiv : (yoneda.obj (ψ.obj c.unop) ⟶ F) ≃
       F.obj (op (ψ.obj c.unop))).surjective x
     have h := congrArg (fun t => t.app c (𝟙 (ψ.obj c.unop))) (η.naturality a)
-    simp [restrMap, restr] at h ⊢
+    simp only [restr, Functor.whiskeringLeft_obj_obj, Functor.comp_obj, Functor.op_obj,
+        Functor.whiskeringLeft_obj_map, NatTrans.comp_app, CategoryTheory.yoneda_obj_obj,
+        Functor.whiskerLeft_app, comp_apply, restrMap, Functor.whiskeringLeft_map_app_app,
+        NatTrans.op_app, op_unop, Fun.toFun_apply] at h ⊢
     rw [CategoryTheory.yonedaEquiv_apply, h]
     generalize (η.app (yoneda.obj (ψ.obj (unop c)))).app c (𝟙 (ψ.obj (unop c))) = t
     have h3 := NatTrans.naturality_apply a (X := op (ψ.obj c.unop)) (Y := op (φ.obj c.unop))
@@ -332,7 +352,8 @@ def pointBot_eval (X : C) :
   pointBotPresheafFiberIso X (Type u)
 
 theorem presheaf_enoughPoints :
-    (pointsBot.{u} C).IsConservativeFamilyOfPoints ∧ HasEnoughPoints.{u} (⊥ : GrothendieckTopology C) :=
+    (pointsBot.{u} C).IsConservativeFamilyOfPoints ∧
+      HasEnoughPoints.{u} (⊥ : GrothendieckTopology C) :=
   ⟨isConservative_pointsBot C, inferInstance⟩
 
 /-- PqCQM3Pcl6Q-9189 (2:33:09) [prop], one direction: the fibre functor of a point coming from `C`
@@ -418,7 +439,8 @@ theorem representable_preservesLimits (X : Sheaf J (Type u)) :
 `j^* : E → E/X'`, `Y ↦ Y × X'`, has the left adjoint `j_!` forgetting the map to `X'`, hence
 commutes with limits. -/
 @[buffalo "PqCQM3Pcl6Q-6357"]
-def localization_adj (X' : Sheaf J (Type u)) : Over.forget X' ⊣ Over.star X' := Over.forgetAdjStar X'
+def localization_adj (X' : Sheaf J (Type u)) : Over.forget X' ⊣ Over.star X' :=
+  Over.forgetAdjStar X'
 
 theorem localization_preservesLimits (X' : Sheaf J (Type u)) : PreservesLimits (Over.star X') :=
   (Over.forgetAdjStar X').rightAdjoint_preservesLimits

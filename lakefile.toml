@@ -21,15 +21,30 @@ rev = "f56a316ddf7a930906d88b78d6f9a2668cffd0cf"
 
 [[lean_lib]]
 name = "GrothendieckArchivesProofs"
+[lean_lib.leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+maxSynthPendingDepth = 3
+weak.linter.mathlibStandardSet = true
 
 # The working notes kept at the University of Montpellier: one file per folder (cote), and the
 # general lemmas in Grothendieck/Upstream/.
 [[lean_lib]]
 name = "Grothendieck"
+[lean_lib.leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+maxSynthPendingDepth = 3
+weak.linter.mathlibStandardSet = true
 
 # The Buffalo lectures (1973): the entries of the index, one file per part.
 [[lean_lib]]
 name = "Buffalo"
+[lean_lib.leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+maxSynthPendingDepth = 3
+weak.linter.mathlibStandardSet = true
 
 # Files copied unchanged from AxiomMath/Mordell at 82a30cb (Apache-2.0, listed in NOTICE), with
 # the options of Mordell's own lakefile that affect elaboration. Warnings stay errors, as above.
@@ -47,6 +62,11 @@ leanOptions = { autoImplicit = false, relaxedAutoImplicit = false, maxSynthPendi
 # (definitions, not theorems): one file per section of the edition's two notes on open problems.
 [[lean_lib]]
 name = "OpenProblems"
+[lean_lib.leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+maxSynthPendingDepth = 3
+weak.linter.mathlibStandardSet = true
 
 # Files copied from LeanPool/lean-pool at cb3d7f8 (Apache-2.0, Michel Hua's PRs, listed in NOTICE):
 # ToposTheoreticBridges (classifying topoi of geometric theories, Morita equivalence, Boolean and

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Group.Units.Basic
@@ -8,8 +13,6 @@ public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.Data.Fintype.Fin
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 89: the « fundamental relation » of the 3-3 sets, pages 15–18
 
@@ -19,10 +22,21 @@ states, for `u` and `v` spanning (here: `u ∧ v` a unit),
   `u ∧ v = v ∧ w = w ∧ u  ⟺  u + v + w = 0`,
 
 and notes that the statement holds over any commutative ring, the page saying only « on vérifie de
-suite ». The proof below is the edition's: Cramer's identity
+suite ».
+
+## Implementation notes
+
+The proof below is the edition's: Cramer's identity
 `(v ∧ w) • u + (w ∧ u) • v + (u ∧ v) • w = 0` gives `d • (u + v + w) = 0` when all three wedges
 equal `d`, and `d` is a unit.
+
+## References
+
+* A. Grothendieck, Folder 89, pages 15–18
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder89
 

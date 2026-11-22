@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 03 (a): étale schemes, `π₀`, pro-étale schemes
@@ -12,13 +15,26 @@ Entries `3ULFIl_2Wis-6157` to `3ULFIl_2Wis-8898` of `docs/buffalo-groupes/index.
 2 July 1973, from "Étale schemes, torsors and Galois extensions" to the end of "Pro-étale and
 locally profinite schemes"). Statuses in `docs/buffalo-groupes/lean/Part03.json`.
 
+## Implementation notes
+
 Conventions. An affine étale `k`-scheme is `Spec A` with `A` an étale `k`-algebra
 (`Algebra.Etale k A`); its points over a separable closure are read through Mathlib's
 `Algebra.Etale.iff_exists_algEquiv_prod` (a finite product of finite separable extensions) and
-`Algebra.FormallyEtale.equivPiOfIsSepClosed`. The equivalence between étale `k`-schemes and
-discrete `Gal(k_s/k)`-sets is not in Mathlib; statements made through it are proved on the algebra
-side only.
+`Algebra.FormallyEtale.equivPiOfIsSepClosed`.
+
+## Not formalised
+
+The equivalence between étale `k`-schemes and discrete `Gal(k_s/k)`-sets is not in Mathlib;
+statements made through it are proved on the algebra side only.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `3ULFIl_2Wis`, entries 6157–8898
+  (session of 2 July 1973)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part03
 
@@ -129,7 +145,7 @@ theorem etale_injective_iff_comap_surjective [Algebra.Etale K A] [Algebra.Etale 
       rintro p ⟨-, hp⟩
       obtain ⟨q, hq⟩ := hs ⟨p, hp⟩
       have : a ∈ (PrimeSpectrum.comap f.toRingHom q).asIdeal := by
-        show f a ∈ q.asIdeal; rw [ha]; exact q.asIdeal.zero_mem
+        change f a ∈ q.asIdeal; rw [ha]; exact q.asIdeal.zero_mem
       rwa [hq] at this
     exact (mem_nilradical.mp hnil).eq_zero
 

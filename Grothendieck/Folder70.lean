@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Field.ZMod
@@ -17,8 +22,6 @@ public import Mathlib.FieldTheory.Relrank
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 70, pages 74–78 and 89–102: the icosahedron over `ℤ[α]` and modulo 5
@@ -45,7 +48,7 @@ characteristic-5 case of `70-icosahedron-integral-faithful`. Proving them says o
 that the claims hold as stated; whether they stand in the literature is a separate
 question.
 
-What is formalised.
+## Main results
 
 * Over any commutative ring `R` with `α² + α − 1 = 0`: `q_vert` (the twelve vertices lie
   on `q = 0`), `sigma0_vert`, `sigma1_vert`, `sigma2_vert` (the three generators
@@ -69,11 +72,22 @@ What is formalised.
   incidence part), over any nonzero commutative ring with `α² + α − 1 = 0`:
   `vert_injective_any` (twelve distinct vertices), `not_collinear_any` (no three on a
   line), `not_in_face_plane_any` (no vertex in the plane of a face not containing it).
-  The proof is the page's « par homogénéité » made explicit: `sigmaOf_vert` and the
-  kernel-checked word tables `pairWord`, `faceWord` reduce every case to the lines
-  `s₀s₁`, `s₀s''₃`, `s₀ι(s₀)` and the face plane `z = 0`, where a `2 × 2` minor is a unit
-  of `ℤ[α]` (`base_line_1`, `base_line_5`, `base_line_6`) and `isUnit_z` applies.
+
+## Implementation notes
+
+The proof of faithfulness is the page's « par homogénéité » made explicit: `sigmaOf_vert` and
+the kernel-checked word tables `pairWord`, `faceWord` reduce every case to the lines
+`s₀s₁`, `s₀s''₃`, `s₀ι(s₀)` and the face plane `z = 0`, where a `2 × 2` minor is a unit
+of `ℤ[α]` (`base_line_1`, `base_line_5`, `base_line_6`) and `isUnit_z` applies.
+
+## References
+
+* A. Grothendieck, folder 70, pp. 74–78, 89–102 (findings `70-icosahedron-char5-conic`,
+  `70-icosahedron-integral-faithful`); modernised reading `transcripts/70/70.modern.tex`, § VII
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder70
 
@@ -1074,14 +1088,24 @@ theorem quadric_unique (h : α ^ 2 + α - 1 = 0) (Q : QuadFn R)
   simp only [QuadFn.eval, vert, iota, Matrix.cons_val] at h0 h1 h2 h3 h4 h5 h6 h7 h8
   simp only [QuadFn.smul, qFn, QuadFn.mk.injEq]
   refine ⟨by ring, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · linear_combination (-1) * h1 + (1) * h2 + (1) * h3 + (-1) * h4 + (α) * h7 + (-α) * h8 + (-a - b - u + v + w) * h
-  · linear_combination (-α) * h0 + (1) * h2 + (1 - α) * h3 + (-1) * h5 + (α) * h6 + (α - 1) * h7 + (-2*a*α - 3*a - 2*b*α - 4*b - 2*c*α - 5*c + 2*d - 2*e - 2*f - 2*u*α - 5*u + 2*v*α + 4*v + 2*w*α + 4*w) * h
-  · linear_combination (1) * h0 + (α) * h1 + (-α - 1) * h2 + (-2*α) * h3 + (α) * h4 + (α) * h5 + (α - 1) * h7 + (1 - α) * h8 + (-a*α - 3*a - 2*b*α - 4*b + d - 2*e - 3*u + 2*v + w*α + 3*w) * h
-  · linear_combination (-α) * h0 + (α) * h1 + (1) * h4 + (-1) * h5 + (1) * h6 + (-1) * h7 + (-a + w) * h
-  · linear_combination (1) * h0 + (-1) * h1 + (-1) * h4 + (1) * h5 + (-α) * h6 + (α) * h7 + (-a + v) * h
+  · linear_combination (-1) * h1 + (1) * h2 + (1) * h3 + (-1) * h4 + (α) * h7 + (-α) * h8 +
+        (-a - b - u + v + w) * h
+  · linear_combination (-α) * h0 + (1) * h2 + (1 - α) * h3 + (-1) * h5 + (α) * h6 + (α - 1) * h7 +
+        (-2*a*α - 3*a - 2*b*α - 4*b - 2*c*α - 5*c + 2*d - 2*e - 2*f - 2*u*α - 5*u + 2*v*α + 4*v +
+          2*w*α + 4*w) * h
+  · linear_combination (1) * h0 + (α) * h1 + (-α - 1) * h2 + (-2*α) * h3 + (α) * h4 + (α) * h5 +
+        (α - 1) * h7 + (1 - α) * h8 +
+        (-a*α - 3*a - 2*b*α - 4*b + d - 2*e - 3*u + 2*v + w*α + 3*w) * h
+  · linear_combination (-α) * h0 + (α) * h1 + (1) * h4 + (-1) * h5 + (1) * h6 + (-1) * h7 +
+        (-a + w) * h
+  · linear_combination (1) * h0 + (-1) * h1 + (-1) * h4 + (1) * h5 + (-α) * h6 + (α) * h7 +
+        (-a + v) * h
   · linear_combination (-1) * h0 + (1) * h1
-  · linear_combination (-1) * h0 + (1) * h1 + (-1) * h3 + (1) * h4 + (-α) * h7 + (α) * h8 + (a + b + u - v - w) * h
-  · linear_combination (α - 1) * h0 + (-1) * h2 + (α) * h3 + (1) * h5 + (-α) * h6 + (1 - α) * h7 + (2*a*α + 3*a + 2*b*α + 4*b + 2*c*α + 5*c - 2*d + 2*e + 2*f + 2*u*α + 5*u - 2*v*α - 4*v - 2*w*α - 4*w) * h
+  · linear_combination (-1) * h0 + (1) * h1 + (-1) * h3 + (1) * h4 + (-α) * h7 + (α) * h8 +
+        (a + b + u - v - w) * h
+  · linear_combination (α - 1) * h0 + (-1) * h2 + (α) * h3 + (1) * h5 + (-α) * h6 + (1 - α) * h7 +
+        (2*a*α + 3*a + 2*b*α + 4*b + 2*c*α + 5*c - 2*d + 2*e + 2*f + 2*u*α + 5*u - 2*v*α - 4*v -
+          2*w*α - 4*w) * h
   · linear_combination h0
 
 /-- The half-discriminant `δ'` of the ternary form `a x² + b y² + c z² + u yz + v zx + w xy`:
@@ -1173,7 +1197,10 @@ theorem qMat4_ker_char_five (h5 : (5 : R) = 0) (hα : α = 2) (v : Fin 4 → R) 
     · linear_combination (-2) * r0 - r1 + (v 0 + v 1 - v 3) * h5
     · linear_combination (-2) * r0 - r2 + (v 0 + v 2 - v 3) * h5
   · intro hv
-    rw [hv]; ext i; fin_cases i <;> simp <;>
+    rw [hv]; ext i; fin_cases i <;> simp only [Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue,
+        Pi.smul_apply, cons_val_zero, smul_eq_mul, mul_one, cons_val_one, cons_val,
+        add_sub_cancel_right, sub_self, sub_add_cancel, neg_add_rev, Fin.zero_eta, Pi.zero_apply,
+        Fin.mk_one, Fin.reduceFinMk] <;>
       first | linear_combination (v 3) * h5 | linear_combination (-v 3) * h5
 
 /-- With `α = 2`, the point `(1, 2, 2, 1)` lies on the quadric, in any ring. -/
@@ -1344,7 +1371,12 @@ theorem isAff_comp {f g : R × R × R → R × R × R} (hf : IsAff f) (hg : IsAf
   refine ⟨by ring, by ring, by ring⟩
 
 theorem isAff_sigmaOf (k : Fin 3) : IsAff (sigmaOf α k) := fun p => by
-  fin_cases k <;> simp [sigmaOf, sigma0, sigma1, sigma2, Prod.ext_iff] <;> (try constructor) <;>
+  fin_cases k <;> simp only [sigmaOf, Fin.zero_eta, Fin.isValue, Matrix.cons_val', sigma0,
+      Prod.mk.eta, sigma1, sigma2, Matrix.cons_val_fin_one, Matrix.cons_val_zero, Prod.fst_zero,
+      Prod.snd_zero, add_zero, sub_zero, mul_zero, sub_self, Prod.mk_sub_mk, zero_sub, Prod.smul_mk,
+      smul_eq_mul, mul_neg, mul_one, smul_zero, Prod.mk_add_mk, zero_add, neg_sub, sub_neg_eq_add,
+      Prod.ext_iff, and_true, Fin.mk_one, Matrix.cons_val_one, add_right_inj, Fin.reduceFinMk,
+      Matrix.cons_val] <;> (try constructor) <;>
     ring
 
 /-- **The order 120 of the group** of the icosahedron (pages 75 and 87): over every nonzero

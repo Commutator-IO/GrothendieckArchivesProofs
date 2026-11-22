@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part02a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02 (b): distributions, hyperalgebra, diagonalizable groups
@@ -11,11 +14,21 @@ import Grothendieck.Attr
 Entries `_lTf_L0yvrU-25719` to `_lTf_L0yvrU-30490` of `docs/buffalo-groupes/index.tex` (19 and
 20 June 1973). Statuses in `docs/buffalo-groupes/lean/Part02.json`.
 
+## Implementation notes
+
 `Dist(X)(k') = V(A)(k') = Hom_k(A, k')` for `X = Spec A` (`Part01.V`). The pairing
 `u ⊠ v : A ⊗ B → k'` is `a ⊗ b ↦ u(a) v(b)` (`boxtimes`); the diagonal of `Dist(X)` is the
 transpose of the multiplication of `A` (`diag`); the law of `Dist(G)` for a monoid `G = Spec A`
 is Mathlib's convolution product on `WithConv (A →ₗ[k] k')`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), video `_lTf_L0yvrU`, entries 25719–30490 (19
+  and 20 June 1973)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part02
 
@@ -166,7 +179,8 @@ noncomputable def diag (u : A →ₗ[k] R) : A ⊗[k] A →ₗ[k] R := u ∘ₗ 
 /-- _lTf_L0yvrU-26440 (7:20:40) [prop] The inclusion `X ⊆ Dist(X)` commutes with the diagonals:
 `δ(x) = x ⊠ x` for a point `x` of `X` (`X → X × X` is the diagonal). -/
 @[buffalo "_lTf_L0yvrU-26440"]
-theorem diag_point (φ : A →ₐ[k] R) : diag R φ.toLinearMap = boxtimes R φ.toLinearMap φ.toLinearMap :=
+theorem diag_point (φ : A →ₐ[k] R) :
+    diag R φ.toLinearMap = boxtimes R φ.toLinearMap φ.toLinearMap :=
   TensorProduct.ext' fun a b ↦ by simp [diag]
 
 /-- _lTf_L0yvrU-26884 (7:28:04) [prop] A point `x ∈ Dist(X)(k')` lies in `X(k')` iff
@@ -215,7 +229,8 @@ theorem comm_iff_cocomm :
 theorem assoc_iff_coassoc :
     μ ∘ₗ μ.rTensor P = μ ∘ₗ μ.lTensor P ∘ₗ (TensorProduct.assoc k P P P).toLinearMap ↔
       ∀ (R : Type u) [CommRing R] [Algebra k R] (x : P →ₗ[k] R),
-        x ∘ₗ μ ∘ₗ μ.rTensor P = x ∘ₗ μ ∘ₗ μ.lTensor P ∘ₗ (TensorProduct.assoc k P P P).toLinearMap :=
+        x ∘ₗ μ ∘ₗ μ.rTensor P =
+          x ∘ₗ μ ∘ₗ μ.lTensor P ∘ₗ (TensorProduct.assoc k P P P).toLinearMap :=
   ⟨fun h R _ _ x ↦ by rw [h], fun h ↦ V_separates fun R _ _ x ↦ h R x⟩
 
 /-- _lTf_L0yvrU-26689 (7:24:49) [prop] `1 ∈ A` is a unit for `μ` iff `ε(x) = x(1)` is a counit
@@ -260,7 +275,8 @@ noncomputable def pointsToDist : WithConv (A →ₐ[k] R) →* WithConv (A →�
 
 noncomputable example : Algebra R (WithConv (A →ₗ[k] R)) := inferInstance
 
-theorem pointsToDist_injective : Function.Injective (pointsToDist (k := k) R (A := A)) := fun f g h ↦ by
+theorem pointsToDist_injective :
+    Function.Injective (pointsToDist (k := k) R (A := A)) := fun f g h ↦ by
   have := congrArg ofConv h
   exact WithConv.ofConv_injective (AlgHom.toLinearMap_injective this)
 
@@ -290,7 +306,8 @@ section Hyper
 variable {k} (A : Type u) [CommRing A] [Bialgebra k A] (R : Type u) [CommRing R] [Algebra k R]
 
 /-- The augmentation ideal `I = Ker ε`. -/
-abbrev augIdeal (k : Type u) [CommRing k] (A : Type u) [CommRing A] [Bialgebra k A] : Ideal A := RingHom.ker (Bialgebra.counitAlgHom k A)
+abbrev augIdeal (k : Type u) [CommRing k] (A : Type u) [CommRing A] [Bialgebra k A] : Ideal A :=
+  RingHom.ker (Bialgebra.counitAlgHom k A)
 
 /-- _lTf_L0yvrU-27899 (7:44:59) [def] The distributions concentrated at the origin, vanishing on a
 power of `I = Ker ε` (an `𝒪`-submodule; that it is a subalgebra is not formalised). -/
@@ -344,11 +361,13 @@ noncomputable def constConv (u v : (Γ → k) →ₗ[k] k) : (Γ → k) →ₗ[k
 the basis of `k^Γ`) multiply like `Γ`: `e_g ⋆ e_h = e_{gh}`. -/
 @[buffalo "_lTf_L0yvrU-28231"]
 theorem constConv_eval (g h : Γ) :
-    constConv Γ (LinearMap.proj g) (LinearMap.proj h) = (LinearMap.proj (g * h) : (Γ → k) →ₗ[k] k) :=
+    constConv Γ (LinearMap.proj g) (LinearMap.proj h) =
+      (LinearMap.proj (g * h) : (Γ → k) →ₗ[k] k) :=
   rfl
 
-theorem dualBasis_eq_eval {Γ : Type u} [Fintype Γ] [DecidableEq Γ] (g : Γ) :
+theorem dualBasis_eq_eval {Γ : Type u} [Finite Γ] [DecidableEq Γ] (g : Γ) :
     (Pi.basisFun k Γ).dualBasis g = LinearMap.proj g := by
+  have := Fintype.ofFinite Γ
   ext f; simp
 
 /-- _lTf_L0yvrU-28424 (7:53:44) [prop] Representations of `Γ` on `M` are the `k[Γ]`-module
@@ -361,13 +380,15 @@ noncomputable def repEquiv (Γ' : Type u) [Group Γ'] (M : Type u) [AddCommGroup
 /-- _lTf_L0yvrU-28489 (7:54:49) [ex] For the constant group, the augmentation ideal `I ⊆ k^Γ`
 (functions vanishing at `1`) satisfies `I² = I`; hence `Lie(Γ_k) = (I/I²)^∨ = 0`. -/
 @[buffalo "_lTf_L0yvrU-28489"]
-theorem aug_sq_eq (Γ' : Type*) [Group Γ'] [DecidableEq Γ'] :
+theorem aug_sq_eq (Γ' : Type*) [Group Γ'] :
     RingHom.ker (Pi.evalRingHom (fun _ : Γ' ↦ k) (1 : Γ')) ^ 2 =
       RingHom.ker (Pi.evalRingHom (fun _ : Γ' ↦ k) (1 : Γ')) := by
+  classical
   apply le_antisymm (Ideal.pow_le_self two_ne_zero)
   intro f hf
   have hf' : f 1 = 0 := hf
-  have he : (1 - Pi.single 1 1 : Γ' → k) ∈ RingHom.ker (Pi.evalRingHom (fun _ : Γ' ↦ k) (1 : Γ')) := by
+  have he : (1 - Pi.single 1 1 : Γ' → k) ∈
+      RingHom.ker (Pi.evalRingHom (fun _ : Γ' ↦ k) (1 : Γ')) := by
     rw [RingHom.mem_ker, Pi.evalRingHom_apply]; simp
   have : f = f * (1 - Pi.single 1 1) := by
     ext g
@@ -396,8 +417,9 @@ theorem one_ne_neg_one_of_two {R : Type*} [CommRing R] (h2 : (2 : R) ≠ 0) : (1
   linear_combination h
 
 /-- _lTf_L0yvrU-28615 (7:56:55) [ex] … trivial on points in characteristic `2` (`-1 = 1`), while
-`μ₂` has the non-trivial point `1 + ε` over `k[ε]` (non-zero Lie algebra, `Part01.mu_p_nontrivial`). -/
 @[buffalo "_lTf_L0yvrU-28615"]
+`μ₂` has the non-trivial point `1 + ε` over `k[ε]` (non-zero Lie algebra,
+`Part01.mu_p_nontrivial`). -/
 theorem mu2_char2 {R : Type*} [CommRing R] [CharP R 2] : (-1 : R) = 1 := by
   rw [neg_eq_iff_add_eq_zero, one_add_one_eq_two, CharTwo.two_eq_zero]
 

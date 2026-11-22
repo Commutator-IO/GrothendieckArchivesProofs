@@ -1,12 +1,17 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part05a
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
-# Buffalo, topos theory, part 5c: exactness properties, envelopes, categories of fractions (2 July 1973)
+# Buffalo, topos theory, part 5c: exactness, envelopes, categories of fractions
+
+2 July 1973.
 
 Entries of `docs/buffalo-topos/index.tex` lines 767–811 (video `4gynb9uTEE4`, 1:57:30–3:31:07):
 representability of theories, exactness properties (groupoids, preorders, discrete categories),
@@ -14,11 +19,21 @@ limits in `T(C)`, change of `Δ`, the envelope `Ĵ` and the saturated categories
 `C[Σ'⁻¹]` in `Δ` = categories with small limits. The status of each entry is in
 `docs/buffalo-topos/lean/Part05.json`.
 
+## Implementation notes
+
 The saturation `Σ'` of a class `Σ` of arrows is formalised literally: the arrows inverted by every
 limit-preserving functor inverting `Σ` (`saturation`). Its properties (isomorphisms, composition,
 two out of three, base change, diagonals, infinite fibre products, right calculus of fractions)
 are proved for an arbitrary category with the relevant limits.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `4gynb9uTEE4`, 1:57:30–3:31:07
+  (2 July 1973)
 -/
+
+@[expose] public section
+
 
 universe w v u v' u' w' v'' u''
 
@@ -244,7 +259,8 @@ theorem torsor_no_initial (X : SingleObj G) : IsInitial X → False := by
 theorem torsor_no_product {X : SingleObj G} (c : BinaryFan X X) : IsLimit c → False := by
   intro hc
   obtain ⟨a, ha⟩ := exists_ne (1 : G)
-  obtain ⟨l₁, h₁, h₁'⟩ := BinaryFan.IsLimit.lift' hc (show X ⟶ X from (1 : G)) (show X ⟶ X from (1 : G))
+  obtain ⟨l₁, h₁, h₁'⟩ := BinaryFan.IsLimit.lift' hc (show X ⟶ X from (1 : G))
+      (show X ⟶ X from (1 : G))
   obtain ⟨l₂, h₂, h₂'⟩ := BinaryFan.IsLimit.lift' hc (show X ⟶ X from (1 : G)) (show X ⟶ X from a)
   rw [SingleObj.comp_as_mul] at h₁ h₁' h₂ h₂'
   have : l₁ = l₂ := by
@@ -257,8 +273,10 @@ theorem torsor_no_product {X : SingleObj G} (c : BinaryFan X X) : IsLimit c → 
 theorem torsor_no_coproduct {X : SingleObj G} (c : BinaryCofan X X) : IsColimit c → False := by
   intro hc
   obtain ⟨a, ha⟩ := exists_ne (1 : G)
-  obtain ⟨l₁, h₁, h₁'⟩ := BinaryCofan.IsColimit.desc' hc (show X ⟶ X from (1 : G)) (show X ⟶ X from (1 : G))
-  obtain ⟨l₂, h₂, h₂'⟩ := BinaryCofan.IsColimit.desc' hc (show X ⟶ X from (1 : G)) (show X ⟶ X from a)
+  obtain ⟨l₁, h₁, h₁'⟩ := BinaryCofan.IsColimit.desc' hc (show X ⟶ X from (1 : G))
+      (show X ⟶ X from (1 : G))
+  obtain ⟨l₂, h₂, h₂'⟩ := BinaryCofan.IsColimit.desc' hc (show X ⟶ X from (1 : G))
+      (show X ⟶ X from a)
   rw [SingleObj.comp_as_mul] at h₁ h₁' h₂ h₂'
   have : l₁ = l₂ := by
     have e : l₁ * (c.inl : G) = l₂ * c.inl := by rw [h₁, h₂]

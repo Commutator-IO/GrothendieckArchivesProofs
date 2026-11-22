@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
 public import Mathlib.Topology.Sober
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 41, Proposition 1 (page 11): continuity of the generic section and openness
@@ -25,39 +28,62 @@ The modernised reading `transcripts/41/41.modern.tex` (manuscript page 11) state
 >
 > *Démonstration.* … `φ⁻¹(U) = f(U)` …
 
-What is proved, as the reading states it:
+It is proved as the reading states it.
+
+## Main definitions
 
 * `SectionGenerique f φ` encodes « `φ(y)` est le point générique de la fibre
   irréductible non vide `X_y` » on the underlying spaces: `φ(y)` lies over `y`
-  and specialises to every point of `f⁻¹(y)`. `sectionGenerique_iff` checks that
-  this is exactly: `φ(y)` is a generic point of the fibre `f⁻¹(y)` with its
-  induced topology. (The fibre of a morphism of schemes is homeomorphic to this
-  subspace; that identification is not re-proved here.)
+  and specialises to every point of `f⁻¹(y)`.
+
+## Main results
+
+* `sectionGenerique_iff` checks that `SectionGenerique` is exactly: `φ(y)` is a generic point
+  of the fibre `f⁻¹(y)` with its induced topology.
 * `preimage_eq_image` — the page's formula `φ⁻¹(U) = f(U)` for `U` open.
 * `i_iff_ii`, `i_imp_iii`, `iii_iff_iiibis` — « (i) ⟺ (ii) sans autre
   hypothèse, et (ii) ⟹ (iii) ⟺ (iii bis) », for arbitrary topological spaces:
   no hypothesis on `f` at all, not even continuity.
 * `proposition1` — for a morphism of schemes locally of finite presentation, the
-  four conditions are equivalent. The one step that needs the hypothesis,
-  (iii bis) ⟹ (ii), is mathlib's `AlgebraicGeometry.isOpenMap_of_generalizingMap`
-  (Stacks 01U1, the reading's EGA IV 1.10.4); the rest is the topology above.
+  four conditions are equivalent.
 * `iiibis_not_imp_ii` — the finiteness hypothesis is not decoration: already for
   topological spaces, (iii bis) does not imply (ii). The identity map from `ℕ`
   discrete to `ℕ` with the cofinite topology has singleton fibres, lifts
   generizations (both spaces are T1), and is not open.
 
+## Implementation notes
+
+In `proposition1`, the one step that needs the hypothesis, (iii bis) ⟹ (ii), is mathlib's
+`AlgebraicGeometry.isOpenMap_of_generalizingMap` (Stacks 01U1, the reading's EGA IV 1.10.4);
+the rest is the topology above.
+
 **What the formalisation finds.** Nothing false and no missing hypothesis. The
 reading places the finiteness hypothesis exactly where it is needed, and « sans
 autre hypothèse » is true in the strongest sense: (i) ⟺ (ii) and
 (i) ⟹ (iii) ⟺ (iii bis) hold for any map of topological spaces with a
-generic-point section. The rest of the folder (monogenic sections,
-representability of the space of components, the theorem of page 8) is not
-formalised: mathlib has neither geometric irreducibility of fibres nor the
-valuative criteria in the form used.
+generic-point section.
 
 What this certifies is that the reading holds together at this point, not that
 it is what the page says (issue #26).
+
+## Not formalised
+
+* The fibre of a morphism of schemes is homeomorphic to the subspace `f⁻¹(y)`; that
+  identification is not re-proved here.
+* The rest of the folder (monogenic sections, representability of the space of components,
+  the theorem of page 8) is not formalised: mathlib has neither geometric irreducibility of
+  fibres nor the valuative criteria in the form used.
+
+## References
+
+* A. Grothendieck, folder 41, page 11 (reading `transcripts/41/41.modern.tex`)
+* [EGA IV] 1.10.4
+* Stacks Project, tag 01U1
+* Issue #26
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder41
 

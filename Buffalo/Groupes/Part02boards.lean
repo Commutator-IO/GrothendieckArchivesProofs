@@ -1,8 +1,11 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Groupes.Part02
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic groups, Part 02: board items not covered by an index entry
@@ -10,7 +13,15 @@ public import Buffalo.Groupes.Part02
 Board items of `public/buffalo-boards/` in the time range of Part 02 (videos `_lTf_L0yvrU` from
 5:51 and `3ULFIl_2Wis` up to 1:42) that make a claim no index entry of the part formalises, or
 that were corrected. Statuses in `docs/buffalo-groupes/lean/Part02-boards.json`.
+
+## References
+
+* the Buffalo lectures on algebraic groups (1973), videos `_lTf_L0yvrU` (from 5:51) and
+  `3ULFIl_2Wis` (up to 1:42) (reconstructed blackboards `public/buffalo-boards/`)
 -/
+
+@[expose] public section
+
 
 namespace Buffalo.Groupes.Part02
 
@@ -87,7 +98,8 @@ theorem quot_isComodule {k A M M'' : Type u} [CommRing k] [AddCommGroup A] [Modu
     obtain ⟨x, rfl⟩ := hq y
     simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply, LinearMap.id_apply, hh]
     have nat : ∀ z : M ⊗[k] A, TensorProduct.rid k M'' ((Coalgebra.counit (R := k) (A := A)).lTensor
-        M'' (q.rTensor A z)) = q (TensorProduct.rid k M ((Coalgebra.counit (R := k)).lTensor M z)) := by
+        M'' (q.rTensor A z)) =
+        q (TensorProduct.rid k M ((Coalgebra.counit (R := k)).lTensor M z)) := by
       intro z
       induction z using TensorProduct.inductionOn with
       | tmul a b => simp

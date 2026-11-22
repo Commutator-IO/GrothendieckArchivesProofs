@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
@@ -7,8 +12,6 @@ public import Mathlib.RingTheory.AdicCompletion.Completeness
 public import Mathlib.RingTheory.Henselian
 public import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 39, the formal preparation theorem (pages 18–19): the adic and discrete cases
@@ -28,27 +31,27 @@ states:
 > nilpotents. Soit `𝔪` l'idéal qu'ils engendrent : il est de type fini et
 > engendré par des nilpotents, donc nilpotent. …
 
-**This is a partial formalisation.** What is proved:
+**This is a partial formalisation.** The adic and discrete cases are proved.
+
+## Main results
 
 * `preparation_adique` — the theorem for `A` complete and separated for an
   `I`-adic topology, with `aᵢ ∈ I` for `i < N` and `a_N` a unit (in the `I`-adic
   topology « topologiquement nilpotent » means `aᵢ ∈ √I`, slightly weaker than
   `aᵢ ∈ I`; that gap is not closed here): `F` is regular,
   and every `G` is uniquely `QF + r` with `r` a polynomial of degree `< N`
-  (which is `∑_{i<N} bᵢ Zⁱ`). This is a short application of mathlib's
-  Weierstrass division (`PowerSeries.IsWeierstrassDivisorAt`), once one checks
-  that the order of `F` modulo `I` is exactly `N`.
+  (which is `∑_{i<N} bᵢ Zⁱ`).
 * `preparation_discrete` — the case the proof reduces to: `A` any commutative
-  ring, `a₀, …, a_{N-1}` nilpotent, `a_N` a unit. As the reading says, the ideal
-  `𝔪` they generate is nilpotent (`ideal_nilpotent`), so `A` is `𝔪`-adically
-  complete (`isAdicComplete_of_nilpotent`) and the adic case applies.
+  ring, `a₀, …, a_{N-1}` nilpotent, `a_N` a unit.
 
-Not formalised: the general linearly topologised case, i.e. the passage from
-the discrete quotients `A/J` back to `A = lim A/J`. mathlib has the vocabulary
-(`IsLinearTopology`, `IsTopologicallyNilpotent`) but not the identification of
-`A[[Z]]` with `lim (A/J)[[Z]]` that the gluing needs; building it is beyond the
-scope of a check. Pages 9–14 (the axioms of a class of formal functions) are
-formalised in the second part of this file, `Grothendieck.Folder39.Henselian`.
+## Implementation notes
+
+* `preparation_adique` is a short application of mathlib's Weierstrass division
+  (`PowerSeries.IsWeierstrassDivisorAt`), once one checks that the order of `F` modulo `I`
+  is exactly `N`.
+* `preparation_discrete`: as the reading says, the ideal `𝔪` the `a₀, …, a_{N-1}` generate
+  is nilpotent (`ideal_nilpotent`), so `A` is `𝔪`-adically complete
+  (`isAdicComplete_of_nilpotent`) and the adic case applies.
 
 **What the formalisation finds.** Nothing false, and the discrete step is exactly
 as the reading gives it: finitely many nilpotents generate a nilpotent ideal,
@@ -60,7 +63,24 @@ uses « de type fini » only to get `𝔪ʲA[[Z]] = 𝔪ʲ[[Z]]` inside its own 
 
 What this certifies is that the reading holds together at this point, not that
 it is what the pages say (issue #26).
+
+## Not formalised
+
+The general linearly topologised case, i.e. the passage from
+the discrete quotients `A/J` back to `A = lim A/J`. mathlib has the vocabulary
+(`IsLinearTopology`, `IsTopologicallyNilpotent`) but not the identification of
+`A[[Z]]` with `lim (A/J)[[Z]]` that the gluing needs; building it is beyond the
+scope of a check. Pages 9–14 (the axioms of a class of formal functions) are
+formalised in the second part of this file, `Grothendieck.Folder39.Henselian`.
+
+## References
+
+* A. Grothendieck, folder 39, pp. 9–14 and 18–19 (reading `transcripts/39/39.modern.tex`)
+* Issue #26
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder39
 
@@ -102,7 +122,7 @@ theorem preparation_adique (I : Ideal A) [IsAdicComplete I A] (F : A⟦X⟧) (N 
     have hdeg := hdiv.degree_lt
     rw [hord] at hdeg
     refine ⟨(H.div G, H.mod G), ⟨hdeg, ?_⟩, ?_⟩
-    · show G = H.div G * F + ↑(H.mod G)
+    · change G = H.div G * F + ↑(H.mod G)
       rw [mul_comm]
       exact hdiv.eq_mul_add
     rintro ⟨q, r⟩ ⟨hr, hG⟩

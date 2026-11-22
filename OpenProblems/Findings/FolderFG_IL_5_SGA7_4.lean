@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -6,6 +11,8 @@ module
 The open row `FG_IL_5_SGA7_4-depth-local-acyclicity` of the edition's list of findings
 (`src/content/findings.ts`), folder FG_IL_5_SGA7_4, p. 28 (with pp. 21–27 for 5.1–5.7 a)). It
 cannot be stated faithfully with Mathlib and the Stacks library; what is missing.
+
+## Not formalised
 
 * `FG_IL_5_SGA7_4-depth-local-acyclicity`: the conjecture of Remarque 5.7 b), that a flat
   morphism `Spec B → Spec A` of noetherian strictly local schemes whose special fibre has, after
@@ -19,4 +26,11 @@ cannot be stated faithfully with Mathlib and the Stacks library; what is missing
   Stacks 0GJP: an isomorphism of the vanishing-cycle fibre map in the derived category), from
   which a truncated variant would have to be defined; neither library has the singular locus of
   a fibre after residue extensions as a scheme with a dimension.
+
+## References
+
+* Fonds Grothendieck–Illusie (IHÉS), FG_IL_5_SGA7_4, pp. 21–28 (finding
+  `FG_IL_5_SGA7_4-depth-local-acyclicity`)
+* [SGA 2] XIV 6.3; L. Illusie (2003)
+* Stacks Project, tag 0GJP
 -/

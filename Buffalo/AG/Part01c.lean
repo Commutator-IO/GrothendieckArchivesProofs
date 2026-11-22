@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01b
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 01 (c): 4 June 1973
@@ -12,9 +15,21 @@ The session of 4 June 1973 (video `51wmmpHand0`, 3:07:15–4:55:19): projective 
 category `𝒞` of affine spaces (products, final object, fibre products, base change, kernels of
 pairs of arrows), filtered limits, finite presentation and noetherian rings, kernels and
 stabilizers of affine groups, inductive limits and quotients, and the first example of
-`GL_n / B`. Notation as in `Buffalo.AG.Part01a`; `𝒞` is `(CommAlgCat k)ᵒᵖ`, identified with the
+`GL_n / B`.
+
+## Implementation notes
+
+Notation as in `Buffalo.AG.Part01a`; `𝒞` is `(CommAlgCat k)ᵒᵖ`, identified with the
 representable functors by `prop_6911`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 4 June 1973, video
+  `51wmmpHand0`, 3:07:15–4:55:19
 -/
+
+@[expose] public section
+
 
 open CategoryTheory MvPolynomial
 
@@ -429,9 +444,11 @@ is a bijection from `Hom_k(k[T_ij][1/det], k')` onto the matrices with invertibl
 @[buffalo "51wmmpHand0-17469"]
 theorem prop_17469 (k' : Type u) [CommRing k'] [Algebra k k'] :
     Function.Injective (fun u : OGL k n →ₐ[k] k' =>
-        (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j)))  : Matrix n n k')) ∧
+        (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j)))  :
+          Matrix n n k')) ∧
       Set.range (fun u : OGL k n →ₐ[k] k' =>
-        (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j))) : Matrix n n k')) =
+        (Matrix.of fun i j => u (algebraMap (MvPolynomial (n × n) k) (OGL k n) (X (i, j))) :
+          Matrix n n k')) =
         {M | IsUnit M.det} := by
   let ι : MvPolynomial (n × n) k →ₐ[k] OGL k n := IsScalarTower.toAlgHom k _ _
   refine ⟨fun u v huv => ?_, ?_⟩

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 151, page 68: the gluing of tubes over covering pairs fails in depth 2
@@ -16,6 +19,21 @@ limit of the diagram `Ĩ` built from the covering pairs `i ⋖ j` only:
 `R_{i,j} = ⋃ {X_k | k < j, X_k ⊉ Xᵢ}`, `𝒱_{i,j} = 𝒱̄_{i,j} ∖ R_{i,j}` and
 `𝒱*_{i,j} = 𝒱̄_{i,j} ∖ Ẋⱼ`.
 
+## Main results
+
+* `exists_unique_desc`: `(ℝ², colimTop)` with the seven inclusions *is* the colimit of `Ĩ` in
+  `Top`: every compatible family of continuous maps out of the vertices factors uniquely through
+  a map `ℝ² → Z` continuous for `colimTop`;
+* `isOpen_colimTop_U`, `not_isOpen_U`: `U = {(x, y) | x = 0 → y = 0}` (the plane minus the
+  punctured vertical axis) is open in the colimit topology and not in `ℝ²`;
+* `colimTop_ne`: so the colimit topology is not the topology of `ℝ²`, and the comparison
+  `colim Ĩ → X`, a continuous bijection, is not a homeomorphism.
+
+The reason: `0` lies only in the vertices `X₀*` and `𝒱_{0,1}`, both inside the horizontal axis;
+the neighbourhood of `0` in `ℝ²` is the tube `𝒱_{0,2}` of the non-covering pair `0 < 2`.
+
+## Implementation notes
+
 What is modelled. The edition's counterexample `X = ℝ²` (here `ℝ × ℝ`), `X₀ = {0}`,
 `X₁ = ℝ × {0}`, `X₂ = ℝ²`, which satisfies the census hypotheses of pp. 62–63. Here
 `Ẋ₁ = X₀`, `Ẋ₂ = X₁`, `R_{0,1} = ∅`, `R_{1,2} = X₀`. The tubes `𝒱̄_{0,1} ⊆ X₁` and
@@ -24,19 +42,21 @@ arrows `Xᵢ* → 𝒱_{i,j}` exist: the result does not depend on how they are 
 The seven vertices of `Ĩ` are `Tubes.piece`, the six arrows `Tubes.arrows` are inclusions
 (`piece_subset_of_mem_arrows`), and the colimit topology `Tubes.colimTop` on the set `ℝ²` is the
 finest making the seven inclusions continuous.
-* `exists_unique_desc`: `(ℝ², colimTop)` with the seven inclusions *is* the colimit of `Ĩ` in
-  `Top`: every compatible family of continuous maps out of the vertices factors uniquely through
-  a map `ℝ² → Z` continuous for `colimTop`;
-* `isOpen_colimTop_U`, `not_isOpen_U`: `U = {(x, y) | x = 0 → y = 0}` (the plane minus the
-  punctured vertical axis) is open in the colimit topology and not in `ℝ²`;
-* `colimTop_ne`: so the colimit topology is not the topology of `ℝ²`, and the comparison
-  `colim Ĩ → X`, a continuous bijection, is not a homeomorphism.
-The reason: `0` lies only in the vertices `X₀*` and `𝒱_{0,1}`, both inside the horizontal axis;
-the neighbourhood of `0` in `ℝ²` is the tube `𝒱_{0,2}` of the non-covering pair `0 < 2`.
 
-Not formalised: the homotopy-colimit variant (its Euler characteristic is `−1`, so it is not
-contractible), the general stratified setting, and the depth-one case where the statement holds.
+## Not formalised
+
+The homotopy-colimit variant (its Euler characteristic is `−1`, so it is not contractible), the
+general stratified setting, and the depth-one case where the statement holds.
+
+## References
+
+* A. Grothendieck, folder 151, « Le théorème de recollement des tubes », pp. 62–63, 68;
+  transcription `transcripts/151/batch-04.fr.tex`, modernised reading
+  `transcripts/151/151.modern.tex`
 -/
+
+@[expose] public section
+
 
 open Set Topology
 

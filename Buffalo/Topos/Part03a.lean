@@ -1,21 +1,36 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.Topos.Part01
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Buffalo, topos theory, part 3a: points, fibre functors, classifying topoi (11 May and 30 May 1973)
 
-Entries of `docs/buffalo-topos/index.tex` lines 390–535 concerning points of topoi, the classifying
-topos `B_G`, fibre functors on `Sh(X)` and the 2-cells between morphisms of topoi of spaces (videos
-`URU5jgTvjhU` 9:27:02–11:04:45 and `PqCQM3Pcl6Q` 0:04:34–0:53:20). The status of each entry is in
-`docs/buffalo-topos/lean/Part03.json`.
+Entries of `docs/buffalo-topos/index.tex` lines 390–535 concerning points of topoi, the
+classifying topos `B_G`, fibre functors on `Sh(X)` and the 2-cells between morphisms of topoi of
+spaces (videos `URU5jgTvjhU` 9:27:02–11:04:45 and `PqCQM3Pcl6Q` 0:04:34–0:53:20). The status of
+each entry is in `docs/buffalo-topos/lean/Part03.json`.
+
+## Implementation notes
 
 Points of `Sh(X)` are modelled by Mathlib's points of the site `(Opens X, J)`
-(`GrothendieckTopology.Point`, the fibre functors of SGA 4 IV 6.3), and `B_G` by `Action (Type u) G`.
+(`GrothendieckTopology.Point`, the fibre functors of SGA 4 IV 6.3), and `B_G` by
+`Action (Type u) G`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), videos `URU5jgTvjhU`, 9:27:02–11:04:45, and
+  `PqCQM3Pcl6Q`, 0:04:34–0:53:20 (11 May and 30 May 1973)
+* [SGA 4] exposé IV, 6.3
 -/
+
+@[expose] public section
+
 
 universe w u
 
@@ -144,7 +159,7 @@ def orbitHom (A : Action (Type u) G) (x : A.V) : Action.ofMulAction G G ⟶ A wh
   hom := ↾fun h => A.ρ h x
   comm h := by
     ext (k : G)
-    show A.ρ (h * k) x = A.ρ h (A.ρ k x)
+    change A.ρ (h * k) x = A.ρ h (A.ρ k x)
     rw [map_mul]
     rfl
 
@@ -157,7 +172,7 @@ theorem forget_end (η : Action.forget (Type u) G ⟶ Action.forget (Type u) G) 
     rwa [h1] at h
   · have := hg (Action.ofMulAction G G) (1 : G)
     rw [this]
-    show g = g * 1
+    change g = g * 1
     rw [mul_one]
 
 /-- URU5jgTvjhU-34130 (9:28:50) [cex] If `G ≠ 1`, the topos `B_G` is equivalent to no `Sh(X)`:
@@ -179,7 +194,8 @@ theorem classifying_not_spatial [Nontrivial G] (X : TopCat.{u}) :
 commutes with finite limits and all colimits)... -/
 @[buffalo "URU5jgTvjhU-34201"]
 theorem forget_isFibreFunctor :
-    PreservesFiniteLimits (Action.forget (Type u) G) ∧ PreservesColimits (Action.forget (Type u) G) :=
+    PreservesFiniteLimits (Action.forget (Type u) G) ∧
+      PreservesColimits (Action.forget (Type u) G) :=
   ⟨inferInstance, inferInstance⟩
 
 /-- URU5jgTvjhU-37075 (10:17:55) [prop] `Γ(X) = Hom(1, X)` is the set of `G`-invariant elements

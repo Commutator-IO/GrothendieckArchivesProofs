@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 80, pages 39–54: the skeleton of a bigon-free arrangement, in combinatorial maps
@@ -13,14 +16,11 @@ Finding `80-skeleton-full-faithfulness`. Page 54 (« En résumé »):
 > Le foncteur canonique du groupoïde des arrangements de pseudo-droites sans bigone vers celui
 > des arrangements de dimension 1 de pseudo-droites sans bigone est pleinement fidèle.
 
-**Model.** As in `Folder80Maps2`, an arrangement is a generalised map (flags, three involutions
-`a0, a1, a2`) of Euler characteristic `1` whose flags are labelled by lines (page 60), and it is
-*bigon-free* when every line carries at least three vertices. Page 60's « aller tout droit » is
-the extra hypothesis `Straight`: with `φ = a2 a1` the rotation around a vertex of `ν` lines,
-`φ^ν` returns to the same line. The arrangement of dimension `1` (page 40) is the skeleton —
-vertices, edges, incidence — with the line of each edge; `SkelIso` is an isomorphism of these.
+The functor is proved faithful, and full away from `III₆` (whenever every triangle has a fourth
+line avoiding its vertices).
 
-**What is proved.**
+## Main results
+
 * `faithful`: two isomorphisms of arrangements inducing the same maps on vertices and edges are
   equal — the functor is faithful.
 * `lift`, `lift_iff`: page 41's « théorème général des cartes ». A skeleton isomorphism comes
@@ -66,10 +66,27 @@ vertices, edges, incidence — with the line of each edge; `SkelIso` is an isomo
   only two lines always has a fourth line, so fullness holds whenever every triangle has a
   double vertex (`SimpleCorner`): a triangle without a fourth line has three multiple vertices.
 
-**Not formalised.** The arrangements where some triangle has no fourth line avoiding its
-vertices: (A6) and the complete quadrangle `III₆`. These are what remains of the page 54
-theorem.
+## Implementation notes
+
+**Model.** As in `Folder80Maps2`, an arrangement is a generalised map (flags, three involutions
+`a0, a1, a2`) of Euler characteristic `1` whose flags are labelled by lines (page 60), and it is
+*bigon-free* when every line carries at least three vertices. Page 60's « aller tout droit » is
+the extra hypothesis `Straight`: with `φ = a2 a1` the rotation around a vertex of `ν` lines,
+`φ^ν` returns to the same line. The arrangement of dimension `1` (page 40) is the skeleton —
+vertices, edges, incidence — with the line of each edge; `SkelIso` is an isomorphism of these.
+
+## Not formalised
+
+The arrangements where some triangle has no fourth line avoiding its vertices: (A6) and the
+complete quadrangle `III₆`. These are what remains of the page 54 theorem.
+
+## References
+
+* A. Grothendieck, folder 80, pp. 35, 39–54, 60 (finding `80-skeleton-full-faithfulness`)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder80Maps3
 
@@ -236,6 +253,7 @@ theorem const_of_inv {α : Type*} (f : D → α) (h0 : ∀ d, f (X.M.a0 d) = f d
 
 variable [Fintype D]
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 /-- The four flags of a line at a vertex. -/
 theorem at_four {d x1 x2 x3 x4 : D} (hn : [x1, x2, x3, x4].Nodup)
@@ -249,6 +267,7 @@ theorem at_four {d x1 x2 x3 x4 : D} (hn : [x1, x2, x3, x4].Nodup)
     (by rw [h4, List.toFinset_card_of_nodup hn]; rfl)
   simpa [hf, hl] using (Finset.ext_iff.1 this f).2
 
+set_option linter.unusedFintypeInType false in
 /-- No loop: the two ends of an edge are distinct vertices. -/
 theorem noLoop (hbf : BigonFree X.On) (d : D) : X.M.vtx (X.M.a0 d) ≠ X.M.vtx d := by
   intro h
@@ -263,6 +282,7 @@ theorem noLoop (hbf : BigonFree X.On) (d : D) : X.M.vtx (X.M.a0 d) ≠ X.M.vtx d
 
 /-! ### Faithfulness -/
 
+set_option linter.unusedFintypeInType false in
 /-- At a vertex, the two flags of an edge-end are followed by flags of two different edges. -/
 theorem edge_a1_a2_ne (hbf : BigonFree X.On) (u : D) :
     X.M.edge (X.M.a1 (X.M.a2 u)) ≠ X.M.edge (X.M.a1 u) := by
@@ -295,14 +315,16 @@ theorem edge_a1_a2_ne (hbf : BigonFree X.On) (u : D) :
   · exact hn (X.M.a2 (X.M.a1 u)) (by rw [← k]; simp)
 
 omit [Fintype D] in
+set_option linter.unusedFintypeInType false in
 /-- **Faithfulness.** Two maps of flags `X → X'` commuting with `a1` (for instance two
 isomorphisms of arrangements) that induce the same maps on vertices and on edges are equal. -/
 @[montpellier "80, 54"]
-theorem faithful {D' L' : Type*} [Fintype D'] {X' : PseudolineMap D' L'}
+theorem faithful {D' L' : Type*} [Finite D'] {X' : PseudolineMap D' L'}
     (hbf : BigonFree X'.On) {g g' : D → D'}
     (h1 : ∀ d, g (X.M.a1 d) = X'.M.a1 (g d)) (h1' : ∀ d, g' (X.M.a1 d) = X'.M.a1 (g' d))
     (hv : ∀ d, X'.M.vtx (g d) = X'.M.vtx (g' d)) (he : ∀ d, X'.M.edge (g d) = X'.M.edge (g' d)) :
     g = g' := by
+  have := Fintype.ofFinite D'
   funext d
   have hn := noLoop hbf
   rcases edge_eq.1 (he d) with h | h | h | h
@@ -359,11 +381,13 @@ noncomputable def lineChain (l : L) : X.M.Edge → ZMod 2 := fun e => if X.lineE
 omit [Fintype D] in
 theorem edge_surj (e : X.M.Edge) : ∃ d, X.M.edge d = e := Quot.exists_rep e
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 theorem incM_mulVec (c : X.M.Edge → ZMod 2) (v : X.M.Vtx) :
     (X.incM *ᵥ c) v = ∑ e, if X.Inc v e then c e else 0 := by
   simp [incM, Matrix.mulVec, dotProduct]
 
+set_option linter.unusedFintypeInType false in
 theorem bd_apply (S : X.M.Face → ZMod 2) (d : D) :
     (X.bdM *ᵥ S) (X.M.edge d) = S (X.M.face d) + S (X.M.face (X.M.a2 d)) := by
   classical
@@ -373,6 +397,7 @@ theorem bd_apply (S : X.M.Face → ZMod 2) (d : D) :
   rcases edge_eq.1 (Quot.out_eq (X.M.edge d)) with h | h | h | h <;>
     simp [h, ← X.M.a0_a2, X.M.a2_a2, add_comm]
 
+set_option linter.unusedFintypeInType false in
 /-- The flags at a vertex on a given edge are `d` and `a2 d`. -/
 theorem at_edge (hbf : BigonFree X.On) {d x : D} :
     X.M.vtx x = X.M.vtx d ∧ X.M.edge x = X.M.edge d ↔ x = d ∨ x = X.M.a2 d := by
@@ -392,6 +417,7 @@ theorem inc_iff (d : D) (v : X.M.Vtx) :
   · rintro (rfl | rfl)
     exacts [⟨d, rfl, rfl⟩, ⟨_, rfl, edge_a0 d⟩]
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 theorem sum_inc (hbf : BigonFree X.On) (d : D) (g : X.M.Vtx → ZMod 2) :
     ∑ v, (if X.Inc v (X.M.edge d) then g v else 0) = g (X.M.vtx d) + g (X.M.vtx (X.M.a0 d)) := by
@@ -416,9 +442,12 @@ theorem vtx_const {g : X.M.Vtx → ZMod 2} (h : ∀ d, g (X.M.vtx d) = g (X.M.vt
     _ _
 
 omit [Fintype D] in
-theorem finrank_ker_le {V W : Type*} [Fintype V] [AddCommGroup W] [Module (ZMod 2) W]
+set_option linter.unusedFintypeInType false in
+theorem finrank_ker_le {V W : Type*} [Finite V] [AddCommGroup W] [Module (ZMod 2) W]
     {f : (V → ZMod 2) →ₗ[ZMod 2] W}
-    (h : ∀ g ∈ LinearMap.ker f, ∀ v w, g v = g w) : Module.finrank (ZMod 2) (LinearMap.ker f) ≤ 1 := by
+    (h : ∀ g ∈ LinearMap.ker f, ∀ v w, g v = g w) :
+    Module.finrank (ZMod 2) (LinearMap.ker f) ≤ 1 := by
+  have := Fintype.ofFinite V
   refine (Submodule.finrank_mono (t := Submodule.span (ZMod 2) {fun _ => 1}) fun g hg => ?_).trans
     ((finrank_span_le_card _).trans (by simp))
   rcases isEmpty_or_nonempty V with hV | ⟨⟨v0⟩⟩
@@ -452,7 +481,7 @@ theorem B1_le_Z1 (hbf : BigonFree X.On) : X.B1 ≤ X.Z1 := by
 theorem finrank_Z1_le (hbf : BigonFree X.On) :
     Module.finrank (ZMod 2) X.Z1 ≤ Module.finrank (ZMod 2) X.B1 + 1 := by
   classical
-  show Module.finrank _ (LinearMap.ker _) ≤ Module.finrank _ (LinearMap.range _) + 1
+  change Module.finrank _ (LinearMap.ker _) ≤ Module.finrank _ (LinearMap.range _) + 1
   have k1 : Module.finrank (ZMod 2) (LinearMap.ker X.incMᵀ.mulVecLin) ≤ 1 := by
     refine finrank_ker_le fun g hg => vtx_const fun d => two_eq _ _ ?_
     have := congrFun (LinearMap.mem_ker.1 hg) (X.M.edge d)
@@ -728,6 +757,7 @@ section Parity
 
 open Matrix
 
+set_option linter.unusedFintypeInType false in
 /-- Turning by `φ` across an edge of the boundary `∂S` changes side of `S`. -/
 theorem face_phi (S : X.M.Face → ZMod 2) (y : D) :
     S (X.M.face (X.phi y)) = S (X.M.face y) + (X.bdM *ᵥ S) (X.M.edge (X.phi y)) := by
@@ -735,6 +765,7 @@ theorem face_phi (S : X.M.Face → ZMod 2) (y : D) :
     ← add_assoc, add_self', zero_add]
   rfl
 
+set_option linter.unusedFintypeInType false in
 theorem face_phi_pow (S : X.M.Face → ZMod 2) (y : D) (n : ℕ) :
     S (X.M.face ((X.phi ^ n) y)) =
       S (X.M.face y) + ∑ i ∈ Finset.range n, (X.bdM *ᵥ S) (X.M.edge ((X.phi ^ (i + 1)) y)) := by
@@ -770,7 +801,8 @@ theorem parity (hbf : BigonFree X.On) (hs : X.Straight) (S : X.M.Face → ZMod 2
     rw [hx] at hfil
     rw [← Finset.sum_filter, hfil, Finset.sum_pair hee, hμ x hx, hμ x' hx', face_phi_pow S]
     rcases h2 _ ⟨x, rfl, hx⟩ with h | ⟨m, hm, hmw, hz⟩
-    · rw [Finset.sum_eq_zero fun i _ => h _ ⟨_, by simp, rfl⟩, ite_eq_right fun ⟨e, he, hz⟩ => hz (h e he),
+    · rw [Finset.sum_eq_zero fun i _ => h _ ⟨_, by simp, rfl⟩,
+        ite_eq_right fun ⟨e, he, hz⟩ => hz (h e he),
         add_zero, add_self']
     · obtain ⟨d, hdv, rfl⟩ := hmw
       rw [ite_eq_left ⟨X.M.edge d, ⟨d, hdv, rfl⟩, by rw [hz _ ⟨d, hdv, rfl⟩]; simp⟩, ← add_assoc,
@@ -817,7 +849,8 @@ theorem lineChain_mem (hbf : BigonFree X.On) (hs : X.Straight) (l : L) : X.lineC
   by_cases hv : X.On v l
   · obtain ⟨x, rfl, rfl⟩ := hv
     rw [(line_edges hbf hs x).1, Finset.card_pair (line_edges hbf hs x).2]; rfl
-  · rw [Finset.card_eq_zero.2 (Finset.filter_eq_empty_iff.2 fun e _ ⟨h1, h2⟩ => hv (h2 ▸ on_of_inc h1))]
+  · rw [Finset.card_eq_zero.2
+      (Finset.filter_eq_empty_iff.2 fun e _ ⟨h1, h2⟩ => hv (h2 ▸ on_of_inc h1))]
     rfl
 
 open Classical in
@@ -850,7 +883,8 @@ theorem Z1_cases (hbf : BigonFree X.On) (hs : X.Straight) {a Δ : L} (h : a ≠ 
     {z : X.M.Edge → ZMod 2} (hz : z ∈ X.Z1) : z ∈ X.B1 ∨ z + X.lineChain a ∈ X.B1 := by
   set c := X.lineChain a
   have hc := lineChain_not_mem hbf hs h
-  have hc0 : c ≠ 0 := fun h0 => hc (by rw [show X.lineChain a = 0 from h0]; exact Submodule.zero_mem _)
+  have hc0 : c ≠ 0 :=
+      fun h0 => hc (by rw [show X.lineChain a = 0 from h0]; exact Submodule.zero_mem _)
   have hinf : X.B1 ⊓ Submodule.span (ZMod 2) {c} = ⊥ := by
     refine (Submodule.eq_bot_iff _).2 fun y ⟨hy, hy'⟩ => ?_
     obtain ⟨t, rfl⟩ := Submodule.mem_span_singleton.1 hy'
@@ -892,7 +926,8 @@ theorem seg_val (hbf : BigonFree X.On) (hs : X.Straight) {x : L} {p q : X.M.Vtx}
   rw [hyx] at hfil
   rw [Finset.sum_congr rfl (g := fun e => if X.Inc (X.M.vtx y) e ∧ X.lineE e = x then P e else 0)
     (fun e _ => by
-      by_cases h1 : X.Inc (X.M.vtx y) e <;> by_cases h2 : X.lineE e = x <;> simp [h1, h2]
+      by_cases h1 : X.Inc (X.M.vtx y) e <;> by_cases h2 : X.lineE e = x <;> simp only [h1,
+          ↓reduceIte, h2, and_self, and_false, and_true]
       exact by_contra fun h => h2 (hP e h)), ← Finset.sum_filter, hfil,
     Finset.sum_pair hee] at h0
   have h0 := two_eq _ _ h0
@@ -905,6 +940,7 @@ theorem seg_val (hbf : BigonFree X.On) (hs : X.Straight) {x : L} {p q : X.M.Vtx}
       rw [h'] <;> simp [h0]
   · exact by_contra fun h' => h (hP e h')
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 theorem ind_val {Δ x : L} {z : X.M.Edge → ZMod 2} {w : X.M.Vtx} (hw : X.On w Δ) {t : ZMod 2}
     (hz : ∀ e, X.Inc w e → z e = if X.lineE e = x then t else 0) {ex : X.M.Edge}
@@ -1095,6 +1131,7 @@ def SkelIso.symm (f : SkelIso X X') : SkelIso X' X where
   inc v e := by rw [f.inc]; simp
   line e := by rw [Equiv.eq_symm_apply, ← f.line]; simp
 
+set_option linter.unusedFintypeInType false in
 /-- A flag is determined by its vertex, its edge and the edge after it. -/
 theorem dart_unique (hbf : BigonFree X.On) {y y' : D} (hv : X.M.vtx y' = X.M.vtx y)
     (he : X.M.edge y' = X.M.edge y) (h1 : X.M.edge (X.M.a1 y') = X.M.edge (X.M.a1 y)) :
@@ -1114,7 +1151,8 @@ theorem exists_dart (hbf : BigonFree X.On) (hs : X.Straight) (f : SkelIso X X')
   have iv := (f.inc _ _).1 (⟨d, rfl, rfl⟩ : X.Inc (X.M.vtx d) (X.M.edge d))
   have iw := (f.inc _ _).1 (⟨_, rfl, edge_a0 d⟩ : X.Inc (X.M.vtx (X.M.a0 d)) (X.M.edge d))
   rw [← h2, inc_iff] at iv iw
-  have hvw : f.fV (X.M.vtx d) ≠ f.fV (X.M.vtx (X.M.a0 d)) := fun h => noLoop hbf d (f.fV.injective h).symm
+  have hvw : f.fV (X.M.vtx d) ≠ f.fV (X.M.vtx (X.M.a0 d)) :=
+      fun h => noLoop hbf d (f.fV.injective h).symm
   by_contra hne
   have hw : X'.M.vtx d' = f.fV (X.M.vtx (X.M.a0 d)) :=
     (iw.resolve_right fun h' => hvw ((iv.resolve_left fun h => hne h.symm).trans h'.symm)).symm
@@ -1124,6 +1162,7 @@ theorem exists_dart (hbf : BigonFree X.On) (hs : X.Straight) (f : SkelIso X X')
   exact noLoop hbf d (meet_eq (line_a1_ne hs d) (lineE_edge (X := X) (X.M.a1 d) ▸ on_of_inc this)
     ⟨_, rfl, X.line_a0 d⟩ ⟨_, vtx_a1 d, rfl⟩ ⟨d, rfl, rfl⟩)
 
+set_option linter.unusedFintypeInType false in
 /-- **The general theorem on maps, page 41.** An isomorphism of decomposed skeletons that
 carries the three-edge face paths to face paths is induced by a morphism of the arrangements
 (commuting with `a0, a1, a2`, over the given bijections). -/
@@ -1192,7 +1231,8 @@ theorem line_cycle (hbf : BigonFree X.On) (hs : X.Straight) {l : L} {z : X.M.Edg
     simp only [Matrix.mulVecLin_apply, Pi.zero_apply] at h0
     rw [incM_mulVec, Finset.sum_congr rfl
       (g := fun e => if X.Inc (X.M.vtx x) e ∧ X.lineE e = X.line x then z e else 0) fun e _ => by
-        by_cases h1 : X.Inc (X.M.vtx x) e <;> by_cases h2 : X.lineE e = X.line x <;> simp [h1, h2]
+        by_cases h1 : X.Inc (X.M.vtx x) e <;> by_cases h2 : X.lineE e = X.line x <;> simp only [h1,
+            ↓reduceIte, h2, and_self, and_false, and_true]
         exact by_contra fun h => h2 (hx ▸ hl e h), ← Finset.sum_filter, (line_edges hbf hs x).1,
       Finset.sum_pair (line_edges hbf hs x).2] at h0
     exact (two_eq _ _ h0).symm
@@ -1286,6 +1326,9 @@ theorem supp_map {c : X.M.Edge → ZMod 2} {a : L} (h : ∀ e, c e ≠ 0 → X.l
   obtain ⟨e, rfl⟩ := f.fE.surjective e'
   rw [f.line, h e (by rwa [mapC_apply] at h')]
 
+-- `[Fintype D]`, `[Fintype D']` are section variables that the type uses inside the
+-- incidence products; making them `Finite` here would change the whole section.
+set_option linter.unusedFintypeInType false in
 open Classical in
 theorem bd_map {c : X.M.Edge → ZMod 2} {p q : X.M.Vtx}
     (h : X.incM *ᵥ c = Pi.single p 1 + Pi.single q 1) :
@@ -1348,7 +1391,8 @@ theorem half_one (hs : X.Straight) (y : D) {l : L} {P : X.M.Edge → ZMod 2}
     (h1 : P (X.M.edge (X.M.a1 y)) = 1) :
     ∑ i ∈ Finset.range (X.nu (X.M.vtx y)), P (X.M.edge ((X.phi ^ (i + 1)) y)) = 1 := by
   classical
-  have hν : 0 < X.nu (X.M.vtx y) := Finset.card_pos.2 ⟨X.line y, Finset.mem_image.2 ⟨y, by simp, rfl⟩⟩
+  have hν : 0 < X.nu (X.M.vtx y) :=
+      Finset.card_pos.2 ⟨X.line y, Finset.mem_image.2 ⟨y, by simp, rfl⟩⟩
   rw [Finset.sum_eq_single 0]
   · simpa [phi_apply] using h1
   · intro i hi hi0
@@ -1388,7 +1432,8 @@ theorem edge_parity (hbf : BigonFree X.On) (hs : X.Straight) (S : X.M.Face → Z
       ∑ i ∈ Finset.range (X.nu (X.M.vtx (X.M.a0 d))),
         (X.bdM *ᵥ S) (X.M.edge ((X.phi ^ (i + 1)) (X.M.a0 d))) = 0 := by
   set Δ := X.line d
-  let μ : X.M.Edge → ZMod 2 := fun ε => if ε = X.M.edge d then S (X.M.face d) else S (X.M.face ε.out)
+  let μ : X.M.Edge → ZMod 2 := fun ε =>
+      if ε = X.M.edge d then S (X.M.face d) else S (X.M.face ε.out)
   have hμ : ∀ y, X.line y = Δ → (X.M.edge y ≠ X.M.edge d ∨ y = d ∨ y = X.M.a0 d) →
       μ (X.M.edge y) = S (X.M.face y) := by
     rintro y hy (hne | rfl | rfl)
@@ -1416,7 +1461,8 @@ theorem edge_parity (hbf : BigonFree X.On) (hs : X.Straight) (S : X.M.Face → Z
   rw [Fintype.sum_eq_add (X.M.vtx d) (X.M.vtx (X.M.a0 d)) (noLoop hbf d).symm] at glob
   · rwa [loc d rfl (hμ d rfl (.inr (.inl rfl))) (hμ _ (hs d) (.inl (line_edges hbf hs d).2.symm)),
       loc (X.M.a0 d) (X.line_a0 d) (hμ _ (X.line_a0 d) (.inr (.inr rfl)))
-        (hμ _ ((hs _).trans (X.line_a0 d)) (.inl (by simpa using (line_edges hbf hs (X.M.a0 d)).2.symm)))] at glob
+        (hμ _ ((hs _).trans (X.line_a0 d))
+          (.inl (by simpa using (line_edges hbf hs (X.M.a0 d)).2.symm)))] at glob
   · rintro q ⟨hqv, hqw⟩
     by_cases hq : X.On q Δ
     · obtain ⟨x, rfl, hx⟩ := hq
@@ -1427,6 +1473,7 @@ theorem edge_parity (hbf : BigonFree X.On) (hs : X.Straight) (S : X.M.Face → Z
       exact Finset.sum_eq_zero fun i _ => h0 _ ⟨x, rfl, hx⟩ hqv hqw _ ⟨_, by simp, rfl⟩
     · exact Finset.sum_eq_zero fun ε _ => ite_eq_right fun ⟨h1, h2⟩ => hq (h2 ▸ on_of_inc h1)
 
+set_option linter.unusedFintypeInType false in
 open Classical in
 /-- The boundary of an edge is its two ends. -/
 theorem bd_single (hbf : BigonFree X.On) (d : D) :
@@ -1601,7 +1648,8 @@ theorem SkelIso.mapC_single (f : SkelIso X X') (e : X.M.Edge) :
 open Classical in
 /-- **A skeleton isomorphism of simple arrangements carries face paths to face paths.** -/
 theorem path_map (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straight)
-    (hs' : X'.Straight) (h2 : ∀ y : D, X.nu (X.M.vtx y) = 2) (h2' : ∀ y : D', X'.nu (X'.M.vtx y) = 2)
+    (hs' : X'.Straight) (h2 : ∀ y : D, X.nu (X.M.vtx y) = 2)
+    (h2' : ∀ y : D', X'.nu (X'.M.vtx y) = 2)
     (f : SkelIso X X') {e1 e e2 : X.M.Edge} (h : X.Path3 e1 e e2) :
     X'.Path3 (f.fE e1) (f.fE e) (f.fE e2) := by
   obtain ⟨d, rfl, rfl, rfl⟩ := h
@@ -1626,7 +1674,8 @@ theorem path_map (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straigh
   obtain ⟨q, oq, hqv, hqp⟩ : ∃ q, X.On q (X.line (X.M.a1 d)) ∧ q ≠ X.M.vtx d ∧ q ≠ p := by
     by_contra hc
     push Not at hc
-    have k := fun q (hq : X.On q (X.line (X.M.a1 d))) => (eq_or_ne q (X.M.vtx d)).imp_right (hc q hq)
+    have k := fun q (hq : X.On q (X.line (X.M.a1 d))) =>
+        (eq_or_ne q (X.M.vtx d)).imp_right (hc q hq)
     rcases k _ o1 with rfl | rfl <;> rcases k _ o2 with h2 | h2 <;> rcases k _ o3 with h3 | h3 <;>
       simp_all
   obtain ⟨x, rfl, hx⟩ := oq
@@ -1635,7 +1684,8 @@ theorem path_map (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straigh
   have hΔa : Δ ≠ X.line (X.M.a1 d) := hx ▸ hyl
   have oΔ : X.On (X.M.vtx x) Δ := ⟨y, hyv, rfl⟩
   have hΔm : X.line d ≠ Δ := fun h => hqv (meet_eq ham ⟨x, rfl, hx⟩ (h ▸ oΔ) va vm)
-  have hΔb : X.line (X.M.a1 (X.M.a0 d)) ≠ Δ := fun h => hqp (meet_eq hab ⟨x, rfl, hx⟩ (h ▸ oΔ) pa pb)
+  have hΔb : X.line (X.M.a1 (X.M.a0 d)) ≠ Δ := fun h =>
+      hqp (meet_eq hab ⟨x, rfl, hx⟩ (h ▸ oΔ) pa pb)
   have nv : ¬X.On (X.M.vtx d) Δ := fun h => hΔa (two_lines hs (h2 d) h hΔm.symm)
   have nw : ¬X.On (X.M.vtx (X.M.a0 d)) Δ := fun h => hΔb.symm (two_lines hs (h2 _) h
     (by rw [X.line_a0]; exact hΔm.symm))
@@ -1700,7 +1750,8 @@ theorem path_map (hbf : BigonFree X.On) (hbf' : BigonFree X'.On) (hs : X.Straigh
   · refine lineChain_not_mem hbf' hs' (f.fL.injective.ne ham) ?_
     convert X'.B1.add_mem hT' hT2 using 1
     rw [hq]
-    exact funext fun _ => (by decide : ∀ s x y c : ZMod 2, c = s + x + y + (s + (x + c) + y)) _ _ _ _
+    exact funext fun _ =>
+        (by decide : ∀ s x y c : ZMod 2, c = s + x + y + (s + (x + c) + y)) _ _ _ _
 
 /-- **Full faithfulness for simple arrangements** (page 54, when every vertex is on exactly two
 lines). Every isomorphism of decomposed skeleta of two simple bigon-free arrangements that go
@@ -1852,7 +1903,8 @@ theorem seg_end (hbf : BigonFree X.On) (hs : X.Straight) (x : D) {P : X.M.Edge �
   have h0 := congrFun hb (X.M.vtx x)
   rw [incM_mulVec, Finset.sum_congr rfl
     (g := fun e => if X.Inc (X.M.vtx x) e ∧ X.lineE e = X.line x then P e else 0) fun e _ => by
-      by_cases h1 : X.Inc (X.M.vtx x) e <;> by_cases h2 : X.lineE e = X.line x <;> simp [h1, h2]
+      by_cases h1 : X.Inc (X.M.vtx x) e <;> by_cases h2 : X.lineE e = X.line x <;> simp only [h1,
+          ↓reduceIte, h2, and_self, and_false, and_true]
       exact by_contra fun h => h2 (hP e h), ← Finset.sum_filter, (line_edges hbf hs x).1,
     Finset.sum_pair (line_edges hbf hs x).2] at h0
   simpa [Pi.single_eq_of_ne hp.symm] using h0
@@ -1969,7 +2021,8 @@ theorem side_cover (hs : X.Straight) (x : D) {ε : X.M.Edge}
     Finset.card_pos.2 ⟨X.line x, Finset.mem_image.2 ⟨x, by simp, rfl⟩⟩
   have hr : (X.phi ^ k) x = (X.phi ^ (k % (2 * X.nu (X.M.vtx x) : ℕ)).toNat) x := by
     have h' : ((X.phi ^ ((2 * X.nu (X.M.vtx x) : ℕ) : ℤ)) ^ (k / (2 * X.nu (X.M.vtx x) : ℕ))) x =
-        x := Equiv.Perm.zpow_apply_eq_self_of_apply_eq_self (by rw [zpow_natCast]; exact phi_period x) _
+        x := Equiv.Perm.zpow_apply_eq_self_of_apply_eq_self
+          (by rw [zpow_natCast]; exact phi_period x) _
     conv_lhs => rw [← Int.emod_add_mul_ediv k (2 * X.nu (X.M.vtx x) : ℕ), zpow_add,
       Equiv.Perm.mul_apply, zpow_mul, h']
     rw [← zpow_natCast, Int.toNat_of_nonneg (Int.emod_nonneg _ (by omega))]
@@ -2318,7 +2371,8 @@ theorem fourth_at (hbf : BigonFree X.On) {a b c : L} {u v w : X.M.Vtx} (h1 : X.O
   obtain ⟨Δ, hΔ, hqΔ⟩ := other_line hq
   have hac : a ≠ c := fun h => h7 (h ▸ h1)
   have hbc : b ≠ c := fun h => h7 (h ▸ h2)
-  refine ⟨Δ, fun h => ?_, fun h => hqv (meet_eq hΔ hqΔ hq h h4), fun h => hqw (meet_eq hΔ hqΔ hq h h5)⟩
+  refine ⟨Δ, fun h => ?_, fun h => hqv (meet_eq hΔ hqΔ hq h h4),
+      fun h => hqw (meet_eq hΔ hqΔ hq h h5)⟩
   rcases hu Δ h with rfl | rfl
   · exact hqw (meet_eq hac hqΔ hq h6 h5)
   · exact hqv (meet_eq hbc hqΔ hq h3 h4)

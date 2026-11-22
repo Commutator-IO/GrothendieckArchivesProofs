@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 01 (b): 30 May 1973
@@ -11,8 +14,20 @@ import Grothendieck.Attr
 The session of 30 May 1973 (video `51wmmpHand0`, 1:34:31–3:07:15): the dictionary between
 closed subspaces and ideals, radicals and the Nullstellensatz (tested on fields, on finite
 extensions, on `k` when `k` is algebraically closed), the algebra of functions of an affine space,
-and products, sums and filtered limits. Notation as in `Buffalo.AG.Part01a`.
+and products, sums and filtered limits.
+
+## Implementation notes
+
+Notation as in `Buffalo.AG.Part01a`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 30 May 1973, video
+  `51wmmpHand0`, 1:34:31–3:07:15
 -/
+
+@[expose] public section
+
 
 open CategoryTheory MvPolynomial
 
@@ -136,7 +151,8 @@ theorem prop_7502 (J : Ideal (MvPolynomial I k)) (f : MvPolynomial I k) :
 /-- 51wmmpHand0-7367 (2:02:47) [prop] Over fields, `V'_J ⊆ V'_{J'}` iff `√J ⊇ √J'`. -/
 @[buffalo "51wmmpHand0-7367"]
 theorem prop_7367 (J J' : Ideal (MvPolynomial I k)) :
-    (∀ (K : Type u) [Field K] [Algebra k K], Z k (J : Set _) K ⊆ Z k (J' : Set (MvPolynomial I k)) K) ↔
+    (∀ (K : Type u) [Field K] [Algebra k K],
+        Z k (J : Set _) K ⊆ Z k (J' : Set (MvPolynomial I k)) K) ↔
       J'.radical ≤ J.radical := by
   constructor
   · intro h
@@ -150,7 +166,8 @@ theorem prop_7367 (J J' : Ideal (MvPolynomial I k)) :
 /-- 51wmmpHand0-7367 (2:02:47) [prop] `J ↦ V'_J` is injective on radical ideals. -/
 @[buffalo "51wmmpHand0-7367"]
 theorem prop_7367_inj (J J' : Ideal (MvPolynomial I k)) (hJ : J.IsRadical) (hJ' : J'.IsRadical)
-    (h : ∀ (K : Type u) [Field K] [Algebra k K], Z k (J : Set _) K = Z k (J' : Set (MvPolynomial I k)) K) :
+    (h : ∀ (K : Type u) [Field K] [Algebra k K],
+      Z k (J : Set _) K = Z k (J' : Set (MvPolynomial I k)) K) :
     J = J' := by
   have h1 := (prop_7367 k J J').1 fun K _ _ => (h K).le
   have h2 := (prop_7367 k J' J).1 fun K _ _ => (h K).ge
@@ -205,7 +222,8 @@ theorem thm_7993 {K : Type u} [Field K] [IsAlgClosed K] {σ : Type u} [Finite σ
 
 /-- Statement (a) of the course over a field `K`. -/
 def StmtA (K : Type u) [Field K] : Prop :=
-  ∀ (A : Type u) [Field A] [Algebra K A] [Algebra.FiniteType K A], Function.Bijective (algebraMap K A)
+  ∀ (A : Type u) [Field A] [Algebra K A] [Algebra.FiniteType K A],
+    Function.Bijective (algebraMap K A)
 
 /-- Statement (b) of the course over a field `K`. -/
 def StmtB (K : Type u) [Field K] : Prop :=
@@ -247,7 +265,7 @@ theorem exists_algHom_ker_eq {K : Type u} [Field K] (hA : StmtA K) {A : Type u} 
 
 theorem mem_jacobson_bot_iff {A : Type*} [CommRing A] (f : A) :
     f ∈ (⊥ : Ideal A).jacobson ↔ ∀ m : Ideal A, m.IsMaximal → f ∈ m := by
-  show f ∈ sInf _ ↔ _
+  change f ∈ sInf _ ↔ _
   rw [Ideal.mem_sInf]
   exact ⟨fun h m hm => h ⟨bot_le, hm⟩, fun h m hm => h m hm.2⟩
 
@@ -501,7 +519,8 @@ def isInitialSelf : Limits.IsInitial (CommAlgCat.of k k) :=
 the empty set, so the forgetful functor does not preserve initial objects. -/
 @[buffalo "51wmmpHand0-11182"]
 theorem prop_11182_sums :
-    ¬ Limits.PreservesColimit (Functor.empty.{0} (CommAlgCat.{u} k)) (forget (CommAlgCat.{u} k)) := by
+    ¬ Limits.PreservesColimit (Functor.empty.{0} (CommAlgCat.{u} k))
+      (forget (CommAlgCat.{u} k)) := by
   intro h
   have hi := Limits.IsInitial.isInitialObj (forget (CommAlgCat.{u} k)) _ (isInitialSelf k)
   exact (hi.to PEmpty.{u + 1} (0 : k)).elim

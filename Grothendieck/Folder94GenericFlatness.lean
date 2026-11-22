@@ -1,10 +1,13 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Grothendieck.Folder94
 public import StacksFrontier.RingTheory.Flat.GenericFlatness
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 94, page 19 (Lemme 16): the dense open for `X` of finite type over `S`
@@ -19,12 +22,10 @@ This file supplies it with the vendored AxiomMath/Stacks theorem
 `Algebra.exists_isOpen_dense_isFinitePresentationFreeAway` (Stacks tag 051Z, file
 `StacksFrontier/RingTheory/Flat/GenericFlatness.lean`): over a *reduced* ring `A₀`, for a finite
 type `A₀`-algebra `S` and a finite `S`-module `M`, the points of `Spec A₀` near which `M` becomes
-free form a dense open. The survey of 2026-11-15 named the noetherian-domain form 051R
-(`Module.exists_ne_zero_free_localizedModule_away`) with a passage from domains to the reduced
-ring through its minimal primes; the library's own reduced form 051Z does that passage, and its
-import closure contains 051R, so it is used directly.
+free form a dense open.
 
-**What is proved.**
+## Main results
+
 * `exists_isOpen_dense_subset_freeLocus`: generic freeness over a reduced ring, in the form of a
   dense open contained in Mathlib's `Module.freeLocus` (from 051Z, by comparing Stacks'
   localisation `S_f ⊗_S M` with Mathlib's `LocalizedModule`);
@@ -40,11 +41,29 @@ import closure contains 051R, so it is used directly.
   finite `B`-module, there is a dense open `U ⊆ Spec A` such that at every `𝔭 ∈ U` every
   `A_𝔭`-weakly regular sequence is weakly regular on `R_𝔭`.
 
+## Implementation notes
+
+The survey of 2026-11-15 named the noetherian-domain form 051R
+(`Module.exists_ne_zero_free_localizedModule_away`) with a passage from domains to the reduced
+ring through its minimal primes; the library's own reduced form 051Z does that passage, and its
+import closure contains 051R, so it is used directly.
+
 As in `Folder94.lean`, the open is the intersection of finitely many dense opens of
 `Spec A₀ ≅ Spec A`: the free loci of the nonzero layers of `A` (finite over `A₀`) and, for each
-nonzero layer of `R`, the generic freeness open of 051Z. The step from weak regularity on `R_𝔭`
-to the vanishing of `Tor` is `Folder94Koszul.lean`'s, with the same caveat.
+nonzero layer of `R`, the generic freeness open of 051Z.
+
+## Not formalised
+
+The step from weak regularity on `R_𝔭` to the vanishing of `Tor` is `Folder94Koszul.lean`'s,
+with the same caveat.
+
+## References
+
+* A. Grothendieck, Folder 94, page 19 (Lemme 16)
+* Stacks Project, tags 051Z, 051R
 -/
+
+@[expose] public section
 
 open RingTheory.Sequence Submodule Function Module PrimeSpectrum TensorProduct
 

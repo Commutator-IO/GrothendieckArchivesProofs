@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 /-!
@@ -6,6 +11,8 @@ module
 The open row `126-generic-descent` of the edition's list of findings
 (`src/content/findings.ts`), folder 126, pp. 26–29. It cannot be stated faithfully with Mathlib
 and the Stacks library; what is missing.
+
+## Not formalised
 
 * `126-generic-descent`: for `S` noetherian, `T → S` flat of finite type and a fibred category
   `F` on finite-type `S`-schemes for which flat surjections are of `F`-descent (full faithfulness
@@ -20,4 +27,10 @@ and the Stacks library; what is missing.
   always over the whole fibre products; « of `F`-descent » in the sense of full faithfulness only
   would also have to be written. The argument is the edition's reordering of a page the reading
   calls circular, and its step « sauf erreur » (surjectivity of `W' → W ×_{T×T} W`) is unproved.
+
+## References
+
+* A. Grothendieck, folder 126, pp. 26–29 (finding `126-generic-descent`)
+* A. Weil (1956), Th. 6–7
+* Stacks Project, tags 026B, 02ZD
 -/

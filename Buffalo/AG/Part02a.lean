@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part01
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 02 (a): 5 June 1973
@@ -14,10 +17,20 @@ algebras through the dual numbers `D_K(N)`, finite sums of affine spaces and ide
 connected and `0`-connected objects, points with values in fields and the prime spectrum, the
 Zariski topology and irreducible spaces.
 
+## Implementation notes
+
 Notation as in `Buffalo.AG.Part01a`: `k` is a commutative ring (the lecture's `K`), `V k A` is the
 functor `k' ↦ Hom_k(A, k')` represented by `A`, and `𝒞 = (CommAlgCat k)ᵒᵖ` is the category of
 affine spaces over `k`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 5 June 1973, video
+  `51wmmpHand0`, 4:55:19–6:38:51 (`docs/buffalo-ag/index.tex`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits
 
@@ -417,10 +430,11 @@ def prop_19812 : IsLimit (piFan k A) :=
 /-- 51wmmpHand0-19886 (5:31:26) [prop] The projections `∏ A_j → A_i` are surjective, so
 `X_i → ∐ X_j` is a closed immersion, injective on points with values in every `K'`. -/
 @[buffalo "51wmmpHand0-19886"]
-theorem prop_19886 [DecidableEq ι] (i : ι) :
+theorem prop_19886 (i : ι) :
     Function.Surjective (Pi.evalAlgHom k A i) ∧
       ∀ (k' : Type*) [CommRing k'] [Algebra k k'],
         Function.Injective (fun φ : A i →ₐ[k] k' => φ.comp (Pi.evalAlgHom k A i)) := by
+  classical
   have hs : Function.Surjective (Pi.evalAlgHom k A i) :=
     fun a => ⟨Pi.single i a, Pi.single_eq_same i a⟩
   refine ⟨hs, fun k' _ _ φ ψ h => AlgHom.ext fun a => ?_⟩
@@ -685,10 +699,12 @@ theorem prop_21041 {ι : Type*} [Fintype ι] [DecidableEq ι] (A : ι → Type*)
 /-- 51wmmpHand0-21173 (5:52:53) [prop] If `K'` is `0`-connected, the map
 `∐ X_i(K') → X(K')`, `X = ∐ X_i` (finite sum), is bijective. -/
 @[buffalo "51wmmpHand0-21173"]
-theorem prop_21173 {ι : Type*} [Fintype ι] [DecidableEq ι] (A : ι → Type*)
+theorem prop_21173 {ι : Type*} [Finite ι] (A : ι → Type*)
     [∀ i, CommRing (A i)] [∀ i, Algebra k (A i)] (k' : Type*) [CommRing k'] [Algebra k k']
     [Nontrivial k'] (hk' : ∀ e : k', IsIdempotentElem e → e = 0 ∨ e = 1) :
     Function.Bijective (fun x : (Σ i, A i →ₐ[k] k') => x.2.comp (Pi.evalAlgHom k A x.1)) := by
+  classical
+  have := Fintype.ofFinite ι
   constructor
   · rintro ⟨i, ψ⟩ ⟨j, ψ'⟩ h
     have hij : i = j := by
@@ -721,7 +737,8 @@ theorem prop_21173 {ι : Type*} [Fintype ι] [DecidableEq ι] (A : ι → Type*)
         map_zero' := by rw [Pi.single_zero, map_zero]
         map_add' := fun a b => by rw [Pi.single_add, map_add]
         commutes' := fun c => by
-          have : Pi.single i (algebraMap k (A i) c) = algebraMap k (∀ j, A j) c * Pi.single i 1 := by
+          have : Pi.single i (algebraMap k (A i) c) =
+              algebraMap k (∀ j, A j) c * Pi.single i 1 := by
             ext j
             by_cases hj : j = i
             · subst hj; simp
@@ -801,10 +818,11 @@ theorem rem_21237 (A : Type*) [CommRing A] :
 is a singleton while `∐ X_i(0)` has one point for each `i`, so the map of `prop_21173` is not
 injective as soon as there are two indices. -/
 @[buffalo "51wmmpHand0-21337"]
-theorem cex_21337 {ι : Type*} [Fintype ι] (A : ι → Type*) [∀ i, CommRing (A i)]
+theorem cex_21337 {ι : Type*} [Finite ι] (A : ι → Type*) [∀ i, CommRing (A i)]
     [∀ i, Algebra k (A i)] {i j : ι} (hij : i ≠ j) :
     ¬ Function.Injective (fun x : (Σ i, A i →ₐ[k] PUnit.{u + 1}) =>
       x.2.comp (Pi.evalAlgHom k A x.1)) := fun h => by
+  have := Fintype.ofFinite ι
   have := @h ⟨i, toSubsingleton k _ _⟩ ⟨j, toSubsingleton k _ _⟩
     (AlgHom.ext fun _ => Subsingleton.elim _ _)
   exact hij (congrArg Sigma.fst this)

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 64, pages 48–51: the octahedral configuration in characteristic 5
@@ -20,6 +23,8 @@ wherever the identification `Aut(X, Δ) ≃ 𝔖₄` is used: over `𝔽₅` the
 `ℙ¹(𝔽₅)`. This is the reachable part of finding `64-octahedral-configurations-relative` of
 `src/content/findings.ts`.
 
+## Main results
+
 * `fixer_five`: over a field with `i² = −1` and `2 ≠ 0`, if `z ↦ a z + (a − 1)` maps
   `{0, 1, i, −i}` into itself then `5 (a − 1) = 0`. The map is then a bijection of the four
   points, whose sum is `1`, and it changes that sum into `5a − 4`.
@@ -34,11 +39,23 @@ wherever the identification `Aut(X, Δ) ≃ 𝔖₄` is used: over `𝔽₅` the
   and `z ↦ a z + (a − 1)` for `a = 2, 3, 4` (the common part `{2, 3, 4}` of the reading's
   footnote).
 
-Not formalised: the relative statements over a base `S`, the bijections of the Théorème of
-page 51 and the two corollaries of page 52.
+## Implementation notes
 
 The finite checks over `𝔽₅` use `decide +kernel`, which the kernel checks.
+
+## Not formalised
+
+The relative statements over a base `S`, the bijections of the Théorème of page 51 and the two
+corollaries of page 52.
+
+## References
+
+* A. Grothendieck, folder 64, pp. 48–52 (finding `64-octahedral-configurations-relative`);
+  modernised reading `transcripts/64/64.modern.tex`, part II, § 1
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder64
 

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Data.Set.Card
@@ -12,8 +17,6 @@ public import Mathlib.Topology.Algebra.ConstMulAction
 public import Mathlib.Algebra.Group.Action.Sum
 import Grothendieck.Attr
 
-@[expose] public section
-
 /-!
 # Folder 98: the axioms of a theory of norms in the model of G-sets (pages 10–12), and the
 # classes of sheaves over the extensions of the base field (pages 28–30)
@@ -23,12 +26,25 @@ gives, in a category with finite sums, a class `𝒩` of morphisms with (i) iden
 (ii) composition, (iii) base change, (iv) sums, (v) the quotients `(X^n_Y)/H`, `H ⊆ 𝔖_n`; a
 degree with (i bis) `deg id = 1`, (ii bis) `deg (vu) = deg v · deg u`, (iii bis) invariance under
 base change, (iv bis) additivity, (v bis) `deg ((X^n_Y)/H → Y) = card(E^n/H)` for `deg u = r`,
-`E = {1, …, r}`; and canonical sections `Con_{X/Y} : Y → Sym^r_Y(X)` (written « Con » on the page) with (i ter)
+`E = {1, …, r}`; and canonical sections `Con_{X/Y} : Y → Sym^r_Y(X)` (written « Con » on the
+page) with (i ter)
 `Con_{X/X} = id`, (ii ter) the transitivity diagram of page 11, (iii ter) base change,
 (iv ter) additivity. Example I: `G`-sets, `u` of degree `r` when all its fibres have `r`
 elements, `Can_{X/Y}(y)` the class of the « suite de ses éléments rangés dans un ordre
 quelconque »; the page says (i)–(v) and (i bis)–(v bis) are « trivialement vérifiées » and that
 « on vérifie aussitôt » (i ter)–(iv ter).
+
+**What the formalisation finds.** Example I satisfies all the axioms, including (ii ter), which
+nothing in the folder verifies for any example. For Déf. 1, the
+justification of page 28, that two extensions of `k` « peuvent toujours être “dominées” par une
+troisième », is not enough for transitivity: the two extensions `K'`, `K''` of `K₂` must be
+dominated by a third extension of `K₂`, compatibly with the two embeddings of `K₂`
+(`Amalgamation`), as the reading's note says.
+
+What this certifies is that the reading holds together at this point, not that it is what the
+pages say (issue #26).
+
+## Main results
 
 What is formalised, for maps of types (the action of `G` only has to be respected, `can_smul`):
 
@@ -47,26 +63,30 @@ What is formalised, for maps of types (the action of `G` only has to be respecte
 * `corollaire5_surj`, `corollaire5_iff` — Cor. 5 of page 30: from Prop. 1 and the two
   properties of `K̃`, `𝔉(X/k)` is the quotient of the classes on `X ⊗_k K̃` by `Aut(K̃/k)`.
 
-Not formalised: Example II (finite locally free morphisms of schemes, with the norm of page 2),
+## Implementation notes
+
+For (ii ter): the fibre of `v ∘ u` over `z` is the disjoint
+union of the fibres of `u` over the `s` points of the fibre of `v`. The group plays no role
+beyond the equivariance of `Can`; (v bis) holds for every `n` and every `H`, with the fibre of
+`(X^n_Y)/H` identified with `E^n/H` by any enumeration of the fibre of `u`. In Cor. 5,
+surjectivity uses only the first half of Prop. 1 and the embedding of the extensions of finite
+type in `K̃`; injectivity uses both halves and the homogeneity of `K̃`.
+
+## Not formalised
+
+Example II (finite locally free morphisms of schemes, with the norm of page 2),
 Example III (covering spaces and `Φ(E) = X ×^Γ E`), the transitivity of norms of pages 6–8;
 for pages 28–30, Prop. 1 itself and the universality and homogeneity of `K̃`, which are
 hypotheses.
 
-**What the formalisation finds.** Example I satisfies all the axioms, including (ii ter), which
-nothing in the folder verifies for any example: the fibre of `v ∘ u` over `z` is the disjoint
-union of the fibres of `u` over the `s` points of the fibre of `v`. The group plays no role
-beyond the equivariance of `Can`; (v bis) holds for every `n` and every `H`, with the fibre of
-`(X^n_Y)/H` identified with `E^n/H` by any enumeration of the fibre of `u`. For Déf. 1, the
-justification of page 28, that two extensions of `k` « peuvent toujours être “dominées” par une
-troisième », is not enough for transitivity: the two extensions `K'`, `K''` of `K₂` must be
-dominated by a third extension of `K₂`, compatibly with the two embeddings of `K₂`
-(`Amalgamation`), as the reading's note says. In Cor. 5, surjectivity uses only the first half
-of Prop. 1 and the embedding of the extensions of finite type in `K̃`; injectivity uses both
-halves and the homogeneity of `K̃`.
+## References
 
-What this certifies is that the reading holds together at this point, not that it is what the
-pages say (issue #26).
+* A. Grothendieck, Folder 98, pages 2, 6–8, 10–12 and 28–30 (modernised reading
+  `transcripts/98/98.modern.tex`, « Une théorie axiomatique des normes »; issue #26)
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder98
 
@@ -201,7 +221,9 @@ theorem hasDeg_quotPow {u : X → Y} {r : ℕ} (hu : HasDeg u r) {n : ℕ}
   rw [← Nat.card_coe_set_eq, Nat.card_congr (Equiv.ofBijective g hg).symm]
 
 
-/-! ### The canonical sections `Con_{X/Y} : Y → Sym^r_Y(X)` (written « Con » on the page): (i ter)–(iv ter) -/
+/-! ### The canonical sections `Con_{X/Y} : Y → Sym^r_Y(X)`: (i ter)–(iv ter)
+
+Written « Con » on the page. -/
 
 /-- `Sym^r_Y(X) = (X^r_Y)/𝔖_r`: a point `y` and a multiset of `r` points of `u⁻¹(y)`. -/
 def SymY (u : X → Y) (r : ℕ) :=
@@ -575,7 +597,8 @@ theorem Phi.symComp_bijective (hfree : ∀ (g : Γ) (x : X), g • x = x → g =
     obtain ⟨e'', n, hn⟩ := p'
     have h2 : m.map (Phi.mk Γ x) = n.map (Phi.mk Γ y) := congrArg (fun s => s.2.1) hab
     obtain ⟨g, hgx, hge⟩ := Phi.mk_eq_mk.1 (congrArg Sigma.fst hab)
-    refine Phi.mk_eq_mk.2 ⟨g, hgx, SymY.ext hge (Multiset.map_injective (Phi.mk_injective hfree x) ?_)⟩
+    refine Phi.mk_eq_mk.2 ⟨g, hgx,
+        SymY.ext hge (Multiset.map_injective (Phi.mk_injective hfree x) ?_)⟩
     change g • y = x at hgx
     change (n.map (g • ·)).map _ = _
     rw [h2, ← hgx]

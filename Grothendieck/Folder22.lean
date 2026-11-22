@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib.Algebra.Module.FinitePresentation
@@ -16,8 +21,6 @@ public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.LinearAlgebra.TensorProduct.Pi
 public import Mathlib.Algebra.FiveLemma
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 22, Lemme 3.3, Corollaires 3.4, 3.5, and the obstruction of pp. 22, 24
@@ -39,39 +42,30 @@ page 25) states:
 > *strict*, admettant un système cofinal dénombrable, de `A`-modules projectifs.
 > Alors `P` est un `A`-module plat.
 
-The rest of the folder — formal smoothness of topological algebras (3.2, 3.6),
-Cohen algebras (3.7–3.12), the regular-homomorphism criterion 3.13 — needs preadic
-topologies and geometric regularity, which mathlib does not have; it is not
-formalised here. The discrete-topology half of the obstruction of pages 22 and 24
-is (finding `22-power-series-discrete-obstruction`, issue #54): for
+The discrete-topology half of the obstruction of pages 22 and 24 is formalised
+(finding `22-power-series-discrete-obstruction`, issue #54): for
 `k = ℚ(x_i : i ∈ I)`, `I` infinite, and `A = k[[t]]`, no derivation
 `D : A → Ω_k ⊗_k A ≅ A^{(I)}` induces `d_k`, because the `dx_{i_n}`-component of
 `D(Σ x_{i_n} tⁿ)` has `tⁿ`-coefficient `1` for every `n`; hence `A` is not formally
-smooth over `k` for the discrete topology. The `t`-adic half (formal smoothness
-for the `t`-adic topology) is not formalised.
+smooth over `k` for the discrete topology. So is the counterexample of pages 26 and 28
+(finding `22-differentials-kernel-counterexample`).
 
-What is proved:
+## Main results
 
 * `lemme3_3` — exactly as stated: for `M` finitely presented, the canonical map
-  `TensorProduct.piRightHom : M ⊗ ∏ P_i → ∏ (M ⊗ P_i)` is bijective. The proof is
-  the typescript's: a presentation by free modules *of finite type* (the
-  handwritten « de type fini », which the reading rightly calls essential),
-  right exactness of `⊗`, exactness of products, and the five lemma.
+  `TensorProduct.piRightHom : M ⊗ ∏ P_i → ∏ (M ⊗ P_i)` is bijective.
 * `corollaire3_4` — under the reading's hypothesis, verbatim.
+* `hypothese_iff_noetherien`, `corollaire3_4_coherent` — the hypothesis of 3.4 is equivalent
+  to Noetherian, and 3.4 for rings whose finitely generated ideals are finitely presented (see
+  the implementation notes).
 * `corollaire3_5` — for a projective system indexed by `ℕ` with surjective
   transition maps (the reading's own reduction: « Le système cofinal
   dénombrable permet de se ramener à un système `(P_n)_{n ∈ ℕ}` dont les
   applications de transition sont surjectives — c'est ce que veut dire
-  strict »). The reduction from a general countable cofinal system to `ℕ` is not
-  formalised. The proof follows the reading's argument: the sequences split,
-  `lim P_n ≅ P_0 × ∏ K_n` with `K_n = ker(P_{n+1} → P_n)` projective, then 3.4.
+  strict »).
 * `no_derivation` — the obstruction, abstractly: if `M` is a free `k`-module with
   basis `b`, no derivation `k⟦t⟧ → k⟦t⟧ ⊗_k M` over any base sends `aₙ` to
-  `1 ⊗ b(iₙ)` for infinitely many distinct `iₙ`. The proof is the reading's, with one
-  simplification: the reading first reduces to `D(t) = 0`; here `n` is chosen large
-  enough that the `b(iₙ)`-coordinate of `D(t)` already vanishes, so the coordinate
-  derivation `E` kills `t`, hence `E(t^{n+1}g) = t^{n+1}E(g)`, and the `tⁿ`-coefficient
-  of `E(Σ a_m t^m)` is `1`, while `E(Σ a_m t^m)` is itself `0` for `n` large.
+  `1 ⊗ b(iₙ)` for infinitely many distinct `iₙ`.
 * `basisDx`, `no_derivation_extending_d` — page 22's case: `(dx_i)` is a basis of
   `Ω_{k/ℚ}` (polynomial basis, then localisation, which is formally étale), and no
   derivation `D : A → A ⊗_k Ω_{k/ℚ}` satisfies `D(c) = 1 ⊗ dc` on `k`.
@@ -84,15 +78,47 @@ What is proved:
   which the second transcription pass reads in full: for a field `K` over a base `R` (the
   page's `k`) with `Ω_{K/R}` of infinite dimension, `K[[t]]` with the discrete topology is
   not formally smooth over `K`, and, « plus précisément », no derivation
-  `K[[t]] → K[[t]] ⊗_K Ω_{K/R}` induces `d_{K/R}`. Neither characteristic 0 nor the
-  choice of `ℚ(x_i)` is used: only a basis of `Ω` containing infinitely many `d aₙ`, which
-  over a field can always be extracted from the spanning family `(da)`.
+  `K[[t]] → K[[t]] ⊗_K Ω_{K/R}` induces `d_{K/R}`.
 * `incl`, `proj`, `no_derivation_mv` — the page's `n > 0` variables (finding
   `22-p23-proposition-reconstruction`): no derivation
-  `K⟦t₁, …, tₙ⟧ → K⟦t₁, …, tₙ⟧ ⊗_K Ω_{K/R}` induces `d_{K/R}`. Restricting along
-  `t ↦ t_{i₀}` and projecting along `t_i ↦ 0` for `i ≠ i₀` (a retraction of `K`-algebras)
-  turns such a derivation into one in a single variable. Its « a fortiori … sur k » rests on a
-  relative notion the folder does not define and is not formalised.
+  `K⟦t₁, …, tₙ⟧ → K⟦t₁, …, tₙ⟧ ⊗_K Ω_{K/R}` induces `d_{K/R}`.
+* `contre_exemple_page26` — pages 26 and 28, in the page's own specialisation `a_i = 0` for
+  `2 ≤ i ≤ p − 1`, for every prime `p`: with `K = 𝔽_p(x, b₀, b₁)`, `y = b₀ᵖ + b₁ᵖ x`,
+  `k = 𝔽_p(x, y)` and `k' = k ∩ Kᵖ`, the element `1 ⊗ dy − a₁ ⊗ dx` of `K ⊗_k Ω_{k/k'}` is
+  nonzero and dies in `Ω_{K/k'}`.
+* `map_bijective_of_pow`, `contre_exemple_general`, `contre_exemple_general_span` (added
+  2026-10-26) — the identification `Ω_{K/k'} = Ω_K` whenever `k'` lands in `Kᵖ`, and the page's
+  general example with `a₂, …, a_{p−1}` for every prime `p`: for
+  `K = 𝔽_p(x, b₀, …, b_{p−1})`, `a_i = b_iᵖ`, `y = Σ a_i xⁱ`, the map `Ω_{k/k'} ⊗_k K → Ω_K` is
+  not injective, and `dy − y' dx` (`y' = Σ i a_i xⁱ⁻¹`) lies in the kernel of
+  `K ⊗_k Ω_k → Ω_K` but not in the span of the `dc`, `c ∈ k'`.
+
+## Implementation notes
+
+* `lemme3_3`: the proof is the typescript's: a presentation by free modules *of finite type*
+  (the handwritten « de type fini », which the reading rightly calls essential), right
+  exactness of `⊗`, exactness of products, and the five lemma.
+* `corollaire3_5`: the proof follows the reading's argument: the sequences split,
+  `lim P_n ≅ P_0 × ∏ K_n` with `K_n = ker(P_{n+1} → P_n)` projective, then 3.4.
+* `no_derivation`: the proof is the reading's, with one simplification: the reading first
+  reduces to `D(t) = 0`; here `n` is chosen large enough that the `b(iₙ)`-coordinate of `D(t)`
+  already vanishes, so the coordinate derivation `E` kills `t`, hence
+  `E(t^{n+1}g) = t^{n+1}E(g)`, and the `tⁿ`-coefficient of `E(Σ a_m t^m)` is `1`, while
+  `E(Σ a_m t^m)` is itself `0` for `n` large.
+* `no_derivation_of_field`: neither characteristic 0 nor the choice of `ℚ(x_i)` is used: only
+  a basis of `Ω` containing infinitely many `d aₙ`, which over a field can always be extracted
+  from the spanning family `(da)`.
+* `no_derivation_mv`: restricting along `t ↦ t_{i₀}` and projecting along `t_i ↦ 0` for
+  `i ≠ i₀` (a retraction of `K`-algebras) turns such a derivation into one in a single variable.
+* `contre_exemple_page26`: the proof does not compute `k'`: it shows that `∂/∂y` kills `k'`,
+  because `∂/∂x` of `K` kills `Kᵖ` and the chain rule gives `∂_x c + a₁ ∂_y c = 0` for
+  `c ∈ k'`, while `a₁ ∉ k` (`a1_not_mem`, from the algebraic independence of `x, y, a₁`,
+  `triple_injective`).
+* `map_bijective_of_pow` comes from the exact sequence `K ⊗_{k'} Ω_{k'} → Ω_K → Ω_{K/k'} → 0`,
+  whose first map is zero. The argument of `contre_exemple_general` is the special case's, for
+  any `k → K` with `dy = y' dx` and `y' ∉ k`; `x, y, y'` are algebraically independent because
+  the specialisation `b_i ↦ 0` (`i ≥ 2`) sends them to `x, y, a₁` of the special case
+  (`tripleG_injective`).
 
 **What the formalisation finds.**
 
@@ -114,26 +140,33 @@ What is proved:
   every characteristic, over any base ring, which is the page 23 Proposition. Page 24
   chooses `aₙ` with `d_{K/k} aₙ ≠ 0`, too weak for the construction; the struck
   « `D_{iₙ}(aₙ) ≠ 0` » is what `no_derivation` uses (`D(aₙ) = 1 ⊗ b(iₙ)`).
-* Pages 26 and 28 (finding `22-differentials-kernel-counterexample`): the counterexample
-  holds, in the page's own specialisation `a_i = 0` for `2 ≤ i ≤ p − 1`, for every prime `p`
-  (`contre_exemple_page26`). With `K = 𝔽_p(x, b₀, b₁)`, `y = b₀ᵖ + b₁ᵖ x`, `k = 𝔽_p(x, y)` and
-  `k' = k ∩ Kᵖ`, the element `1 ⊗ dy − a₁ ⊗ dx` of `K ⊗_k Ω_{k/k'}` is nonzero and dies in
-  `Ω_{K/k'}`. The proof does not compute `k'`: it shows that `∂/∂y` kills `k'`, because
-  `∂/∂x` of `K` kills `Kᵖ` and the chain rule gives `∂_x c + a₁ ∂_y c = 0` for `c ∈ k'`, while
-  `a₁ ∉ k` (`a1_not_mem`, from the algebraic independence of `x, y, a₁`, `triple_injective`).
-* Added 2026-10-26. The identification `Ω_{K/k'} = Ω_K` holds whenever `k'` lands in `Kᵖ`
-  (`map_bijective_of_pow`, from the exact sequence `K ⊗_{k'} Ω_{k'} → Ω_K → Ω_{K/k'} → 0`, whose
-  first map is zero), and the page's general example with `a₂, …, a_{p−1}` holds for every prime
-  `p` (`contre_exemple_general`): for `K = 𝔽_p(x, b₀, …, b_{p−1})`, `a_i = b_iᵖ`, `y = Σ a_i xⁱ`,
-  the map `Ω_{k/k'} ⊗_k K → Ω_K` is not injective, and `dy − y' dx` (`y' = Σ i a_i xⁱ⁻¹`) lies
-  in the kernel of `K ⊗_k Ω_k → Ω_K` but not in the span of the `dc`, `c ∈ k'`
-  (`contre_exemple_general_span`). The argument is the special case's, for any `k → K` with
-  `dy = y' dx` and `y' ∉ k`; `x, y, y'` are algebraically independent because the specialisation
-  `b_i ↦ 0` (`i ≥ 2`) sends them to `x, y, a₁` of the special case (`tripleG_injective`).
+* The counterexample of pages 26 and 28 holds, in the special case and in general.
 
 What this certifies is that the reading holds together at these points, not
 that it is what the page says (issue #26).
+
+## Not formalised
+
+* The rest of the folder — formal smoothness of topological algebras (3.2, 3.6),
+  Cohen algebras (3.7–3.12), the regular-homomorphism criterion 3.13 — needs preadic
+  topologies and geometric regularity, which mathlib does not have; it is not
+  formalised here.
+* The `t`-adic half of the obstruction (formal smoothness for the `t`-adic topology).
+* For `corollaire3_5`, the reduction from a general countable cofinal system to `ℕ`.
+* The « a fortiori … sur k » of page 23 in `n` variables rests on a relative notion the
+  folder does not define and is not formalised.
+
+## References
+
+* A. Grothendieck, folder 22, typescript page 10 (his page 25), pp. 22–28 (reading
+  `transcripts/22/22.modern.tex`; findings `22-power-series-discrete-obstruction`,
+  `22-p23-proposition-reconstruction`, `22-differentials-kernel-counterexample`)
+* Chase (1960), the theorem on products of flat modules over coherent rings
+* Issues #26, #54
 -/
+
+@[expose] public section
+
 
 namespace Grothendieck.Folder22
 
@@ -815,6 +848,7 @@ theorem proj_incl (i₀ : σ) (f : K⟦X⟧) : proj i₀ (incl i₀ f) = f := by
   simp only
   exact PowerSeries.X_subst f
 
+set_option linter.unusedDecidableInType false in
 /-- **Page 23's Proposition in `n ≥ 1` variables**: for a field `K` over `R` with `Ω_{K/R}`
 infinite-dimensional, no derivation `K⟦t₁, …, tₙ⟧ → K⟦t₁, …, tₙ⟧ ⊗_K Ω_{K/R}` induces
 `d_{K/R}` on `K`. Restricting along `t ↦ t_{i₀}` and projecting along `t_i ↦ 0`, `i ≠ i₀`,
@@ -855,6 +889,7 @@ section SeveralVariablesSmooth
 variable {R K : Type*} [CommRing R] [Field K] [Algebra R K] {σ : Type*} [Finite σ]
   [DecidableEq σ]
 
+set_option linter.unusedDecidableInType false in
 /-- **Page 23's Proposition in `n ≥ 1` variables, formal smoothness**: for a field `K` over `R`
 with `Ω_{K/R}` infinite-dimensional, `K⟦t₁, …, tₙ⟧` with the discrete topology is not formally
 smooth over `K`. As for `n = 1`: a formally smooth `S` would give, by Jacobi–Zariski, a retraction
@@ -929,7 +964,10 @@ theorem partialD_one_kPrimeOf (c : FracF p (Fin 2)) (hc : c ∈ kPrimeOf p K) :
         dx (algebraMap _ K (var p (0 : Fin 2))) • (Algebra.linearMap _ K).compDer (partialD p 0) :=
     derivation_ext p fun i => by fin_cases i <;> simp [partialD_var]
   have h := congrArg (· c) h
-  simp [← hw, _root_.frobenius_def, der_pow_char' p, hy, hdx] at h
+  simp only [Derivation.compAlgebraMap_apply, ← hw, _root_.frobenius_def, der_pow_char' p,
+      Fin.isValue, hy, hdx, smul_eq_mul, mul_one, one_smul, _root_.add_apply, Derivation.coe_smul,
+      Derivation.coe_comp, coe_comp, coe_restrictScalars, Derivation.coeFn_coe, Pi.smul_apply,
+      Function.comp_apply, Algebra.linearMap_apply] at h
   by_contra hne
   refine hy' (-(partialD p 0 c) / partialD p 1 c) ?_
   rw [map_div₀, map_neg, neg_div, eq_comm, eq_neg_iff_add_eq_zero, add_div' _ _ _ hne,
@@ -953,7 +991,8 @@ include hy hy' hdx in
 /-- `K ⊗_k Ω_{k/k'} → Ω_{K/k'}` is not injective: `dy − y' dx` is a nonzero element of its
 kernel. -/
 theorem not_injective_of :
-    ¬ Function.Injective (KaehlerDifferential.mapBaseChange (kPrimeOf p K) (FracF p (Fin 2)) K) := by
+    ¬ Function.Injective
+      (KaehlerDifferential.mapBaseChange (kPrimeOf p K) (FracF p (Fin 2)) K) := by
   intro hinj
   let ω : K ⊗[FracF p (Fin 2)] Ω[FracF p (Fin 2)⁄kPrimeOf p K] :=
     (1 : K) ⊗ₜ KaehlerDifferential.D _ _ (var p (1 : Fin 2)) -
@@ -1137,8 +1176,10 @@ theorem partialD_x : partialD p (none : Option (Fin p))
 `k' = k ∩ Kᵖ`, the map `Ω_{k/k'} ⊗_k K → Ω_K` is not injective. -/
 @[montpellier "22, 26, 28"]
 theorem contre_exemple_general :
-    ¬ Function.Injective ((omegaEquiv p (KG p)).symm.toLinearMap.restrictScalars (FracF p (Fin 2)) ∘ₗ
-      (KaehlerDifferential.mapBaseChange (kPrimeOf p (KG p)) (FracF p (Fin 2)) (KG p)).restrictScalars
+    ¬ Function.Injective
+      ((omegaEquiv p (KG p)).symm.toLinearMap.restrictScalars (FracF p (Fin 2)) ∘ₗ
+      (KaehlerDifferential.mapBaseChange (kPrimeOf p (KG p)) (FracF p (Fin 2))
+        (KG p)).restrictScalars
         _) :=
   not_injective_to_omega p _ (der_yG p) (y'G_not_mem p) _ (partialD_x p)
 

@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Folder 148, pages 55–58: gluing two circles with `r` marked points is unique
@@ -16,14 +19,8 @@ homeomorphism once an anti-isomorphism of torsors `R_a → R_{a'}` is given. The
 gluing is then « bien déterminé »; the reading justifies it: the orientation-reversing
 homeomorphisms realising a given anti-isomorphism form a non-empty contractible space.
 
-What is modelled. A circle with `r` marked points is `ℝ/ℤ` (oriented by `ℝ`) with the lifted
-marked points `p : ℤ → ℝ`, strictly increasing with `p (k + r) = p k + 1` (`Marking r`); the
-torsor `R_a` is `ℤ/r` acting by `k ↦ k + 1` (next point along the orientation), so that an
-anti-isomorphism `ℤ/r → ℤ/r` is `k ↦ c - k` (`antiIso_eq`). An orientation-reversing
-homeomorphism of circles is described by its lifts: continuous strictly antitone `F : ℝ → ℝ`
-with `F (x + 1) = F x - 1`; two lifts of the same map differ by an integer, and the lift is
-normalised by asking `F (p k) = q (c - k)` for all `k` (`c ∈ ℤ` lifting the anti-isomorphism).
-The space `gluings P Q c ⊆ C(ℝ, ℝ)` carries the compact-open topology.
+## Main results
+
 * `gluings_nonempty`: the space is non-empty, for arbitrary positions of the marked points
   (piecewise-linear interpolation `Marking.interpHomeomorph`);
 * `convex_gluings`, `contractibleSpace_gluings`, `isPathConnected_gluings`: it is convex, hence
@@ -34,10 +31,31 @@ The space `gluings P Q c ⊆ C(ℝ, ℝ)` carries the compact-open topology.
   of `a` onto those of `a'` induces an anti-isomorphism `k ↦ c - k`, so the spaces `gluings P Q c`
   exhaust the gluings respecting the markings.
 
-Not formalised: the identification of the space of lifts with a space of homeomorphisms of the
-circle `AddCircle 1`, the case `r = 0` (where `Marking 0` is empty; the reading says the space
-then has the homotopy type of a circle, the Dehn twist ambiguity), and the groupoid itself.
+## Implementation notes
+
+What is modelled. A circle with `r` marked points is `ℝ/ℤ` (oriented by `ℝ`) with the lifted
+marked points `p : ℤ → ℝ`, strictly increasing with `p (k + r) = p k + 1` (`Marking r`); the
+torsor `R_a` is `ℤ/r` acting by `k ↦ k + 1` (next point along the orientation), so that an
+anti-isomorphism `ℤ/r → ℤ/r` is `k ↦ c - k` (`antiIso_eq`). An orientation-reversing
+homeomorphism of circles is described by its lifts: continuous strictly antitone `F : ℝ → ℝ`
+with `F (x + 1) = F x - 1`; two lifts of the same map differ by an integer, and the lift is
+normalised by asking `F (p k) = q (c - k)` for all `k` (`c ∈ ℤ` lifting the anti-isomorphism).
+The space `gluings P Q c ⊆ C(ℝ, ℝ)` carries the compact-open topology.
+
+## Not formalised
+
+The identification of the space of lifts with a space of homeomorphisms of the circle
+`AddCircle 1`, the case `r = 0` (where `Marking 0` is empty; the reading says the space then has
+the homotopy type of a circle, the Dehn twist ambiguity), and the groupoid itself.
+
+## References
+
+* A. Grothendieck, folder 148, « D) Recollement », pp. 49–60; transcription
+  `transcripts/148/batch-03.fr.tex`, modernised reading `transcripts/148/148.modern.tex`
 -/
+
+@[expose] public section
+
 
 open Set Filter Topology
 
@@ -124,7 +142,8 @@ theorem continuous_interp : Continuous P.interp := by
     locallyFinite_Icc_of_tendsto tendsto_intCast_atTop_atTop
       (tendsto_atBot_add_const_right _ 1 (tendsto_intCast_atBot_iff.2 tendsto_id))
   refine hlf.continuous ?_ (fun _ => isClosed_Icc) fun n => ?_
-  · refine eq_univ_of_forall fun y => mem_iUnion.2 ⟨⌊y⌋, Int.floor_le y, (Int.lt_floor_add_one y).le⟩
+  · refine eq_univ_of_forall fun y => mem_iUnion.2 ⟨⌊y⌋, Int.floor_le y,
+      (Int.lt_floor_add_one y).le⟩
   · exact (ContinuousOn.congr (by fun_prop) (P.interp_eqOn n))
 
 theorem strictMono_interp : StrictMono P.interp := by
@@ -223,7 +242,7 @@ theorem convex_gluings (P Q : Marking r) (c : ℤ) : Convex ℝ (gluings P Q c) 
     have h2 := hG1 hxy
     rcases ha.lt_or_eq with ha | ha
     · nlinarith [mul_le_mul_of_nonneg_left h2.le hb]
-    · subst ha; simp at hab; subst hab; simpa using h2
+    · subst ha; simp only [zero_add] at hab; subst hab; simpa using h2
   · simp only [ContinuousMap.coe_add, ContinuousMap.coe_smul, Pi.add_apply, Pi.smul_apply,
       smul_eq_mul, hF2, hG2]
     linear_combination -hab
@@ -362,7 +381,7 @@ theorem abs_lt_of_near_int {D : ℝ → ℝ} (hD : Continuous D) {a : ℝ} (ha :
       have h1 : (1 : ℝ) ≤ |(round (D y) : ℝ)| := by exact_mod_cast Int.one_le_abs h0
       have := abs_sub_abs_le_abs_sub (round (D y) : ℝ) (D y)
       rw [abs_sub_comm] at this
-      show 1 - ε < |D y|; linarith [h y]
+      change 1 - ε < |D y|; linarith [h y]
   exact isPreconnected_univ.subset_left_of_subset_union hu hv hdis hcov
     ⟨a, trivial, by simpa [ha] using h a⟩ (mem_univ x)
 
@@ -454,7 +473,7 @@ theorem lift_add_one {f : C(UnitAddCircle, UnitAddCircle)} (hf : Function.Inject
     have hk0 : 0 ≤ k := by exact_mod_cast (show (0 : ℝ) ≤ k by linarith)
     have hk1 : k ≤ 1 := by exact_mod_cast (show (k : ℝ) ≤ 1 by linarith)
     interval_cases k
-    · simp at hk; subst hk; linarith
+    · simp only [sub_zero, Int.cast_zero] at hk; subst hk; linarith
     · simp at hk; rw [show t = 1 by linarith] at ht; linarith
   · rw [hm2] at hm; push_cast at hm; linarith
 

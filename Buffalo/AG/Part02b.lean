@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Buffalo.AG.Part02a
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, algebraic geometry, part 02 (b): 6 June 1973
@@ -11,9 +14,20 @@ import Grothendieck.Attr
 The entries of `docs/buffalo-ag/index.tex` for the session of 6 June 1973 (video `51wmmpHand0`,
 6:38:51–8:10:17): the Zariski topology, irreducible closed sets and generic points, irreducible
 components, closed points, noetherian spaces and rings, points with values in `k` and closed
-points of algebras of finite type, and very dense subsets (Jacobson spaces). Notation as in
-`Buffalo.AG.Part02a`.
+points of algebras of finite type, and very dense subsets (Jacobson spaces).
+
+## Implementation notes
+
+Notation as in `Buffalo.AG.Part02a`.
+
+## References
+
+* the Buffalo lectures on algebraic geometry (1973), session of 6 June 1973, video
+  `51wmmpHand0`, 6:38:51–8:10:17 (`docs/buffalo-ag/index.tex`)
 -/
+
+@[expose] public section
+
 
 open CategoryTheory Limits TopologicalSpace PrimeSpectrum
 
@@ -270,7 +284,8 @@ theorem prop_26376 {X : Type*} [TopologicalSpace X] [CompactSpace X] (Z : Set X)
 points is a minimal irreducible closed set, and conversely. -/
 @[buffalo "51wmmpHand0-26508"]
 theorem prop_26508 {X : Type*} [TopologicalSpace X] (S : Set X) :
-    (S.Nonempty ∧ ∀ x ∈ S, closure {x} = S) ↔ Minimal (fun s => IsIrreducible s ∧ IsClosed s) S := by
+    (S.Nonempty ∧ ∀ x ∈ S, closure {x} = S) ↔
+      Minimal (fun s => IsIrreducible s ∧ IsClosed s) S := by
   constructor
   · rintro ⟨⟨x, hx⟩, h⟩
     refine ⟨⟨h x hx ▸ isIrreducible_singleton.closure, h x hx ▸ isClosed_closure⟩,
@@ -547,7 +562,8 @@ theorem prop_28339 {X : Type*} [TopologicalSpace X] (X₀ : Set X) :
       · rintro ⟨⟨hyU, -⟩, hy0⟩
         exact ⟨hyU, hy0⟩
     have := congrArg (fun V : Opens X => x ∈ (V : Set X)) (h heq)
-    simp only [Opens.coe_inf, Opens.coe_mk, Set.mem_inter_iff, Set.mem_compl_iff, eq_iff_iff] at this
+    simp only [Opens.coe_inf, Opens.coe_mk, Set.mem_inter_iff, Set.mem_compl_iff,
+        eq_iff_iff] at this
     exact (this.1 hx.1).2 hx.2
   · intro h U V hUV
     by_contra hne

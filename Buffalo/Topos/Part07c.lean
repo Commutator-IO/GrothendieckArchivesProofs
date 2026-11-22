@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Buffalo, topos theory, part 7c: what is not a theory, faithfulness, points (12 July 1973)
@@ -12,7 +15,15 @@ Entries of `docs/buffalo-topos/index.tex` lines 965–1114 (video `ORG14LNb5gE`,
 properties not stable under filtered colimits (rank-`n` coverings, rings with `n` connected
 components; both corrected to `n ≥ 2`), faithfulness of actions, topoi without points. Statuses in
 `docs/buffalo-topos/lean/Part07.json`.
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `ORG14LNb5gE`, 3:48:16–4:36:27
+  (12 July 1973)
 -/
+
+@[expose] public section
+
 
 universe u v w
 
@@ -31,12 +42,12 @@ def collapseSeq (n : ℕ) (hn : 0 < n) : ℕ ⥤ Type where
   obj _ := Fin n
   map {i j} _ := ↾(fun x => if i = j then x else ⟨0, hn⟩)
   map_id i := ConcreteCategory.hom_ext _ _ fun x => by
-    show (if i = i then x else ⟨0, hn⟩) = x
+    change (if i = i then x else ⟨0, hn⟩) = x
     simp
   map_comp {i j k} f g := ConcreteCategory.hom_ext _ _ fun x => by
     have hij := leOfHom f
     have hjk := leOfHom g
-    show (if i = k then x else ⟨0, hn⟩) =
+    change (if i = k then x else ⟨0, hn⟩) =
       (if j = k then (if i = j then x else ⟨0, hn⟩) else ⟨0, hn⟩)
     split_ifs <;> first | rfl | omega
 
@@ -51,7 +62,7 @@ def collapseIsColimit (n : ℕ) (hn : 0 < n) : IsColimit (collapseCocone n hn) :
     (fun _ => ⟨0, ⟨0, hn⟩, rfl⟩)
     (fun i j xi xj _ => ⟨max i j + 1, homOfLE (by omega), homOfLE (by omega), by
       change Fin n at xi xj
-      show (if i = max i j + 1 then xi else (⟨0, hn⟩ : Fin n)) =
+      change (if i = max i j + 1 then xi else (⟨0, hn⟩ : Fin n)) =
         (if j = max i j + 1 then xj else (⟨0, hn⟩ : Fin n))
       split_ifs <;> first | rfl | omega⟩)
 
@@ -198,10 +209,12 @@ end Components
 /-! ## Faithful actions, topoi without points -/
 
 /-- The action of `Perm Bool × Perm Bool` on `Bool` through the first factor. -/
-instance : MulAction (Equiv.Perm Bool × Equiv.Perm Bool) Bool := MulAction.compHom Bool (MonoidHom.fst _ _)
+instance : MulAction (Equiv.Perm Bool × Equiv.Perm Bool) Bool :=
+  MulAction.compHom Bool (MonoidHom.fst _ _)
 
 /-- A faithful action: only `1` acts trivially. -/
-def IsFaithfulAction (G X : Type*) [Group G] [MulAction G X] : Prop := ∀ g : G, (∀ x : X, g • x = x) → g = 1
+def IsFaithfulAction (G X : Type*) [Group G] [MulAction G X] : Prop :=
+  ∀ g : G, (∀ x : X, g • x = x) → g = 1
 
 /-- ORG14LNb5gE-15944 (4:25:44) [cex] Faithfulness of a `G`-action is not stable under inverse
 image. On the discrete two-point space (sheaves = pairs of sets), `G = 𝔖₂ × 𝔖₂` acting on
@@ -209,7 +222,8 @@ image. On the discrete two-point space (sheaves = pairs of sets), `G = 𝔖₂ �
 that point) is `Bool` with the action through the first factor, which is not faithful. -/
 @[buffalo "ORG14LNb5gE-15944"]
 theorem faithful_not_stable :
-    (∀ g : Equiv.Perm Bool × Equiv.Perm Bool, (∀ x : Bool, g.1 x = x) → (∀ y : Bool, g.2 y = y) → g = 1) ∧
+    (∀ g : Equiv.Perm Bool × Equiv.Perm Bool, (∀ x : Bool, g.1 x = x) → (∀ y : Bool, g.2 y = y) →
+      g = 1) ∧
       ¬ IsFaithfulAction (Equiv.Perm Bool × Equiv.Perm Bool) Bool := by
   refine ⟨fun g h1 h2 => Prod.ext (Equiv.ext h1) (Equiv.ext h2), fun h => ?_⟩
   have := h (1, Equiv.swap true false) (fun x => rfl)
@@ -248,7 +262,8 @@ theorem completelyPrime_atom {B : Type u} [CompleteBooleanAlgebra B] (F : Set B)
     rwa [inf_compl_eq_bot, le_bot_iff] at this
 
 /-- In particular an atomless complete Boolean algebra has no completely prime filter. -/
-theorem atomless_no_point {B : Type u} [CompleteBooleanAlgebra B] (hB : ∀ a : B, ¬ IsAtom a) (F : Set B)
+theorem atomless_no_point {B : Type u} [CompleteBooleanAlgebra B] (hB : ∀ a : B, ¬ IsAtom a)
+    (F : Set B)
     (hinf : ∀ a b, a ∈ F → b ∈ F → a ⊓ b ∈ F) (htop : ⊤ ∈ F) (hbot : ⊥ ∉ F)
     (hprime : ∀ s : Set B, sSup s ∈ F → ∃ b ∈ s, b ∈ F) : False := by
   obtain ⟨a, ha, -⟩ := completelyPrime_atom F hinf htop hbot hprime

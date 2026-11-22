@@ -1,9 +1,12 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
 module
 
 public import Mathlib
 import Grothendieck.Attr
-
-@[expose] public section
 
 /-!
 # Abelian varieties and reductive groups: the open problems, stated as propositions
@@ -12,7 +15,7 @@ Section « Abelian varieties and reductive groups » of the note on the open pro
 Montpellier notes (`docs/problems/article.tex`): problems p:surf and p:kostant. Nothing here is
 proved; a `def … : Prop` asserts nothing.
 
-## Stated
+## Main definitions
 
 * `KostantOppositeTypeA` (p:kostant): the question of general position, for the groups of type
   `A_{n-1}` (`G = PGL_n(ℂ)`) only. A special case. Proved for every `n`:
@@ -26,7 +29,7 @@ proved; a `def … : Prop` asserts nothing.
   steps `V_k`, `k < n`, are transverse, and the middle step holds for one of the two maximal
   isotropic subspaces through `V_{n-1}` only (so it is not in the statement).
 
-## Not stated, and what is missing
+## Not formalised
 
 * p:surf (is `Pic^δ_{A/S}` a trivial torsor under the dual `B` when `A/S` is an abelian scheme of
   relative dimension 2 and `χ(δ)` is even?). Stacks has abelian varieties over a field
@@ -48,7 +51,15 @@ proved; a `def … : Prop` asserts nothing.
   quadruples, `|W|²/(h z φ(h))`, is checked as arithmetic in
   `Grothendieck/Folder123Kostant.lean`. The second question (a distinguished conjugacy class of
   quadruples, stable under the outer automorphisms) is not stated either.
+
+## References
+
+* the note on the open problems of the Montpellier notes (`docs/problems/article.tex`), section
+  « Abelian varieties and reductive groups », problems p:surf and p:kostant
 -/
+
+@[expose] public section
+
 
 namespace OpenProblems.AbelianVarieties
 
