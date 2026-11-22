@@ -65,9 +65,9 @@ elements of `J` are the elements of `I = J ∩ A'`, so the descended module is `
   `(Y₀, Ker(𝒪_X ⇉ 𝒪_R))` into a scheme, and the effectivity of `R` as an equivalence relation.
 * The construction of the nerve from `R ⇉ X`: `R ×_X R`, its three projections, and the
   identifications `R₀ = R ×_X X₀ ≅ X₀ ×_{Y₀} X₀` are the hypotheses of `IsThickenedNerve`.
-* For a nilpotent `J` only the exact sequence is proved; the descent of `J` and the flatness of
-  `X → Y` are proved for `J² = 0`, and the induction along `J ⊃ J² ⊃ ⋯` (which needs the nerve
-  hypotheses on each intermediate thickening) is not done.
+* Here, for a nilpotent `J`, only the exact sequence is proved; the descent of `J` and the
+  flatness of `X → Y` are proved for `J² = 0`. The nilpotent case of the flatness, by induction
+  along `X₀ = X_1 ⊂ X_2 ⊂ ⋯ ⊂ X`, `X_k = Spec (B' ⧸ J^k)`, is `Folder126NilpotentFlat`.
 * In `flat_and_bijective` the map `φ : B' ⊗_{A'} B' → C''` and its bijectivity modulo `I` are
   hypotheses: identifying `(A' ⧸ I) ⊗_{A'} φ` with `B ⊗_A B ≅ C' ⧸ J C'` (that is
   `R₀ ≅ X₀ ×_{Y₀} X₀`) is not done.
