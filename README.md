@@ -4,9 +4,12 @@ Lean 4 proofs of statements from two of Alexandre Grothendieck's archives, built
 [Mathlib](https://github.com/leanprover-community/mathlib4) and on
 [the Stacks Project in Lean](https://github.com/AxiomMath/Stacks) (AxiomMath):
 
-- `Grothendieck/`: the working notes kept at the University of Montpellier, one file per folder
-  (cote), with the general lemmas they use in `Grothendieck/Upstream/`. The statements are the
-  modernised readings of the edition [grothendieck-project](https://github.com/Commutator-IO/grothendieck-project),
+- `Grothendieck/`: the working notes kept at the University of Montpellier, in topic directories
+  as in Mathlib (`AlgebraicGeometry/`, `RingTheory/`, `CategoryTheory/`, …), with the general
+  lemmas they use in `Grothendieck/Upstream/`. The files keep the name of their folder (cote),
+  `Grothendieck/AlgebraicGeometry/Folder126Glue.lean` for instance, and each statement carries its
+  source as an attribute (see [Conventions](#conventions)). The statements are the modernised
+  readings of the edition [grothendieck-project](https://github.com/Commutator-IO/grothendieck-project),
   where each file is linked to its folder, its pages and its findings.
 - `Buffalo/`: the lectures given at Buffalo in 1973, one file per part of their index.
 
@@ -65,22 +68,39 @@ and left unproved; `Solution/` proves the same statements through the libraries 
 `lake comparator` (configured in `comparator.json`, sandboxed with
 [bubblewrap](https://github.com/containers/bubblewrap)) checks that each theorem of `Solution`
 has exactly the statement of `Challenge`, is accepted by the kernel and uses only the three
-axioms, so that no import of the proof can change what the statement means. One statement is
-there so far (folder 19, page 80).
+axioms, so that no import of the proof can change what the statement means. There are 41 such
+statements, from 31 folders and from problem 3 of the Buffalo lectures.
 
 The continuous integration (`.github/workflows/build.yml`) runs these commands on every push
 to `main`, on a self-hosted runner that keeps `main`'s `.lake` between runs, and on a pull request
 when the label `ci` is added; `build-hosted.yml` is the same build on GitHub's runner, by hand.
 
-## Plan
+## Conventions
 
-This repository follows the layout of AxiomMath's projects built on Stacks
-([Weil](https://github.com/AxiomMath/Weil), [Mordell](https://github.com/AxiomMath/Mordell)).
-The next steps, tracked in
-[grothendieck-project#160](https://github.com/Commutator-IO/grothendieck-project/issues/160):
-a library arranged by mathematical topic instead of by folder, an attribute linking each
-declaration to its folder and page or Buffalo entry, Stacks' `@[ega]`/`@[sga]` attributes where a
-declaration proves an EGA or SGA item, and Mathlib's style options.
+The repository follows the layout of AxiomMath's projects built on Stacks
+([Weil](https://github.com/AxiomMath/Weil), [Mordell](https://github.com/AxiomMath/Mordell)) and of
+Mathlib (#39):
+
+- **Style.** The libraries build with Mathlib's options (`autoImplicit = false`,
+  `relaxedAutoImplicit = false`, `maxSynthPendingDepth = 3`) and its linter set
+  (`weak.linter.mathlibStandardSet`), warnings being errors. Module docstrings have Mathlib's
+  shape: a summary, then Main results, Implementation notes and References.
+- **Sources.** `@[montpellier "cote, page"]` and `@[buffalo "entry"]` (`Grothendieck/Attr.lean`)
+  record the folder and page, or the Buffalo index entry, of a statement; Stacks' `@[ega …]` and
+  `@[sga …]` mark a declaration that proves that EGA or SGA item. `scripts/SourceIndex.lean` lists
+  the declarations by source, and the CI keeps the list as an artifact.
+- **Topic tree.** `scripts/restructure.py` moved the folder files into topic directories;
+  `docs/review/restructure-map.md` maps each old path to the new one.
+- **What is already in the libraries.** `scripts/FindDuplicates.lean` compares every statement of
+  this repository with those of Mathlib and Stacks (same statement, or a library theorem applied
+  to some of the hypotheses); the CI keeps its report, `duplicates.md`. A proof that redoes a
+  library theorem is replaced by it, and the name stays, since the edition cites it.
+- **Kernel replay.** `.github/workflows/kernel-check.yml` replays every constant of the
+  repository's own libraries through Lean's kernel, and runs `lake comparator --paranoid` (the
+  independent kernels) on the statements of `Challenge/`; it runs weekly and by hand.
+
+Open work is tracked in the issues: the general golfing of the proofs (`simp`, `grind`, `omega`,
+near-duplicate lemmas) in #69.
 
 ## Licence
 
