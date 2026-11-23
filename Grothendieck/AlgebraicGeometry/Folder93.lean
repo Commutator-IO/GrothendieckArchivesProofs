@@ -342,12 +342,8 @@ theorem Killed.comp {u : R[X]} (hu : Killed u) (f : R[X]) : Killed (f.comp u) :=
   exact ⟨by rw [h1, u1, mul_zero], by rw [h2, u1, u2]; ring, by rw [h3, u1, u2, u3]; ring⟩
 
 lemma hasseDeriv_eq_zero_iff (k : ℕ) (f : R[X]) :
-    D k f = 0 ↔ ∀ n, (n.choose k : R) * f.coeff n = 0 := by
-  refine ⟨fun h n => ?_, fun h => ext fun n => by
-    rw [hasseDeriv_coeff, coeff_zero]; exact h (n + k)⟩
-  rcases lt_or_ge n k with hn | hn
-  · simp [Nat.choose_eq_zero_of_lt hn]
-  · simpa [hasseDeriv_coeff, Nat.sub_add_cancel hn] using congrArg (coeff · (n - k)) h
+    D k f = 0 ↔ ∀ n, (n.choose k : R) * f.coeff n = 0 :=
+  Polynomial.hasseDeriv_eq_zero_iff k f
 
 lemma natCast_isUnit (p : ℕ) [Fact p.Prime] [CharP R p] {m : ℕ} (h : ¬ p ∣ m) :
     IsUnit (m : R) := by

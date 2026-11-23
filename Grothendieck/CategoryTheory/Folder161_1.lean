@@ -346,11 +346,7 @@ def v0 : (F0 adj).FullSubcategory ⥤ (E0 adj).FullSubcategory :=
 the unit and counit of the adjunction as the two isomorphisms. -/
 @[montpellier "161-1, 4"]
 noncomputable def fixedEquiv : (E0 adj).FullSubcategory ≌ (F0 adj).FullSubcategory :=
-  CategoryTheory.Equivalence.mk (u0 adj) (v0 adj)
-    (NatIso.ofComponents (fun Y => (E0 adj).isoMk (unitIso0 adj Y))
-      (fun f => ObjectProperty.hom_ext _ (by simp [u0, v0])))
-    (NatIso.ofComponents (fun P => (F0 adj).isoMk (counitIso0 adj P))
-      (fun f => ObjectProperty.hom_ext _ (by simp [u0, v0])))
+  adj.fixedEquiv
 
 theorem fixedEquiv_functor : (fixedEquiv adj).functor = u0 adj := rfl
 
