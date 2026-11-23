@@ -26,6 +26,7 @@ public import Grothendieck.AlgebraicGeometry.Folder126NilpotentQuotient
 public import Grothendieck.AlgebraicGeometry.Folder126RadicialEtale
 public import Grothendieck.AlgebraicGeometry.Folder126RadicialEtaleGlobal
 public import Grothendieck.AlgebraicGeometry.Folder126Sheets
+public import Grothendieck.AlgebraicGeometry.Folder127
 public import Grothendieck.AlgebraicGeometry.Folder128
 public import Grothendieck.AlgebraicGeometry.Folder128FlatBaseChange
 public import Grothendieck.AlgebraicGeometry.Folder13
@@ -140,6 +141,7 @@ public import Grothendieck.RepresentationTheory.Folder44
 public import Grothendieck.RingTheory.Folder100
 public import Grothendieck.RingTheory.Folder100Baire
 public import Grothendieck.RingTheory.Folder100Cohen
+public import Grothendieck.RingTheory.Folder127
 public import Grothendieck.RingTheory.Folder136
 public import Grothendieck.RingTheory.Folder136Prop1
 public import Grothendieck.RingTheory.Folder136Stacks
