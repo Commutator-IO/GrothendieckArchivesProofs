@@ -167,3 +167,36 @@ Old path → new path of every moved file. Declaration names are unchanged.
 | `Grothendieck/IhesSGA6_2_3Euler.lean` | `Grothendieck/CategoryTheory/IhesSGA6_2_3Euler.lean` |
 | `Grothendieck/IhesSGA6_2_3Verdier.lean` | `Grothendieck/CategoryTheory/IhesSGA6_2_3Verdier.lean` |
 | `Grothendieck/IhesSGA6_2_4.lean` | `Grothendieck/CategoryTheory/IhesSGA6_2_4.lean` |
+
+## From `Grothendieck/Upstream/` to `LeanPool/`
+
+The general lemmas that also stand in lean-pool, moved after #69 to lean-pool's paths. Declaration
+names are unchanged.
+
+| Old path | New path |
+|---|---|
+| `Grothendieck/Upstream/AdjunctionIdempotent.lean` | `LeanPool/CategoryTheoryToolkit/AdjunctionIdempotent.lean` |
+| `Grothendieck/Upstream/KaroubiAdditiveFunctors.lean` | `LeanPool/CategoryTheoryToolkit/KaroubiAdditiveFunctors.lean` |
+| `Grothendieck/Upstream/MonadicityIff.lean` | `LeanPool/CategoryTheoryToolkit/MonadicityIff.lean` |
+| `Grothendieck/Upstream/SemiSimplexCategoryReedy.lean` | `LeanPool/CategoryTheoryToolkit/SemiSimplexCategoryReedy.lean` |
+| `Grothendieck/Upstream/DerivationLeibnizProd.lean` | `LeanPool/CommutativeAlgebraToolkit/DerivationLeibnizProd.lean` |
+| `Grothendieck/Upstream/DerivationLieMulLeft.lean` | `LeanPool/CommutativeAlgebraToolkit/DerivationLieMulLeft.lean` |
+| `Grothendieck/Upstream/FinitePresentationPiRightHomBijective.lean` | `LeanPool/CommutativeAlgebraToolkit/FinitePresentationPiRightHomBijective.lean` |
+| `Grothendieck/Upstream/FlatProdPi.lean` | `LeanPool/CommutativeAlgebraToolkit/FlatProdPi.lean` |
+| `Grothendieck/Upstream/HasseDerivXPowMul.lean` | `LeanPool/CommutativeAlgebraToolkit/HasseDerivXPowMul.lean` |
+| `Grothendieck/Upstream/IsNoetherianRingIffFinitePresentation.lean` | `LeanPool/CommutativeAlgebraToolkit/IsNoetherianRingIffFinitePresentation.lean` |
+| `Grothendieck/Upstream/NoetherianIsOpenOfStableUnderGeneralization.lean` | `LeanPool/CommutativeAlgebraToolkit/NoetherianIsOpenOfStableUnderGeneralization.lean` |
+| `Grothendieck/Upstream/PolynomialIntegerValued.lean` | `LeanPool/CommutativeAlgebraToolkit/PolynomialIntegerValued.lean` |
+| `Grothendieck/Upstream/PolynomialIsCoprimeX.lean` | `LeanPool/CommutativeAlgebraToolkit/PolynomialIsCoprimeX.lean` |
+| `Grothendieck/Upstream/PrimaryComponentInjective.lean` | `LeanPool/CommutativeAlgebraToolkit/PrimaryComponentInjective.lean` |
+| `Grothendieck/Upstream/RatSmulMemIndivisible.lean` | `LeanPool/CommutativeAlgebraToolkit/RatSmulMemIndivisible.lean` |
+| `Grothendieck/Upstream/SemilocalStableRange.lean` | `LeanPool/CommutativeAlgebraToolkit/SemilocalStableRange.lean` |
+| `Grothendieck/Upstream/SubalgebraIsUnitOfIsIntegral.lean` | `LeanPool/CommutativeAlgebraToolkit/SubalgebraIsUnitOfIsIntegral.lean` |
+| `Grothendieck/Upstream/TensorProductMemRangeRTensorBasis.lean` | `LeanPool/CommutativeAlgebraToolkit/TensorProductMemRangeRTensorBasis.lean` |
+| `Grothendieck/Upstream/ChoosePrimePowSubOne.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/ChoosePrimePowSubOne.lean` |
+| `Grothendieck/Upstream/CurryR1Space.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/CurryR1Space.lean` |
+| `Grothendieck/Upstream/DetPascalMatrix.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/DetPascalMatrix.lean` |
+| `Grothendieck/Upstream/MatrixDetFinTwoCauchyBinet.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/MatrixDetFinTwoCauchyBinet.lean` |
+| `Grothendieck/Upstream/MonoidRightZero.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/MonoidRightZero.lean` |
+| `Grothendieck/Upstream/QuasiSoberPiCoreCompact.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/QuasiSoberPiCoreCompact.lean` |
+| `Grothendieck/Upstream/SingularValuesSigmaTwo.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/SingularValuesSigmaTwo.lean` |

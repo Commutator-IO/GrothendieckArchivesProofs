@@ -6,7 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
-public import Grothendieck.Upstream.NoetherianIsOpenOfStableUnderGeneralization
+public import LeanPool.CommutativeAlgebraToolkit.NoetherianIsOpenOfStableUnderGeneralization
 import Grothendieck.Attr
 
 /-!

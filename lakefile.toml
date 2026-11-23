@@ -68,11 +68,17 @@ relaxedAutoImplicit = false
 maxSynthPendingDepth = 3
 weak.linter.mathlibStandardSet = true
 
-# Files copied from LeanPool/lean-pool at cb3d7f8 (Apache-2.0, Michel Hua's PRs, listed in NOTICE):
-# ToposTheoreticBridges (classifying topoi of geometric theories, Morita equivalence, Boolean and
-# De Morgan presheaf topoi), ported from Lean v4.36 to v4.35. Warnings stay errors, as above.
+# Files that also stand in LeanPool/lean-pool (Apache-2.0, Michel Hua's PRs, listed in NOTICE), at
+# lean-pool's paths: ToposTheoreticBridges (classifying topoi of geometric theories, Morita
+# equivalence, Boolean and De Morgan presheaf topoi), copied at cb3d7f8 and ported from Lean v4.36
+# to v4.35, and the general lemmas of CategoryTheoryToolkit, CommutativeAlgebraToolkit and
+# LinearAlgebraCombinatoricsAndAnalysis that the Montpellier proofs use, with the options of
+# lean-pool's lakefile that affect elaboration. Warnings stay errors, as above.
 [[lean_lib]]
 name = "LeanPool"
+[lean_lib.leanOptions]
+relaxedAutoImplicit = false
+maxSynthPendingDepth = 3
 
 # Issue #31, question 3. The trusted statements, written with Mathlib (and reviewed Stacks
 # definitions) alone and left unproved: a `sorry` is expected here, so warnings are not errors in

@@ -26,7 +26,7 @@ public import Mathlib.CategoryTheory.Limits.Types.Coproducts
 public import Mathlib.CategoryTheory.Limits.MonoCoprod
 public import Mathlib.CategoryTheory.Extensive
 public import Mathlib.CategoryTheory.Adjunction.Limits
-public import Grothendieck.Upstream.SemiSimplexCategoryReedy
+public import LeanPool.CategoryTheoryToolkit.SemiSimplexCategoryReedy
 import Grothendieck.Attr
 
 /-!

@@ -155,3 +155,36 @@ licensed under the Apache License, Version 2.0.
      an import replaced by its counterpart in the pinned Mathlib.
 
    LeanPool.lean (the root importing them) is new to this repository.
+
+   Also under LeanPool/, at the same paths as in lean-pool: the general lemmas below, written in
+   this repository (under Grothendieck/Upstream/ until #69) and contributed by Michel Hua to
+   lean-pool, where the same files stand. They are this repository's version: built against
+   Lean v4.35.0 and Mathlib 56a0058, with Mathlib's style options, they differ from lean-pool's
+   (cb3d7f85) in headers, docstrings, imports and proofs, and some declare lemmas that lean-pool's
+   do not (QuasiSoberPiCoreCompact: WayBelowOpen, CoreCompact; FlatProdPi,
+   PolynomialIntegerValued, SingularValuesSigmaTwo, SubalgebraIsUnitOfIsIntegral: one each).
+   LeanPool/CategoryTheoryToolkit/AdjunctionIdempotent.lean
+   LeanPool/CategoryTheoryToolkit/KaroubiAdditiveFunctors.lean
+   LeanPool/CategoryTheoryToolkit/MonadicityIff.lean
+   LeanPool/CategoryTheoryToolkit/SemiSimplexCategoryReedy.lean
+   LeanPool/CommutativeAlgebraToolkit/DerivationLeibnizProd.lean
+   LeanPool/CommutativeAlgebraToolkit/DerivationLieMulLeft.lean
+   LeanPool/CommutativeAlgebraToolkit/FinitePresentationPiRightHomBijective.lean
+   LeanPool/CommutativeAlgebraToolkit/FlatProdPi.lean
+   LeanPool/CommutativeAlgebraToolkit/HasseDerivXPowMul.lean
+   LeanPool/CommutativeAlgebraToolkit/IsNoetherianRingIffFinitePresentation.lean
+   LeanPool/CommutativeAlgebraToolkit/NoetherianIsOpenOfStableUnderGeneralization.lean
+   LeanPool/CommutativeAlgebraToolkit/PolynomialIntegerValued.lean
+   LeanPool/CommutativeAlgebraToolkit/PolynomialIsCoprimeX.lean
+   LeanPool/CommutativeAlgebraToolkit/PrimaryComponentInjective.lean
+   LeanPool/CommutativeAlgebraToolkit/RatSmulMemIndivisible.lean
+   LeanPool/CommutativeAlgebraToolkit/SemilocalStableRange.lean
+   LeanPool/CommutativeAlgebraToolkit/SubalgebraIsUnitOfIsIntegral.lean
+   LeanPool/CommutativeAlgebraToolkit/TensorProductMemRangeRTensorBasis.lean
+   LeanPool/LinearAlgebraCombinatoricsAndAnalysis/ChoosePrimePowSubOne.lean
+   LeanPool/LinearAlgebraCombinatoricsAndAnalysis/CurryR1Space.lean
+   LeanPool/LinearAlgebraCombinatoricsAndAnalysis/DetPascalMatrix.lean
+   LeanPool/LinearAlgebraCombinatoricsAndAnalysis/MatrixDetFinTwoCauchyBinet.lean
+   LeanPool/LinearAlgebraCombinatoricsAndAnalysis/MonoidRightZero.lean
+   LeanPool/LinearAlgebraCombinatoricsAndAnalysis/QuasiSoberPiCoreCompact.lean
+   LeanPool/LinearAlgebraCombinatoricsAndAnalysis/SingularValuesSigmaTwo.lean

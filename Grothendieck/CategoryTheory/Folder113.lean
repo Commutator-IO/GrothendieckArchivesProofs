@@ -9,7 +9,7 @@ public import Mathlib.CategoryTheory.Idempotents.FunctorExtension
 public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
 public import Mathlib.CategoryTheory.Preadditive.Opposite
 public import Mathlib.Algebra.Category.ModuleCat.Abelian
-public import Grothendieck.Upstream.KaroubiAdditiveFunctors
+public import LeanPool.CategoryTheoryToolkit.KaroubiAdditiveFunctors
 import Grothendieck.Attr
 
 /-!

@@ -6,7 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
-public import Grothendieck.Upstream.DerivationLeibnizProd
+public import LeanPool.CommutativeAlgebraToolkit.DerivationLeibnizProd
 import Grothendieck.Attr
 
 /-!

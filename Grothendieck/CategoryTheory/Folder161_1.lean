@@ -11,7 +11,7 @@ public import Mathlib.CategoryTheory.Discrete.Basic
 public import Mathlib.Tactic.TFAE
 public import Mathlib.CategoryTheory.Monad.Limits
 public import Mathlib.CategoryTheory.Adjunction.PartialAdjoint
-public import Grothendieck.Upstream.AdjunctionIdempotent
+public import LeanPool.CategoryTheoryToolkit.AdjunctionIdempotent
 public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
 public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
 import Grothendieck.Attr

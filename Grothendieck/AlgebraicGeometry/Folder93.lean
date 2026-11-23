@@ -24,9 +24,9 @@ public import Mathlib.Data.Nat.Choose.Sum
 public import Mathlib.LinearAlgebra.Matrix.Notation
 public import Mathlib.Data.Int.GCD
 public import Mathlib.Data.Nat.Choose.Dvd
-public import Grothendieck.Upstream.HasseDerivXPowMul
-public import Grothendieck.Upstream.PolynomialIsCoprimeX
-public import Grothendieck.Upstream.DerivationLieMulLeft
+public import LeanPool.CommutativeAlgebraToolkit.HasseDerivXPowMul
+public import LeanPool.CommutativeAlgebraToolkit.PolynomialIsCoprimeX
+public import LeanPool.CommutativeAlgebraToolkit.DerivationLieMulLeft
 public import Mathlib.RingTheory.PicardGroup
 public import Mathlib.RingTheory.Localization.Away.Basic
 public import Mathlib.RingTheory.FiniteType

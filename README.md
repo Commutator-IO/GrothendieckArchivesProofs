@@ -6,7 +6,8 @@ Lean 4 proofs of statements from two of Alexandre Grothendieck's archives, built
 
 - `Grothendieck/`: the working notes kept at the University of Montpellier, in topic directories
   as in Mathlib (`AlgebraicGeometry/`, `RingTheory/`, `CategoryTheory/`, …), with the general
-  lemmas they use in `Grothendieck/Upstream/`. The files keep the name of their folder (cote),
+  lemmas they use in `Grothendieck/Upstream/` (and in `LeanPool/`, for those that also stand in
+  lean-pool). The files keep the name of their folder (cote),
   `Grothendieck/AlgebraicGeometry/Folder126Glue.lean` for instance, and each statement carries its
   source as an attribute (see [Conventions](#conventions)). The statements are the modernised
   readings of the edition [grothendieck-project](https://github.com/Commutator-IO/grothendieck-project),
@@ -99,8 +100,9 @@ Mathlib (#39):
   repository's own libraries through Lean's kernel, and runs `lake comparator --paranoid` (the
   independent kernels) on the statements of `Challenge/`; it runs weekly and by hand.
 
-Open work is tracked in the issues: the general golfing of the proofs (`simp`, `grind`, `omega`,
-near-duplicate lemmas) in #69.
+The proofs were golfed in #69: unneeded `show` and `change` removed, one-call `simp`, `grind` and
+`omega` where they do not slow the build, and near-duplicate lemmas merged; open work is tracked in
+the issues.
 
 ## Licence
 
@@ -116,4 +118,8 @@ field. `MMP/` holds files copied from [AxiomMath/MMP](https://github.com/AxiomMa
 (Apache-2.0), from Michel Hua's pull requests there: classifying topoi of geometric theories,
 Diaconescu's theorem, theories of presheaf type, Morita equivalence, Boolean and De Morgan
 presheaf topoi, subtopoi and essential points; twelve of them are ported from Lean v4.36 to the
-pinned Lean and Mathlib. They are listed in [`NOTICE`](NOTICE), with the commit they come from.
+pinned Lean and Mathlib. It also holds, at lean-pool's paths, the 25 general lemmas of the
+Montpellier proofs that Michel Hua contributed to lean-pool (`CategoryTheoryToolkit/`,
+`CommutativeAlgebraToolkit/`, `LinearAlgebraCombinatoricsAndAnalysis/`), in this repository's
+version, which differs from lean-pool's in style and in a few declarations. They are listed in
+[`NOTICE`](NOTICE), with the commit they come from.

@@ -8,7 +8,7 @@ module
 public import Mathlib.Topology.Sets.Opens
 public import Mathlib.Topology.LocallyClosed
 public import Mathlib.Topology.Sober
-public import Grothendieck.Upstream.QuasiSoberPiCoreCompact
+public import LeanPool.LinearAlgebraCombinatoricsAndAnalysis.QuasiSoberPiCoreCompact
 import Grothendieck.Attr
 
 /-!

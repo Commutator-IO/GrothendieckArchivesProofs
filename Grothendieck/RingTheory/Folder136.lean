@@ -6,7 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
-public import Grothendieck.Upstream.ChoosePrimePowSubOne
+public import LeanPool.LinearAlgebraCombinatoricsAndAnalysis.ChoosePrimePowSubOne
 import Grothendieck.Attr
 
 /-!

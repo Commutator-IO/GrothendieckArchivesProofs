@@ -12,7 +12,7 @@ public import Mathlib.Topology.NoetherianSpace
 public import Mathlib.Topology.Sober
 public import Mathlib.Topology.Category.TopCat.Opens
 public import Mathlib.CategoryTheory.Category.Cat
-public import Grothendieck.Upstream.PrimaryComponentInjective
+public import LeanPool.CommutativeAlgebraToolkit.PrimaryComponentInjective
 import Grothendieck.Attr
 
 /-!

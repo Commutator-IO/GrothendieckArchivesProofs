@@ -16,7 +16,7 @@ public import Mathlib.RingTheory.Ideal.Quotient.Operations
 public import Mathlib.RingTheory.Spectrum.Maximal.Defs
 public import Mathlib.RingTheory.Ideal.Nonunits
 public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-public import Grothendieck.Upstream.SemilocalStableRange
+public import LeanPool.CommutativeAlgebraToolkit.SemilocalStableRange
 import Grothendieck.Attr
 
 /-!

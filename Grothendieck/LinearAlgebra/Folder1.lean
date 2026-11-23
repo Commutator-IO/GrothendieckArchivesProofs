@@ -6,8 +6,8 @@ Authors: Michel Hua
 module
 
 public import Mathlib
-public import Grothendieck.Upstream.SingularValuesSigmaTwo
-import all Grothendieck.Upstream.SingularValuesSigmaTwo
+public import LeanPool.LinearAlgebraCombinatoricsAndAnalysis.SingularValuesSigmaTwo
+import all LeanPool.LinearAlgebraCombinatoricsAndAnalysis.SingularValuesSigmaTwo
 import Grothendieck.Attr
 
 /-!

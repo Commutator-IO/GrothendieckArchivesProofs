@@ -6,7 +6,7 @@ Authors: Michel Hua
 module
 
 public import Mathlib
-public import Grothendieck.Upstream.RatSmulMemIndivisible
+public import LeanPool.CommutativeAlgebraToolkit.RatSmulMemIndivisible
 import Grothendieck.Attr
 
 /-!
