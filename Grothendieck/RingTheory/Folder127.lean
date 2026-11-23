@@ -34,9 +34,6 @@ and no finiteness of `A'` is needed, and `Q` is arbitrary.
   with `K ∩ I N ⊆ I K` for every ideal `I` is flat; `inf_smul_top_le_of_injective_baseChange`
   gives that condition from the injectivity of `K ⊗ R/I → N ⊗ R/I`, through
   `one_tmul_eq_zero_iff` (`1 ⊗ x = 0` in `R/I ⊗ N` iff `x ∈ I N`).
-* `lTensor_injective_of_flat_cokernel`, `flat_of_flat_of_flat_cokernel`: for
-  `0 → G → N → Q → 0` exact with `Q` flat, `L ⊗ G → L ⊗ N` is injective for every `L`, and `G` is
-  flat if `N` is.
 
 These are used in `Grothendieck/AlgebraicGeometry/Folder127.lean` to prove the affine statement
 `OpenProblems.Findings.Folder127.NonFlatDescentArtinian`.
@@ -50,7 +47,8 @@ independence of the reductions gives `ker π ⊆ 𝔪 A^(ι)`. After base change
 `π' : A'^(ι) → A' ⊗ Q` is surjective onto a flat module, so `ker π' ∩ J A'^(ι) = J ker π'` for
 `J = 𝔪A'` (`LinearMap.ker_inf_smul_top_eq_smul_of_flat`), and `ker π' ⊆ J A'^(ι)` by right
 exactness. Hence `ker π' ⊆ J ker π'`, so `ker π' = 0` because `J` is nilpotent. Finally
-`A^(ι) → A'^(ι)` is injective because `A → A'` is, so `ker π = 0` and `Q ≅ A^(ι)`.
+`A^(ι) → A'^(ι)` is injective because `A → A'` is (`Module.Flat.tensorProduct_mk_injective`), so
+`ker π = 0` and `Q ≅ A^(ι)`.
 
 ## References
 
@@ -64,14 +62,6 @@ open TensorProduct
 
 namespace Grothendieck.Folder127
 
-/-- A finitely supported family all of whose coefficients lie in `I` lies in `I • ⊤`. -/
-theorem mem_smul_top_of_forall_mem {R ι : Type*} [CommRing R] {I : Ideal R} (c : ι →₀ R)
-    (hc : ∀ i, c i ∈ I) : c ∈ I • (⊤ : Submodule R (ι →₀ R)) := by
-  rw [← c.sum_single]
-  refine Submodule.sum_mem _ fun i _ ↦ ?_
-  rw [← Finsupp.smul_single_one]
-  exact Submodule.smul_mem_smul (hc i) Submodule.mem_top
-
 /-- Right exactness of base change: if `ker π ⊆ I • ⊤` and `π` is surjective, then the kernel of
 `π ⊗ R'` lies in `(I R') • ⊤`. -/
 theorem ker_baseChange_le_smul_top {R R' F Q : Type*} [CommRing R] [CommRing R'] [Algebra R R']
@@ -84,22 +74,14 @@ theorem ker_baseChange_le_smul_top {R R' F Q : Type*} [CommRing R] [CommRing R']
     refine Submodule.smul_induction_on hf (fun a ha f _ ↦ ?_) (fun f g hf hg ↦ ?_)
     · rw [TensorProduct.tmul_smul, ← algebraMap_smul R' a]
       exact Submodule.smul_mem_smul (Ideal.mem_map_of_mem _ ha) Submodule.mem_top
-    · rw [TensorProduct.tmul_add]; exact Submodule.add_mem _ hf hg
+    · rw [TensorProduct.tmul_add]; exact add_mem hf hg
   intro y hy
   obtain ⟨z, rfl⟩ := (lTensor_exact R' (LinearMap.exact_subtype_ker_map π) hsurj y).1
     (LinearMap.mem_ker.1 hy)
   clear hy
   induction z using TensorProduct.inductionOn with
   | tmul r' k => exact htmul r' k (hker k.2)
-  | add z w hz hw => rw [map_add]; exact Submodule.add_mem _ hz hw
-
-/-- For `F` flat (free, for instance) and `R → R'` injective, `F → R' ⊗_R F` is injective. -/
-theorem injective_one_tmul {R R' F : Type*} [CommRing R] [CommRing R'] [Algebra R R']
-    [AddCommGroup F] [Module R F] [Module.Flat R F] (hinj : Function.Injective (algebraMap R R')) :
-    Function.Injective fun c : F ↦ (1 : R') ⊗ₜ[R] c :=
-  fun _ _ h ↦ (TensorProduct.lid R F).symm.injective <|
-    Module.Flat.rTensor_preserves_injective_linearMap (Algebra.linearMap R R') hinj
-      (by simpa using h)
+  | add z w hz hw => rw [map_add]; exact add_mem hz hw
 
 /-- **Flatness descends along an injective map over a local ring with nilpotent maximal ideal**
 (folder 127, Lemma 1.3, its flatness part). Let `R` be a local ring whose maximal ideal is
@@ -119,8 +101,7 @@ theorem flat_of_flat_baseChange_of_isNilpotent {R R' Q : Type*} [CommRing R] [Is
   have hπ : ∀ i r, (m • (⊤ : Submodule R Q)).mkQ (π (Finsupp.single i r)) =
       Ideal.Quotient.mk m r • b i := by
     intro i r
-    simp only [π, Finsupp.linearCombination_single, map_smul, hx]
-    exact (algebraMap_smul (R ⧸ m) r (b i)).symm
+    simp only [π, Finsupp.linearCombination_single, map_smul, hx, Module.IsTorsionBySet.mk_smul]
   -- `π` is surjective, by Nakayama's lemma for the nilpotent ideal `m`.
   have hmap : Submodule.map (m • (⊤ : Submodule R Q)).mkQ (LinearMap.range π) = ⊤ := by
     refine eq_top_iff.2 fun v _ ↦ ?_
@@ -136,29 +117,27 @@ theorem flat_of_flat_baseChange_of_isNilpotent {R R' Q : Type*} [CommRing R] [Is
   have hred : ∀ c, (m • (⊤ : Submodule R Q)).mkQ (π c) =
       Finsupp.linearCombination (R ⧸ m) b (c.mapRange (Ideal.Quotient.mk m) (map_zero _)) := by
     intro c
-    induction c using Finsupp.induction_linear with
-    | zero => simp
-    | add f g hf hg => simp_all [Finsupp.mapRange_add]
-    | single i r => simp [hπ]
-  have hker : LinearMap.ker π ≤ m • ⊤ := by
-    intro c hc
+    induction c using Finsupp.induction_linear <;> simp_all [Finsupp.mapRange_add]
+  have hker : LinearMap.ker π ≤ m • ⊤ := fun c hc ↦ by
     have h0 : c.mapRange (Ideal.Quotient.mk m) (map_zero _) = 0 :=
       b.linearIndependent (by rw [← hred, LinearMap.mem_ker.1 hc, map_zero, map_zero])
-    exact mem_smul_top_of_forall_mem c fun i ↦
-      Ideal.Quotient.eq_zero_iff_mem.1 (by simpa using DFunLike.congr_fun h0 i)
+    rw [← c.sum_single]
+    refine Submodule.sum_mem _ fun i _ ↦ ?_
+    rw [← Finsupp.smul_single_one]
+    exact Submodule.smul_mem_smul
+      (Ideal.Quotient.eq_zero_iff_mem.1 (by simpa using DFunLike.congr_fun h0 i)) trivial
   -- After base change, `π'` is injective.
   let π' := π.baseChange R'
   have hsurj' : Function.Surjective π' := LinearMap.lTensor_surjective R' hsurj
   set J := m.map (algebraMap R R')
-  have hJ : IsNilpotent J := by
-    obtain ⟨n, hn⟩ := hR
-    exact ⟨n, by rw [← Ideal.map_pow, hn]; simp⟩
-  have hbot' : LinearMap.ker π' = ⊥ := Submodule.eq_bot_of_le_smul_of_isNilpotent J _ hJ <| by
+  have hbot' : LinearMap.ker π' = ⊥ :=
+    Submodule.eq_bot_of_le_smul_of_isNilpotent J _ (hR.map (Ideal.mapHom _)) <| by
     rw [← LinearMap.ker_inf_smul_top_eq_smul_of_flat J π' hsurj']
     exact le_inf le_rfl (ker_baseChange_le_smul_top π hsurj hker)
   -- Hence `π` is injective, since `R^(ι) → R'^(ι)` is.
-  have hinjπ : Function.Injective π := fun c d h ↦
-    injective_one_tmul hinj (LinearMap.ker_eq_bot.1 hbot' (by simp [π', h]))
+  have := (faithfulSMul_iff_algebraMap_injective R R').2 hinj
+  have hinjπ : Function.Injective π := fun c d h ↦ Module.Flat.tensorProduct_mk_injective R _ R'
+    (LinearMap.ker_eq_bot.1 hbot' (by simp [π', h]))
   exact Module.Flat.of_linearEquiv (LinearEquiv.ofBijective π ⟨hinjπ, hsurj⟩).symm
 
 /-- **Flatness descends along an injective map over an artinian ring** (folder 127, Lemma 1.3, its
@@ -195,7 +174,7 @@ variable {R N : Type*} [CommRing R] [AddCommGroup N] [Module R N]
 theorem one_tmul_eq_zero_iff (I : Ideal R) (x : N) :
     (1 : R ⧸ I) ⊗ₜ[R] x = 0 ↔ x ∈ I • (⊤ : Submodule R N) := by
   rw [← (quotTensorEquivQuotSMul N I).injective.eq_iff, map_zero,
-    show (1 : R ⧸ I) = Ideal.Quotient.mk I 1 from (map_one _).symm,
+    ← map_one (Ideal.Quotient.mk I),
     quotTensorEquivQuotSMul_mk_tmul, one_smul, Submodule.Quotient.mk_eq_zero]
 
 /-- If the inclusion of `K` into `N` stays injective after base change to `R ⧸ I`, then
@@ -213,10 +192,7 @@ every ideal `I` (a pure submodule) has a flat target. -/
 theorem flat_of_surjective_of_ker_inf_smul_top_le {Q : Type*} [AddCommGroup Q] [Module R Q]
     [Module.Flat R N] (p : N →ₗ[R] Q) (hp : Function.Surjective p)
     (h : ∀ I : Ideal R, LinearMap.ker p ⊓ I • ⊤ ≤ I • LinearMap.ker p) : Module.Flat R Q := by
-  rw [Module.Flat.iff_rTensor_injective']
-  intro I
-  rw [← LinearMap.ker_eq_bot, eq_bot_iff]
-  intro x hx
+  refine Module.Flat.iff_rTensor_injective'.2 fun I ↦ (injective_iff_map_eq_zero _).2 fun x hx ↦ ?_
   obtain ⟨y, rfl⟩ := LinearMap.lTensor_surjective I hp x
   let μN := (TensorProduct.lid R N).toLinearMap ∘ₗ I.subtype.rTensor N
   let K := LinearMap.ker p
@@ -225,8 +201,8 @@ theorem flat_of_surjective_of_ker_inf_smul_top_le {Q : Type*} [AddCommGroup Q] [
       (TensorProduct.lid R Q).toLinearMap ∘ₗ I.subtype.rTensor Q ∘ₗ p.lTensor I := by
     ext; simp [μN]
   have hμ : μN y ∈ K := by
-    rw [LinearMap.mem_ker, ← LinearMap.comp_apply, comm]
-    simp only [LinearMap.comp_apply, LinearMap.mem_ker.1 hx, map_zero]
+    rw [LinearMap.mem_ker, ← LinearMap.comp_apply, comm, LinearMap.comp_apply, LinearMap.comp_apply,
+      hx, map_zero]
   have hmem : (⟨μN y, hμ⟩ : K) ∈ I • (⊤ : Submodule R K) := by
     rw [Submodule.mem_smul_top_iff]
     refine h I ⟨hμ, ?_⟩
@@ -237,66 +213,10 @@ theorem flat_of_surjective_of_ker_inf_smul_top_le {Q : Type*} [AddCommGroup Q] [
   have comm2 : μN ∘ₗ K.subtype.lTensor I = K.subtype ∘ₗ μK := by ext; simp [μN, μK]
   have hinjN : Function.Injective μN :=
     (TensorProduct.lid R N).injective.comp (Module.Flat.iff_rTensor_injective'.1 ‹_› I)
-  have hy : K.subtype.lTensor I z = y := by
-    apply hinjN
-    rw [← LinearMap.comp_apply, comm2, LinearMap.comp_apply]
-    exact congrArg Subtype.val hz
-  rw [Submodule.mem_bot, ← hy, ← LinearMap.comp_apply, ← LinearMap.lTensor_comp,
+  have hy : K.subtype.lTensor I z = y := hinjN <| by
+    rw [← LinearMap.comp_apply, comm2, LinearMap.comp_apply]; exact congrArg Subtype.val hz
+  rw [← hy, ← LinearMap.comp_apply, ← LinearMap.lTensor_comp,
     LinearMap.comp_ker_subtype, LinearMap.lTensor_zero, LinearMap.zero_apply]
-
-/-- `lTensor` and `rTensor` commute: both composites are `TensorProduct.map u v`. -/
-theorem lTensor_rTensor_comm {X Y P P' : Type*} [AddCommGroup X] [Module R X] [AddCommGroup Y]
-    [Module R Y] [AddCommGroup P] [Module R P] [AddCommGroup P'] [Module R P'] (u : X →ₗ[R] Y)
-    (v : P →ₗ[R] P') (t : X ⊗[R] P) :
-    v.lTensor Y (u.rTensor P t) = u.rTensor P' (v.lTensor X t) := by
-  rw [← LinearMap.comp_apply, ← LinearMap.comp_apply, LinearMap.lTensor_comp_rTensor,
-    LinearMap.rTensor_comp_lTensor]
-
-/-- The diagram chase behind `lTensor_injective_of_flat_cokernel`, for a surjection `ε : F → L`
-from a flat module. -/
-theorem lTensor_injective_of_flat_cokernel_aux {G Q F L : Type*} [AddCommGroup G] [Module R G]
-    [AddCommGroup Q] [Module R Q] [Module.Flat R Q] [AddCommGroup F] [Module R F] [Module.Flat R F]
-    [AddCommGroup L] [Module R L] {f : G →ₗ[R] N} {g : N →ₗ[R] Q}
-    (hf : Function.Injective f) (hfg : Function.Exact f g) (hg : Function.Surjective g)
-    (ε : F →ₗ[R] L) (hε : Function.Surjective ε) : Function.Injective (f.lTensor L) := by
-  let K := LinearMap.ker ε
-  have hFinj : Function.Injective (f.lTensor F) :=
-    Module.Flat.lTensor_preserves_injective_linearMap f hf
-  have hQinj : Function.Injective (K.subtype.rTensor Q) :=
-    Module.Flat.rTensor_preserves_injective_linearMap K.subtype K.injective_subtype
-  refine (injective_iff_map_eq_zero _).2 fun x hx ↦ ?_
-  obtain ⟨x', rfl⟩ := LinearMap.rTensor_surjective G hε x
-  obtain ⟨z, hz⟩ := ((rTensor_exact N (LinearMap.exact_subtype_ker_map ε) hε) (f.lTensor F x')).1
-    (by rw [← lTensor_rTensor_comm]; exact hx)
-  have hw : g.lTensor K z = 0 := by
-    apply hQinj
-    rw [map_zero, ← lTensor_rTensor_comm, hz, ← LinearMap.comp_apply, ← LinearMap.lTensor_comp,
-      hfg.linearMap_comp_eq_zero, LinearMap.lTensor_zero, LinearMap.zero_apply]
-  obtain ⟨u, rfl⟩ := ((lTensor_exact K hfg hg) z).1 hw
-  have hx' : K.subtype.rTensor G u = x' := hFinj (by rw [lTensor_rTensor_comm, hz])
-  rw [← hx', ← LinearMap.comp_apply, ← LinearMap.rTensor_comp, LinearMap.comp_ker_subtype,
-    LinearMap.rTensor_zero, LinearMap.zero_apply]
-
-/-- For an exact sequence `0 → G → N → Q → 0` with `Q` flat, `L ⊗ G → L ⊗ N` is injective for
-every module `L`. -/
-theorem lTensor_injective_of_flat_cokernel {G Q : Type*} [AddCommGroup G] [Module R G]
-    [AddCommGroup Q] [Module R Q] [Module.Flat R Q] {f : G →ₗ[R] N} {g : N →ₗ[R] Q}
-    (hf : Function.Injective f) (hfg : Function.Exact f g) (hg : Function.Surjective g)
-    (L : Type*) [AddCommGroup L] [Module R L] : Function.Injective (f.lTensor L) :=
-  lTensor_injective_of_flat_cokernel_aux hf hfg hg (Finsupp.linearCombination R (id : L → L))
-    fun l ↦ ⟨Finsupp.single l 1, by simp⟩
-
-/-- In an exact sequence `0 → G → N → Q → 0` with `N` and `Q` flat, `G` is flat. -/
-theorem flat_of_flat_of_flat_cokernel {G Q : Type*} [AddCommGroup G] [Module R G]
-    [AddCommGroup Q] [Module R Q] [Module.Flat R N] [Module.Flat R Q] {f : G →ₗ[R] N}
-    {g : N →ₗ[R] Q} (hf : Function.Injective f) (hfg : Function.Exact f g)
-    (hg : Function.Surjective g) : Module.Flat R G := by
-  refine Module.Flat.iff_rTensor_injective'.2 fun I ↦
-    Function.Injective.of_comp (f := f.lTensor R) ?_
-  rw [← LinearMap.coe_comp, LinearMap.lTensor_comp_rTensor, ← LinearMap.rTensor_comp_lTensor,
-    LinearMap.coe_comp]
-  exact (Module.Flat.rTensor_preserves_injective_linearMap _ I.injective_subtype).comp
-    (lTensor_injective_of_flat_cokernel hf hfg hg I)
 
 end Purity
 

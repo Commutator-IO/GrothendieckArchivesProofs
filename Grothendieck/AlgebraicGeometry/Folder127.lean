@@ -8,6 +8,7 @@ module
 public import OpenProblems.Findings.Folder127
 public import Grothendieck.RingTheory.Folder127
 import Grothendieck.Attr
+import StacksFrontier.Algebra.Module.FlatComplexBaseChange
 
 /-!
 # Folder 127, pages 2–3: Lemma 1.3, non-flat descent over an artinian base, affine case
@@ -35,7 +36,8 @@ Write `G = Im(M → N)` and `Q = N/G`. Since `G' = Im(A' ⊗ M → A' ⊗ N)` is
 over `A'` (`flat_of_surjective_of_ker_inf_smul_top_le`; `A' ⊗ N` is flat because `N` is). Flatness
 descends along the injection `A → A'` over the artinian ring `A`
 (`flat_of_flat_baseChange_of_isArtinianRing`), so `Q` is flat. Then `0 → G → N → Q → 0` with `N`
-and `Q` flat gives both conclusions: `G` is flat and `G → N` is universally injective.
+and `Q` flat gives both conclusions: `G` is flat (`StacksDraft.FlatComplex.flat_of_exact`) and
+`G → N` is universally injective (`LinearMap.lTensor_injective_of_exact_of_flat`).
 
 **What the proof finds.** The finiteness of `A' → A` and the flatness of `G'` are not used, nor
 the hypotheses of `IsAffineSetting` other than the flatness of `N` over `A` (`G_U` flat over `Y`).
@@ -85,23 +87,21 @@ theorem nonFlatDescent_of_injective {A A' M N : Type u} [CommRing A] [IsArtinian
     IsFlatClosureSolution A φ := by
   set G := LinearMap.range φ
   let p := G.mkQ.baseChange A'
-  have hp : Function.Surjective p := LinearMap.lTensor_surjective A' G.mkQ_surjective
+  have hex := LinearMap.exact_subtype_mkQ G
+  -- `ker p = Im(A' ⊗ G → A' ⊗ N) = Im(A' ⊗ M → A' ⊗ N)`, as `A' ⊗ M → A' ⊗ G` is onto.
   have hker : LinearMap.ker p = LinearMap.range (φ.baseChange A') := by
     ext x
-    rw [LinearMap.mem_ker, LinearMap.mem_range]
-    refine (lTensor_exact A' (LinearMap.exact_subtype_mkQ G) G.mkQ_surjective x).trans ?_
-    refine ⟨fun ⟨y, hy⟩ ↦ ?_, fun ⟨z, hz⟩ ↦ ⟨φ.rangeRestrict.lTensor A' z, ?_⟩⟩
-    · obtain ⟨z, rfl⟩ := LinearMap.lTensor_surjective A' φ.surjective_rangeRestrict y
-      exact ⟨z, by rw [← hy, ← LinearMap.comp_apply, ← LinearMap.lTensor_comp]; rfl⟩
-    · rw [← hz, ← LinearMap.comp_apply, ← LinearMap.lTensor_comp]; rfl
+    refine (lTensor_exact A' hex G.mkQ_surjective x).trans ?_
+    rw [← (LinearMap.lTensor_surjective A' φ.surjective_rangeRestrict).range_comp,
+      ← LinearMap.coe_comp, ← LinearMap.lTensor_comp]
+    rfl
   have : Module.Flat A' (A' ⊗[A] (N ⧸ G)) :=
-    flat_of_surjective_of_ker_inf_smul_top_le p hp fun I ↦ by
-      rw [hker]
-      exact inf_smul_top_le_of_injective_baseChange _ I (huniv (A' ⧸ I))
+    flat_of_surjective_of_ker_inf_smul_top_le p (LinearMap.lTensor_surjective A' G.mkQ_surjective)
+      fun I ↦ hker ▸ inf_smul_top_le_of_injective_baseChange _ I (huniv (A' ⧸ I))
   have : Module.Flat A (N ⧸ G) := flat_of_flat_baseChange_of_isArtinianRing hinj
-  have hex := LinearMap.exact_subtype_mkQ G
-  exact ⟨flat_of_flat_of_flat_cokernel G.injective_subtype hex G.mkQ_surjective, fun R'' _ _ ↦
-    lTensor_injective_of_flat_cokernel G.injective_subtype hex G.mkQ_surjective R''⟩
+  exact ⟨StacksDraft.FlatComplex.flat_of_exact _ _ G.injective_subtype G.mkQ_surjective hex,
+    fun R'' _ _ ↦
+      LinearMap.lTensor_injective_of_exact_of_flat _ G.mkQ_surjective _ G.injective_subtype hex R''⟩
 
 /-- **`127-non-flat-descent-artinian-epimorphism`** (folder 127, pp. 2–3, Lemma 1.3), in the affine
 case: the statement `NonFlatDescentArtinian` holds. The folder states the lemma without proof.
