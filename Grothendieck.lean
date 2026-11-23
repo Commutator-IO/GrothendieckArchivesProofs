@@ -150,6 +150,7 @@ public import Grothendieck.RingTheory.Folder136Stacks
 public import Grothendieck.RingTheory.Folder153
 public import Grothendieck.RingTheory.Folder155
 public import Grothendieck.RingTheory.Folder160
+public import Grothendieck.RingTheory.Folder161_2Pseudofield
 public import Grothendieck.RingTheory.Folder21
 public import Grothendieck.RingTheory.Folder22
 public import Grothendieck.RingTheory.Folder22Adic
