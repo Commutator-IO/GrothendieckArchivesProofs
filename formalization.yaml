@@ -86,7 +86,7 @@ alignment:
   statements:
     - source: "Buffalo, problem 3"
       lean: "Buffalo.ProblemThree.not_isPresentable"
-      module: "Buffalo.ProblemThree"
+      module: "Buffalo.CategoryTheory.ProblemThree"
       status: "proved"
     - source: "Folder 1, page 124"
       lean: "Grothendieck.Folder1.corollaire3"

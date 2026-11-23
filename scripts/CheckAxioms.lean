@@ -10,8 +10,8 @@ axiom half. Run after `lake build`:
 
     lake env lean --run scripts/CheckAxioms.lean <root module> <module prefix>...
 
-The CI runs it on `GrothendieckArchivesProofs` with the prefixes of the libraries of this
-repository (`Grothendieck`, `Buffalo`, `OpenProblems`, the copied `MMP`, `LeanPool`, and the dependency
+The CI runs it on `GrothendieckArchivesProofs` with the prefixes of the libraries of this repository
+(`Grothendieck`, `Buffalo`, `OpenProblems`, the copied `MMP`, `LeanPool`, and the dependency
 `Mordell`).
 
 Imports the root module and collects every axiom that the constants declared in modules whose

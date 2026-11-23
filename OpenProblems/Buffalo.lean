@@ -54,8 +54,8 @@ a specialist.
   localisations in `Cat_D` are not in Mathlib.
 * p:three (« problem three »): what remains open is the converse for mixed large classes `D`
   (finite limits together with all colimits, say), which needs the notions « basic » and
-  « algebraic » relative to `D`; they are not formalised. `Buffalo/ProblemThree.lean` proves the
-  concrete halves of the counterexample `{2} → Set` for all small limits: every set is in
+  « algebraic » relative to `D`; they are not formalised. `Buffalo/CategoryTheory/ProblemThree.lean`
+  proves the concrete halves of the counterexample `{2} → Set` for all small limits: every set is in
   bijection with an equaliser of maps between powers of `2` (`equivEqualizer`), the saturation of
   `{2}` under limits is everything at its second stage and misses `Fin 3` at its first
   (`saturation_two`, `not_saturation_one`), condition (G) holds (`conditionG`), and `2` is not
@@ -68,11 +68,11 @@ a specialist.
 * p:qcoh (descent of quasi-coherent sheaves along universal effective epimorphisms of schemes):
   Mathlib has no category of descent data for quasi-coherent sheaves along a morphism of schemes.
   The open part is effectivity along a universal effective epimorphism that is not
-  quasi-compact, in ZFC alone. `Buffalo/QcohDescent.lean` proves the affine core of full
-  faithfulness: if `N → B ⊗_A N ⇉ B ⊗_A B ⊗_A N` is an equaliser, base change on homomorphisms
-  into `N` is bijective (`descend_bijective`), with the converse for `M = A`
-  (`isEqualizer_iff_bijective`) and the equivalence of the condition for all modules with
-  purity (`equalizerCondition_iff_isPure`).
+  quasi-compact, in ZFC alone. `Buffalo/AlgebraicGeometry/QcohDescent.lean` proves the affine core
+  of full faithfulness: if `N → B ⊗_A N ⇉ B ⊗_A B ⊗_A N` is an equaliser, base change on
+  homomorphisms into `N` is bijective (`descend_bijective`), with the converse for `M = A`
+  (`isEqualizer_iff_bijective`) and the equivalence of the condition for all modules with purity
+  (`equalizerCondition_iff_isPure`).
 * The second question of p:immersion (exactness of descent of subschemes without
   retrocompactness) is stated loosely in the lecture; the same counterexample answers it, and
   it is not written separately.

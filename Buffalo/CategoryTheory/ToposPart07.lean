@@ -1,0 +1,38 @@
+/-
+Copyright (c) 2026 Michel Hua. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Michel Hua
+-/
+module
+
+public import Buffalo.CategoryTheory.ToposPart07a
+public import Buffalo.CategoryTheory.ToposPart07b
+public import Buffalo.CategoryTheory.ToposPart07c
+public import Buffalo.CategoryTheory.ToposPart07boards
+
+/-!
+# Buffalo, topos theory, part 7 (12 July 1973)
+
+The entries of lines 965–1114 of `docs/buffalo-topos/index.tex` (video `ORG14LNb5gE`,
+0:32:47–6:09:46), the last part of the course, split into three files: `Part07a` (generating
+subcategories, strictly and universally epimorphic families, the counterexamples in groups,
+subtopoi of `Sh(C, τ)`), `Part07b` (the classifying topos of objects and its subtopoi at the level
+of points, flat functors, `B_G` and contracted products, torsors, elementary topoi, flatness,
+hypertopoi, universes), `Part07c` (properties not stable under filtered colimits, faithful
+actions, topoi without points). Status of every entry: `docs/buffalo-topos/lean/Part07.json`.
+
+Corrected entries:
+* ORG14LNb5gE-13696: sets with `n` elements are not stable under filtered colimits only for
+  `n ≥ 2` (`rank_not_stable`); for `n = 1` they are (`singleton_stable`).
+* ORG14LNb5gE-14022: « having exactly `n` connected components » fails to be stable under
+  filtered colimits for `n ≥ 2` (`components_not_stable`); for `n = 1` it is connectedness, which
+  defines a subtopos (entry 13957).
+
+## References
+
+* the Buffalo lectures on topos theory (1973), video `ORG14LNb5gE`, 0:32:47–6:09:46
+  (12 July 1973), `docs/buffalo-topos/index.tex` lines 965–1114
+-/
+
+@[expose] public section
+

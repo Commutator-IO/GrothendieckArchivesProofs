@@ -11,7 +11,9 @@ Lean 4 proofs of statements from two of Alexandre Grothendieck's archives, built
   source as an attribute (see [Conventions](#conventions)). The statements are the modernised
   readings of the edition [grothendieck-project](https://github.com/Commutator-IO/grothendieck-project),
   where each file is linked to its folder, its pages and its findings.
-- `Buffalo/`: the lectures given at Buffalo in 1973, one file per part of their index.
+- `Buffalo/`: the lectures given at Buffalo in 1973, one file per part of their index, in the same
+  topic directories (`AlgebraicGeometry/`, `CategoryTheory/`), the lecture series (`AG`, `Groupes`,
+  `Topos`) prefixing the file name: `Buffalo/CategoryTheory/ToposPart03a.lean` for instance.
 
 The Montpellier statements and their proofs, written out in French, are in the preprint
 M. Hua, *Grothendieck Montpellier. Énoncés des lectures modernisées démontrés*, Hexagon

@@ -1,6 +1,6 @@
 module
 
-public import Buffalo.ProblemThree
+public import Buffalo.CategoryTheory.ProblemThree
 
 @[expose] public section
 

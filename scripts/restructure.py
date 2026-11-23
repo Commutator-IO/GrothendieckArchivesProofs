@@ -10,7 +10,7 @@ already moved are left alone, so the script can be run again after other pull re
 Only paths change: declaration names, and so the namespaces `Grothendieck.FolderN…`, stay as
 they are, and the cote and page of each statement is carried by its `@[montpellier]` attribute
 (step 3), not by the file name. `Grothendieck/Upstream/` (backports of Mathlib lemmas), `Buffalo/`
-(already in topic directories `AG`, `Groupes`, `Topos`), `OpenProblems/` and the support files
+(moved separately, after #69: docs/review/restructure-map.md), `OpenProblems/` and the support files
 of `KEEP` (`Grothendieck/Attr.lean`) keep their layout.
 
 Usage, from the repository root:  python3 scripts/restructure.py [--dry-run]

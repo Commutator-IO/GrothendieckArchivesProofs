@@ -19,7 +19,7 @@ name = "Stacks"
 git = "https://github.com/AxiomMath/Stacks"
 rev = "f56a316ddf7a930906d88b78d6f9a2668cffd0cf"
 
-# AxiomMath/Mordell (Apache-2.0): abelian varieties and ample sheaves, for Buffalo/AG/Part07. It
+# AxiomMath/Mordell (Apache-2.0): abelian varieties and ample sheaves, for Buffalo/AlgebraicGeometry/AGPart07. It
 # pins Stacks c496df0 and is built here against the Stacks above (same Mathlib and Lean); only the
 # modules this repository imports are compiled, with Mordell's own options.
 [[require]]
