@@ -1,6 +1,6 @@
 name: Build
 
-# Runs on the self-hosted runner of issue #34 (Azure, 16 cores, 64 GB). The compiled `.lake` is
+# Runs on the self-hosted runner of issue #34 (Azure, 8 cores, 32 GB). The compiled `.lake` is
 # kept on the machine, one copy per version of `lake-manifest.json` + `lean-toolchain`, under
 # $LEAN_CI_STORE (default /var/lib/lean-ci/store, on the same XFS disk as the job workspaces in
 # /var/lib/lean-ci/work, so the copies below are reflinks). Every job works on its own copy, so concurrent jobs
@@ -118,7 +118,7 @@ jobs:
         run: lake build --log-level=warning
 
       # The five checks below only read the `.lake` that the Build step left complete, and each
-      # runs on a single core, so they run side by side: about 7 minutes instead of 25 one after
+      # runs on a single core, so they run side by side: about 8 minutes instead of 25 one after
       # the other. Lean maps the `.olean` files read-only and shared, so five processes take little
       # more memory than one. Each check's log is printed in its own group once all have finished
       # (failed ones first, expanded by GitHub's annotations); the step fails if any failed.
