@@ -66,7 +66,8 @@ copied files, and fails on any axiom other than `propext`, `Classical.choice` an
 **Cost.** The Stacks modules the proofs import have no cache and are compiled by the build:
 several thousand modules. A cold build took 3 h 50 on GitHub's hosted runner (4 cores, 16 GB of
 RAM plus 12 GB of swap, without which it ran out of memory) and 34 minutes on 32 cores with 128 GB
-(about twice that on the 16 cores the runner has since 2026-11-23). The compilation peaks at
+(expect about four times that, a little over 2 hours, on the 8 cores the runner has since
+2026-11-23). The compilation peaks at
 26 GB of RAM. Count about 40 GB of disk for `.lake`. The axiom check takes about 6 minutes.
 
 **Statements against proofs.** `Challenge.lean` holds trusted statements, in one file that imports
@@ -82,11 +83,12 @@ statements, from 31 folders and from problem 3 of the Buffalo lectures. `compara
 The continuous integration (`.github/workflows/build.yml`) runs these commands on every push
 to `main`, on a self-hosted runner that keeps `main`'s `.lake` between runs, and on a pull request
 when the label `ci` is added; `build-hosted.yml` is the same build on GitHub's runner, by hand.
-The runner is an Azure VM with 16 cores and 64 GB (Commutator-IO/ai-infra, `stacks/lean-ci`),
+The runner is an Azure VM with 8 cores and 32 GB (Commutator-IO/ai-infra, `stacks/lean-ci`),
 started by the workflow and deallocated by itself after 10 idle minutes. After the build, the
 five checks (axioms, statement definitions, duplicates, source index, comparator) each use one
-core, so they run side by side in a single step: about 7 minutes instead of 25. When the build
-only replays modules, a run takes about 10 minutes (measured on #70).
+core, so they run side by side in a single step: about 8 minutes instead of 25. When the build
+only replays modules, a run takes 11 to 17 minutes, the longer when the VM has just changed host
+and its disk cache is cold.
 
 ## Conventions
 
