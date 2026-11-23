@@ -39,9 +39,12 @@ Everything the build depends on is pinned in two files:
 - `lean-toolchain`: Lean `v4.35.0` (elan installs it on the first `lake` command);
 - `lake-manifest.json`: the exact commits of every dependency — Mathlib `56a0058`, the
   [Stacks project](https://github.com/AxiomMath/Stacks) `f56a316` (the Mathlib and Lean of
-  Stacks), and their own dependencies. `lakefile.toml` names the two direct ones.
+  Stacks), [Mordell](https://github.com/AxiomMath/Mordell) `82a30cb` (built against that Stacks,
+  not its own pin `c496df0`), and their own dependencies. `lakefile.toml` names the three direct
+  ones.
 
-`Mordell/` and `MMP/` are copied files, not dependencies; their origin commits are in `NOTICE`.
+`MMP/` is copied, not a dependency (one of its files needs a port to the pinned Stacks); its origin
+commit is in `NOTICE`.
 
 ## Building
 
@@ -115,9 +118,9 @@ the issues.
 the manuscripts in comments, in « », are not covered: the rights in Grothendieck's manuscripts are
 held by his heirs.
 
-`Mordell/` holds files copied unchanged from [AxiomMath/Mordell](https://github.com/AxiomMath/Mordell)
-(Apache-2.0): abelian varieties (Pic⁰, φ_L, the theorem of the square) and ample sheaves over a
-field. `MMP/` holds files copied from [AxiomMath/MMP](https://github.com/AxiomMath/MMP)
+[AxiomMath/Mordell](https://github.com/AxiomMath/Mordell) (Apache-2.0) is a dependency: its abelian
+varieties (Pic⁰, φ_L, the theorem of the square) and ample sheaves over a field serve the Buffalo
+lectures. `MMP/` holds files copied from [AxiomMath/MMP](https://github.com/AxiomMath/MMP)
 (Apache-2.0): nef divisors and numerical equivalence; one of them is ported to the pinned Stacks.
 `LeanPool/` holds files copied from [lean-pool](https://github.com/LeanPool/lean-pool)
 (Apache-2.0), from Michel Hua's pull requests there: classifying topoi of geometric theories,

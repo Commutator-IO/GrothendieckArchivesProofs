@@ -9,7 +9,15 @@ module
 -- Buffalo lectures, built on Mathlib and AxiomMath's Stacks library, and the open problems of both,
 -- stated as propositions.
 public import Grothendieck
-public import Mordell
+public import Mordell.AbelianVariety.AbelianScheme.BaseChange
+public import Mordell.AbelianVariety.Ample.Sum
+public import Mordell.AbelianVariety.PhiMap
+public import Mordell.AbelianVariety.PicZero
+public import Mordell.AbelianVariety.PicZeroTranslation
+public import Mordell.AbelianVariety.Rigidity
+public import Mordell.AbelianVariety.TheoremOfTheSquare
+public import Mordell.AlgebraicGeometry.Ample
+public import Mordell.AlgebraicGeometry.VeryAmple.Twist
 public import MMP
 public import LeanPool
 public import Buffalo

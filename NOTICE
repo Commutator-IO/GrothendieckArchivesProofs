@@ -21,38 +21,10 @@ licensed under the Apache License, Version 2.0.
    (StacksFrontier/RingTheory/Descent/NilpotentEqualizerLift.lean) at that commit.
 
 2. Mordell, https://github.com/AxiomMath/Mordell
-   The files below are copied from commit 82a30cb7857f6e3cfdb1be91f5533c0ccb57d493,
-   at the same paths, under Mordell/. They carry no per-file header in the source; their licence
-   is Mordell's LICENSE, copied as Mordell/LICENSE. They are built here against Stacks f56a316
-   instead of Mordell's pin c496df0.
-
-   Mordell/Attr.lean
-   Mordell/AbelianVariety/AbelianScheme/BaseChange.lean
-   Mordell/AbelianVariety/Ample/Sum.lean
-   Mordell/AbelianVariety/PhiMap.lean
-   Mordell/AbelianVariety/PicZero.lean
-   Mordell/AbelianVariety/PicZeroTranslation.lean
-   Mordell/AbelianVariety/Rigidity.lean
-   Mordell/AlgebraicGeometry/Ample.lean
-   Mordell/AlgebraicGeometry/PicardPullback.lean
-   Mordell/AlgebraicGeometry/ProjectiveSpace/Embedding.lean
-   Mordell/AlgebraicGeometry/ProjectiveSpace/MorphismOfSections.lean
-   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Basic.lean
-   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/ClosedImmersion.lean
-   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Product.lean
-   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/ProductEmbedding.lean
-   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/ProductPullback.lean
-   Mordell/AlgebraicGeometry/VeryAmple/Twist.lean
-
-   Modified (a comment at the top of the file says how):
-   Mordell/AlgebraicGeometry/GroupScheme/BaseChangePoints.lean
-     the redundant @[expose] on the abbrev Faltings.P is removed.
-   Mordell/AbelianVariety/TheoremOfTheSquare.lean
-     two private lemmas omit an unused section instance.
-   Mordell/AlgebraicGeometry/ProjectiveSpace/Segre/Pullback.lean
-     one haveI of a proposition becomes have.
-
-   Mordell.lean (the root importing them) is new to this repository.
+   Required as a Lake dependency at commit 82a30cb7857f6e3cfdb1be91f5533c0ccb57d493
+   (lakefile.toml); not copied (it was, under Mordell/, until it became a dependency). Mordell
+   pins Stacks c496df0; it is built here against the Stacks above, f56a316, with the same Mathlib
+   and Lean, and only the modules this repository imports are compiled.
 
 3. MMP, https://github.com/AxiomMath/MMP
    The files below are copied from commit 1f9ade367087ec711a2ce1382bad279a5a0284c3, at the same

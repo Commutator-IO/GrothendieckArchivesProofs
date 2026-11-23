@@ -2,9 +2,9 @@ name: Kernel replay
 
 # Issue #31, question 4 of « …and the proof is checked in Lean »: does the code exploit a bug in
 # Lean's kernel, or get a declaration past it? `scripts/ReplayOwn.lean` replays every constant of
-# this repository's own libraries (Grothendieck, Buffalo, OpenProblems, Mordell, MMP, LeanPool and
-# the root) through Lean's kernel, on top of an environment that holds only their dependencies
-# (Lean, Mathlib, Stacks), which are trusted as built. It catches a declaration that entered the
+# this repository's own libraries (Grothendieck, Buffalo, OpenProblems, MMP, LeanPool and the root),
+# and the Mordell modules they import, through Lean's kernel, on top of an environment that holds
+# only their dependencies (Lean, Mathlib, Stacks), which are trusted as built. It catches a declaration that entered the
 # environment without the kernel checking it (an unchecked `addDecl` in a metaprogram, an `unsafe`
 # trick, a corrupted `.olean`). The axiom check of every build (#32) already rules out any axiom
 # beyond propext, Classical.choice and Quot.sound.

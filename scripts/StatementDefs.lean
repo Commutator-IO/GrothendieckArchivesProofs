@@ -14,7 +14,7 @@ Imports the root module and, for every theorem declared in a module whose name s
 the prefixes, collects the constants in its *statement* (its type, not its proof; for a
 `def … : Prop`, as in `OpenProblems/`, its body) that are
 defined outside Mathlib and Lean's core libraries: definitions, structures and inductive types of
-AxiomMath/Stacks, of the copied `Mordell/` and `MMP/` files, and of this repository. It then
+AxiomMath/Stacks, of AxiomMath/Mordell, of the copied `MMP/` files, and of this repository. It then
 follows the definitions those depend on (types and bodies), still outside Mathlib, which is the
 whole set a reader has to check to trust the statements.
 
@@ -53,7 +53,7 @@ def isDefinitionLike : ConstantInfo → Bool
 def library (mod : Name) : String :=
   match mod.getRoot with
   | `StacksCore | `StacksFrontier | `Stacks => "AxiomMath/Stacks"
-  | `Mordell => "Mordell (copied)"
+  | `Mordell => "AxiomMath/Mordell"
   | `MMP => "MMP (copied)"
   | r => s!"{r} (this repository)"
 

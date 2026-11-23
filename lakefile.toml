@@ -19,6 +19,14 @@ name = "Stacks"
 git = "https://github.com/AxiomMath/Stacks"
 rev = "f56a316ddf7a930906d88b78d6f9a2668cffd0cf"
 
+# AxiomMath/Mordell (Apache-2.0): abelian varieties and ample sheaves, for Buffalo/AG/Part07. It
+# pins Stacks c496df0 and is built here against the Stacks above (same Mathlib and Lean); only the
+# modules this repository imports are compiled, with Mordell's own options.
+[[require]]
+name = "Mordell"
+git = "https://github.com/AxiomMath/Mordell"
+rev = "82a30cb7857f6e3cfdb1be91f5533c0ccb57d493"
+
 [[lean_lib]]
 name = "GrothendieckArchivesProofs"
 [lean_lib.leanOptions]
@@ -45,12 +53,6 @@ autoImplicit = false
 relaxedAutoImplicit = false
 maxSynthPendingDepth = 3
 weak.linter.mathlibStandardSet = true
-
-# Files copied unchanged from AxiomMath/Mordell at 82a30cb (Apache-2.0, listed in NOTICE), with
-# the options of Mordell's own lakefile that affect elaboration. Warnings stay errors, as above.
-[[lean_lib]]
-name = "Mordell"
-leanOptions = { autoImplicit = false, relaxedAutoImplicit = false, maxSynthPendingDepth = 3 }
 
 # Files copied from AxiomMath/MMP at 1f9ade3 (Apache-2.0, listed in NOTICE; one is ported), with
 # the options of MMP's own lakefile that affect elaboration. Warnings stay errors, as above.
