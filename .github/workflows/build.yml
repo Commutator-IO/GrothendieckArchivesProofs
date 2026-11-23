@@ -123,6 +123,12 @@ jobs:
       # more memory than one. Each check's log is printed in its own group once all have finished
       # (failed ones first, expanded by GitHub's annotations); the step fails if any failed.
       #
+      # The `.olean*` files (~12 GB) are read once beforehand, in large sequential reads. Without
+      # it, five processes fault the same mapped files in small random pieces, the data disk hits
+      # its IOPS limit (500 on StandardSSD) and the checks took 25 minutes in parallel, on an idle
+      # CPU (measured 2026-11-23). The job's `.lake` is a fresh reflink copy, so the page cache
+      # left by the store or by an earlier job does not count: this read takes ~20 s.
+      #
       # - axioms (issue #31): every constant of this repository depends only on propext,
       #   Classical.choice and Quot.sound, through Mathlib, Stacks and the copied files (no
       #   sorryAx, no added axiom).
@@ -145,6 +151,10 @@ jobs:
           LIBS="GrothendieckArchivesProofs Grothendieck Buffalo OpenProblems Mordell MMP LeanPool"
           LOGS="$RUNNER_TEMP/checks"
           rm -rf "$LOGS" && mkdir -p "$LOGS"
+
+          start=$SECONDS
+          find .lake -name '*.olean*' -print0 | xargs -0 -P 8 -n 200 cat >/dev/null
+          echo "Read the .olean files into the page cache in $((SECONDS - start)) s"
 
           axioms() {
             lake env lean --run scripts/CheckAxioms.lean GrothendieckArchivesProofs $LIBS
