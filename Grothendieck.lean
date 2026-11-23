@@ -134,6 +134,7 @@ public import Grothendieck.Order.Folder156_6
 public import Grothendieck.Order.Folder156_7
 public import Grothendieck.Order.Folder156_8
 public import Grothendieck.Order.Folder156_9
+public import Grothendieck.Order.Folder161_2Join
 public import Grothendieck.RepresentationTheory.Folder10
 public import Grothendieck.RepresentationTheory.Folder123Kostant
 public import Grothendieck.RepresentationTheory.Folder123KostantClassical
