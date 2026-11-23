@@ -58,9 +58,10 @@ The proof is a computation checked by the kernel (`decide +kernel`, no `native_d
 on three facts proved in general:
 
 * every involution is conjugate to `(0 1)(2 3) ⋯ (2j−2 2j−1)` for `2j` its number of moved
-  darts (`exists_conj_of_mul_self`, through `Equiv.Perm.isConj_iff_cycleType_eq`), so every map
-  is isomorphic to one of the candidates `cands n`: all `n!` rotations, with one of these
-  involutions (2880 candidates for `n = 6`);
+  darts (`exists_conj_of_mul_self`, through `Equiv.Perm.isConj_iff_cycleType_eq` and
+  `Equiv.Perm.cycleType_of_pow_prime_eq_one`), so every map is isomorphic to one of the
+  candidates `cands n`: all `n!` rotations, with one of these involutions (2880 candidates for
+  `n = 6`);
 * the numbers of cycles and connectedness are read on tables (`numCycles_eq`, through the least
   dart of each cycle; `connected_iff`, through the sets of darts stable under `σ` and `α`);
 * in a connected map, a homeomorphism is determined by the image of one dart: every dart is
@@ -173,9 +174,7 @@ theorem Iso.homeo {M M' : DartMap n} (h : M.Iso M') : M.Homeo M' := Or.inl h
 /-! ### Invariance -/
 
 theorem numCycles_conj (τ f : Perm (Fin n)) : numCycles (τ * f * τ⁻¹) = numCycles f :=
-  Nat.card_congr (Quotient.congr τ.symm fun a b => by
-    change SameCycle _ a b ↔ SameCycle _ _ _
-    rw [sameCycle_conj]; rfl)
+  Nat.card_congr (Quotient.congr τ.symm fun _ _ => sameCycle_conj)
 
 /-- A set of darts stable under `σ` and `α`. -/
 def IsClosed (M : DartMap n) (S : Set (Fin n)) : Prop := ∀ x ∈ S, M.σ x ∈ S ∧ M.α x ∈ S
@@ -192,10 +191,8 @@ theorem IsClosed.mem_closure {M : DartMap n} {S : Set (Fin n)} (hS : M.IsClosed 
     ∀ x ∈ S, g x ∈ S := by
   induction hg using Subgroup.closure_induction with
   | mem g hg =>
-    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hg
     rcases hg with rfl | rfl
-    · exact fun x hx => (hS x hx).1
-    · exact fun x hx => (hS x hx).2
+    exacts [fun x hx => (hS x hx).1, fun x hx => (hS x hx).2]
   | one => simp
   | mul g h _ _ hg hh => intro x hx; simpa [Perm.mul_apply] using hg _ (hh x hx)
   | inv g _ hg => exact inv_mem_of_mapsTo hg
@@ -207,25 +204,17 @@ theorem connected_iff (M : DartMap n) :
     obtain ⟨g, rfl⟩ := h.exists_smul_eq x y
     exact hS.mem_closure g.2 x hx
   · intro h
-    refine ⟨fun x y => ?_⟩
-    have hσ : M.σ ∈ Subgroup.closure ({M.σ, M.α} : Set (Perm (Fin n))) :=
-      Subgroup.subset_closure (by simp)
-    have hα : M.α ∈ Subgroup.closure ({M.σ, M.α} : Set (Perm (Fin n))) :=
-      Subgroup.subset_closure (by simp)
-    refine h {z | ∃ g : Subgroup.closure ({M.σ, M.α} : Set (Perm (Fin n))), g • x = z}
-      (fun z ⟨g, hg⟩ => ⟨⟨⟨M.σ, hσ⟩ * g, by rw [mul_smul, hg]; rfl⟩,
-        ⟨⟨M.α, hα⟩ * g, by rw [mul_smul, hg]; rfl⟩⟩) x ⟨1, one_smul _ _⟩ y
+    refine ⟨fun x y => h {z | ∃ g : Subgroup.closure ({M.σ, M.α} : Set (Perm (Fin n))), g • x = z}
+      (fun z ⟨g, hg⟩ => ⟨⟨⟨M.σ, Subgroup.subset_closure (by simp)⟩ * g, by rw [mul_smul, hg]; rfl⟩,
+        ⟨⟨M.α, Subgroup.subset_closure (by simp)⟩ * g, by rw [mul_smul, hg]; rfl⟩⟩) x
+      ⟨1, one_smul _ _⟩ y⟩
 
 theorem Iso.connected {M M' : DartMap n} (h : M.Iso M') (hM : M.Connected) : M'.Connected := by
   obtain ⟨τ, h1, h2⟩ := h
   rw [connected_iff] at hM ⊢
   intro S hS x hx y
-  have hT : M.IsClosed {z | τ z ∈ S} := fun z hz => by
-    have h1' := (hS _ hz).1
-    have h2' := (hS _ hz).2
-    rw [← h1] at h1'
-    rw [← h2] at h2'
-    exact ⟨by simpa using h1', by simpa using h2'⟩
+  have hT : M.IsClosed {z | τ z ∈ S} := fun z hz =>
+    ⟨by simpa [← h1] using (hS _ hz).1, by simpa [← h2] using (hS _ hz).2⟩
   simpa using hM _ hT (τ⁻¹ x) (by simpa using hx) (τ⁻¹ y)
 
 theorem Iso.isSpherical {M M' : DartMap n} (h : M.Iso M') (hM : M.IsSpherical) :
@@ -242,20 +231,10 @@ end DartMap
 
 theorem cycleType_of_mul_self {f : Perm (Fin n)} (hf : f * f = 1) :
     f.cycleType = Multiset.replicate (#f.support / 2) 2 ∧ #f.support = 2 * (#f.support / 2) := by
-  have h2 : ∀ k ∈ f.cycleType, k = 2 := by
-    intro k hk
-    have hd : k ∣ 2 := (dvd_of_mem_cycleType hk).trans
-      (orderOf_dvd_of_pow_eq_one (by rw [sq]; exact hf))
-    have := two_le_of_mem_cycleType hk
-    have := Nat.le_of_dvd (by norm_num) hd
-    omega
-  have hrep : f.cycleType = Multiset.replicate (Multiset.card f.cycleType) 2 :=
-    Multiset.eq_replicate_card.2 h2
+  have hrep := cycleType_of_pow_prime_eq_one (p := 2) (by rw [sq]; exact hf)
   have hs := sum_cycleType f
   rw [hrep, Multiset.sum_replicate, smul_eq_mul] at hs
-  refine ⟨?_, ?_⟩
-  · rw [hrep, ← hs]; congr 1; omega
-  · omega
+  exact ⟨by rw [hrep, ← hs]; congr 1; omega, by omega⟩
 
 theorem exists_conj_of_mul_self {f g : Perm (Fin n)} (hf : f * f = 1) (hg : g * g = 1)
     (h : #f.support = #g.support) : ∃ τ : Perm (Fin n), τ * f * τ⁻¹ = g :=
@@ -444,10 +423,7 @@ theorem wordPerm_mem (σ α : Perm (Fin n)) (w : List Bool) :
     wordPerm σ α w ∈ Subgroup.closure ({σ, α} : Set (Perm (Fin n))) := by
   induction w with
   | nil => exact one_mem _
-  | cons b w ih =>
-    cases b
-    · exact mul_mem (Subgroup.subset_closure (by simp)) ih
-    · exact mul_mem (Subgroup.subset_closure (by simp)) ih
+  | cons b w ih => cases b <;> exact mul_mem (Subgroup.subset_closure (by simp)) ih
 
 theorem evalW_conj {τ : Fin n → Fin n} {s a s' a' : Fin n → Fin n}
     (hs : ∀ x, τ (s x) = s' (τ x)) (ha : ∀ x, τ (a x) = a' (τ x)) (w : List Bool) (x : Fin n) :
@@ -752,7 +728,7 @@ theorem card_isoVia [NeZero n] {σ α σ' α' : Perm (Fin n)} {W : List (Option 
   · rw [transport_eq hW τ.2.1 τ.2.2]; exact isoB_tab τ.2.1 τ.2.2
   · rintro ⟨τ, h1, h2⟩ ⟨τ', h1', h2'⟩ h
     have := congrArg app (transport_eq hW h1 h2)
-    rw [show τ 0 = τ' 0 from congrArg Subtype.val h, transport_eq hW h1' h2', app_tab,
+    rw [Subtype.mk.inj h, transport_eq hW h1' h2', app_tab,
       app_tab] at this
     exact Subtype.ext (Equiv.ext fun x => (congrFun this x).symm)
   · rintro ⟨d, hd⟩
@@ -777,6 +753,10 @@ theorem fullAutOrder_eq [NeZero n] {r : Rep n} (hr : r.ok = true) :
   simp only [DartMap.IsoVia]
   rw [card_isoVia hv h0, card_isoVia hv h0, ← hs, ← ha, ← hm]
   rfl
+
+theorem map_fullAutOrder [NeZero n] {reps : List (Rep n)} (hok : reps.all Rep.ok = true) :
+    reps.map (fun r => r.toMap.fullAutOrder) = reps.map autB :=
+  List.map_congr_left fun r hr => fullAutOrder_eq (List.all_eq_true.1 hok r hr)
 
 /-! ### The tables -/
 
@@ -896,33 +876,28 @@ theorem all_of_chunks {α : Type*} (L : List α) (p : α → Bool) (m K : ℕ)
 
 /-- 1 spherical map with 1 dart, up to homeomorphism. -/
 @[montpellier "138, 113–119"]
-theorem card_census_one : Nat.card (Census 1) = 1 :=
-  card_census reps1 (by decide +kernel) (by decide +kernel) (by decide +kernel)
-    (by decide +kernel)
+theorem card_census_one : Nat.card (Census 1) = 1 := by
+  apply card_census reps1 <;> decide +kernel
 
 /-- 3 spherical maps with 2 darts, up to homeomorphism. -/
 @[montpellier "138, 113–119"]
-theorem card_census_two : Nat.card (Census 2) = 3 :=
-  card_census reps2 (by decide +kernel) (by decide +kernel) (by decide +kernel)
-    (by decide +kernel)
+theorem card_census_two : Nat.card (Census 2) = 3 := by
+  apply card_census reps2 <;> decide +kernel
 
 /-- 3 spherical maps with 3 darts, up to homeomorphism. -/
 @[montpellier "138, 113–119"]
-theorem card_census_three : Nat.card (Census 3) = 3 :=
-  card_census reps3 (by decide +kernel) (by decide +kernel) (by decide +kernel)
-    (by decide +kernel)
+theorem card_census_three : Nat.card (Census 3) = 3 := by
+  apply card_census reps3 <;> decide +kernel
 
 /-- 9 spherical maps with 4 darts, up to homeomorphism. -/
 @[montpellier "138, 113–119"]
-theorem card_census_four : Nat.card (Census 4) = 9 :=
-  card_census reps4 (by decide +kernel) (by decide +kernel) (by decide +kernel)
-    (by decide +kernel)
+theorem card_census_four : Nat.card (Census 4) = 9 := by
+  apply card_census reps4 <;> decide +kernel
 
 /-- 13 spherical maps with 5 darts, up to homeomorphism. -/
 @[montpellier "138, 113–119"]
-theorem card_census_five : Nat.card (Census 5) = 13 :=
-  card_census reps5 (by decide +kernel) (by decide +kernel) (by decide +kernel)
-    (by decide +kernel)
+theorem card_census_five : Nat.card (Census 5) = 13 := by
+  apply card_census reps5 <;> decide +kernel
 
 theorem cover_six_0 :
     (chunk (cands 6) 240 0).all (fun p => coverB reps6 p.1 p.2) = true := by
@@ -997,49 +972,37 @@ theorem census_counts :
 @[montpellier "138, 113–119"]
 theorem fullAutOrder_reps1 :
     reps1.map (fun r => r.toMap.fullAutOrder) = [2] := by
-  rw [List.map_congr_left fun r hr =>
-    fullAutOrder_eq (List.all_eq_true.1 (by decide +kernel : reps1.all Rep.ok = true) r hr)]
-  decide +kernel
+  rw [map_fullAutOrder (by decide +kernel)]; decide +kernel
 
 /-- The orders of the full automorphism groups of the maps with 2 darts, in the order of `reps2`. -/
 @[montpellier "138, 113–119"]
 theorem fullAutOrder_reps2 :
     reps2.map (fun r => r.toMap.fullAutOrder) = [4, 4, 4] := by
-  rw [List.map_congr_left fun r hr =>
-    fullAutOrder_eq (List.all_eq_true.1 (by decide +kernel : reps2.all Rep.ok = true) r hr)]
-  decide +kernel
+  rw [map_fullAutOrder (by decide +kernel)]; decide +kernel
 
 /-- The orders of the full automorphism groups of the maps with 3 darts, in the order of `reps3`. -/
 @[montpellier "138, 113–119"]
 theorem fullAutOrder_reps3 :
     reps3.map (fun r => r.toMap.fullAutOrder) = [6, 2, 2] := by
-  rw [List.map_congr_left fun r hr =>
-    fullAutOrder_eq (List.all_eq_true.1 (by decide +kernel : reps3.all Rep.ok = true) r hr)]
-  decide +kernel
+  rw [map_fullAutOrder (by decide +kernel)]; decide +kernel
 
 /-- The orders of the full automorphism groups of the maps with 4 darts, in the order of `reps4`. -/
 @[montpellier "138, 113–119"]
 theorem fullAutOrder_reps4 :
     reps4.map (fun r => r.toMap.fullAutOrder) = [8, 2, 4, 4, 2, 2, 4, 8, 4] := by
-  rw [List.map_congr_left fun r hr =>
-    fullAutOrder_eq (List.all_eq_true.1 (by decide +kernel : reps4.all Rep.ok = true) r hr)]
-  decide +kernel
+  rw [map_fullAutOrder (by decide +kernel)]; decide +kernel
 
 /-- The orders of the full automorphism groups of the maps with 5 darts, in the order of `reps5`. -/
 @[montpellier "138, 113–119"]
 theorem fullAutOrder_reps5 :
     reps5.map (fun r => r.toMap.fullAutOrder) = [10, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2] := by
-  rw [List.map_congr_left fun r hr =>
-    fullAutOrder_eq (List.all_eq_true.1 (by decide +kernel : reps5.all Rep.ok = true) r hr)]
-  decide +kernel
+  rw [map_fullAutOrder (by decide +kernel)]; decide +kernel
 
 /-- The orders of the full automorphism groups of the maps with 6 darts, in the order of `reps6`. -/
 @[montpellier "138, 113–119"]
 theorem fullAutOrder_reps6 :
     reps6.map (fun r => r.toMap.fullAutOrder) = [12, 2, 2, 2, 4, 4, 1, 2, 6, 4, 4, 2, 1, 2, 1, 2, 2,
       2, 2, 1, 2, 2, 4, 2, 2, 4, 2, 4, 4, 2, 4, 4, 4, 12, 1, 2, 2, 2, 6, 4, 12, 4] := by
-  rw [List.map_congr_left fun r hr =>
-    fullAutOrder_eq (List.all_eq_true.1 (by decide +kernel : reps6.all Rep.ok = true) r hr)]
-  decide +kernel
+  rw [map_fullAutOrder (by decide +kernel)]; decide +kernel
 
 end Grothendieck.Folder138
