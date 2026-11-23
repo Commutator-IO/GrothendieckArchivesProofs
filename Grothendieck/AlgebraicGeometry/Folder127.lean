@@ -67,9 +67,7 @@ theorem injective_of_epi_spec {A A' : Type u} [CommRing A] [CommRing A'] [Algebr
   have hcomp : ev a ≫ CommRingCat.ofHom (algebraMap A A') =
       ev b ≫ CommRingCat.ofHom (algebraMap A A') := by
     ext1
-    apply Polynomial.ringHom_ext
-    · intro c; simp [ev]
-    · simp [ev, hab]
+    exact Polynomial.ringHom_ext (fun c ↦ by simp [ev]) (by simp [ev, hab])
   have hspec : Spec.map (ev a) = Spec.map (ev b) := by
     rw [← cancel_epi (Spec.map (CommRingCat.ofHom (algebraMap A A'))), ← Spec.map_comp,
       ← Spec.map_comp, hcomp]
@@ -88,31 +86,22 @@ theorem nonFlatDescent_of_injective {A A' M N : Type u} [CommRing A] [IsArtinian
   set G := LinearMap.range φ
   let p := G.mkQ.baseChange A'
   have hp : Function.Surjective p := LinearMap.lTensor_surjective A' G.mkQ_surjective
-  have hφ : G.subtype ∘ₗ φ.rangeRestrict = φ := LinearMap.ext fun _ ↦ rfl
   have hker : LinearMap.ker p = LinearMap.range (φ.baseChange A') := by
     ext x
     rw [LinearMap.mem_ker, LinearMap.mem_range]
-    change G.mkQ.lTensor A' x = 0 ↔ _
-    rw [lTensor_exact A' (LinearMap.exact_subtype_mkQ G) G.mkQ_surjective x]
-    constructor
-    · rintro ⟨y, rfl⟩
-      obtain ⟨z, rfl⟩ := LinearMap.lTensor_surjective A' φ.surjective_rangeRestrict y
-      refine ⟨z, ?_⟩
-      rw [← LinearMap.comp_apply, ← LinearMap.lTensor_comp, hφ]
-      rfl
-    · rintro ⟨z, rfl⟩
-      refine ⟨φ.rangeRestrict.lTensor A' z, ?_⟩
-      rw [← LinearMap.comp_apply, ← LinearMap.lTensor_comp, hφ]
-      rfl
+    refine (lTensor_exact A' (LinearMap.exact_subtype_mkQ G) G.mkQ_surjective x).trans ?_
+    refine ⟨fun ⟨y, hy⟩ ↦ ?_, fun ⟨z, hz⟩ ↦ ⟨φ.rangeRestrict.lTensor A' z, ?_⟩⟩
+    · obtain ⟨z, rfl⟩ := LinearMap.lTensor_surjective A' φ.surjective_rangeRestrict y
+      exact ⟨z, by rw [← hy, ← LinearMap.comp_apply, ← LinearMap.lTensor_comp]; rfl⟩
+    · rw [← hz, ← LinearMap.comp_apply, ← LinearMap.lTensor_comp]; rfl
   have : Module.Flat A' (A' ⊗[A] (N ⧸ G)) :=
     flat_of_surjective_of_ker_inf_smul_top_le p hp fun I ↦ by
       rw [hker]
       exact inf_smul_top_le_of_injective_baseChange _ I (huniv (A' ⧸ I))
   have : Module.Flat A (N ⧸ G) := flat_of_flat_baseChange_of_isArtinianRing hinj
-  refine ⟨flat_of_flat_of_flat_cokernel G.injective_subtype (LinearMap.exact_subtype_mkQ G)
-    G.mkQ_surjective, fun R'' _ _ ↦ ?_⟩
-  exact lTensor_injective_of_flat_cokernel G.injective_subtype (LinearMap.exact_subtype_mkQ G)
-    G.mkQ_surjective R''
+  have hex := LinearMap.exact_subtype_mkQ G
+  exact ⟨flat_of_flat_of_flat_cokernel G.injective_subtype hex G.mkQ_surjective, fun R'' _ _ ↦
+    lTensor_injective_of_flat_cokernel G.injective_subtype hex G.mkQ_surjective R''⟩
 
 /-- **`127-non-flat-descent-artinian-epimorphism`** (folder 127, pp. 2–3, Lemma 1.3), in the affine
 case: the statement `NonFlatDescentArtinian` holds. The folder states the lemma without proof.
@@ -120,9 +109,8 @@ The finiteness of `A → A'` is not used, and the epimorphism only through the i
 `A → A'` (`nonFlatDescent_of_injective`). -/
 @[montpellier "127, 2–3"]
 theorem nonFlatDescentArtinian : NonFlatDescentArtinian.{u} := by
-  intro A B M N _ _ _ _ _ _ _ _ _ _ _ φ g hA hset A' _ _ _ hepi hsol
-  have : IsArtinianRing A := hA
-  have : Module.Flat A N := hset.2.2.2.2
+  intro A B M N _ _ _ _ _ _ _ _ _ _ _ φ g _ hset A' _ _ _ hepi hsol
+  have := hset.2.2.2.2
   exact nonFlatDescent_of_injective (φ.restrictScalars A) (injective_of_epi_spec hepi) hsol.2
 
 end Grothendieck.Folder127
