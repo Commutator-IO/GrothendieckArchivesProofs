@@ -92,6 +92,7 @@ public import Grothendieck.CategoryTheory.IhesSGA6_2_3Db
 public import Grothendieck.CategoryTheory.IhesSGA6_2_3Euler
 public import Grothendieck.CategoryTheory.IhesSGA6_2_3Verdier
 public import Grothendieck.CategoryTheory.IhesSGA6_2_4
+public import Grothendieck.Combinatorics.Folder138
 public import Grothendieck.Combinatorics.Folder148
 public import Grothendieck.Combinatorics.Folder148Chart
 public import Grothendieck.Combinatorics.Folder152
