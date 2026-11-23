@@ -122,12 +122,7 @@ theorem odd_converse {p : V →ₗ[K] W} {q : W →ₗ[K] U} {L : V →ₗ[K] U}
     {ZV : Submodule K V} {ZW : Submodule K W} {ZU : Submodule K U}
     (hp : ∀ x ∈ ZV, p x ∈ ZW) (hq : ∀ y ∈ ZW, q y ∈ ZU) (hinj : Function.Injective L)
     (hA : ∀ z ∈ ZU, ∃ x ∈ ZV, L x = z) :
-    (∀ x, p x ∈ ZW → x ∈ ZV) ∧ (∀ z ∈ ZU, ∃ y ∈ ZW, q y = z) := by
-  refine ⟨fun x hx => ?_, fun z hz => ?_⟩
-  · obtain ⟨x', hx', he⟩ := hA (L x) (by rw [hL]; exact hq _ hx)
-    rwa [hinj he] at hx'
-  · obtain ⟨x, hx, rfl⟩ := hA z hz
-    exact ⟨p x, hp x hx, (hL x).symm⟩
+    (∀ x, p x ∈ ZW → x ∈ ZV) ∧ (∀ z ∈ ZU, ∃ y ∈ ZW, q y = z) := by grind
 
 /-- Without the splitting, `n` odd: `L = q ∘ p` bijective, `p` injective, `q` onto, `A′⁰` and `A″⁰`
 hold, the maps respect algebraic classes, and `A⁰` fails. Here `V = U = ℚ`, `W = ℚ²`,

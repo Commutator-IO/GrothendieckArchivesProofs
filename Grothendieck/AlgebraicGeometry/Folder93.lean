@@ -122,10 +122,7 @@ variable {R : Type*} [CommRing R]
 
 local notation "D" => Polynomial.hasseDeriv
 
-lemma D_mul_one (f g : R[X]) : D 1 (f * g) = D 1 f * g + f * D 1 g := by
-  rw [hasseDeriv_mul]
-  simp [Finset.Nat.antidiagonal_succ]
-  ring
+lemma D_mul_one (f g : R[X]) : D 1 (f * g) = D 1 f * g + f * D 1 g := by simp
 
 lemma D_mul_two (f g : R[X]) :
     D 2 (f * g) = D 2 f * g + D 1 f * D 1 g + f * D 2 g := by

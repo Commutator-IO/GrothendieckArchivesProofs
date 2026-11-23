@@ -1423,10 +1423,7 @@ theorem two_ne_zero_of_lt (hn : 2 < n) : (2 : ZMod n) ≠ 0 := by
   omega
 
 theorem pm_one_mul {d x ν : ZMod n} (hd : d = 1 ∨ d = -1) :
-    (d * x = ν ∨ d * x = -ν) ↔ (x = ν ∨ x = -ν) := by
-  rcases hd with rfl | rfl
-  · simp
-  · simp only [neg_one_mul, neg_eq_iff_eq_neg, neg_neg]; tauto
+    (d * x = ν ∨ d * x = -ν) ↔ (x = ν ∨ x = -ν) := by grind
 
 /-- An injective map of `Z/n` (`n ≥ 3`) preserving the cycle `k ~ k + 1` is
 `k ↦ ± k + c`: the automorphisms of the `n`-gon are dihedral. -/

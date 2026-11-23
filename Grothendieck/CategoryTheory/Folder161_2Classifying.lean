@@ -213,20 +213,7 @@ variable {A}
 
 /-- A quasi-inverse is unique: from `a² y = a`, `y² a = y`, `a² z = a`, `z² a = z`, `y = z`. -/
 theorem quasiInverse_unique {a y z : A} (hy₁ : a * a * y = a) (hy₂ : y * y * a = y)
-    (hz₁ : a * a * z = a) (hz₂ : z * z * a = z) : y = z := by
-  have hy : y = y * a * z := by
-    calc y = y * y * a := hy₂.symm
-      _ = y * y * (a * a * z) := by rw [hz₁]
-      _ = y * y * a * a * z := by ring
-      _ = y * a * z := by rw [hy₂]
-  have hz : z = z * a * y := by
-    calc z = z * z * a := hz₂.symm
-      _ = z * z * (a * a * y) := by rw [hy₁]
-      _ = z * z * a * a * y := by ring
-      _ = z * a * y := by rw [hz₂]
-  calc y = y * a * z := hy
-    _ = z * a * y := by ring
-    _ = z := hz.symm
+    (hz₁ : a * a * z = a) (hz₂ : z * z * a = z) : y = z := by grind
 
 /-- From any `b` with `a² b = a`, `a b²` is a quasi-inverse of `a`. -/
 theorem isQuasiInverse_of_mul {a b : A} (h : a * a * b = a) :

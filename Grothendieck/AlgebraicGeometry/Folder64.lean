@@ -78,12 +78,7 @@ lemma quad_facts (hi : i ^ 2 = -1) (h2 : (2 : K) ≠ 0) :
     fun h => h2 (by linear_combination hi + (1 - i) * h), fun h => h2 (by linear_combination h)⟩
 
 lemma quad_distinct (hi : i ^ 2 = -1) (h2 : (2 : K) ≠ 0) :
-    (0 : K) ∉ ({1, i, -i} : Finset K) ∧ (1 : K) ∉ ({i, -i} : Finset K) ∧ i ≠ -i := by
-  obtain ⟨h0, h1, hm, -⟩ := quad_facts hi h2
-  have f1 : (1 : K) ≠ -i := fun h => hm (by linear_combination h)
-  have f2 : (0 : K) ≠ -i := fun h => h0 (by linear_combination h)
-  have hii : i ≠ -i := fun h => h2 (by linear_combination 2 * hi - i * h)
-  simp [f1, f2, h0.symm, h1.symm, hii]
+    (0 : K) ∉ ({1, i, -i} : Finset K) ∧ (1 : K) ∉ ({i, -i} : Finset K) ∧ i ≠ -i := by grind
 
 lemma card_quad (hi : i ^ 2 = -1) (h2 : (2 : K) ≠ 0) : (quad i).card = 4 := by
   obtain ⟨n0, n1, hii⟩ := quad_distinct hi h2

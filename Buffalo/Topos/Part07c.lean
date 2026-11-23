@@ -153,14 +153,7 @@ def ringCoconeIsColimit : IsColimit (ringCocone n hn) where
     rfl
 
 /-- The idempotents of `ℤ`: `ℤ` is connected. -/
-theorem int_idem (a : ℤ) : IsIdempotentElem a ↔ a = 0 ∨ a = 1 := by
-  constructor
-  · intro h
-    have : a * (a - 1) = 0 := by rw [mul_sub, h.eq, mul_one, sub_self]
-    rcases mul_eq_zero.mp this with h0 | h0
-    · exact Or.inl h0
-    · exact Or.inr (by omega)
-  · rintro (rfl | rfl) <;> rfl
+theorem int_idem (a : ℤ) : IsIdempotentElem a ↔ a = 0 ∨ a = 1 := by simp
 
 /-- The idempotents of `ℤⁿ`. -/
 theorem pi_idem (x : Fin n → ℤ) : IsIdempotentElem x ↔ ∀ i, x i = 0 ∨ x i = 1 := by
