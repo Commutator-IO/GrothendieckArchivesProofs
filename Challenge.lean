@@ -487,6 +487,10 @@ open CategoryTheory Limits
 
 universe w v u u₁ u₂
 
+-- `Folder126` imports `Mathlib.Combinatorics.Quiver.ReflQuiver` for its own statement; here the
+-- arrows of a category go through `CategoryStruct.toQuiver`, as in `Solution`.
+attribute [-instance] CategoryTheory.catToReflQuiver
+
 namespace Challenge.Folder161_2
 
 /-- *Page 33. « Un foncteur `U : A → B` admettant un adjoint à gauche `F` est monadique si `U`
@@ -551,6 +555,10 @@ the poset `ℤ ⊕ ℤ` — each right adjoint to the previous one, none of them
 open CategoryTheory Limits
 
 universe v u₁ u₂
+
+-- `Folder126` imports `Mathlib.Combinatorics.Quiver.ReflQuiver` for its own statement; here the
+-- arrows of a category go through `CategoryStruct.toQuiver`, as in `Solution`.
+attribute [-instance] CategoryTheory.catToReflQuiver
 
 namespace Challenge.Folder19
 
