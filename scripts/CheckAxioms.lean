@@ -1,4 +1,6 @@
-import Lean
+module
+
+public meta import Lean
 
 /-!
 # Axiom check
@@ -24,6 +26,8 @@ comparator between a trusted statement file and the proof (issue #31).
 One traversal of the whole dependency graph decides pass or fail; the per-constant report,
 which is slower, runs only on failure.
 -/
+
+public meta section
 
 open Lean
 

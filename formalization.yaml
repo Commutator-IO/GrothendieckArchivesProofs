@@ -1,0 +1,252 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Lean proofs of Grothendieck's archives (Montpellier notes and Buffalo lectures)"
+  description: >-
+    Lean 4 proofs of statements read in two archives of Alexandre Grothendieck: the working notes
+    kept at the University of Montpellier, in the modernised readings of the edition
+    grothendieck-project and of the paper « Grothendieck Montpellier. Énoncés des lectures
+    modernisées démontrés. » (Hexagon 2611.00125), and the lectures given at Buffalo in 1973. The
+    library covers algebraic geometry, commutative algebra, category and topos theory, homotopy
+    theory, combinatorics and geometry, built on Mathlib and on AxiomMath's Stacks Project in
+    Lean. The compared Challenge has 41 statements, from 31 folders of the notes and from
+    problem 3 of the Buffalo lectures, each written with Mathlib alone.
+  authors:
+    - name: "Michel Hua"
+      orcid: "0009-0002-8304-0683"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - name: "Michel Hua"
+      orcid: "0009-0002-8304-0683"
+
+classification:
+  arxiv: ["math.AG", "math.CT", "math.AC", "math.CO", "math.HO"]
+  msc2020: ["03B35", "14-03", "18-03", "52C30", "01A60"]
+
+sources:
+  - title: "Grothendieck Montpellier. Énoncés des lectures modernisées démontrés."
+    authors:
+      - "Michel Hua"
+    id: "https://hexagonmath.org/2611.00125v2"
+    type: "preprint"
+    location: "https://hexagonmath.org/2611.00125v2"
+    relationship: "formalizes"
+    license: "CC-BY-4.0"
+    author_endorsement: "participated"
+  - title: "Working notes of Alexandre Grothendieck (University of Montpellier)"
+    authors:
+      - "Alexandre Grothendieck"
+    id: "https://grothendieck.umontpellier.fr/"
+    type: "manuscript"
+    location: "https://grothendieck.umontpellier.fr/"
+    relationship: "independently-proves"
+    note: "The folders state the results; the proofs are the paper's. Each section of Challenge.lean gives the folder and the page of its statements."
+    license: "unknown"
+    author_endorsement: "n/a"
+
+status:
+  scope: >-
+    The library holds the Lean proofs of the paper, one file per folder of the working notes in
+    topic directories (Grothendieck/), the entries of the Buffalo lectures (Buffalo/), the open
+    problems of both stated as definitions (OpenProblems/), and the general lemmas they use
+    (LeanPool/). The Challenge (Challenge.lean) states 41 of its theorems with Mathlib alone;
+    Solution proves the same statements through the library. Every build fails on any warning,
+    hence on any sorry outside Challenge.lean, and checks that every constant uses only the three
+    standard axioms.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude Opus 5.5", "Claude Sonnet 5.5"]
+      framework: "Claude Code"
+      tool_setup: "Claude Code with the Lean language server, on Lean 4, Mathlib and AxiomMath's Stacks; the proofs were written by the model and checked by Lean."
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "subscription-based"
+        hardware: "local machine and cloud sessions"
+      prompting_notes: "n/a"
+  spend_usd: "subscription-based"
+  notes: "The statements and the proof strategies were set by the author; the Lean text was written by a language model under his direction and kept only once Lean accepted it."
+
+fidelity:
+  divergences: "The statements are the modernised readings of the edition, not the manuscripts' words; where a folder speaks of an object Mathlib does not define, the Challenge states the property it uses (the section of Challenge.lean says so)."
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "none"
+  notes: "The Challenge statements are those of the paper, compared with the readings by the author; no independent mathematical review."
+
+alignment:
+  namespace: "Grothendieck"
+  statements:
+    - source: "Buffalo, problem 3"
+      lean: "Buffalo.ProblemThree.not_isPresentable"
+      module: "Buffalo.ProblemThree"
+      status: "proved"
+    - source: "Folder 1, page 124"
+      lean: "Grothendieck.Folder1.corollaire3"
+      module: "Grothendieck.LinearAlgebra.Folder1"
+      status: "proved"
+    - source: "Folder 100, page 38"
+      lean: "Grothendieck.Folder100.Baire.exists_coheight_eq_one"
+      module: "Grothendieck.RingTheory.Folder100"
+      status: "proved"
+    - source: "Folder 101, pages 10–15"
+      lean: "Grothendieck.Folder101Ext.isAdicComplete_iff_ext_one"
+      module: "Grothendieck.AlgebraicGeometry.Folder101Ext"
+      status: "proved"
+    - source: "Folder 101, pages 10–15"
+      lean: "Grothendieck.Folder101DimTwo.not_nonempty_linearEquiv_dual"
+      module: "Grothendieck.AlgebraicGeometry.Folder101DimTwo"
+      status: "proved"
+    - source: "Folder 104, page 4"
+      lean: "Grothendieck.Folder104.globulaire_complexe"
+      module: "Grothendieck.CategoryTheory.Folder104"
+      status: "proved"
+    - source: "Folder 113, page 3"
+      lean: "Grothendieck.Folder113.enveloppe_libre"
+      module: "Grothendieck.CategoryTheory.Folder113"
+      status: "proved"
+    - source: "Folder 125"
+      lean: "Grothendieck.Folder125.etage1_iff_etage2"
+      module: "Grothendieck.AlgebraicGeometry.Folder125"
+      status: "proved"
+    - source: "Folder 125"
+      lean: "Grothendieck.Folder125.lemme_III18"
+      module: "Grothendieck.AlgebraicGeometry.Folder125"
+      status: "proved"
+    - source: "Folder 126, pages 17–23"
+      lean: "Grothendieck.Folder126Glue.radicial_etale_factorisation"
+      module: "Grothendieck.AlgebraicGeometry.Folder126Glue"
+      status: "proved"
+    - source: "Folder 128, page 23"
+      lean: "Grothendieck.Folder128.Infinitesimal.lemme2"
+      module: "Grothendieck.AlgebraicGeometry.Folder128"
+      status: "proved"
+    - source: "Folder 13, page 47"
+      lean: "Grothendieck.Folder13.tate"
+      module: "Grothendieck.AlgebraicGeometry.Folder13"
+      status: "proved"
+    - source: "Folder 136, pages 26–31"
+      lean: "Grothendieck.Folder136.binomial_shadow_existsUnique"
+      module: "Grothendieck.RingTheory.Folder136"
+      status: "proved"
+    - source: "Folder 145, pages 34–35"
+      lean: "Grothendieck.Folder145.dihedral_witness"
+      module: "Grothendieck.NumberTheory.Folder145"
+      status: "proved"
+    - source: "Folder 153, page 7"
+      lean: "Grothendieck.Folder153.pascal_det"
+      module: "Grothendieck.RingTheory.Folder153"
+      status: "proved"
+    - source: "Folder 153, page 7"
+      lean: "Grothendieck.Folder153.geom_not_finite_coaddition"
+      module: "Grothendieck.RingTheory.Folder153"
+      status: "proved"
+    - source: "Folder 16"
+      lean: "Grothendieck.Folder16.inverse_Lefschetz_algebrique"
+      module: "Grothendieck.AlgebraicGeometry.Folder16"
+      status: "proved"
+    - source: "Folder 16"
+      lean: "Grothendieck.Folder16.pseudo_inverse_unique"
+      module: "Grothendieck.AlgebraicGeometry.Folder16"
+      status: "proved"
+    - source: "Folder 161-2"
+      lean: "Grothendieck.Folder161_2.monadicite"
+      module: "Grothendieck.CategoryTheory.Folder161_2"
+      status: "proved"
+    - source: "Folder 161-2"
+      lean: "Grothendieck.Folder161_2.caracterisation_gabriel_ulmer"
+      module: "Grothendieck.CategoryTheory.Folder161_2"
+      status: "proved"
+    - source: "Folder 161-6, pages 4–14"
+      lean: "Grothendieck.Folder161_6.cos_two_pi_div_five"
+      module: "Grothendieck.Geometry.Folder161_6"
+      status: "proved"
+    - source: "Folder 19, pages 4, 14–15 and 80"
+      lean: "Grothendieck.Folder19.proposition_page80"
+      module: "Grothendieck.CategoryTheory.Folder19"
+      status: "proved"
+    - source: "Folder 19, pages 4, 14–15 and 80"
+      lean: "Grothendieck.Folder19.beck_iff"
+      module: "Grothendieck.CategoryTheory.Folder19"
+      status: "proved"
+    - source: "Folder 19, pages 4, 14–15 and 80"
+      lean: "Grothendieck.Folder19.gabriel_popescu"
+      module: "Grothendieck.CategoryTheory.Folder19"
+      status: "proved"
+    - source: "Folder 22"
+      lean: "Grothendieck.Folder22.lemme3_3"
+      module: "Grothendieck.RingTheory.Folder22"
+      status: "proved"
+    - source: "Folder 22"
+      lean: "Grothendieck.Folder22.no_derivation"
+      module: "Grothendieck.RingTheory.Folder22"
+      status: "proved"
+    - source: "Folder 39, pages 18–19"
+      lean: "Grothendieck.Folder39.preparation_adique"
+      module: "Grothendieck.RingTheory.Folder39"
+      status: "proved"
+    - source: "Folder 39, pages 18–19"
+      lean: "Grothendieck.Folder39.preparation_discrete"
+      module: "Grothendieck.RingTheory.Folder39"
+      status: "proved"
+    - source: "Folder 42, page 3"
+      lean: "Grothendieck.Folder42.isOpen_of_stableUnderGeneralization"
+      module: "Grothendieck.Topology.Folder42"
+      status: "proved"
+    - source: "Folder 5, page 4"
+      lean: "Grothendieck.Folder5.sub_one_mul_padicValNat_factorial_pow"
+      module: "Grothendieck.RingTheory.Folder5"
+      status: "proved"
+    - source: "Folder 53, page 9"
+      lean: "Grothendieck.Folder53.irreducibleSpace_of_stable"
+      module: "Grothendieck.AlgebraicGeometry.Folder53"
+      status: "proved"
+    - source: "Folder 55, page 13"
+      lean: "Grothendieck.Folder55.isNoetherianRing_of_tilde"
+      module: "Grothendieck.AlgebraicGeometry.Folder55"
+      status: "proved"
+    - source: "Folder 74, page 116"
+      lean: "Grothendieck.Folder74.p116"
+      module: "Grothendieck.Combinatorics.Folder74"
+      status: "proved"
+    - source: "Folder 77"
+      lean: "Grothendieck.Folder77.prop85_local"
+      module: "Grothendieck.RingTheory.Folder77"
+      status: "proved"
+    - source: "Folder 84, page 64"
+      lean: "Grothendieck.Folder84.identity_page64"
+      module: "Grothendieck.RingTheory.Folder84"
+      status: "proved"
+    - source: "Folder 85"
+      lean: "Grothendieck.Folder85.pow_five_eq"
+      module: "Grothendieck.Geometry.Folder85"
+      status: "proved"
+    - source: "Folder 88, page 14"
+      lean: "Grothendieck.Folder88.hyperbolique_iff"
+      module: "Grothendieck.Combinatorics.Folder88"
+      status: "proved"
+    - source: "Folder 90, page 9"
+      lean: "Grothendieck.Folder90.iInf_pow_eq_bot_iff"
+      module: "Grothendieck.AlgebraicGeometry.Folder90"
+      status: "proved"
+    - source: "Folder 91, page 19"
+      lean: "Grothendieck.Folder91HomUnramified.exists_unique_lift_of_surjective"
+      module: "Grothendieck.AlgebraicGeometry.Folder91HomUnramified"
+      status: "proved"
+    - source: "Folder 93"
+      lean: "Grothendieck.Folder93.PCurvature.jacobson"
+      module: "Grothendieck.AlgebraicGeometry.Folder93"
+      status: "proved"
+    - source: "Folder 94, page 7"
+      lean: "Grothendieck.Folder94.free_of_finrank_eq_of_isReduced"
+      module: "Grothendieck.RingTheory.Folder94"
+      status: "proved"
+
+acknowledgements: "Lean 4, Mathlib, AxiomMath's Stacks Project in Lean, and the Palomar template."

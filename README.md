@@ -67,13 +67,15 @@ RAM plus 12 GB of swap, without which it ran out of memory) and 34 minutes on 32
 (about twice that on the 16 cores the runner has since 2026-11-23). The compilation peaks at
 26 GB of RAM. Count about 40 GB of disk for `.lake`. The axiom check takes about 6 minutes.
 
-**Statements against proofs.** `Challenge/` holds trusted statements, written with Mathlib alone
-and left unproved; `Solution/` proves the same statements through the libraries above.
+**Statements against proofs.** `Challenge.lean` holds trusted statements, in one file that imports
+Mathlib alone, left unproved; `Solution/` proves the same statements through the libraries above.
 `lake comparator` (configured in `comparator.json`, sandboxed with
 [bubblewrap](https://github.com/containers/bubblewrap)) checks that each theorem of `Solution`
 has exactly the statement of `Challenge`, is accepted by the kernel and uses only the three
 axioms, so that no import of the proof can change what the statement means. There are 41 such
-statements, from 31 folders and from problem 3 of the Buffalo lectures.
+statements, from 31 folders and from problem 3 of the Buffalo lectures. `comparator.json` and
+`formalization.yaml` follow the rules of the [Palomar Registry](https://palomar-registry.org/)
+(a Challenge of at most 1,000 lines importing Mathlib alone, a `module` header in every Lean file).
 
 The continuous integration (`.github/workflows/build.yml`) runs these commands on every push
 to `main`, on a self-hosted runner that keeps `main`'s `.lake` between runs, and on a pull request
@@ -106,7 +108,7 @@ Mathlib (#39):
   library theorem is replaced by it, and the name stays, since the edition cites it.
 - **Kernel replay.** `.github/workflows/kernel-check.yml` replays every constant of the
   repository's own libraries through Lean's kernel, and runs `lake comparator --paranoid` (the
-  independent kernels) on the statements of `Challenge/`; it runs weekly and by hand.
+  independent kernels) on the statements of `Challenge.lean`; it runs weekly and by hand.
 
 The proofs were golfed in #69: unneeded `show` and `change` removed, one-call `simp`, `grind` and
 `omega` where they do not slow the build, and near-duplicate lemmas merged; open work is tracked in

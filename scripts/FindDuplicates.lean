@@ -1,4 +1,6 @@
-import Lean
+module
+
+public meta import Lean
 
 /-!
 # What this repository re-proves
@@ -39,6 +41,8 @@ library theorem, our theorems with the same statement as another of ours, and ou
 a library theorem applied to some of their hypotheses. A theorem whose proof is already a constant
 application of the library theorem it matches (an `alias`, or `L ..`) is marked « reuses ».
 -/
+
+public meta section
 
 open Lean Meta
 

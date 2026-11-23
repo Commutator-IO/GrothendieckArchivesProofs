@@ -134,7 +134,7 @@ jobs:
       #   sorryAx, no added axiom).
       # - definitions (issue #31, questions 1 and 3): the definitions outside Mathlib that the
       #   statements are written with, the list a human review has to cover; and the theorems of
-      #   Grothendieck/, Buffalo/ and OpenProblems/ stated with Mathlib alone, which Challenge/ can
+      #   Grothendieck/, Buffalo/ and OpenProblems/ stated with Mathlib alone, which Challenge.lean can
       #   restate. Both kept as artifacts.
       # - duplicates (issue #39, step 1b): the theorems whose statement Mathlib or the imported
       #   Stacks modules already have, or that follow from a library theorem applied to some of
@@ -143,7 +143,7 @@ jobs:
       #   of the Buffalo index and by EGA/SGA item, from the attributes of `Grothendieck/Attr.lean`
       #   and Stacks' `@[ega]`/`@[sga]`. Artifact; `docs/review/source-index.md` is refreshed by
       #   hand.
-      # - comparator (issue #31, question 3): each statement of Challenge/ (Mathlib alone,
+      # - comparator (issue #31, question 3): each statement of Challenge.lean (Mathlib alone,
       #   unproved) is proved with exactly that statement by Solution/, using only the three axioms
       #   (comparator.json). lake comparator sandboxes the build with bubblewrap.
       - name: Run the checks (axioms, definitions, duplicates, sources, comparator)

@@ -1,3 +1,7 @@
+module
+
+public meta import Lean
+
 /-
 Issue #31, question 4, in its affordable form: replay, through Lean's kernel, every constant of
 this repository's own libraries, on top of an environment that holds only their dependencies
@@ -8,7 +12,8 @@ an `unsafe` trick, a corrupted `.olean`), in minutes; it does not use an indepen
 Usage: `lake env lean --run scripts/ReplayOwn.lean <root module> <library prefix>...`, e.g.
 `lake env lean --run scripts/ReplayOwn.lean GrothendieckArchivesProofs Grothendieck Buffalo`.
 -/
-import Lean
+
+public meta section
 
 open Lean
 

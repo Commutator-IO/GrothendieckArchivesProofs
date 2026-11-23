@@ -1,7 +1,8 @@
-import Lean
-import Grothendieck.Attr
-import StacksCore.Tactic.EgaSgaAttribute
+module
 
+public meta import Lean
+public meta import Grothendieck.Attr
+public meta import StacksCore.Tactic.EgaSgaAttribute
 /-!
 # The declarations by source
 
@@ -16,6 +17,9 @@ of the prefixes, the attributes `@[montpellier "cote, page"]` and `@[buffalo "en
 (`StacksCore.Tactic.EgaSgaAttribute`). The report (Markdown) has three parts: the Montpellier
 notes by cote, the Buffalo lectures by entry, and the EGA and SGA items.
 -/
+
+public meta section
+
 
 open Lean Grothendieck.Source
 

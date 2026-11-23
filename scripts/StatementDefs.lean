@@ -1,4 +1,6 @@
-import Lean
+module
+
+public meta import Lean
 
 /-!
 # The definitions behind the statements
@@ -25,9 +27,11 @@ reviewed with the class or structure they belong to.
 
 With `--mathlib-only`, a second report (Markdown) lists the *theorems* whose statement uses no
 constant outside Mathlib and Lean's core libraries at all, by module, with their count: these can
-be restated in `Challenge/` with Mathlib's imports alone and compared by `lake comparator` (issue
-#31, question 3).
+be restated in `Challenge.lean` with Mathlib's imports alone and compared by `lake comparator`
+(issue #31, question 3).
 -/
+
+public meta section
 
 open Lean
 
