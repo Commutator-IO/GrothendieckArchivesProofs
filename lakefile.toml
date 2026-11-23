@@ -27,8 +27,8 @@ relaxedAutoImplicit = false
 maxSynthPendingDepth = 3
 weak.linter.mathlibStandardSet = true
 
-# The working notes kept at the University of Montpellier: one file per folder (cote), and the
-# general lemmas in Grothendieck/Upstream/.
+# The working notes kept at the University of Montpellier: one file per folder (cote), in topic
+# directories; the general lemmas they use are in LeanPool/ (below).
 [[lean_lib]]
 name = "Grothendieck"
 [lean_lib.leanOptions]

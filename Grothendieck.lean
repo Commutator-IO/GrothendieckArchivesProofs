@@ -167,7 +167,5 @@ public import Grothendieck.Topology.Folder121
 public import Grothendieck.Topology.Folder150
 public import Grothendieck.Topology.Folder151
 public import Grothendieck.Topology.Folder42
-public import Grothendieck.Upstream.FormallySmoothMapBaseChange
-public import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
 
 @[expose] public section

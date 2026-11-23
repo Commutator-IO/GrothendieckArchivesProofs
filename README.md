@@ -6,8 +6,7 @@ Lean 4 proofs of statements from two of Alexandre Grothendieck's archives, built
 
 - `Grothendieck/`: the working notes kept at the University of Montpellier, in topic directories
   as in Mathlib (`AlgebraicGeometry/`, `RingTheory/`, `CategoryTheory/`, …), with the general
-  lemmas they use in `Grothendieck/Upstream/` (and in `LeanPool/`, for those that also stand in
-  lean-pool). The files keep the name of their folder (cote),
+  lemmas they use in `LeanPool/` (see [Licence](#licence)). The files keep the name of their folder (cote),
   `Grothendieck/AlgebraicGeometry/Folder126Glue.lean` for instance, and each statement carries its
   source as an attribute (see [Conventions](#conventions)). The statements are the modernised
   readings of the edition [grothendieck-project](https://github.com/Commutator-IO/grothendieck-project),

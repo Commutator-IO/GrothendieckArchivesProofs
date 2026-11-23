@@ -10,7 +10,6 @@ public import Mathlib.RingTheory.Noetherian.Nilpotent
 public import Mathlib.RingTheory.MvPowerSeries.Equiv
 public import Mathlib.RingTheory.AdicCompletion.Completeness
 public import Mathlib.RingTheory.Henselian
-public import Grothendieck.Upstream.IsAdicCompleteOfIsNilpotent
 import Grothendieck.Attr
 import StacksFrontier.RingTheory.CompleteLocalRing.CohenStructureTheorem.PowerSeriesRing
 
@@ -88,6 +87,19 @@ namespace Grothendieck.Folder39
 open PowerSeries Polynomial
 
 variable {A : Type*} [CommRing A]
+
+/-- A module is adically complete along a nilpotent ideal. (AxiomMath's Stacks library has
+`IsAdicComplete.of_isNilpotent` for the ring case, hence the name.) -/
+theorem _root_.IsAdicComplete.of_isNilpotent_module {R : Type*} [CommRing R] {I : Ideal R}
+    (M : Type*) [AddCommGroup M] [Module R M] (hI : IsNilpotent I) : IsAdicComplete I M := by
+  obtain ⟨k, hk⟩ := hI
+  have h {n : ℕ} (hn : k ≤ n) : (I ^ n • ⊤ : Submodule R M) = ⊥ := by
+    rw [le_bot_iff.1 ((Ideal.pow_le_pow_right hn).trans_eq hk), Submodule.bot_smul]
+  refine { haus' x hx := ?_, prec' f hf := ⟨f k, fun n ↦ ?_⟩ }
+  · simpa [h le_rfl, SModEq.zero] using hx k
+  · rcases le_total n k with hn | hn
+    · exact hf hn
+    · rw [SModEq.bot.1 (h le_rfl ▸ hf hn : f k ≡ f n [SMOD (⊥ : Submodule R M)])]
 
 /-- A ring is complete and separated for a nilpotent ideal. -/
 theorem isAdicComplete_of_nilpotent {I : Ideal A} (hI : IsNilpotent I) : IsAdicComplete I A :=

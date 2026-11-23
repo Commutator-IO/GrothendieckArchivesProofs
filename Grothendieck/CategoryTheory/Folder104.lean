@@ -223,7 +223,7 @@ include hend in
 /-- **Reedy.** A skeletal category satisfying (ii) whose strict order on
 objects is well founded is a direct category: the relation « there is a
 non-identity arrow `X ⟶ Y` » is contained in the strict order, hence well founded,
-and `ReedyStructure.ofWellFounded` (`Upstream/`) takes the rank for it as degree. -/
+and `ReedyStructure.ofWellFounded` (`LeanPool/`) takes the rank for it as degree. -/
 @[montpellier "104, 6"]
 noncomputable def reedyDirecte (hsk : Skeletal M) (hwf : WellFounded (Strict (M := M))) :
     HomotopicalAlgebra.ReedyStructure (MorphismProperty.identities M) ⊤ Ordinal.{u} :=

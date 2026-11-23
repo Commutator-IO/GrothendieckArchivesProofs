@@ -157,7 +157,7 @@ licensed under the Apache License, Version 2.0.
    LeanPool.lean (the root importing them) is new to this repository.
 
    Also under LeanPool/, at the same paths as in lean-pool: the general lemmas below, written in
-   this repository (under Grothendieck/Upstream/ until #69) and contributed by Michel Hua to
+   this repository (under Grothendieck/Upstream/, now removed) and contributed by Michel Hua to
    lean-pool, where the same files stand. They are this repository's version: built against
    Lean v4.35.0 and Mathlib 56a0058, with Mathlib's style options, they differ from lean-pool's
    (cb3d7f85) in headers, docstrings, imports and proofs, and some declare lemmas that lean-pool's

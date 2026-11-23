@@ -1056,7 +1056,7 @@ theorem matA_sq (hR : Exceptional R) : (matA : Matrix (Fin 2) (Fin 2) R) * matA 
 /-- Stable range one for a semi-local ring (finitely many maximal ideals):
 if `(d, d')` is unimodular, some `a d + d'` is a unit. This is the input that
 page 20 cites as known (« on sait que »); it is `IsCoprime.exists_isUnit_add_mul`
-(`Upstream/`). -/
+(`LeanPool/`). -/
 theorem exists_isUnit_mul_add [Finite (MaximalSpectrum R)] {d d' a₀ b₀ : R}
     (h : a₀ * d + b₀ * d' = 1) : ∃ a : R, IsUnit (a * d + d') := by
   obtain ⟨a, ha⟩ := IsCoprime.exists_isUnit_add_mul (a := d') (b := d)

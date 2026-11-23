@@ -479,20 +479,33 @@ theorem no_derivation_extending_d (I : Type*) [Infinite I] :
   exact no_derivation (basisDx I) e e.injective
     (fun n => x (e n)) D fun n => by rw [hD, basisDx_apply]
 
+/-- The first fundamental sequence `0 → T ⊗[S] Ω[S⁄R] → Ω[T⁄R] → Ω[T⁄S] → 0` is split exact
+when `H¹(L_{T⁄S}) = 0` and `Ω[T⁄S]` is projective, e.g. when `T` is a formally smooth `S`-algebra
+([Matsumura, Theorem 25.1][matsumura1987]). (Stacks'
+`KaehlerDifferential.exists_retraction_mapBaseChange`, the companion of tag 04B2, assumes `A → B`
+formally smooth instead.) -/
+lemma _root_.KaehlerDifferential.exists_retraction_mapBaseChange_of_projective
+    (R S T : Type*) [CommRing R] [CommRing S] [CommRing T]
+    [Algebra R S] [Algebra R T] [Algebra S T] [IsScalarTower R S T]
+    [Subsingleton (Algebra.H1Cotangent S T)] [Module.Projective T Ω[T⁄S]] :
+    ∃ l : Ω[T⁄R] →ₗ[T] T ⊗[S] Ω[S⁄R], l ∘ₗ KaehlerDifferential.mapBaseChange R S T =
+      LinearMap.id := by
+  have hinj : Function.Injective (KaehlerDifferential.mapBaseChange R S T) :=
+      (injective_iff_map_eq_zero _).mpr fun x hx => by
+    obtain ⟨y, rfl⟩ := (Algebra.H1Cotangent.exact_δ_mapBaseChange R S T x).mp hx
+    rw [Subsingleton.elim y 0, map_zero]
+  have h := ((KaehlerDifferential.exact_mapBaseChange_map R S T).split_tfae').out 1 2
+  exact (h.mp ⟨hinj,
+    Module.projective_lifting_property _ _ (KaehlerDifferential.map_surjective R S T)⟩).2
+
 /-- If `S` is formally smooth over `k` (discrete topology), `S ⊗_k Ω_{k/R} → Ω_{S/R}` has a
 `S`-linear retraction. -/
 theorem retraction_of_formallySmooth (R k S : Type*) [CommRing R] [CommRing k] [CommRing S]
     [Algebra R k] [Algebra R S] [Algebra k S] [IsScalarTower R k S]
     [Algebra.FormallySmooth k S] :
     ∃ r : Ω[S⁄R] →ₗ[S] S ⊗[k] Ω[k⁄R], r ∘ₗ KaehlerDifferential.mapBaseChange R k S =
-      LinearMap.id := by
-  have hinj : Function.Injective (KaehlerDifferential.mapBaseChange R k S) :=
-      (injective_iff_map_eq_zero _).mpr fun x hx => by
-    obtain ⟨y, rfl⟩ := (Algebra.H1Cotangent.exact_δ_mapBaseChange R k S x).mp hx
-    rw [Subsingleton.elim y 0, map_zero]
-  have h := ((KaehlerDifferential.exact_mapBaseChange_map R k S).split_tfae').out 1 2
-  exact (h.mp ⟨hinj,
-    Module.projective_lifting_property _ _ (KaehlerDifferential.map_surjective R k S)⟩).2
+      LinearMap.id :=
+  KaehlerDifferential.exists_retraction_mapBaseChange_of_projective R k S
 
 /-- **`k⟦t⟧` is not formally smooth over `k` for the discrete topology** as soon as `Ω_{k/R}`
 has a basis containing infinitely many differentials `d aₙ`. -/

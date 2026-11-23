@@ -200,3 +200,11 @@ names are unchanged.
 | `Grothendieck/Upstream/MonoidRightZero.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/MonoidRightZero.lean` |
 | `Grothendieck/Upstream/QuasiSoberPiCoreCompact.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/QuasiSoberPiCoreCompact.lean` |
 | `Grothendieck/Upstream/SingularValuesSigmaTwo.lean` | `LeanPool/LinearAlgebraCombinatoricsAndAnalysis/SingularValuesSigmaTwo.lean` |
+
+The last two files of `Grothendieck/Upstream/`, used in one place each, are folded into it, and the
+directory is gone:
+
+| Old path | Now in |
+|---|---|
+| `Grothendieck/Upstream/FormallySmoothMapBaseChange.lean` | `Grothendieck/RingTheory/Folder22.lean` |
+| `Grothendieck/Upstream/IsAdicCompleteOfIsNilpotent.lean` | `Grothendieck/RingTheory/Folder39.lean` |

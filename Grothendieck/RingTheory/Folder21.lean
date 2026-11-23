@@ -55,7 +55,7 @@ Here `H` is, as « avec les notations précédentes » says (2.9, 2.14), an
 The proof of `proposition2_15` is the typescript's: Baer's criterion, the image of `u`
 killed by one power `Iⁿ`, Artin–Rees in the form `N ∩ I^{n+k} ⊆ IⁿN`, and the extension
 along `N/(N ∩ Iᵐ) ↪ A/Iᵐ`; that argument is `Ideal.injective_of_primaryComponent_eq_top`
-(`Upstream/`).
+(`LeanPool/`).
 
 **What the formalisation finds.** Nothing false. The Artin–Rees containment
 the proof needs is `N ∩ IᵐA ⊆ IⁿN`, with the ambient module on the left — the
