@@ -508,29 +508,34 @@ theorem isoB_spec {s a s' a' : Fin n → Fin n} {t : List (Fin n)} :
     exact ⟨⟨fun y => (em (app t x = app t y)).elim (fun e => Or.inr (h1 x y e)) Or.inl, h2 x⟩,
       h3 x⟩
 
-theorem iso_of_isoB {σ α σ' α' : Perm (Fin n)} {t : List (Fin n)}
-    (h : isoB σ α σ' α' t = true) : ∃ τ : Perm (Fin n), τ * σ * τ⁻¹ = σ' ∧ τ * α * τ⁻¹ = α' := by
+theorem conj_apply {τ σ σ' : Perm (Fin n)} (h : τ * σ * τ⁻¹ = σ') (x : Fin n) :
+    τ (σ x) = σ' (τ x) := by
+  rw [← h]; simp
+
+theorem perm_of_isoB {σ α σ' α' : Perm (Fin n)} {t : List (Fin n)}
+    (h : isoB σ α σ' α' t = true) :
+    ∃ τ : Perm (Fin n), ⇑τ = app t ∧ τ * σ * τ⁻¹ = σ' ∧ τ * α * τ⁻¹ = α' := by
   obtain ⟨hi, hs, ha⟩ := isoB_spec.1 h
-  have hinj : Function.Injective (app t) := fun x y => hi x y
-  let τ : Perm (Fin n) := Equiv.ofBijective _ (Finite.injective_iff_bijective.1 hinj)
-  refine ⟨τ, ?_, ?_⟩
-  · rw [mul_inv_eq_iff_eq_mul]; ext x; simp [τ, hs]
-  · rw [mul_inv_eq_iff_eq_mul]; ext x; simp [τ, ha]
+  refine ⟨Equiv.ofBijective _ (Finite.injective_iff_bijective.1 fun x y => hi x y), rfl, ?_, ?_⟩ <;>
+    rw [mul_inv_eq_iff_eq_mul] <;> ext x <;> simp [hs, ha]
+
+theorem isoB_tab {σ α σ' α' τ : Perm (Fin n)} (h1 : τ * σ * τ⁻¹ = σ') (h2 : τ * α * τ⁻¹ = α') :
+    isoB σ α σ' α' (tab τ) = true := by
+  rw [isoB_spec, app_tab]
+  exact ⟨fun x y h => τ.injective h, conj_apply h1, conj_apply h2⟩
+
+theorem transport_eq [NeZero n] {σ α σ' α' : Perm (Fin n)} {W : List (Option (List Bool))}
+    (hW : validB σ α W = true) {τ : Perm (Fin n)} (h1 : τ * σ * τ⁻¹ = σ')
+    (h2 : τ * α * τ⁻¹ = α') : transport W σ' α' (τ 0) = tab τ := by
+  refine List.map_congr_left fun y _ => ?_
+  obtain ⟨w, hw, hwy⟩ := validB_spec hW y
+  simp only [hw]
+  rw [← evalW_conj (conj_apply h1) (conj_apply h2), hwy]
 
 theorem isoSearch_of_iso [NeZero n] {σ α σ' α' : Perm (Fin n)} {W : List (Option (List Bool))}
     (hW : validB σ α W = true) {τ : Perm (Fin n)} (h1 : τ * σ * τ⁻¹ = σ')
-    (h2 : τ * α * τ⁻¹ = α') : isoSearch W σ α σ' α' = true := by
-  have hs : ∀ x, τ (σ x) = σ' (τ x) := fun x => by rw [← h1]; simp
-  have ha : ∀ x, τ (α x) = α' (τ x) := fun x => by rw [← h2]; simp
-  have ht : transport W σ' α' (τ 0) = tab τ := by
-    refine List.map_congr_left fun y _ => ?_
-    obtain ⟨w, hw, hwy⟩ := validB_spec hW y
-    rw [hw]
-    simp only
-    rw [← evalW_conj hs ha, hwy]
-  refine List.any_eq_true.2 ⟨τ 0, List.mem_finRange _, ?_⟩
-  rw [ht, isoB_spec, app_tab]
-  exact ⟨fun x y h => τ.injective h, hs, ha⟩
+    (h2 : τ * α * τ⁻¹ = α') : isoSearch W σ α σ' α' = true :=
+  List.any_eq_true.2 ⟨τ 0, List.mem_finRange _, by rw [transport_eq hW h1 h2]; exact isoB_tab h1 h2⟩
 
 /-! ### The census -/
 
@@ -631,9 +636,9 @@ theorem homeo_of_homeoB [NeZero n] (M : DartMap n) {W : List (Option (List Bool)
   simp only [homeoB, Bool.or_eq_true, isoSearch, List.any_eq_true] at h
   rcases h with ⟨d, -, hd⟩ | ⟨d, -, hd⟩
   · rw [← hs, ← ha] at hd
-    exact Or.inl (iso_of_isoB hd)
+    obtain ⟨τ, -, h⟩ := perm_of_isoB hd; exact Or.inl ⟨τ, h⟩
   · rw [← hm, ← ha] at hd
-    exact Or.inr (iso_of_isoB hd)
+    obtain ⟨τ, -, h⟩ := perm_of_isoB hd; exact Or.inr ⟨τ, h⟩
 
 theorem homeoB_of_homeo [NeZero n] {r r' : Rep n} (hr : r.ok = true) (hr' : r'.ok = true)
     (h : r.toMap.Homeo r'.toMap) :
@@ -646,22 +651,9 @@ theorem homeoB_of_homeo [NeZero n] {r r' : Rep n} (hr : r.ok = true) (hr' : r'.o
   · left; rw [← hs', ← ha']; exact isoSearch_of_iso hv h1 h2
   · right; rw [← hm', ← ha']; exact isoSearch_of_iso hv h1 h2
 
-/-- `p` holds between each entry and every later one. -/
-def pairwiseB {α : Type*} (p : α → α → Bool) : List α → Bool
-  | [] => true
-  | x :: xs => xs.all (p x) && pairwiseB p xs
-
-theorem pairwiseB_spec {α : Type*} {p : α → α → Bool} {l : List α} (h : pairwiseB p l = true) :
-    l.Pairwise fun x y => p x y = true := by
-  induction l with
-  | nil => exact List.Pairwise.nil
-  | cons x xs ih =>
-    simp only [pairwiseB, Bool.and_eq_true, List.all_eq_true] at h
-    exact List.Pairwise.cons h.1 (ih h.2)
-
 /-- No two entries of `reps` are homeomorphic, computed. -/
-def distinctB [NeZero n] (reps : List (Rep n)) : Bool :=
-  pairwiseB (fun r r' => !homeoB (words (app r.σ) (app r.α)) (app r.σ) (app r.α) r') reps
+abbrev distinctB [NeZero n] (reps : List (Rep n)) : Prop :=
+  reps.Pairwise fun r r' => homeoB (words (app r.σ) (app r.α)) (app r.σ) (app r.α) r' = false
 
 /-- `iotaL n j` is an involution moving `2j` darts. -/
 def iotaOK (n : ℕ) [NeZero n] (j : ℕ) : Bool :=
@@ -710,7 +702,7 @@ theorem exists_rep [NeZero n] (reps : List (Rep n)) (hok : reps.all Rep.ok = tru
 /-- The number of classes is the length of `reps`, once the tables and the candidates are
 checked. -/
 theorem card_census [NeZero n] (reps : List (Rep n)) (hok : reps.all Rep.ok = true)
-    (hd : distinctB reps = true) (hι : (List.range (n / 2 + 1)).all (iotaOK n) = true)
+    (hd : distinctB reps) (hι : (List.range (n / 2 + 1)).all (iotaOK n) = true)
     (hc : (cands n).all (fun p => coverB reps p.1 p.2) = true) :
     Nat.card (Census n) = reps.length := by
   have hok' : ∀ r ∈ reps, r.ok = true := List.all_eq_true.1 hok
@@ -719,17 +711,14 @@ theorem card_census [NeZero n] (reps : List (Rep n)) (hok : reps.all Rep.ok = tr
   have hF : Function.Bijective F := by
     refine ⟨fun i k h => ?_, fun q => ?_⟩
     · have hH : reps[i].toMap.Homeo reps[k].toMap := Quotient.exact h
-      have hp := List.pairwise_iff_getElem.1 (pairwiseB_spec hd)
+      have hp := List.pairwise_iff_getElem.1 hd
+      have hb {r r' : Rep n} (hr : r ∈ reps) (hr' : r' ∈ reps) :=
+        homeoB_of_homeo (hok' r hr) (hok' r' hr')
       by_contra hik
       rcases lt_or_gt_of_ne (Fin.val_ne_of_ne hik) with hlt | hlt
-      · have := hp i k i.2 k.2 hlt
-        rw [homeoB_of_homeo (hok' _ (List.getElem_mem _)) (hok' _ (List.getElem_mem _)) hH]
-          at this
-        exact absurd this (by decide)
-      · have := hp k i k.2 i.2 hlt
-        rw [homeoB_of_homeo (hok' _ (List.getElem_mem _)) (hok' _ (List.getElem_mem _))
-          (homeo_equivalence.symm hH)] at this
-        exact absurd this (by decide)
+      · simpa [hb (List.getElem_mem _) (List.getElem_mem _) hH] using hp i k i.2 k.2 hlt
+      · simpa [hb (List.getElem_mem _) (List.getElem_mem _) (homeo_equivalence.symm hH)] using
+          hp k i k.2 i.2 hlt
     · induction q using Quotient.inductionOn with
       | h M =>
         obtain ⟨r, hr, hH⟩ := exists_rep reps hok hι hc M.1 M.2
@@ -753,17 +742,6 @@ noncomputable def fullAutOrder (M : DartMap n) : ℕ :=
 
 end DartMap
 
-theorem transport_eq [NeZero n] {σ α σ' α' : Perm (Fin n)} {W : List (Option (List Bool))}
-    (hW : validB σ α W = true) {τ : Perm (Fin n)} (h1 : τ * σ * τ⁻¹ = σ')
-    (h2 : τ * α * τ⁻¹ = α') : transport W σ' α' (τ 0) = tab τ := by
-  have hs : ∀ x, τ (σ x) = σ' (τ x) := fun x => by rw [← h1]; simp
-  have ha : ∀ x, τ (α x) = α' (τ x) := fun x => by rw [← h2]; simp
-  refine List.map_congr_left fun y _ => ?_
-  obtain ⟨w, hw, hwy⟩ := validB_spec hW y
-  rw [hw]
-  simp only
-  rw [← evalW_conj hs ha, hwy]
-
 theorem card_isoVia [NeZero n] {σ α σ' α' : Perm (Fin n)} {W : List (Option (List Bool))}
     (hW : validB σ α W = true) (h0 : look W (0 : Fin n) = some []) :
     Nat.card {τ : Perm (Fin n) // τ * σ * τ⁻¹ = σ' ∧ τ * α * τ⁻¹ = α'} =
@@ -771,29 +749,18 @@ theorem card_isoVia [NeZero n] {σ α σ' α' : Perm (Fin n)} {W : List (Option 
   classical
   rw [countP_finRange, ← Fintype.card_subtype, ← Nat.card_eq_fintype_card]
   refine Nat.card_eq_of_bijective (fun τ => ⟨τ.1 0, ?_⟩) ⟨?_, ?_⟩
-  · obtain ⟨τ, h1, h2⟩ := τ
-    rw [transport_eq hW h1 h2, isoB_spec, app_tab]
-    have hs : ∀ x, τ (σ x) = σ' (τ x) := fun x => by rw [← h1]; simp
-    have ha : ∀ x, τ (α x) = α' (τ x) := fun x => by rw [← h2]; simp
-    exact ⟨fun x y h => τ.injective h, hs, ha⟩
+  · rw [transport_eq hW τ.2.1 τ.2.2]; exact isoB_tab τ.2.1 τ.2.2
   · rintro ⟨τ, h1, h2⟩ ⟨τ', h1', h2'⟩ h
-    have h' : τ 0 = τ' 0 := congrArg Subtype.val h
-    have := transport_eq hW h1 h2
-    rw [h', transport_eq hW h1' h2'] at this
-    have := congrArg app this
-    rw [app_tab, app_tab] at this
+    have := congrArg app (transport_eq hW h1 h2)
+    rw [show τ 0 = τ' 0 from congrArg Subtype.val h, transport_eq hW h1' h2', app_tab,
+      app_tab] at this
     exact Subtype.ext (Equiv.ext fun x => (congrFun this x).symm)
   · rintro ⟨d, hd⟩
-    obtain ⟨hi, hs, ha⟩ := isoB_spec.1 hd
-    have hinj : Function.Injective (app (transport W σ' α' d)) := fun x y => hi x y
-    let τ : Perm (Fin n) := Equiv.ofBijective _ (Finite.injective_iff_bijective.1 hinj)
-    refine ⟨⟨τ, ?_, ?_⟩, ?_⟩
-    · rw [mul_inv_eq_iff_eq_mul]; ext x; simp [τ, hs]
-    · rw [mul_inv_eq_iff_eq_mul]; ext x; simp [τ, ha]
-    · apply Subtype.ext
-      change app (transport W σ' α' d) 0 = d
-      rw [show transport W σ' α' d = tab _ from rfl, app_tab]
-      simp [h0, evalW]
+    obtain ⟨τ, hτ, h⟩ := perm_of_isoB hd
+    refine ⟨⟨τ, h⟩, Subtype.ext ?_⟩
+    change τ 0 = d
+    rw [hτ, show transport W σ' α' d = tab _ from rfl, app_tab]
+    simp [h0, evalW]
 
 /-- The order of the full automorphism group, computed from the tables. -/
 def autB [NeZero n] (r : Rep n) : ℕ :=
