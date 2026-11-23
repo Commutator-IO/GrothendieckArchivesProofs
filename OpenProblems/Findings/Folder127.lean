@@ -17,15 +17,16 @@ Three open rows of the edition's list of findings (`src/content/findings.ts`) fo
 (*critère valuatif de platitude d'une adhérence schématique*, and Hironaka's flatness over a
 reduced base): `127-closure-flatness-artinian-or-trait`, `127-non-flat-descent-artinian-epimorphism`
 and `127-hironaka-reduced-base-openness`. Nothing here is proved; a `def … : Prop` asserts
-nothing.
+nothing. The second is proved elsewhere (below).
 
 ## Main definitions
 
 * `ClosureFlatnessArtinianOrTrait` (`127-closure-flatness-artinian-or-trait`): the valuative
   criterion, affine case.
 * `NonFlatDescentArtinian` (`127-non-flat-descent-artinian-epimorphism`): descent along a finite
-  epimorphism over an artinian base, affine case. Doubtful: the folder gives no proof, and the
-  row asks first whether it is true.
+  epimorphism over an artinian base, affine case. The folder gives no proof; it is proved in Lean
+  as `Grothendieck.Folder127.nonFlatDescentArtinian`
+  (`Grothendieck/AlgebraicGeometry/Folder127.lean`).
 * `HironakaReducedBase` (`127-hironaka-reduced-base-openness`): stated for schemes, as the row
   gives it.
 
@@ -131,9 +132,11 @@ epimorphism of schemes `Y' → Y`, flat or not, provided `Y' → Y` is finite: i
 after base change to `Y'`, it has one over `Y`. The solution, when it exists, is the image of `F`
 in `i_*G_U`, hence unique, which is why the statement is about that image.
 
-Status: doubtful. The lemma is stated in the folder and not proved (checked on the facsimile,
-#127); the row asks first whether it is true as stated, before any search (Raynaud–Gruson I,
-Ferrand 2003, Mesablishvili). Stated as read.
+Status: proved, as `Grothendieck.Folder127.nonFlatDescentArtinian`
+(`Grothendieck/AlgebraicGeometry/Folder127.lean`). The lemma is stated in the folder and not proved
+(checked on the facsimile, #127). The proof uses neither the finiteness of `A → A'` nor the
+flatness of the base-changed solution, and uses the epimorphism only through the injectivity of
+`A → A'` (`Grothendieck.Folder127.nonFlatDescent_of_injective`). Stated as read.
 
 Choices: the affine case of the module docstring; `Y' = Spec A'` with `A → A'` finite and
 `Spec A' → Spec A` an epimorphism in the category of schemes; the standing hypotheses
