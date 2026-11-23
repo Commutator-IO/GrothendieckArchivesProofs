@@ -24,12 +24,19 @@ p:noncoh (same folder) is in `OpenProblems/TopoiStacks.lean`.
   theory and the subtopoi classifying its quotient theories, coherent topoi, and the lattice of
   subtopoi with its joins; the Stacks library has subtopoi of a topos of sheaves, open and closed
   ones (`IsSubtopos`, `IsOpenSubtopos`, `IsClosedSubtopos`, Stacks 08LV, 08LX, 08LZ), but not the
-  join. « Obtained by gluing along an open » is the edition's form of a brouillon (p. 48) and is
-  not a defined construction there, so the gluing criterion has no statement yet to formalise.
+  join. The gluing lemma of p. 48 (issue Commutator-IO/grothendieck-project#185) is proved in its
+  order-theoretic core, in any distributive lattice, in `Grothendieck/Order/Folder161_2Join.lean`
+  (`Grothendieck.Folder161_2.recollement_iff`, `Grothendieck.Folder161_2.recollement`): the two
+  forms of the condition on the opens are equivalent, and they give Grothendieck's form
+  `V = Z' ⊔ (Z'' ⊓ V)`, `W = Z'' ⊔ (Z' ⊓ W)`. Its instance on subtopoi is not stated: the libraries
+  have no distributive lattice of subtopoi (or of Grothendieck topologies), no open subtopos
+  `o(U)` as an element of it, and no gluing of subtopoi along an open cover; that file's header
+  lists what is missing.
 
 ## References
 
 * A. Grothendieck, folder 161-2, pp. 47–49, *Algèbre universelle* (finding
   `161-2-definite-characteristic-join-of-subtopoi`)
 * Stacks Project, tags 08LV, 08LX, 08LZ
+* P. T. Johnstone, *Sketches of an Elephant*, §A4.5
 -/
