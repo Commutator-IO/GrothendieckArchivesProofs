@@ -8,7 +8,7 @@ name: Build
 # including those from forks, only read it. The GitHub-hosted build is kept in
 # `build-hosted.yml`, started by hand.
 #
-# The runner VM is on demand: it is deallocated when idle (it does that itself after 20 minutes
+# The runner VM is on demand: it is deallocated when idle (it does that itself after 10 minutes
 # without a job) and the `start-runner` job below starts it through OIDC, with an Azure role that
 # can only read and start that one VM. The VM, its disk and both roles are Terraform in
 # Commutator-IO/ai-infra (stacks/lean-ci); the repository variables AZURE_CLIENT_ID,
