@@ -259,11 +259,10 @@ section Points
 variable {X : Type u} [TopologicalSpace X]
 
 theorem fiber_mono (Φ : Point.{u} (Opens.grothendieckTopology X)) {U V : Opens X} (h : U ≤ V) :
-    Nonempty (Φ.fiber.obj U) → Nonempty (Φ.fiber.obj V) :=
-  fun ⟨a⟩ => ⟨Φ.fiber.map (homOfLE h) a⟩
+    Nonempty (Φ.fiber.obj U) → Nonempty (Φ.fiber.obj V) := Part02.point_mono Φ h
 
 theorem fiber_top (Φ : Point.{u} (Opens.grothendieckTopology X)) : Nonempty (Φ.fiber.obj ⊤) :=
-  ⟨(Φ.uniqueFiberObj ⊤ isTerminalTop).default⟩
+  Part02.point_top Φ
 
 theorem fiber_inf (Φ : Point.{u} (Opens.grothendieckTopology X)) {U V : Opens X} :
     Nonempty (Φ.fiber.obj U) → Nonempty (Φ.fiber.obj V) → Nonempty (Φ.fiber.obj (U ⊓ V)) :=
@@ -299,7 +298,7 @@ def pointIsoOfNonempty (Φ Ψ : Point.{u} (Opens.grothendieckTopology X))
 
 theorem nonempty_iff_of_iso {Φ Ψ : Point.{u} (Opens.grothendieckTopology X)} (e : Φ ≅ Ψ)
     (U : Opens X) : Nonempty (Φ.fiber.obj U) ↔ Nonempty (Ψ.fiber.obj U) :=
-  ⟨fun ⟨a⟩ => ⟨e.inv.hom.app U a⟩, fun ⟨b⟩ => ⟨e.hom.hom.app U b⟩⟩
+  Part02.nonempty_of_iso e U
 
 theorem point_fiber_iff (x : X) (U : Opens X) :
     Nonempty ((Opens.pointGrothendieckTopology x).fiber.obj U) ↔ x ∈ U :=

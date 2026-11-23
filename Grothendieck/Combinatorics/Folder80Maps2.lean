@@ -352,12 +352,9 @@ open Relation
 
 /-- A set invariant under the generators of an equivalence closure is invariant under it. -/
 theorem eqvGen_iff {α : Type*} {r : α → α → Prop} (S : α → Prop) (h : ∀ x y, r x y → (S x ↔ S y))
-    {a b : α} (hab : EqvGen r a b) : S a ↔ S b := by
-  induction hab with
-  | rel x y h' => exact h x y h'
-  | refl => rfl
-  | symm _ _ _ ih => exact ih.symm
-  | trans _ _ _ _ _ i1 i2 => exact i1.trans i2
+    {a b : α} (hab : EqvGen r a b) : S a ↔ S b :=
+  (Equivalence.eqvGen_iff (r := fun x y => S x ↔ S y) ⟨fun _ => .rfl, .symm, .trans⟩).1
+    (EqvGen.mono h _ _ hab)
 
 /-- A generalised map (a combinatorial map of a possibly non-orientable surface): flags with
 three fixed-point-free involutions, `a0` and `a2` commuting with `a0 a2` fixed-point-free. -/

@@ -77,12 +77,9 @@ theorem prop_6129 (F : CommAlgCat.{u} k ⥤ Type u) :
 
 /-- The essential image of `coyoneda` consists of the representable functors. -/
 theorem essImage_coyoneda_iff (F : CommAlgCat.{u} k ⥤ Type u) :
-    coyoneda.essImage F ↔ F.IsCorepresentable := by
-  constructor
-  · rintro ⟨X, ⟨e⟩⟩
-    exact Functor.IsCorepresentable.mk' (X := X.unop) e
-  · intro _
-    exact ⟨Opposite.op F.coreprX, ⟨F.coreprW⟩⟩
+    coyoneda.essImage F ↔ F.IsCorepresentable :=
+  ⟨fun ⟨Y, ⟨e⟩⟩ ↦ ⟨Y.unop, ⟨Functor.corepresentableByEquiv.symm e⟩⟩,
+    fun ⟨X, ⟨e⟩⟩ ↦ ⟨Opposite.op X, ⟨Functor.corepresentableByEquiv e⟩⟩⟩
 
 /-- 51wmmpHand0-6911 (1:55:11) [prop] The morphisms `V_A → V_{A'}` correspond to the
 homomorphisms `A' → A` (`prop_4188`), and the category of affine algebraic spaces (the

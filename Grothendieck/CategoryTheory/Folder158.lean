@@ -758,12 +758,9 @@ def HypH (X : Type w) [Category.{v} X] : Prop :=
 /-- A predicate that respects a relation in both directions respects its equivalence
 closure. -/
 theorem eqvGen_iff {α : Type*} {r : α → α → Prop} {Q : α → Prop}
-    (h : ∀ a b, r a b → (Q a ↔ Q b)) {a b : α} (hab : Relation.EqvGen r a b) : Q a ↔ Q b := by
-  induction hab with
-  | rel a b hr => exact h a b hr
-  | refl => exact Iff.rfl
-  | symm _ _ _ ih => exact ih.symm
-  | trans _ _ _ _ _ ih₁ ih₂ => exact ih₁.trans ih₂
+    (h : ∀ a b, r a b → (Q a ↔ Q b)) {a b : α} (hab : Relation.EqvGen r a b) : Q a ↔ Q b :=
+  (Equivalence.eqvGen_iff (r := fun x y => Q x ↔ Q y) ⟨fun _ => .rfl, .symm, .trans⟩).1
+    (Relation.EqvGen.mono h _ _ hab)
 
 section Doubling
 
