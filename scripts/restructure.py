@@ -39,7 +39,7 @@ _set("RepresentationTheory", "10 44 123")
 _set("GroupTheory", "133")
 _set("NumberTheory", "78 145")
 _set("Order", "156_1 156_2 156_3 156_4 156_5 156_6 156_7 156_8 156_9")
-_set("LinearAlgebra", "1")
+_set("LinearAlgebra", "1 75")
 _set("AlgebraicTopology", "68")
 
 # Files of `Grothendieck/` that are not named after a folder, or whose topic is not their folder's
