@@ -30,6 +30,8 @@ one idempotent at a time.
 
 * `exists_fg_le_of_ringHom`: for `A` finitely presented and any ideal `m` of any ring `R`, a map
   `A → R ⧸ m` lifts to `A → R ⧸ K` for a finitely generated ideal `K ≤ m`;
+* `isIdempotentElem_ideal_of_regular`, `isReduced_of_regular`: in a von Neumann regular ring
+  every ideal is idempotent, and the ring is reduced;
 * `exists_ringHom_of_forall_isMaximal`: the lemma, for a von Neumann regular `R`;
 * `ringHomOfResidueFields`: the statement `RingHomOfResidueFields`.
 
@@ -49,7 +51,10 @@ in every prime, so in the nilradical, which is `0` since `R` is reduced, and `R 
 
 Von Neumann regularity is the elementwise condition `∀ a, ∃ b, a * a * b = a`, as in
 `Grothendieck/CategoryTheory/Folder161_2Classifying.lean`. It is used twice: every ideal is
-idempotent, and `R` is reduced.
+idempotent (`isIdempotentElem_ideal_of_regular`), and `R` is reduced (`isReduced_of_regular`).
+Neither Mathlib nor Stacks states them for this condition: Stacks' `IsAbsolutelyFlat` (tag 092B)
+is the equivalent module-theoretic definition, and its own proofs of the two facts
+(`forall_flat_tfae`) start from flatness.
 
 ## Not formalised
 
@@ -89,6 +94,18 @@ theorem exists_fg_le_of_ringHom [Algebra.FinitePresentation ℤ A] {m : Ideal R}
       Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_map_of_mem _ hp)).comp
       (RingHom.quotientKerEquivOfSurjective hf).symm.toRingHom
 
+/-- In a von Neumann regular ring (every `a` has some `b` with `a² b = a`), every ideal `K` is
+idempotent: `a = a · (a b) ∈ K²`. -/
+theorem isIdempotentElem_ideal_of_regular (hR : ∀ a : R, ∃ b, a * a * b = a) (K : Ideal R) :
+    IsIdempotentElem K :=
+  le_antisymm Ideal.mul_le_right fun x hx => (hR x).elim fun b hb => by
+    simpa [← mul_assoc, hb] using Ideal.mul_mem_mul hx (K.mul_mem_right b hx)
+
+/-- A von Neumann regular ring is reduced: if `a² = 0`, then `a = a² b = 0`. -/
+theorem isReduced_of_regular (hR : ∀ a : R, ∃ b, a * a * b = a) : IsReduced R :=
+  (isReduced_iff_pow_one_lt 2 one_lt_two).mpr fun x hx => (hR x).elim fun b hb => by
+    rw [← hb, ← sq, hx, zero_mul]
+
 /-- **Pages 41–42, the local-global lemma.** Let `A` be a finitely presented commutative ring and
 `R` a von Neumann regular commutative ring (every `a` has some `b` with `a² b = a`). If every
 residue field `R ⧸ 𝔪`, `𝔪` maximal, receives a ring map from `A`, then there is a ring map
@@ -103,14 +120,10 @@ theorem exists_ringHom_of_forall_isMaximal [Algebra.FinitePresentation ℤ A]
     by_contra hne
     obtain ⟨m, hm, hle⟩ := Ideal.exists_le_maximal _ hne
     obtain ⟨K, hK, hKm, ⟨φ⟩⟩ := exists_fg_le_of_ringHom (h m hm).some
-    have hKK : IsIdempotentElem K := le_antisymm Ideal.mul_le_right fun x hx => by
-      obtain ⟨b, hb⟩ := hR x
-      rw [← hb, mul_assoc]
-      exact Ideal.mul_mem_mul hx (K.mul_mem_right b hx)
-    obtain ⟨g, hg, rfl⟩ := (Ideal.isIdempotentElem_iff_of_fg K hK).mp hKK
-    exact hm.ne_top ((Ideal.eq_top_iff_one _).mpr (by
-      simpa using add_mem (hKm (Ideal.mem_span_singleton_self g))
-        (hle (Ideal.subset_span ⟨g, hg, rfl, ⟨φ⟩⟩))))
+    obtain ⟨g, hg, rfl⟩ :=
+      (Ideal.isIdempotentElem_iff_of_fg K hK).mp (isIdempotentElem_ideal_of_regular hR K)
+    exact hm.ne_top (m.eq_top_iff_one.mpr (sub_add_cancel (1 : R) g ▸
+      add_mem (hle (Ideal.subset_span ⟨g, hg, rfl, ⟨φ⟩⟩)) (hKm (Ideal.mem_span_singleton_self g))))
   obtain ⟨s, hsT, hs⟩ := (Ideal.span_eq_top_iff_finite T).mp hT
   -- Gluing along finitely many of them.
   have key : ∀ t : Finset R, ↑t ⊆ T → ∃ J : Ideal R, Nonempty (A →+* R ⧸ J) ∧
@@ -118,37 +131,26 @@ theorem exists_ringHom_of_forall_isMaximal [Algebra.FinitePresentation ℤ A]
     classical
     intro t
     induction t using Finset.induction_on with
-    | empty =>
-      have : Subsingleton (R ⧸ (⊤ : Ideal R)) := Ideal.Quotient.subsingleton_iff.mpr rfl
-      exact fun _ => ⟨⊤, ⟨⟨⟨⟨fun _ => 0, Subsingleton.elim _ _⟩, fun _ _ => Subsingleton.elim _ _⟩,
-        rfl, fun _ _ => Subsingleton.elim _ _⟩⟩, fun p _ h => (h (by simp)).elim⟩
-    | insert x t hx ih =>
-      intro hxt
-      rw [Finset.coe_insert, Set.insert_subset_iff] at hxt
-      obtain ⟨J, ⟨φ⟩, hJ⟩ := ih hxt.2
-      obtain ⟨g, hg, rfl, ⟨ψ⟩⟩ := hxt.1
-      have hcop : IsCoprime (Ideal.span {g}) (J ⊔ Ideal.span {1 - g}) := by
-        rw [Ideal.isCoprime_iff_sup_eq, Ideal.eq_top_iff_one]
-        simpa using add_mem (Ideal.mem_sup_left (Ideal.mem_span_singleton_self g))
-          (Ideal.mem_sup_right (Ideal.mem_sup_right (Ideal.mem_span_singleton_self (1 - g))))
+    | empty => exact fun _ => ⟨⊤, ⟨RingEquiv.ofUnique.toRingHom.comp (algebraMap A Unit)⟩, by simp⟩
+    | insert x t _ ih =>
+      rw [Finset.coe_insert, Set.insert_subset_iff]
+      rintro ⟨⟨g, hg, rfl, ⟨ψ⟩⟩, hxt⟩
+      obtain ⟨J, ⟨φ⟩, hJ⟩ := ih hxt
+      have hcop : IsCoprime (Ideal.span {g}) (J ⊔ Ideal.span {1 - g}) :=
+        Ideal.isCoprime_iff_exists.mpr ⟨g, Ideal.mem_span_singleton_self g, 1 - g,
+          Ideal.mem_sup_right (Ideal.mem_span_singleton_self _), add_sub_cancel g 1⟩
       refine ⟨_, ⟨(Ideal.quotientInfEquivQuotientProd _ _ hcop).symm.toRingHom.comp
         (ψ.prod ((Ideal.Quotient.factor le_sup_left).comp φ))⟩, fun p hp hpt => ?_⟩
       by_cases h1 : 1 - g ∈ p
-      · have : ¬ ↑t ⊆ (p : Set R) := fun ht => hpt (by simp [Set.insert_subset_iff, h1, ht])
-        exact inf_le_right.trans
-          (sup_le (hJ p hp this) ((Ideal.span_singleton_le_iff_mem _).mpr h1))
-      · have : g * (1 - g) ∈ p := hg.mul_one_sub_self ▸ p.zero_mem
-        exact inf_le_left.trans
-          ((Ideal.span_singleton_le_iff_mem _).mpr ((hp.mem_or_mem this).resolve_right h1))
+      · exact inf_le_right.trans (sup_le (hJ p hp fun ht => hpt (Set.insert_subset h1 ht))
+          ((Ideal.span_singleton_le_iff_mem _).mpr h1))
+      · exact inf_le_left.trans ((Ideal.span_singleton_le_iff_mem _).mpr
+          ((hp.mem_or_mem (hg.mul_one_sub_self ▸ p.zero_mem)).resolve_right h1))
   obtain ⟨J, ⟨φ⟩, hJ⟩ := key s hsT
-  have : IsReduced R := (isReduced_iff_pow_one_lt 2 one_lt_two).mpr fun x hx => by
-    obtain ⟨b, hb⟩ := hR x
-    rw [← hb, ← sq, hx, zero_mul]
-  have hJ0 : J = ⊥ := le_bot_iff.mp <| by
-    rw [← Ideal.zero_eq_bot, ← nilradical_eq_zero R, nilradical_eq_sInf]
-    exact le_sInf fun p hp => hJ p hp fun hsp => hp.ne_top (by
-      rw [eq_top_iff, ← hs]; exact Ideal.span_le.mpr hsp)
-  subst hJ0
+  have := isReduced_of_regular hR
+  obtain rfl : J = ⊥ := le_bot_iff.mp <| (nilradical_eq_zero R).le.trans' <|
+    nilradical_eq_sInf R ▸ le_sInf fun p hp => hJ p hp fun hsp => hp.ne_top
+      (eq_top_iff.mpr (hs ▸ Ideal.span_le.mpr hsp))
   exact ⟨(RingEquiv.quotientBot R).toRingHom.comp φ⟩
 
 universe u v in
