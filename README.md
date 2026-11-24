@@ -17,7 +17,7 @@ Lean 4 proofs of statements from two of Alexandre Grothendieck's archives, built
 
 The Montpellier statements and their proofs, written out in French, are in the preprint
 M. Hua, *Grothendieck Montpellier. Énoncés des lectures modernisées démontrés*, Hexagon
-[2611.00125v2](https://hexagonmath.org/2611.00125v2).
+[2611.00125v3](https://hexagonmath.org/pdf/2611.00125v3).
 
 `import GrothendieckArchivesProofs` brings in both. Lean's kernel checks every proof; the build
 treats warnings as errors, so a `sorry` fails it.
