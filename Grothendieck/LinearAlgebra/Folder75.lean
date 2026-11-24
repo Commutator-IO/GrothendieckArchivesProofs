@@ -116,16 +116,8 @@ theorem sign_trans_symm [DecidableEq X] {n : ℕ} (f g : X ≃ Fin n) :
     show (g.symm.trans (f.trans g.symm)).trans g = g.symm.trans f by ext; simp,
     sign_eq_prod_prod_Iio, prod_sigma', prod_ite, prod_const_one, one_mul, prod_const]
   congr 1
-  refine card_nbij' (fun x => (g.symm x.1, g.symm x.2)) (fun p => ⟨g p.1, g p.2⟩) ?_ ?_ ?_ ?_
-  · rintro ⟨j, i⟩ h
-    simp only [inversions, coe_filter, mem_sigma, mem_univ, mem_Iio, true_and, not_lt,
-      trans_apply] at h ⊢
-    exact ⟨h.2.lt_of_ne (by simpa using h.1.ne'), by simpa using h.1⟩
-  · rintro ⟨x, y⟩ h
-    simp only [inversions, coe_filter, mem_univ, true_and, mem_sigma, mem_Iio,
-      trans_apply, not_lt] at h ⊢
-    exact ⟨h.2, by simpa using h.1.le⟩
-  all_goals intro _ _; simp
+  refine card_nbij' (fun x => (g.symm x.1, g.symm x.2)) (fun p => ⟨g p.1, g p.2⟩) ?_ ?_ ?_ ?_ <;>
+    rintro ⟨_, _⟩ h <;> grind [inversions, EmbeddingLike.apply_eq_iff_eq]
 
 end Numbering
 
@@ -137,8 +129,7 @@ variable {I : Type*} [Fintype I] (d : I → ℕ) {n : ℕ}
 def lexKey (e : I ≃ Fin n) : (Σ i, Fin (d i)) ↪ Lex (Fin n × ℕ) :=
   ⟨fun x => toLex (e x.1, (x.2 : ℕ)), by
     rintro ⟨i, a⟩ ⟨j, b⟩ h
-    simp only [Prod.mk.injEq, EmbeddingLike.apply_eq_iff_eq] at h
-    obtain ⟨rfl, h⟩ := h
+    obtain ⟨rfl, h⟩ : i = j ∧ (a : ℕ) = b := by simpa using h
     exact congrArg _ (Fin.ext h)⟩
 
 /-- The numbering of `Σ i, Fin (d i)` obtained by concatenating the blocks `Fin (d i)` in the
@@ -153,8 +144,7 @@ theorem concat_lt_concat (e : I ≃ Fin n) {x y : Σ i, Fin (d i)} :
 
 theorem mem_inversions_concat (e e' : I ≃ Fin n) {x y : Σ i, Fin (d i)} :
     (x, y) ∈ inversions (concat d e) (concat d e') ↔ (x.1, y.1) ∈ inversions e e' := by
-  simp only [inversions, mem_filter, mem_univ, true_and, concat_lt_concat]
-  grind
+  grind [inversions, concat_lt_concat]
 
 theorem card_inversions_concat (e e' : I ≃ Fin n) :
     #(inversions (concat d e) (concat d e')) = ∑ p ∈ inversions e e', d p.1 * d p.2 := by
@@ -170,13 +160,11 @@ theorem card_inversions_concat (e e' : I ≃ Fin n) :
       left_inv _ := rfl
       right_inv _ := rfl }
   rw [this, ← Fintype.card_subtype, Fintype.card_congr φ, Fintype.card_sigma]
-  simp only [Fintype.card_prod, Fintype.card_fin]
-  exact sum_coe_sort (inversions e e') fun p => d p.1 * d p.2
+  simpa using sum_coe_sort (inversions e e') fun p => d p.1 * d p.2
 
 theorem neg_one_pow_mul (a b : ℕ) : (-1 : ℤˣ) ^ (a * b) = if Odd a ∧ Odd b then -1 else 1 := by
-  split_ifs with h
-  · exact (Nat.odd_mul.2 h).neg_one_pow
-  · exact (Nat.not_odd_iff_even.1 (Nat.odd_mul.not.2 h)).neg_one_pow
+  simp only [neg_one_pow_eq_ite, ← Nat.not_odd_iff_even]
+  grind
 
 /-- The block-exchange sign: reordering the blocks changes the concatenated numbering by a
 permutation of sign `∏ (-1) ^ (d i * d j)` over the pairs `(i, j)` that `e` and `e'` order
@@ -231,10 +219,8 @@ theorem det_pi_basis {ι : I → Type*} [∀ i, Fintype (ι i)] [∀ i, Decidabl
   have hM : (Pi.basis b).toMatrix (Pi.basis b') =
       Matrix.blockDiagonal' fun i => (b i).toMatrix (b' i) := by
     ext ⟨i, x⟩ ⟨j, y⟩
-    by_cases h : i = j
-    · subst h
-      simp [Basis.toMatrix_apply]
-    · simp [Basis.toMatrix_apply, h, Matrix.blockDiagonal'_apply_ne _ _ _ h]
+    obtain rfl | h := eq_or_ne i j <;>
+      simp [Basis.toMatrix_apply, Matrix.blockDiagonal'_apply_ne, *]
   rw [Basis.det_apply, hM, (Matrix.blockTriangular_blockDiagonal' _).det]
   refine (prod_subset (subset_univ _) fun i _ hi => ?_).trans (prod_congr rfl fun i _ => ?_)
   · have : IsEmpty {x : Σ i, ι i // x.1 = i} := ⟨fun x => hi (mem_image.2 ⟨x.1, mem_univ _, x.2⟩)⟩
@@ -281,13 +267,11 @@ theorem orientation_concatBasis (e e' : I ≃ Fin n) (b b' : ∀ i, Basis (Fin (
       else -(concatBasis d e b).orientation := by
   have hpos : 0 < ∏ i, (b i).det (b' i) :=
     prod_pos fun i _ => (Basis.orientation_eq_iff_det_pos _ _).1 (h i)
-  rcases Int.units_eq_one_or (oddSign d e e') with hs | hs
-  · simp only [hs, ↓reduceIte]
-    rw [eq_comm, Basis.orientation_eq_iff_det_pos, det_concatBasis, hs]
+  split_ifs with hs
+  · rw [eq_comm, Basis.orientation_eq_iff_det_pos, det_concatBasis, hs]
     simpa using hpos
-  · simp only [hs, show (-1 : ℤˣ) ≠ 1 by decide, ↓reduceIte]
-    rw [← Basis.orientation_ne_iff_eq_neg, ne_comm, Ne,
-      Basis.orientation_eq_iff_det_pos, det_concatBasis, hs]
+  · rw [← Basis.orientation_ne_iff_eq_neg, ne_comm, Ne, Basis.orientation_eq_iff_det_pos,
+      det_concatBasis, Int.units_ne_iff_eq_neg.1 hs]
     simpa using hpos.le
 
 end Orientation
