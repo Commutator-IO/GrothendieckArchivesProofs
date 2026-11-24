@@ -100,9 +100,8 @@ noncomputable def numbering {L : Type*} [LinearOrder L] (r : X ↪ L) : X ≃ Fi
 
 theorem numbering_lt_numbering {L : Type*} [LinearOrder L] (r : X ↪ L) {x y : X} :
     numbering r x < numbering r y ↔ r x < r y := by
-  simp only [numbering, OrderIso.toEquiv_symm, trans_apply, ofInjective_apply,
-    OrderIso.coe_symm_toEquiv, OrderIso.lt_iff_lt]
-  exact Iff.rfl
+  simp [numbering]
+  rfl
 
 /-- The pairs `(x, y)` put in the order `x < y` by `f` and in the order `y < x` by `g`. -/
 def inversions {L L' : Type*} [LinearOrder L] [LinearOrder L'] (f : X → L) (g : X → L') :
