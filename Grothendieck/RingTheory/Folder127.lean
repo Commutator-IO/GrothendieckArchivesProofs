@@ -173,8 +173,7 @@ variable {R N : Type*} [CommRing R] [AddCommGroup N] [Module R N]
 /-- `1 ⊗ x` vanishes in `R ⧸ I ⊗ N` exactly when `x ∈ I N`. -/
 theorem one_tmul_eq_zero_iff (I : Ideal R) (x : N) :
     (1 : R ⧸ I) ⊗ₜ[R] x = 0 ↔ x ∈ I • (⊤ : Submodule R N) := by
-  rw [← (quotTensorEquivQuotSMul N I).injective.eq_iff, map_zero,
-    ← map_one (Ideal.Quotient.mk I),
+  rw [← (quotTensorEquivQuotSMul N I).map_eq_zero_iff, ← map_one (Ideal.Quotient.mk I),
     quotTensorEquivQuotSMul_mk_tmul, one_smul, Submodule.Quotient.mk_eq_zero]
 
 /-- If the inclusion of `K` into `N` stays injective after base change to `R ⧸ I`, then

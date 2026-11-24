@@ -59,7 +59,6 @@ relative to `Y` of the second row. These are special cases of the rows, not the 
 
 @[expose] public section
 
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Topology TensorProduct
 
 universe u

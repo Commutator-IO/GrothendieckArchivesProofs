@@ -29,11 +29,11 @@ def _set(topic, cotes):
 
 _set("AlgebraicGeometry",
      "2 11 13 16 18 29 37 40 41 49 50 53 55 58 62 63 64 82 83 90 91 93 101 125 126 128 "
-     "140_1 146 147")
+     "127 140_1 146 147")
 _set("RingTheory", "5 21 22 23 39 43 46 67 77 84 94 100 136 153 155 160")
 _set("CategoryTheory", "19 98 104 106 107 113 114 115 118 137 158 161_1 161_2 161_3")
 _set("Topology", "42 120 121 150 151")
-_set("Combinatorics", "74 76 79 80 81 88 89 148 152 154")
+_set("Combinatorics", "74 76 79 80 81 88 89 138 148 152 154")
 _set("Geometry", "69 70 72 73 85 86 161_6")
 _set("RepresentationTheory", "10 44 123")
 _set("GroupTheory", "133")
@@ -42,11 +42,17 @@ _set("Order", "156_1 156_2 156_3 156_4 156_5 156_6 156_7 156_8 156_9")
 _set("LinearAlgebra", "1")
 _set("AlgebraicTopology", "68")
 
-# Files of `Grothendieck/` that are not named after a folder.
+# Files of `Grothendieck/` that are not named after a folder, or whose topic is not their folder's
+# (161_2: the gluing lemma is order theory, the pseudo-field lemma ring theory).
+# `Grothendieck/RingTheory/Folder127.lean` is the commutative algebra of folder 127 (127 being
+# AlgebraicGeometry); a stem cannot tell it from `AlgebraicGeometry/Folder127.lean`, so it is only
+# noted here. The script moves files of `Grothendieck/` itself, not of the topic directories.
 NAMED = {
     "EffectiveVenken": "AlgebraicGeometry",
     "EffectiveVenkenRelation": "AlgebraicGeometry",
     "Ihes2ILL5": "CategoryTheory",
+    "Folder161_2Join": "Order",
+    "Folder161_2Pseudofield": "RingTheory",
 }
 IHES = "CategoryTheory"  # IhesSGA6_*: pseudo-coherence, K-groups of triangulated categories
 
