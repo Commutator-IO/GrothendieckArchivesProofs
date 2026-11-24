@@ -48,7 +48,10 @@ orthomodular.
   `ficelle_mem_supp` (`z₃ ∈ supp {z₁, z₂}`), `ficelle_not_distrib`
   (`{z₃} ∧ ({z₁} ∨ {z₂}) = {z₃}` while `({z₃} ∧ {z₁}) ∨ ({z₃} ∧ {z₂}) = ∅`),
   `ficelle_not_supp1` (`|z₁| ∩ |z₂| = ∅` though `z₁`, `z₂` are not disjoint) and
-  `ficelle_img_ssubset` (`|A| ⊊ |supp A|` for `A = {z₁, z₂}`).
+  `ficelle_img_ssubset` (`|A| ⊊ |supp A|` for `A = {z₁, z₂}`). `ficelle_not_distrib` computes
+  with the singletons `{z}`, which are the supports `A_z` only under `NoMinOrder`; the computation
+  in the lattice of supports itself, with the hypotheses it needs, is in
+  `Grothendieck/Order/Folder156_7Ficelle.lean` (`supports_not_distrib`).
 * **Page 98, « Rideau… ».** The Lemme 3 of page 97, `S ∥ S' ⇒ S' = (S ∨ S') ∩ ∁ S`, is the
   orthomodular law. `path_lemma3_false`: on the path `A' — A — B — B'` (disjoint = adjacent),
   `{A}` and `{B}` are disjoint supports, `{A} ∨ {B} = 𝓜`, and `(S ∨ S') ∩ ∁ S = {A', B} ≠ {B}`.

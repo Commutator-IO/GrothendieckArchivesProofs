@@ -132,6 +132,7 @@ public import Grothendieck.Order.Folder156_4
 public import Grothendieck.Order.Folder156_5
 public import Grothendieck.Order.Folder156_6
 public import Grothendieck.Order.Folder156_7
+public import Grothendieck.Order.Folder156_7Ficelle
 public import Grothendieck.Order.Folder156_8
 public import Grothendieck.Order.Folder156_9
 public import Grothendieck.Order.Folder161_2Join
