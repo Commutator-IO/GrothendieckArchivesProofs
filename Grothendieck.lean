@@ -123,6 +123,7 @@ public import Grothendieck.Geometry.Folder85
 public import Grothendieck.Geometry.Folder86
 public import Grothendieck.GroupTheory.Folder133
 public import Grothendieck.LinearAlgebra.Folder1
+public import Grothendieck.LinearAlgebra.Folder75
 public import Grothendieck.NumberTheory.Folder145
 public import Grothendieck.NumberTheory.Folder78
 public import Grothendieck.Order.Folder156_1
