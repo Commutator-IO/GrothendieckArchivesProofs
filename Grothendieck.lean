@@ -159,6 +159,7 @@ public import Grothendieck.RingTheory.Folder22Uniqueness
 public import Grothendieck.RingTheory.Folder23Normalisation
 public import Grothendieck.RingTheory.Folder39
 public import Grothendieck.RingTheory.Folder43
+public import Grothendieck.RingTheory.Folder43LocalCohomology
 public import Grothendieck.RingTheory.Folder46
 public import Grothendieck.RingTheory.Folder5
 public import Grothendieck.RingTheory.Folder67
