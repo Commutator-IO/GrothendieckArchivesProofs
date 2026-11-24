@@ -155,37 +155,35 @@ theorem not_nested_of_mem {z w : I × I'} (hw : w ∈ (lieu z).extent) : ¬ nest
 
 variable {z w : I × I'}
 
+variable {u : I × I'}
+
+/-- A lieu below `z` lies below every lieu of `A_z`. -/
+theorem lt_of_mem_of_lt (hw : w ∈ (lieu z).extent) (hu : u < z) : u < w :=
+  (mem_extent_lieu.1 hw u (.inr hu)).resolve_left fun k => not_nested_of_mem hw (.inr (k.trans hu))
+
+/-- A lieu above `z` lies above every lieu of `A_z`. -/
+theorem lt_of_mem_of_gt (hw : w ∈ (lieu z).extent) (hu : z < u) : w < u :=
+  (mem_extent_lieu.1 hw u (.inl hu)).resolve_right fun k => not_nested_of_mem hw (.inl (hu.trans k))
+
 /-- If `z.2` is not least, the lieux of `A_z` lie to the right of `z` on the first strand. -/
-theorem fst_le_of_mem (hw : w ∈ (lieu z).extent) (h : ¬ IsMin z.2) : z.1 ≤ w.1 := by
-  obtain ⟨b, hb⟩ := not_isMin_iff.1 h
-  have hu : ((z.1, b) : I × I') < z := Prod.lt_iff.2 (.inr ⟨le_rfl, hb⟩)
-  rcases mem_extent_lieu.1 hw _ (.inr hu) with k | k
-  · exact absurd (.inr (k.trans hu)) (not_nested_of_mem hw)
-  · exact (Prod.mk_le_mk.1 k.le).1
+theorem fst_le_of_mem (hw : w ∈ (lieu z).extent) (h : ¬ IsMin z.2) : z.1 ≤ w.1 :=
+  have ⟨b, hb⟩ := not_isMin_iff.1 h
+  (lt_of_mem_of_lt (u := (z.1, b)) hw (Prod.lt_iff.2 (.inr ⟨le_rfl, hb⟩))).le.1
 
 /-- If `z.2` is not greatest, the lieux of `A_z` lie to the left of `z` on the first strand. -/
-theorem le_fst_of_mem (hw : w ∈ (lieu z).extent) (h : ¬ IsMax z.2) : w.1 ≤ z.1 := by
-  obtain ⟨b, hb⟩ := not_isMax_iff.1 h
-  have hu : z < ((z.1, b) : I × I') := Prod.lt_iff.2 (.inr ⟨le_rfl, hb⟩)
-  rcases mem_extent_lieu.1 hw _ (.inl hu) with k | k
-  · exact (Prod.mk_le_mk.1 k.le).1
-  · exact absurd (.inl (hu.trans k)) (not_nested_of_mem hw)
+theorem le_fst_of_mem (hw : w ∈ (lieu z).extent) (h : ¬ IsMax z.2) : w.1 ≤ z.1 :=
+  have ⟨b, hb⟩ := not_isMax_iff.1 h
+  (lt_of_mem_of_gt (u := (z.1, b)) hw (Prod.lt_iff.2 (.inr ⟨le_rfl, hb⟩))).le.1
 
 /-- If `z.1` is not least, the lieux of `A_z` lie to the right of `z` on the second strand. -/
-theorem snd_le_of_mem (hw : w ∈ (lieu z).extent) (h : ¬ IsMin z.1) : z.2 ≤ w.2 := by
-  obtain ⟨a, ha⟩ := not_isMin_iff.1 h
-  have hu : ((a, z.2) : I × I') < z := Prod.lt_iff.2 (.inl ⟨ha, le_rfl⟩)
-  rcases mem_extent_lieu.1 hw _ (.inr hu) with k | k
-  · exact absurd (.inr (k.trans hu)) (not_nested_of_mem hw)
-  · exact (Prod.mk_le_mk.1 k.le).2
+theorem snd_le_of_mem (hw : w ∈ (lieu z).extent) (h : ¬ IsMin z.1) : z.2 ≤ w.2 :=
+  have ⟨a, ha⟩ := not_isMin_iff.1 h
+  (lt_of_mem_of_lt (u := (a, z.2)) hw (Prod.lt_iff.2 (.inl ⟨ha, le_rfl⟩))).le.2
 
 /-- If `z.1` is not greatest, the lieux of `A_z` lie to the left of `z` on the second strand. -/
-theorem le_snd_of_mem (hw : w ∈ (lieu z).extent) (h : ¬ IsMax z.1) : w.2 ≤ z.2 := by
-  obtain ⟨a, ha⟩ := not_isMax_iff.1 h
-  have hu : z < ((a, z.2) : I × I') := Prod.lt_iff.2 (.inl ⟨ha, le_rfl⟩)
-  rcases mem_extent_lieu.1 hw _ (.inl hu) with k | k
-  · exact (Prod.mk_le_mk.1 k.le).2
-  · exact absurd (.inl (hu.trans k)) (not_nested_of_mem hw)
+theorem le_snd_of_mem (hw : w ∈ (lieu z).extent) (h : ¬ IsMax z.1) : w.2 ≤ z.2 :=
+  have ⟨a, ha⟩ := not_isMax_iff.1 h
+  (lt_of_mem_of_gt (u := (a, z.2)) hw (Prod.lt_iff.2 (.inl ⟨ha, le_rfl⟩))).le.2
 
 /-- **`A_z = {z}`**, when one coordinate of `z` is neither least nor greatest, or when neither
 coordinate is least, or neither is greatest. The condition fails only near the anti-corners:
@@ -258,9 +256,8 @@ theorem supports_not_distrib (h13 : x₁ < x₃) (h32 : x₃ < x₂) (h23 : y₂
     (mem_extent_lieu_sup_of_between h13 h32 h23 h31))), ?_, fun h => ?_⟩
   · rw [lieu_inf_eq_bot h13 h32 (not_mem_extent_lieu_left h13 h31 hz₁),
       lieu_inf_eq_bot h13 h32 (not_mem_extent_lieu_right h32 h23 hz₂), bot_sup_eq]
-  · have := congrArg Concept.extent h
-    rw [extent_lieu_between h13 h32, extent_bot_supports] at this
-    exact singleton_ne_empty _ this
+  · exact singleton_ne_empty _ ((extent_lieu_between h13 h32).symm.trans
+      ((congrArg Concept.extent h).trans extent_bot_supports))
 
 /-- **Pages 82–83, the supports of the two-strand string are not distributive**, as soon as the
 strands carry three crossing lieux as in `supports_not_distrib`. -/
@@ -297,13 +294,12 @@ theorem coe_polarF (S : Finset X) : (polarF r S : Set X) = lowerPolar r S := by
 @[montpellier "156-7, 81–83"]
 theorem fin3_distrib_corner :
     lieu ((1, 1) : Fin 3 × Fin 3) ⊓ (lieu (0, 2) ⊔ lieu (2, 0)) =
-      lieu (1, 1) ⊓ lieu (0, 2) ⊔ lieu (1, 1) ⊓ lieu (2, 0) := by
-  have h : ∀ z : Fin 3 × Fin 3, z ∈ ({(0, 2), (2, 0)} : Set _) →
-      lieu ((1, 1) : Fin 3 × Fin 3) ≤ lieu z := by
-    rintro z (rfl | rfl) <;>
-    exact Concept.ofObjects_le_iff.2 (singleton_subset_iff.2 (mem_extent_lieu.2 (by decide)))
-  rw [inf_eq_left.2 (h _ (by simp)), inf_eq_left.2 (h _ (by simp)), sup_idem,
-    inf_eq_left.2 ((h _ (by simp)).trans le_sup_left)]
+      lieu (1, 1) ⊓ lieu (0, 2) ⊔ lieu (1, 1) ⊓ lieu (2, 0) :=
+  Concept.ext <| by
+    simp only [Concept.extent_sup, Concept.extent_inf, Concept.intent_inf, lieu,
+      Concept.extent_ofObjects, Concept.intent_ofObjects, upperPolar_eq_lowerPolar,
+      ← Finset.coe_singleton, ← coe_polarF, ← Finset.coe_inter, Finset.coe_inj]
+    decide
 
 /-- The edition's check on the `5 × 5` grid: `A_z = {z}` for `z₁ = (1, 3)`, `z₂ = (3, 1)` and
 `z₃ = (2, 2)`. -/
