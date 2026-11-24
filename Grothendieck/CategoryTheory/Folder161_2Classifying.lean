@@ -238,9 +238,9 @@ theorem existsUnique_quasiInverse_iff :
     exact ⟨q a, (hq a).1⟩
 
 /-- **The idempotent of page 42.** With `y = q(a)` (only `a² y = a` is needed), `e = a y` is
-@[montpellier "161-2, 42"]
 idempotent and `e a = a`: `A ≅ eA × (1 − e)A`, with `a` invertible in the first factor and zero
 in the second, which is `A ≅ A_a × A/aA`. -/
+@[montpellier "161-2, 42"]
 theorem mul_quasiInverse_idempotent {a y : A} (h₁ : a * a * y = a) :
     IsIdempotentElem (a * y) ∧ a * y * a = a :=
   ⟨by unfold IsIdempotentElem; linear_combination y * h₁, by linear_combination h₁⟩
