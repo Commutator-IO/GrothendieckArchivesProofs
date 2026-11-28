@@ -40,6 +40,7 @@ public import Grothendieck.AlgebraicGeometry.Folder2
 public import Grothendieck.AlgebraicGeometry.Folder29
 public import Grothendieck.AlgebraicGeometry.Folder29TameInertia
 public import Grothendieck.AlgebraicGeometry.Folder2KCoherent
+public import Grothendieck.AlgebraicGeometry.Folder32PullbackKernelIndex
 public import Grothendieck.AlgebraicGeometry.Folder37
 public import Grothendieck.AlgebraicGeometry.Folder40
 public import Grothendieck.AlgebraicGeometry.Folder41
