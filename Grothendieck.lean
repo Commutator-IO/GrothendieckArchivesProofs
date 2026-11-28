@@ -60,6 +60,7 @@ public import Grothendieck.AlgebraicGeometry.Folder58LefPermanence
 public import Grothendieck.AlgebraicGeometry.Folder62
 public import Grothendieck.AlgebraicGeometry.Folder63
 public import Grothendieck.AlgebraicGeometry.Folder64
+public import Grothendieck.AlgebraicGeometry.Folder64Legendre
 public import Grothendieck.AlgebraicGeometry.Folder82
 public import Grothendieck.AlgebraicGeometry.Folder83
 public import Grothendieck.AlgebraicGeometry.Folder90
