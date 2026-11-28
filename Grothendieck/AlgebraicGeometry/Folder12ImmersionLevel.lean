@@ -92,9 +92,7 @@ weight `≤ 2 inf(i, n)`. -/
 @[montpellier "12, 115, 119"]
 theorem weight_le (h : PageBounds n nz wt lv) (hi : p + q = i) (hpq : nz p q) :
     wt p q ≤ 2 * min i n := by
-  have := h.support p q hpq
-  have := h.weight p q hpq
-  omega
+  have := h.support p q hpq; have := h.weight p q hpq; omega
 
 /-- `12-immersion-level-bound` (folder 12, pp. 115, 119): every `E₂^{p,q}` with `p + q = i` has
 level `≤ inf(i, 2n − 1 − i)`, the level row of the framed table of page 119. -/
@@ -102,18 +100,15 @@ level `≤ inf(i, 2n − 1 − i)`, the level row of the framed table of page 11
 theorem level_le_sharp (h : PageBounds n nz wt lv) (hi : p + q = i) (hpq : nz p q) :
     lv p q ≤ min i (2 * n - 1 - i) := by
   rcases Nat.eq_zero_or_pos q with rfl | hq
-  · have := h.level_zero p hpq
-    omega
-  · have := h.level_pos p q hq hpq
-    omega
+  · have := h.level_zero p hpq; omega
+  · have := h.level_pos p q hq hpq; omega
 
 /-- `12-immersion-level-bound` (folder 12, pp. 115, 119): every `E₂^{p,q}` with `p + q = i` has
 level `≤ inf(i, n − 1)`. -/
 @[montpellier "12, 115, 119"]
 theorem level_le (h : PageBounds n nz wt lv) (hi : p + q = i) (hpq : nz p q) :
     lv p q ≤ min i (n - 1) := by
-  have := level_le_sharp h hi hpq
-  omega
+  have := level_le_sharp h hi hpq; omega
 
 /-- `12-immersion-level-bound` (folder 12, p. 119, boxed): a constituent of `Rⁱf_* ℚ_ℓ` of weight
 `w` and level `l`, coming from some `E₂^{p,q}` with `p + q = i` (hypothesis: the passage to the
@@ -167,10 +162,8 @@ for `n = 2`, `E₂^{1,1}` satisfies the margin's `p + 2q ≤ 2n` and has level b
 @[montpellier "12, 115"]
 theorem not_summary_bound :
     ¬ ∀ n p q, 0 < q → p + 2 * q ≤ 2 * n →
-      min p (2 * n - 2 * q - p) ≤ min (p + q) (2 * n - 2 - (p + q)) := by
-  intro h
-  have := h 2 1 1 (by decide) (by decide)
-  simp at this
+      min p (2 * n - 2 * q - p) ≤ min (p + q) (2 * n - 2 - (p + q)) :=
+  fun h => by simpa using h 2 1 1 (by decide) (by decide)
 
 /-- With the general formula `inf(p, 2n − 2q − p)` taken at `q = 0`, the term `E₂^{n,0}` would
 allow level `n`, above the boxed `n − 1`; page 115 writes `inf(p, 2n − 2 − p)` for `E₂^{p0}`,
