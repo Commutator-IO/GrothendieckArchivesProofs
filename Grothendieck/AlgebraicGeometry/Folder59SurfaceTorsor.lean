@@ -7,7 +7,8 @@ module
 
 public import Mathlib.Algebra.Module.NatInt
 public import Mathlib.RingTheory.Coprime.Lemmas
-public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Module
 import Grothendieck.Attr
 
 /-!
@@ -82,10 +83,8 @@ by `χ^{n−2} gcd(χ − 1, 2)`. -/
 @[montpellier "59, 13"]
 theorem zsmul_eq_zero_of_gcd {χ : ℤ} {n : ℕ} {c : G} (h₁ : (χ ^ (n - 2) * (χ - 1)) • c = 0)
     (h₂ : (2 * χ ^ (n - 2)) • c = 0) : (χ ^ (n - 2) * (Int.gcd (χ - 1) 2 : ℤ)) • c = 0 := by
-  rw [Int.gcd_eq_gcd_ab, show χ ^ (n - 2) * ((χ - 1) * Int.gcdA (χ - 1) 2 + 2 * Int.gcdB (χ - 1) 2)
-    = Int.gcdA (χ - 1) 2 * (χ ^ (n - 2) * (χ - 1)) + Int.gcdB (χ - 1) 2 * (2 * χ ^ (n - 2)) by ring,
-    add_smul, mul_smul _ (χ ^ (n - 2) * (χ - 1)), mul_smul _ (2 * χ ^ (n - 2)), h₁, h₂, smul_zero,
-    smul_zero, add_zero]
+  rw [Int.gcd_eq_gcd_ab]
+  linear_combination (norm := module) Int.gcdA (χ - 1) 2 • h₁ + Int.gcdB (χ - 1) 2 • h₂
 
 /-- `59-surface-even-chi-torsor` (folder 59, p. 13): if moreover `χ` is even, `χ − 1` is odd, so
 `gcd(χ − 1, 2) = 1` and `χ^{n−2} • c = 0`. -/
