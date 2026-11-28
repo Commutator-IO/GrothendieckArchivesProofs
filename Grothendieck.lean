@@ -27,6 +27,7 @@ public import Grothendieck.AlgebraicGeometry.Folder126RadicialEtale
 public import Grothendieck.AlgebraicGeometry.Folder126RadicialEtaleGlobal
 public import Grothendieck.AlgebraicGeometry.Folder126Sheets
 public import Grothendieck.AlgebraicGeometry.Folder127
+public import Grothendieck.AlgebraicGeometry.Folder127ClosureFlatness
 public import Grothendieck.AlgebraicGeometry.Folder128
 public import Grothendieck.AlgebraicGeometry.Folder128FlatBaseChange
 public import Grothendieck.AlgebraicGeometry.Folder13
