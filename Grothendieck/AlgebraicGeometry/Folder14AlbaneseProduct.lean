@@ -103,13 +103,8 @@ theorem extProd_single_single (p : X) (p' : X') (n n' : ℤ) :
 @[montpellier "14, 29"]
 theorem deg_extProd (z : X →₀ ℤ) (z' : X' →₀ ℤ) : deg (extProd z z') = deg z * deg z' := by
   induction z using Finsupp.induction_linear with
-  | zero => simp
-  | add z₁ z₂ h₁ h₂ => simp [h₁, h₂, add_mul]
-  | single p n =>
-    induction z' using Finsupp.induction_linear with
-    | zero => simp
-    | add z₁ z₂ h₁ h₂ => simp_all [mul_add]
-    | single p' n' => simp
+  | single p n => induction z' using Finsupp.induction_linear <;> simp_all [mul_add]
+  | _ => simp_all [add_mul]
 
 /-- The Albanese sum of an exterior product, for the Albanese map `(p, p′) ↦ (a p, a′ p′)` of
 `X × X′` to `A × A′`: `albSum (z × z′) = (deg z′ • albSum a z, deg z • albSum a′ z′)`. -/
@@ -118,13 +113,10 @@ theorem albSum_extProd (a : X → A) (a' : X' → A') (z : X →₀ ℤ) (z' : X
     albSum (fun q => (a q.1, a' q.2)) (extProd z z') =
       (deg z' • albSum a z, deg z • albSum a' z') := by
   induction z using Finsupp.induction_linear with
-  | zero => simp [Prod.zero_eq_mk]
-  | add z₁ z₂ h₁ h₂ => simp [h₁, h₂, smul_add, add_smul]
   | single p n =>
-    induction z' using Finsupp.induction_linear with
-    | zero => simp [Prod.zero_eq_mk]
-    | add z₁ z₂ h₁ h₂ => simp_all [smul_add, add_smul]
-    | single p' n' => simp [mul_smul, smul_comm n' n]
+    induction z' using Finsupp.induction_linear <;>
+      simp_all [Prod.zero_eq_mk, smul_add, add_smul, mul_smul, smul_comm n]
+  | _ => simp_all [Prod.zero_eq_mk, smul_add, add_smul]
 
 /-- `14-albanese-equivalence-ring` (folder 14, p. 29): the exterior product of two 0-cycles of
 degree `0` has zero Albanese sum on `X × X′`. -/
