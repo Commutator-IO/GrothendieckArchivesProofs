@@ -79,9 +79,8 @@ non-negative square root of `d`. -/
 @[montpellier "9, 26"]
 theorem nonneg_and_sq_eq_of_eq_mul_self (Δ : M →* K) {u v : M} {d : K}
     (hd : Δ u * Δ (star u) = d) (hv : star v = v) (huv : u = v * v) :
-    0 ≤ Δ u ∧ Δ u ^ 2 = d := by
-  subst huv
-  exact ⟨by simpa using mul_self_nonneg (Δ v), sq_eq_of_star_eq Δ hd (by rw [star_mul, hv])⟩
+    0 ≤ Δ u ∧ Δ u ^ 2 = d :=
+  ⟨huv ▸ by simpa using mul_self_nonneg (Δ v), sq_eq_of_star_eq Δ hd (by rw [huv, star_mul, hv])⟩
 
 /-- `9-symmetric-positive-det-sqrt-degree` (folder 9, pp. 24, 26), with real values:
 `Δ(u) = √d`. -/
