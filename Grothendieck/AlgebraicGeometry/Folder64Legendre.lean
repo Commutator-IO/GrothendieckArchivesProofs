@@ -113,17 +113,8 @@ lemma rootsCurve_comp (e : Fin 3 → R) (σ : Perm (Fin 3)) : rootsCurve (e ∘ 
 lemma variableChange_rootsCurve (u : Rˣ) (r : R) (e e' : Fin 3 → R)
     (h : ∀ i, e i = u ^ 2 * e' i + r) :
     (⟨u, r, 0, 0⟩ : VariableChange R) • rootsCurve e = rootsCurve e' := by
-  have hu (n : ℕ) : (↑u⁻¹ : R) ^ n * (u : R) ^ n = 1 := by
-    rw [← mul_pow, Units.inv_mul, one_pow]
-  ext
-  · simp [variableChange_a₁, rootsCurve]
-  · simp only [variableChange_a₂, rootsCurve, h]
-    linear_combination (-(e' 0 + e' 1 + e' 2)) * hu 2
-  · simp [variableChange_a₃, rootsCurve]
-  · simp only [variableChange_a₄, rootsCurve, h]
-    linear_combination (e' 0 * e' 1 + e' 0 * e' 2 + e' 1 * e' 2) * hu 4
-  · simp only [variableChange_a₆, rootsCurve, h]
-    linear_combination (-(e' 0 * e' 1 * e' 2)) * hu 6
+  ext <;> simp [variableChange_a₁, variableChange_a₂, variableChange_a₃, variableChange_a₄,
+    variableChange_a₆, rootsCurve, h] <;> ring_nf <;> simp [← mul_pow]
 
 /-- The Vandermonde product of three roots changes by the sign of a permutation. -/
 lemma vandermonde_comp (e : Fin 3 → R) (σ : Perm (Fin 3)) :
@@ -133,7 +124,7 @@ lemma vandermonde_comp (e : Fin 3 → R) (σ : Perm (Fin 3)) :
     simp [Perm.mul_apply, swap_apply_def, Perm.sign_mul, Perm.sign_swap'] <;> ring
 
 lemma sign_sq (σ : Perm (Fin 3)) : ((Perm.sign σ : ℤ) : R) ^ 2 = 1 := by
-  rcases Int.units_eq_one_or (Perm.sign σ) with h | h <;> simp [h]
+  simp [← Int.cast_pow, ← Units.val_pow_eq_pow_val]
 
 /-! ### The Legendre curve -/
 
@@ -162,12 +153,10 @@ theorem legendre_j (t : R) [(legendre t).IsElliptic] :
     (legendre t).j * (t ^ 2 * (t - 1) ^ 2) = 256 * (t ^ 2 - t + 1) ^ 3 := by
   have h1 : (legendre t).j * (legendre t).Δ = (legendre t).c₄ ^ 3 := by
     rw [j, ← coe_Δ', mul_right_comm, Units.inv_mul, one_mul]
-  have h16 : IsUnit (16 : R) := by
-    have := (legendre t).isUnit_Δ
-    rw [legendre_Δ] at this
-    exact isUnit_of_mul_isUnit_left (isUnit_of_mul_isUnit_left this)
   rw [legendre_Δ, legendre_c₄] at h1
-  exact h16.mul_left_cancel (by linear_combination h1)
+  have h16 := legendre_Δ t ▸ (legendre t).isUnit_Δ
+  exact (isUnit_of_mul_isUnit_left (isUnit_of_mul_isUnit_left h16)).mul_left_cancel
+    (by linear_combination h1)
 
 /-! ### The six substitutions -/
 
@@ -203,8 +192,7 @@ theorem legendre_j_perm (σ : Perm (Fin 3)) {t t' : R} (u : Rˣ) (hu : (u : R) ^
     (ht' : t' * scale t σ = numer t σ) [(legendre t).IsElliptic] [(legendre t').IsElliptic] :
     (legendre t').j = (legendre t).j := by
   rw [← variableChange_j (W := legendre t) (C := ⟨u, ![0, 1, t] (σ 0), 0, 0⟩)]
-  congr 1
-  exact (legendre_variableChange σ u hu ht').symm
+  simp_rw [legendre_variableChange σ u hu ht']
 
 /-! ### The Möbius map of a substitution -/
 
@@ -280,10 +268,8 @@ theorem pinned_tangent (σ : Perm (Fin 3)) {t t' ζ : R} (u : Rˣ)
     (ht' : t' * scale t σ = numer t σ) :
     u * F t' * scale t σ = (Perm.sign σ : ℤ) * ζ * F t ∧
       (((Perm.sign σ : ℤ) : R) * ζ) ^ 2 = (Perm.sign σ : ℤ) := by
-  have hs := sign_sq (R := R) σ
-  constructor
-  · linear_combination (F t' * scale t σ) * hu + ζ * scale_pow_three_mul_F σ ht'
-  · linear_combination ((Perm.sign σ : ℤ) : R) ^ 2 * hζ + ((Perm.sign σ : ℤ) : R) * hs
+  refine ⟨?_, by rw [mul_pow, sign_sq, hζ, one_mul]⟩
+  linear_combination (F t' * scale t σ) * hu + ζ * scale_pow_three_mul_F σ ht'
 
 /-- The pinning is respected: `s² (C t + D)² = A D − B C`, that is `s² = g_σ'(t)`, the
 derivative at `t` of the Möbius map of `σ` (`det_mobius`). -/
