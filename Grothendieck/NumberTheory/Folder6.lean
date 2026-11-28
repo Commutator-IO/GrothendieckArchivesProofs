@@ -184,9 +184,8 @@ theorem exists_sq_eq_of_toZMod_eq_sq (hp2 : p ≠ 2) {w : ℤ_[p]} {c : ZMod p} 
   set a : ℤ_[p] := (c.val : ℤ_[p])
   have ha : PadicInt.toZMod a = c := by simp [a]
   have h1 : ‖a‖ = 1 := (PadicInt.norm_le_one a).antisymm (not_lt.1 fun h' ↦ hc (ha ▸ hker.2 h'))
-  have h2 : ‖(2 : ℤ_[p])‖ = 1 := by
-    exact_mod_cast PadicInt.norm_natCast_eq_one_iff.2
-      ((Nat.coprime_primes hp.out Nat.prime_two).2 hp2)
+  have h2 : ‖(2 : ℤ_[p])‖ = 1 := mod_cast PadicInt.norm_natCast_eq_one_iff.2
+    ((Nat.coprime_primes hp.out Nat.prime_two).2 hp2)
   obtain ⟨x, hx, -⟩ := hensels_lemma (F := X ^ 2 - C w) (a := a) (by
     simpa [h1, one_add_one_eq_two, h2] using (hker (y := a ^ 2 - w)).1 (by simp [ha, h]))
   exact ⟨x, by simpa [sub_eq_zero] using hx⟩
@@ -197,24 +196,20 @@ non-square, the norm of `ℤ_p[√u]` maps its units onto `ℤ_p*`. -/
 theorem exists_sq_sub_mul_sq_eq (hp2 : p ≠ 2) (u v : ℤ_[p]ˣ) :
     ∃ x y : ℤ_[p], x ^ 2 - u * y ^ 2 = v := by
   have hodd : Fintype.card (ZMod p) % 2 = 1 := by
-    simpa [ZMod.card, Nat.odd_iff] using hp.out.odd_of_ne_two hp2
+    simpa [Nat.odd_iff] using hp.out.odd_of_ne_two hp2
   have hu := (u.isUnit.map (PadicInt.toZMod (p := p))).ne_zero
   have hv := (v.isUnit.map (PadicInt.toZMod (p := p))).ne_zero
   obtain ⟨a, b, hab⟩ := FiniteField.exists_root_sum_quadratic
     (degree_X_pow_sub_C two_pos (PadicInt.toZMod (v : ℤ_[p])))
     (degree_C_mul_X_pow 2 (neg_ne_zero.2 hu)) hodd
   simp only [eval_sub, eval_pow, eval_X, eval_C, eval_mul] at hab
-  have hb : PadicInt.toZMod (b.val : ℤ_[p]) = b := by simp
   by_cases ha : a = 0
   · subst ha
-    have hi : PadicInt.toZMod (u : ℤ_[p]) * PadicInt.toZMod ↑u⁻¹ = 1 := by
-      rw [← map_mul, u.mul_inv, map_one]
     obtain ⟨y, hy⟩ := exists_sq_eq_of_toZMod_eq_sq hp2 (w := -(v * ↑u⁻¹)) (c := b)
-      (by rintro rfl; exact hv (by simpa using hab)) (by
-        simp only [map_neg, map_mul]; linear_combination PadicInt.toZMod ↑u⁻¹ * hab + b ^ 2 * hi)
+      (by rintro rfl; exact hv (by simpa using hab)) (by simp; field_simp; linear_combination hab)
     exact ⟨0, y, by rw [hy]; linear_combination (v : ℤ_[p]) * u.mul_inv⟩
   · obtain ⟨x, hx⟩ := exists_sq_eq_of_toZMod_eq_sq hp2 (w := v + u * (b.val : ℤ_[p]) ^ 2) ha
-      (by simp only [map_add, map_mul, map_pow, hb]; linear_combination -hab)
+      (by simp; linear_combination -hab)
     exact ⟨x, b.val, by rw [hx]; ring⟩
 
 end Norm
