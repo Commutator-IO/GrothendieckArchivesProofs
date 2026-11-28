@@ -66,6 +66,7 @@ public import Grothendieck.AlgebraicGeometry.Folder90Comodules
 public import Grothendieck.AlgebraicGeometry.Folder91HomUnramified
 public import Grothendieck.AlgebraicGeometry.Folder93
 public import Grothendieck.AlgebraicGeometry.Folder93Stacks
+public import Grothendieck.AlgebraicGeometry.Folder9SymmetricDeterminant
 public import Grothendieck.AlgebraicTopology.Folder68
 public import Grothendieck.Attr
 public import Grothendieck.CategoryTheory.Folder104
