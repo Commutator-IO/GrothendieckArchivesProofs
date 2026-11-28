@@ -108,6 +108,12 @@ reading's. « tout » and « artinien » on p. 15 are uncertain readings, and th
 « artinien » be checked on the facsimile first. To compare with EGA IV 11.8 and 11.10 and
 Raynaud–Gruson I §§ 4–5.
 
+Proved in Lean (`Grothendieck/AlgebraicGeometry/Folder127ClosureFlatness.lean`): the direct
+implication, for every base change (`Grothendieck.Folder127.IsFlatClosureSolution.baseChange`),
+and what the condition is over a trait
+(`Grothendieck.Folder127.isFlatClosureSolution_iff_of_isDedekindDomain`). The converse
+implication, which is the content of the criterion, is not.
+
 Choices: the affine case described in the module docstring (`X = Spec B`, `Y = Spec A`,
 `U = D(g)`), with `A` and `B` noetherian; the points of `X − U` are the primes containing `g`; a
 trait is the spectrum of a discrete valuation ring. Not formalised: non-affine `X`, a
