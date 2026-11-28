@@ -21,6 +21,9 @@ proved; a `def … : Prop` asserts nothing.
 ## Main definitions
 
 * `CdShiftThree` (p:cd): the page's conjectured global bound, as stated. Faithful.
+* `CdHenselianOpen` (p:cd, conjecture 4° of the same page): the bound for the opens of the
+  spectrum of a henselian local domain of mixed characteristic. Faithful to the leaf as read,
+  with the doubtful « affine » said below.
 * `LowerBoundExceptions`, `LowerBoundRegular`, `LowerBoundCatenaryJapanese` (p:lower): the page's
   inequality with its two exceptions, and its two refinements. Faithful, with the reading of
   « `k` itself real » said below.
@@ -106,7 +109,8 @@ Status: open. The constant cannot be lowered to `2` (`X = Spec ℤ`, `p` odd: th
 `2`, while `cd_p(Spec ℤ) = 3`, SGA 4 X 6.1). Local forms are known (Gabber and Orgogozo, Th. 6.1;
 Mathew, Prop. 4.5); globally, Clausen and Mathew give `cd_p(X) ≤ dim X + sup_x cd_p k(x)` for
 `X` qcqs of finite Krull dimension. A printed bound of this shape for every affine scheme of mixed
-characteristic, or a counterexample, would settle it. -/
+characteristic, or a counterexample, would settle it. Finding `31-imperfection-bound-conjectures`
+(with `CdHenselianOpen`). -/
 @[montpellier "31, 84"]
 def CdShiftThree (p : ℕ) [Fact p.Prime] : Prop :=
   ∀ (A : Type u) [CommRing A], ¬ IsUnit (p : A) →
@@ -114,6 +118,31 @@ def CdShiftThree (p : ℕ) [Fact p.Prime] : Prop :=
       max (⨆ P : PrimeSpectrum A, fieldCd p P.asIdeal.ResidueField)
         ((⨆ P : {P : PrimeSpectrum A // P.asIdeal ∈ (Ideal.span {(p : A)}).minimalPrimes},
             pDegreeExponent p P.1.asIdeal.ResidueField) + 3)
+
+/-- **p:cd, conjecture 4°: the henselian local bound** (folder 31, p. 84, « Conjectures sur la
+cohomologie des schémas affines »; inventory dating [1963–1973]; finding
+`31-imperfection-bound-conjectures`). Let `A` be a henselian local domain whose residue field `k`
+has characteristic the prime `p` and whose fraction field has characteristic `0`. For every
+affine open `U` of `Spec A`, `cd_p(U) ≤ dim A + ν(k) + cd_p(k)`, where `p^{ν(k)} = [k : k^p]`.
+As with `CdShiftThree`, the page writes `ℓ` for the prime. The bound is read in `ℕ∞`: it says
+nothing when `dim A` is infinite (the hypothesis `ringKrullDim A = d` then fails for every
+`d : ℕ`) or when `ν(k)` is.
+
+Choices: « un ouvert affine » is the reading of a machine pass of 2026-11-24, and « affine » is
+doubtful. Without it the statement, for every open `U`, would be stronger; the affine reading is
+the one written, so this is the leaf as read, and a consequence of the other reading. `U` is an
+open subscheme (`Scheme.Opens.toScheme`), and `IsAffineOpen` is Mathlib's.
+
+Status: the case `U ⊆ Spec A[1/p]` with `A` excellent follows from Gabber and Orgogozo, Th. 6.1,
+with `dim_p(k) ≤ ν(k) + cd_p(k)`. What remains open is the case of `U` meeting `V(p)`. -/
+@[montpellier "31, 84"]
+def CdHenselianOpen (p : ℕ) [Fact p.Prime] : Prop :=
+  ∀ (A : Type u) [CommRing A] [IsDomain A] [HenselianLocalRing A] (d : ℕ),
+    ringChar (IsLocalRing.ResidueField A) = p → ringChar (FractionRing A) = 0 →
+    ringKrullDim A = d → ∀ U : (Spec (CommRingCat.of A)).Opens, IsAffineOpen U →
+      etaleCd p U.toScheme ≤
+        (d : ℕ∞) + pDegreeExponent p (IsLocalRing.ResidueField A) +
+          fieldCd p (IsLocalRing.ResidueField A)
 
 section Lower
 
