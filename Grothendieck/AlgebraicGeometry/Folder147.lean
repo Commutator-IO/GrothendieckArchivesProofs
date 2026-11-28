@@ -108,10 +108,8 @@ proved. -/
 theorem class_strata {u s₀ s₁ z₂ z₃ one L : M} (hline : u + s₀ + s₁ + z₂ + z₃ = L)
     (hS₀ : s₀ + z₂ + z₃ = one) (hS₁ : s₁ + z₂ + z₃ = one) :
     u = L - one - one + z₂ + z₃ ∧ s₀ = one - z₂ - z₃ ∧ s₁ = one - z₂ - z₃ := by
-  refine ⟨?_, ?_, ?_⟩
-  · linear_combination (norm := abel) hline - hS₀ - hS₁
-  · linear_combination (norm := abel) hS₀
-  · linear_combination (norm := abel) hS₁
+  exact ⟨by linear_combination (norm := abel) hline - hS₀ - hS₁,
+    by linear_combination (norm := abel) hS₀, by linear_combination (norm := abel) hS₁⟩
 
 end Strata
 
@@ -163,10 +161,8 @@ space, not the curves (that number, `p`, is not proved here). -/
 theorem pointCount_M11 (p : ℕ) :
     (1 / 2 : K) * (p - 2) + 1 / 4 + 1 / 6 = (1 / 2) * (p - 1) - 1 / 12 ∧
       (1 / 2 : K) * (p - 1) - 1 / 12 ≠ p := by
-  refine ⟨by ring, fun h => ?_⟩
-  have h' : ((6 * p + 7 : ℕ) : K) = 0 := by
-    push_cast
-    linear_combination (-12 : K) * h
-  exact Nat.cast_ne_zero.2 (by omega) h'
+  refine ⟨by ring, fun h => Nat.cast_add_one_ne_zero (R := K) (6 * p + 6) ?_⟩
+  push_cast
+  linear_combination (-12 : K) * h
 
 end Grothendieck.Folder147
