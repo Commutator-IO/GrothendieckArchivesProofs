@@ -136,9 +136,8 @@ theorem modMap_mk (f : G →+ P) (x : G) :
     modMap n f (x : Mod n G) = (f x : Mod n P) := rfl
 
 theorem modMap_comp (f : G →+ P) (g : P →+ Q) :
-    modMap n (g.comp f) = (modMap n g).comp (modMap n f) := by
-  ext x
-  rfl
+    modMap n (g.comp f) = (modMap n g).comp (modMap n f) :=
+  QuotientAddGroup.addMonoidHom_ext _ rfl
 
 theorem mk_eq_zero {x : G} : (x : Mod n G) = 0 ↔ ∃ y, n • y = x :=
   QuotientAddGroup.eq_zero_iff x
@@ -264,13 +263,11 @@ theorem modMap_surjective : Surjective (modMap n v) := by
   obtain ⟨p, rfl⟩ := h.surjective q
   exact ⟨p, rfl⟩
 
-theorem range_delta : (h.delta n).range = (modMap n i).ker := by
-  ext x
-  exact (h.exact_delta_modMap x).symm
+theorem range_delta : (h.delta n).range = (modMap n i).ker :=
+  AddSubgroup.ext fun x => (h.exact_delta_modMap x).symm
 
-theorem ker_delta : (h.delta n).ker = (torsMap n v).range := by
-  ext x
-  exact h.exact_torsMap_delta x
+theorem ker_delta : (h.delta n).ker = (torsMap n v).range :=
+  AddSubgroup.ext h.exact_torsMap_delta
 
 end ShortExact
 
