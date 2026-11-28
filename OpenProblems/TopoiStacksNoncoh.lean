@@ -57,9 +57,12 @@ needs no polynomial computation.)
 
 ## Not formalised
 
-The open question (do they have enough points?) is not touched here. This does **not** prove that
-the classifying topoi are not coherent for any presentation: coherence of a topos is not stated
-here, and Mathlib has neither geometric theories nor their classifying topoi.
+The question whether these classifying topoi have enough points is not touched here; the edition
+answers it (yes) by an argument not formalised and not checked by a specialist, given in
+`OpenProblems/TopoiStacks.lean` (countable geometric theories, Makkai–Reyes, *First Order
+Categorical Logic*, LNM 611, Theorem 6.2.4). This does **not** prove that the classifying topoi
+are not coherent for any presentation: coherence of a topos is not stated here, and Mathlib has
+neither geometric theories nor their classifying topoi.
 
 ## References
 
