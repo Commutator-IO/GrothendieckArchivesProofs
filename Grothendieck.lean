@@ -30,6 +30,7 @@ public import Grothendieck.AlgebraicGeometry.Folder127
 public import Grothendieck.AlgebraicGeometry.Folder127ClosureFlatness
 public import Grothendieck.AlgebraicGeometry.Folder128
 public import Grothendieck.AlgebraicGeometry.Folder128FlatBaseChange
+public import Grothendieck.AlgebraicGeometry.Folder12ImmersionLevel
 public import Grothendieck.AlgebraicGeometry.Folder13
 public import Grothendieck.AlgebraicGeometry.Folder140_1
 public import Grothendieck.AlgebraicGeometry.Folder146
