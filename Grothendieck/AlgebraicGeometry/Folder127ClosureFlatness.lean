@@ -133,10 +133,9 @@ theorem isFlatClosureSolution_iff_of_isDedekindDomain (φ : M →ₗ[R] N) :
       ∀ (r : R) (n : N), r ≠ 0 → r • n ∈ LinearMap.range φ → n ∈ LinearMap.range φ := by
   set G := LinearMap.range φ
   refine ⟨fun h r n hr hn ↦ ?_, fun h ↦ ⟨inferInstance, fun R' _ _ ↦ ?_⟩⟩
-  · have hmem := inf_smul_top_le_of_injective_baseChange G (Ideal.span {r}) (h.2 _)
-      ⟨hn, Submodule.smul_mem_smul (Ideal.mem_span_singleton_self r) trivial⟩
-    rw [Submodule.ideal_span_singleton_smul] at hmem
-    obtain ⟨g, hg, hgn⟩ := hmem
+  · obtain ⟨g, hg, hgn⟩ := (Submodule.ideal_span_singleton_smul r G).le
+      (inf_smul_top_le_of_injective_baseChange G _ (h.2 _)
+        ⟨hn, Submodule.smul_mem_smul (Ideal.mem_span_singleton_self r) trivial⟩)
     rwa [← smul_right_injective N hr hgn]
   · have : Module.IsTorsionFree R (N ⧸ G) := .of_smul_eq_zero fun r x hx ↦ by
       induction x using Submodule.Quotient.induction_on with | _ n
@@ -220,9 +219,8 @@ theorem not_flat_range_zmodFour :
     ⟨LaurentPolynomial.C 2 * T (-1), (0, 1), by simp [zmodFour]⟩
   -- `2 x = 0`, so by the equational criterion `x = ∑ aⱼ yⱼ` with `2 aⱼ = 0`, that is `aⱼ = 2 bⱼ`.
   obtain ⟨k, a, y, hy, ha⟩ := Module.Flat.iff_forall_isTrivialRelation.1 hflat (l := 1)
-    (f := fun _ ↦ 2) (x := fun _ ↦ x) (by
-      simp only [Finset.univ_unique, Finset.sum_singleton]
-      exact Subtype.ext (by simp [x, LaurentPolynomial.smul_eq_C_mul, ← mul_assoc, h4]))
+    (f := fun _ ↦ 2) (x := fun _ ↦ x)
+    (Subtype.ext (by simp [x, LaurentPolynomial.smul_eq_C_mul, ← mul_assoc, h4]))
   choose b hb using fun j ↦ (by decide : ∀ c : ZMod 4, 2 * c = 0 → ∃ b, c = 2 * b) (a 0 j)
     (by simpa using ha j)
   -- Hence `2 T⁻¹ = 2 (p + 2 T⁻¹ q) = 2 p`, and `2 = 2 p X` in `(ℤ/4)[X]`, false at `X = 0`.
@@ -238,9 +236,8 @@ theorem not_flat_range_zmodFour :
   rw [show LaurentPolynomial.C 2 * (toLaurent q * (LaurentPolynomial.C 2 * T (-1))) * T 1 =
     toLaurent q * (LaurentPolynomial.C 2 * LaurentPolynomial.C 2) * (T (-1) * T 1) by ring, h4,
     mul_zero, zero_mul, add_zero, mul_assoc, ← T_add] at h2
-  have h3 : toLaurent (Polynomial.C 2 : (ZMod 4)[X]) = toLaurent (Polynomial.C 2 * p * X) := by
-    simpa using h2
-  exact absurd (congrArg (Polynomial.eval 0) (toLaurent_injective h3))
+  exact absurd (congrArg (Polynomial.eval 0) (toLaurent_injective (by simpa using h2 :
+    toLaurent (Polynomial.C 2 : (ZMod 4)[X]) = toLaurent (Polynomial.C 2 * p * X))))
     (by simp only [eval_C, eval_mul, eval_X, mul_zero]; decide)
 
 end Counterexample
