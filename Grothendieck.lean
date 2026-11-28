@@ -126,6 +126,7 @@ public import Grothendieck.GroupTheory.Folder133
 public import Grothendieck.LinearAlgebra.Folder1
 public import Grothendieck.LinearAlgebra.Folder75
 public import Grothendieck.NumberTheory.Folder145
+public import Grothendieck.NumberTheory.Folder6
 public import Grothendieck.NumberTheory.Folder78
 public import Grothendieck.Order.Folder156_1
 public import Grothendieck.Order.Folder156_2
