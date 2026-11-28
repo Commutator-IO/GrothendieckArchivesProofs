@@ -136,34 +136,26 @@ variable {G₀ G₁}
 @[montpellier "27, 29"]
 theorem ineq6_of_ineq2_ineq5 (h₀ : Chevalley G₀) (h₁ : Chevalley G₁) (h2 : ineq2 G₀ G₁)
     (h5 : ineq5 G₀ G₁) : ineq6 G₀ G₁ := by
-  have := h₀.na_eq; have := h₀.n_eq; have := h₁.na_eq; have := h₁.n_eq
-  unfold ineq2 ineq5 ineq6 at *
-  omega
+  cases h₀; cases h₁; omega
 
 /-- `27-semicontinuity-proof` (folder 27, p. 29): `(1) + (5) ⇒ (7)`. -/
 @[montpellier "27, 29"]
 theorem ineq7_of_ineq1_ineq5 (h₀ : Chevalley G₀) (h₁ : Chevalley G₁) (h1 : ineq1 G₀ G₁)
     (h5 : ineq5 G₀ G₁) : ineq7 G₀ G₁ := by
-  have := h₀.n_eq; have := h₁.n_eq
-  unfold ineq1 ineq5 ineq7 at *
-  omega
+  cases h₀; cases h₁; omega
 
 /-- `27-semicontinuity-proof` (folder 27, pp. 29, 32 a)): with `d = d′`, `(1) ⇔ (8)`. -/
 @[montpellier "27, 29, 32"]
 theorem ineq1_iff_ineq8 (h₀ : Chevalley G₀) (h₁ : Chevalley G₁) (hd : G₀.d = G₁.d) :
     ineq1 G₀ G₁ ↔ ineq8 G₀ G₁ := by
-  have := h₀.d_eq; have := h₁.d_eq
-  unfold ineq1 ineq8
-  omega
+  cases h₀; cases h₁; omega
 
 /-- With `d = d′`, `(1) + (4) ⇒ (9)`: this, not `(3) ⇒ (9)`, is what the identities of page 28
 give for the dimension of the radical. -/
 @[montpellier "27, 28, 29"]
 theorem ineq9_of_ineq1_ineq4 (h₀ : Chevalley G₀) (h₁ : Chevalley G₁) (hd : G₀.d = G₁.d)
     (h1 : ineq1 G₀ G₁) (h4 : ineq4 G₀ G₁) : ineq9 G₀ G₁ := by
-  have := h₀.d_eq; have := h₁.d_eq; have := h₀.aff_eq; have := h₁.aff_eq
-  unfold ineq1 ineq4 ineq9 at *
-  omega
+  cases h₀; cases h₁; omega
 
 /-- The invariants of `SL₃`. -/
 def exSL3 : Invariants :=
@@ -213,9 +205,7 @@ equivalent to (4). -/
 @[montpellier "27, 29"]
 theorem ineq10_iff_ineq4 (h₀ : Chevalley G₀) (h₁ : Chevalley G₁) (hd : G₀.d = G₁.d) :
     dRadAff G₁ ≤ dRadAff G₀ ↔ ineq4 G₀ G₁ := by
-  have := h₀.d_eq; have := h₁.d_eq; have := h₀.aff_eq; have := h₁.aff_eq
-  unfold dRadAff ineq4
-  omega
+  cases h₀; cases h₁; unfold dRadAff; omega
 
 /-- `27-semicontinuity-proof` (folder 27, p. 29): with the reading `d_radaff = ρ_ab + d_rad`,
 `(1) + (3) ⇒ (10)` fails for (10) read as `d_radaff ≥ d′_radaff`: `SL₃` against
