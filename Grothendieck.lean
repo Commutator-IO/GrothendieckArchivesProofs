@@ -40,6 +40,7 @@ public import Grothendieck.AlgebraicGeometry.Folder16
 public import Grothendieck.AlgebraicGeometry.Folder16Problem5
 public import Grothendieck.AlgebraicGeometry.Folder18
 public import Grothendieck.AlgebraicGeometry.Folder2
+public import Grothendieck.AlgebraicGeometry.Folder27SemicontinuityRanks
 public import Grothendieck.AlgebraicGeometry.Folder29
 public import Grothendieck.AlgebraicGeometry.Folder29TameInertia
 public import Grothendieck.AlgebraicGeometry.Folder2KCoherent
